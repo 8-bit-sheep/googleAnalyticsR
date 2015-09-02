@@ -118,6 +118,7 @@ shinyServer(function(input, output, session){
   gadata <- reactive({
 
     gadata <- with_shiny(google_analytics,
+                         id = "222222",
                          start="2015-08-01", end="2015-08-02", 
                          metrics = c("sessions", "bounceRate"), 
                          dimensions = c("source", "medium"),
