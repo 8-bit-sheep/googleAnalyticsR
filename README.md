@@ -60,13 +60,13 @@ multi_gadata <- google_analytics(account_list$viewId[1:2],
                                  dimensions = c("source", "medium"))
 
 ## if more than 10000 rows in results, auto batching
-batch_gadata <- google_analytics(account_list$viewId[1:2], 
+batch_gadata <- google_analytics(account_list$viewId[1], 
                                  start="2014-08-01", end="2015-08-02", 
                                  metrics = c("sessions", "bounceRate"), 
                                  dimensions = c("source", "medium", "landingPagePath"))
 
 ## mitigate sampling by setting samplingLevel="WALK"
-walk_gadata <- google_analytics(account_list$viewId[1:2], 
+walk_gadata <- google_analytics(account_list$viewId[1], 
                                 start="2014-08-01", end="2015-08-02", 
                                 metrics = c("sessions", "bounceRate"), 
                                 dimensions = c("source", "medium", "landingPagePath"), 
