@@ -1,0 +1,16 @@
+Package: googleAnalyticsR
+Type: Package
+Title: Google Analytics API into R
+Version: 0.0.9000
+Date: 2015-08-15
+Authors@R: c(person("Mark", "Edmondson",email = "r@sunholo.com",
+                  role = c("aut", "cre"))
+URL: https://github.com/MarkEdmondson1234/googleAnalyticsR_public
+BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR_public/issues
+Description: Google Analytics API using googleAuthR
+License: MIT
+LazyData: TRUE
+Depends:
+    R (>= 3.2.0)
+Imports:
+    googleAuthR (>= 0.1.1)
