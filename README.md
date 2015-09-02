@@ -114,6 +114,10 @@ shinyServer(function(input, output, session){
   
   ## Get auth code from return URL
   access_token  <- reactiveAccessToken(session)
+  
+  ## Make a loginButton to display using loginOutput
+  output$loginButton <- renderLogin(session, access_token(),
+                                    logout_class = "btn btn-danger")
 
   gadata <- reactive({
 
