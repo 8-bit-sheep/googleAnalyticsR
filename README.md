@@ -100,3 +100,28 @@ attr(gadata, "profileInfo")
 attr(gadata, "dateRange")
 
 ```
+
+To use in Shiny, use the googleAuth `with_shiny`
+
+```
+
+## in server.R
+library(googleAuthR)
+library(googleAnalyticsR)
+library(shiny)
+
+shinyServer(function(input, output, session){
+  
+  ## Get auth code from return URL
+  access_token  <- reactiveAccessToken(session)
+
+  gadata <- reactive({
+
+    gadata <- with_shiny(google_analytics,
+                         start="2015-08-01", end="2015-08-02", 
+                         metrics = c("sessions", "bounceRate"), 
+                         dimensions = c("source", "medium"),
+                         shiny_access_token = access_token())
+
+})
+```
