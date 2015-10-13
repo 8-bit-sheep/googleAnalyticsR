@@ -7,6 +7,7 @@ A new Google Analytics R library.  Very much work in progress, mainly here to te
 * [RGA](https://bitbucket.org/unikum/rga)
 * [RGoogleAnalytics](https://github.com/Tatvic/RGoogleAnalytics)
 * [ganalytics](https://github.com/jdeboer/ganalytics)
+* [GAR](https://github.com/andrewgeisler/GAR)
 
 ## Why do we need another GA library?
 
