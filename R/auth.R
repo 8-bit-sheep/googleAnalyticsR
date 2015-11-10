@@ -5,9 +5,9 @@
 #' @param verbose More feedback
 #'
 #' @export
-ga_auth <- function(token = NULL,
-                    new_user = FALSE,
-                    verbose = TRUE){
+ga_auth <- function(new_user = FALSE,
+                    verbose = TRUE,
+                    token = NULL){
   options("googleAuthR.client_id" = "289759286325-da3fr5kq4nl4nkhmhs2uft776kdsggbo.apps.googleusercontent.com")
   options("googleAuthR.client_secret" = "1mKySbffYRyWevGkjL0LMJYu")
   options("googleAuthR.jsonlite.simplifyVector" = FALSE)

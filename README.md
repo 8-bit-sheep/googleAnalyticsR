@@ -39,6 +39,8 @@ library(googleAnalyticsR)
 ## this also sets options
 ga_auth()
 
+## if you need to re-authenticate use ga_auth(new_user=TRUE)
+
 ## get account info, including View Ids
 account_list <- google_analytics_account_list()
 
