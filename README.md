@@ -1,5 +1,7 @@
 # googleAnalyticsR
-A new Google Analytics R library.  Very much work in progress, mainly here to test implementation of a Google API package using `googleAuthR`
+A new Google Analytics R library.  Very much work in progress, mainly here to test implementation of a Google API package using `googleAuthR`.
+
+Please log any problems here in the issues tracker.
 
 ## Other GA R libraries
 
