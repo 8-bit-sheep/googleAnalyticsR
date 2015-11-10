@@ -33,7 +33,7 @@ devtools::install_github("MarkEdmondson1234/googleAnalyticsR_public")
 
 ```
 library(googleAuthR)
-library(googleAnalytics)
+library(googleAnalyticsR)
 
 
 ## set options if needed
