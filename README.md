@@ -15,7 +15,8 @@ This one uses googleAuthR as a backend, which means:
 * Shiny App compatible
 * The same authentication flow can be used with other googleAuthR apps like searchConsoleR
 * Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnnel
-* Support for googleAuthR batch, meaning 10 calls at once to GA - great for big fetches.  For big data calls this is implemented automatically so could be 10x quicker than normal GA fetching.
+* Support for googleAuthR batch, meaning 10 calls at once to GA - great for big fetches.  For big data calls this is implemented automatically so could be 10x quicker than normal GA fetching
+
 * Meta data included in attributes of returned dataframe
 
 ## Install
@@ -30,7 +31,11 @@ devtools::install_github("MarkEdmondson1234/googleAnalyticsR_public")
 
 ```
 library(googleAuthR)
+
 library(googleAnalytics)
+=======
+library(googleAnalytics_public)
+
 
 ## set options if needed
 options("googleAuthR.scopes.selected" = getOption("googleAnalyticsR.scope") )
