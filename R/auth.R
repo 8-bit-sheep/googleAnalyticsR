@@ -8,8 +8,8 @@
 ga_auth <- function(token = NULL,
                     new_user = FALSE,
                     verbose = TRUE){
-  options("googleAuthR.client_id" = "858905045851-3beqpmsufml9d7v5d1pr74m9lnbueak2.apps.googleusercontent.com")
-  options("googleAuthR.client_secret" = "bnmF6C-ScpSR68knbGrHBQrS")
+  options("googleAuthR.client_id" = "289759286325-da3fr5kq4nl4nkhmhs2uft776kdsggbo.apps.googleusercontent.com")
+  options("googleAuthR.client_secret" = "1mKySbffYRyWevGkjL0LMJYu")
   options("googleAuthR.jsonlite.simplifyVector" = FALSE)
   options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/analytics", "https://www.googleapis.com/auth/analytics.readonly"))
   options("googleAnalyticsR.raw_req" = FALSE)
