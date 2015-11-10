@@ -12,7 +12,9 @@ ga_auth <- function(token = NULL,
   options("googleAuthR.client_secret" = "1mKySbffYRyWevGkjL0LMJYu")
   options("googleAuthR.jsonlite.simplifyVector" = FALSE)
   options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/analytics", "https://www.googleapis.com/auth/analytics.readonly"))
-  options("googleAnalyticsR.raw_req" = FALSE)
+  options("googleAnalyticsR.raw_req" = FALSE),
+  options("googleAnalyticsR.webapp.client_id" = "289759286325-42j8nmkeq5n9v9eb1kiuj2i97v9oea1f.apps.googleusercontent.com"),
+  options("googleAnalyticsR.webapp.client_secret" = "0zBtmZ_klTEzXUaTUTP5AkNQ")
   
   googleAuthR::gar_auth(token = token,
                         new_user = new_user,

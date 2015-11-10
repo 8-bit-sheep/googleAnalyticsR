@@ -35,14 +35,8 @@ devtools::install_github("MarkEdmondson1234/googleAnalyticsR_public")
 library(googleAuthR)
 library(googleAnalyticsR)
 
-
-## set options if needed
-options("googleAuthR.scopes.selected" = getOption("googleAnalyticsR.scope") )
-options("googleAuthR.client_id" = getOption("googleAnalyticsR.client_id"))
-options("googleAuthR.client_secret" = getOption("googleAnalyticsR.client_secret"))
-options("googleAuthR.webapp.client_id" = getOption("googleAnalyticsR.webapp.client_id"))
-options("googleAuthR.webapp.client_secret" = getOption("googleAnalyticsR.webapp.client_secret"))
-
+## Authenticate in Google OAuth2
+## this also sets options
 ga_auth()
 
 ## get account info, including View Ids
