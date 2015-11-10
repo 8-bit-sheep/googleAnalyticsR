@@ -58,7 +58,7 @@ gadata <- google_analytics(account_list$viewId[1],
                            dimensions = c("source", "medium"))
 
 ## multi accounts, pass character vector of viewIds
-multi_gadata <- google_analytics(account_list$viewId[1:2], 
+multi_gadata <- google_analytics(c("123456","9876545","765432"), 
                                  start="2015-08-01", end="2015-08-02", 
                                  metrics = c("sessions", "bounceRate"), 
                                  dimensions = c("source", "medium"))
