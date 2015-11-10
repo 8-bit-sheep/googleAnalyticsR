@@ -43,7 +43,7 @@ options("googleAuthR.client_secret" = getOption("googleAnalyticsR.client_secret"
 options("googleAuthR.webapp.client_id" = getOption("googleAnalyticsR.webapp.client_id"))
 options("googleAuthR.webapp.client_secret" = getOption("googleAnalyticsR.webapp.client_secret"))
 
-gar_auth()
+ga_auth()
 
 ## get account info, including View Ids
 account_list <- google_analytics_account_list()
