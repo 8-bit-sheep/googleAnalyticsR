@@ -1,9 +1,11 @@
 # googleAnalyticsR
-A new Google Analytics R library.  Very much work in progress, mainly here to test implementation of a Google API package using `googleAuthR`.
+A new Google Analytics R library.  Very much work in progress, mainly here to test implementation of a Google API package using [`googleAuthR`](https://github.com/MarkEdmondson1234/googleAuthR).
 
 Please log any problems here in the issues tracker.
 
 ## Other GA R libraries
+
+These are all great libraries, that I have taken inspiration from.
 
 * [rga](https://github.com/skardhamar/rga)
 * [RGA](https://bitbucket.org/unikum/rga)
@@ -13,17 +15,16 @@ Please log any problems here in the issues tracker.
 
 ## Why do we need another GA library?
 
-This one uses googleAuthR as a backend, which means:  
+This one uses `googleAuthR` as a backend, which means:  
 * Shiny App compatible
-* The same authentication flow can be used with other googleAuthR apps like searchConsoleR
+* The same authentication flow can be used with other `googleAuthR` apps like [`searchConsoleR`](https://github.com/MarkEdmondson1234/searchConsoleR)
 * Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnnel
-* Support for googleAuthR batch, meaning 10 calls at once to GA - great for big fetches.  For big data calls this is implemented automatically so could be 10x quicker than normal GA fetching
-
+* Support for `googleAuthR` batch, meaning 10 calls at once to GA - great for big fetches.  For big data calls this is implemented automatically so could be 10x quicker than normal GA fetching
 * Meta data included in attributes of returned dataframe
 
 ## Install
 
-Development version
+Development version - needs dev version of `googleAuthR` too until the latest changes are on CRAN
 
 ```
 devtools::install_github("MarkEdmondson1234/googleAuthR")
@@ -40,6 +41,10 @@ library(googleAnalyticsR)
 ga_auth()
 
 ## if you need to re-authenticate use ga_auth(new_user=TRUE)
+
+## if you have your own Google Dev console project keys, 
+## then don't run ga_auth() as that will set the authentication project to the defaults.
+## instead put your options here, and run googleAuthR::gar_auth()
 
 ## get account info, including View Ids
 account_list <- google_analytics_account_list()
@@ -106,6 +111,36 @@ attr(gadata, "profileInfo")
 attr(gadata, "dateRange")
 
 ```
+## Using your own Google Developer Project API Key
+
+With the amount of API calls possible with this library via batching and walking, its more likely the shared
+Google API project will hit the 50,000 calls per day limit.
+
+To mitigate that, use your own [Google Developer Console Project](https://console.developers.google.com/apis/library) key, so it is not shared across all users of this library.
+
+Get your own OAuth2 clientID and client secret and add to the options like so:
+TODO: guide on how you get your own client Id.
+
+### Example 
+
+Below a new client Id is set for both offline and Shiny use.  Put the lines at the top of your R script with your
+own crudentials.
+
+In this example, the scopes are also set so a user can authenticate with searchConsoleR at the same time, which 
+is possible as they both use googleAuthR as a backend.
+
+```
+options("googleAuthR.client_id" = "994xxx55706-afliqtuxxxxxxx2fd4kesu6.apps.googleusercontent.com")
+options("googleAuthR.client_secret" = "3JhLa_GxxxxxCQYLe31c64")
+options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/analytics", 
+                                          "https://www.googleapis.com/auth/analytics.readonly", 
+                                          "https://www.googleapis.com/auth/webmasters"))
+options("googleAnalyticsR.webapp.client_id" = "994xxxx55706-e9qompxxxxx9pcab1u005cv.apps.googleusercontent.com")
+options("googleAnalyticsR.webapp.client_secret" = "zcofxxxxxxElemXN5sf")
+```
+
+
+## Shiny
 
 To use in Shiny, use the googleAuth `with_shiny`
 
