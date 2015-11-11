@@ -119,9 +119,10 @@ Google API project will hit the 50,000 calls per day limit.
 To mitigate that, use your own [Google Developer Console Project](https://console.developers.google.com/apis/library) key, so it is not shared across all users of this library.
 
 Get your own OAuth2 clientID and client secret and add to the options like so:
+
 TODO: guide on how you get your own client Id.
 
-### Example 
+### Example adding your own Google Developer Console keys
 
 Below a new client Id is set for both offline and Shiny use.  Put the lines at the top of your R script with your
 own crudentials.
