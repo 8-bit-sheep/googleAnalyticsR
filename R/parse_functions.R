@@ -7,11 +7,12 @@ parse_google_analytics <- function(x){
   
   
   samplePercent <-  100
-  if(x$containsSampledData) {
-    samplePercent <- round(100 * (as.numeric(x$sampleSize) / as.numeric(x$sampleSpace)), 2)
-    message("Data is sampled, based on ", samplePercent, "% of visits. Use samplingLevel='WALK' to mitigate it." )
+  if(!is.null(x$containsSampledData)){
+    if(x$containsSampledData) {
+      samplePercent <- round(100 * (as.numeric(x$sampleSize) / as.numeric(x$sampleSpace)), 2)
+      message("Data is sampled, based on ", samplePercent, "% of visits. Use samplingLevel='WALK' to mitigate it." )
+    }
   }
-  
   
   if(x$kind == "analytics#gaData"){
     gadata <- parse_google_analytics_ga(x)
