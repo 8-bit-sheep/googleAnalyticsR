@@ -125,7 +125,7 @@ TODO: guide on how you get your own client Id.
 ### Example adding your own Google Developer Console keys
 
 Below a new client Id is set for both offline and Shiny use.  Put the lines at the top of your R script with your
-own crudentials.
+own credentials.
 
 In this example, the scopes are also set so a user can authenticate with searchConsoleR at the same time, which 
 is possible as they both use googleAuthR as a backend.
