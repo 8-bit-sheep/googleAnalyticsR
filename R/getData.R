@@ -116,7 +116,7 @@ google_analytics <- function(id,
 google_analytics_meta <- function(){
   
   ga_auth()
-  options("googleAuthR.jsonlite.simplifyVector" = TRUE)
+  # options("googleAuthR.jsonlite.simplifyVector" = TRUE)
   meta <-
     googleAuthR::gar_api_generator("https://www.googleapis.com/analytics/v3",
                                    "GET",
@@ -125,7 +125,7 @@ google_analytics_meta <- function(){
                                    data_parse_function = parse_google_analytics_meta )
   
   mmm <- meta()
-  options("googleAuthR.jsonlite.simplifyVector" = FALSE)
+  # options("googleAuthR.jsonlite.simplifyVector" = FALSE)
   
   mmm
   
@@ -141,13 +141,13 @@ google_analytics_meta <- function(){
 google_analytics_account_list <- function(){
   
   ga_auth()
-  options("googleAuthR.jsonlite.simplifyVector" = TRUE)
+  # options("googleAuthR.jsonlite.simplifyVector" = TRUE)
   acc_sum <- googleAuthR::gar_api_generator("https://www.googleapis.com/analytics/v3/management/accountSummaries",
                                             "GET",
                                             data_parse_function = parse_ga_account_summary)
   
   aa <- acc_sum()
-  options("googleAuthR.jsonlite.simplifyVector" = FALSE)
+  # options("googleAuthR.jsonlite.simplifyVector" = FALSE)
   
   aa
 }
