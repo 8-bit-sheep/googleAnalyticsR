@@ -32,6 +32,8 @@ devtools::install_github("MarkEdmondson1234/googleAnalyticsR_public")
 ```
 ## To use
 
+For syntax of filters and dimensions, this library parses in exactly as specified in the [Google Analytics v3 API docs](https://developers.google.com/analytics/devguides/reporting/core/v3/reference?hl=en#filters), so check those out.  Note you do not need to encode symbols, but may have to encode URLs if you are filtering for those in say ga:pagePath
+
 ```
 library(googleAuthR)
 library(googleAnalyticsR)
