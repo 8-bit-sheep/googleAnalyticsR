@@ -115,7 +115,6 @@ google_analytics <- function(id,
 #'
 google_analytics_meta <- function(){
   
-  ga_auth()
   # options("googleAuthR.jsonlite.simplifyVector" = TRUE)
   meta <-
     googleAuthR::gar_api_generator("https://www.googleapis.com/analytics/v3",
@@ -140,7 +139,6 @@ google_analytics_meta <- function(){
 #' @export
 google_analytics_account_list <- function(){
   
-  ga_auth()
   # options("googleAuthR.jsonlite.simplifyVector" = TRUE)
   acc_sum <- googleAuthR::gar_api_generator("https://www.googleapis.com/analytics/v3/management/accountSummaries",
                                             "GET",
