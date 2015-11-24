@@ -71,6 +71,10 @@ parse_google_analytics_mcf <- function(x){
   types <- x$columnHeaders$dataType
 
   if ("MCF_SEQUENCE" %in% types) {
+    ## take out null object lists that the JSON sometimes strangely returns
+    type_check <- vapply(x$rows, function(x) inherits(x[1]$conversionPathValue[[1]], "list"), FUN.VALUE=TRUE)
+    x$rows <- x$rows[!type_check]
+    
     pv_idx <- grep("MCF_SEQUENCE", types, fixed = TRUE, invert = TRUE)
     cv_idx <- grep("MCF_SEQUENCE", types, fixed = TRUE)
     primitive <- lapply(x$rows,
