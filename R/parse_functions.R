@@ -107,52 +107,47 @@ parse_google_analytics_meta <- function(x){
 }
 
 parse_ga_account_summary <- function(x){
-
+  
   x <- x$items
-
+  
   accounts <- data.frame(accountId = x$id, accountName = x$name, stringsAsFactors = FALSE)
-
+  
   wp_prep <- x$webProperties
   names(wp_prep) <- x$id
-
+  
   webprops <- listNameToDFCol(wp_prep, "accountId")
-
+  
   ## newly created app GA webproperties get "--" listed as websiteUrl
   ## but old ones perhaps don't
   ## its missing the websiteUrl in the JSON sometimes.
   webprops <- lapply(webprops, function(x) {
-    if(is.null(x$websiteUrl)){
-      x$websiteUrl <- "--"
+    if(!("websiteUrl" %in% names(x))){
+      x["websiteUrl"] <- "--"
     } else {
-      x$websiteUrl
+      x["websiteUrl"]
     }
     x })
-
+  
   webprops <- Reduce(rbind, webprops)
-
+  
   view_prep <- webprops$profiles
   names(view_prep) <- webprops$id
-
+  
   webProperties <- data.frame(webPropertyId = webprops$id, webPropertyName = webprops$name,
                               websiteUrl = webprops$websiteUrl,
                               level = webprops$level,
                               accountId = webprops$accountId,
                               stringsAsFactors = F)
-
+  
   views <- Reduce(rbind, listNameToDFCol(view_prep, "webPropertyId"))
-
+  
   views <- data.frame(viewId = views$id, viewName = views$name,
                       viewType = views$type, webPropertyId = views$webPropertyId,
                       stringsAsFactors = F)
-
+  
   accWeb <- merge(accounts, webProperties, by = c("accountId"))
   accWebView <- merge(accWeb, views, by = c("webPropertyId"))
-
+  
   accWebView
-
+  
 }
-
-
-
-
-
