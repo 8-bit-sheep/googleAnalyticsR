@@ -39,6 +39,9 @@ google_analytics <- function(id,
   start <- as.character(start)
   end <- as.character(end)
   type <-  match.arg(type)
+  if(!is.null(filters)) {
+    filters <- utils::URLencode(filters, reserved = TRUE)
+  } 
   
   id <- sapply(id, checkPrefix, prefix = "ga")
   metrics <- paste(sapply(metrics, checkPrefix, prefix=type), collapse=",")
