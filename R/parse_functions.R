@@ -135,6 +135,7 @@ parse_ga_account_summary <- function(x){
   
   webProperties <- data.frame(webPropertyId = webprops$id, webPropertyName = webprops$name,
                               websiteUrl = webprops$websiteUrl,
+                              internalWebPropertyId = webprops$internalWebPropertyId,
                               level = webprops$level,
                               accountId = webprops$accountId,
                               stringsAsFactors = F)
