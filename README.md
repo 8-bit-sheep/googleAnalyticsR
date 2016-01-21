@@ -1,5 +1,7 @@
 # googleAnalyticsR
-A new Google Analytics R library.  Very much work in progress, mainly here to test implementation of a Google API package using [`googleAuthR`](https://github.com/MarkEdmondson1234/googleAuthR).
+A new Google Analytics R library.  Built using [`googleAuthR`](https://github.com/MarkEdmondson1234/googleAuthR). The successor to [`shinyga`](https://github.com/MarkEdmondson1234/shinyga) it allows online OAuth2 authentication within Shiny apps, along with new features such as batching and compatibility with other Google APIs.
+
+Work is currently focused on getting feature parity with `shinyga` such as the GA Management API features. 
 
 Please log any problems here in the issues tracker.
 
