@@ -126,6 +126,13 @@ parse_ga_account_summary <- function(x){
     } else {
       x["websiteUrl"]
     }
+    
+    if(!("starred" %in% names(x))){
+      x["starred"] <- NA
+    } else {
+      x["starred"]
+    }
+    
     x })
   
   webprops <- Reduce(rbind, webprops)
@@ -138,12 +145,26 @@ parse_ga_account_summary <- function(x){
                               internalWebPropertyId = webprops$internalWebPropertyId,
                               level = webprops$level,
                               accountId = webprops$accountId,
+                              starred = webprops$starred,
                               stringsAsFactors = F)
   
-  views <- Reduce(rbind, listNameToDFCol(view_prep, "webPropertyId"))
+  view_prep <- listNameToDFCol(view_prep, "webPropertyId")
+  
+  view_prep <- lapply(view_prep, function(x) {
+    
+    if(!("starred" %in% names(x))){
+      x["starred"] <- NA
+    } else {
+      x["starred"]
+    }
+    
+    x })
+  
+  views <- Reduce(rbind, view_prep)
   
   views <- data.frame(viewId = views$id, viewName = views$name,
                       viewType = views$type, webPropertyId = views$webPropertyId,
+                      starred = views$starred,
                       stringsAsFactors = F)
   
   accWeb <- merge(accounts, webProperties, by = c("accountId"))
