@@ -1,3 +1,7 @@
+#' @importFrom magrittr %>%
+#' @export
+magrittr::`%>%`
+
 #' A helper function that tests whether an object is either NULL _or_
 #' a list of NULLs
 #'
