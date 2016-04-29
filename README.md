@@ -1,7 +1,7 @@
 # googleAnalyticsR
 [![Travis-CI Build Status](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master)](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR)
 
-A new Google Analytics R library.  Built using [`googleAuthR`](https://github.com/MarkEdmondson1234/googleAuthR). The successor to [`shinyga`](https://github.com/MarkEdmondson1234/shinyga) it allows online OAuth2 authentication within Shiny apps, along with new features such as batching and compatibility with other Google APIs.
+A new Google Analytics R library using the new v4 of the Google Analytics Reporting API.  Built using [`googleAuthR`](https://github.com/MarkEdmondson1234/googleAuthR). The successor to [`shinyga`](https://github.com/MarkEdmondson1234/shinyga) it allows online OAuth2 authentication within Shiny apps, along with new features such as batching and compatibility with other Google APIs.
 
 Work is currently focused on getting feature parity with `shinyga` such as the GA Management API features. 
 
@@ -19,22 +19,109 @@ These are all great libraries, that I have taken inspiration from.
 
 ## Why do we need another GA library?
 
-This one uses `googleAuthR` as a backend, which means:  
+* First Google Analytics Reporting v4 API library for R
+* v4 features include: dynamic calculated metrics, pivots, histograms, date comparisons, batching.
 * Shiny App compatible
 * The same authentication flow can be used with other `googleAuthR` apps like [`searchConsoleR`](https://github.com/MarkEdmondson1234/searchConsoleR)
 * Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnnel
 * Support for `googleAuthR` batch, meaning 10 calls at once to GA - great for big fetches.  For big data calls this is implemented automatically so could be 10x quicker than normal GA fetching
-* Meta data included in attributes of returned dataframe
+* Meta data included in attributes of returned dataframe including date ranges, totals, min and max
 
 ## Install
 
-Development version - needs dev version of `googleAuthR` too until the latest changes are on CRAN
+Development version - needs version > `0.2.0.9000` of `googleAuthR` too until the latest changes are on CRAN
 
 ```
 devtools::install_github("MarkEdmondson1234/googleAuthR")
 devtools::install_github("MarkEdmondson1234/googleAnalyticsR")
 ```
-## To use
+
+## To use - v4 API calls
+
+Todo.  But check out `?google_analytics_4` and these example queries:
+
+```r
+library(googleAuthR)
+library(googleAnalyticsR)
+
+## authenticate, or use the RStudio Addin "Google API Auth" with analytics scopes set
+ga_auth()
+
+## get your accounts
+account_list <- google_analytics_account_list()
+
+## pick a profile with data to query
+ga_id <- account_list[31,'viewId']
+
+## create filters on metrics
+mf <- met_filter("bounces", "GREATER_THAN", 0)
+mf2 <- met_filter("sessions", "GREATER", 2)
+
+## create filters on dimensions
+df <- dim_filter("source","BEGINS_WITH","1",not = TRUE)
+df2 <- dim_filter("source","BEGINS_WITH","a",not = TRUE)
+
+## construct filter objects
+fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
+fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
+
+## make v4 request
+## demo showing how the new filters work
+ga_data1 <- google_analytics_4(ga_id, 
+                              date_range = c("2015-07-30","2015-10-01"),
+                              dimensions=c('source','medium'), 
+                              metrics = c('sessions','bounces'), 
+                              met_filters = fc, 
+                              dim_filters = fc2, 
+                              filtersExpression = "ga:source!=(direct)")
+              
+## demo of querying two date ranges at a time   
+## we make the request via make_ga_4_req to use in next demo
+multidate_test <- make_ga_4_req(ga_id, 
+                                date_range = c("2015-07-30",
+                                               "2015-10-01",
+                                                "2014-07-30",
+                                                "2014-10-01"),
+                                dimensions = c('source','medium'), 
+                                metrics = c('sessions','bounces'), 
+                                met_filters = fc, 
+                                dim_filters = fc2, 
+                                filtersExpression = "ga:source!=(direct)")
+                                
+ga_data1 <- fetch_google_analytics_4(list(multidate_test))
+
+## Demo querying two reports at the same time
+## Use make_ga_4_req() to make multiple requests and then send 
+##   them as a list to fetch_google_analytics_r()
+multidate_test2 <- make_ga_4_req(ga_id,
+                                 date_range = c("2015-07-30",
+                                                "2015-10-01",
+                                                "2014-07-30",
+                                                "2014-10-01"),
+                                 dimensions=c('hour','medium'), 
+                                 metrics = c('visitors','bounces'), 
+                                 met_filters = fc, 
+                                 dim_filters = fc2, 
+                                 filtersExpression = "ga:source!=(direct)")
+
+ga_data3 <- fetch_google_analytics_4(list(multidate_test, multidate_test2)) 
+
+## demo showing on-the-fly calculated metrics
+ga_data4 <- google_analytics_4(ga_id,
+                               date_range = c("2015-07-30",
+                                              "2015-10-01"),
+                              dimensions=c('medium'), 
+                              metrics = c(visitsPervisitor = "ga:visits/ga:visitors",
+                                          'bounces'), 
+                              metricFormat = c("FLOAT","INTEGER"),
+                              met_filters = fc, 
+                              dim_filters = fc2, 
+                              filtersExpression = "ga:source!=(direct)")
+
+```
+
+
+## To use - v3 API calls
 
 For syntax of filters and dimensions, this library parses in exactly as specified in the [Google Analytics v3 API docs](https://developers.google.com/analytics/devguides/reporting/core/v3/reference?hl=en#filters), so check those out.  Note you do not need to encode symbols, but may have to encode URLs if you are filtering for those in say ga:pagePath
 
