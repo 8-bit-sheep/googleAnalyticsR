@@ -30,7 +30,7 @@ Development version - needs dev version of `googleAuthR` too until the latest ch
 
 ```
 devtools::install_github("MarkEdmondson1234/googleAuthR")
-devtools::install_github("MarkEdmondson1234/googleAnalyticsR_public")
+devtools::install_github("MarkEdmondson1234/googleAnalyticsR")
 ```
 ## To use
 
