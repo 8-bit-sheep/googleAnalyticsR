@@ -1,3 +1,130 @@
+#' ga v4 parse batching
+#'
+google_analytics_4_parse_batch <- function(response_list){
+  
+  parsed <- lapply(response_list$reports, google_analytics_4_parse)
+  
+  ## if only one entry in the list, return the dataframe
+  if(length(parsed) == 1) parsed <- parsed[[1]]
+  
+  parsed
+  
+}
+
+#' ga v4 data parsing
+#'
+#' x is response_list$reports[[1]] from google_analytics_4_parse_batch
+#' @keywords internal
+google_analytics_4_parse <- function(x){
+  
+  message("Parsing GA API v4")
+  
+  columnHeader <- x$columnHeader
+  data <- x$data$rows
+  hasDateComparison <- if(length(data[[1]]$metrics) == 2) TRUE else FALSE
+  
+  if(!is.null(data$isDataGolden)){
+    if(!data$isDataGolden)
+      warning("Data is not Golden - may change on subsequent API calls.")
+  }
+  
+  if(!is.null(data$filteredForPrivacyReasons)){
+    warning("Some data has been filtered for privacy reasons.")
+  }
+  
+  if(!is.null(data$samplesReadCounts)){
+    warning("Data is sampled.")
+  }
+  
+  dim_names <- unlist(columnHeader$dimensions)
+  met_names <- unlist(lapply(columnHeader$metricHeader$metricHeaderEntries, function(x) x$name))
+  # met_types <- unlist(lapply(columnHeader$metricHeader$metricHeaderEntries, function(x) x$type))
+  
+  
+  
+  dims <- matrix(unlist(lapply(data, function(x) x$dimensions)),
+                 ncol = length(dim_names), byrow = TRUE)
+  mets <- matrix(unlist(lapply(data, function(x) x$metrics[[1]]$values)),
+                 ncol = length(met_names), byrow = TRUE)
+  
+  ## comparison date metrics
+  if(hasDateComparison){
+    mets2 <- matrix(unlist(lapply(data, function(x) x$metrics[[2]]$values)),
+                    ncol = length(met_names), byrow=TRUE)
+    mets <- cbind(mets, mets2)
+    met_names <- c(paste0(met_names, ".d1"), paste0(met_names, ".d2"))
+  }
+  
+  ## construct the dataframe
+  out <- data.frame(dims, mets,
+                    stringsAsFactors = FALSE, row.names = 1:nrow(mets))
+  
+  out_names <- c(dim_names, met_names)
+  out_names <- gsub("ga:","",out_names)
+  
+  names(out) <- make.names(out_names, unique=TRUE)
+  
+  ## type conversion
+  met_names <- gsub("ga:","",met_names)
+  out[,met_names] <- as.numeric(as.character(unlist(out[,met_names])))
+  
+  if('date' %in% colnames(out)) {
+    out[,'date'] <- as.Date(unlist(out[,'date']), format="%Y%m%d")
+  }
+  
+  ## add support for met_types == TIME
+  
+  pivot_entries <- pivot_ga4_parse(x, hasDateComparison)
+  
+  if(!is.null(pivot_entries)) out <- cbind(out, pivot_entries)
+  
+  attr(out, "totals") <- x$data$totals
+  attr(out, "minimums") <- x$data$minimums
+  attr(out, "maximums") <- x$data$maximums
+  attr(out, "isDataGolden") <- x$data$isDataGolden
+  attr(out, "rowCount") <- x$data$rowCount
+  
+  out
+  
+}
+
+
+#' New parse GA account summary
+#' 
+#' @param x The account summary items
+#' @import tidyjson
+parse_ga_account_summary <- function(x){
+  
+  json_accounts <- jsonlite::toJSON(x$items)
+  class(json_accounts) <- c(class(json_accounts), "character")
+  tidy_json <- json_accounts %>% as.tbl_json()
+  
+  tidy_json <- tidy_json %>% 
+    gather_array() %>% 
+    spread_values(accountId = jstring("id"), 
+                  accountName = jstring("name")) %>%
+    enter_object("webProperties") %>%
+    gather_array() %>%
+    spread_values(webPropertyId = jstring("id"), 
+                  webPropertyName = jstring("name"),
+                  internalWebPropertyId = jstring("internalWebPropertyId"),
+                  level = jstring("level"),
+                  websiteUrl = jstring("websiteUrl")) %>%
+    enter_object("profiles") %>%
+    gather_array() %>%
+    spread_values(viewId = jstring("id"), 
+                  viewName = jstring("name"),
+                  type = jstring("type"),
+                  starred = jstring("starred"))
+  
+  ## remove tidyjson artifacts
+  out <- tidy_json[,setdiff(names(tidy_json), c("document.id","array.index"))]
+  
+  out
+}
+
+
+
 parse_google_analytics <- function(x){
 
   message("Request to profileId: ", x$profileInfo$profileId,

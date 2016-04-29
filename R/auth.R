@@ -2,11 +2,9 @@
 #'
 #' @param token If you have an existing token already
 #' @param new_user Go through the auth flow again
-#' @param verbose More feedback
 #'
 #' @export
 ga_auth <- function(new_user = FALSE,
-                    verbose = TRUE,
                     token = NULL){
   options("googleAuthR.client_id" = "289759286325-da3fr5kq4nl4nkhmhs2uft776kdsggbo.apps.googleusercontent.com")
   options("googleAuthR.client_secret" = "1mKySbffYRyWevGkjL0LMJYu")
@@ -17,7 +15,6 @@ ga_auth <- function(new_user = FALSE,
   options("googleAnalyticsR.webapp.client_secret" = "0zBtmZ_klTEzXUaTUTP5AkNQ")
   
   googleAuthR::gar_auth(token = token,
-                        new_user = new_user,
-                        verbose = verbose)
+                        new_user = new_user)
   
 }

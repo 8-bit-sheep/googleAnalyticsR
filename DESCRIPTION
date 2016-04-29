@@ -1,18 +1,21 @@
 Package: googleAnalyticsR
 Type: Package
 Title: Google Analytics API into R
-Version: 0.0.9001
+Version: 0.0.9002
 Date: 2015-08-15
 Authors@R: c(person("Mark", "Edmondson",email = "r@sunholo.com",
                   role = c("aut", "cre")))
-URL: https://github.com/MarkEdmondson1234/googleAnalyticsR_public
-BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR_public/issues
+URL: https://github.com/MarkEdmondson1234/googleAnalyticsR
+BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
 Description: Google Analytics API using googleAuthR
 License: MIT
 LazyData: TRUE
 Depends:
     R (>= 3.2.0),
-    tidyjson (>= 0.2.1)
+    tidyjson (>= 0.2.1),
+    magrittr
 Imports:
-    googleAuthR (>= 0.2.0)
+    googleAuthR (>= 0.2.0.9000)
+Suggests:
+    testthat (>= 1.0.2)
 RoxygenNote: 5.0.1

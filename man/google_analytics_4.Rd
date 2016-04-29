@@ -13,7 +13,7 @@ google_analytics_4(viewId, date_range, metrics, dimensions = NULL,
 \arguments{
 \item{viewId}{viewId of data to get.}
 
-\item{date_range}{character or date vector of format c(start, end). Optionc("#752324", "white", "white", "indianred")c("#FFFFFF")al c(s1,e1,s2,e2)}
+\item{date_range}{character or date vector of format c(start, end). Optional c(s1,e1,s2,e2)}
 
 \item{metrics}{Metric to fetch. Required. Supports calculated metrics.}
 
