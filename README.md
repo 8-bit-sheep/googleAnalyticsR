@@ -224,7 +224,7 @@ ga_data4 <- google_analytics_4(ga_id,
                                date_range = c("2015-07-30",
                                               "2015-10-01"),
                               dimensions=c('medium'), 
-                              metrics = c(visitsPervisitor = "ga:visits/ga:visitors",
+                              metrics = c(visitsPerVisitor = "ga:visits/ga:visitors",
                                           'bounces'), 
                               metricFormat = c("FLOAT","INTEGER"),
                               met_filters = fc, 
@@ -233,7 +233,7 @@ ga_data4 <- google_analytics_4(ga_id,
 > str(ga_data4)
 'data.frame':	2 obs. of  3 variables:
  $ medium          : chr  "organic" "referral"
- $ visitsPervisitor: num  1.08 1.01
+ $ visitsPerVisitor: num  1.08 1.01
  $ bounces         : num  605 71
  - attr(*, "totals")=List of 1
   ..$ :List of 1
