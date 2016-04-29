@@ -1,0 +1,148 @@
+## test commands
+
+mf <- met_filter("bounces", "GREATER_THAN", 0)
+mf2 <- met_filter("sessions", "GREATER", 2)
+
+df <- dim_filter("source","BEGINS_WITH","1",not = TRUE)
+df2 <- dim_filter("source","BEGINS_WITH","a",not = TRUE)
+
+fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
+
+fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
+
+googleAnalyticsR::google_analytics_4(account_list[31,'viewId'], c("2015-07-30","2015-10-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'), met_filters = fc, dim_filters = fc2, filtersExpression = "ga:source!=(direct)") -> gg
+
+
+
+pivme <- pivot_ga4(c("hour","minute"), metrics = c("sessions", "visitors"))
+pivme2 <- pivot_ga4(c("medium"), metrics = c("sessions", "visitors"))
+
+pivtest1 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'), met_filters = fc, dim_filters = fc2, filtersExpression = "ga:source!=(direct), pivots = list(pivme)")
+
+pivtest2 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'), met_filters = fc, dim_filters = fc2, filtersExpression = "ga:source!=(direct)", pivots = list(pivme, pivme2))
+
+
+piv_1 <- fetch_google_analytics_4(pivtest1)
+piv_2 <- fetch_google_analytics_4(pivtest2)
+
+test1 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'), met_filters = fc, dim_filters = fc2, filtersExpression = "ga:source!=(direct)")
+
+test2 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('hour','medium'), metrics = c('visitors','bounces'), met_filters = fc, dim_filters = fc2, filtersExpression = "ga:source!=(direct)")
+
+one_fetch <- fetch_google_analytics_4(list(test1))
+
+two_fetch <- fetch_google_analytics_4(list(test1, test2))
+
+order_1 <- order_type("sessions", descending = TRUE)
+order_2 <- order_type("bounces", descending = TRUE)
+
+
+> lapply(pivotHeaders, function(pivots) lapply(pivots$pivotHeaderEntries, function(pivotNames) unlist(pivotNames)))
+[[1]]
+[[1]][[1]]
+ dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
+       "ga:hour"      "ga:minute"             "15"             "13"    "ga:sessions"
+     metric.type
+       "INTEGER"
+
+[[1]][[2]]
+ dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
+       "ga:hour"      "ga:minute"             "15"             "13"    "ga:visitors"
+     metric.type
+       "INTEGER"
+
+[[1]][[3]]
+ dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
+       "ga:hour"      "ga:minute"             "15"             "24"    "ga:sessions"
+     metric.type
+       "INTEGER"
+
+[[1]][[4]]
+ dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
+       "ga:hour"      "ga:minute"             "15"             "24"    "ga:visitors"
+     metric.type
+       "INTEGER"
+
+[[1]][[5]]
+ dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
+       "ga:hour"      "ga:minute"             "15"             "08"    "ga:sessions"
+     metric.type
+       "INTEGER"
+
+[[1]][[6]]
+ dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
+       "ga:hour"      "ga:minute"             "15"             "08"    "ga:visitors"
+     metric.type
+       "INTEGER"
+
+[[1]][[7]]
+ dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
+       "ga:hour"      "ga:minute"             "15"             "44"    "ga:sessions"
+     metric.type
+       "INTEGER"
+
+[[1]][[8]]
+ dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
+       "ga:hour"      "ga:minute"             "15"             "44"    "ga:visitors"
+     metric.type
+       "INTEGER"
+
+[[1]][[9]]
+ dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
+       "ga:hour"      "ga:minute"             "15"             "45"    "ga:sessions"
+     metric.type
+       "INTEGER"
+
+[[1]][[10]]
+ dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
+       "ga:hour"      "ga:minute"             "15"             "45"    "ga:visitors"
+     metric.type
+       "INTEGER"
+
+
+[[2]]
+[[2]][[1]]
+ dimensionNames dimensionValues     metric.name     metric.type
+    "ga:medium"      "referral"   "ga:sessions"       "INTEGER"
+
+[[2]][[2]]
+ dimensionNames dimensionValues     metric.name     metric.type
+    "ga:medium"      "referral"   "ga:visitors"       "INTEGER"
+
+[[2]][[3]]
+ dimensionNames dimensionValues     metric.name     metric.type
+    "ga:medium"           "cpc"   "ga:sessions"       "INTEGER"
+
+[[2]][[4]]
+ dimensionNames dimensionValues     metric.name     metric.type
+    "ga:medium"           "cpc"   "ga:visitors"       "INTEGER"
+
+[[2]][[5]]
+ dimensionNames dimensionValues     metric.name     metric.type
+    "ga:medium"         "email"   "ga:sessions"       "INTEGER"
+
+[[2]][[6]]
+ dimensionNames dimensionValues     metric.name     metric.type
+    "ga:medium"         "email"   "ga:visitors"       "INTEGER"
+
+[[2]][[7]]
+ dimensionNames dimensionValues     metric.name     metric.type
+    "ga:medium"        "social"   "ga:sessions"       "INTEGER"
+
+[[2]][[8]]
+ dimensionNames dimensionValues     metric.name     metric.type
+    "ga:medium"        "social"   "ga:visitors"       "INTEGER"
+
+[[2]][[9]]
+ dimensionNames dimensionValues     metric.name     metric.type
+    "ga:medium"        "Social"   "ga:sessions"       "INTEGER"
+
+[[2]][[10]]
+ dimensionNames dimensionValues     metric.name     metric.type
+    "ga:medium"        "Social"   "ga:visitors"       "INTEGER"
+
+
+test1 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'), met_filters = fc, dim_filters = fc2, filtersExpression = "ga:source!=(direct)")
+
+order_fetch <- fetch_google_analytics_4(list(test1))
+
