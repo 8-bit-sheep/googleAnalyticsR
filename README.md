@@ -3,9 +3,13 @@
 
 A new Google Analytics R library using the new v4 of the Google Analytics Reporting API.  Built using [`googleAuthR`](https://github.com/MarkEdmondson1234/googleAuthR). The successor to [`shinyga`](https://github.com/MarkEdmondson1234/shinyga) it allows online OAuth2 authentication within Shiny apps, along with new features such as batching and compatibility with other Google APIs.
 
-Work is currently focused on getting feature parity with `shinyga` such as the GA Management API features. 
+## Wasson?
 
-Please log any problems here in the issues tracker.
+Work is currently focused on implementing all the v4 API features.  Segments still not supported. 
+
+Its still experimental so use at your own risk, but if you do please log any problems here in the issues tracker.
+
+The v3 API calls are all pretty robust now, so when the v4 is finished I will submit to CRAN. 
 
 ## Other GA R libraries
 
@@ -118,8 +122,8 @@ ga_data1 <- google_analytics_4(ga_id,
 multidate_test <- make_ga_4_req(ga_id, 
                                 date_range = c("2015-07-30",
                                                "2015-10-01",
-                                                "2014-07-30",
-                                                "2014-10-01"),
+                                               "2014-07-30",
+                                               "2014-10-01"),
                                 dimensions = c('source','medium'), 
                                 metrics = c('sessions','bounces'), 
                                 met_filters = fc, 
@@ -130,7 +134,7 @@ ga_data2 <- fetch_google_analytics_4(list(multidate_test))
 
 ## Demo querying two reports at the same time
 ## Use make_ga_4_req() to make multiple requests and then send 
-##   them as a list to fetch_google_analytics_r()
+##   them as a list to fetch_google_analytics_4()
 multidate_test2 <- make_ga_4_req(ga_id,
                                  date_range = c("2015-07-30",
                                                 "2015-10-01",
