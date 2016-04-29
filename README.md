@@ -125,7 +125,7 @@ ga_data4 <- google_analytics_4(ga_id,
 
 For syntax of filters and dimensions, this library parses in exactly as specified in the [Google Analytics v3 API docs](https://developers.google.com/analytics/devguides/reporting/core/v3/reference?hl=en#filters), so check those out.  Note you do not need to encode symbols, but may have to encode URLs if you are filtering for those in say ga:pagePath
 
-```
+```r
 library(googleAuthR)
 library(googleAnalyticsR)
 
@@ -223,7 +223,7 @@ own credentials.
 In this example, the scopes are also set so a user can authenticate with searchConsoleR at the same time, which 
 is possible as they both use googleAuthR as a backend.
 
-```
+```r
 options("googleAuthR.client_id" = "994xxx55706-afliqtuxxxxxxx2fd4kesu6.apps.googleusercontent.com")
 options("googleAuthR.client_secret" = "3JhLa_GxxxxxCQYLe31c64")
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/analytics", 
@@ -238,7 +238,7 @@ options("googleAnalyticsR.webapp.client_secret" = "zcofxxxxxxElemXN5sf")
 
 To use in Shiny, use the googleAuth `with_shiny`
 
-```
+```r
 
 ## in server.R
 library(googleAuthR)
