@@ -112,10 +112,10 @@ google_analytics <- function(id,
 #' Get current dimensions and metrics available in GA API.
 #'
 #' @return dataframe of dimensions and metrics available to use
+#'
+#' @seealso \link{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}
+#' 
 #' @export
-#'
-#'  @seealso \link{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}
-#'
 google_analytics_meta <- function(){
   
   # options("googleAuthR.jsonlite.simplifyVector" = TRUE)
