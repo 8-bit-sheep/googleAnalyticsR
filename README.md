@@ -1,4 +1,6 @@
 # googleAnalyticsR
+[![Travis-CI Build Status](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master)](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR)
+
 A new Google Analytics R library.  Built using [`googleAuthR`](https://github.com/MarkEdmondson1234/googleAuthR). The successor to [`shinyga`](https://github.com/MarkEdmondson1234/shinyga) it allows online OAuth2 authentication within Shiny apps, along with new features such as batching and compatibility with other Google APIs.
 
 Work is currently focused on getting feature parity with `shinyga` such as the GA Management API features. 
