@@ -1,11 +1,4 @@
-options("googleAuthR.scopes.selected" = getOption("googleAnalyticsR.scope") )
-options("googleAuthR.client_id" = getOption("googleAnalyticsR.client_id"))
-options("googleAuthR.client_secret" = getOption("googleAnalyticsR.client_secret"))
-options("googleAuthR.webapp.client_id" = getOption("googleAnalyticsR.webapp.client_id"))
-options("googleAuthR.webapp.client_secret" = getOption("googleAnalyticsR.webapp.client_secret"))
-
-
-#' Get Google Analytics data
+#' Get Google Analytics v3 data
 #'
 #' @param id A character vector of View Ids to fetch from.
 #' @param start Start date in YYY-MM-DD format.
@@ -20,9 +13,12 @@ options("googleAuthR.webapp.client_secret" = getOption("googleAnalyticsR.webapp.
 #' @param type ga = google Analytics; mcf = Multi-Channel Funels.
 #'
 #' @return For one id a data.frame of data, with meta-data in attributes.  For multiple id, a list of dataframes.
-#' @export
-#'
+#' 
 #' @seealso https://developers.google.com/analytics/devguides/reporting/core/v3/
+#' 
+#' @importFrom googleAuthR gar_api_generator
+#' 
+#' @export
 google_analytics <- function(id,
                              start,
                              end,
@@ -67,11 +63,11 @@ google_analytics <- function(id,
   for(i in id){
     ga_pars$ids <- i
     
-    ga <-
-      googleAuthR::gar_api_generator(paste0("https://www.googleapis.com/analytics/v3/data/",type),
-                                     "GET",
-                                     pars_args = ga_pars,
-                                     data_parse_function = parse_google_analytics)
+    ga <- gar_api_generator(paste0("https://www.googleapis.com/analytics/v3/data/",
+                                   type),
+                            "GET",
+                            pars_args = ga_pars,
+                            data_parse_function = parse_google_analytics)
     
     ## if walk through results then split up dates and walk through date ranges
     if(samplingLevel %in% "WALK"){
@@ -115,21 +111,18 @@ google_analytics <- function(id,
 #'
 #' @seealso \link{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}
 #' 
+#' @importFrom googleAuthR gar_api_generator
+#' 
 #' @export
 google_analytics_meta <- function(){
   
-  # options("googleAuthR.jsonlite.simplifyVector" = TRUE)
-  meta <-
-    googleAuthR::gar_api_generator("https://www.googleapis.com/analytics/v3",
-                                   "GET",
-                                   path_args = list(metadata = "ga",
-                                                    columns = ""),
-                                   data_parse_function = parse_google_analytics_meta )
+  meta <- gar_api_generator("https://www.googleapis.com/analytics/v3",
+                            "GET",
+                            path_args = list(metadata = "ga",
+                                             columns = ""),
+                            data_parse_function = parse_google_analytics_meta )
   
-  mmm <- meta()
-  # options("googleAuthR.jsonlite.simplifyVector" = FALSE)
-  
-  mmm
+  meta()
   
 }
 
@@ -138,17 +131,14 @@ google_analytics_meta <- function(){
 #' @seealso https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountSummaries/list
 #'
 #' @return a dataframe of all account, webproperty and view data
-#'
+#' @importFrom googleAuthR gar_api_generator
 #' @export
 google_analytics_account_list <- function(){
   
-  # options("googleAuthR.jsonlite.simplifyVector" = TRUE)
-  acc_sum <- googleAuthR::gar_api_generator("https://www.googleapis.com/analytics/v3/management/accountSummaries",
-                                            "GET",
-                                            data_parse_function = parse_ga_account_summary)
+  url <- "https://www.googleapis.com/analytics/v3/management/accountSummaries"
+  acc_sum <- gar_api_generator(url,
+                               "GET",
+                               data_parse_function = parse_ga_account_summary)
   
-  aa <- acc_sum()
-  # options("googleAuthR.jsonlite.simplifyVector" = FALSE)
-  
-  aa
+  acc_sum()
 }

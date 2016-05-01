@@ -78,3 +78,45 @@ makePivotNames <- function(pivotHeaders){
   
   unlist(pivNames)
 }
+
+#' Make a pivot object
+#'
+#' @param pivot_dim A character vector of dimensions
+#' @param metrics Metrics to aggregate and return.
+#' @param dim_filter_clause Only data included in filter included.
+#' @param startGroup which groups of k columns are included in response.
+#' @param maxGroupCount Maximum number of groups to return.
+#'
+#' @details If maxGroupCount is set to -1 returns all groups.
+#'
+#' @return pivot object of class \code{pivot_ga4} for use in \code{\link{filter_clause_ga4}}
+#'
+#' @export
+pivot_ga4 <- function(pivot_dim, metrics, dim_filter_clause=NULL,
+                      startGroup = 1, maxGroupCount = 5){
+  
+  stopifnot(inherits(pivot_dim, "character"),
+            inherits(metrics, "character"),
+            any(is.null(dim_filter_clause), inherits(dim_filter_clause, "list")))
+  
+  dim_list <- dimension_ga4(pivot_dim)
+  met_list <- metric_ga4(metrics)
+  
+  if(!is.null(dim_filter_clause)) stopifnot(inherits(dim_filter_clause, "dim_fil_ga4"))
+  
+  structure(
+    list(
+      dimensions = dim_list,
+      dimensionFilterClauses = dim_filter_clause,
+      metrics = met_list,
+      startGroup = startGroup,
+      maxGroupCount = maxGroupCount
+    ),
+    class = "pivot_ga4"
+    
+  )
+  
+  
+}
+
+

@@ -1,9 +1,3 @@
-##docs: https://developers.google.com/analytics/trusted-testing/reporting/
-## https://developers.google.com/analytics/trusted-testing/reporting/rest/v4/reports/batchGet#Dimension
-
-## TODO:
-##       segments
-
 #' Google Analytics v4 API fetch
 #'
 #' @param viewId viewId of data to get.

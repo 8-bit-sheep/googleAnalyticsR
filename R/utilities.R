@@ -1,3 +1,42 @@
+#' Test S3 class in a list
+#' 
+#' @param listthing A list of things
+#' @param types A vector of types we want
+#' @param null_ok Is it ok to have a NULL listhing?
+#' 
+expect_list_of_this <- function(listthing, types, null_ok=FALSE){
+  
+  if(null_ok){
+    expect_null_or_type(listthing, "list")
+    return()
+  } else {
+    testthat::expect_type(listthing, "list")
+  }
+
+  res <- mapply(function(thing, type) {
+    class(thing)==type
+    }, listthing, types)
+  
+  if(!any(res)){
+    str(res)
+    str(listthing)
+    str(types)
+    stop(paste(types, collapse = " "), " is not found in list")
+  }
+  
+}
+
+
+#' Expect NULL or type
+#' 
+#' wraps testthat::expect_type() to run if not NULL
+expect_null_or_type <- function(thing, type){
+  if(!is.null(thing)){
+    testthat::expect_type(thing, type)
+  }
+}
+
+
 #' @importFrom magrittr %>%
 #' @export
 magrittr::`%>%`

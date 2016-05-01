@@ -11,6 +11,69 @@ google_analytics_4_parse_batch <- function(response_list){
   
 }
 
+#' seeing if this is better
+google_analytics_4_parse_tidyjson <- function(x){
+  
+  json_raw <- jsonlite::toJSON(x, auto_unbox = TRUE)
+  reference <- json_raw %>% jsonlite::prettify()
+  class(json_raw) <- c(class(json_raw), "character")
+  tidy_json <- json_raw %>% as.tbl_json()
+  
+  headers_json <- tidy_json %>% enter_object("columnHeader")
+  
+  headers_metrics <- headers_json %>%
+    enter_object("metricHeader") %>%
+    enter_object("metricHeaderEntries") %>%
+    gather_array() %>%
+    spread_values(metrics = jstring("name"),
+                  type = jstring("type"))
+  headers_metrics <- headers_metrics[,setdiff(names(headers_metrics), 
+                                              c("document.id","array.index")), drop=FALSE]
+  
+  headers_dims <- headers_json %>%
+    enter_object("dimensions") %>%
+    gather_array() %>%
+    append_values_string("dimensions")
+  
+  headers_dims <- headers_dims[,setdiff(names(headers_dims), 
+                                        c("document.id","array.index")), drop = FALSE]
+  
+  
+  data_json <- tidy_json %>% enter_object("data")
+  
+  data_meta <- data_json %>% 
+    spread_values(isDataGolden = jlogical("isDataGolden"),
+                  rows = jnumber("rowCount"))
+  
+  data_totals <- data_json %>% 
+    enter_object("totals") %>% 
+    gather_array() %>% 
+    enter_object("values") %>% 
+    gather_array() %>% 
+    append_values_number("totals")
+  
+  data_min <- data_json %>% 
+    enter_object("minimums") %>% 
+    gather_array() %>% 
+    enter_object("values") %>% 
+    gather_array() %>% 
+    append_values_number("minimums")
+  
+  data_max <- data_json %>% 
+    enter_object("maximums") %>% 
+    gather_array() %>% 
+    enter_object("values") %>% 
+    gather_array() %>% 
+    append_values_number("maximums")
+  
+  data_json %>% enter_object("rows") %>% 
+    gather_array() %>% 
+    enter_object("dimensions") %>% 
+    gather_array() %>% 
+    append_values_string()
+
+}
+
 #' ga v4 data parsing
 #'
 #' x is response_list$reports[[1]] from google_analytics_4_parse_batch
@@ -18,6 +81,7 @@ google_analytics_4_parse_batch <- function(response_list){
 google_analytics_4_parse <- function(x){
   
   message("Parsing GA API v4")
+ 
   
   columnHeader <- x$columnHeader
   data <- x$data$rows
@@ -83,6 +147,15 @@ google_analytics_4_parse <- function(x){
   attr(out, "maximums") <- x$data$maximums
   attr(out, "isDataGolden") <- x$data$isDataGolden
   attr(out, "rowCount") <- x$data$rowCount
+  attr(out, "samplesReadCounts") <- x$data$samplesReadCounts
+  attr(out, "samplingSpaceSizes") <- x$data$samplingSpaceSizes
+  attr(out, "nextPageToken") <- x$nextPageToken
+  
+  # samplePercent <-  100
+  # if(!is.null(x$data$samplesReadCounts)){
+  #     samplePercent <- round(100 * (as.numeric(x$data$samplesReadCounts) / as.numeric(x$data$samplingSpaceSizes)), 2)
+  #     message("Data is sampled, based on ", samplePercent, "% of visits. Use samplingLevel='WALK' to mitigate it." )
+  # }
   
   out
   

@@ -4,19 +4,17 @@
 \alias{segment_ga4}
 \title{Make a segment object for use}
 \usage{
-segment_ga4(name, segment_filters, exclude = FALSE, type = c("simple",
-  "sequence"), firstStepMatch = FALSE)
+segment_ga4(name, segment_id = NULL, user_segment = NULL,
+  session_segment = NULL)
 }
 \arguments{
 \item{name}{The name of the segment for the reports.}
 
-\item{segment_filters}{A vector of \code{segment_filter}.}
+\item{segment_id}{The segment ID of a built in or custom segment e.g. gaid::-3}
 
-\item{exclude}{Should this match or exclude the segment defined.}
+\item{user_segment}{A list of \code{segment_define}'s that apply to users}
 
-\item{type}{Simple or Sequence segment.}
-
-\item{firstStepMatch}{If a sequence segment, should first step match first hit.}
+\item{session_segment}{A list of \code{segment_define}'s that apply to sessions}
 }
 \value{
 a segmentFilter object. You can pass a list of these to the request.
@@ -34,7 +32,9 @@ Other v4 segment functions: \code{\link{dynamicSegment}},
   \code{\link{segmentMetricFilter}},
   \code{\link{segmentObj_ga4}},
   \code{\link{segmentSequenceStep}},
-  \code{\link{segment_filter}},
+  \code{\link{segment_define}},
+  \code{\link{segment_element}},
+  \code{\link{segment_vector_simple}},
   \code{\link{sequenceSegment}},
   \code{\link{simpleSegment}}
 }

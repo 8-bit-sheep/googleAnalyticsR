@@ -36,113 +36,24 @@ two_fetch <- fetch_google_analytics_4(list(test1, test2))
 order_1 <- order_type("sessions", descending = TRUE)
 order_2 <- order_type("bounces", descending = TRUE)
 
-
-> lapply(pivotHeaders, function(pivots) lapply(pivots$pivotHeaderEntries, function(pivotNames) unlist(pivotNames)))
-[[1]]
-[[1]][[1]]
- dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
-       "ga:hour"      "ga:minute"             "15"             "13"    "ga:sessions"
-     metric.type
-       "INTEGER"
-
-[[1]][[2]]
- dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
-       "ga:hour"      "ga:minute"             "15"             "13"    "ga:visitors"
-     metric.type
-       "INTEGER"
-
-[[1]][[3]]
- dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
-       "ga:hour"      "ga:minute"             "15"             "24"    "ga:sessions"
-     metric.type
-       "INTEGER"
-
-[[1]][[4]]
- dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
-       "ga:hour"      "ga:minute"             "15"             "24"    "ga:visitors"
-     metric.type
-       "INTEGER"
-
-[[1]][[5]]
- dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
-       "ga:hour"      "ga:minute"             "15"             "08"    "ga:sessions"
-     metric.type
-       "INTEGER"
-
-[[1]][[6]]
- dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
-       "ga:hour"      "ga:minute"             "15"             "08"    "ga:visitors"
-     metric.type
-       "INTEGER"
-
-[[1]][[7]]
- dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
-       "ga:hour"      "ga:minute"             "15"             "44"    "ga:sessions"
-     metric.type
-       "INTEGER"
-
-[[1]][[8]]
- dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
-       "ga:hour"      "ga:minute"             "15"             "44"    "ga:visitors"
-     metric.type
-       "INTEGER"
-
-[[1]][[9]]
- dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
-       "ga:hour"      "ga:minute"             "15"             "45"    "ga:sessions"
-     metric.type
-       "INTEGER"
-
-[[1]][[10]]
- dimensionNames1  dimensionNames2 dimensionValues1 dimensionValues2      metric.name
-       "ga:hour"      "ga:minute"             "15"             "45"    "ga:visitors"
-     metric.type
-       "INTEGER"
-
-
-[[2]]
-[[2]][[1]]
- dimensionNames dimensionValues     metric.name     metric.type
-    "ga:medium"      "referral"   "ga:sessions"       "INTEGER"
-
-[[2]][[2]]
- dimensionNames dimensionValues     metric.name     metric.type
-    "ga:medium"      "referral"   "ga:visitors"       "INTEGER"
-
-[[2]][[3]]
- dimensionNames dimensionValues     metric.name     metric.type
-    "ga:medium"           "cpc"   "ga:sessions"       "INTEGER"
-
-[[2]][[4]]
- dimensionNames dimensionValues     metric.name     metric.type
-    "ga:medium"           "cpc"   "ga:visitors"       "INTEGER"
-
-[[2]][[5]]
- dimensionNames dimensionValues     metric.name     metric.type
-    "ga:medium"         "email"   "ga:sessions"       "INTEGER"
-
-[[2]][[6]]
- dimensionNames dimensionValues     metric.name     metric.type
-    "ga:medium"         "email"   "ga:visitors"       "INTEGER"
-
-[[2]][[7]]
- dimensionNames dimensionValues     metric.name     metric.type
-    "ga:medium"        "social"   "ga:sessions"       "INTEGER"
-
-[[2]][[8]]
- dimensionNames dimensionValues     metric.name     metric.type
-    "ga:medium"        "social"   "ga:visitors"       "INTEGER"
-
-[[2]][[9]]
- dimensionNames dimensionValues     metric.name     metric.type
-    "ga:medium"        "Social"   "ga:sessions"       "INTEGER"
-
-[[2]][[10]]
- dimensionNames dimensionValues     metric.name     metric.type
-    "ga:medium"        "Social"   "ga:visitors"       "INTEGER"
-
-
 test1 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'), met_filters = fc, dim_filters = fc2, filtersExpression = "ga:source!=(direct)")
 
 order_fetch <- fetch_google_analytics_4(list(test1))
 
+
+## segments....
+
+googleAnalyticsR::google_analytics_4(account_list[31,'viewId'], c("2015-07-30","2015-10-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'), met_filters = fc, dim_filters = fc2, filtersExpression = "ga:source!=(direct)") -> gg
+
+se1 <- googleAnalyticsR::segment_element("source", operator = "ENDS_WITH", type = "dimension", expressions = ".com")
+se2 <- googleAnalyticsR::segment_element("sessions", operator = "GREATER_THAN", type = "metric", comparisonValue = 1)
+
+sv_simple <- googleAnalyticsR::segment_vector_simple(list(list(se1, se2)))
+sv_seq <- googleAnalyticsR::segment_vector_sequence(list(list(list(se1, se2))))
+
+seg_define <- googleAnalyticsR::segment_define(list(sv_simple))
+
+segment4 <- googleAnalyticsR::segment_ga4("test", session_segment = seg_define)
+
+## bugs out
+googleAnalyticsR::google_analytics_4(account_list[31,'viewId'], c("2015-07-30","2015-10-01"), dimensions=c('source','medium','segment'), segments = segment4, metrics = c('sessions','bounces')) -> sss

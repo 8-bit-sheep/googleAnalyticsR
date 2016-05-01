@@ -2,7 +2,7 @@
 % Please edit documentation in R/getData.R
 \name{google_analytics}
 \alias{google_analytics}
-\title{Get Google Analytics data}
+\title{Get Google Analytics v3 data}
 \usage{
 google_analytics(id, start, end, metrics = c("sessions", "bounceRate"),
   dimensions = NULL, sort = NULL, filters = NULL, segment = NULL,
@@ -36,7 +36,7 @@ google_analytics(id, start, end, metrics = c("sessions", "bounceRate"),
 For one id a data.frame of data, with meta-data in attributes.  For multiple id, a list of dataframes.
 }
 \description{
-Get Google Analytics data
+Get Google Analytics v3 data
 }
 \seealso{
 https://developers.google.com/analytics/devguides/reporting/core/v3/
