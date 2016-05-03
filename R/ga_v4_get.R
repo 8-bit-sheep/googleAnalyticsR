@@ -1,4 +1,4 @@
-#' Google Analytics v4 API fetch
+  #' Google Analytics v4 API fetch
 #'
 #' @param viewId viewId of data to get.
 #' @param date_range character or date vector of format c(start, end). Optional c(s1,e1,s2,e2)

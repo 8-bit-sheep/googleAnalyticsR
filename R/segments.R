@@ -271,8 +271,11 @@ segmentObj_ga4 <- function(dynamicSegment=NULL, segmentId=NULL){
   
   structure(
       list(
-        dynamicSegment = dynamicSegment,
-        segmentId = segmentId
+        list(
+          dynamicSegment = dynamicSegment,
+          segmentId = segmentId
+        )
+
     ),
     class = "segment_ga4")
   

@@ -45,11 +45,11 @@ order_fetch <- fetch_google_analytics_4(list(test1))
 
 googleAnalyticsR::google_analytics_4(account_list[31,'viewId'], c("2015-07-30","2015-10-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'), met_filters = fc, dim_filters = fc2, filtersExpression = "ga:source!=(direct)") -> gg
 
-se1 <- googleAnalyticsR::segment_element("source", operator = "ENDS_WITH", type = "dimension", expressions = ".com")
-se2 <- googleAnalyticsR::segment_element("sessions", operator = "GREATER_THAN", type = "metric", comparisonValue = 1)
+se1 <- googleAnalyticsR::segment_element("source", operator = "BEGINS_WITH", type = "dimension", expressions = ".com")
+se2 <- googleAnalyticsR::segment_element("sessions", operator = "GREATER_THAN", type = "metric", comparisonValue = 1, scope = "USER")
 
-sv_simple <- googleAnalyticsR::segment_vector_simple(list(list(se1, se2)))
-sv_seq <- googleAnalyticsR::segment_vector_sequence(list(list(list(se1, se2))))
+sv_simple <- googleAnalyticsR::segment_vector_simple(list(list(se2)))
+sv_seq <- googleAnalyticsR::segment_vector_sequence(list(list(list(se2))))
 
 seg_define <- googleAnalyticsR::segment_define(list(sv_simple))
 

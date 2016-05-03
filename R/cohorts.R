@@ -7,8 +7,9 @@
 cohortGroup <- function(cohorts,
                         lifetimeValue=FALSE){
   
-  testthat::expect_type(cohorts, "list")
-  
+
+  expect_list_of_this(cohorts, "cohort_ga4")
+
   structure(
     list(
       cohorts = cohorts,
