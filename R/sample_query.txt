@@ -53,7 +53,7 @@ sv_seq <- googleAnalyticsR::segment_vector_sequence(list(list(list(se2))))
 
 seg_define <- googleAnalyticsR::segment_define(list(sv_simple))
 
-segment4 <- googleAnalyticsR::segment_ga4("test", session_segment = seg_define)
+segment4 <- googleAnalyticsR::segment_ga4("test", user_segment = seg_define)
 
-## bugs out
+## works
 googleAnalyticsR::google_analytics_4(account_list[31,'viewId'], c("2015-07-30","2015-10-01"), dimensions=c('source','medium','segment'), segments = segment4, metrics = c('sessions','bounces')) -> sss

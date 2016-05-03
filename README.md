@@ -260,6 +260,44 @@ ga_data4 <- google_analytics_4(ga_id,
   ..$ :List of 2
   .. ..$ startDate: chr "2015-07-30"
   .. ..$ endDate  : chr "2015-10-01"
+  
+  
+## segments are a lot more complex to configure, but more powerful
+## more in line to how you configure them in the UI
+
+## make a segment element
+se <- segment_element("sessions", 
+                      operator = "GREATER_THAN", 
+                      type = "metric", 
+                      comparisonValue = 1, 
+                      scope = "USER")
+
+## choose between segment_vector_simple or segment_vector_sequence
+## Elements can be combined into clauses, which can then be combined into OR filter clauses
+sv_simple <- segment_vector_simple(list(list(se)))
+
+## Each segment vector can then be combined into a logical AND
+seg_defined <- segment_define(list(sv_simple))
+
+## Each segement defintion can apply to users, sessions or both.
+## You can pass a list of several segments
+segment4 <- segment_ga4("test", user_segment = seg_defined)
+
+## Add the segments to the segments param
+segment_example <- google_analytics_4(ga_id, 
+                                      c("2015-07-30","2015-10-01"), 
+                                      dimensions=c('source','medium','segment'), 
+                                      segments = segment4, 
+                                      metrics = c('sessions','bounces')
+                                      )
+
+> segment_example
+      source   medium segment sessions bounces
+1       bing  organic    test        6       3
+2     google  organic    test       77      69
+3      yahoo  organic    test        9       6
+4 zapmeta.se referral    test        2       1
+
 ```
 
 
