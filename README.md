@@ -45,6 +45,7 @@ devtools::install_github("MarkEdmondson1234/googleAnalyticsR")
 Todo.  But check out `?google_analytics_4` and these example queries:
 
 ```r
+## setup
 library(googleAuthR)
 library(googleAnalyticsR)
 
@@ -57,6 +58,11 @@ account_list <- google_analytics_account_list()
 ## pick a profile with data to query
 ga_id <- account_list[31,'viewId']
 
+```
+
+### New Filter Syntax
+
+```r
 ## create filters on metrics
 mf <- met_filter("bounces", "GREATER_THAN", 0)
 mf2 <- met_filter("sessions", "GREATER", 2)
@@ -79,44 +85,28 @@ ga_data1 <- google_analytics_4(ga_id,
                               dim_filters = fc2, 
                               filtersExpression = "ga:source!=(direct)")
 
-> str(ga_data1)
-'data.frame':	11 obs. of  6 variables:
- $ source     : chr  "baby.dk" "bing" "buttons-for-website.com" "duckduckgo.com" ...
- $ medium     : chr  "referral" "organic" "referral" "referral" ...
- $ sessions.d1: num  3 71 7 5 642 3 3 35 11 66 ...
- $ bounces.d1 : num  2 42 7 3 520 2 1 35 11 43 ...
- $ sessions.d2: num  6 217 0 0 1286 ...
- $ bounces.d2 : num  3 126 0 0 920 9 0 0 0 178 ...
- - attr(*, "totals")=List of 2
-  ..$ :List of 1
-  .. ..$ values:List of 2
-  .. .. ..$ : chr "852"
-  .. .. ..$ : chr "670"
-  ..$ :List of 1
-  .. ..$ values:List of 2
-  .. .. ..$ : chr "1766"
-  .. .. ..$ : chr "1240"
- - attr(*, "minimums")=List of 2
-  ..$ :List of 1
-  .. ..$ values:List of 2
-  .. .. ..$ : chr "3"
-  .. .. ..$ : chr "1"
-  ..$ :List of 1
-  .. ..$ values:List of 2
-  .. .. ..$ : chr "0"
-  .. .. ..$ : chr "0"
- - attr(*, "maximums")=List of 2
-  ..$ :List of 1
-  .. ..$ values:List of 2
-  .. .. ..$ : chr "642"
-  .. .. ..$ : chr "520"
-  ..$ :List of 1
-  .. ..$ values:List of 2
-  .. .. ..$ : chr "1286"
-  .. .. ..$ : chr "920"
- - attr(*, "isDataGolden")= logi TRUE
- - attr(*, "rowCount")= int 11
-              
+> ga_data1
+                    source   medium sessions bounces
+1                  baby.dk referral        3       2
+2                     bing  organic       71      42
+3  buttons-for-website.com referral        7       7
+4           duckduckgo.com referral        5       3
+5                   google  organic      642     520
+6                google.se referral        3       2
+7                 izito.se referral        3       1
+8          success-seo.com referral       35      35
+9    video--production.com referral       11      11
+10                   yahoo  organic       66      43
+11              zapmeta.se referral        6       4
+``` 
+
+
+### Querying multiple report types at a time
+
+Example with two date ranges and two reports.
+
+
+```r
 ## demo of querying two date ranges at a time   
 ## we make the request via make_ga_4_req to use in next demo
 multidate_test <- make_ga_4_req(ga_id, 
@@ -125,146 +115,84 @@ multidate_test <- make_ga_4_req(ga_id,
                                                "2014-07-30",
                                                "2014-10-01"),
                                 dimensions = c('source','medium'), 
-                                metrics = c('sessions','bounces'), 
-                                met_filters = fc, 
-                                dim_filters = fc2, 
-                                filtersExpression = "ga:source!=(direct)")
+                                metrics = c('sessions','bounces'))
                                 
 ga_data2 <- fetch_google_analytics_4(list(multidate_test))
+> ga_data2
+                    source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
+1                  baby.dk referral           3          2           6          3
+2                     bing  organic          71         42         217        126
+3  buttons-for-website.com referral           7          7           0          0
+4           duckduckgo.com referral           5          3           0          0
+5                   google  organic         642        520        1286        920
+6                google.se referral           3          2          12          9
+7                 izito.se referral           3          1           0          0
+8          success-seo.com referral          35         35           0          0
+9    video--production.com referral          11         11           0          0
+10                   yahoo  organic          66         43         236        178
+11              zapmeta.se referral           6          4           9          4
+
 
 ## Demo querying two reports at the same time
 ## Use make_ga_4_req() to make multiple requests and then send 
 ##   them as a list to fetch_google_analytics_4()
-multidate_test2 <- make_ga_4_req(ga_id,
-                                 date_range = c("2015-07-30",
-                                                "2015-10-01",
-                                                "2014-07-30",
-                                                "2014-10-01"),
-                                 dimensions=c('hour','medium'), 
-                                 metrics = c('visitors','bounces'), 
-                                 met_filters = fc, 
-                                 dim_filters = fc2, 
-                                 filtersExpression = "ga:source!=(direct)")
+multi_test2 <- make_ga_4_req(ga_id,
+                                date_range = c("2015-07-30",
+                                               "2015-10-01",
+                                               "2014-07-30",
+                                               "2014-10-01"),
+                             dimensions=c('hour','medium'), 
+                             metrics = c('visitors','bounces'))
 
-ga_data3 <- fetch_google_analytics_4(list(multidate_test, multidate_test2)) 
+## all requests must have same viewID and dateRange
+ga_data3 <- fetch_google_analytics_4(list(multidate_test, multi_test2)) 
+> ga_data3
+[[1]]
+                    source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
+1                  baby.dk referral           3          2           6          3
+2                     bing  organic          71         42         217        126
+3  buttons-for-website.com referral           7          7           0          0
+4           duckduckgo.com referral           5          3           0          0
+5                   google  organic         642        520        1286        920
+6                google.se referral           3          2          12          9
+7                 izito.se referral           3          1           0          0
+8          success-seo.com referral          35         35           0          0
+9    video--production.com referral          11         11           0          0
+10                   yahoo  organic          66         43         236        178
+11              zapmeta.se referral           6          4           9          4
 
-> str(ga_data3)
-List of 2
- $ :'data.frame':	11 obs. of  6 variables:
-  ..$ source     : chr [1:11] "baby.dk" "bing" "buttons-for-website.com" "duckduckgo.com" ...
-  ..$ medium     : chr [1:11] "referral" "organic" "referral" "referral" ...
-  ..$ sessions.d1: num [1:11] 3 71 7 5 642 3 3 35 11 66 ...
-  ..$ bounces.d1 : num [1:11] 2 42 7 3 520 2 1 35 11 43 ...
-  ..$ sessions.d2: num [1:11] 6 217 0 0 1286 ...
-  ..$ bounces.d2 : num [1:11] 3 126 0 0 920 9 0 0 0 178 ...
-  ..- attr(*, "totals")=List of 2
-  .. ..$ :List of 1
-  .. .. ..$ values:List of 2
-  .. .. .. ..$ : chr "852"
-  .. .. .. ..$ : chr "670"
-  .. ..$ :List of 1
-  .. .. ..$ values:List of 2
-  .. .. .. ..$ : chr "1766"
-  .. .. .. ..$ : chr "1240"
-  ..- attr(*, "minimums")=List of 2
-  .. ..$ :List of 1
-  .. .. ..$ values:List of 2
-  .. .. .. ..$ : chr "3"
-  .. .. .. ..$ : chr "1"
-  .. ..$ :List of 1
-  .. .. ..$ values:List of 2
-  .. .. .. ..$ : chr "0"
-  .. .. .. ..$ : chr "0"
-  ..- attr(*, "maximums")=List of 2
-  .. ..$ :List of 1
-  .. .. ..$ values:List of 2
-  .. .. .. ..$ : chr "642"
-  .. .. .. ..$ : chr "520"
-  .. ..$ :List of 1
-  .. .. ..$ values:List of 2
-  .. .. .. ..$ : chr "1286"
-  .. .. .. ..$ : chr "920"
-  ..- attr(*, "isDataGolden")= logi TRUE
-  ..- attr(*, "rowCount")= int 11
- $ :'data.frame':	36 obs. of  6 variables:
-  ..$ hour       : chr [1:36] "00" "00" "01" "02" ...
-  ..$ medium     : chr [1:36] "organic" "referral" "organic" "organic" ...
-  ..$ visitors.d1: num [1:36] 28 3 43 53 3 39 5 43 42 45 ...
-  ..$ bounces.d1 : num [1:36] 16 2 28 41 3 27 5 34 30 34 ...
-  ..$ visitors.d2: num [1:36] 85 1 93 94 5 87 6 103 83 81 ...
-  ..$ bounces.d2 : num [1:36] 59 1 66 67 4 61 5 73 60 50 ...
-  ..- attr(*, "totals")=List of 2
-  .. ..$ :List of 1
-  .. .. ..$ values:List of 2
-  .. .. .. ..$ : chr "838"
-  .. .. .. ..$ : chr "661"
-  .. ..$ :List of 1
-  .. .. ..$ values:List of 2
-  .. .. .. ..$ : chr "1844"
-  .. .. .. ..$ : chr "1303"
-  ..- attr(*, "minimums")=List of 2
-  .. ..$ :List of 1
-  .. .. ..$ values:List of 2
-  .. .. .. ..$ : chr "3"
-  .. .. .. ..$ : chr "2"
-  .. ..$ :List of 1
-  .. .. ..$ values:List of 2
-  .. .. .. ..$ : chr "1"
-  .. .. .. ..$ : chr "1"
-  ..- attr(*, "maximums")=List of 2
-  .. ..$ :List of 1
-  .. .. ..$ values:List of 2
-  .. .. .. ..$ : chr "65"
-  .. .. .. ..$ : chr "56"
-  .. ..$ :List of 1
-  .. .. ..$ values:List of 2
-  .. .. .. ..$ : chr "142"
-  .. .. .. ..$ : chr "101"
-  ..- attr(*, "isDataGolden")= logi TRUE
-  ..- attr(*, "rowCount")= int 36
-  
-## demo showing on-the-fly calculated metrics
+[[2]]
+   hour   medium visitors.d1 bounces.d1 visitors.d2 bounces.d2
+1    00  organic          28         16          85         59
+2    00 referral           3          2           1          1
+3    01  organic          43         28          93         66
+
+
+```
+
+### On-the-fly calculated metrics
+
+
+```r
 ga_data4 <- google_analytics_4(ga_id,
                                date_range = c("2015-07-30",
                                               "2015-10-01"),
                               dimensions=c('medium'), 
                               metrics = c(visitsPerVisitor = "ga:visits/ga:visitors",
                                           'bounces'), 
-                              metricFormat = c("FLOAT","INTEGER"),
-                              met_filters = fc, 
-                              dim_filters = fc2, 
-                              filtersExpression = "ga:source!=(direct)")
-> str(ga_data4)
-'data.frame':	2 obs. of  3 variables:
- $ medium          : chr  "organic" "referral"
- $ visitsPerVisitor: num  1.08 1.01
- $ bounces         : num  605 71
- - attr(*, "totals")=List of 1
-  ..$ :List of 1
-  .. ..$ values:List of 2
-  .. .. ..$ : chr "1.0696517412935322"
-  .. .. ..$ : chr "676"
- - attr(*, "minimums")=List of 1
-  ..$ :List of 1
-  .. ..$ values:List of 2
-  .. .. ..$ : chr "1.0125"
-  .. .. ..$ : chr "71"
- - attr(*, "maximums")=List of 1
-  ..$ :List of 1
-  .. ..$ values:List of 2
-  .. .. ..$ : chr "1.0759668508287292"
-  .. .. ..$ : chr "605"
- - attr(*, "isDataGolden")= logi TRUE
- - attr(*, "rowCount")= int 2
- - attr(*, "dates")=List of 1
-  ..$ :List of 2
-  .. ..$ startDate: chr "2015-07-30"
-  .. ..$ endDate  : chr "2015-10-01"
-  
-  
-## segments are a lot more complex to configure, but more powerful
-## more in line to how you configure them in the UI
+                              metricFormat = c("FLOAT","INTEGER"))
+> ga_data4
+    medium visitsPerVisitor bounces
+1   (none)         1.000000     117
+2  organic         1.075137     612
+3 referral         1.012500      71
+```
 
+### Segments v4
+
+Segments are a lot more complex to configure, but more powerful and more in line to how you configure them in the UI
+
+```r
 ## make a segment element
 se <- segment_element("sessions", 
                       operator = "GREATER_THAN", 
@@ -300,8 +228,33 @@ segment_example <- google_analytics_4(ga_id,
 
 ```
 
+### Cohort reports
+
+Details on [cohort reports and LTV can be found here](https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohorts).
+
+```r
+## first make a cohort group
+cohort4 <- makeCohortGroup(list("cohort 1" = c("2015-08-01", "2015-08-01"), 
+                                "cohort 2" = c("2015-07-01","2015-07-01")))
+
+## then call cohort report.  No date_range and must include metrics and dimensions
+##   from the cohort list
+cohort_example <- google_analytics_4(ga_id, 
+                                     dimensions=c('cohort'), 
+                                     cohort = cohort4, 
+                                     metrics = c('cohortTotalUsers'))
+
+> cohort_example
+    cohort cohortTotalUsers
+1 cohort 1               14
+2 cohort 2               20
+
+```
+
 
 ## To use - v3 API calls
+
+v3 API calls are also tried and tested.
 
 For syntax of filters and dimensions, this library parses in exactly as specified in the [Google Analytics v3 API docs](https://developers.google.com/analytics/devguides/reporting/core/v3/reference?hl=en#filters), so check those out.  Note you do not need to encode symbols, but may have to encode URLs if you are filtering for those in say ga:pagePath
 

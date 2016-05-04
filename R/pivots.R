@@ -38,7 +38,7 @@ makePivotData <- function(pivotRows, pivotNames, index=1){
   
   if(index==2) pivotNames <- paste0(pivotNames, ".d2")
   
-  pivotData <- lapply(pivotRows, function(row) row$metrics[[index]]$pivotValues)
+  pivotData <- lapply(pivotRows, function(row) row$metrics[[index]]$values)
   pivotData <- lapply(lapply(pivotData, function(x) lapply(x, unlist)), unlist)
   
   pivotData <- Reduce(rbind, pivotData)

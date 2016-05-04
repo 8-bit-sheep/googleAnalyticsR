@@ -80,7 +80,6 @@ google_analytics <- function(id,
         the_data <- ga(pars_arguments = ga_pars)
       } else {
         ## batching data
-        message("Too many results for one API call.  Batching required.")
         the_data <- batchData(ga, ga_pars)
       }
       

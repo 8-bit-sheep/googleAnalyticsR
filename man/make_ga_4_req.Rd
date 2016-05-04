@@ -4,9 +4,10 @@
 \alias{make_ga_4_req}
 \title{Google Analytics v4 API fetch}
 \usage{
-make_ga_4_req(viewId, date_range, metrics, dimensions = NULL,
-  dim_filters = NULL, met_filters = NULL, filtersExpression = NULL,
-  orderBys = NULL, segments = NULL, pivots = NULL, max = 1000,
+make_ga_4_req(viewId, date_range = NULL, metrics = NULL,
+  dimensions = NULL, dim_filters = NULL, met_filters = NULL,
+  filtersExpression = NULL, orderBys = NULL, segments = NULL,
+  pivots = NULL, cohorts = NULL, max = 1000,
   samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
   histogramBuckets = NULL)
 }
@@ -22,6 +23,8 @@ make_ga_4_req(viewId, date_range, metrics, dimensions = NULL,
 \item{segments}{Segments of the data}
 
 \item{pivots}{Pivots of the data}
+
+\item{cohorts}{Cohorts created by \link{makeCohortGroup}}
 
 \item{samplingLevel}{Sample level}
 

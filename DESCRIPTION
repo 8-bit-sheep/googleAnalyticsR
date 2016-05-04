@@ -7,7 +7,7 @@ Authors@R: c(person("Mark", "Edmondson",email = "r@sunholo.com",
                   role = c("aut", "cre")))
 URL: https://github.com/MarkEdmondson1234/googleAnalyticsR
 BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
-Description: Google Analytics API using googleAuthR
+Description: Google Analytics API for version 3 and 4 using googleAuthR
 License: MIT
 LazyData: TRUE
 Depends:

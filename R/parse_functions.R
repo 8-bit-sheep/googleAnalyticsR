@@ -4,6 +4,14 @@ google_analytics_4_parse_batch <- function(response_list){
   
   parsed <- lapply(response_list$reports, google_analytics_4_parse)
   
+  nextPageTokens <- lapply(parsed, function(x) attr(x, "nextPageToken"))
+  
+  if(any(unlist(lapply(nextPageTokens, function(x) is.null(x))))){
+    ### fetch the next page of results
+    
+  }
+  
+  
   ## if only one entry in the list, return the dataframe
   if(length(parsed) == 1) parsed <- parsed[[1]]
   
@@ -82,6 +90,7 @@ google_analytics_4_parse <- function(x){
   
   message("Parsing GA API v4")
  
+  #### x <- ga_data2$reports[[1]]
   
   columnHeader <- x$columnHeader
   data <- x$data$rows
@@ -102,6 +111,7 @@ google_analytics_4_parse <- function(x){
   
   dim_names <- unlist(columnHeader$dimensions)
   met_names <- unlist(lapply(columnHeader$metricHeader$metricHeaderEntries, function(x) x$name))
+  met_names1 <- gsub("ga:","",met_names)
   # met_types <- unlist(lapply(columnHeader$metricHeader$metricHeaderEntries, function(x) x$type))
   
   
@@ -142,20 +152,24 @@ google_analytics_4_parse <- function(x){
   
   if(!is.null(pivot_entries)) out <- cbind(out, pivot_entries)
   
-  attr(out, "totals") <- x$data$totals
-  attr(out, "minimums") <- x$data$minimums
-  attr(out, "maximums") <- x$data$maximums
+  totals <- lapply(x$data$totals, function(x) setNames(x$values, met_names1))
+  minimums <- lapply(x$data$minimums, function(x) setNames(x$values, met_names1))
+  maximums <- lapply(x$data$maximums, function(x) setNames(x$values, met_names1))
+  
+  attr(out, "totals") <- totals
+  attr(out, "minimums") <- minimums
+  attr(out, "maximums") <- maximums
   attr(out, "isDataGolden") <- x$data$isDataGolden
   attr(out, "rowCount") <- x$data$rowCount
   attr(out, "samplesReadCounts") <- x$data$samplesReadCounts
   attr(out, "samplingSpaceSizes") <- x$data$samplingSpaceSizes
   attr(out, "nextPageToken") <- x$nextPageToken
   
-  # samplePercent <-  100
-  # if(!is.null(x$data$samplesReadCounts)){
-  #     samplePercent <- round(100 * (as.numeric(x$data$samplesReadCounts) / as.numeric(x$data$samplingSpaceSizes)), 2)
-  #     message("Data is sampled, based on ", samplePercent, "% of visits. Use samplingLevel='WALK' to mitigate it." )
-  # }
+  samplePercent <-  100
+  if(!is.null(x$data$samplesReadCounts)){
+      samplePercent <- round(100 * (as.numeric(x$data$samplesReadCounts) / as.numeric(x$data$samplingSpaceSizes)), 2)
+      message("Data is sampled, based on ", samplePercent, "% of visits." )
+  }
   
   out
   

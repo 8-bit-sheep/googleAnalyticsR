@@ -4,9 +4,10 @@
 \alias{google_analytics_4}
 \title{Do a single request}
 \usage{
-google_analytics_4(viewId, date_range, metrics, dimensions = NULL,
-  date_range_two = NULL, dim_filters = NULL, met_filters = NULL,
-  filtersExpression = NULL, segments = NULL, pivots = NULL, max = 1000,
+google_analytics_4(viewId, date_range = NULL, metrics = NULL,
+  dimensions = NULL, date_range_two = NULL, dim_filters = NULL,
+  met_filters = NULL, filtersExpression = NULL, segments = NULL,
+  pivots = NULL, cohorts = NULL, max = 1000,
   samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
   histogramBuckets = NULL)
 }
@@ -22,6 +23,8 @@ google_analytics_4(viewId, date_range, metrics, dimensions = NULL,
 \item{segments}{Segments of the data}
 
 \item{pivots}{Pivots of the data}
+
+\item{cohorts}{Cohorts created by \link{makeCohortGroup}}
 
 \item{samplingLevel}{Sample level}
 

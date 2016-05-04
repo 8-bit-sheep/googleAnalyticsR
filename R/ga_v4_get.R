@@ -7,6 +7,7 @@
 #' @param filters A list of dimensionFilterClauses or metricFilterClauses
 #' @param segments Segments of the data
 #' @param pivots Pivots of the data
+#' @param cohorts Cohorts created by \link{makeCohortGroup}
 #' @param samplingLevel Sample level
 #' @param metricFormat If supplying calculated metrics, specify the metric type
 #'
@@ -60,8 +61,8 @@
 #'
 #' @export
 make_ga_4_req <- function(viewId,
-                          date_range,
-                          metrics,
+                          date_range=NULL,
+                          metrics=NULL,
                           dimensions=NULL,
                           dim_filters=NULL,
                           met_filters=NULL,
@@ -69,12 +70,29 @@ make_ga_4_req <- function(viewId,
                           orderBys=NULL,
                           segments=NULL,
                           pivots=NULL,
+                          cohorts=NULL,
                           max=1000,
                           samplingLevel=c("DEFAULT", "SMALL","LARGE"),
                           metricFormat=NULL,
                           histogramBuckets=NULL) {
 
   samplingLevel <- match.arg(samplingLevel)
+  
+  if(all(is.null(date_range), is.null(cohorts))){
+    stop("Must supply one of date_range or cohorts")
+  }
+  
+  if(!is.null(cohorts)){
+    testthat::expect_true(cohort_metric_check(metrics))
+    testthat::expect_true(cohort_dimension_check(dimensions))
+    if(!is.null(date_range)){
+      stop("Don't supply date_range when using cohorts")
+    }
+  }
+  
+  if(is.null(metrics)){
+    stop("Must supply a metric")
+  }
 
   id <- sapply(viewId, checkPrefix, prefix = "ga")
 
@@ -115,6 +133,7 @@ make_ga_4_req <- function(viewId,
         orderBys = orderBys,
         segments = segments,
         pivots = pivots,
+        cohortGroup=cohorts,
         pageSize = max,
         includeEmptyRows = TRUE
       ),
@@ -132,8 +151,8 @@ make_ga_4_req <- function(viewId,
 #' @inheritParams make_ga_4_req
 #' @export
 google_analytics_4 <- function(viewId,
-                               date_range,
-                               metrics,
+                               date_range=NULL,
+                               metrics=NULL,
                                dimensions=NULL,
                                date_range_two=NULL,
                                dim_filters=NULL,
@@ -141,6 +160,7 @@ google_analytics_4 <- function(viewId,
                                filtersExpression=NULL,
                                segments=NULL,
                                pivots=NULL,
+                               cohorts=NULL,
                                max=1000,
                                samplingLevel=c("DEFAULT", "SMALL","LARGE"),
                                metricFormat=NULL,
@@ -155,6 +175,7 @@ google_analytics_4 <- function(viewId,
                        filtersExpression = filtersExpression,
                        segments=segments,
                        pivots=pivots,
+                       cohorts=cohorts,
                        max=max,
                        samplingLevel=samplingLevel,
                        metricFormat=metricFormat,
@@ -175,29 +196,18 @@ fetch_google_analytics_4 <- function(request_list){
 
   testthat::expect_type(request_list, "list")
 
-  raw <- getOption("googleAnalyticsR.raw_req")
-
-  if(raw) {
-    warning("No data parsing due to 'getOption('googleAnalyticsR.raw_req')' set to TRUE")
-    dpf <- function(x) x
-    } else {
-      dpf <- google_analytics_4_parse_batch
-    }
-
   body <- list(
     reportRequests = request_list
   )
 
   f <- gar_api_generator("https://analyticsreporting.googleapis.com/v4/reports:batchGet",
                          "POST",
-                         data_parse_function = dpf, 
+                         data_parse_function = google_analytics_4_parse_batch, 
                          simplifyVector = FALSE)
 
   message("Fetching Google Analytics v4 API data")
 
   out <- f(the_body = body)
-
-  attr(out, "dates") <- request_list$dateRanges
 
   out
 }

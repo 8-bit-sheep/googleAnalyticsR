@@ -1,4 +1,4 @@
-#' Test S3 class in a list
+ #' Test S3 class in a list
 #' 
 #' @param listthing A list of things
 #' @param types A vector of types we want
@@ -18,9 +18,6 @@ expect_list_of_this <- function(listthing, types, null_ok=FALSE){
     }, listthing, types)
   
   if(!any(res)){
-    str(res)
-    str(listthing)
-    str(types)
     stop(paste(types, collapse = " "), " is not found in list")
   }
   

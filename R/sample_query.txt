@@ -17,7 +17,7 @@ googleAnalyticsR::google_analytics_4(account_list[31,'viewId'], c("2015-07-30","
 pivme <- pivot_ga4(c("hour","minute"), metrics = c("sessions", "visitors"))
 pivme2 <- pivot_ga4(c("medium"), metrics = c("sessions", "visitors"))
 
-pivtest1 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'), met_filters = fc, dim_filters = fc2, filtersExpression = "ga:source!=(direct), pivots = list(pivme)")
+pivtest1 <- make_ga_4_req(account_list[25,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'), met_filters = fc, dim_filters = fc2, filtersExpression = "ga:source!=(direct)", pivots = list(pivme))
 
 pivtest2 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'), met_filters = fc, dim_filters = fc2, filtersExpression = "ga:source!=(direct)", pivots = list(pivme, pivme2))
 
@@ -25,12 +25,23 @@ pivtest2 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01"
 piv_1 <- fetch_google_analytics_4(pivtest1) 
 piv_2 <- fetch_google_analytics_4(pivtest2)
 
-test1 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'), met_filters = fc, dim_filters = fc2, filtersExpression = "ga:source!=(direct)")
+test1 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-11-30","2015-01-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'))
 
-test2 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('hour','medium'), metrics = c('visitors','bounces'), met_filters = fc, dim_filters = fc2, filtersExpression = "ga:source!=(direct)")
+test2 <- make_ga_4_req(account_list[31,'viewId'], c("2015-08-30","2015-09-01","2014-07-30","2014-10-01"), dimensions=c('hour','medium'), metrics = c('visitors','bounces'))
+
+test3 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'))
+
+test4 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('hour','medium'), metrics = c('visitors','bounces'))
+
+test11 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'))
+
+test21 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('hour','medium'), metrics = c('visitors','bounces'))
+
+test31 <- make_ga_4_req(account_list[31,'viewId'], c("2015-07-30","2015-10-01","2014-07-30","2014-10-01"), dimensions=c('source','medium'), metrics = c('sessions','bounces'))
 
 one_fetch <- fetch_google_analytics_4(list(test1))
 
+## must be same viewID and same dateRange
 two_fetch <- fetch_google_analytics_4(list(test1, test2))
 
 order_1 <- order_type("sessions", descending = TRUE)
@@ -57,3 +68,13 @@ segment4 <- googleAnalyticsR::segment_ga4("test", user_segment = seg_define)
 
 ## works
 googleAnalyticsR::google_analytics_4(account_list[31,'viewId'], c("2015-07-30","2015-10-01"), dimensions=c('source','medium','segment'), segments = segment4, metrics = c('sessions','bounces')) -> sss
+
+
+### cohorts
+
+cohort4 <- googleAnalyticsR::makeCohortGroup(list("cohort 1" = c("2015-08-01", "2015-08-01"), "cohort 2" = c("2015-07-01","2015-07-01")))
+
+cohort_example <- googleAnalyticsR::google_analytics_4(account_list[31,'viewId'], dimensions=c('cohort'), cohort = cohort4, metrics = c('cohortTotalUsers'))
+
+cohort_example
+
