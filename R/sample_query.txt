@@ -87,3 +87,5 @@ cohort_example <- googleAnalyticsR::google_analytics_4(account_list[31,'viewId']
 
 cohort_example
 
+## batching
+googleAnalyticsR::google_analytics_4(ga_id, c("2015-07-30","2015-10-01"), dimensions=c('source','medium','pagePath','hour'), metrics = c('sessions','bounces'), max = 999999999) -> gg

@@ -7,7 +7,7 @@
 make_ga_4_req(viewId, date_range = NULL, metrics = NULL,
   dimensions = NULL, dim_filters = NULL, met_filters = NULL,
   filtersExpression = NULL, orderBys = NULL, segments = NULL,
-  pivots = NULL, cohorts = NULL, max = 1000,
+  pivots = NULL, cohorts = NULL, pageToken = 1, pageSize = 1000,
   samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
   histogramBuckets = NULL)
 }
@@ -25,6 +25,10 @@ make_ga_4_req(viewId, date_range = NULL, metrics = NULL,
 \item{pivots}{Pivots of the data}
 
 \item{cohorts}{Cohorts created by \link{makeCohortGroup}}
+
+\item{pageToken}{Where to start the data fetch,}
+
+\item{pageSize}{How many rows to fetch. Max 10000 each batch.}
 
 \item{samplingLevel}{Sample level}
 

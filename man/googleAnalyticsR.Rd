@@ -6,9 +6,6 @@
 \alias{googleAnalyticsR-package}
 \title{Library for getting Google Analytics data into R}
 \description{
-docs: https://developers.google.com/analytics/trusted-testing/reporting/
-}
-\details{
-https://developers.google.com/analytics/trusted-testing/reporting/rest/v4/reports/batchGet
+https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/reports/batchGet
 }
 

@@ -8,6 +8,8 @@
 #' @param segments Segments of the data
 #' @param pivots Pivots of the data
 #' @param cohorts Cohorts created by \link{makeCohortGroup}
+#' @param pageToken Where to start the data fetch,
+#' @param pageSize How many rows to fetch. Max 10000 each batch.
 #' @param samplingLevel Sample level
 #' @param metricFormat If supplying calculated metrics, specify the metric type
 #'
@@ -71,7 +73,8 @@ make_ga_4_req <- function(viewId,
                           segments=NULL,
                           pivots=NULL,
                           cohorts=NULL,
-                          max=1000,
+                          pageToken=1,
+                          pageSize=1000,
                           samplingLevel=c("DEFAULT", "SMALL","LARGE"),
                           metricFormat=NULL,
                           histogramBuckets=NULL) {
@@ -134,7 +137,8 @@ make_ga_4_req <- function(viewId,
         segments = segments,
         pivots = pivots,
         cohortGroup=cohorts,
-        pageSize = max,
+        pageToken=as.character(pageToken),
+        pageSize = pageSize,
         includeEmptyRows = TRUE
       ),
       class = "ga4_req")
@@ -166,22 +170,85 @@ google_analytics_4 <- function(viewId,
                                metricFormat=NULL,
                                histogramBuckets=NULL){
 
-  req <- make_ga_4_req(viewId=viewId,
-                       date_range=date_range,
-                       metrics=metrics,
-                       dimensions=dimensions,
-                       dim_filters=dim_filters,
-                       met_filters=met_filters,
-                       filtersExpression = filtersExpression,
-                       segments=segments,
-                       pivots=pivots,
-                       cohorts=cohorts,
-                       max=max,
-                       samplingLevel=samplingLevel,
-                       metricFormat=metricFormat,
-                       histogramBuckets=histogramBuckets)
+  ## for same Id and daterange, v4 batches can be made
+  if(max > 10000){
+    ## how many v4 batch requests can be made at one time (5-1) due to bad maths
+    batchLimit <- 5
+    meta_batch_start_index <- seq(from=1, to=max, by=10000*batchLimit)
+    batches <- length(meta_batch_start_index)
+    
+    message("V4 Batching data into [", batches, "] calls.")
 
-  fetch_google_analytics_4(req)
+    ## loop for each over 50000
+    requests <- lapply(meta_batch_start_index, function(meta){
+      
+      message("Outer batch loop:", meta)
+      batch_start_index <- seq(from=meta, to=min(meta+((batchLimit-1)*10000),max), 10000)
+      
+      ## loop for each 10000 fetch
+      requests_in <- lapply(batch_start_index, function(x){
+        message("Inner batch loop:", x)
+        req <- make_ga_4_req(viewId=viewId,
+                             date_range=date_range,
+                             metrics=metrics,
+                             dimensions=dimensions,
+                             dim_filters=dim_filters,
+                             met_filters=met_filters,
+                             filtersExpression = filtersExpression,
+                             segments=segments,
+                             pivots=pivots,
+                             cohorts=cohorts,
+                             pageToken = x,
+                             pageSize = 10000,
+                             samplingLevel=samplingLevel,
+                             metricFormat=metricFormat,
+                             histogramBuckets=histogramBuckets)
+        
+      })
+      
+
+      ## a list of gav4 results
+      inner_reqs <- fetch_google_analytics_4(requests_in)
+      
+      ## make it one dataframe
+      if(inherits(inner_reqs, "list")){
+        out <- Reduce(rbind, inner_reqs)
+      } else if(inherits(inner_reqs, "data.frame")){
+        out <- inner_reqs
+      } else {
+        stop("Output class not recognised: ", class(inner_reqs))
+      }
+      
+      out
+      
+    })
+
+    ## a list of dataframes, to one
+    out <- Reduce(rbind, requests)
+    
+  } else {
+    ## normal under 10000
+    req <- make_ga_4_req(viewId=viewId,
+                         date_range=date_range,
+                         metrics=metrics,
+                         dimensions=dimensions,
+                         dim_filters=dim_filters,
+                         met_filters=met_filters,
+                         filtersExpression = filtersExpression,
+                         segments=segments,
+                         pivots=pivots,
+                         cohorts=cohorts,
+                         pageToken = 1,
+                         pageSize = max,
+                         samplingLevel=samplingLevel,
+                         metricFormat=metricFormat,
+                         histogramBuckets=histogramBuckets)
+    out <- fetch_google_analytics_4(req)
+  }
+  
+  out
+
+
 }
 
 #' Fetch multiple GAv4 requests
@@ -202,12 +269,16 @@ fetch_google_analytics_4 <- function(request_list){
 
   f <- gar_api_generator("https://analyticsreporting.googleapis.com/v4/reports:batchGet",
                          "POST",
-                         data_parse_function = google_analytics_4_parse_batch, 
+                         data_parse_function = google_analytics_4_parse_batch,
+                         # data_parse_function = function(x) x,
                          simplifyVector = FALSE)
 
   message("Fetching Google Analytics v4 API data")
 
   out <- f(the_body = body)
+  
+  ## if only one entry in the list, return the dataframe
+  if(length(out) == 1) out <- out[[1]]
 
   out
 }

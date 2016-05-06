@@ -4,17 +4,6 @@ google_analytics_4_parse_batch <- function(response_list){
   
   parsed <- lapply(response_list$reports, google_analytics_4_parse)
   
-  nextPageTokens <- lapply(parsed, function(x) attr(x, "nextPageToken"))
-  
-  if(any(unlist(lapply(nextPageTokens, function(x) is.null(x))))){
-    ### fetch the next page of results
-    
-  }
-  
-  
-  ## if only one entry in the list, return the dataframe
-  if(length(parsed) == 1) parsed <- parsed[[1]]
-  
   parsed
   
 }
@@ -173,6 +162,8 @@ google_analytics_4_parse <- function(x){
       samplePercent <- round(100 * (as.numeric(x$data$samplesReadCounts) / as.numeric(x$data$samplingSpaceSizes)), 2)
       message("Data is sampled, based on ", samplePercent, "% of visits." )
   }
+  
+  testthat::expect_s3_class(out, "data.frame")
   
   out
   
