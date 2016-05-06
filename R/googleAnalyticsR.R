@@ -1,8 +1,6 @@
 #' Library for getting Google Analytics data into R
 #' 
-#' docs: https://developers.google.com/analytics/trusted-testing/reporting/
-#' 
-#' https://developers.google.com/analytics/trusted-testing/reporting/rest/v4/reports/batchGet
+#' https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/reports/batchGet
 #' 
 #' @docType package
 #' @name googleAnalyticsR

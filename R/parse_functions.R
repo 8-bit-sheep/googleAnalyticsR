@@ -114,7 +114,10 @@ google_analytics_4_parse <- function(x){
   met_names1 <- gsub("ga:","",met_names)
   # met_types <- unlist(lapply(columnHeader$metricHeader$metricHeaderEntries, function(x) x$type))
   
-  
+  if(is.null(data)){
+    message("No data found")
+    return(NULL)
+  }
   
   dims <- matrix(unlist(lapply(data, function(x) x$dimensions)),
                  ncol = length(dim_names), byrow = TRUE)

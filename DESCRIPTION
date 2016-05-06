@@ -13,9 +13,8 @@ LazyData: TRUE
 Depends:
     R (>= 3.2.0),
     tidyjson (>= 0.2.1),
-    magrittr
+    magrittr,
+    testthat (>= 1.0.2)
 Imports:
     googleAuthR (>= 0.2.0.9000)
-Suggests:
-    testthat (>= 1.0.2)
 RoxygenNote: 5.0.1

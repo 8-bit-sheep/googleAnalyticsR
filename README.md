@@ -251,6 +251,38 @@ cohort_example <- google_analytics_4(ga_id,
 
 ```
 
+### Pivot Requests
+
+
+```r
+
+## filter pivot results to 
+pivot_dim_filter1 <- dim_filter("medium",
+                                "REGEXP",
+                                "organic|social|email|cpc")
+                                
+pivot_dim_clause <- filter_clause_ga4(list(pivot_dim_filter1))
+
+pivme <- pivot_ga4("medium",
+                   metrics = c("sessions"), 
+                   maxGroupCount = 4, 
+                   dim_filter_clause = pivot_dim_clause)
+
+pivtest1 <- google_analytics_4(ga_id, 
+                               c("2016-01-30","2016-10-01"), 
+                               dimensions=c('source'), 
+                               metrics = c('sessions'), 
+                               pivots = list(pivme))
+
+
+> names(pivtest1)
+ [1] "source"                      "sessions"                    "medium.referral.sessions"   
+ [4] "medium..none..sessions"      "medium.cpc.sessions"         "medium.email.sessions"      
+ [7] "medium.social.sessions"      "medium.twitter.sessions"     "medium.socialMedia.sessions"
+[10] "medium.Social.sessions"      "medium.linkedin.sessions"  
+
+```
+
 
 ## To use - v3 API calls
 

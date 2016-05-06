@@ -20,3 +20,5 @@ vignettes/*.pdf
 .httr-oauth
 
 .RData
+
+pivot_debug.rda

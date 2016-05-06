@@ -3,6 +3,7 @@
 #' @keywords internal
 #' @family pivot functions
 pivot_ga4_parse <- function(x, hasDateComparison){
+  
   if(is.null(x$columnHeader$metricHeader$pivotHeaders)) {
     return(NULL)
   }
@@ -13,6 +14,8 @@ pivot_ga4_parse <- function(x, hasDateComparison){
   pivot_col_names <- makePivotNames(pivotHeaders)
   
   pivotDataRows <- x$data$rows
+
+  # save(x, file = "pivot_debug.rda")
   
   pivotData1 <- makePivotData(pivotDataRows, pivot_col_names)
   
@@ -38,7 +41,7 @@ makePivotData <- function(pivotRows, pivotNames, index=1){
   
   if(index==2) pivotNames <- paste0(pivotNames, ".d2")
   
-  pivotData <- lapply(pivotRows, function(row) row$metrics[[index]]$values)
+  pivotData <- lapply(pivotRows, function(row) row$metrics[[index]]$pivotValueRegions)
   pivotData <- lapply(lapply(pivotData, function(x) lapply(x, unlist)), unlist)
   
   pivotData <- Reduce(rbind, pivotData)
@@ -76,7 +79,9 @@ makePivotNames <- function(pivotHeaders){
   
   pivNames <- lapply(n, make.names, unique = TRUE)
   
-  unlist(pivNames)
+  out <- unlist(pivNames)
+
+  out
 }
 
 #' Make a pivot object
@@ -95,9 +100,10 @@ makePivotNames <- function(pivotHeaders){
 pivot_ga4 <- function(pivot_dim, metrics, dim_filter_clause=NULL,
                       startGroup = 1, maxGroupCount = 5){
   
-  stopifnot(inherits(pivot_dim, "character"),
-            inherits(metrics, "character"),
-            any(is.null(dim_filter_clause), inherits(dim_filter_clause, "list")))
+  testthat::expect_type(pivot_dim, "character")
+  testthat::expect_type(metrics, "character")  
+  
+  ### testthat for dim_filter_clause
   
   dim_list <- dimension_ga4(pivot_dim)
   met_list <- metric_ga4(metrics)
