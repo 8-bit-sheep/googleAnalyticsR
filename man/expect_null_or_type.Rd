@@ -9,4 +9,5 @@ expect_null_or_type(thing, type)
 \description{
 wraps testthat::expect_type() to run if not NULL
 }
+\keyword{internal}
 

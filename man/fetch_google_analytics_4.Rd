@@ -7,12 +7,12 @@
 fetch_google_analytics_4(request_list)
 }
 \arguments{
-\item{requests}{A list of GAv4 requests created by make_ga_4_req}
+\item{requests}{A list of requests created by \link{make_ga_4_req}}
 }
 \value{
-dataframe of GA results
+A dataframe if one request, or a list of data.frames if multiple.
 }
 \description{
-Fetch multiple GAv4 requests
+Fetch the GAv4 requests as created by \link{make_ga_4_req}
 }
 

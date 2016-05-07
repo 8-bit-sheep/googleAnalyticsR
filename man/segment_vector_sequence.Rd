@@ -8,15 +8,31 @@ segment_vector_sequence(segment_elements, stepMatchList = NULL,
   firstStepMatch = FALSE)
 }
 \arguments{
+\item{segment_elements}{a list of OR lists of segment elements}
+
 \item{stepMatchList}{a list same length as segment_elements of
 c("PRECEDES", "IMMEDIATELY_PRECEDES") for each step. 
 If omitted, assumed all to be "PRECEDES"}
 
 \item{firstStepMatch}{FALSE default}
-
-\item{segment_element_list}{a list of lists of segment elements}
 }
 \description{
 Make sequenceSegment
+}
+\seealso{
+Other v4 segment functions: \code{\link{dynamicSegment}},
+  \code{\link{orFiltersForSegment}},
+  \code{\link{segmentDefinition}},
+  \code{\link{segmentDimensionFilter}},
+  \code{\link{segmentFilterClause}},
+  \code{\link{segmentFilter}},
+  \code{\link{segmentMetricFilter}},
+  \code{\link{segmentObj_ga4}},
+  \code{\link{segmentSequenceStep}},
+  \code{\link{segment_define}},
+  \code{\link{segment_element}}, \code{\link{segment_ga4}},
+  \code{\link{segment_vector_simple}},
+  \code{\link{sequenceSegment}},
+  \code{\link{simpleSegment}}
 }
 

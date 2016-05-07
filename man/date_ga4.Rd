@@ -9,4 +9,5 @@ date_ga4(vector)
 \description{
 Make a date object
 }
+\keyword{internal}
 

@@ -7,7 +7,7 @@
 filter_clause_ga4(filters, operator = c("OR", "AND"))
 }
 \arguments{
-\item{filters}{a list of dim_filter or met_filter. Only one type allowed.}
+\item{filters}{a list of \link{dim_filter} or \link{met_filter}. Only one type allowed.}
 
 \item{operator}{combination of filter.}
 }
@@ -19,7 +19,7 @@ Make a dimension or metric filter clause object
 }
 \details{
 If you have dimension and metric filters,
-  make the clauses in two seperate calls, then pass the objects to make_ga_4_req
+  make the clauses in two seperate calls, then pass the objects to \link{make_ga_4_req}
 }
 \seealso{
 Other filter functions: \code{\link{dim_filter}},

@@ -14,19 +14,24 @@ make_ga_4_req(viewId, date_range = NULL, metrics = NULL,
 \arguments{
 \item{viewId}{viewId of data to get.}
 
-\item{date_range}{character or date vector of format c(start, end). Optional c(s1,e1,s2,e2)}
+\item{date_range}{character or date vector of format \code{c(start, end)} or 
+for two date ranges: \code{c(start1,end1,start2,end2)}}
 
 \item{metrics}{Metric to fetch. Required. Supports calculated metrics.}
 
 \item{dimensions}{Dimensions to fetch.}
 
-\item{segments}{Segments of the data}
+\item{dim_filters}{A \link{filter_clause_ga4} wrapping \link{dim_filter}}
 
-\item{pivots}{Pivots of the data}
+\item{met_filters}{A \link{filter_clause_ga4} wrapping \link{met_filter}}
 
-\item{cohorts}{Cohorts created by \link{makeCohortGroup}}
+\item{segments}{List of segments as created by \link{segment_ga4}}
 
-\item{pageToken}{Where to start the data fetch,}
+\item{pivots}{Pivots of the data as created by \link{pivot_ga4}}
+
+\item{cohorts}{Cohorts created by \link{make_cohort_group}}
+
+\item{pageToken}{Where to start the data fetch}
 
 \item{pageSize}{How many rows to fetch. Max 10000 each batch.}
 
@@ -34,11 +39,12 @@ make_ga_4_req(viewId, date_range = NULL, metrics = NULL,
 
 \item{metricFormat}{If supplying calculated metrics, specify the metric type}
 
-\item{filters}{A list of dimensionFilterClauses or metricFilterClauses}
+\item{histogramBuckets}{For numeric dimensions such as hour, a list of buckets of data.
+See details in \link{make_ga_4_req}}
 }
 \description{
 This function constructs the Google Analytics API v4 call to be called
-  via \code{fetch_google_analytics_4}
+  via \link{fetch_google_analytics_4}
 }
 \section{Metrics}{
 
@@ -78,12 +84,13 @@ This function constructs the Google Analytics API v4 call to be called
   Dimension values that fall in a bucket get transformed to a new dimension
   value. For example, if one gives a list of "0, 1, 3, 4, 7", then we
   return the following buckets: -
-
-  bucket #1: values < 0, dimension value "<0"
-  bucket #2: values in [0,1), dimension value "0"
-  bucket #3: values in [1,3), dimension value "1-2"
-  bucket #4: values in [3,4), dimension value "3"
-  bucket #5: values in [4,7), dimension value "4-6"
-  bucket #6: values >= 7, dimension value "7+"
+\itemize{
+  \item bucket #1: values < 0, dimension value "<0"
+  \item bucket #2: values in [0,1), dimension value "0"
+  \item bucket #3: values in [1,3), dimension value "1-2"
+  \item bucket #4: values in [3,4), dimension value "3"
+  \item bucket #5: values in [4,7), dimension value "4-6"
+  \item bucket #6: values >= 7, dimension value "7+"
+ }
 }
 

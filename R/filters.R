@@ -1,10 +1,10 @@
 #' Make a dimension or metric filter clause object
 #'
-#' @param filters a list of dim_filter or met_filter. Only one type allowed.
+#' @param filters a list of \link{dim_filter} or \link{met_filter}. Only one type allowed.
 #' @param operator combination of filter.
 #'
 #' @details If you have dimension and metric filters,
-#'   make the clauses in two seperate calls, then pass the objects to make_ga_4_req
+#'   make the clauses in two seperate calls, then pass the objects to \link{make_ga_4_req}
 #'
 #' @export
 #'

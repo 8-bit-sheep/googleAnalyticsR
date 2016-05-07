@@ -1,5 +1,5 @@
 #' ga v4 parse batching
-#'
+#' @keywords internal
 google_analytics_4_parse_batch <- function(response_list){
   
   if(!is.null(response_list$reports)){
@@ -116,6 +116,7 @@ google_analytics_4_parse <- function(x){
 #' 
 #' @param x The account summary items
 #' @import tidyjson
+#' @keywords internal
 parse_ga_account_summary <- function(x){
   
   json_accounts <- jsonlite::toJSON(x$items)

@@ -12,4 +12,5 @@ parse_ga_account_summary(x)
 \description{
 New parse GA account summary
 }
+\keyword{internal}
 

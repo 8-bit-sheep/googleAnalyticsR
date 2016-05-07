@@ -2,16 +2,24 @@
 % Please edit documentation in R/auth.R
 \name{ga_auth}
 \alias{ga_auth}
-\title{ga_auth}
+\title{Authentication with Google Analytics}
 \usage{
 ga_auth(new_user = FALSE, token = NULL)
 }
 \arguments{
-\item{new_user}{Go through the auth flow again}
+\item{new_user}{Set to TRUE to go through the auth flow again}
 
-\item{token}{If you have an existing token already}
+\item{token}{If you have an existing token already pass it through.}
 }
 \description{
-ga_auth
+Wraps \link[googleAuthR]{gar_auth} as a convenience.
+}
+\details{
+Use \code{googleAuthR:gar_auth()} if you need to authenticate with more 
+  than just the Google Analytics API.
+  
+Sets default googleAuthR options, that you will probably want to change via \code{options(googleAuthR.**)}.
+
+See \link[googleAuthR]{gar_auth} setup details for more details.
 }
 

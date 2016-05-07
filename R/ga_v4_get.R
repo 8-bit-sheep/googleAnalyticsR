@@ -1,22 +1,25 @@
-  #' Google Analytics v4 API fetch
+#' Google Analytics v4 API fetch
+#' 
+#' @description
+#'   This function constructs the Google Analytics API v4 call to be called
+#'   via \link{fetch_google_analytics_4}
 #'
 #' @param viewId viewId of data to get.
-#' @param date_range character or date vector of format c(start, end). Optional c(s1,e1,s2,e2)
+#' @param date_range character or date vector of format \code{c(start, end)} or 
+#'   for two date ranges: \code{c(start1,end1,start2,end2)}
 #' @param metrics Metric to fetch. Required. Supports calculated metrics.
 #' @param dimensions Dimensions to fetch.
-#' @param filters A list of dimensionFilterClauses or metricFilterClauses
-#' @param segments Segments of the data
-#' @param pivots Pivots of the data
-#' @param cohorts Cohorts created by \link{makeCohortGroup}
-#' @param pageToken Where to start the data fetch,
+#' @param dim_filters A \link{filter_clause_ga4} wrapping \link{dim_filter}
+#' @param met_filters A \link{filter_clause_ga4} wrapping \link{met_filter}
+#' @param segments List of segments as created by \link{segment_ga4}
+#' @param pivots Pivots of the data as created by \link{pivot_ga4}
+#' @param cohorts Cohorts created by \link{make_cohort_group}
+#' @param pageToken Where to start the data fetch
 #' @param pageSize How many rows to fetch. Max 10000 each batch.
 #' @param samplingLevel Sample level
 #' @param metricFormat If supplying calculated metrics, specify the metric type
-#'
-#' @description
-#'   This function constructs the Google Analytics API v4 call to be called
-#'   via \code{fetch_google_analytics_4}
-#'
+#' @param histogramBuckets For numeric dimensions such as hour, a list of buckets of data.
+#'   See details in \link{make_ga_4_req}
 #'
 #' @section Metrics:
 #'   Metrics support calculated metrics like ga:users / ga:sessions if you supply
@@ -53,14 +56,16 @@
 #'   Dimension values that fall in a bucket get transformed to a new dimension
 #'   value. For example, if one gives a list of "0, 1, 3, 4, 7", then we
 #'   return the following buckets: -
-#'
-#'   bucket #1: values < 0, dimension value "<0"
-#'   bucket #2: values in [0,1), dimension value "0"
-#'   bucket #3: values in [1,3), dimension value "1-2"
-#'   bucket #4: values in [3,4), dimension value "3"
-#'   bucket #5: values in [4,7), dimension value "4-6"
-#'   bucket #6: values >= 7, dimension value "7+"
-#'
+#' \itemize{
+#'   \item bucket #1: values < 0, dimension value "<0"
+#'   \item bucket #2: values in [0,1), dimension value "0"
+#'   \item bucket #3: values in [1,3), dimension value "1-2"
+#'   \item bucket #4: values in [3,4), dimension value "3"
+#'   \item bucket #5: values in [4,7), dimension value "4-6"
+#'   \item bucket #6: values >= 7, dimension value "7+"
+#'  }
+#'   
+#' @family GAv4 fetch functions
 #' @export
 make_ga_4_req <- function(viewId,
                           date_range=NULL,
@@ -150,9 +155,17 @@ make_ga_4_req <- function(viewId,
 
 
 
-#' Do a single request
+#' GAv4 single request
 #'
+#' A convenience function that wraps \link{make_ga_4_req} and \link{fetch_google_analytics_4}
+#'  for the common case of one GA data request.
+#'  
+#' Will perform batching if over the 10000 row per API call limit.
+#' 
 #' @inheritParams make_ga_4_req
+#' @param max Maximum number of rows to fetch. Defaults at 1000.
+#' 
+#' @family GAv4 fetch functions
 #' @export
 google_analytics_4 <- function(viewId,
                                date_range=NULL,
@@ -252,12 +265,16 @@ google_analytics_4 <- function(viewId,
 }
 
 #' Fetch multiple GAv4 requests
+#' 
+#' Fetch the GAv4 requests as created by \link{make_ga_4_req}
 #'
-#' @param requests A list of GAv4 requests created by make_ga_4_req
+#' @param requests A list of requests created by \link{make_ga_4_req}
 #'
-#' @return dataframe of GA results
+#' @return A dataframe if one request, or a list of data.frames if multiple.
 #'
 #' @importFrom googleAuthR gar_api_generator
+#' 
+#' @family GAv4 fetch functions
 #' @export
 fetch_google_analytics_4 <- function(request_list){
 

@@ -18,4 +18,5 @@ a list suitable for parsing in req
 \description{
 Make a metric object
 }
+\keyword{internal}
 

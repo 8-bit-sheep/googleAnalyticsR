@@ -15,6 +15,7 @@ Check the request has cohort metrics
 \seealso{
 Other v4 cohort functions: \code{\link{cohortGroup}},
   \code{\link{cohort_dimension_check}},
-  \code{\link{cohort}}, \code{\link{makeCohortGroup}}
+  \code{\link{cohort}}, \code{\link{make_cohort_group}}
 }
+\keyword{internal}
 

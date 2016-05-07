@@ -2,6 +2,7 @@
 #' 
 #' @param metrics A vector of metrics
 #' @family v4 cohort functions
+#' @keywords internal
 cohort_metric_check <- function(metrics){
   
   metrics <- sapply(metrics, checkPrefix, prefix="ga", USE.NAMES = F)
@@ -30,6 +31,7 @@ cohort_metric_check <- function(metrics){
 #' 
 #' @param metrics A vector of dimensions
 #' @family v4 cohort functions
+#' @keywords internal
 cohort_dimension_check <- function(dimensions){
   
   dimensions <- sapply(dimensions, checkPrefix, prefix="ga", USE.NAMES = F)
@@ -74,7 +76,7 @@ cohort_dimension_check <- function(dimensions){
 #' 
 #' @family v4 cohort functions
 #' @export
-makeCohortGroup <- function(cohorts, lifetimeValue=FALSE, cohort_types=NULL){
+make_cohort_group <- function(cohorts, lifetimeValue=FALSE, cohort_types=NULL){
   
   testthat::expect_type(cohorts, "list")
   testthat::expect_named(cohorts)
@@ -95,6 +97,7 @@ makeCohortGroup <- function(cohorts, lifetimeValue=FALSE, cohort_types=NULL){
 #' @param lifetimeValue Boolean. Has to be an app. 
 #'
 #' @family v4 cohort functions
+#' @keywords internal
 cohortGroup <- function(cohorts,
                         lifetimeValue=FALSE){
   
@@ -118,6 +121,7 @@ cohortGroup <- function(cohorts,
 #' @param dateRange A \link{date_ga4} object
 #'
 #' @family v4 cohort functions
+#' @keywords internal
 cohort <- function(name,
                    type = c("FIRST_VISIT_DATE"),
                    dateRange){

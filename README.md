@@ -55,7 +55,7 @@ ga_auth()
 account_list <- google_analytics_account_list()
 
 ## pick a profile with data to query
-ga_id <- account_list[31,'viewId']
+ga_id <- account_list[23,'viewId']
 
 ```
 
@@ -189,7 +189,7 @@ ga_data4 <- google_analytics_4(ga_id,
 
 ### Segments v4
 
-Segments are a lot more complex to configure, but more powerful and more in line to how you configure them in the UI
+Segments are more complex to configure that v3, but more powerful and in line to how you configure them in the UI
 
 ```r
 ## make a segment element
@@ -198,23 +198,28 @@ se <- segment_element("sessions",
                       type = "metric", 
                       comparisonValue = 1, 
                       scope = "USER")
+                      
+se2 <- segment_element("medium", 
+                      operator = "EXACT", 
+                      type = "dimension", 
+                      expressions = "organic")
 
 ## choose between segment_vector_simple or segment_vector_sequence
 ## Elements can be combined into clauses, which can then be combined into OR filter clauses
 sv_simple <- segment_vector_simple(list(list(se)))
 
-## if only one OR filter, you can leave out wrapper list()
-sv_simple <- segment_vector_simple(list(se))
+sv_simple2 <- segment_vector_simple(list(list(se2)))
 
 ## Each segment vector can then be combined into a logical AND
-seg_defined <- segment_define(list(sv_simple))
+seg_defined <- segment_define(list(sv_simple, sv_simple2))
 
-## if only one AND defintion, you can lieave out wrapper list()
-seg_defined <- segment_define(sv_simple)
+## if only one AND definition, you can leave out wrapper list()
+seg_defined_one <- segment_define(sv_simple)
+
 
 ## Each segement defintion can apply to users, sessions or both.
 ## You can pass a list of several segments
-segment4 <- segment_ga4("test", user_segment = seg_defined)
+segment4 <- segment_ga4("simple", user_segment = seg_defined)
 
 ## Add the segments to the segments param
 segment_example <- google_analytics_4(ga_id, 
@@ -231,6 +236,37 @@ segment_example <- google_analytics_4(ga_id,
 3      yahoo  organic    test        9       6
 4 zapmeta.se referral    test        2       1
 
+
+## Sequence segment
+
+se2 <- segment_element("medium", 
+                       operator = "EXACT", 
+                       type = "dimension", 
+                       expressions = "organic")
+
+se3 <- segment_element("medium",
+                       operator = "EXACT",
+                       type = "dimension",
+                       not = TRUE,
+                       expressions = "organic")
+
+## step sequence
+## users who arrived via organic then via referral
+sv_sequence <- segment_vector_sequence(list(list(se2), 
+                                             list(se3)))
+
+seq_defined2 <- segment_define(list(sv_sequence))
+
+segment4_seq <- segment_ga4("sequence", user_segment = seq_defined2)
+
+## Add the segments to the segments param
+segment_seq_example <- google_analytics_4(ga_id, 
+                                          c("2016-04-01","2016-05-01"), 
+                                          dimensions=c('source','segment'), 
+                                          segments = segment4_seq,
+                                          metrics = c('sessions','bounces')
+                                          )
+
 ```
 
 ### Cohort reports
@@ -239,7 +275,7 @@ Details on [cohort reports and LTV can be found here](https://developers.google.
 
 ```r
 ## first make a cohort group
-cohort4 <- makeCohortGroup(list("cohort 1" = c("2015-08-01", "2015-08-01"), 
+cohort4 <- make_cohort_group(list("cohort 1" = c("2015-08-01", "2015-08-01"), 
                                 "cohort 2" = c("2015-07-01","2015-07-01")))
 
 ## then call cohort report.  No date_range and must include metrics and dimensions

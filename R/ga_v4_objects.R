@@ -1,6 +1,6 @@
 #' Make a date object
 #'
-#'
+#' @keywords internal
 date_ga4 <- function(vector){
   if(is.null(vector)) return(NULL)
 
@@ -32,7 +32,7 @@ date_ga4 <- function(vector){
 #'
 #'  Warning: only makes sense to apply to dimensions that are numeric e.g. ga:hour
 #'
-#'
+#' @keywords internal
 #' @return a list suitable for parsing in req
 dimension_ga4 <- function(vector, histogramBuckets=NULL){
   
@@ -58,6 +58,7 @@ dimension_ga4 <- function(vector, histogramBuckets=NULL){
 #' @param metricFormat Optional same length character vector of formats
 #'   for the API to return
 #'
+#' @keywords internal
 #' @return a list suitable for parsing in req
 metric_ga4 <- function(vector, metricFormat=NULL){
 
@@ -105,7 +106,7 @@ metric_ga4 <- function(vector, metricFormat=NULL){
 #'
 #' @details For multiple order sorting, create seperate OrderType objects to pass
 #'
-#' @export
+#' @keywords internal
 order_type <- function(field,
                        descending = FALSE,
                        orderType = c("VALUE",

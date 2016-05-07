@@ -10,13 +10,14 @@ segment_define(segment_filters, not_vector = NULL)
 \item{not_vector}{Boolean applied to each segmentFilter step. 
 If NULL, assumed FALSE}
 
-\item{segmentFilters}{A list of segment_vector_simple and segment_vector_sequence}
+\item{segmentFilters}{A list of \link{segment_vector_simple} and \link{segment_vector_sequence}}
 }
 \value{
 segmentDefinition object for \link{segment_ga4}
 }
 \description{
-Make a segment definition
+Defines the segment to be a set of SegmentFilters 
+  which are combined together with a logical AND operation.
 }
 \seealso{
 Other v4 segment functions: \code{\link{dynamicSegment}},
@@ -29,6 +30,7 @@ Other v4 segment functions: \code{\link{dynamicSegment}},
   \code{\link{segmentObj_ga4}},
   \code{\link{segmentSequenceStep}},
   \code{\link{segment_element}}, \code{\link{segment_ga4}},
+  \code{\link{segment_vector_sequence}},
   \code{\link{segment_vector_simple}},
   \code{\link{sequenceSegment}},
   \code{\link{simpleSegment}}

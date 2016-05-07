@@ -7,6 +7,7 @@
 #' @param perhaps_list A list or an element that will be wrapped in list()
 #' 
 #' @return A list
+#' @keywords internal
 unitToList <- function(perhaps_list){
   
   if(is.null(perhaps_list)){
@@ -28,13 +29,13 @@ unitToList <- function(perhaps_list){
 }
 
 
- #' Test S3 class in a list
+ #' Test Type in a list
 #' 
 #' @param listthing A list of things
 #' @param types A vector of types we want
 #' @param null_ok Is it ok to have a NULL listhing?
-#' 
-expect_list_of_this <- function(listthing, types, null_ok=FALSE){
+#' @keywords internal
+expect_list_of_type <- function(listthing, types, null_ok=FALSE){
   
   if(null_ok){
     expect_null_or_type(listthing, "list")
@@ -48,15 +49,69 @@ expect_list_of_this <- function(listthing, types, null_ok=FALSE){
     }, listthing, types)
   
   if(!any(res)){
+    str(listthing)
     stop(paste(types, collapse = " "), " is not found in list")
   }
   
 }
 
+#' Test S3 Class in a list
+#' 
+#' @param listthing A list of things
+#' @param types A vector of s3 class we want
+#' @param null_ok Is it ok to have a NULL listhing?
+#' @keywords internal
+expect_list_of_class <- function(listthing, types, null_ok=FALSE){
+  
+  if(null_ok){
+    expect_null_or_type(listthing, "list")
+    return()
+  } else {
+    testthat::expect_s3_class(listthing, "list")
+  }
+  
+  res <- mapply(function(thing, type) {
+    class(thing)==type
+  }, listthing, types)
+  
+  if(!any(res)){
+    str(listthing)
+    stop(paste(types, collapse = " "), " is not found in list")
+  }
+  
+}
+
+#' Testthat in a list
+#' 
+#' @param f The testthat function
+#' @param listthing A list of things
+#' @param types A vector of types we want
+#' @param null_ok Is it ok to have a NULL listhing?
+#' @keywords internal
+expect_list_of_this <- function(f, listthing, types, null_ok=FALSE){
+  
+  if(null_ok){
+    expect_null_or_type(listthing, "list")
+    return()
+  } else {
+    f(listthing, "list")
+  }
+  
+  res <- mapply(function(thing, type) {
+    class(thing)==type
+  }, listthing, types)
+  
+  if(!any(res)){
+    str(listthing)
+    stop(paste(types, collapse = " "), " is not found in list")
+  }
+  
+}
 
 #' Expect NULL or type
 #' 
 #' wraps testthat::expect_type() to run if not NULL
+#' @keywords internal
 expect_null_or_type <- function(thing, type){
   if(!is.null(thing)){
     testthat::expect_type(thing, type)
@@ -66,6 +121,7 @@ expect_null_or_type <- function(thing, type){
 #' Expect NULL or class (s3)
 #' 
 #' wraps testthat::expect_type() to run if not NULL
+#' @keywords internal
 expect_null_or_s3_class <- function(thing, s3class){
   if(!is.null(thing)){
     testthat::expect_s3_class(thing, s3class)
@@ -75,6 +131,7 @@ expect_null_or_s3_class <- function(thing, s3class){
 
 #' @importFrom magrittr %>%
 #' @export
+#' @keywords internal
 magrittr::`%>%`
 
 #' A helper function that tests whether an object is either NULL _or_

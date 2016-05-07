@@ -2,7 +2,7 @@
 % Please edit documentation in R/ga_v4_get.R
 \name{google_analytics_4}
 \alias{google_analytics_4}
-\title{Do a single request}
+\title{GAv4 single request}
 \usage{
 google_analytics_4(viewId, date_range = NULL, metrics = NULL,
   dimensions = NULL, date_range_two = NULL, dim_filters = NULL,
@@ -14,23 +14,36 @@ google_analytics_4(viewId, date_range = NULL, metrics = NULL,
 \arguments{
 \item{viewId}{viewId of data to get.}
 
-\item{date_range}{character or date vector of format c(start, end). Optional c(s1,e1,s2,e2)}
+\item{date_range}{character or date vector of format \code{c(start, end)} or 
+for two date ranges: \code{c(start1,end1,start2,end2)}}
 
 \item{metrics}{Metric to fetch. Required. Supports calculated metrics.}
 
 \item{dimensions}{Dimensions to fetch.}
 
-\item{segments}{Segments of the data}
+\item{dim_filters}{A \link{filter_clause_ga4} wrapping \link{dim_filter}}
 
-\item{pivots}{Pivots of the data}
+\item{met_filters}{A \link{filter_clause_ga4} wrapping \link{met_filter}}
 
-\item{cohorts}{Cohorts created by \link{makeCohortGroup}}
+\item{segments}{List of segments as created by \link{segment_ga4}}
+
+\item{pivots}{Pivots of the data as created by \link{pivot_ga4}}
+
+\item{cohorts}{Cohorts created by \link{make_cohort_group}}
+
+\item{max}{Maximum number of rows to fetch. Defaults at 1000.}
 
 \item{samplingLevel}{Sample level}
 
 \item{metricFormat}{If supplying calculated metrics, specify the metric type}
+
+\item{histogramBuckets}{For numeric dimensions such as hour, a list of buckets of data.
+See details in \link{make_ga_4_req}}
 }
 \description{
-Do a single request
+A convenience function that wraps \link{make_ga_4_req} and \link{fetch_google_analytics_4}
+ for the common case of one GA data request.
+ 
+Will perform batching if over the 10000 row per API call limit.
 }
 

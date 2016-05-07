@@ -1,5 +1,16 @@
 #' Make a segment object for use
 #'
+#' A Segment is a subset of the Analytics data. 
+#' For example, of the entire set of users, one Segment 
+#' might be users from a particular country or city.
+#' 
+#' \code{segment_ga4} is the top heirarchy of segment creation, for which you will also need:
+#' \itemize{
+#'  \item \link{segment_define} : AND combination of segmentFilters
+#'  \item \link{segment_vector_simple} or \link{segment_vector_sequence}
+#'  \item \link{segment_element} that are combined in OR lists for \code{segment_vectors_*}
+#' }
+#' 
 #' @param name The name of the segment for the reports.
 #' @param segment_id The segment ID of a built in or custom segment e.g. gaid::-3
 #' @param user_segment A list of \code{segment_define}'s that apply to users
@@ -15,8 +26,8 @@ segment_ga4 <- function(name,
   
   testthat::expect_type(name, "character")
   expect_null_or_type(segment_id, "character")
-  expect_list_of_this(user_segment, "segmentDef_ga4", null_ok=TRUE)
-  expect_list_of_this(session_segment, "segmentDef_ga4", null_ok=TRUE)
+  # expect_list_of_this(user_segment, "segmentDef_ga4", null_ok=TRUE)
+  # expect_list_of_this(session_segment, "segmentDef_ga4", null_ok=TRUE)
 
   if(!is.null(segment_id)){
     out <- segmentObj_ga4(
@@ -35,7 +46,10 @@ segment_ga4 <- function(name,
 
 #' Make a segment definition
 #' 
-#' @param segmentFilters A list of segment_vector_simple and segment_vector_sequence
+#' Defines the segment to be a set of SegmentFilters 
+#'   which are combined together with a logical AND operation.
+#' 
+#' @param segmentFilters A list of \link{segment_vector_simple} and \link{segment_vector_sequence}
 #' @param not_vector Boolean applied to each segmentFilter step. 
 #'   If NULL, assumed FALSE
 #' 
@@ -47,7 +61,7 @@ segment_define <- function(segment_filters,
   
   segment_filters <- unitToList(segment_filters)
   
-  expect_list_of_this(segment_filters,  c("sequenceSegment_ga4","simpleSegment_ga4"))
+  # expect_list_of_type(segment_filters,  c("list"))
   expect_null_or_type(not_vector, "list")
   
   if(is.null(not_vector)){
@@ -87,8 +101,6 @@ segment_define <- function(segment_filters,
 #' @export
 segment_vector_simple <- function(segment_elements){
   
-  segment_elements <- unitToList(segment_elements)
-  
   testthat::expect_type(segment_elements, "list")
   
   orFiltersList <- makeOrFilters(segment_elements)
@@ -100,7 +112,7 @@ segment_vector_simple <- function(segment_elements){
 }
 
 #' Make orFiltersForSegment
-#' 
+#' @keywords internal
 makeOrFilters <- function(segment_element_list){
   
   lapply(segment_element_list, function(sfc){
@@ -111,21 +123,22 @@ makeOrFilters <- function(segment_element_list){
 
 #' Make sequenceSegment
 #' 
-#' @param segment_element_list a list of lists of segment elements
+#' @param segment_elements a list of OR lists of segment elements
 #' @param stepMatchList a list same length as segment_elements of
 #'   c("PRECEDES", "IMMEDIATELY_PRECEDES") for each step. 
 #'   If omitted, assumed all to be "PRECEDES"
 #' @param firstStepMatch FALSE default
-#'    
+#' 
+#' @family v4 segment functions   
 #' @export
 segment_vector_sequence <- function(segment_elements,
                                     stepMatchList=NULL,
                                     firstStepMatch=FALSE){
   
   if(!is.null(stepMatchList)){
-    testthat::expect_equal(length(segment_element), length(stepMatchList))
+    testthat::expect_equal(length(segment_elements), length(stepMatchList))
   } else {
-    stepMatchList <- as.list(rep("PRECEDES", length(segment_element)))
+    stepMatchList <- as.list(rep("PRECEDES", length(segment_elements)))
   }
   
   steps <- mapply(function(sfc, sml){
@@ -268,6 +281,7 @@ segment_element <- function(name,
 #' @return a list of class \code{segment_ga4}
 #'
 #' @family v4 segment functions
+#' @keywords internal
 segmentObj_ga4 <- function(dynamicSegment=NULL, segmentId=NULL){
   
   if(!is.null(dynamicSegment) && !is.null(segmentId))
@@ -292,6 +306,7 @@ segmentObj_ga4 <- function(dynamicSegment=NULL, segmentId=NULL){
 #' @param sessionSegment sessionSegment to include in the segment
 #'
 #' @family v4 segment functions
+#' @keywords internal
 dynamicSegment <- function(name, userSegment, sessionSegment){
   
   testthat::expect_type(name, "character")
@@ -315,9 +330,10 @@ dynamicSegment <- function(name, userSegment, sessionSegment){
 #'   SegmentFilters which are combined together with a logical AND operation.
 #' 
 #' @family v4 segment functions
+#' @keywords internal
 segmentDefinition <- function(segmentFilterList){
   
-  expect_list_of_this(segmentFilterList,  "segmentFilter_ga4")
+  # expect_list_of_this(segmentFilterList,  "segmentFilter_ga4")
   
   structure(
     list(
@@ -339,6 +355,7 @@ segmentDefinition <- function(segmentFilterList){
 #' For example, to match all visits not from "New York", set to TRUE.
 #'
 #' @family v4 segment functions
+#' @keywords internal
 segmentFilter <- function(not=FALSE, simpleSegment=NULL, sequenceSegment=NULL){
   
   testthat::expect_type(not, "logical")
@@ -365,6 +382,7 @@ segmentFilter <- function(not=FALSE, simpleSegment=NULL, sequenceSegment=NULL){
 #' Simple Segment
 #'
 #' @family v4 segment functions
+#' @keywords internal
 simpleSegment <- function(orFiltersForSegmentList){
   
   expect_list_of_this(orFiltersForSegmentList, "orFiltersForSegment_ga4")
@@ -381,9 +399,10 @@ simpleSegment <- function(orFiltersForSegmentList){
 #' orFiltersForSegment
 #'
 #' @family v4 segment functions
+#' @keywords internal
 orFiltersForSegment <- function(segmentFilterClauseList){
   
-  expect_list_of_this(segmentFilterClauseList, "segmentFilterClause_ga4")
+  # expect_list_of_this(testthat::expect_s3_class, segmentFilterClauseList, "segmentFilterClause_ga4")
   
   structure(
     list(
@@ -399,6 +418,7 @@ orFiltersForSegment <- function(segmentFilterClauseList){
 #' Make this internal
 #'
 #' @family v4 segment functions
+#' @keywords internal
 segmentFilterClause <- function(not=FALSE,
                                 dimensionFilter=NULL,
                                 metricFilter=NULL){
@@ -419,6 +439,7 @@ segmentFilterClause <- function(not=FALSE,
 #' segmentDimensionFilter
 #'
 #' @family v4 segment functions
+#' @keywords internal
 segmentDimensionFilter <- function(name,
                                    expressions,
                                    operator = c(
@@ -456,6 +477,7 @@ segmentDimensionFilter <- function(name,
 #' segmentMetricFilter
 #'
 #' @family v4 segment functions
+#' @keywords internal
 segmentMetricFilter <- function(name,
                                 scope = c("PRODUCT", "HIT","SESSION","USER"),
                                 operator = c("LESS_THAN","GREATER_THAN","EQUAL","BETWEEN"),
@@ -487,9 +509,10 @@ segmentMetricFilter <- function(name,
 #' @return A sequenceSegment object
 #'
 #' @family v4 segment functions
+#' @keywords internal
 sequenceSegment <- function(segmentSequenceStepList, firstStepMatch=FALSE){
   
-  expect_list_of_this(segmentSequenceStepList,  "segmentSequenceStep_ga4")
+  # expect_list_of_this(testthat::expect_s3_class, segmentSequenceStepList,  "segmentSequenceStep_ga4")
   testthat::expect_type(firstStepMatch, "logical")
   
   structure(
@@ -509,11 +532,11 @@ sequenceSegment <- function(segmentSequenceStepList, firstStepMatch=FALSE){
 #' @return segmentSequenceStep object
 #' 
 #' @family v4 segment functions
-#'
+#' @keywords internal
 segmentSequenceStep <- function(orFiltersForSegmentList,
                                 matchType = c("PRECEDES", "IMMEDIATELY_PRECEDES")){
 
-  expect_list_of_this(orFiltersForSegmentList,  "orFiltersForSegment_ga4")
+  # expect_list_of_this(testthat::expect_s3_class, orFiltersForSegmentList,  "orFiltersForSegment_ga4")
   matchType <- match.arg(matchType)
   
   structure(

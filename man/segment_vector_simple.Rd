@@ -27,6 +27,7 @@ Other v4 segment functions: \code{\link{dynamicSegment}},
   \code{\link{segmentSequenceStep}},
   \code{\link{segment_define}},
   \code{\link{segment_element}}, \code{\link{segment_ga4}},
+  \code{\link{segment_vector_sequence}},
   \code{\link{sequenceSegment}},
   \code{\link{simpleSegment}}
 }

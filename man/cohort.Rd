@@ -20,6 +20,7 @@ Cohort object
 Other v4 cohort functions: \code{\link{cohortGroup}},
   \code{\link{cohort_dimension_check}},
   \code{\link{cohort_metric_check}},
-  \code{\link{makeCohortGroup}}
+  \code{\link{make_cohort_group}}
 }
+\keyword{internal}
 
