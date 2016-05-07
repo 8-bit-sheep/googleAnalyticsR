@@ -35,12 +35,13 @@ date_ga4 <- function(vector){
 #'
 #' @return a list suitable for parsing in req
 dimension_ga4 <- function(vector, histogramBuckets=NULL){
+  
   if(is.null(vector)) return(NULL)
 
-  stopifnot(inherits(vector, "character"),
-            any(inherits(histogramBuckets, "list"), is.null(histogramBuckets)))
+  testthat::expect_type(vector, "character")
+  expect_null_or_type(histogramBuckets, "list")
 
-  dimensions <- sapply(vector, checkPrefix, prefix="ga", USE.NAMES = F)
+  dimensions <- vapply(vector, checkPrefix, character(1), prefix="ga", USE.NAMES = FALSE)
 
   structure(
     lapply(dimensions, function(x) list(name = x,
@@ -60,21 +61,22 @@ dimension_ga4 <- function(vector, histogramBuckets=NULL){
 #' @return a list suitable for parsing in req
 metric_ga4 <- function(vector, metricFormat=NULL){
 
-  stopifnot(inherits(vector, "character"))
+  testthat::expect_type(vector, "character")
 
-  metrics <- sapply(vector, checkPrefix, prefix="ga", USE.NAMES = F)
+  ## metrics may have a named vector so USE.NAMES must be TRUE
+  metrics <- vapply(vector, checkPrefix, character(1), prefix="ga", USE.NAMES = TRUE)
 
   if(is.null(metricFormat)) metricFormat <- rep("METRIC_TYPE_UNSPECIFIED",
                                                 length(metrics))
 
-  stopifnot(any(metricFormat %in% c("METRIC_TYPE_UNSPECIFIED",
-                                     "INTEGER",
-                                     "FLOAT",
-                                     "CURRENCY",
-                                     "PERCENT",
-                                     "TIME"))
-            )
-  stopifnot(length(metricFormat) == length(metrics))
+  testthat::expect_true(any(metricFormat %in% c("METRIC_TYPE_UNSPECIFIED",
+                                            "INTEGER",
+                                            "FLOAT",
+                                            "CURRENCY",
+                                            "PERCENT",
+                                            "TIME")))
+  
+  testthat::expect_true(length(metricFormat) == length(metrics))
 
   metrics <- lapply(seq_along(metrics), function(x) {
     entry <- metrics[x]
@@ -117,7 +119,7 @@ order_type <- function(field,
   testthat::expect_length(field, 1)
   testthat::expect_type(field, character)
 
-  field <- sapply(field, checkPrefix, prefix = "ga")
+  field <- vapply(field, checkPrefix, character(1), prefix = "ga")
   if(descending) field <- paste(field, "desc")
 
   structure(

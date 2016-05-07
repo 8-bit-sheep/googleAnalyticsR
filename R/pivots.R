@@ -102,13 +102,10 @@ pivot_ga4 <- function(pivot_dim, metrics, dim_filter_clause=NULL,
   
   testthat::expect_type(pivot_dim, "character")
   testthat::expect_type(metrics, "character")  
-  
-  ### testthat for dim_filter_clause
+  expect_null_or_s3_class(dim_filter_clause, "dim_fil_ga4")
   
   dim_list <- dimension_ga4(pivot_dim)
   met_list <- metric_ga4(metrics)
-  
-  if(!is.null(dim_filter_clause)) stopifnot(inherits(dim_filter_clause, "dim_fil_ga4"))
   
   structure(
     list(

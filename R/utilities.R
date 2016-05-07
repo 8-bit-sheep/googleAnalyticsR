@@ -1,3 +1,33 @@
+#' Allow unit lists
+#' 
+#' If you need a list but only get one element, make it a list.
+#' 
+#' Makes it easier for users to use some functions by not worrying about list wrapping. 
+#' 
+#' @param perhaps_list A list or an element that will be wrapped in list()
+#' 
+#' @return A list
+unitToList <- function(perhaps_list){
+  
+  if(is.null(perhaps_list)){
+    return(NULL)
+  }
+  
+  if(inherits(perhaps_list, "list")){
+    out <- perhaps_list
+  } else {
+    if(length(perhaps_list) == 1){
+      out <- list(perhaps_list)
+    } else {
+      stop("Needs to be a list or a length 1 object")
+    }
+
+  }
+  
+  out
+}
+
+
  #' Test S3 class in a list
 #' 
 #' @param listthing A list of things
@@ -30,6 +60,15 @@ expect_list_of_this <- function(listthing, types, null_ok=FALSE){
 expect_null_or_type <- function(thing, type){
   if(!is.null(thing)){
     testthat::expect_type(thing, type)
+  }
+}
+
+#' Expect NULL or class (s3)
+#' 
+#' wraps testthat::expect_type() to run if not NULL
+expect_null_or_s3_class <- function(thing, s3class){
+  if(!is.null(thing)){
+    testthat::expect_s3_class(thing, s3class)
   }
 }
 

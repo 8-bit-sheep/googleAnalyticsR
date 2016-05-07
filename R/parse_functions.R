@@ -2,73 +2,15 @@
 #'
 google_analytics_4_parse_batch <- function(response_list){
   
-  parsed <- lapply(response_list$reports, google_analytics_4_parse)
+  if(!is.null(response_list$reports)){
+    parsed <- lapply(response_list$reports, google_analytics_4_parse)
+  } else {
+    warning("No $reports found.")
+  }
+
   
   parsed
   
-}
-
-#' seeing if this is better
-google_analytics_4_parse_tidyjson <- function(x){
-  
-  json_raw <- jsonlite::toJSON(x, auto_unbox = TRUE)
-  reference <- json_raw %>% jsonlite::prettify()
-  class(json_raw) <- c(class(json_raw), "character")
-  tidy_json <- json_raw %>% as.tbl_json()
-  
-  headers_json <- tidy_json %>% enter_object("columnHeader")
-  
-  headers_metrics <- headers_json %>%
-    enter_object("metricHeader") %>%
-    enter_object("metricHeaderEntries") %>%
-    gather_array() %>%
-    spread_values(metrics = jstring("name"),
-                  type = jstring("type"))
-  headers_metrics <- headers_metrics[,setdiff(names(headers_metrics), 
-                                              c("document.id","array.index")), drop=FALSE]
-  
-  headers_dims <- headers_json %>%
-    enter_object("dimensions") %>%
-    gather_array() %>%
-    append_values_string("dimensions")
-  
-  headers_dims <- headers_dims[,setdiff(names(headers_dims), 
-                                        c("document.id","array.index")), drop = FALSE]
-  
-  
-  data_json <- tidy_json %>% enter_object("data")
-  
-  data_meta <- data_json %>% 
-    spread_values(isDataGolden = jlogical("isDataGolden"),
-                  rows = jnumber("rowCount"))
-  
-  data_totals <- data_json %>% 
-    enter_object("totals") %>% 
-    gather_array() %>% 
-    enter_object("values") %>% 
-    gather_array() %>% 
-    append_values_number("totals")
-  
-  data_min <- data_json %>% 
-    enter_object("minimums") %>% 
-    gather_array() %>% 
-    enter_object("values") %>% 
-    gather_array() %>% 
-    append_values_number("minimums")
-  
-  data_max <- data_json %>% 
-    enter_object("maximums") %>% 
-    gather_array() %>% 
-    enter_object("values") %>% 
-    gather_array() %>% 
-    append_values_number("maximums")
-  
-  data_json %>% enter_object("rows") %>% 
-    gather_array() %>% 
-    enter_object("dimensions") %>% 
-    gather_array() %>% 
-    append_values_string()
-
 }
 
 #' ga v4 data parsing
@@ -77,7 +19,7 @@ google_analytics_4_parse_tidyjson <- function(x){
 #' @keywords internal
 google_analytics_4_parse <- function(x){
   
-  message("Parsing GA API v4")
+  # message("Parsing GA API v4")
  
   #### x <- ga_data2$reports[[1]]
   

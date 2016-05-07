@@ -261,6 +261,8 @@ google_analytics_4 <- function(viewId,
 #' @export
 fetch_google_analytics_4 <- function(request_list){
 
+  request_list <- unitToList(request_list)
+  
   testthat::expect_type(request_list, "list")
 
   body <- list(

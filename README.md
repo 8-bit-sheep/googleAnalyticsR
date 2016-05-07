@@ -46,7 +46,6 @@ Todo.  But check out `?google_analytics_4` and these example queries:
 
 ```r
 ## setup
-library(googleAuthR)
 library(googleAnalyticsR)
 
 ## authenticate, or use the RStudio Addin "Google API Auth" with analytics scopes set
@@ -108,7 +107,7 @@ Example with two date ranges and two reports.
 
 ```r
 ## demo of querying two date ranges at a time   
-## we make the request via make_ga_4_req to use in next demo
+## we make the request via make_ga_4_req() to use in next demo
 multidate_test <- make_ga_4_req(ga_id, 
                                 date_range = c("2015-07-30",
                                                "2015-10-01",
@@ -117,7 +116,7 @@ multidate_test <- make_ga_4_req(ga_id,
                                 dimensions = c('source','medium'), 
                                 metrics = c('sessions','bounces'))
                                 
-ga_data2 <- fetch_google_analytics_4(list(multidate_test))
+ga_data2 <- fetch_google_analytics_4(multidate_test)
 > ga_data2
                     source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
 1                  baby.dk referral           3          2           6          3
