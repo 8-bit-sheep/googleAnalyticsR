@@ -203,8 +203,14 @@ se <- segment_element("sessions",
 ## Elements can be combined into clauses, which can then be combined into OR filter clauses
 sv_simple <- segment_vector_simple(list(list(se)))
 
+## if only one OR filter, you can leave out wrapper list()
+sv_simple <- segment_vector_simple(list(se))
+
 ## Each segment vector can then be combined into a logical AND
 seg_defined <- segment_define(list(sv_simple))
+
+## if only one AND defintion, you can lieave out wrapper list()
+seg_defined <- segment_define(sv_simple)
 
 ## Each segement defintion can apply to users, sessions or both.
 ## You can pass a list of several segments

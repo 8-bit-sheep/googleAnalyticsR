@@ -7,7 +7,7 @@
 segment_vector_simple(segment_elements)
 }
 \arguments{
-\item{segment_elements}{A list of lists of \link{segment_element}}
+\item{segment_elements}{A list of OR lists of \link{segment_element}}
 }
 \value{
 A segment vector you can put in a list for use in \link{segment_ga4}

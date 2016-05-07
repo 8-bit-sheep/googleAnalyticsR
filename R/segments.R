@@ -45,6 +45,8 @@ segment_ga4 <- function(name,
 segment_define <- function(segment_filters,
                            not_vector=NULL){
   
+  segment_filters <- unitToList(segment_filters)
+  
   expect_list_of_this(segment_filters,  c("sequenceSegment_ga4","simpleSegment_ga4"))
   expect_null_or_type(not_vector, "list")
   
@@ -78,12 +80,14 @@ segment_define <- function(segment_filters,
 
 #' Make a simple segment vector
 #' 
-#' @param segment_elements A list of lists of \link{segment_element}
+#' @param segment_elements A list of OR lists of \link{segment_element}
 #' 
 #' @return A segment vector you can put in a list for use in \link{segment_ga4}
 #' @family v4 segment functions
 #' @export
 segment_vector_simple <- function(segment_elements){
+  
+  segment_elements <- unitToList(segment_elements)
   
   testthat::expect_type(segment_elements, "list")
   
