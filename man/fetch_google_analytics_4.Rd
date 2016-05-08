@@ -15,4 +15,8 @@ A dataframe if one request, or a list of data.frames if multiple.
 \description{
 Fetch the GAv4 requests as created by \link{make_ga_4_req}
 }
+\seealso{
+Other GAv4 fetch functions: \code{\link{google_analytics_4}},
+  \code{\link{make_ga_4_req}}
+}
 

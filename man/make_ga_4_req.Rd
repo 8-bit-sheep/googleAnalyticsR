@@ -93,4 +93,8 @@ This function constructs the Google Analytics API v4 call to be called
   \item bucket #6: values >= 7, dimension value "7+"
  }
 }
+\seealso{
+Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4}},
+  \code{\link{google_analytics_4}}
+}
 

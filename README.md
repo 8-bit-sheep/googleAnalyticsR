@@ -5,11 +5,9 @@ A new Google Analytics R library using the new v4 of the Google Analytics Report
 
 ## Wasson?
 
-Work is currently focused on implementing all the v4 API features.  Segments still not supported. 
+Work is currently focused on submitting to CRAN.
 
-Its still experimental so use at your own risk, but if you do please log any problems here in the issues tracker.
-
-The v3 API calls are all pretty robust now, so when the v4 is finished I will submit to CRAN. 
+If you find any bugs please log any problems here in the issues tracker.
 
 ## Other GA R libraries
 
@@ -84,19 +82,20 @@ ga_data1 <- google_analytics_4(ga_id,
                               dim_filters = fc2, 
                               filtersExpression = "ga:source!=(direct)")
 
-> ga_data1
-                    source   medium sessions bounces
-1                  baby.dk referral        3       2
-2                     bing  organic       71      42
-3  buttons-for-website.com referral        7       7
-4           duckduckgo.com referral        5       3
-5                   google  organic      642     520
-6                google.se referral        3       2
-7                 izito.se referral        3       1
-8          success-seo.com referral       35      35
-9    video--production.com referral       11      11
-10                   yahoo  organic       66      43
-11              zapmeta.se referral        6       4
+ga_data1
+
+#                     source   medium sessions bounces
+# 1                  baby.dk referral        3       2
+# 2                     bing  organic       71      42
+# 3  buttons-for-website.com referral        7       7
+# 4           duckduckgo.com referral        5       3
+# 5                   google  organic      642     520
+# 6                google.se referral        3       2
+# 7                 izito.se referral        3       1
+# 8          success-seo.com referral       35      35
+# 9    video--production.com referral       11      11
+# 10                   yahoo  organic       66      43
+# 11              zapmeta.se referral        6       4
 ``` 
 
 
@@ -117,19 +116,19 @@ multidate_test <- make_ga_4_req(ga_id,
                                 metrics = c('sessions','bounces'))
                                 
 ga_data2 <- fetch_google_analytics_4(multidate_test)
-> ga_data2
-                    source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
-1                  baby.dk referral           3          2           6          3
-2                     bing  organic          71         42         217        126
-3  buttons-for-website.com referral           7          7           0          0
-4           duckduckgo.com referral           5          3           0          0
-5                   google  organic         642        520        1286        920
-6                google.se referral           3          2          12          9
-7                 izito.se referral           3          1           0          0
-8          success-seo.com referral          35         35           0          0
-9    video--production.com referral          11         11           0          0
-10                   yahoo  organic          66         43         236        178
-11              zapmeta.se referral           6          4           9          4
+ga_data2
+#                     source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
+# 1                  baby.dk referral           3          2           6          3
+# 2                     bing  organic          71         42         217        126
+# 3  buttons-for-website.com referral           7          7           0          0
+# 4           duckduckgo.com referral           5          3           0          0
+# 5                   google  organic         642        520        1286        920
+# 6                google.se referral           3          2          12          9
+# 7                 izito.se referral           3          1           0          0
+# 8          success-seo.com referral          35         35           0          0
+# 9    video--production.com referral          11         11           0          0
+# 10                   yahoo  organic          66         43         236        178
+# 11              zapmeta.se referral           6          4           9          4
 
 
 ## Demo querying two reports at the same time
@@ -145,26 +144,26 @@ multi_test2 <- make_ga_4_req(ga_id,
 
 ## all requests must have same viewID and dateRange
 ga_data3 <- fetch_google_analytics_4(list(multidate_test, multi_test2)) 
-> ga_data3
-[[1]]
-                    source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
-1                  baby.dk referral           3          2           6          3
-2                     bing  organic          71         42         217        126
-3  buttons-for-website.com referral           7          7           0          0
-4           duckduckgo.com referral           5          3           0          0
-5                   google  organic         642        520        1286        920
-6                google.se referral           3          2          12          9
-7                 izito.se referral           3          1           0          0
-8          success-seo.com referral          35         35           0          0
-9    video--production.com referral          11         11           0          0
-10                   yahoo  organic          66         43         236        178
-11              zapmeta.se referral           6          4           9          4
-
-[[2]]
-   hour   medium visitors.d1 bounces.d1 visitors.d2 bounces.d2
-1    00  organic          28         16          85         59
-2    00 referral           3          2           1          1
-3    01  organic          43         28          93         66
+ga_data3
+# [[1]]
+#                     source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
+# 1                  baby.dk referral           3          2           6          3
+# 2                     bing  organic          71         42         217        126
+# 3  buttons-for-website.com referral           7          7           0          0
+# 4           duckduckgo.com referral           5          3           0          0
+# 5                   google  organic         642        520        1286        920
+# 6                google.se referral           3          2          12          9
+# 7                 izito.se referral           3          1           0          0
+# 8          success-seo.com referral          35         35           0          0
+# 9    video--production.com referral          11         11           0          0
+# 10                   yahoo  organic          66         43         236        178
+# 11              zapmeta.se referral           6          4           9          4
+# 
+# [[2]]
+#    hour   medium visitors.d1 bounces.d1 visitors.d2 bounces.d2
+# 1    00  organic          28         16          85         59
+# 2    00 referral           3          2           1          1
+# 3    01  organic          43         28          93         66
 
 
 ```
@@ -180,11 +179,11 @@ ga_data4 <- google_analytics_4(ga_id,
                               metrics = c(visitsPerVisitor = "ga:visits/ga:visitors",
                                           'bounces'), 
                               metricFormat = c("FLOAT","INTEGER"))
-> ga_data4
-    medium visitsPerVisitor bounces
-1   (none)         1.000000     117
-2  organic         1.075137     612
-3 referral         1.012500      71
+ga_data4
+#     medium visitsPerVisitor bounces
+# 1   (none)         1.000000     117
+# 2  organic         1.075137     612
+# 3 referral         1.012500      71
 ```
 
 ### Segments v4
@@ -229,12 +228,12 @@ segment_example <- google_analytics_4(ga_id,
                                       metrics = c('sessions','bounces')
                                       )
 
-> segment_example
-      source   medium segment sessions bounces
-1       bing  organic    test        6       3
-2     google  organic    test       77      69
-3      yahoo  organic    test        9       6
-4 zapmeta.se referral    test        2       1
+segment_example
+#                            source   medium segment sessions bounces
+# 1                        24.co.uk referral  simple        1       1
+# 2                     aidsmap.com referral  simple        1       0
+# 3                             aol  organic  simple       30      19
+# 4                             ask  organic  simple       32      17
 
 
 ## Sequence segment
@@ -266,7 +265,12 @@ segment_seq_example <- google_analytics_4(ga_id,
                                           segments = segment4_seq,
                                           metrics = c('sessions','bounces')
                                           )
-
+segment_seq_example
+#                                source  segment sessions bounces
+# 1                                 aol sequence        1       0
+# 2                                 ask sequence        5       1
+# 3      bestbackpackersinsurance.co.uk sequence        9       6
+# 4                                bing sequence       22       2
 ```
 
 ### Cohort reports
@@ -285,10 +289,10 @@ cohort_example <- google_analytics_4(ga_id,
                                      cohort = cohort4, 
                                      metrics = c('cohortTotalUsers'))
 
-> cohort_example
-    cohort cohortTotalUsers
-1 cohort 1               14
-2 cohort 2               20
+cohort_example
+#     cohort cohortTotalUsers
+# 1 cohort 1               14
+# 2 cohort 2               20
 
 ```
 
@@ -316,11 +320,11 @@ pivtest1 <- google_analytics_4(ga_id,
                                pivots = list(pivme))
 
 
-> names(pivtest1)
- [1] "source"                      "sessions"                    "medium.referral.sessions"   
- [4] "medium..none..sessions"      "medium.cpc.sessions"         "medium.email.sessions"      
- [7] "medium.social.sessions"      "medium.twitter.sessions"     "medium.socialMedia.sessions"
-[10] "medium.Social.sessions"      "medium.linkedin.sessions"  
+names(pivtest1)
+#  [1] "source"                      "sessions"                    "medium.referral.sessions"   
+#  [4] "medium..none..sessions"      "medium.cpc.sessions"         "medium.email.sessions"      
+#  [7] "medium.social.sessions"      "medium.twitter.sessions"     "medium.socialMedia.sessions"
+# [10] "medium.Social.sessions"      "medium.linkedin.sessions"  
 
 ```
 
@@ -332,7 +336,6 @@ v3 API calls are also tried and tested.
 For syntax of filters and dimensions, this library parses in exactly as specified in the [Google Analytics v3 API docs](https://developers.google.com/analytics/devguides/reporting/core/v3/reference?hl=en#filters), so check those out.  Note you do not need to encode symbols, but may have to encode URLs if you are filtering for those in say ga:pagePath
 
 ```r
-library(googleAuthR)
 library(googleAnalyticsR)
 
 ## Authenticate in Google OAuth2
@@ -347,6 +350,7 @@ ga_auth()
 
 ## get account info, including View Ids
 account_list <- google_analytics_account_list()
+ga_id <- account_list$viewId[1]
 
 ## get a list of what metrics and dimensions you can use
 meta <- google_analytics_meta()
@@ -354,7 +358,7 @@ head(meta)
 
 ## pick the account_list$viewId you want to see data for.
 ## metrics and dimensions can have or have not "ga:" prefix
-gadata <- google_analytics(id = account_list$viewId[1], 
+gadata <- google_analytics(id = ga_id, 
                            start="2015-08-01", end="2015-08-02", 
                            metrics = c("sessions", "bounceRate"), 
                            dimensions = c("source", "medium"))

@@ -26,8 +26,6 @@ segment_ga4 <- function(name,
   
   testthat::expect_type(name, "character")
   expect_null_or_type(segment_id, "character")
-  # expect_list_of_this(user_segment, "segmentDef_ga4", null_ok=TRUE)
-  # expect_list_of_this(session_segment, "segmentDef_ga4", null_ok=TRUE)
 
   if(!is.null(segment_id)){
     out <- segmentObj_ga4(
@@ -61,7 +59,6 @@ segment_define <- function(segment_filters,
   
   segment_filters <- unitToList(segment_filters)
   
-  # expect_list_of_type(segment_filters,  c("list"))
   expect_null_or_type(not_vector, "list")
   
   if(is.null(not_vector)){
@@ -104,8 +101,6 @@ segment_vector_simple <- function(segment_elements){
   testthat::expect_type(segment_elements, "list")
   
   orFiltersList <- makeOrFilters(segment_elements)
-   
-  expect_list_of_this(orFiltersList, "orFiltersForSegment_ga4")  
   
   simpleSegment(orFiltersList)
 
@@ -333,8 +328,6 @@ dynamicSegment <- function(name, userSegment, sessionSegment){
 #' @keywords internal
 segmentDefinition <- function(segmentFilterList){
   
-  # expect_list_of_this(segmentFilterList,  "segmentFilter_ga4")
-  
   structure(
     list(
       segmentFilters = segmentFilterList
@@ -385,8 +378,6 @@ segmentFilter <- function(not=FALSE, simpleSegment=NULL, sequenceSegment=NULL){
 #' @keywords internal
 simpleSegment <- function(orFiltersForSegmentList){
   
-  expect_list_of_this(orFiltersForSegmentList, "orFiltersForSegment_ga4")
-  
   structure(
     list(
       orFiltersForSegment = orFiltersForSegmentList
@@ -401,8 +392,6 @@ simpleSegment <- function(orFiltersForSegmentList){
 #' @family v4 segment functions
 #' @keywords internal
 orFiltersForSegment <- function(segmentFilterClauseList){
-  
-  # expect_list_of_this(testthat::expect_s3_class, segmentFilterClauseList, "segmentFilterClause_ga4")
   
   structure(
     list(
@@ -512,7 +501,6 @@ segmentMetricFilter <- function(name,
 #' @keywords internal
 sequenceSegment <- function(segmentSequenceStepList, firstStepMatch=FALSE){
   
-  # expect_list_of_this(testthat::expect_s3_class, segmentSequenceStepList,  "segmentSequenceStep_ga4")
   testthat::expect_type(firstStepMatch, "logical")
   
   structure(
@@ -536,7 +524,6 @@ sequenceSegment <- function(segmentSequenceStepList, firstStepMatch=FALSE){
 segmentSequenceStep <- function(orFiltersForSegmentList,
                                 matchType = c("PRECEDES", "IMMEDIATELY_PRECEDES")){
 
-  # expect_list_of_this(testthat::expect_s3_class, orFiltersForSegmentList,  "orFiltersForSegment_ga4")
   matchType <- match.arg(matchType)
   
   structure(

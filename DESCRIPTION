@@ -3,8 +3,11 @@ Type: Package
 Title: Google Analytics API into R
 Version: 0.0.9002
 Date: 2015-08-15
-Authors@R: c(person("Mark", "Edmondson",email = "r@sunholo.com",
-                  role = c("aut", "cre")))
+Authors@R: c(person("Mark", "Edmondson",email = "m@sunholo.com",
+                  role = c("aut", "cre")),
+             person(given = "Artem", family = "Klevtsov",
+                    email = "a.a.klevtsov@gmail.com", role = "ctb"),
+           person("Johann", "deBoer", email="johanndeboer@gmail.com", role = "ctb"))
 URL: https://github.com/MarkEdmondson1234/googleAnalyticsR
 BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
 Description: Google Analytics API for version 3 and 4 using googleAuthR

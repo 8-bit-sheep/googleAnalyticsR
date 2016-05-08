@@ -46,4 +46,8 @@ A convenience function that wraps \link{make_ga_4_req} and \link{fetch_google_an
  
 Will perform batching if over the 10000 row per API call limit.
 }
+\seealso{
+Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4}},
+  \code{\link{make_ga_4_req}}
+}
 

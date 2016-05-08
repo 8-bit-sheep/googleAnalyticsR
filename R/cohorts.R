@@ -100,9 +100,6 @@ make_cohort_group <- function(cohorts, lifetimeValue=FALSE, cohort_types=NULL){
 #' @keywords internal
 cohortGroup <- function(cohorts,
                         lifetimeValue=FALSE){
-  
-
-  expect_list_of_this(cohorts, "cohort_ga4")
 
   structure(
     list(
