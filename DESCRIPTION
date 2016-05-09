@@ -19,5 +19,5 @@ Depends:
     magrittr,
     testthat (>= 1.0.2)
 Imports:
-    googleAuthR (>= 0.2.0.9000)
+    googleAuthR (>= 0.3.0)
 RoxygenNote: 5.0.1
