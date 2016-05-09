@@ -20,7 +20,8 @@ Imports:
     jsonlite,
     testthat (>= 1.0.2)
 Suggests:
-    knitr
+    knitr,
+    rmarkdown
 License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr

@@ -1,15 +1,17 @@
-# googleAnalyticsR
-[![Travis-CI Build Status](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master)](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR)
+---
+title: "googleAnalyticsR"
+author: "Mark Edmondson"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
-[googleAnalyticsR website](http://code.markedmondson.me/googleAnalyticsR)
+[googleAnalyticsR guide online](http://code.markedmondson.me/googleAnalyticsR)
 
 A new Google Analytics R library using the new v4 of the Google Analytics Reporting API.  Built using [`googleAuthR`](https://github.com/MarkEdmondson1234/googleAuthR). The successor to [`shinyga`](https://github.com/MarkEdmondson1234/shinyga) it allows online OAuth2 authentication within Shiny apps, along with new features such as batching and compatibility with other Google APIs.
-
-## Wasson?
-
-Work is currently focused on submitting to CRAN.
-
-If you find any bugs please log any problems here in the issues tracker.
 
 ## Other GA R libraries
 
