@@ -8,11 +8,12 @@
 #' @param sort How to sort the results, in form 'ga:sessions,-ga:bounceRate'
 #' @param filters Filters for the result, in form 'ga:sessions>0;ga:pagePath=~blah'
 #' @param segment How to segment.
-#' @param samplingLevel. Choose "WALK" to do an API call per day to mitigate against sampling.
+#' @param samplingLevel Choose "WALK" to mitigate against sampling.
 #' @param max_results Default 100. If greater than 10,000 then will batch GA calls.
-#' @param type ga = google Analytics; mcf = Multi-Channel Funels.
+#' @param type ga = Google Analytics v3; mcf = Multi-Channel Funels.
 #'
-#' @return For one id a data.frame of data, with meta-data in attributes.  For multiple id, a list of dataframes.
+#' @return For one id a data.frame of data, with meta-data in attributes.  
+#'   For multiple id's, a list of dataframes.
 #' 
 #' @seealso https://developers.google.com/analytics/devguides/reporting/core/v3/
 #' 
@@ -27,7 +28,10 @@ google_analytics <- function(id,
                              sort=NULL,
                              filters=NULL,
                              segment=NULL,
-                             samplingLevel=c("DEFAULT", "FASTER","HIGHER_PRECISION", "WALK"),
+                             samplingLevel=c("DEFAULT", 
+                                             "FASTER",
+                                             "HIGHER_PRECISION", 
+                                             "WALK"),
                              max_results=100,
                              type = c("ga", "mcf")) {
   

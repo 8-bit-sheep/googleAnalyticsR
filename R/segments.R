@@ -190,7 +190,8 @@ segment_vector_sequence <- function(segment_elements,
 #' @param comparisonValue [met] What the name shall compare to
 #' @param matchType If used in sequence segment, what behaviour
 #'
-#' @return An SegmentFilterClause object for use in a vector passed to \link{segment_vector}
+#' @return An SegmentFilterClause object
+#' 
 #' @family v4 segment functions
 #' @export
 segment_element <- function(name,

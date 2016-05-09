@@ -36,7 +36,7 @@ segment_element(name, operator = c("REGEXP", "BEGINS_WITH", "ENDS_WITH",
 \item{matchType}{If used in sequence segment, what behaviour}
 }
 \value{
-An SegmentFilterClause object for use in a vector passed to \link{segment_vector}
+An SegmentFilterClause object
 }
 \description{
 \code{segment_element} is the lowest heirarchy of segment creation, for which you will also need:

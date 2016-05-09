@@ -26,14 +26,15 @@ google_analytics(id, start, end, metrics = c("sessions", "bounceRate"),
 
 \item{segment}{How to segment.}
 
+\item{samplingLevel}{Choose "WALK" to mitigate against sampling.}
+
 \item{max_results}{Default 100. If greater than 10,000 then will batch GA calls.}
 
-\item{type}{ga = google Analytics; mcf = Multi-Channel Funels.}
-
-\item{samplingLevel.}{Choose "WALK" to do an API call per day to mitigate against sampling.}
+\item{type}{ga = Google Analytics v3; mcf = Multi-Channel Funels.}
 }
 \value{
-For one id a data.frame of data, with meta-data in attributes.  For multiple id, a list of dataframes.
+For one id a data.frame of data, with meta-data in attributes.  
+  For multiple id's, a list of dataframes.
 }
 \description{
 Get Google Analytics v3 data
