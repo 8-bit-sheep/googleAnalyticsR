@@ -46,8 +46,15 @@ segment_ga4 <- function(name,
 #' 
 #' Defines the segment to be a set of SegmentFilters 
 #'   which are combined together with a logical AND operation.
+#'   
+#' \code{segment_define} is in the heirarchy of segment creation, for which you will also need:
+#' \itemize{
+#'  \item \link{segment_define} : AND combination of segmentFilters
+#'  \item \link{segment_vector_simple} or \link{segment_vector_sequence}
+#'  \item \link{segment_element} that are combined in OR lists for \code{segment_vectors_*}
+#' }
 #' 
-#' @param segmentFilters A list of \link{segment_vector_simple} and \link{segment_vector_sequence}
+#' @param segment_filters A list of \link{segment_vector_simple} and \link{segment_vector_sequence}
 #' @param not_vector Boolean applied to each segmentFilter step. 
 #'   If NULL, assumed FALSE
 #' 
@@ -91,6 +98,13 @@ segment_define <- function(segment_filters,
 
 #' Make a simple segment vector
 #' 
+#' \code{segment_vector_simple} is in the heirarchy of segment creation, for which you will also need:
+#' \itemize{
+#'  \item \link{segment_define} : AND combination of segmentFilters
+#'  \item \link{segment_vector_simple} or \link{segment_vector_sequence}
+#'  \item \link{segment_element} that are combined in OR lists for \code{segment_vectors_*}
+#' }
+#' 
 #' @param segment_elements A list of OR lists of \link{segment_element}
 #' 
 #' @return A segment vector you can put in a list for use in \link{segment_ga4}
@@ -117,6 +131,14 @@ makeOrFilters <- function(segment_element_list){
 }
 
 #' Make sequenceSegment
+#' 
+#' 
+#' \code{segment_vector_sequence} is in the heirarchy of segment creation, for which you will also need:
+#' \itemize{
+#'  \item \link{segment_define} : AND combination of segmentFilters
+#'  \item \link{segment_vector_simple} or \link{segment_vector_sequence}
+#'  \item \link{segment_element} that are combined in OR lists for \code{segment_vectors_*}
+#' }
 #' 
 #' @param segment_elements a list of OR lists of segment elements
 #' @param stepMatchList a list same length as segment_elements of
@@ -149,9 +171,12 @@ segment_vector_sequence <- function(segment_elements,
 
 #' Make a segment element
 #' 
-#' Define the segment steps here, then combine into a vector and pass to \link{segment_vector}
-#'   which in turn is combined into a list for \link{segment_ga4} 
-#'   to finally be passed as a list to \link{google_analytics_4}
+#' \code{segment_element} is the lowest heirarchy of segment creation, for which you will also need:
+#' \itemize{
+#'  \item \link{segment_define} : AND combination of segmentFilters
+#'  \item \link{segment_vector_simple} or \link{segment_vector_sequence}
+#'  \item \link{segment_element} that are combined in OR lists for \code{segment_vectors_*}
+#' }
 #'
 #' @param name Name of the GA metric or dimension to segment on
 #' @param operator How name shall operate on expression or comparisonValue

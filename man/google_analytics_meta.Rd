@@ -13,6 +13,6 @@ dataframe of dimensions and metrics available to use
 Get current dimensions and metrics available in GA API.
 }
 \seealso{
-\link{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}
+\url{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}
 }
 

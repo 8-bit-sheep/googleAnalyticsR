@@ -23,5 +23,4 @@ Make an OrderType object
 \details{
 For multiple order sorting, create seperate OrderType objects to pass
 }
-\keyword{internal}
 

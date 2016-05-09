@@ -116,6 +116,7 @@ google_analytics_4_parse <- function(x){
 #' 
 #' @param x The account summary items
 #' @import tidyjson
+#' @importFrom jsonlite toJSON
 #' @keywords internal
 parse_ga_account_summary <- function(x){
   

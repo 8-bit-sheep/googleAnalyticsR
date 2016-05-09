@@ -11,6 +11,8 @@
 #' @param dimensions Dimensions to fetch.
 #' @param dim_filters A \link{filter_clause_ga4} wrapping \link{dim_filter}
 #' @param met_filters A \link{filter_clause_ga4} wrapping \link{met_filter}
+#' @param filtersExpression A v3 API style simple filter string. Not used with other filters. 
+#' @param order An \link{order_type} object
 #' @param segments List of segments as created by \link{segment_ga4}
 #' @param pivots Pivots of the data as created by \link{pivot_ga4}
 #' @param cohorts Cohorts created by \link{make_cohort_group}
@@ -74,7 +76,7 @@ make_ga_4_req <- function(viewId,
                           dim_filters=NULL,
                           met_filters=NULL,
                           filtersExpression=NULL,
-                          orderBys=NULL,
+                          order=NULL,
                           segments=NULL,
                           pivots=NULL,
                           cohorts=NULL,
@@ -115,9 +117,9 @@ make_ga_4_req <- function(viewId,
   met_list <- metric_ga4(metrics, metricFormat)
 
   # order the dimensions if histograms
-  if(all(is.null(orderBys), !is.null(histogramBuckets))){
+  if(all(is.null(order), !is.null(histogramBuckets))){
     bys <- intersect(dimensions, names(histogramBuckets))
-    orderBys <- lapply(bys,
+    order <- lapply(bys,
                        order_type,
                        FALSE,
                        "HISTOGRAM_BUCKET")
@@ -138,7 +140,7 @@ make_ga_4_req <- function(viewId,
         dimensionFilterClauses = dim_filters,
         metricFilterClauses = met_filters,
         filtersExpression = filtersExpression,
-        orderBys = orderBys,
+        orderBys = order,
         segments = segments,
         pivots = pivots,
         cohortGroup=cohorts,
@@ -171,10 +173,10 @@ google_analytics_4 <- function(viewId,
                                date_range=NULL,
                                metrics=NULL,
                                dimensions=NULL,
-                               date_range_two=NULL,
                                dim_filters=NULL,
                                met_filters=NULL,
                                filtersExpression=NULL,
+                               order=NULL,
                                segments=NULL,
                                pivots=NULL,
                                cohorts=NULL,
@@ -208,6 +210,7 @@ google_analytics_4 <- function(viewId,
                              dim_filters=dim_filters,
                              met_filters=met_filters,
                              filtersExpression = filtersExpression,
+                             order=order,
                              segments=segments,
                              pivots=pivots,
                              cohorts=cohorts,
@@ -248,6 +251,7 @@ google_analytics_4 <- function(viewId,
                          dim_filters=dim_filters,
                          met_filters=met_filters,
                          filtersExpression = filtersExpression,
+                         order=order,
                          segments=segments,
                          pivots=pivots,
                          cohorts=cohorts,
@@ -268,7 +272,7 @@ google_analytics_4 <- function(viewId,
 #' 
 #' Fetch the GAv4 requests as created by \link{make_ga_4_req}
 #'
-#' @param requests A list of requests created by \link{make_ga_4_req}
+#' @param request_list A list of requests created by \link{make_ga_4_req}
 #'
 #' @return A dataframe if one request, or a list of data.frames if multiple.
 #'

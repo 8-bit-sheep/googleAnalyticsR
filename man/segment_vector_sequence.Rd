@@ -17,7 +17,12 @@ If omitted, assumed all to be "PRECEDES"}
 \item{firstStepMatch}{FALSE default}
 }
 \description{
-Make sequenceSegment
+\code{segment_vector_sequence} is in the heirarchy of segment creation, for which you will also need:
+\itemize{
+ \item \link{segment_define} : AND combination of segmentFilters
+ \item \link{segment_vector_simple} or \link{segment_vector_sequence}
+ \item \link{segment_element} that are combined in OR lists for \code{segment_vectors_*}
+}
 }
 \seealso{
 Other v4 segment functions: \code{\link{dynamicSegment}},

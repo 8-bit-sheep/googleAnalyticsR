@@ -39,9 +39,12 @@ segment_element(name, operator = c("REGEXP", "BEGINS_WITH", "ENDS_WITH",
 An SegmentFilterClause object for use in a vector passed to \link{segment_vector}
 }
 \description{
-Define the segment steps here, then combine into a vector and pass to \link{segment_vector}
-  which in turn is combined into a list for \link{segment_ga4} 
-  to finally be passed as a list to \link{google_analytics_4}
+\code{segment_element} is the lowest heirarchy of segment creation, for which you will also need:
+\itemize{
+ \item \link{segment_define} : AND combination of segmentFilters
+ \item \link{segment_vector_simple} or \link{segment_vector_sequence}
+ \item \link{segment_element} that are combined in OR lists for \code{segment_vectors_*}
+}
 }
 \seealso{
 Other v4 segment functions: \code{\link{dynamicSegment}},

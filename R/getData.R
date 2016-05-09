@@ -7,7 +7,7 @@
 #' @param dimensions A character vector of dimensions. With or without ga: prefix.
 #' @param sort How to sort the results, in form 'ga:sessions,-ga:bounceRate'
 #' @param filters Filters for the result, in form 'ga:sessions>0;ga:pagePath=~blah'
-#' @param segment How to segment
+#' @param segment How to segment.
 #' @param samplingLevel. Choose "WALK" to do an API call per day to mitigate against sampling.
 #' @param max_results Default 100. If greater than 10,000 then will batch GA calls.
 #' @param type ga = google Analytics; mcf = Multi-Channel Funels.
@@ -108,7 +108,7 @@ google_analytics <- function(id,
 #'
 #' @return dataframe of dimensions and metrics available to use
 #'
-#' @seealso \link{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}
+#' @seealso \url{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}
 #' 
 #' @importFrom googleAuthR gar_api_generator
 #' 

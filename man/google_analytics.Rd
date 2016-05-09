@@ -24,7 +24,7 @@ google_analytics(id, start, end, metrics = c("sessions", "bounceRate"),
 
 \item{filters}{Filters for the result, in form 'ga:sessions>0;ga:pagePath=~blah'}
 
-\item{segment}{How to segment}
+\item{segment}{How to segment.}
 
 \item{max_results}{Default 100. If greater than 10,000 then will batch GA calls.}
 

@@ -49,7 +49,6 @@ expect_list_of_type <- function(listthing, types, null_ok=FALSE){
     }, listthing, types)
   
   if(!any(res)){
-    str(listthing)
     stop(paste(types, collapse = " "), " is not found in list")
   }
   
@@ -75,7 +74,6 @@ expect_list_of_class <- function(listthing, types, null_ok=FALSE){
   }, listthing, types)
   
   if(!any(res)){
-    str(listthing)
     stop(paste(types, collapse = " "), " is not found in list")
   }
   
@@ -102,7 +100,6 @@ expect_list_of_this <- function(f, listthing, types, null_ok=FALSE){
   }, listthing, types)
   
   if(!any(res)){
-    str(listthing)
     stop(paste(types, collapse = " "), " is not found in list")
   }
   

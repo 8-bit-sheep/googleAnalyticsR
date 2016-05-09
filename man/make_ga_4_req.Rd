@@ -6,7 +6,7 @@
 \usage{
 make_ga_4_req(viewId, date_range = NULL, metrics = NULL,
   dimensions = NULL, dim_filters = NULL, met_filters = NULL,
-  filtersExpression = NULL, orderBys = NULL, segments = NULL,
+  filtersExpression = NULL, order = NULL, segments = NULL,
   pivots = NULL, cohorts = NULL, pageToken = 1, pageSize = 1000,
   samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
   histogramBuckets = NULL)
@@ -24,6 +24,10 @@ for two date ranges: \code{c(start1,end1,start2,end2)}}
 \item{dim_filters}{A \link{filter_clause_ga4} wrapping \link{dim_filter}}
 
 \item{met_filters}{A \link{filter_clause_ga4} wrapping \link{met_filter}}
+
+\item{filtersExpression}{A v3 API style simple filter string. Not used with other filters.}
+
+\item{order}{An \link{order_type} object}
 
 \item{segments}{List of segments as created by \link{segment_ga4}}
 

@@ -106,7 +106,7 @@ metric_ga4 <- function(vector, metricFormat=NULL){
 #'
 #' @details For multiple order sorting, create seperate OrderType objects to pass
 #'
-#' @keywords internal
+#' @export
 order_type <- function(field,
                        descending = FALSE,
                        orderType = c("VALUE",
