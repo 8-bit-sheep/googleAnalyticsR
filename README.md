@@ -33,10 +33,16 @@ These are all great libraries, that I have taken inspiration from.
 
 ## Install
 
-Development version - needs version > `0.2.0.9000` of `googleAuthR` too until the latest changes are on CRAN
+You need the version > `0.3.0` of `googleAuthR` too:
 
+```r
+install.packages("googleAuthR")
+install.packages("googleAnalyticsR")
 ```
-devtools::install_github("MarkEdmondson1234/googleAuthR")
+
+### Development version off github
+
+```r
 devtools::install_github("MarkEdmondson1234/googleAnalyticsR")
 ```
 
