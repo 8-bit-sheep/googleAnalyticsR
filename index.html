@@ -1,0 +1,506 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>googleAnalyticsR by MarkEdmondson1234</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>googleAnalyticsR</h1>
+        <p>A new Google Analytics R library using googleAuthR and v4 of the reporting API</p>
+
+        <p class="view"><a href="https://github.com/MarkEdmondson1234/googleAnalyticsR">View the Project on GitHub <small>MarkEdmondson1234/googleAnalyticsR</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/MarkEdmondson1234/googleAnalyticsR">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="googleanalyticsr" class="anchor" href="#googleanalyticsr" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>googleAnalyticsR</h1>
+
+<p><a href="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR"><img src="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master" alt="Travis-CI Build Status"></a></p>
+
+<p>A new Google Analytics R library using the new v4 of the Google Analytics Reporting API.  Built using <a href="https://github.com/MarkEdmondson1234/googleAuthR"><code>googleAuthR</code></a>. The successor to <a href="https://github.com/MarkEdmondson1234/shinyga"><code>shinyga</code></a> it allows online OAuth2 authentication within Shiny apps, along with new features such as batching and compatibility with other Google APIs.</p>
+
+<h2>
+<a id="other-ga-r-libraries" class="anchor" href="#other-ga-r-libraries" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Other GA R libraries</h2>
+
+<p>These are all great libraries, that I have taken inspiration from.</p>
+
+<ul>
+<li><a href="https://github.com/skardhamar/rga">rga</a></li>
+<li><a href="https://bitbucket.org/unikum/rga">RGA</a></li>
+<li><a href="https://github.com/Tatvic/RGoogleAnalytics">RGoogleAnalytics</a></li>
+<li><a href="https://github.com/jdeboer/ganalytics">ganalytics</a></li>
+<li><a href="https://github.com/andrewgeisler/GAR">GAR</a></li>
+</ul>
+
+<h2>
+<a id="why-do-we-need-another-ga-library" class="anchor" href="#why-do-we-need-another-ga-library" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why do we need another GA library?</h2>
+
+<ul>
+<li>First Google Analytics Reporting v4 API library for R</li>
+<li>v4 features include: dynamic calculated metrics, pivots, histograms, date comparisons, batching.</li>
+<li>Shiny App compatible</li>
+<li>The same authentication flow can be used with other <code>googleAuthR</code> apps like <a href="https://github.com/MarkEdmondson1234/searchConsoleR"><code>searchConsoleR</code></a>
+</li>
+<li>Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnnel</li>
+<li>Support for <code>googleAuthR</code> batch, meaning 10 calls at once to GA - great for big fetches.  For big data calls this is implemented automatically so could be 10x quicker than normal GA fetching</li>
+<li>Meta data included in attributes of returned dataframe including date ranges, totals, min and max</li>
+</ul>
+
+<h2>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h2>
+
+<p>Development version - needs version &gt; <code>0.2.0.9000</code> of <code>googleAuthR</code> too until the latest changes are on CRAN</p>
+
+<pre><code>devtools::install_github("MarkEdmondson1234/googleAuthR")
+devtools::install_github("MarkEdmondson1234/googleAnalyticsR")
+</code></pre>
+
+<h2>
+<a id="to-use---v4-api-calls" class="anchor" href="#to-use---v4-api-calls" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>To use - v4 API calls</h2>
+
+<p>Todo.  But check out <code>?google_analytics_4</code> and these example queries:</p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-c">## setup</span>
+library(<span class="pl-smi">googleAnalyticsR</span>)
+
+<span class="pl-c">## authenticate, or use the RStudio Addin "Google API Auth" with analytics scopes set</span>
+ga_auth()
+
+<span class="pl-c">## get your accounts</span>
+<span class="pl-smi">account_list</span> <span class="pl-k">&lt;-</span> google_analytics_account_list()
+
+<span class="pl-c">## pick a profile with data to query</span>
+<span class="pl-smi">ga_id</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">account_list</span>[<span class="pl-c1">23</span>,<span class="pl-s"><span class="pl-pds">'</span>viewId<span class="pl-pds">'</span></span>]
+</pre></div>
+
+<h3>
+<a id="new-filter-syntax" class="anchor" href="#new-filter-syntax" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>New Filter Syntax</h3>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-c">## create filters on metrics</span>
+<span class="pl-smi">mf</span> <span class="pl-k">&lt;-</span> met_filter(<span class="pl-s"><span class="pl-pds">"</span>bounces<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>GREATER_THAN<span class="pl-pds">"</span></span>, <span class="pl-c1">0</span>)
+<span class="pl-smi">mf2</span> <span class="pl-k">&lt;-</span> met_filter(<span class="pl-s"><span class="pl-pds">"</span>sessions<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>GREATER<span class="pl-pds">"</span></span>, <span class="pl-c1">2</span>)
+
+<span class="pl-c">## create filters on dimensions</span>
+<span class="pl-smi">df</span> <span class="pl-k">&lt;-</span> dim_filter(<span class="pl-s"><span class="pl-pds">"</span>source<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>BEGINS_WITH<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>,<span class="pl-v">not</span> <span class="pl-k">=</span> <span class="pl-c1">TRUE</span>)
+<span class="pl-smi">df2</span> <span class="pl-k">&lt;-</span> dim_filter(<span class="pl-s"><span class="pl-pds">"</span>source<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>BEGINS_WITH<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>,<span class="pl-v">not</span> <span class="pl-k">=</span> <span class="pl-c1">TRUE</span>)
+
+<span class="pl-c">## construct filter objects</span>
+<span class="pl-smi">fc2</span> <span class="pl-k">&lt;-</span> filter_clause_ga4(<span class="pl-k">list</span>(<span class="pl-smi">df</span>, <span class="pl-smi">df2</span>), <span class="pl-v">operator</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>AND<span class="pl-pds">"</span></span>)
+<span class="pl-smi">fc</span> <span class="pl-k">&lt;-</span> filter_clause_ga4(<span class="pl-k">list</span>(<span class="pl-smi">mf</span>, <span class="pl-smi">mf2</span>), <span class="pl-v">operator</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>AND<span class="pl-pds">"</span></span>)
+
+<span class="pl-c">## make v4 request</span>
+<span class="pl-c">## demo showing how the new filters work</span>
+<span class="pl-smi">ga_data1</span> <span class="pl-k">&lt;-</span> google_analytics_4(<span class="pl-smi">ga_id</span>, 
+                              <span class="pl-v">date_range</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>2015-07-30<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2015-10-01<span class="pl-pds">"</span></span>),
+                              <span class="pl-v">dimensions</span><span class="pl-k">=</span>c(<span class="pl-s"><span class="pl-pds">'</span>source<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>medium<span class="pl-pds">'</span></span>), 
+                              <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">'</span>sessions<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>bounces<span class="pl-pds">'</span></span>), 
+                              <span class="pl-v">met_filters</span> <span class="pl-k">=</span> <span class="pl-smi">fc</span>, 
+                              <span class="pl-v">dim_filters</span> <span class="pl-k">=</span> <span class="pl-smi">fc2</span>, 
+                              <span class="pl-v">filtersExpression</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>ga:source!=(direct)<span class="pl-pds">"</span></span>)
+
+<span class="pl-smi">ga_data1</span>
+
+<span class="pl-c">#                     source   medium sessions bounces</span>
+<span class="pl-c"># 1                  baby.dk referral        3       2</span>
+<span class="pl-c"># 2                     bing  organic       71      42</span>
+<span class="pl-c"># 3  buttons-for-website.com referral        7       7</span>
+<span class="pl-c"># 4           duckduckgo.com referral        5       3</span>
+<span class="pl-c"># 5                   google  organic      642     520</span>
+<span class="pl-c"># 6                google.se referral        3       2</span>
+<span class="pl-c"># 7                 izito.se referral        3       1</span>
+<span class="pl-c"># 8          success-seo.com referral       35      35</span>
+<span class="pl-c"># 9    video--production.com referral       11      11</span>
+<span class="pl-c"># 10                   yahoo  organic       66      43</span>
+<span class="pl-c"># 11              zapmeta.se referral        6       4</span></pre></div>
+
+<h3>
+<a id="querying-multiple-report-types-at-a-time" class="anchor" href="#querying-multiple-report-types-at-a-time" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Querying multiple report types at a time</h3>
+
+<p>Example with two date ranges and two reports.</p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-c">## demo of querying two date ranges at a time   </span>
+<span class="pl-c">## we make the request via make_ga_4_req() to use in next demo</span>
+<span class="pl-smi">multidate_test</span> <span class="pl-k">&lt;-</span> make_ga_4_req(<span class="pl-smi">ga_id</span>, 
+                                <span class="pl-v">date_range</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>2015-07-30<span class="pl-pds">"</span></span>,
+                                               <span class="pl-s"><span class="pl-pds">"</span>2015-10-01<span class="pl-pds">"</span></span>,
+                                               <span class="pl-s"><span class="pl-pds">"</span>2014-07-30<span class="pl-pds">"</span></span>,
+                                               <span class="pl-s"><span class="pl-pds">"</span>2014-10-01<span class="pl-pds">"</span></span>),
+                                <span class="pl-v">dimensions</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">'</span>source<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>medium<span class="pl-pds">'</span></span>), 
+                                <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">'</span>sessions<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>bounces<span class="pl-pds">'</span></span>))
+
+<span class="pl-smi">ga_data2</span> <span class="pl-k">&lt;-</span> fetch_google_analytics_4(<span class="pl-smi">multidate_test</span>)
+<span class="pl-smi">ga_data2</span>
+<span class="pl-c">#                     source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2</span>
+<span class="pl-c"># 1                  baby.dk referral           3          2           6          3</span>
+<span class="pl-c"># 2                     bing  organic          71         42         217        126</span>
+<span class="pl-c"># 3  buttons-for-website.com referral           7          7           0          0</span>
+<span class="pl-c"># 4           duckduckgo.com referral           5          3           0          0</span>
+<span class="pl-c"># 5                   google  organic         642        520        1286        920</span>
+<span class="pl-c"># 6                google.se referral           3          2          12          9</span>
+<span class="pl-c"># 7                 izito.se referral           3          1           0          0</span>
+<span class="pl-c"># 8          success-seo.com referral          35         35           0          0</span>
+<span class="pl-c"># 9    video--production.com referral          11         11           0          0</span>
+<span class="pl-c"># 10                   yahoo  organic          66         43         236        178</span>
+<span class="pl-c"># 11              zapmeta.se referral           6          4           9          4</span>
+
+
+<span class="pl-c">## Demo querying two reports at the same time</span>
+<span class="pl-c">## Use make_ga_4_req() to make multiple requests and then send </span>
+<span class="pl-c">##   them as a list to fetch_google_analytics_4()</span>
+<span class="pl-smi">multi_test2</span> <span class="pl-k">&lt;-</span> make_ga_4_req(<span class="pl-smi">ga_id</span>,
+                                <span class="pl-v">date_range</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>2015-07-30<span class="pl-pds">"</span></span>,
+                                               <span class="pl-s"><span class="pl-pds">"</span>2015-10-01<span class="pl-pds">"</span></span>,
+                                               <span class="pl-s"><span class="pl-pds">"</span>2014-07-30<span class="pl-pds">"</span></span>,
+                                               <span class="pl-s"><span class="pl-pds">"</span>2014-10-01<span class="pl-pds">"</span></span>),
+                             <span class="pl-v">dimensions</span><span class="pl-k">=</span>c(<span class="pl-s"><span class="pl-pds">'</span>hour<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>medium<span class="pl-pds">'</span></span>), 
+                             <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">'</span>visitors<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>bounces<span class="pl-pds">'</span></span>))
+
+<span class="pl-c">## all requests must have same viewID and dateRange</span>
+<span class="pl-smi">ga_data3</span> <span class="pl-k">&lt;-</span> fetch_google_analytics_4(<span class="pl-k">list</span>(<span class="pl-smi">multidate_test</span>, <span class="pl-smi">multi_test2</span>)) 
+<span class="pl-smi">ga_data3</span>
+<span class="pl-c"># [[1]]</span>
+<span class="pl-c">#                     source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2</span>
+<span class="pl-c"># 1                  baby.dk referral           3          2           6          3</span>
+<span class="pl-c"># 2                     bing  organic          71         42         217        126</span>
+<span class="pl-c"># 3  buttons-for-website.com referral           7          7           0          0</span>
+<span class="pl-c"># 4           duckduckgo.com referral           5          3           0          0</span>
+<span class="pl-c"># 5                   google  organic         642        520        1286        920</span>
+<span class="pl-c"># 6                google.se referral           3          2          12          9</span>
+<span class="pl-c"># 7                 izito.se referral           3          1           0          0</span>
+<span class="pl-c"># 8          success-seo.com referral          35         35           0          0</span>
+<span class="pl-c"># 9    video--production.com referral          11         11           0          0</span>
+<span class="pl-c"># 10                   yahoo  organic          66         43         236        178</span>
+<span class="pl-c"># 11              zapmeta.se referral           6          4           9          4</span>
+<span class="pl-c"># </span>
+<span class="pl-c"># [[2]]</span>
+<span class="pl-c">#    hour   medium visitors.d1 bounces.d1 visitors.d2 bounces.d2</span>
+<span class="pl-c"># 1    00  organic          28         16          85         59</span>
+<span class="pl-c"># 2    00 referral           3          2           1          1</span>
+<span class="pl-c"># 3    01  organic          43         28          93         66</span>
+
+</pre></div>
+
+<h3>
+<a id="on-the-fly-calculated-metrics" class="anchor" href="#on-the-fly-calculated-metrics" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>On-the-fly calculated metrics</h3>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-smi">ga_data4</span> <span class="pl-k">&lt;-</span> google_analytics_4(<span class="pl-smi">ga_id</span>,
+                               <span class="pl-v">date_range</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>2015-07-30<span class="pl-pds">"</span></span>,
+                                              <span class="pl-s"><span class="pl-pds">"</span>2015-10-01<span class="pl-pds">"</span></span>),
+                              <span class="pl-v">dimensions</span><span class="pl-k">=</span>c(<span class="pl-s"><span class="pl-pds">'</span>medium<span class="pl-pds">'</span></span>), 
+                              <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-v">visitsPerVisitor</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>ga:visits/ga:visitors<span class="pl-pds">"</span></span>,
+                                          <span class="pl-s"><span class="pl-pds">'</span>bounces<span class="pl-pds">'</span></span>), 
+                              <span class="pl-v">metricFormat</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>FLOAT<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>INTEGER<span class="pl-pds">"</span></span>))
+<span class="pl-smi">ga_data4</span>
+<span class="pl-c">#     medium visitsPerVisitor bounces</span>
+<span class="pl-c"># 1   (none)         1.000000     117</span>
+<span class="pl-c"># 2  organic         1.075137     612</span>
+<span class="pl-c"># 3 referral         1.012500      71</span></pre></div>
+
+<h3>
+<a id="segments-v4" class="anchor" href="#segments-v4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Segments v4</h3>
+
+<p>Segments are more complex to configure that v3, but more powerful and in line to how you configure them in the UI</p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-c">## make a segment element</span>
+<span class="pl-smi">se</span> <span class="pl-k">&lt;-</span> segment_element(<span class="pl-s"><span class="pl-pds">"</span>sessions<span class="pl-pds">"</span></span>, 
+                      <span class="pl-v">operator</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>GREATER_THAN<span class="pl-pds">"</span></span>, 
+                      <span class="pl-v">type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>metric<span class="pl-pds">"</span></span>, 
+                      <span class="pl-v">comparisonValue</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>, 
+                      <span class="pl-v">scope</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>USER<span class="pl-pds">"</span></span>)
+
+<span class="pl-smi">se2</span> <span class="pl-k">&lt;-</span> segment_element(<span class="pl-s"><span class="pl-pds">"</span>medium<span class="pl-pds">"</span></span>, 
+                      <span class="pl-v">operator</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>EXACT<span class="pl-pds">"</span></span>, 
+                      <span class="pl-v">type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>dimension<span class="pl-pds">"</span></span>, 
+                      <span class="pl-v">expressions</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>organic<span class="pl-pds">"</span></span>)
+
+<span class="pl-c">## choose between segment_vector_simple or segment_vector_sequence</span>
+<span class="pl-c">## Elements can be combined into clauses, which can then be combined into OR filter clauses</span>
+<span class="pl-smi">sv_simple</span> <span class="pl-k">&lt;-</span> segment_vector_simple(<span class="pl-k">list</span>(<span class="pl-k">list</span>(<span class="pl-smi">se</span>)))
+
+<span class="pl-smi">sv_simple2</span> <span class="pl-k">&lt;-</span> segment_vector_simple(<span class="pl-k">list</span>(<span class="pl-k">list</span>(<span class="pl-smi">se2</span>)))
+
+<span class="pl-c">## Each segment vector can then be combined into a logical AND</span>
+<span class="pl-smi">seg_defined</span> <span class="pl-k">&lt;-</span> segment_define(<span class="pl-k">list</span>(<span class="pl-smi">sv_simple</span>, <span class="pl-smi">sv_simple2</span>))
+
+<span class="pl-c">## if only one AND definition, you can leave out wrapper list()</span>
+<span class="pl-smi">seg_defined_one</span> <span class="pl-k">&lt;-</span> segment_define(<span class="pl-smi">sv_simple</span>)
+
+
+<span class="pl-c">## Each segement defintion can apply to users, sessions or both.</span>
+<span class="pl-c">## You can pass a list of several segments</span>
+<span class="pl-smi">segment4</span> <span class="pl-k">&lt;-</span> segment_ga4(<span class="pl-s"><span class="pl-pds">"</span>simple<span class="pl-pds">"</span></span>, <span class="pl-v">user_segment</span> <span class="pl-k">=</span> <span class="pl-smi">seg_defined</span>)
+
+<span class="pl-c">## Add the segments to the segments param</span>
+<span class="pl-smi">segment_example</span> <span class="pl-k">&lt;-</span> google_analytics_4(<span class="pl-smi">ga_id</span>, 
+                                      c(<span class="pl-s"><span class="pl-pds">"</span>2015-07-30<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2015-10-01<span class="pl-pds">"</span></span>), 
+                                      <span class="pl-v">dimensions</span><span class="pl-k">=</span>c(<span class="pl-s"><span class="pl-pds">'</span>source<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>medium<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>segment<span class="pl-pds">'</span></span>), 
+                                      <span class="pl-v">segments</span> <span class="pl-k">=</span> <span class="pl-smi">segment4</span>, 
+                                      <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">'</span>sessions<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>bounces<span class="pl-pds">'</span></span>)
+                                      )
+
+<span class="pl-smi">segment_example</span>
+<span class="pl-c">#                            source   medium segment sessions bounces</span>
+<span class="pl-c"># 1                        24.co.uk referral  simple        1       1</span>
+<span class="pl-c"># 2                     aidsmap.com referral  simple        1       0</span>
+<span class="pl-c"># 3                             aol  organic  simple       30      19</span>
+<span class="pl-c"># 4                             ask  organic  simple       32      17</span>
+
+
+<span class="pl-c">## Sequence segment</span>
+
+<span class="pl-smi">se2</span> <span class="pl-k">&lt;-</span> segment_element(<span class="pl-s"><span class="pl-pds">"</span>medium<span class="pl-pds">"</span></span>, 
+                       <span class="pl-v">operator</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>EXACT<span class="pl-pds">"</span></span>, 
+                       <span class="pl-v">type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>dimension<span class="pl-pds">"</span></span>, 
+                       <span class="pl-v">expressions</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>organic<span class="pl-pds">"</span></span>)
+
+<span class="pl-smi">se3</span> <span class="pl-k">&lt;-</span> segment_element(<span class="pl-s"><span class="pl-pds">"</span>medium<span class="pl-pds">"</span></span>,
+                       <span class="pl-v">operator</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>EXACT<span class="pl-pds">"</span></span>,
+                       <span class="pl-v">type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>dimension<span class="pl-pds">"</span></span>,
+                       <span class="pl-v">not</span> <span class="pl-k">=</span> <span class="pl-c1">TRUE</span>,
+                       <span class="pl-v">expressions</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>organic<span class="pl-pds">"</span></span>)
+
+<span class="pl-c">## step sequence</span>
+<span class="pl-c">## users who arrived via organic then via referral</span>
+<span class="pl-smi">sv_sequence</span> <span class="pl-k">&lt;-</span> segment_vector_sequence(<span class="pl-k">list</span>(<span class="pl-k">list</span>(<span class="pl-smi">se2</span>), 
+                                             <span class="pl-k">list</span>(<span class="pl-smi">se3</span>)))
+
+<span class="pl-smi">seq_defined2</span> <span class="pl-k">&lt;-</span> segment_define(<span class="pl-k">list</span>(<span class="pl-smi">sv_sequence</span>))
+
+<span class="pl-smi">segment4_seq</span> <span class="pl-k">&lt;-</span> segment_ga4(<span class="pl-s"><span class="pl-pds">"</span>sequence<span class="pl-pds">"</span></span>, <span class="pl-v">user_segment</span> <span class="pl-k">=</span> <span class="pl-smi">seq_defined2</span>)
+
+<span class="pl-c">## Add the segments to the segments param</span>
+<span class="pl-smi">segment_seq_example</span> <span class="pl-k">&lt;-</span> google_analytics_4(<span class="pl-smi">ga_id</span>, 
+                                          c(<span class="pl-s"><span class="pl-pds">"</span>2016-04-01<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2016-05-01<span class="pl-pds">"</span></span>), 
+                                          <span class="pl-v">dimensions</span><span class="pl-k">=</span>c(<span class="pl-s"><span class="pl-pds">'</span>source<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>segment<span class="pl-pds">'</span></span>), 
+                                          <span class="pl-v">segments</span> <span class="pl-k">=</span> <span class="pl-smi">segment4_seq</span>,
+                                          <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">'</span>sessions<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>bounces<span class="pl-pds">'</span></span>)
+                                          )
+<span class="pl-smi">segment_seq_example</span>
+<span class="pl-c">#                                source  segment sessions bounces</span>
+<span class="pl-c"># 1                                 aol sequence        1       0</span>
+<span class="pl-c"># 2                                 ask sequence        5       1</span>
+<span class="pl-c"># 3      bestbackpackersinsurance.co.uk sequence        9       6</span>
+<span class="pl-c"># 4                                bing sequence       22       2</span></pre></div>
+
+<h3>
+<a id="cohort-reports" class="anchor" href="#cohort-reports" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cohort reports</h3>
+
+<p>Details on <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohorts">cohort reports and LTV can be found here</a>.</p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-c">## first make a cohort group</span>
+<span class="pl-smi">cohort4</span> <span class="pl-k">&lt;-</span> make_cohort_group(<span class="pl-k">list</span>(<span class="pl-s"><span class="pl-pds">"</span>cohort 1<span class="pl-pds">"</span></span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>2015-08-01<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>2015-08-01<span class="pl-pds">"</span></span>), 
+                                <span class="pl-s"><span class="pl-pds">"</span>cohort 2<span class="pl-pds">"</span></span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>2015-07-01<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2015-07-01<span class="pl-pds">"</span></span>)))
+
+<span class="pl-c">## then call cohort report.  No date_range and must include metrics and dimensions</span>
+<span class="pl-c">##   from the cohort list</span>
+<span class="pl-smi">cohort_example</span> <span class="pl-k">&lt;-</span> google_analytics_4(<span class="pl-smi">ga_id</span>, 
+                                     <span class="pl-v">dimensions</span><span class="pl-k">=</span>c(<span class="pl-s"><span class="pl-pds">'</span>cohort<span class="pl-pds">'</span></span>), 
+                                     <span class="pl-v">cohort</span> <span class="pl-k">=</span> <span class="pl-smi">cohort4</span>, 
+                                     <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">'</span>cohortTotalUsers<span class="pl-pds">'</span></span>))
+
+<span class="pl-smi">cohort_example</span>
+<span class="pl-c">#     cohort cohortTotalUsers</span>
+<span class="pl-c"># 1 cohort 1               14</span>
+<span class="pl-c"># 2 cohort 2               20</span>
+</pre></div>
+
+<h3>
+<a id="pivot-requests" class="anchor" href="#pivot-requests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pivot Requests</h3>
+
+<div class="highlight highlight-source-r"><pre>
+<span class="pl-c">## filter pivot results to </span>
+<span class="pl-smi">pivot_dim_filter1</span> <span class="pl-k">&lt;-</span> dim_filter(<span class="pl-s"><span class="pl-pds">"</span>medium<span class="pl-pds">"</span></span>,
+                                <span class="pl-s"><span class="pl-pds">"</span>REGEXP<span class="pl-pds">"</span></span>,
+                                <span class="pl-s"><span class="pl-pds">"</span>organic|social|email|cpc<span class="pl-pds">"</span></span>)
+
+<span class="pl-smi">pivot_dim_clause</span> <span class="pl-k">&lt;-</span> filter_clause_ga4(<span class="pl-k">list</span>(<span class="pl-smi">pivot_dim_filter1</span>))
+
+<span class="pl-smi">pivme</span> <span class="pl-k">&lt;-</span> pivot_ga4(<span class="pl-s"><span class="pl-pds">"</span>medium<span class="pl-pds">"</span></span>,
+                   <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>sessions<span class="pl-pds">"</span></span>), 
+                   <span class="pl-v">maxGroupCount</span> <span class="pl-k">=</span> <span class="pl-c1">4</span>, 
+                   <span class="pl-v">dim_filter_clause</span> <span class="pl-k">=</span> <span class="pl-smi">pivot_dim_clause</span>)
+
+<span class="pl-smi">pivtest1</span> <span class="pl-k">&lt;-</span> google_analytics_4(<span class="pl-smi">ga_id</span>, 
+                               c(<span class="pl-s"><span class="pl-pds">"</span>2016-01-30<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2016-10-01<span class="pl-pds">"</span></span>), 
+                               <span class="pl-v">dimensions</span><span class="pl-k">=</span>c(<span class="pl-s"><span class="pl-pds">'</span>source<span class="pl-pds">'</span></span>), 
+                               <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">'</span>sessions<span class="pl-pds">'</span></span>), 
+                               <span class="pl-v">pivots</span> <span class="pl-k">=</span> <span class="pl-k">list</span>(<span class="pl-smi">pivme</span>))
+
+
+names(<span class="pl-smi">pivtest1</span>)
+<span class="pl-c">#  [1] "source"                      "sessions"                    "medium.referral.sessions"   </span>
+<span class="pl-c">#  [4] "medium..none..sessions"      "medium.cpc.sessions"         "medium.email.sessions"      </span>
+<span class="pl-c">#  [7] "medium.social.sessions"      "medium.twitter.sessions"     "medium.socialMedia.sessions"</span>
+<span class="pl-c"># [10] "medium.Social.sessions"      "medium.linkedin.sessions"  </span>
+</pre></div>
+
+<h2>
+<a id="to-use---v3-api-calls" class="anchor" href="#to-use---v3-api-calls" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>To use - v3 API calls</h2>
+
+<p>v3 API calls are also tried and tested.</p>
+
+<p>For syntax of filters and dimensions, this library parses in exactly as specified in the <a href="https://developers.google.com/analytics/devguides/reporting/core/v3/reference?hl=en#filters">Google Analytics v3 API docs</a>, so check those out.  Note you do not need to encode symbols, but may have to encode URLs if you are filtering for those in say ga:pagePath</p>
+
+<div class="highlight highlight-source-r"><pre>library(<span class="pl-smi">googleAnalyticsR</span>)
+
+<span class="pl-c">## Authenticate in Google OAuth2</span>
+<span class="pl-c">## this also sets options</span>
+ga_auth()
+
+<span class="pl-c">## if you need to re-authenticate use ga_auth(new_user=TRUE)</span>
+
+<span class="pl-c">## if you have your own Google Dev console project keys, </span>
+<span class="pl-c">## then don't run ga_auth() as that will set the authentication project to the defaults.</span>
+<span class="pl-c">## instead put your options here, and run googleAuthR::gar_auth()</span>
+
+<span class="pl-c">## get account info, including View Ids</span>
+<span class="pl-smi">account_list</span> <span class="pl-k">&lt;-</span> google_analytics_account_list()
+<span class="pl-smi">ga_id</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">account_list</span><span class="pl-k">$</span><span class="pl-smi">viewId</span>[<span class="pl-c1">1</span>]
+
+<span class="pl-c">## get a list of what metrics and dimensions you can use</span>
+<span class="pl-smi">meta</span> <span class="pl-k">&lt;-</span> google_analytics_meta()
+head(<span class="pl-smi">meta</span>)
+
+<span class="pl-c">## pick the account_list$viewId you want to see data for.</span>
+<span class="pl-c">## metrics and dimensions can have or have not "ga:" prefix</span>
+<span class="pl-smi">gadata</span> <span class="pl-k">&lt;-</span> google_analytics(<span class="pl-v">id</span> <span class="pl-k">=</span> <span class="pl-smi">ga_id</span>, 
+                           <span class="pl-v">start</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>2015-08-01<span class="pl-pds">"</span></span>, <span class="pl-v">end</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>2015-08-02<span class="pl-pds">"</span></span>, 
+                           <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>sessions<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>bounceRate<span class="pl-pds">"</span></span>), 
+                           <span class="pl-v">dimensions</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>source<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>medium<span class="pl-pds">"</span></span>))
+
+<span class="pl-c">## multi accounts, pass character vector of viewIds</span>
+<span class="pl-c">## outputs a list of data.frames, named after the viewId</span>
+<span class="pl-smi">multi_gadata</span> <span class="pl-k">&lt;-</span> google_analytics(<span class="pl-v">id</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>123456<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>9876545<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>765432<span class="pl-pds">"</span></span>), 
+                                 <span class="pl-v">start</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>2015-08-01<span class="pl-pds">"</span></span>, <span class="pl-v">end</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>2015-08-02<span class="pl-pds">"</span></span>, 
+                                 <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>sessions<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>bounceRate<span class="pl-pds">"</span></span>), 
+                                 <span class="pl-v">dimensions</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>source<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>medium<span class="pl-pds">"</span></span>))
+
+<span class="pl-c">## if more than 10000 rows in results, auto batching</span>
+<span class="pl-c">## example is setting lots of dimensions to try and create big sampled data</span>
+<span class="pl-smi">batch_gadata</span> <span class="pl-k">&lt;-</span> google_analytics(<span class="pl-v">id</span> <span class="pl-k">=</span> <span class="pl-smi">account_list</span><span class="pl-k">$</span><span class="pl-smi">viewId</span>[<span class="pl-c1">1</span>], 
+                                 <span class="pl-v">start</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>2014-08-01<span class="pl-pds">"</span></span>, <span class="pl-v">end</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>2015-08-02<span class="pl-pds">"</span></span>, 
+                                 <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>sessions<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>bounceRate<span class="pl-pds">"</span></span>), 
+                                 <span class="pl-v">dimensions</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>source<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>medium<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>landingPagePath<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>hour<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>minute<span class="pl-pds">"</span></span>),
+                                 <span class="pl-v">max</span><span class="pl-k">=</span><span class="pl-c1">99999999</span>)
+
+<span class="pl-c">## mitigate sampling by setting samplingLevel="WALK"</span>
+<span class="pl-c">## this will send lots and lots of calls to the Google API limits, beware</span>
+<span class="pl-smi">walk_gadata</span> <span class="pl-k">&lt;-</span> google_analytics(<span class="pl-v">id</span> <span class="pl-k">=</span> <span class="pl-smi">account_list</span><span class="pl-k">$</span><span class="pl-smi">viewId</span>[<span class="pl-c1">1</span>], 
+                                <span class="pl-v">start</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>2014-08-01<span class="pl-pds">"</span></span>, <span class="pl-v">end</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>2015-08-02<span class="pl-pds">"</span></span>, 
+                                <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>sessions<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>bounceRate<span class="pl-pds">"</span></span>), 
+                                <span class="pl-v">dimensions</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>source<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>medium<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>landingPagePath<span class="pl-pds">"</span></span>), 
+                                <span class="pl-v">max</span><span class="pl-k">=</span><span class="pl-c1">99999999</span>, <span class="pl-v">samplingLevel</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>WALK<span class="pl-pds">"</span></span>)
+
+<span class="pl-c">## multi-channel funnels set type="mcf"</span>
+<span class="pl-smi">mcf_gadata</span> <span class="pl-k">&lt;-</span> google_analytics(<span class="pl-v">id</span> <span class="pl-k">=</span> <span class="pl-smi">account_list</span><span class="pl-k">$</span><span class="pl-smi">viewId</span>[<span class="pl-c1">1</span>], 
+                               <span class="pl-v">start</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>2015-08-01<span class="pl-pds">"</span></span>, <span class="pl-v">end</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>2015-08-02<span class="pl-pds">"</span></span>, 
+                               <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>totalConversions<span class="pl-pds">"</span></span>), 
+                               <span class="pl-v">dimensions</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>sourcePath<span class="pl-pds">"</span></span>), 
+                               <span class="pl-v">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>mcf<span class="pl-pds">"</span></span>)
+
+<span class="pl-c">## google_analytics dataframes include these meta data attributes:</span>
+<span class="pl-k">-</span> attr(<span class="pl-k">*</span>, <span class="pl-s"><span class="pl-pds">"</span>containsSampledData<span class="pl-pds">"</span></span>)<span class="pl-k">=</span> <span class="pl-smi">logi</span> <span class="pl-c1">FALSE</span>
+ <span class="pl-k">-</span> attr(<span class="pl-k">*</span>, <span class="pl-s"><span class="pl-pds">"</span>samplePercent<span class="pl-pds">"</span></span>)<span class="pl-k">=</span> <span class="pl-smi">num</span> <span class="pl-c1">100</span>
+ <span class="pl-k">-</span> attr(<span class="pl-k">*</span>, <span class="pl-s"><span class="pl-pds">"</span>samplingLevel<span class="pl-pds">"</span></span>)<span class="pl-k">=</span> <span class="pl-smi">chr</span> <span class="pl-s"><span class="pl-pds">"</span>DEFAULT<span class="pl-pds">"</span></span>
+ <span class="pl-k">-</span> attr(<span class="pl-k">*</span>, <span class="pl-s"><span class="pl-pds">"</span>profileInfo<span class="pl-pds">"</span></span>)<span class="pl-k">=</span><span class="pl-smi">List</span> <span class="pl-smi">of</span> <span class="pl-c1">6</span>
+  ..<span class="pl-k">$</span> <span class="pl-smi">profileId</span>            <span class="pl-k">:</span> <span class="pl-smi">chr</span> <span class="pl-s"><span class="pl-pds">"</span>535656<span class="pl-pds">"</span></span>
+  ..<span class="pl-k">$</span> <span class="pl-smi">accountId</span>            <span class="pl-k">:</span> <span class="pl-smi">chr</span> <span class="pl-s"><span class="pl-pds">"</span>2748374<span class="pl-pds">"</span></span>
+  ..<span class="pl-k">$</span> <span class="pl-smi">webPropertyId</span>        <span class="pl-k">:</span> <span class="pl-smi">chr</span> <span class="pl-s"><span class="pl-pds">"</span>UA-278374-1<span class="pl-pds">"</span></span>
+  ..<span class="pl-k">$</span> <span class="pl-smi">internalWebPropertyId</span><span class="pl-k">:</span> <span class="pl-smi">chr</span> <span class="pl-s"><span class="pl-pds">"</span>5279208<span class="pl-pds">"</span></span>
+  ..<span class="pl-k">$</span> <span class="pl-smi">profileName</span>          <span class="pl-k">:</span> <span class="pl-smi">chr</span> <span class="pl-s"><span class="pl-pds">"</span>XXXXX<span class="pl-pds">"</span></span>
+  ..<span class="pl-k">$</span> <span class="pl-smi">tableId</span>              <span class="pl-k">:</span> <span class="pl-smi">chr</span> <span class="pl-s"><span class="pl-pds">"</span>mcf:539656<span class="pl-pds">"</span></span>
+ <span class="pl-k">-</span> attr(<span class="pl-k">*</span>, <span class="pl-s"><span class="pl-pds">"</span>dateRange<span class="pl-pds">"</span></span>)<span class="pl-k">=</span><span class="pl-smi">List</span> <span class="pl-smi">of</span> <span class="pl-c1">2</span>
+  ..<span class="pl-k">$</span> <span class="pl-smi">startDate</span><span class="pl-k">:</span> <span class="pl-smi">chr</span> <span class="pl-s"><span class="pl-pds">"</span>2015-08-01<span class="pl-pds">"</span></span>
+  ..<span class="pl-k">$</span> <span class="pl-smi">endDate</span>  <span class="pl-k">:</span> <span class="pl-smi">chr</span> <span class="pl-s"><span class="pl-pds">"</span>2015-08-02<span class="pl-pds">"</span></span>
+ <span class="pl-k">-</span> attr(<span class="pl-k">*</span>, <span class="pl-s"><span class="pl-pds">"</span>totalResults<span class="pl-pds">"</span></span>)<span class="pl-k">=</span> <span class="pl-smi">int</span> <span class="pl-c1">4</span>
+
+<span class="pl-c">## reach meta-data via attr()</span>
+attr(<span class="pl-smi">gadata</span>, <span class="pl-s"><span class="pl-pds">"</span>profileInfo<span class="pl-pds">"</span></span>)
+attr(<span class="pl-smi">gadata</span>, <span class="pl-s"><span class="pl-pds">"</span>dateRange<span class="pl-pds">"</span></span>)
+</pre></div>
+
+<h2>
+<a id="using-your-own-google-developer-project-api-key" class="anchor" href="#using-your-own-google-developer-project-api-key" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using your own Google Developer Project API Key</h2>
+
+<p>With the amount of API calls possible with this library via batching and walking, its more likely the shared
+Google API project will hit the 50,000 calls per day limit.</p>
+
+<p>To mitigate that, use your own <a href="https://console.developers.google.com/apis/library">Google Developer Console Project</a> key, so it is not shared across all users of this library.</p>
+
+<p>Get your own OAuth2 clientID and client secret and add to the options like so:</p>
+
+<p>TODO: guide on how you get your own client Id.</p>
+
+<h3>
+<a id="example-adding-your-own-google-developer-console-keys" class="anchor" href="#example-adding-your-own-google-developer-console-keys" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example adding your own Google Developer Console keys</h3>
+
+<p>Below a new client Id is set for both offline and Shiny use.  Put the lines at the top of your R script with your
+own credentials.</p>
+
+<p>In this example, the scopes are also set so a user can authenticate with searchConsoleR at the same time, which 
+is possible as they both use googleAuthR as a backend.</p>
+
+<div class="highlight highlight-source-r"><pre>options(<span class="pl-s"><span class="pl-pds">"</span>googleAuthR.client_id<span class="pl-pds">"</span></span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>994xxx55706-afliqtuxxxxxxx2fd4kesu6.apps.googleusercontent.com<span class="pl-pds">"</span></span>)
+options(<span class="pl-s"><span class="pl-pds">"</span>googleAuthR.client_secret<span class="pl-pds">"</span></span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>3JhLa_GxxxxxCQYLe31c64<span class="pl-pds">"</span></span>)
+options(<span class="pl-s"><span class="pl-pds">"</span>googleAuthR.scopes.selected<span class="pl-pds">"</span></span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>https://www.googleapis.com/auth/analytics<span class="pl-pds">"</span></span>, 
+                                          <span class="pl-s"><span class="pl-pds">"</span>https://www.googleapis.com/auth/analytics.readonly<span class="pl-pds">"</span></span>, 
+                                          <span class="pl-s"><span class="pl-pds">"</span>https://www.googleapis.com/auth/webmasters<span class="pl-pds">"</span></span>))
+options(<span class="pl-s"><span class="pl-pds">"</span>googleAnalyticsR.webapp.client_id<span class="pl-pds">"</span></span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>994xxxx55706-e9qompxxxxx9pcab1u005cv.apps.googleusercontent.com<span class="pl-pds">"</span></span>)
+options(<span class="pl-s"><span class="pl-pds">"</span>googleAnalyticsR.webapp.client_secret<span class="pl-pds">"</span></span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>zcofxxxxxxElemXN5sf<span class="pl-pds">"</span></span>)</pre></div>
+
+<h2>
+<a id="shiny" class="anchor" href="#shiny" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Shiny</h2>
+
+<p>To use in Shiny, use the googleAuth <code>with_shiny</code></p>
+
+<div class="highlight highlight-source-r"><pre>
+<span class="pl-c">## in server.R</span>
+library(<span class="pl-smi">googleAuthR</span>)
+library(<span class="pl-smi">googleAnalyticsR</span>)
+library(<span class="pl-smi">shiny</span>)
+
+shinyServer(<span class="pl-k">function</span>(<span class="pl-smi">input</span>, <span class="pl-smi">output</span>, <span class="pl-smi">session</span>){
+
+  <span class="pl-c">## Get auth code from return URL</span>
+  <span class="pl-smi">access_token</span>  <span class="pl-k">&lt;-</span> reactiveAccessToken(<span class="pl-smi">session</span>)
+
+  <span class="pl-c">## Make a loginButton to display using loginOutput</span>
+  <span class="pl-smi">output</span><span class="pl-k">$</span><span class="pl-smi">loginButton</span> <span class="pl-k">&lt;-</span> renderLogin(<span class="pl-smi">session</span>, access_token(),
+                                    <span class="pl-v">logout_class</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>btn btn-danger<span class="pl-pds">"</span></span>)
+
+  <span class="pl-smi">gadata</span> <span class="pl-k">&lt;-</span> reactive({
+
+    <span class="pl-smi">gadata</span> <span class="pl-k">&lt;-</span> with_shiny(<span class="pl-smi">google_analytics</span>,
+                         <span class="pl-v">id</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>222222<span class="pl-pds">"</span></span>,
+                         <span class="pl-v">start</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>2015-08-01<span class="pl-pds">"</span></span>, <span class="pl-v">end</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>2015-08-02<span class="pl-pds">"</span></span>, 
+                         <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>sessions<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>bounceRate<span class="pl-pds">"</span></span>), 
+                         <span class="pl-v">dimensions</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>source<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>medium<span class="pl-pds">"</span></span>),
+                         <span class="pl-v">shiny_access_token</span> <span class="pl-k">=</span> access_token())
+
+})</pre></div>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/MarkEdmondson1234">MarkEdmondson1234</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
