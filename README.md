@@ -427,7 +427,7 @@ attr(gadata, "dateRange")
 With the amount of API calls possible with this library via batching and walking, its more likely the shared
 Google API project will hit the 50,000 calls per day limit.
 
-To mitigate that, use your own [Google Developer Console Project](https://console.developers.google.com/apis/library) key, so it is not shared across all users of this library.
+To mitigate that, use your own Google Developer Console Project key, so it is not shared across all users of this library.
 
 Get your own OAuth2 clientID and client secret and add to the options like so:
 
