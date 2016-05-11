@@ -7,7 +7,7 @@ A new Google Analytics R library using the new v4 of the Google Analytics Report
 
 ## Wasson?
 
-Work is currently focused on submitting to CRAN.
+Work is currently focused on submitting to CRAN..
 
 If you find any bugs please log any problems here in the issues tracker.
 
