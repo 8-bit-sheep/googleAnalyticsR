@@ -23,6 +23,38 @@ Create a cohort group
 Example: \code{list("cohort 1" = c("2015-08-01", "2015-08-01"), 
                     "cohort 2" = c("2015-07-01","2015-07-01"))}
 }
+\examples{
+
+\dontrun{
+library(googleAnalyticsR)
+
+## authenticate, 
+## or use the RStudio Addin "Google API Auth" with analytics scopes set
+ga_auth()
+
+## get your accounts
+account_list <- google_analytics_account_list()
+
+## pick a profile with data to query
+
+ga_id <- account_list[23,'viewId']
+
+
+## first make a cohort group
+
+cohort4 <- make_cohort_group(list("cohort 1" = c("2015-08-01", "2015-08-01"), 
+                                  "cohort 2" = c("2015-07-01","2015-07-01")))
+                                  
+## then call cohort report.  No date_range and must include metrics and dimensions
+##   from the cohort list
+cohort_example <- google_analytics_4(ga_id, 
+                                     dimensions=c('cohort'), 
+                                     cohort = cohort4, 
+                                     metrics = c('cohortTotalUsers'))
+                                     
+}
+
+}
 \seealso{
 \url{https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohort_and_lifetime_value_ltv_dimensions_and_metrics}
 

@@ -66,7 +66,38 @@
 #'   \item bucket #5: values in [4,7), dimension value "4-6"
 #'   \item bucket #6: values >= 7, dimension value "7+"
 #'  }
-#'   
+#'  
+#' @examples 
+#' 
+#' \dontrun{
+#' library(googleAnalyticsR)
+#' 
+#' ## authenticate, 
+#' ## or use the RStudio Addin "Google API Auth" with analytics scopes set
+#' ga_auth()
+#' 
+#' ## get your accounts
+#' account_list <- google_analytics_account_list()
+#' 
+#' ## pick a profile with data to query
+#' 
+#' ga_id <- account_list[23,'viewId']
+#' 
+#' ga_req1 <- make_ga_4_req(ga_id, 
+#'                          date_range = c("2015-07-30","2015-10-01"),
+#'                          dimensions=c('source','medium'), 
+#'                          metrics = c('sessions'))
+#' 
+#' ga_req2 <- make_ga_4_req(ga_id, 
+#'                          date_range = c("2015-07-30","2015-10-01"),
+#'                          dimensions=c('source','medium'), 
+#'                          metrics = c('users'))
+#'                          
+#' fetch_google_analytics_4(list(ga_req1, ga_req2))
+#' 
+#' }
+#' 
+#' 
 #' @family GAv4 fetch functions
 #' @export
 make_ga_4_req <- function(viewId,
@@ -166,6 +197,31 @@ make_ga_4_req <- function(viewId,
 #' 
 #' @inheritParams make_ga_4_req
 #' @param max Maximum number of rows to fetch. Defaults at 1000.
+#' 
+#' @return A Google Analytics data.frame
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' library(googleAnalyticsR)
+#' 
+#' ## authenticate, 
+#' ## or use the RStudio Addin "Google API Auth" with analytics scopes set
+#' ga_auth()
+#' 
+#' ## get your accounts
+#' account_list <- google_analytics_account_list()
+#' 
+#' ## pick a profile with data to query
+#' 
+#' ga_id <- account_list[23,'viewId']
+#' 
+#' ga_data <- google_analytics_4(ga_id, 
+#'                               date_range = c("2015-07-30","2015-10-01"),
+#'                               dimensions=c('source','medium'), 
+#'                               metrics = c('sessions','bounces'))
+#' 
+#' }
 #' 
 #' @family GAv4 fetch functions
 #' @export
@@ -277,6 +333,36 @@ google_analytics_4 <- function(viewId,
 #' @return A dataframe if one request, or a list of data.frames if multiple.
 #'
 #' @importFrom googleAuthR gar_api_generator
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' library(googleAnalyticsR)
+#' 
+#' ## authenticate, 
+#' ## or use the RStudio Addin "Google API Auth" with analytics scopes set
+#' ga_auth()
+#' 
+#' ## get your accounts
+#' account_list <- google_analytics_account_list()
+#' 
+#' ## pick a profile with data to query
+#' 
+#' ga_id <- account_list[23,'viewId']
+#' 
+#' ga_req1 <- make_ga_4_req(ga_id, 
+#'                          date_range = c("2015-07-30","2015-10-01"),
+#'                          dimensions=c('source','medium'), 
+#'                          metrics = c('sessions'))
+#' 
+#' ga_req2 <- make_ga_4_req(ga_id, 
+#'                          date_range = c("2015-07-30","2015-10-01"),
+#'                          dimensions=c('source','medium'), 
+#'                          metrics = c('users'))
+#'                          
+#' fetch_google_analytics_4(list(ga_req1, ga_req2))
+#' 
+#' }
 #' 
 #' @family GAv4 fetch functions
 #' @export

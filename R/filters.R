@@ -6,9 +6,52 @@
 #' @details If you have dimension and metric filters,
 #'   make the clauses in two seperate calls, then pass the objects to \link{make_ga_4_req}
 #'
-#' @export
 #'
-#' @return An object of class \code{dim_fil_ga4} or \code{met_fil_ga4} for use in \code{\link{make_ga_4_req}}
+#' @return An object of class \code{dim_fil_ga4} or \code{met_fil_ga4} 
+#'   for use in \code{\link{make_ga_4_req}}
+#' 
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' library(googleAnalyticsR)
+#' 
+#' ## authenticate, 
+#' ## or use the RStudio Addin "Google API Auth" with analytics scopes set
+#' ga_auth()
+#' 
+#' ## get your accounts
+#' account_list <- google_analytics_account_list()
+#' 
+#' ## pick a profile with data to query
+#' 
+#' ga_id <- account_list[23,'viewId']
+#' 
+#' ## create filters on metrics
+#' mf <- met_filter("bounces", "GREATER_THAN", 0)
+#' mf2 <- met_filter("sessions", "GREATER", 2)
+#' 
+#' ## create filters on dimensions
+#' df <- dim_filter("source","BEGINS_WITH","1",not = TRUE)
+#' df2 <- dim_filter("source","BEGINS_WITH","a",not = TRUE)
+#' 
+#' ## construct filter objects
+#' fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
+#' fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
+#' 
+#' ## make v4 request
+#' ga_data1 <- google_analytics_4(ga_id, 
+#'                                date_range = c("2015-07-30","2015-10-01"),
+#'                                dimensions=c('source','medium'), 
+#'                                metrics = c('sessions','bounces'), 
+#'                                met_filters = fc, 
+#'                                dim_filters = fc2, 
+#'                                filtersExpression = "ga:source!=(direct)")
+#'                                
+#' }
+#' 
+#' 
+#' @export
 #' @family filter functions
 filter_clause_ga4 <- function(filters, operator = c("OR", "AND")){
   operator <- match.arg(operator)
@@ -41,6 +84,46 @@ filter_clause_ga4 <- function(filters, operator = c("OR", "AND")){
 #' @param not Logical NOT operator. Boolean.
 #'
 #' @return An object of class \code{dim_fil_ga4} for use in \code{\link{filter_clause_ga4}}
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' library(googleAnalyticsR)
+#' 
+#' ## authenticate, 
+#' ## or use the RStudio Addin "Google API Auth" with analytics scopes set
+#' ga_auth()
+#' 
+#' ## get your accounts
+#' account_list <- google_analytics_account_list()
+#' 
+#' ## pick a profile with data to query
+#' 
+#' ga_id <- account_list[23,'viewId']
+#' 
+#' ## create filters on metrics
+#' mf <- met_filter("bounces", "GREATER_THAN", 0)
+#' mf2 <- met_filter("sessions", "GREATER", 2)
+#' 
+#' ## create filters on dimensions
+#' df <- dim_filter("source","BEGINS_WITH","1",not = TRUE)
+#' df2 <- dim_filter("source","BEGINS_WITH","a",not = TRUE)
+#' 
+#' ## construct filter objects
+#' fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
+#' fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
+#' 
+#' ## make v4 request
+#' ga_data1 <- google_analytics_4(ga_id, 
+#'                                date_range = c("2015-07-30","2015-10-01"),
+#'                                dimensions=c('source','medium'), 
+#'                                metrics = c('sessions','bounces'), 
+#'                                met_filters = fc, 
+#'                                dim_filters = fc2, 
+#'                                filtersExpression = "ga:source!=(direct)")
+#'                                
+#' }
+#' 
 #' @export
 #' @family filter functions
 dim_filter <- function(dimension,
@@ -83,6 +166,47 @@ dim_filter <- function(dimension,
 #' @param not Logical NOT operator. Boolean.
 #'
 #' @return An object of class \code{met_fil_ga4} for use in \code{\link{filter_clause_ga4}}
+#' 
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' library(googleAnalyticsR)
+#' 
+#' ## authenticate, 
+#' ## or use the RStudio Addin "Google API Auth" with analytics scopes set
+#' ga_auth()
+#' 
+#' ## get your accounts
+#' account_list <- google_analytics_account_list()
+#' 
+#' ## pick a profile with data to query
+#' 
+#' ga_id <- account_list[23,'viewId']
+#' 
+#' ## create filters on metrics
+#' mf <- met_filter("bounces", "GREATER_THAN", 0)
+#' mf2 <- met_filter("sessions", "GREATER", 2)
+#' 
+#' ## create filters on dimensions
+#' df <- dim_filter("source","BEGINS_WITH","1",not = TRUE)
+#' df2 <- dim_filter("source","BEGINS_WITH","a",not = TRUE)
+#' 
+#' ## construct filter objects
+#' fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
+#' fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
+#' 
+#' ## make v4 request
+#' ga_data1 <- google_analytics_4(ga_id, 
+#'                                date_range = c("2015-07-30","2015-10-01"),
+#'                                dimensions=c('source','medium'), 
+#'                                metrics = c('sessions','bounces'), 
+#'                                met_filters = fc, 
+#'                                dim_filters = fc2, 
+#'                                filtersExpression = "ga:source!=(direct)")
+#'                                
+#' } 
+#' 
 #' @export
 #' @family filter functions
 met_filter <- function(metric,

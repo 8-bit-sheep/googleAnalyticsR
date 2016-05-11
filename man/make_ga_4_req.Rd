@@ -97,6 +97,38 @@ This function constructs the Google Analytics API v4 call to be called
   \item bucket #6: values >= 7, dimension value "7+"
  }
 }
+\examples{
+
+\dontrun{
+library(googleAnalyticsR)
+
+## authenticate, 
+## or use the RStudio Addin "Google API Auth" with analytics scopes set
+ga_auth()
+
+## get your accounts
+account_list <- google_analytics_account_list()
+
+## pick a profile with data to query
+
+ga_id <- account_list[23,'viewId']
+
+ga_req1 <- make_ga_4_req(ga_id, 
+                         date_range = c("2015-07-30","2015-10-01"),
+                         dimensions=c('source','medium'), 
+                         metrics = c('sessions'))
+
+ga_req2 <- make_ga_4_req(ga_id, 
+                         date_range = c("2015-07-30","2015-10-01"),
+                         dimensions=c('source','medium'), 
+                         metrics = c('users'))
+                         
+fetch_google_analytics_4(list(ga_req1, ga_req2))
+
+}
+
+
+}
 \seealso{
 Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4}},
   \code{\link{google_analytics_4}}

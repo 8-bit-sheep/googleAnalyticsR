@@ -44,11 +44,38 @@ for two date ranges: \code{c(start1,end1,start2,end2)}}
 \item{histogramBuckets}{For numeric dimensions such as hour, a list of buckets of data.
 See details in \link{make_ga_4_req}}
 }
+\value{
+A Google Analytics data.frame
+}
 \description{
 A convenience function that wraps \link{make_ga_4_req} and \link{fetch_google_analytics_4}
  for the common case of one GA data request.
  
 Will perform batching if over the 10000 row per API call limit.
+}
+\examples{
+
+\dontrun{
+library(googleAnalyticsR)
+
+## authenticate, 
+## or use the RStudio Addin "Google API Auth" with analytics scopes set
+ga_auth()
+
+## get your accounts
+account_list <- google_analytics_account_list()
+
+## pick a profile with data to query
+
+ga_id <- account_list[23,'viewId']
+
+ga_data <- google_analytics_4(ga_id, 
+                              date_range = c("2015-07-30","2015-10-01"),
+                              dimensions=c('source','medium'), 
+                              metrics = c('sessions','bounces'))
+
+}
+
 }
 \seealso{
 Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4}},

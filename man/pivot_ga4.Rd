@@ -27,4 +27,44 @@ Make a pivot object
 \details{
 If maxGroupCount is set to -1 returns all groups.
 }
+\examples{
+
+\dontrun{
+library(googleAnalyticsR)
+
+## authenticate, 
+## or use the RStudio Addin "Google API Auth" with analytics scopes set
+ga_auth()
+
+## get your accounts
+account_list <- google_analytics_account_list()
+
+## pick a profile with data to query
+
+ga_id <- account_list[23,'viewId']
+
+## filter pivot results to 
+pivot_dim_filter1 <- dim_filter("medium",
+                                "REGEXP",
+                                "organic|social|email|cpc")
+                                
+                                
+pivot_dim_clause <- filter_clause_ga4(list(pivot_dim_filter1))
+
+pivme <- pivot_ga4("medium",
+                   metrics = c("sessions"), 
+                   maxGroupCount = 4, 
+                  dim_filter_clause = pivot_dim_clause)
+                  
+                  
+pivtest <- google_analytics_4(ga_id, 
+                             c("2016-01-30","2016-10-01"), 
+                            dimensions=c('source'), 
+                            metrics = c('sessions'), 
+                            pivots = list(pivme))
+
+}
+
+
+}
 
