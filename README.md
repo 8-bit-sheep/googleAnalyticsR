@@ -287,8 +287,8 @@ Details on [cohort reports and LTV can be found here](https://developers.google.
 
 ```r
 ## first make a cohort group
-cohort4 <- make_cohort_group(list("cohort 1" = c("2015-08-01", "2015-08-01"), 
-                                "cohort 2" = c("2015-07-01","2015-07-01")))
+cohort4 <- make_cohort_group(list("Jan2016" = c("2016-01-01", "2016-01-31"), 
+                                "Feb2016" = c("2016-02-01","2016-02-28")))
 
 ## then call cohort report.  No date_range and must include metrics and dimensions
 ##   from the cohort list
@@ -298,9 +298,9 @@ cohort_example <- google_analytics_4(ga_id,
                                      metrics = c('cohortTotalUsers'))
 
 cohort_example
-#     cohort cohortTotalUsers
-# 1 cohort 1               14
-# 2 cohort 2               20
+#    cohort cohortTotalUsers
+# 1 Feb2016            19040
+# 2 Jan2016            23378
 
 ```
 
