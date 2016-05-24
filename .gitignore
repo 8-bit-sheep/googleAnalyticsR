@@ -16,13 +16,3 @@ vignettes/*.pdf
 .httr-oauth
 pivot_debug.rda
 inst/doc
-
-R/shiny-modules.R
-
-inst/shiny/ga4-example/segment_ga4_helper/app.R
-
-man/segmentBuilder.Rd
-
-man/segmentBuilderUI.Rd
-
-man/segmentElementUI.Rd
