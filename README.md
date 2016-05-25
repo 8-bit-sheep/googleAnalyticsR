@@ -220,13 +220,9 @@ sv_simple2 <- segment_vector_simple(list(list(se2)))
 ## Each segment vector can then be combined into a logical AND
 seg_defined <- segment_define(list(sv_simple, sv_simple2))
 
-## if only one AND definition, you can leave out wrapper list()
-seg_defined_one <- segment_define(sv_simple)
-
-
 ## Each segement defintion can apply to users, sessions or both.
 ## You can pass a list of several segments
-segment4 <- segment_ga4("simple", user_segment = seg_defined)
+segment4 <- segment_ga4("simple", user_segment = seg_defined_one)
 
 ## Add the segments to the segments param
 segment_example <- google_analytics_4(ga_id, 
@@ -369,7 +365,8 @@ head(meta)
 gadata <- google_analytics(id = ga_id, 
                            start="2015-08-01", end="2015-08-02", 
                            metrics = c("sessions", "bounceRate"), 
-                           dimensions = c("source", "medium"))
+                           dimensions = c("source", "medium"),
+                           order = order_type("sessions"))
 
 ## multi accounts, pass character vector of viewIds
 ## outputs a list of data.frames, named after the viewId

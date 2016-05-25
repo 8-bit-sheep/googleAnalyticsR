@@ -1,6 +1,7 @@
 # 0.1.1.9000
 
-* 
+* Fix order_type() for v4 (#18)
+* Tests
 
 # 0.1.1
 

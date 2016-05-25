@@ -21,7 +21,8 @@ Imports:
     testthat (>= 1.0.2)
 Suggests:
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr
