@@ -1,12 +1,16 @@
 library(googleAnalyticsR)
 
 test_that("Auth check", {
+  skip_on_cran()
+  skip_on_travis()
   expect_s3_class(ga_auth(), "Token2.0")
 })
 
 ga_id <- 106249469
 
 vanilla_test <- function(){
+  skip_on_cran()
+  skip_on_travis()
   google_analytics_4(ga_id, 
                      date_range = c("2015-07-30","2015-10-01"),
                      dimensions=c('medium'), 
@@ -15,6 +19,8 @@ vanilla_test <- function(){
 }
 
 vanilla_test2 <- function(){
+  skip_on_cran()
+  skip_on_travis()
   google_analytics(ga_id, 
                    start = "2015-07-30", end = "2015-10-01",
                    dimensions=c('medium'), 
@@ -23,14 +29,19 @@ vanilla_test2 <- function(){
 }
 
 test_that("Vanilla test data fetch", {
+  skip_on_cran()
+  skip_on_travis()
   expect_equal_to_reference(vanilla_test(), "t1.rds")
 })
 
 test_that("v4 API matches v3 equivalent API call", {
+
   expect_equivalent(vanilla_test(), vanilla_test2())
 })
 
 example_filter <- function(){
+  skip_on_cran()
+  skip_on_travis()
   ## create filters on metrics
   mf <- met_filter("bounces", "GREATER_THAN", 0)
   mf2 <- met_filter("sessions", "GREATER", 2)
@@ -52,6 +63,8 @@ example_filter <- function(){
 }
 
 example_multidate <- function(){
+  skip_on_cran()
+  skip_on_travis()
   ## demo of querying two date ranges at a time   
   ## we make the request via make_ga_4_req() to use in next demo
   multidate_test <- make_ga_4_req(ga_id, 
@@ -66,6 +79,8 @@ example_multidate <- function(){
 }
 
 example_multifetch <- function(){
+  skip_on_cran()
+  skip_on_travis()
   multidate_test <- make_ga_4_req(ga_id, 
                                   date_range = c("2015-07-30",
                                                  "2015-10-01",
@@ -89,6 +104,8 @@ example_multifetch <- function(){
 }
 
 example_calculated <- function(){
+  skip_on_cran()
+  skip_on_travis()
   google_analytics_4(ga_id,
                      date_range = c("2015-07-30",
                                     "2015-10-01"),
@@ -99,6 +116,8 @@ example_calculated <- function(){
 }
 
 example_simple_segment <- function(){
+  skip_on_cran()
+  skip_on_travis()
   ## make a segment element
   se <- segment_element("sessions", 
                         operator = "GREATER_THAN", 
@@ -134,6 +153,8 @@ example_simple_segment <- function(){
 }
 
 example_sequence_segment <- function(){
+  skip_on_cran()
+  skip_on_travis()
   se2 <- segment_element("medium", 
                          operator = "EXACT", 
                          type = "dimension", 
@@ -164,6 +185,8 @@ example_sequence_segment <- function(){
 }
 
 example_cohorts <- function(){
+  skip_on_cran()
+  skip_on_travis()
   ## first make a cohort group
   cohort4 <- make_cohort_group(list("Jan2016" = c("2016-01-01", "2016-01-31"), 
                                     "Feb2016" = c("2016-02-01","2016-02-28")))
@@ -177,7 +200,8 @@ example_cohorts <- function(){
 }
 
 example_pivots <- function(){
-  
+  skip_on_cran()
+  skip_on_travis()
   mf2 <- met_filter("sessions", "GREATER", 100)
   
   fc <- filter_clause_ga4(list(mf2))
