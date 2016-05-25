@@ -121,22 +121,18 @@ multidate_test <- make_ga_4_req(ga_id,
                                                "2014-07-30",
                                                "2014-10-01"),
                                 dimensions = c('source','medium'), 
-                                metrics = c('sessions','bounces'))
+                                metrics = c('sessions','bounces'),
+                                order = order_type("sessions", "DESCENDING"))
                                 
 ga_data2 <- fetch_google_analytics_4(multidate_test)
 ga_data2
-#                     source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
-# 1                  baby.dk referral           3          2           6          3
-# 2                     bing  organic          71         42         217        126
-# 3  buttons-for-website.com referral           7          7           0          0
-# 4           duckduckgo.com referral           5          3           0          0
-# 5                   google  organic         642        520        1286        920
-# 6                google.se referral           3          2          12          9
-# 7                 izito.se referral           3          1           0          0
-# 8          success-seo.com referral          35         35           0          0
-# 9    video--production.com referral          11         11           0          0
-# 10                   yahoo  organic          66         43         236        178
-# 11              zapmeta.se referral           6          4           9          4
+#                                     source      medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
+# 1                                 (direct)      (none)        5923       3328           0          0
+# 2                        example_mem.co.uk    referral        5846       1100           0          0
+# 3                                   google         cpc        5476       2669           0          0
+# 4                           examp-link.net    referral        2241        653           0          0
+# 5                    moneysavingexampl.com    referral        1869        549           0          0
+# 6                            emailCampaign       email        1268        772           0          0
 
 
 ## Demo querying two reports at the same time
@@ -365,8 +361,7 @@ head(meta)
 gadata <- google_analytics(id = ga_id, 
                            start="2015-08-01", end="2015-08-02", 
                            metrics = c("sessions", "bounceRate"), 
-                           dimensions = c("source", "medium"),
-                           order = order_type("sessions"))
+                           dimensions = c("source", "medium"))
 
 ## multi accounts, pass character vector of viewIds
 ## outputs a list of data.frames, named after the viewId
