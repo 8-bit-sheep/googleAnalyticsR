@@ -2,6 +2,7 @@
 
 * Fix order_type() for v4 (#18)
 * Tests
+* Multi-account batching for v3 (#17)
 
 # 0.1.1
 
