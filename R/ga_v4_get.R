@@ -245,7 +245,7 @@ google_analytics_4 <- function(viewId,
   if(max > 10000){
     ## how many v4 batch requests can be made at one time (5-1) due to bad maths
     batchLimit <- 5
-    meta_batch_start_index <- seq(from=1, to=max, by=10000*batchLimit)
+    meta_batch_start_index <- seq(from=0, to=max, by=10000*batchLimit)
     batches <- length(meta_batch_start_index)
     
     message("V4 Batching data into [", batches, "] calls.")
@@ -311,7 +311,7 @@ google_analytics_4 <- function(viewId,
                          segments=segments,
                          pivots=pivots,
                          cohorts=cohorts,
-                         pageToken = 1,
+                         pageToken = 0,
                          pageSize = max,
                          samplingLevel=samplingLevel,
                          metricFormat=metricFormat,

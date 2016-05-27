@@ -99,7 +99,7 @@ metric_ga4 <- function(vector, metricFormat=NULL){
 #' Make an OrderType object
 #'
 #' @param field One field to sort by
-#' @param descending If the sorting should be descending or not
+#' @param sort_order ASCENDING or DESCENDING
 #' @param orderType Type of ordering
 #'
 #' @return A order_type_ga4 object for use in GAv4 fetch
@@ -108,25 +108,25 @@ metric_ga4 <- function(vector, metricFormat=NULL){
 #'
 #' @export
 order_type <- function(field,
-                       descending = FALSE,
+                       sort_order = c("ASCENDING", "DESCENDING"),
                        orderType = c("VALUE",
                                      "DELTA",
                                      "SMART",
                                      "HISTOGRAM_BUCKET",
                                      "DIMENSION_AS_INTEGER")){
   
+  sort_order <- match.arg(sort_order)
   orderType <- match.arg(orderType)
   
   testthat::expect_length(field, 1)
-  testthat::expect_type(field, character)
 
   field <- vapply(field, checkPrefix, character(1), prefix = "ga")
-  if(descending) field <- paste(field, "desc")
 
   structure(
     list(
       fieldName = field,
-      orderType = orderType
+      orderType = orderType,
+      sortOrder = sort_order
     ),
     class = "order_type_ga4"
   )

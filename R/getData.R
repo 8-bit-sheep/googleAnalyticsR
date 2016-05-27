@@ -10,6 +10,8 @@
 #' @param segment How to segment.
 #' @param samplingLevel Choose "WALK" to mitigate against sampling.
 #' @param max_results Default 100. If greater than 10,000 then will batch GA calls.
+#' @param multi_account_batching If TRUE then multiple id's are fetched together.  
+#'     Not compatible with \code{samplingLevel="WALK"} or \code{max_results>10000}
 #' @param type ga = Google Analytics v3; mcf = Multi-Channel Funels.
 #'
 #' @return For one id a data.frame of data, with meta-data in attributes.  
@@ -105,12 +107,32 @@ google_analytics <- function(id,
                                              "HIGHER_PRECISION", 
                                              "WALK"),
                              max_results=100,
+                             multi_account_batching = FALSE,
                              type = c("ga", "mcf")) {
   
   samplingLevel <- match.arg(samplingLevel)
   start <- as.character(start)
   end <- as.character(end)
   type <-  match.arg(type)
+  
+  if(multi_account_batching){
+    if(max_results>10000){
+      warning("Can't use multi_account_batching=TRUE when max_results>10000. 
+              Setting back to FALSE")
+      multi_account_batching <- FALSE
+    }
+    if(samplingLevel=="WALK"){
+      warning("Can't use multi_account_batching=TRUE when samplingLevel=='WALK'. 
+              Setting back to FALSE")
+      multi_account_batching <- FALSE 
+    }
+    if(length(id) == 1){
+      warning("multi_account_batching=TRUE but only one id specified. 
+              Ignoring.")
+      multi_account_batching <- FALSE 
+    }
+  }
+  
   if(!is.null(filters)) {
     filters <- utils::URLencode(filters, reserved = TRUE)
   } 
@@ -135,46 +157,32 @@ google_analytics <- function(id,
   
   ga_pars <- rmNullObs(ga_pars)
   
-  all_data <- list()
-  for(i in id){
-    ga_pars$ids <- i
+  # all_data <- list()
+  ga <- gar_api_generator(paste0("https://www.googleapis.com/analytics/v3/data/",
+                                 type),
+                          "GET",
+                          pars_args = ga_pars,
+                          data_parse_function = parse_google_analytics)
+  
+  if(multi_account_batching){
+    message("Fetching all ids at same time (max 10 per API call")
+    all_data <- googleAuthR::gar_batch_walk(ga,
+                                            walk_vector = id,
+                                            gar_pars = ga_pars,
+                                            pars_walk = 'ids',
+                                            data_frame_output = FALSE,
+                                            batch_size = 10)
+    all_data <- unlist(all_data, recursive = FALSE, use.names = FALSE)
+    names(all_data) <- id
     
-    ga <- gar_api_generator(paste0("https://www.googleapis.com/analytics/v3/data/",
-                                   type),
-                            "GET",
-                            pars_args = ga_pars,
-                            data_parse_function = parse_google_analytics)
-    
-    ## if walk through results then split up dates and walk through date ranges
-    if(samplingLevel %in% "WALK"){
-      message("Walking through data.")
-      the_data <- walkData(ga, ga_pars, start, end)
-      
-    } else {
-      ## No batch needed
-      if(max_results < 10000) {
-        the_data <- ga(pars_arguments = ga_pars)
-      } else {
-        ## batching data
-        the_data <- batchData(ga, ga_pars)
-      }
-      
-    }
-    
-    if(length(id) > 1){
-      ## for multiple id's, a list of dataframes.
-      message("Multiple IDs")
-      id_name <- attr(the_data, "profileInfo")$profileId
-      
-      all_data[[id_name]] <- the_data
-      
-    } else {
-      ## for one id, just a dataframe
-      all_data <- the_data
-      
-    }
-    
+  } else {
+    all_data <- loop_ids(id=id, 
+                         ga_pars=ga_pars, 
+                         samplingLevel=samplingLevel, 
+                         max_results=max_results, 
+                         ga=ga)
   }
+
   
   all_data
   

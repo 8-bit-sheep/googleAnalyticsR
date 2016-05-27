@@ -121,22 +121,18 @@ multidate_test <- make_ga_4_req(ga_id,
                                                "2014-07-30",
                                                "2014-10-01"),
                                 dimensions = c('source','medium'), 
-                                metrics = c('sessions','bounces'))
+                                metrics = c('sessions','bounces'),
+                                order = order_type("sessions", "DESCENDING"))
                                 
 ga_data2 <- fetch_google_analytics_4(multidate_test)
 ga_data2
-#                     source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
-# 1                  baby.dk referral           3          2           6          3
-# 2                     bing  organic          71         42         217        126
-# 3  buttons-for-website.com referral           7          7           0          0
-# 4           duckduckgo.com referral           5          3           0          0
-# 5                   google  organic         642        520        1286        920
-# 6                google.se referral           3          2          12          9
-# 7                 izito.se referral           3          1           0          0
-# 8          success-seo.com referral          35         35           0          0
-# 9    video--production.com referral          11         11           0          0
-# 10                   yahoo  organic          66         43         236        178
-# 11              zapmeta.se referral           6          4           9          4
+#                                     source      medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
+# 1                                 (direct)      (none)        5923       3328           0          0
+# 2                        example_mem.co.uk    referral        5846       1100           0          0
+# 3                                   google         cpc        5476       2669           0          0
+# 4                           examp-link.net    referral        2241        653           0          0
+# 5                    moneysavingexampl.com    referral        1869        549           0          0
+# 6                            emailCampaign       email        1268        772           0          0
 
 
 ## Demo querying two reports at the same time
@@ -220,10 +216,6 @@ sv_simple2 <- segment_vector_simple(list(list(se2)))
 ## Each segment vector can then be combined into a logical AND
 seg_defined <- segment_define(list(sv_simple, sv_simple2))
 
-## if only one AND definition, you can leave out wrapper list()
-seg_defined_one <- segment_define(sv_simple)
-
-
 ## Each segement defintion can apply to users, sessions or both.
 ## You can pass a list of several segments
 segment4 <- segment_ga4("simple", user_segment = seg_defined)
@@ -287,8 +279,8 @@ Details on [cohort reports and LTV can be found here](https://developers.google.
 
 ```r
 ## first make a cohort group
-cohort4 <- make_cohort_group(list("cohort 1" = c("2015-08-01", "2015-08-01"), 
-                                "cohort 2" = c("2015-07-01","2015-07-01")))
+cohort4 <- make_cohort_group(list("Jan2016" = c("2016-01-01", "2016-01-31"), 
+                                "Feb2016" = c("2016-02-01","2016-02-28")))
 
 ## then call cohort report.  No date_range and must include metrics and dimensions
 ##   from the cohort list
@@ -298,9 +290,9 @@ cohort_example <- google_analytics_4(ga_id,
                                      metrics = c('cohortTotalUsers'))
 
 cohort_example
-#     cohort cohortTotalUsers
-# 1 cohort 1               14
-# 2 cohort 2               20
+#    cohort cohortTotalUsers
+# 1 Feb2016            19040
+# 2 Jan2016            23378
 
 ```
 
@@ -454,10 +446,9 @@ options("googleAnalyticsR.webapp.client_secret" = "zcofxxxxxxElemXN5sf")
 
 ## Shiny
 
-To use in Shiny, use the googleAuth `with_shiny`
+To use in Shiny with a multi-user login, use googleAuth's `with_shiny`.  See the `googleAuthR` readme for details. 
 
 ```r
-
 ## in server.R
 library(googleAuthR)
 library(googleAnalyticsR)
@@ -466,20 +457,37 @@ library(shiny)
 shinyServer(function(input, output, session){
   
   ## Get auth code from return URL
-  access_token  <- reactiveAccessToken(session)
-  
-  ## Make a loginButton to display using loginOutput
-  output$loginButton <- renderLogin(session, access_token(),
-                                    logout_class = "btn btn-danger")
+  access_token  <- callModule(googleAuth, "auth1")
 
   gadata <- reactive({
 
-    gadata <- with_shiny(google_analytics,
-                         id = "222222",
-                         start="2015-08-01", end="2015-08-02", 
-                         metrics = c("sessions", "bounceRate"), 
-                         dimensions = c("source", "medium"),
-                         shiny_access_token = access_token())
-
+    with_shiny(google_analytics,
+               id = "222222",
+               start="2015-08-01", end="2015-08-02", 
+               metrics = c("sessions", "bounceRate"), 
+               dimensions = c("source", "medium"),
+               shiny_access_token = access_token())
+  })
+  
+  output$something <- renderPlot({
+  
+    gadata <- gadata()
+    
+    plot(gadata)
+  
+  })
+  
 })
+
+## ui.R
+library(googleAuthR)
+library(shiny)
+
+shinyUI(fluidPage(
+
+  googleAuthUI("auth1"),
+  plotOutput("something")
+
+))
+
 ```
