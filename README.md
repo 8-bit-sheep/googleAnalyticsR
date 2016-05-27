@@ -218,7 +218,7 @@ seg_defined <- segment_define(list(sv_simple, sv_simple2))
 
 ## Each segement defintion can apply to users, sessions or both.
 ## You can pass a list of several segments
-segment4 <- segment_ga4("simple", user_segment = seg_defined_one)
+segment4 <- segment_ga4("simple", user_segment = seg_defined)
 
 ## Add the segments to the segments param
 segment_example <- google_analytics_4(ga_id, 
@@ -446,10 +446,9 @@ options("googleAnalyticsR.webapp.client_secret" = "zcofxxxxxxElemXN5sf")
 
 ## Shiny
 
-To use in Shiny, use the googleAuth `with_shiny`
+To use in Shiny with a multi-user login, use googleAuth's `with_shiny`.  See the `googleAuthR` readme for details. 
 
 ```r
-
 ## in server.R
 library(googleAuthR)
 library(googleAnalyticsR)
@@ -458,20 +457,37 @@ library(shiny)
 shinyServer(function(input, output, session){
   
   ## Get auth code from return URL
-  access_token  <- reactiveAccessToken(session)
-  
-  ## Make a loginButton to display using loginOutput
-  output$loginButton <- renderLogin(session, access_token(),
-                                    logout_class = "btn btn-danger")
+  access_token  <- callModule(googleAuth, "auth1")
 
   gadata <- reactive({
 
-    gadata <- with_shiny(google_analytics,
-                         id = "222222",
-                         start="2015-08-01", end="2015-08-02", 
-                         metrics = c("sessions", "bounceRate"), 
-                         dimensions = c("source", "medium"),
-                         shiny_access_token = access_token())
-
+    with_shiny(google_analytics,
+               id = "222222",
+               start="2015-08-01", end="2015-08-02", 
+               metrics = c("sessions", "bounceRate"), 
+               dimensions = c("source", "medium"),
+               shiny_access_token = access_token())
+  })
+  
+  output$something <- renderPlot({
+  
+    gadata <- gadata()
+    
+    plot(gadata)
+  
+  })
+  
 })
+
+## ui.R
+library(googleAuthR)
+library(shiny)
+
+shinyUI(fluidPage(
+
+  googleAuthUI("auth1"),
+  plotOutput("something")
+
+))
+
 ```

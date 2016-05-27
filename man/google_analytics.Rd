@@ -7,7 +7,8 @@
 google_analytics(id, start, end, metrics = c("sessions", "bounceRate"),
   dimensions = NULL, sort = NULL, filters = NULL, segment = NULL,
   samplingLevel = c("DEFAULT", "FASTER", "HIGHER_PRECISION", "WALK"),
-  max_results = 100, type = c("ga", "mcf"))
+  max_results = 100, multi_account_batching = FALSE, type = c("ga",
+  "mcf"))
 }
 \arguments{
 \item{id}{A character vector of View Ids to fetch from.}
@@ -29,6 +30,9 @@ google_analytics(id, start, end, metrics = c("sessions", "bounceRate"),
 \item{samplingLevel}{Choose "WALK" to mitigate against sampling.}
 
 \item{max_results}{Default 100. If greater than 10,000 then will batch GA calls.}
+
+\item{multi_account_batching}{If TRUE then multiple id's are fetched together.
+Not compatible with \code{samplingLevel="WALK"} or \code{max_results>10000}}
 
 \item{type}{ga = Google Analytics v3; mcf = Multi-Channel Funels.}
 }
