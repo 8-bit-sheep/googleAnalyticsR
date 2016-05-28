@@ -9,7 +9,8 @@ segmentBuilderUI <- function(id){
   
   shiny::tagList(
     segmentElementUI(ns("ui1")),
-    segmentChainUI(ns("chain1"))
+    segmentChainUI(ns("chain1")),
+    segmentChainSequenceUI(ns("seq1"))
   )
   
 }
@@ -26,10 +27,125 @@ segmentBuilder <- function(input, output, session){
   segment_chain <- shiny::callModule(segmentChain, "chain1", 
                                   element_inputs = element_inputs)
   
-  return(segment_chain)
+  segment_sequence <- shiny::callModule(segmentChainSequence, "seq1", 
+                                        segment_chain = segment_chain,
+                                        element_inputs = element_inputs)
+  
+  return(segment_sequence)
   
 }
 
+
+#' segmentChainSequence UI
+#'
+#' Shiny Module for use with \link{segmentChainSequence}
+#' 
+#' @param id Shiny id
+#'
+#' @return Shiny UI
+segmentChainSequenceUI <- function(id){
+
+  ns <- shiny::NS(id)
+  shiny::radioButtons(ns("sequence_type"), "Sequence Type",
+                      choices = c(Simple = "simple", Sequence = "sequence"))
+  shiny::uiOutput(ns("segment_chain_sequence"))
+  
+}
+
+#' segmentChainSequence
+#'
+#' Shiny Module for use with \link{segmentChainSequenceUI}
+#'
+#' Call via \code{shiny::callModule(segmentChainSequence, "your_id")}
+#'
+#' @param input shiny input
+#' @param output shiny output
+#' @param session shiny session
+#' @param segment_chain reactive segment_chain from \link{segmentChain}
+#'
+#' @return Something
+segmentChainSequence <- function(input, output, session,
+                                 segment_chain,
+                                 element_inputs){
+
+    ns <- session$ns
+
+    output$segment_chain_sequence <- shiny::renderUI({
+      
+      segment_sequence <- shiny::reactiveValuesToList(segment_chain)
+
+      make_output <- function(id){
+        seq <- segment_sequence[[id]]
+        segment_element_ui(id, seq)
+      }
+      
+      out <- lapply(names(segment_sequence), make_output)
+      
+      shiny::tagList(
+        out
+      )
+      
+    })
+
+}
+
+segment_element_ui <- function(id, seq){
+
+  message(paste(names(seq), sep = " ", collapse = " \n "))
+  str(seq)
+  exps <- NULL
+  
+  ## UI not fully loaded
+  if(length(seq) < 11) return(NULL)
+  
+  if(seq[["type"]] == "metric"){
+    class <- "label label-warning"
+    
+    exps <- paste(seq[["scope"]], 
+                  seq[["compValue"]])
+    
+    if(seq[["operator"]] == "BETWEEN"){
+      exps <- paste(exps, seq[["maxCompValue"]])
+    }
+    
+  } else { ## dimension
+    class <- "label label-primary"
+
+    exps <- paste(seq[["case_sensitive"]], 
+                  seq[["expressions"]])
+    
+    if(seq[["operator"]] == "NUMERIC_BETWEEN"){
+      exps <- paste(exps, seq[["minCompValue"]], seq[["maxCompValue"]])
+    }
+
+  }
+  
+  if(seq[["not"]]){
+    exclude <- "Exclude: "
+  } else {
+    exclude <- NULL
+  }
+  
+  if(seq[["matchType"]] == "PRECEDES"){
+    seperator <- " > "
+  } else {
+    seperator <- " >> "
+  }
+  
+  shiny::h2(paste(id, 
+                  exclude,
+                  seq[["name"]],
+                  # seq[["minCompValue"]],
+                  # seq[["maxCompValue"]],
+                  # seq[["expressions"]],
+                  # seq[["case_sensitive"]],
+                  # seq[["compValue"]],
+                  # seq[["scope"]],
+                  seq[["operator"]],
+                  exps,
+                  seperator),
+           class = class)
+}
 
 #' segmentChain UI
 #'
@@ -43,10 +159,7 @@ segmentChainUI <- function(id){
   ns <- shiny::NS(id)
   
   shiny::tagList(
-    shiny::radioButtons(ns("sequence_type"), "Sequence Type", 
-                           choices = c(Simple = "simple", Sequence = "sequence")),
-    shiny::tableOutput(ns("chain_text")),
-    shiny::uiOutput(ns("chain_vector"))
+    shiny::uiOutput(ns("chain_text"))
   )
 
 
@@ -72,12 +185,6 @@ segmentChain <- function(input, output, session,
     ## keeps list of all elements added
     segment_vector <- shiny::reactiveValues()
     
-    shiny::observe({
-
-      segment_vector$segment_type <- input$sequence_type
-
-    })
-    
     segment_chain <- shiny::reactive({
       
       chain <- character(1)
@@ -90,7 +197,6 @@ segmentChain <- function(input, output, session,
         
         names(inputA) <- names(element_inputs[i])
         chain <- c(chain, inputA)
-        
       }
 
       chain
@@ -105,54 +211,23 @@ segmentChain <- function(input, output, session,
       position <- as.character(position)
       
       ## add to reactive vector segment_chain at moment submit button pressed
-      segment_vector[[position]] <- shiny::isolate(segment_chain())
 
+      segment_vector[[position]] <- shiny::isolate(segment_chain())
+      segment_vector
+      
     })
     
     ## the current setting
-    output$chain_text <- shiny::renderTable({
+    output$chain_text <- shiny::renderUI({
+      shiny::validate(
+        shiny::need(segment_chain(), "Getting chain")
+      )
       chain <- segment_chain()
       
-      # paste(names(chain), chain, sep = "=")
-      out <- data.frame(as.list(chain))
-
-      out[,setdiff(names(out), c("X..", "submit"))]
+      segment_element_ui(id = NULL, seq = chain)
     })
     
-    ## the sequence vector setting
-    chain_vector <- shiny::reactive({
-      
-      sv <- shiny::reactiveValuesToList(segment_vector)
-      
-      df_list <- lapply(sv, function(chain){
-        out <- data.frame(as.list(chain))
-        
-        out[,setdiff(names(out), c("X..", "submit"))]
-        
-      }) 
-      
-      
-    })
-    
-    output$chain_vector <- shiny::renderUI({
-      shiny::validate(
-        shiny::need(chain_vector(), "List of df")
-      )
-      
-      sv <- shiny::reactiveValuesToList(segment_vector)
-      cv <- sv$segment_type
-      df_list <- chain_vector()
-      
-      length_df <- as.character(1:length(df_list))
-      
-      
-      
-      
-      
-    })
-    
-
-    
+    ## a reactiveValues list of elements
     return(segment_vector)
 
 }
@@ -186,7 +261,8 @@ segmentElementUI <- function(id){
     shiny::fluidRow(
 
       shiny::column(width = 4,
-        shiny::textInput(ns("name"), "Name")
+        # shiny::textInput(ns("name"), "Name")
+        shiny::uiOutput(ns("dynamic_names"))
       ),
       shiny::column(width = 4,
         shiny::selectInput(ns("operator"), "Operator", choices = NULL)
@@ -208,6 +284,27 @@ segmentElementUI <- function(id){
 segmentElement <- function(input, output, session){
   
   ns <- session$ns
+  
+  output$dynamic_names <- shiny::renderUI({
+    shiny::validate(
+      shiny::need(input$type, "Type")
+    )
+    
+    type <- input$type
+    
+    if(type == "metric"){
+      
+      choices <- meta[meta$type == "METRIC", "name"]
+      
+    } else {
+      
+      choices <- meta[meta$type == "DIMENSION", "name"]
+      
+    }
+    
+    shiny::selectInput(ns("name"), type, choices = choices)
+    
+  })
   
   output$dynamic_UI <- shiny::renderUI({
     shiny::validate(
