@@ -10,6 +10,7 @@ segmentBuilderUI <- function(id){
   shiny::tagList(
     segmentElementUI(ns("ui1")),
     segmentChainUI(ns("chain1")),
+    shiny::helpText("Simple segments combine their elements as OR, sequence segments use the Match Type setting."),
     segmentChainSequenceUI(ns("seq1"))
   )
   
@@ -46,9 +47,13 @@ segmentBuilder <- function(input, output, session){
 segmentChainSequenceUI <- function(id){
 
   ns <- shiny::NS(id)
-  shiny::radioButtons(ns("sequence_type"), "Sequence Type",
-                      choices = c(Simple = "simple", Sequence = "sequence"))
-  shiny::uiOutput(ns("segment_chain_sequence"))
+  shiny::tagList(
+    shiny::radioButtons(ns("sequence_type"), "Segment Type",
+                        choices = c(Simple = "simple", Sequence = "sequence"), 
+                        inline = TRUE),
+    shiny::uiOutput(ns("segment_chain_sequence"))
+  )
+
   
 }
 
@@ -73,36 +78,64 @@ segmentChainSequence <- function(input, output, session,
     output$segment_chain_sequence <- shiny::renderUI({
       
       segment_sequence <- shiny::reactiveValuesToList(segment_chain)
+      segment_type <- input$sequence_type
 
       make_output <- function(id){
         seq <- segment_sequence[[id]]
-        segment_element_ui(id, seq)
+        segment_element_ui(id, seq, segment_type = segment_type)
       }
       
       out <- lapply(names(segment_sequence), make_output)
       
       shiny::tagList(
-        out
+        shiny::div(class = "panel panel-default",
+          shiny::div(class = "panel-heading", paste("Type:", input$sequence_type)),
+          out
+        )
+
       )
       
     })
+    
+    segment_definition <- shiny::reactiveValues()
+    
+    shiny::observeEvent(element_inputs$submit_segment_vector(), {
+      
+      sv <- shiny::reactiveValuesToList(segment_definition)
+      position <- length(sv) + 1
+      
+      position <- as.character(position)
+      
+      ## add to reactive vector segment_chain at moment submit button pressed
+      
+      segment_definition[[position]] <- shiny::isolate(segment_chain)
+      segment_definition[[position]]$segment_type <- shiny::isolate(input$segment_type)
+      
+      ## reset segment_chain
+      segment_chain <- NULL
+      
+      segment_definition
+      
+    })
+    
+    return(segment_definition)
 
 }
 
-segment_element_ui <- function(id, seq){
+segment_element_ui <- function(id, seq, segment_type=NULL){
 
-  message(paste(names(seq), sep = " ", collapse = " \n "))
+  message(segment_type)
   str(seq)
   exps <- NULL
   
   ## UI not fully loaded
-  if(length(seq) < 11) return(NULL)
+  if(length(seq) < 9) return(NULL)
   
   if(seq[["type"]] == "metric"){
     class <- "label label-warning"
     
-    exps <- paste(seq[["scope"]], 
-                  seq[["compValue"]])
+    exps <- paste(seq[["compValue"]],
+                  "[", tolower(seq[["scope"]]), "]")
     
     if(seq[["operator"]] == "BETWEEN"){
       exps <- paste(exps, seq[["maxCompValue"]])
@@ -111,8 +144,9 @@ segment_element_ui <- function(id, seq){
   } else { ## dimension
     class <- "label label-primary"
 
-    exps <- paste(seq[["case_sensitive"]], 
-                  seq[["expressions"]])
+    exps <- paste(seq[["expressions"]],
+                  seq[["case_sensitive"]]
+                  )
     
     if(seq[["operator"]] == "NUMERIC_BETWEEN"){
       exps <- paste(exps, seq[["minCompValue"]], seq[["maxCompValue"]])
@@ -126,21 +160,25 @@ segment_element_ui <- function(id, seq){
     exclude <- NULL
   }
   
-  if(seq[["matchType"]] == "PRECEDES"){
-    seperator <- " > "
+  if(!is.null(segment_type)){
+    if(segment_type == "sequence"){
+      if(seq[["matchType"]] == "PRECEDES"){
+        seperator <- " > "
+      } else {
+        seperator <- " >> "
+      }
+    } else {
+      seperator <- " OR "
+    }
   } else {
-    seperator <- " >> "
+    seperator <- NULL
   }
+
+
   
-  shiny::h2(paste(id, 
+  shiny::tags$li(paste(id, 
                   exclude,
                   seq[["name"]],
-                  # seq[["minCompValue"]],
-                  # seq[["maxCompValue"]],
-                  # seq[["expressions"]],
-                  # seq[["case_sensitive"]],
-                  # seq[["compValue"]],
-                  # seq[["scope"]],
                   seq[["operator"]],
                   exps,
                   seperator),
@@ -217,6 +255,13 @@ segmentChain <- function(input, output, session,
       
     })
     
+    shiny::observeEvent(element_inputs$submit_segment_vector(), {
+      
+      ## if this is pressed, reset the segment_vector
+      segment_vector <- shiny::reactiveValues()
+      
+    })
+    
     ## the current setting
     output$chain_text <- shiny::renderUI({
       shiny::validate(
@@ -242,41 +287,53 @@ segmentElementUI <- function(id){
   ns <- shiny::NS(id)
   
   shiny::tagList(
-    shiny::fluidRow(
-      shiny::column(width = 4,
-        shiny::radioButtons(ns("type"), "Filter Type", 
-                            choices = c(Metric = "metric", 
-                                        Dimension = "dimension"), 
-                            inline = TRUE)
+    shiny::tags$div(
+      shiny::fluidRow(
+        shiny::column(width = 4,
+                      shiny::radioButtons(ns("type"), "Filter Type", 
+                                          choices = c(Metric = "metric", 
+                                                      Dimension = "dimension"), 
+                                          inline = TRUE)
+        ),
+        shiny::column(width = 4,
+                      shiny::radioButtons(ns("not"), 
+                                          "Exclude?", 
+                                          choices = c(Include = FALSE, 
+                                                      Exclude = TRUE), 
+                                          inline = TRUE)
+        ),
+        shiny::column(width = 4,
+                      shiny::radioButtons(ns("matchType"),
+                                          "Match Type", 
+                                          c("PRECEDES","IMMEDIATELY_PRECEDES"))
+        )
+        
       ),
-      shiny::column(width = 4,
-                    shiny::radioButtons(ns("not"), "Exclude?", choices = c(Include = FALSE, 
-                                                                           Exclude = TRUE), inline = TRUE)
+      shiny::fluidRow(
+        
+        shiny::column(width = 4,
+                      shiny::uiOutput(ns("dynamic_names"))
+        ),
+        shiny::column(width = 4,
+                      shiny::selectInput(ns("operator"), "Operator", choices = NULL)
+        ),  
+        shiny::column(width = 4,
+                      shiny::uiOutput(ns("dynamic_UI"))
+        )
       ),
-      shiny::column(width = 4,
-                    shiny::radioButtons(ns("matchType"),"Match Type", c("PRECEDES","IMMEDIATELY_PRECEDES"))
-      )
-      
-    ),
-    shiny::fluidRow(
-
-      shiny::column(width = 4,
-        # shiny::textInput(ns("name"), "Name")
-        shiny::uiOutput(ns("dynamic_names"))
-      ),
-      shiny::column(width = 4,
-        shiny::selectInput(ns("operator"), "Operator", choices = NULL)
-      ),  
-      shiny::column(width = 4,
-        shiny::uiOutput(ns("dynamic_UI"))
-      )
-    ),
-    shiny::fluidRow(
-      shiny::column(width = 4,
-         shiny::actionButton(ns("submit"), "Add Segment Element", 
-                             icon = shiny::icon("plus-square-o"),
-                             class = "btn btn-success")           
-      )
+      shiny::fluidRow(
+        shiny::column(width = 4,
+                      shiny::actionButton(ns("submit"), "Add Segment Element", 
+                                          icon = shiny::icon("plus-square-o"),
+                                          class = "btn btn-success")           
+        ),
+        shiny::column(width = 4,
+                      shiny::actionButton(ns("submit_segment_vector"),
+                                          "Add Segment Vector", 
+                                          icon = shiny::icon("plus-square-o"),
+                                          class = "btn btn-success"))
+      ) 
+    , class = "well"  
     )
   )
 }
@@ -383,20 +440,23 @@ segmentElement <- function(input, output, session){
     
     if(type == "metric"){
       
-      choice <- c("LESS_THAN","GREATER_THAN","EQUAL","BETWEEN")
+      choice <- c("<" = "LESS_THAN",
+                  ">" = "GREATER_THAN",
+                  "=" = "EQUAL",
+                  "between" = "BETWEEN")
       
     } else if(type == "dimension"){
       
       choice <- c(
-        "REGEXP",
-        "BEGINS_WITH",
-        "ENDS_WITH",
-        "PARTIAL",
-        "EXACT",
-        "IN_LIST",
-        "NUMERIC_LESS_THAN",
-        "NUMERIC_GREATER_THAN",
-        "NUMERIC_BETWEEN"
+        "regex" = "REGEXP",
+        "begins" = "BEGINS_WITH",
+        "ends" = "ENDS_WITH",
+        "contains" = "PARTIAL",
+        "exact" = "EXACT",
+        "list" = "IN_LIST",
+        "<" = "NUMERIC_LESS_THAN",
+        ">" = "NUMERIC_GREATER_THAN",
+        "between" = "NUMERIC_BETWEEN"
       )
     } else {
       choice <- NULL
@@ -420,7 +480,8 @@ segmentElement <- function(input, output, session){
     case_sensitive = shiny::reactive(input$case_sensitive),
     compValue = shiny::reactive(input$compValue),
     scope = shiny::reactive(input$scope),
-    submit = shiny::reactive(input$submit)
+    submit = shiny::reactive(input$submit),
+    submit_segment_vector = shiny::reactive(input$submit_segment_vector)
   ))
 
 }
