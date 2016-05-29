@@ -8,10 +8,12 @@ segmentBuilderUI <- function(id){
   ns <- shiny::NS(id)
   
   shiny::tagList(
-    segmentElementUI(ns("ui1")),
-    segmentChainUI(ns("chain1")),
-    shiny::helpText("Simple segments combine their elements as OR, sequence segments use the Match Type setting."),
-    segmentChainSequenceUI(ns("seq1"))
+    shiny::fluidRow(
+      segmentElementUI(ns("ui1")),
+      segmentChainUI(ns("chain1")),
+      shiny::helpText("Simple segments combine their elements as OR, sequence segments use the Match Type setting."),
+      segmentChainSequenceUI(ns("seq1"))
+    )
   )
   
 }
@@ -48,9 +50,6 @@ segmentChainSequenceUI <- function(id){
 
   ns <- shiny::NS(id)
   shiny::tagList(
-    shiny::radioButtons(ns("sequence_type"), "Segment Type",
-                        choices = c(Simple = "simple", Sequence = "sequence"), 
-                        inline = TRUE),
     shiny::uiOutput(ns("segment_chain_sequence"))
   )
 
@@ -78,18 +77,18 @@ segmentChainSequence <- function(input, output, session,
     output$segment_chain_sequence <- shiny::renderUI({
       
       segment_sequence <- shiny::reactiveValuesToList(segment_chain)
-      segment_type <- input$sequence_type
+      sequence_type <- element_inputs$sequence_type()
 
       make_output <- function(id){
         seq <- segment_sequence[[id]]
-        segment_element_ui(id, seq, segment_type = segment_type)
+        segment_element_ui(id, seq, segment_type = sequence_type)
       }
       
       out <- lapply(names(segment_sequence), make_output)
       
       shiny::tagList(
         shiny::div(class = "panel panel-default",
-          shiny::div(class = "panel-heading", paste("Type:", input$sequence_type)),
+          shiny::div(class = "panel-heading", paste(sequence_type)),
           out
         )
 
@@ -109,7 +108,7 @@ segmentChainSequence <- function(input, output, session,
       ## add to reactive vector segment_chain at moment submit button pressed
       
       segment_definition[[position]] <- shiny::isolate(segment_chain)
-      segment_definition[[position]]$segment_type <- shiny::isolate(input$segment_type)
+      segment_definition[[position]]$segment_type <- shiny::isolate(element_inputs$sequence_type())
       
       ## reset segment_chain
       segment_chain <- NULL
@@ -125,7 +124,6 @@ segmentChainSequence <- function(input, output, session,
 segment_element_ui <- function(id, seq, segment_type=NULL){
 
   message(segment_type)
-  str(seq)
   exps <- NULL
   
   ## UI not fully loaded
@@ -143,9 +141,15 @@ segment_element_ui <- function(id, seq, segment_type=NULL){
     
   } else { ## dimension
     class <- "label label-primary"
+    
+    if(seq[["case_sensitive"]]){
+      cs <- " (case sensitive)"
+    } else {
+      cs <- " (not case sensitive)"
+    }
 
     exps <- paste(seq[["expressions"]],
-                  seq[["case_sensitive"]]
+                  cs
                   )
     
     if(seq[["operator"]] == "NUMERIC_BETWEEN"){
@@ -222,6 +226,7 @@ segmentChain <- function(input, output, session,
     
     ## keeps list of all elements added
     segment_vector <- shiny::reactiveValues()
+    segment_length <- shiny::reactiveValues(i=0)
     
     segment_chain <- shiny::reactive({
       
@@ -244,8 +249,9 @@ segmentChain <- function(input, output, session,
     shiny::observeEvent(element_inputs$submit(), {
       
       sv <- shiny::reactiveValuesToList(segment_vector)
-      position <- length(sv) + 1
+      position <- (segment_length$i + 1)
       
+      segment_length$i <- position + 1
       position <- as.character(position)
       
       ## add to reactive vector segment_chain at moment submit button pressed
@@ -257,8 +263,17 @@ segmentChain <- function(input, output, session,
     
     shiny::observeEvent(element_inputs$submit_segment_vector(), {
       
+      sv <- shiny::reactiveValuesToList(segment_vector)
+      position <- length(sv)
+      
+      # position <- as.character(position)
+      
       ## if this is pressed, reset the segment_vector
-      segment_vector <- shiny::reactiveValues()
+      lapply(1:position, function(x) {
+        segment_vector[[as.character(x)]] <- NULL
+      })
+      
+      segment_length$i <- 0
       
     })
     
@@ -303,9 +318,9 @@ segmentElementUI <- function(id){
                                           inline = TRUE)
         ),
         shiny::column(width = 4,
-                      shiny::radioButtons(ns("matchType"),
-                                          "Match Type", 
-                                          c("PRECEDES","IMMEDIATELY_PRECEDES"))
+                      shiny::radioButtons(ns("sequence_type"), "Segment Type",
+                                          choices = c(Simple = "simple", Sequence = "sequence"), 
+                                          inline = TRUE)
         )
         
       ),
@@ -331,7 +346,11 @@ segmentElementUI <- function(id){
                       shiny::actionButton(ns("submit_segment_vector"),
                                           "Add Segment Vector", 
                                           icon = shiny::icon("plus-square-o"),
-                                          class = "btn btn-success"))
+                                          class = "btn btn-success")
+                      ),
+        shiny::column(width = 4,
+                      shiny::uiOutput(ns("matchType_ui"))
+                      )
       ) 
     , class = "well"  
     )
@@ -342,6 +361,27 @@ segmentElement <- function(input, output, session){
   
   ns <- session$ns
   
+  output$matchType_ui <- shiny::renderUI({
+    shiny::validate(
+      shiny::need(input$sequence_type, "sequence_type")
+    )
+    
+    sequence_type <- input$sequence_type
+    
+    if(sequence_type == "sequence"){
+      out <- shiny::radioButtons(ns("matchType"),
+                                 "Element Sequence",
+                                 c("precedes (>)" = "PRECEDES",
+                                   "immediately precedes (>>)" = "IMMEDIATELY_PRECEDES"))
+    } else {
+      out <- NULL
+    }
+    
+    out
+    
+
+  })
+  
   output$dynamic_names <- shiny::renderUI({
     shiny::validate(
       shiny::need(input$type, "Type")
@@ -351,11 +391,11 @@ segmentElement <- function(input, output, session){
     
     if(type == "metric"){
       
-      choices <- meta[meta$type == "METRIC", "name"]
+      choices <- meta[meta$type == "METRIC" & meta$status == "PUBLIC", "name"]
       
     } else {
       
-      choices <- meta[meta$type == "DIMENSION", "name"]
+      choices <- meta[meta$type == "DIMENSION" & meta$status == "PUBLIC", "name"]
       
     }
     
@@ -481,7 +521,8 @@ segmentElement <- function(input, output, session){
     compValue = shiny::reactive(input$compValue),
     scope = shiny::reactive(input$scope),
     submit = shiny::reactive(input$submit),
-    submit_segment_vector = shiny::reactive(input$submit_segment_vector)
+    submit_segment_vector = shiny::reactive(input$submit_segment_vector),
+    sequence_type = shiny::reactive(input$sequence_type)
   ))
 
 }
