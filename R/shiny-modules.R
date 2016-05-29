@@ -11,8 +11,8 @@ segmentBuilderUI <- function(id){
     shiny::fluidRow(
       segmentElementUI(ns("ui1")),
       segmentChainUI(ns("chain1")),
-      shiny::helpText("Simple segments combine their elements as OR, sequence segments use the Match Type setting."),
-      segmentChainSequenceUI(ns("seq1"))
+      shiny::helpText("Simple segments combine their elements as OR, sequence segments use the Element Sequence setting."),
+      segmentDefinitionBuilderUI(ns("def1"))
     )
   )
   
@@ -27,103 +27,81 @@ segmentBuilder <- function(input, output, session){
   
   element_inputs <- shiny::callModule(segmentElement, "ui1")
   
-  segment_chain <- shiny::callModule(segmentChain, "chain1", 
-                                  element_inputs = element_inputs)
-  
-  segment_sequence <- shiny::callModule(segmentChainSequence, "seq1", 
-                                        segment_chain = segment_chain,
+  segment_sequence <- shiny::callModule(segmentChain, "chain1", 
                                         element_inputs = element_inputs)
   
-  return(segment_sequence)
+  segment_definition <- shiny::callModule(segmentDefinitionBuilder, "def1",
+                                          segment_sequence = segment_sequence,
+                                          element_inputs = element_inputs)
+  
+  return(segment_definition)
   
 }
 
 
-#' segmentChainSequence UI
+#' segmentDefinitionBuilder UI
 #'
-#' Shiny Module for use with \link{segmentChainSequence}
+#' Shiny Module for use with \link{segmentDefinitionBuilder}
 #' 
 #' @param id Shiny id
 #'
 #' @return Shiny UI
-segmentChainSequenceUI <- function(id){
+segmentDefinitionBuilderUI <- function(id){
 
   ns <- shiny::NS(id)
-  shiny::tagList(
-    shiny::uiOutput(ns("segment_chain_sequence"))
-  )
+  shiny::uiOutput(ns("segment_defs"))
 
-  
 }
 
-#' segmentChainSequence
+#' segmentDefinitionBuilder
 #'
-#' Shiny Module for use with \link{segmentChainSequenceUI}
+#' Shiny Module for use with \link{segmentDefinitionBuilderUI}
 #'
-#' Call via \code{shiny::callModule(segmentChainSequence, "your_id")}
+#' Call via \code{shiny::callModule(segmentDefinitionBuilder, "your_id")}
 #'
 #' @param input shiny input
 #' @param output shiny output
 #' @param session shiny session
-#' @param segment_chain reactive segment_chain from \link{segmentChain}
+#' @param segment_sequence segment sequence from \link{segmenChainSequence}
+#' @param element_inputs element inputs
 #'
 #' @return Something
-segmentChainSequence <- function(input, output, session,
-                                 segment_chain,
-                                 element_inputs){
+segmentDefinitionBuilder <- function(input, output, session,
+                                     segment_sequence,
+                                     element_inputs){
 
     ns <- session$ns
-
-    output$segment_chain_sequence <- shiny::renderUI({
+    
+    output$segment_defs <- shiny::renderUI({
       
-      segment_sequence <- shiny::reactiveValuesToList(segment_chain)
-      sequence_type <- element_inputs$sequence_type()
+      segment_sequence <- shiny::reactiveValuesToList(segment_sequence)
+      element_inputs <- element_inputs
+      
+      parse_sequence <- function(ss){
+        segment_sequence_part <- segment_sequence[[ss]]
 
-      make_output <- function(id){
-        seq <- segment_sequence[[id]]
-        segment_element_ui(id, seq, segment_type = sequence_type)
+        make_output <- function(id){
+          seq <- segment_sequence_part[[id]]
+          segment_element_ui(id, seq, segment_type = seq$sequence_type)
+        }
+        
+        out1 <- lapply(names(segment_sequence_part), make_output)
+        str(out1)
+        out1
       }
       
-      out <- lapply(names(segment_sequence), make_output)
-      
+      out <- lapply(names(segment_sequence), parse_sequence)
+      str(out)
       shiny::tagList(
-        shiny::div(class = "panel panel-default",
-          shiny::div(class = "panel-heading", paste(sequence_type)),
-          out
-        )
-
+        out
       )
       
     })
-    
-    segment_definition <- shiny::reactiveValues()
-    
-    shiny::observeEvent(element_inputs$submit_segment_vector(), {
-      
-      sv <- shiny::reactiveValuesToList(segment_definition)
-      position <- length(sv) + 1
-      
-      position <- as.character(position)
-      
-      ## add to reactive vector segment_chain at moment submit button pressed
-      
-      segment_definition[[position]] <- shiny::isolate(segment_chain)
-      segment_definition[[position]]$segment_type <- shiny::isolate(element_inputs$sequence_type())
-      
-      ## reset segment_chain
-      segment_chain <- NULL
-      
-      segment_definition
-      
-    })
-    
-    return(segment_definition)
 
 }
 
 segment_element_ui <- function(id, seq, segment_type=NULL){
 
-  message(segment_type)
   exps <- NULL
   
   ## UI not fully loaded
@@ -201,7 +179,8 @@ segmentChainUI <- function(id){
   ns <- shiny::NS(id)
   
   shiny::tagList(
-    shiny::uiOutput(ns("chain_text"))
+    shiny::uiOutput(ns("chain_text")),
+    shiny::uiOutput(ns("segment_chain_sequence"))
   )
 
 
@@ -226,7 +205,6 @@ segmentChain <- function(input, output, session,
     
     ## keeps list of all elements added
     segment_vector <- shiny::reactiveValues()
-    segment_length <- shiny::reactiveValues(i=0)
     
     segment_chain <- shiny::reactive({
       
@@ -246,21 +224,22 @@ segmentChain <- function(input, output, session,
 
     })
     
+    segment_length <- shiny::reactiveValues(i=1)
     shiny::observeEvent(element_inputs$submit(), {
       
       sv <- shiny::reactiveValuesToList(segment_vector)
-      position <- (segment_length$i + 1)
+      position <- segment_length$i
       
       segment_length$i <- position + 1
       position <- as.character(position)
       
       ## add to reactive vector segment_chain at moment submit button pressed
-
       segment_vector[[position]] <- shiny::isolate(segment_chain())
       segment_vector
       
     })
     
+
     shiny::observeEvent(element_inputs$submit_segment_vector(), {
       
       sv <- shiny::reactiveValuesToList(segment_vector)
@@ -273,7 +252,7 @@ segmentChain <- function(input, output, session,
         segment_vector[[as.character(x)]] <- NULL
       })
       
-      segment_length$i <- 0
+      segment_length$i <- 1
       
     })
     
@@ -287,8 +266,52 @@ segmentChain <- function(input, output, session,
       segment_element_ui(id = NULL, seq = chain)
     })
     
+    
+    ##### create the segment sequences from segment_chain
+    output$segment_chain_sequence <- shiny::renderUI({
+      
+      segment_sequence <- shiny::reactiveValuesToList(segment_vector)
+      sequence_type <- element_inputs$sequence_type()
+      
+      make_output <- function(id){
+        seq <- segment_sequence[[id]]
+        segment_element_ui(id, seq, segment_type = sequence_type)
+      }
+      
+      out <- lapply(names(segment_sequence), make_output)
+      
+      shiny::tagList(
+        shiny::div(class = "panel panel-default",
+                   shiny::div(class = "panel-heading", paste(sequence_type)),
+                   out
+        )
+        
+      )
+      
+    })
+    
+    segment_definition <- shiny::reactiveValues()
+    
+    shiny::observeEvent(element_inputs$submit_segment_vector(), {
+      
+      sv <- shiny::reactiveValuesToList(segment_definition)
+      position <- length(sv) + 1
+      
+      position <- as.character(position)
+      
+      ## add to reactive vector segment_chain at moment submit button pressed
+      
+      segment_definition[[position]] <- shiny::isolate(segment_chain)
+      # segment_definition[[position]]$segment_type <- shiny::isolate(element_inputs$sequence_type())
+      
+      segment_definition
+      
+    })
+    
+    return(segment_definition)
+    
     ## a reactiveValues list of elements
-    return(segment_vector)
+    # return(segment_vector)
 
 }
 
