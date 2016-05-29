@@ -240,21 +240,21 @@ segmentChain <- function(input, output, session,
     })
     
 
-    shiny::observeEvent(element_inputs$submit_segment_vector(), {
-      
-      sv <- shiny::reactiveValuesToList(segment_vector)
-      position <- length(sv)
-      
-      # position <- as.character(position)
-      
-      ## if this is pressed, reset the segment_vector
-      lapply(1:position, function(x) {
-        segment_vector[[as.character(x)]] <- NULL
-      })
-      
-      segment_length$i <- 1
-      
-    })
+    # shiny::observeEvent(element_inputs$submit_segment_vector(), {
+    #   
+    #   sv <- shiny::reactiveValuesToList(segment_vector)
+    #   position <- length(sv)
+    #   
+    #   # position <- as.character(position)
+    #   
+    #   ## if this is pressed, reset the segment_vector
+    #   lapply(1:position, function(x) {
+    #     segment_vector[[as.character(x)]] <- NULL
+    #   })
+    #   
+    #   segment_length$i <- 1
+    #   
+    # })
     
     ## the current setting
     output$chain_text <- shiny::renderUI({
@@ -294,15 +294,30 @@ segmentChain <- function(input, output, session,
     
     shiny::observeEvent(element_inputs$submit_segment_vector(), {
       
-      sv <- shiny::reactiveValuesToList(segment_definition)
-      position <- length(sv) + 1
+      segment_chain <- segment_chain()
       
-      position <- as.character(position)
+      sd <- shiny::reactiveValuesToList(segment_definition)
+      position1 <- length(sd) + 1
+      
+      position1 <- as.character(position1)
       
       ## add to reactive vector segment_chain at moment submit button pressed
-      
-      segment_definition[[position]] <- shiny::isolate(segment_chain)
+
+      message("postion1:", position1)
+      segment_definition[[position1]] <- shiny::isolate(segment_chain)
       # segment_definition[[position]]$segment_type <- shiny::isolate(element_inputs$sequence_type())
+      
+      sv <- shiny::reactiveValuesToList(segment_vector)
+      position <- length(sv)
+      
+      # position <- as.character(position)
+      
+      ## if this is pressed, reset the segment_vector
+      lapply(1:position, function(x) {
+        segment_vector[[as.character(x)]] <- NULL
+      })
+      
+      segment_length$i <- 1
       
       segment_definition
       
@@ -310,9 +325,6 @@ segmentChain <- function(input, output, session,
     
     return(segment_definition)
     
-    ## a reactiveValues list of elements
-    # return(segment_vector)
-
 }
 
 
