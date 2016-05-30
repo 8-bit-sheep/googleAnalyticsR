@@ -77,12 +77,16 @@ segmentDefinitionBuilder <- function(input, output, session,
       segment_sequence <- shiny::reactiveValuesToList(segment_sequence)
       element_inputs <- element_inputs
       
+      # browser()
+      
       parse_sequence <- function(ss){
         segment_sequence_part <- segment_sequence[[ss]]
 
         make_output <- function(id){
+          str(id)
+          str(segment_sequence_part)
           seq <- segment_sequence_part[[id]]
-          segment_element_ui(id, seq, segment_type = seq$sequence_type)
+          segment_element_ui(id, seq, segment_type = seq[["sequence_type"]])
         }
         
         out1 <- lapply(names(segment_sequence_part), make_output)
@@ -239,23 +243,6 @@ segmentChain <- function(input, output, session,
       
     })
     
-
-    # shiny::observeEvent(element_inputs$submit_segment_vector(), {
-    #   
-    #   sv <- shiny::reactiveValuesToList(segment_vector)
-    #   position <- length(sv)
-    #   
-    #   # position <- as.character(position)
-    #   
-    #   ## if this is pressed, reset the segment_vector
-    #   lapply(1:position, function(x) {
-    #     segment_vector[[as.character(x)]] <- NULL
-    #   })
-    #   
-    #   segment_length$i <- 1
-    #   
-    # })
-    
     ## the current setting
     output$chain_text <- shiny::renderUI({
       shiny::validate(
@@ -291,26 +278,20 @@ segmentChain <- function(input, output, session,
     })
     
     segment_definition <- shiny::reactiveValues()
+    segment_defintion_length <- shiny::reactiveValues(i=1)
     
     shiny::observeEvent(element_inputs$submit_segment_vector(), {
       
-      segment_chain <- segment_chain()
-      
-      sd <- shiny::reactiveValuesToList(segment_definition)
-      position1 <- length(sd) + 1
-      
-      position1 <- as.character(position1)
+      sv <- shiny::reactiveValuesToList(segment_vector)
+      position <- segment_defintion_length$i
+      segment_length$i <- position + 1
+      position <- as.character(position)
       
       ## add to reactive vector segment_chain at moment submit button pressed
-
-      message("postion1:", position1)
-      segment_definition[[position1]] <- shiny::isolate(segment_chain)
-      # segment_definition[[position]]$segment_type <- shiny::isolate(element_inputs$sequence_type())
+      segment_definition[[position]] <- shiny::isolate(sv)
+      segment_definition[[position]]$sequence_type <- shiny::isolate(element_inputs$sequence_type)
       
-      sv <- shiny::reactiveValuesToList(segment_vector)
-      position <- length(sv)
-      
-      # position <- as.character(position)
+      segment_defintion_length$i <- position + 1
       
       ## if this is pressed, reset the segment_vector
       lapply(1:position, function(x) {
