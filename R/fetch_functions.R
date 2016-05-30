@@ -90,7 +90,7 @@ loop_ids <- function(id, ga_pars, samplingLevel, max_results, ga){
     ## if walk through results then split up dates and walk through date ranges
     if(samplingLevel %in% "WALK"){
       message("Walking through data.")
-      the_data <- walkData(ga, ga_pars, start, end)
+      the_data <- walkData(ga, ga_pars, ga_pars$`start-date`, ga_pars$end)
       
     } else {
       ## No batch needed
