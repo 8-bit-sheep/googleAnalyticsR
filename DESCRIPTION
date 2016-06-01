@@ -22,7 +22,8 @@ Imports:
 Suggests:
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    bigQueryR
 License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr
