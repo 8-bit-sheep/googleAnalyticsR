@@ -417,7 +417,7 @@ attr(gadata, "dateRange")
 
 # To use - BigQuery calls
 
-Limited support for more user freindly calls to BigQuery Google Analytics 360 exports is implemented.
+Limited support for more user friendly calls to BigQuery Google Analytics 360 exports is implemented.
 
 `google_analytics_bq` parses your metrics and dimensions into BigQuery queries.  
 
@@ -445,7 +445,7 @@ You can then export BigQuery data via:
 bq <- google_analytics_bq("project-id", "dataset-id-ga-viewid", 
                            start = "2016-01-01", end = "2016-02-01", 
                            metrics = "users", 
-                           dimensions = c("source","medium","landingPagePath"))
+                           dimensions = c("source","medium"))
 head(bq)
              source   medium  users
 1   mavas|blahbs.ru  display  47837
