@@ -503,7 +503,10 @@ lookup_bq_query_m <- c(visits = "SUM(totals.visits) as sessions",
                        screenviews = "SUM(totals.screenviews) as screenviews",
                        uniqueScreenviews = "SUM(totals.uniqueScreenviews) as uniqueScreenviews",
                        timeOnScreen = "SUM(totals.timeOnScreen) as timeOnScreen",
-                       users = "COUNT(fullVisitorId) as users")
+                       users = "COUNT(fullVisitorId) as users",
+                       exits = "COUNT(hits.isExit) as exits",
+                       entrances = "COUNT(hits.isEntrance) as entrances",
+                       eventValue = "SUM(hits.eventinfo.eventValue) as eventValue")
 
 lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPath",
                        campaign = "trafficSource.campaign as campaign",
@@ -516,6 +519,8 @@ lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPat
                        # adwords...etc...
                        transactionId = "hits.transaction.transactionId as transactionId",
                        date = "date",
+                       fullVisitorId = "fullVisitorId",
+                       userId = "userId",
                        visitorId = "visitorId",
                        visitId = "visitId",
                        visitStartTime = "visitStartTime",
@@ -534,7 +539,11 @@ lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPat
                        subContinent = "geoNetwork.subContinent as subContinent",
                        country = "geoNetwork.country as country",
                        region = "geoNetwork.region as region",
-                       metro = "geoNetwork.region as metro"
+                       metro = "geoNetwork.region as metro",
+                       pagePath = "hits.page.pagePath as pagePath",
+                       eventCategory = "hits.eventInfo.eventCategory as eventCategory",
+                       eventAction = "hits.eventInfo.eventAction as eventAction",
+                       eventLabel = "hits.eventInfo.eventLabel as eventLabel"
                        )
 ```
 
