@@ -469,6 +469,26 @@ bq2 <- google_analytics_bq("project-id", "dataset-id-ga-viewid",
   dimension not yet supported. Must be one of referralPath, campaign, source, medium, keyword, adContent, adwordsCampaignID, adwordsAdGroupID, transactionId, date, visitorId, visitId, visitStartTime, visitNumber                           
 ```
 
+You can also query the BigQuery table directly using the query parameter.  
+
+This is just as you would in the BigQuery interface, and allows all complicated queries. 
+
+```r
+q <- "SELECT
+  date,
+  SUM (totals.visits) visits,
+  SUM (totals.pageviews) pageviews,
+  SUM (totals.transactions) transactions,
+  SUM (totals.transactionRevenue)/1000000 revenue
+FROM [87010628.ga_sessions_20160327],[87010628.ga_sessions_20160328],[87010628.ga_sessions_20160329]
+GROUP BY date
+ORDER BY date ASC "
+
+bq3 <- google_analytics_bq("project-id", "dataset-id-ga-viewid", 
+                           query = q)
+
+```
+
 The metrics and dimensions implemented so far are in the two lookups below.  
 
 ```r
@@ -499,7 +519,22 @@ lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPat
                        visitorId = "visitorId",
                        visitId = "visitId",
                        visitStartTime = "visitStartTime",
-                       visitNumber = "visitNumber"
+                       visitNumber = "visitNumber",
+                       browser = "device.browser as browser",
+                       browserVersion = "device.browserVersion as browserVersion",
+                       operatingSystem = "device.operatingSystem as operatingSystem",
+                       operatingSystemVersion = "device.operatingSystemVersion as operatingSystemVersion",
+                       mobileDeviceBranding = "device.mobileDeviceBranding as mobileDeviceBranding",
+                       flashVersion = "device.flashVersion as flashVersion",
+                       language = "device.language as language",
+                       screenColors = "device.screenColors as screenColors",
+                       screenResolution = "device.screenResolution as screenResolution",
+                       deviceCategory = "device.deviceCategory as deviceCategory",
+                       continent = "geoNetwork.continent as continent",
+                       subContinent = "geoNetwork.subContinent as subContinent",
+                       country = "geoNetwork.country as country",
+                       region = "geoNetwork.region as region",
+                       metro = "geoNetwork.region as metro"
                        )
 ```
 
