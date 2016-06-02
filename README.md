@@ -414,6 +414,144 @@ attr(gadata, "profileInfo")
 attr(gadata, "dateRange")
 
 ```
+
+# To use - BigQuery calls
+
+Limited support for more user friendly calls to BigQuery Google Analytics 360 exports is implemented.
+
+`google_analytics_bq` parses your metrics and dimensions into BigQuery queries.  
+
+To use, you need to also install the `bigQueryR` library and authenticate to BigQuery:
+
+```r
+devtools::install_github("MarkEdmondson1234/bigQueryR")
+library(googleAnalyticsR)
+library(bigQueryR)
+
+## go through Google oAuth2 flow
+bqr_auth()
+
+## get your project and datasets
+bqr_list_projects()
+bqr_list_datasets("project-id")
+
+```
+
+For BigQuery Google Analytics 360 exports, the dataset is the same as the GA View ID you are exporting.
+
+You can then export BigQuery data via:
+
+```r
+bq <- google_analytics_bq("project-id", "dataset-id-ga-viewid", 
+                           start = "2016-01-01", end = "2016-02-01", 
+                           metrics = "users", 
+                           dimensions = c("source","medium"))
+head(bq)
+             source   medium  users
+1   mavas|blahbs.ru  display  47837
+2          examp.ae referral   6090
+3   lm.facebook.com referral    335
+4       ghtie_yahoo  display 133900
+5      fjsfs_inmobi  display  19887
+6 tripadvisor.co.dk referral    307                         
+```
+
+At the moment the metrics/dimensions are very limited as they need to added manually to a lookup table.  
+Segments/filters are not supported.  The data is unsampled though. 
+
+```r
+bq2 <- google_analytics_bq("project-id", "dataset-id-ga-viewid", 
+                           start = "2016-01-01", end = "2016-02-01", 
+                           metrics = "users", 
+                           dimensions = c("source","medium","landingPagePath"))
+                           
+> Error in google_analytics_bq("project-id", "dataset-id-ga-viewid", start = "2016-01-01",  : 
+  dimension not yet supported. Must be one of referralPath, campaign, source, medium, keyword, adContent, adwordsCampaignID, adwordsAdGroupID, transactionId, date, visitorId, visitId, visitStartTime, visitNumber                           
+```
+
+You can also query the BigQuery table directly using the query parameter.  
+
+This is just as you would in the BigQuery interface, and allows all complicated queries. 
+
+```r
+q <- "SELECT
+  date,
+  SUM (totals.visits) visits,
+  SUM (totals.pageviews) pageviews,
+  SUM (totals.transactions) transactions,
+  SUM (totals.transactionRevenue)/1000000 revenue
+FROM [87010628.ga_sessions_20160327],[87010628.ga_sessions_20160328],[87010628.ga_sessions_20160329]
+GROUP BY date
+ORDER BY date ASC "
+
+bq3 <- google_analytics_bq("project-id", "dataset-id-ga-viewid", 
+                           query = q)
+
+```
+
+The metrics and dimensions implemented so far are in the two lookups below.  
+
+```r
+lookup_bq_query_m <- c(visits = "SUM(totals.visits) as sessions",
+                       sessions = "SUM(totals.visits) as sessions",
+                       pageviews = "SUM(totals.pageviews) as pageviews",
+                       timeOnSite = "SUM(totals.timeOnSite) as timeOnSite",
+                       bounces = "SUM(totals.bounces) as bounces",
+                       transactions = "SUM(totals.transactions) as transactions",
+                       transactionRevenue = "SUM(totals.transactionRevenue)/1000000 as transactionRevenue",
+                       newVisits = "SUM(totals.newVisits) as newVisits",
+                       screenviews = "SUM(totals.screenviews) as screenviews",
+                       uniqueScreenviews = "SUM(totals.uniqueScreenviews) as uniqueScreenviews",
+                       timeOnScreen = "SUM(totals.timeOnScreen) as timeOnScreen",
+                       users = "COUNT(fullVisitorId) as users",
+                       exits = "COUNT(hits.isExit) as exits",
+                       entrances = "COUNT(hits.isEntrance) as entrances",
+                       eventValue = "SUM(hits.eventinfo.eventValue) as eventValue")
+
+lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPath",
+                       campaign = "trafficSource.campaign as campaign",
+                       source = "trafficSource.source as source",
+                       medium = "trafficSource.medium as medium",
+                       keyword = "trafficSource.keyword as keyword",
+                       adContent = "trafficSource.adContent as adContent",
+                       adwordsCampaignID = "trafficSource.adwordsClickInfo.campaignId as adwordsCampaignId",
+                       adwordsAdGroupID = "trafficSource.adwordsClickInfo.adGroupId as adwordsAdGroupId",
+                       # adwords...etc...
+                       transactionId = "hits.transaction.transactionId as transactionId",
+                       date = "date",
+                       fullVisitorId = "fullVisitorId",
+                       userId = "userId",
+                       visitorId = "visitorId",
+                       visitId = "visitId",
+                       visitStartTime = "visitStartTime",
+                       visitNumber = "visitNumber",
+                       browser = "device.browser as browser",
+                       browserVersion = "device.browserVersion as browserVersion",
+                       operatingSystem = "device.operatingSystem as operatingSystem",
+                       operatingSystemVersion = "device.operatingSystemVersion as operatingSystemVersion",
+                       mobileDeviceBranding = "device.mobileDeviceBranding as mobileDeviceBranding",
+                       flashVersion = "device.flashVersion as flashVersion",
+                       language = "device.language as language",
+                       screenColors = "device.screenColors as screenColors",
+                       screenResolution = "device.screenResolution as screenResolution",
+                       deviceCategory = "device.deviceCategory as deviceCategory",
+                       continent = "geoNetwork.continent as continent",
+                       subContinent = "geoNetwork.subContinent as subContinent",
+                       country = "geoNetwork.country as country",
+                       region = "geoNetwork.region as region",
+                       metro = "geoNetwork.region as metro",
+                       pagePath = "hits.page.pagePath as pagePath",
+                       eventCategory = "hits.eventInfo.eventCategory as eventCategory",
+                       eventAction = "hits.eventInfo.eventAction as eventAction",
+                       eventLabel = "hits.eventInfo.eventLabel as eventLabel"
+                       )
+```
+
+This will increase as I get time to work on it, but feel free to submit a pull request with more. 
+
+Metric averages are more complicated to implement so will take longer, but eventually the BigQuery reports can do a lot more than the normal Google Analytics API as it allows for statistics, grouping, timestamps and unique visitor and visit Ids.
+
+
 ## Using your own Google Developer Project API Key
 
 With the amount of API calls possible with this library via batching and walking, its more likely the shared

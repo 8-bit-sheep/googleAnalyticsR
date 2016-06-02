@@ -157,7 +157,10 @@ parse_google_analytics <- function(x){
           #     " accountId: ", x$profileInfo$accountId,
           #     " webPropertyId: ", x$profileInfo$webPropertyId,
           " (", x$profileInfo$profileName, ")")
-
+  
+  if(!is.null(x$error)){
+    stop(x$error$message)
+  }
 
   samplePercent <-  100
   if(!is.null(x$containsSampledData)){
