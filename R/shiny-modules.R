@@ -83,19 +83,20 @@ segmentDefinitionBuilder <- function(input, output, session,
         segment_sequence_part <- segment_sequence[[ss]]
 
         make_output <- function(id){
-          str(id)
-          str(segment_sequence_part)
-          seq <- segment_sequence_part[[id]]
-          segment_element_ui(id, seq, segment_type = seq[["sequence_type"]])
+          seq1 <- segment_sequence_part[[id]]
+          out2 <- segment_element_ui(id, seq1, segment_type = attr(seq1, "sequence_type"))
+
         }
         
         out1 <- lapply(names(segment_sequence_part), make_output)
-        str(out1)
-        out1
+
+
+        shiny::div(class = "panel panel-default",
+                           shiny::div(class = "panel-heading", paste(ss, segment_sequence[[1]][[1]][["sequence_type"]])),
+                           out1)
       }
       
       out <- lapply(names(segment_sequence), parse_sequence)
-      str(out)
       shiny::tagList(
         out
       )
@@ -146,19 +147,17 @@ segment_element_ui <- function(id, seq, segment_type=NULL){
     exclude <- NULL
   }
   
-  if(!is.null(segment_type)){
-    if(segment_type == "sequence"){
-      if(seq[["matchType"]] == "PRECEDES"){
-        seperator <- " > "
-      } else {
-        seperator <- " >> "
-      }
+  if(!is.null(segment_type) && segment_type == "sequence"){
+    
+    if(!is.null(seq[["matchType"]]) && seq[["matchType"]] == "PRECEDES"){
+      seperator <- " > "
     } else {
-      seperator <- " OR "
+      seperator <- " >> "
     }
   } else {
-    seperator <- NULL
+    seperator <- " OR "
   }
+
 
 
   
@@ -169,6 +168,7 @@ segment_element_ui <- function(id, seq, segment_type=NULL){
                   exps,
                   seperator),
            class = class)
+
 }
 
 #' segmentChain UI
@@ -283,18 +283,19 @@ segmentChain <- function(input, output, session,
     shiny::observeEvent(element_inputs$submit_segment_vector(), {
       
       sv <- shiny::reactiveValuesToList(segment_vector)
+      attr(sv, "sequence_type") <- shiny::isolate(element_inputs$sequence_type)
+      
       position <- segment_defintion_length$i
-      segment_length$i <- position + 1
+      segment_length$i <- as.character(as.numeric(position) + 1)
       position <- as.character(position)
       
       ## add to reactive vector segment_chain at moment submit button pressed
       segment_definition[[position]] <- shiny::isolate(sv)
-      segment_definition[[position]]$sequence_type <- shiny::isolate(element_inputs$sequence_type)
       
-      segment_defintion_length$i <- position + 1
+      segment_defintion_length$i <- as.character(as.numeric(position) + 1)
       
       ## if this is pressed, reset the segment_vector
-      lapply(1:position, function(x) {
+      lapply(1:as.numeric(position), function(x) {
         segment_vector[[as.character(x)]] <- NULL
       })
       
