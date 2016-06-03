@@ -295,7 +295,8 @@ segmentChain <- function(input, output, session,
       segment_definition_length$i <- as.character(as.numeric(position) + 1)
       
       ## if this is pressed, reset the segment_vector
-      lapply(seq_along(segment_vector), function(x) {
+      lapply(seq_along(sv), function(x) {
+        str(segment_vector[[as.character(x)]])
         segment_vector[[as.character(x)]] <- NULL
       })
       
