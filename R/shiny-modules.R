@@ -84,15 +84,14 @@ segmentDefinitionBuilder <- function(input, output, session,
 
         make_output <- function(id){
           seq1 <- segment_sequence_part[[id]]
-          out2 <- segment_element_ui(id, seq1, segment_type = attr(seq1, "sequence_type"))
+          out2 <- segment_element_ui(id, seq1, segment_type = segment_sequence_part[["segment_type"]])
 
         }
         
         out1 <- lapply(names(segment_sequence_part), make_output)
 
-
         shiny::div(class = "panel panel-default",
-                           shiny::div(class = "panel-heading", paste(ss, segment_sequence[[1]][[1]][["sequence_type"]])),
+                           shiny::div(class = "panel-heading", paste(ss, segment_sequence_part[["segment_type"]])),
                            out1)
       }
       
@@ -239,6 +238,7 @@ segmentChain <- function(input, output, session,
       
       ## add to reactive vector segment_chain at moment submit button pressed
       segment_vector[[position]] <- shiny::isolate(segment_chain())
+      segment_vector$segment_type <- shiny::isolate(element_inputs$sequence_type())
       segment_vector
       
     })
@@ -278,24 +278,24 @@ segmentChain <- function(input, output, session,
     })
     
     segment_definition <- shiny::reactiveValues()
-    segment_defintion_length <- shiny::reactiveValues(i=1)
+    segment_definition_length <- shiny::reactiveValues(i=1)
     
     shiny::observeEvent(element_inputs$submit_segment_vector(), {
       
       sv <- shiny::reactiveValuesToList(segment_vector)
-      attr(sv, "sequence_type") <- shiny::isolate(element_inputs$sequence_type)
+      # attr(sv, "sequence_type") <- shiny::isolate(element_inputs$sequence_type)
       
-      position <- segment_defintion_length$i
+      position <- segment_definition_length$i
       segment_length$i <- as.character(as.numeric(position) + 1)
       position <- as.character(position)
       
       ## add to reactive vector segment_chain at moment submit button pressed
       segment_definition[[position]] <- shiny::isolate(sv)
       
-      segment_defintion_length$i <- as.character(as.numeric(position) + 1)
+      segment_definition_length$i <- as.character(as.numeric(position) + 1)
       
       ## if this is pressed, reset the segment_vector
-      lapply(1:as.numeric(position), function(x) {
+      lapply(seq_along(segment_vector), function(x) {
         segment_vector[[as.character(x)]] <- NULL
       })
       
