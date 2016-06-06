@@ -26,13 +26,14 @@
 #' @return data.frame of results
 #' 
 #' @seealso \url{https://support.google.com/analytics/answer/4419694?hl=en}
+#'          \url{https://support.google.com/analytics/answer/3437719?hl=en}
 #' 
 #' @export
 google_analytics_bq <- function(projectId,
                                 datasetId,
                                 start=NULL,
                                 end=NULL,
-                                metrics = c('sessions', 'users'),
+                                metrics = NULL,
                                 dimensions=NULL,
                                 sort=NULL,
                                 filters=NULL,
@@ -91,14 +92,31 @@ google_analytics_bq <- function(projectId,
       order_q <- NULL
     }
     
-    query <- paste(select_q, from_q, group_q, order_q)
+    limit_q <- paste("LIMIT", as.character(max_results))
+    
+    query <- paste(select_q, from_q, group_q, order_q, limit_q)
   }
   
   if(max_results < 50000){
-    limit_q <- paste("LIMIT", as.character(max_results))
+
     out <- bigQueryR::bqr_query(projectId, datasetId, query)
   } else {
     ## do an async query
+    message("Currently only up to 50,000 rows fetched.  More needs async fetching.")
+    return()
+  }
+  
+  ## convert to more R like objects if we can
+  if("hitTimestamp" %in% names(out)){
+    out$hitTimestamp <- as.POSIXlt(out$hitTimestamp, origin = "1970-01-01")
+  }
+  
+  if("date" %in% names(out)){
+    out$date <- as.Date(out$date, format = "%Y%m%d")
+  }
+  
+  if("visitStartTime" %in% names(out)){
+    out$visitStartTime <- as.POSIXlt(out$visitStartTime, origin = "1970-01-01")
   }
   
   out
@@ -123,6 +141,7 @@ lookup_bq_query_m <- c(visits = "SUM(totals.visits) as sessions",
 # lookup_bq_dimensions <- meta[meta$type == "DIMENSION","name"]
 
 lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPath",
+                       hitTimestamp = "(visitStartTime + (hits.time/1000)) as hitTimestamp",
                        campaign = "trafficSource.campaign as campaign",
                        source = "trafficSource.source as source",
                        medium = "trafficSource.medium as medium",

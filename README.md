@@ -489,7 +489,7 @@ bq3 <- google_analytics_bq("project-id", "dataset-id-ga-viewid",
 
 ```
 
-The metrics and dimensions implemented so far are in the two lookups below.  
+The metrics and dimensions implemented so far are in the two lookups below.  They include the BigQuery exclusive `hitTimestamp`, `fullVisitorId`, `visitId` etc.  Read the full [Google Analytics 360 BigQuery data schema](https://support.google.com/analytics/answer/3437719?hl=en) for an idea on what can be queried.
 
 ```r
 lookup_bq_query_m <- c(visits = "SUM(totals.visits) as sessions",
@@ -509,6 +509,7 @@ lookup_bq_query_m <- c(visits = "SUM(totals.visits) as sessions",
                        eventValue = "SUM(hits.eventinfo.eventValue) as eventValue")
 
 lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPath",
+                       hitTimestamp = "(visitStartTime + (hits.time/1000)) as hitTimestamp",
                        campaign = "trafficSource.campaign as campaign",
                        source = "trafficSource.source as source",
                        medium = "trafficSource.medium as medium",
