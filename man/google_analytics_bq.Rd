@@ -5,8 +5,8 @@
 \title{google_analytics_bq}
 \usage{
 google_analytics_bq(projectId, datasetId, start = NULL, end = NULL,
-  metrics = c("sessions", "users"), dimensions = NULL, sort = NULL,
-  filters = NULL, max_results = 100, query = NULL)
+  metrics = NULL, dimensions = NULL, sort = NULL, filters = NULL,
+  max_results = 100, query = NULL)
 }
 \arguments{
 \item{projectId}{The Google project Id where the BigQuery exports sit.}
@@ -48,5 +48,6 @@ View your projectIds upon authentication via \code{\link[bigQueryR]{bqe_list_pro
 }
 \seealso{
 \url{https://support.google.com/analytics/answer/4419694?hl=en}
+         \url{https://support.google.com/analytics/answer/3437719?hl=en}
 }
 
