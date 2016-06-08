@@ -6,7 +6,7 @@
 \usage{
 google_analytics_bq(projectId, datasetId, start = NULL, end = NULL,
   metrics = NULL, dimensions = NULL, sort = NULL, filters = NULL,
-  max_results = 100, query = NULL)
+  max_results = 100, query = NULL, return_query_only = FALSE)
 }
 \arguments{
 \item{projectId}{The Google project Id where the BigQuery exports sit.}
@@ -28,6 +28,8 @@ google_analytics_bq(projectId, datasetId, start = NULL, end = NULL,
 \item{max_results}{How many results to fetch}
 
 \item{query}{If query is non-NULL then it will use that and ignore above}
+
+\item{return_query_only}{Only return the constructed query, don't call BigQuery.}
 }
 \value{
 data.frame of results

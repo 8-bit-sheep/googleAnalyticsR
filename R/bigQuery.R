@@ -22,6 +22,7 @@
 #' @param filters filter results
 #' @param max_results How many results to fetch
 #' @param query If query is non-NULL then it will use that and ignore above
+#' @param return_query_only Only return the constructed query, don't call BigQuery.
 #' 
 #' @return data.frame of results
 #' 
@@ -39,7 +40,8 @@ google_analytics_bq <- function(projectId,
                                 filters=NULL,
                                 # segment=NULL,
                                 max_results=100,
-                                query=NULL){
+                                query=NULL,
+                                return_query_only=FALSE){
   
   projectId <- as.character(projectId)
   datasetID <- as.character(datasetId)
@@ -86,8 +88,6 @@ google_analytics_bq <- function(projectId,
     
     if(!is.null(sort)){
       order_q <- paste("ORDER BY", paste(sort, collapse = ", "), "DESC")
-    } else if("date" %in% dimensions){
-      order_q <- paste("ORDER BY date ASC")
     } else {
       order_q <- NULL
     }
@@ -95,20 +95,26 @@ google_analytics_bq <- function(projectId,
     limit_q <- paste("LIMIT", as.character(max_results))
     
     query <- paste(select_q, from_q, group_q, order_q, limit_q)
+    
+    if(return_query_only){
+      return(query)
+    } else {
+      message("Query: ", query)
+    }
   }
   
-  if(max_results < 50000){
+  if(max_results < 70000){
 
     out <- bigQueryR::bqr_query(projectId, datasetId, query)
   } else {
     ## do an async query
-    message("Currently only up to 50,000 rows fetched.  More needs async fetching.")
+    message("Currently only up to 70,000 rows fetched per call.")
     return()
   }
   
   ## convert to more R like objects if we can
   if("hitTimestamp" %in% names(out)){
-    out$hitTimestamp <- as.POSIXlt(out$hitTimestamp, origin = "1970-01-01")
+    out$hitTimestamp <- as.POSIXct(out$hitTimestamp, origin = "1970-01-01")
   }
   
   if("date" %in% names(out)){
@@ -116,7 +122,7 @@ google_analytics_bq <- function(projectId,
   }
   
   if("visitStartTime" %in% names(out)){
-    out$visitStartTime <- as.POSIXlt(out$visitStartTime, origin = "1970-01-01")
+    out$visitStartTime <- as.POSIXct(out$visitStartTime, origin = "1970-01-01")
   }
   
   out
