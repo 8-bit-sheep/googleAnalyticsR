@@ -37,6 +37,8 @@ segmentBuilder <- function(input, output, session){
 
 segment_sequence_ui <- function(segment_sequence){
   
+  str(segment_sequence)
+  
   parse_sequence <- function(ss){
     segment_sequence_part <- segment_sequence[[ss]]
     
@@ -199,49 +201,52 @@ segmentChain <- function(input, output, session,
       
     })
     
-
-    
-    segment_definition <- shiny::reactiveValues()
-    segment_definition_length <- shiny::reactiveValues(i=1)
+    segment_definition_user <- shiny::reactiveValues()
+    segment_definition_session <- shiny::reactiveValues()
+    segment_definition_length <- shiny::reactiveValues(u=1, s=1)
     
     segment_u_s <- shiny::reactiveValues()
     
     shiny::observeEvent(element_inputs$submit_segment_vector(), {
-      
+      message("submit segment vector")
       sv <- shiny::reactiveValuesToList(segment_vector)
       
-      position <- segment_definition_length$i
-      segment_length$i <- as.character(as.numeric(position) + 1)
-      position <- as.character(position)
+      if(element_inputs$user_or_session() == "user"){
+
+        sdu <- shiny::reactiveValuesToList(segment_definition_user)
+
+        position <- as.character(segment_definition_length$u)
+        message("user: ", position)       
+        ## add to reactive vector segment_chain at moment submit button pressed
+        segment_definition_user[[position]] <- shiny::isolate(sv)
+        
+        segment_definition_length$u <- as.character(as.numeric(position) + 1)
+        
+        segment_u_s$user <-shiny::isolate(sdu)
+        
+      } else if(element_inputs$user_or_session() == "session"){
+        
+        sds <- shiny::reactiveValuesToList(segment_definition_session)
+        
+        position <- as.character(segment_definition_length$s)
+        message("session: ", position)   
+        ## add to reactive vector segment_chain at moment submit button pressed
+        segment_definition_session[[position]] <- shiny::isolate(sv)
+        
+        segment_definition_length$s <- as.character(as.numeric(position) + 1)
+        
+        segment_u_s$session <-shiny::isolate(sds)
+        
+      }
       
-      ## add to reactive vector segment_chain at moment submit button pressed
-      segment_definition[[position]] <- shiny::isolate(sv)
-      
-      segment_definition_length$i <- as.character(as.numeric(position) + 1)
+      segment_length$i <- 1
       
       ## if this is pressed, reset the segment_vector
+      ## slow this down so it doesnøt clear segment_vector too soon....
       lapply(seq_along(sv), function(x) {
         segment_vector[[as.character(x)]] <- NULL
       })
       
-      segment_length$i <- 1
-      
-      ## add to segment def
-      sd <- shiny::reactiveValuesToList(segment_definition)
-      
-      if(element_inputs$user_or_session() == "user"){
-        
-        segment_u_s$user <-shiny::isolate(sd)
-        
-      } else if(element_inputs$user_or_session() == "session"){
-        
-        segment_u_s$session <-shiny::isolate(sd)
-        
-      } else {
-        warning("Nothing happened to segment_u_s")
-      }
-      
-      segment_u_s
     })
     
     ## the current setting
@@ -257,6 +262,9 @@ segmentChain <- function(input, output, session,
     
     ##### create the segment sequences from segment_chain
     output$segment_chain_sequence <- shiny::renderUI({
+      shiny::validate(
+        shiny::need(element_inputs$sequence_type(), "element_inputs$sequence_type()")
+      )
       
       segment_sequence <- shiny::reactiveValuesToList(segment_vector)
       sequence_type <- element_inputs$sequence_type()
@@ -279,8 +287,14 @@ segmentChain <- function(input, output, session,
     })
     
     output$segment_u_s <- shiny::renderUI({
+      shiny::validate(
+        shiny::need(element_inputs$submit_segment_vector(), "element_inputs$submit_segment_vector()")
+      )
       
+      dummy <- element_inputs$submit_segment_vector()
       segment1 <- shiny::reactiveValuesToList(segment_u_s)
+      
+      str(segment1)
       
       shiny::tagList(
         shiny::h2("User"),
