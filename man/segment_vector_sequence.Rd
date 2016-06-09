@@ -4,15 +4,10 @@
 \alias{segment_vector_sequence}
 \title{Make sequenceSegment}
 \usage{
-segment_vector_sequence(segment_elements, stepMatchList = NULL,
-  firstStepMatch = FALSE)
+segment_vector_sequence(segment_elements, firstStepMatch = FALSE)
 }
 \arguments{
 \item{segment_elements}{a list of OR lists of segment elements}
-
-\item{stepMatchList}{a list same length as segment_elements of
-c("PRECEDES", "IMMEDIATELY_PRECEDES") for each step. 
-If omitted, assumed all to be "PRECEDES"}
 
 \item{firstStepMatch}{FALSE default}
 }

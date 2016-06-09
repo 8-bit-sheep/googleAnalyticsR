@@ -72,17 +72,17 @@ segment_element_ui <- function(id, seq, segment_type=NULL){
   if(seq[["type"]] == "metric"){
     class <- "label label-warning"
     
-    exps <- paste(seq[["compValue"]],
+    exps <- paste(seq[["comparisonValue"]],
                   "[", tolower(seq[["scope"]]), "]")
     
     if(seq[["operator"]] == "BETWEEN"){
-      exps <- paste(exps, seq[["maxCompValue"]])
+      exps <- paste(exps, seq[["maxComparisonValue"]])
     }
     
   } else { ## dimension
     class <- "label label-primary"
     
-    if(seq[["case_sensitive"]]){
+    if(seq[["caseSensitive"]]){
       cs <- " (case sensitive)"
     } else {
       cs <- " (not case sensitive)"
@@ -93,7 +93,7 @@ segment_element_ui <- function(id, seq, segment_type=NULL){
                   )
     
     if(seq[["operator"]] == "NUMERIC_BETWEEN"){
-      exps <- paste(exps, seq[["minCompValue"]], seq[["maxCompValue"]])
+      exps <- paste(exps, seq[["minComparisonValue"]], seq[["maxComparisonValue"]])
     }
 
   }
@@ -193,23 +193,22 @@ segmentChain <- function(input, output, session,
         matchType = "",
         name = "",
         operator = "",
-        minCompValue = "",
-        maxCompValue = "",
+        minComparisonValue = "",
+        maxComparisonValue = "",
         expressions = "",
-        case_sensitive = "",
-        compValue = "",
+        caseSensitive = "",
+        comparisonValue = "",
         scope = "",
         submit = "",
         submit_segment_vector = "",
         sequence_type = "",
         user_or_session = "")
       
+      ## add NULLs for those not present expected metrics
       chain <- lapply(names(expected), 
                       function(x) if(!x %in% names(chain)) NULL else chain[[x]])
       names(chain) <- names(expected)
-      str(chain)
       
-
 
       chain
 
@@ -233,7 +232,6 @@ segmentChain <- function(input, output, session,
     })
     
 
-    
     segment_u_s <- shiny::reactiveValues()
     
     shiny::observeEvent(element_inputs$submit_segment_vector(), {
@@ -325,6 +323,51 @@ segmentChain <- function(input, output, session,
         segment_sequence_ui(segment$session)
       )
 
+    })
+    
+    segmentga4 <- shiny::reactive({
+      
+      segment <- shiny::reactiveValuesToList(segment_u_s)
+      
+      segment_element_calls <- function(se){
+        
+        if(class(se) != "list") return(se)
+        
+        se_list <- list(name = se[["name"]],
+                        operator = se$operator,
+                        type = se$type,
+                        not = as.logical(se$not),
+                        expressions = se$expressions,
+                        caseSensitive = as.logical(se$caseSensitive),
+                        minComparisonValue = se$minComparisonValue,
+                        maxComparisonValue = se$maxComparisonValue,
+                        scope = se$scope,
+                        comparisonValue = as.numeric(se$comparisonValue),
+                        matchType = se$matchType)
+        
+        out <- do.call(segment_element, args = se_list)
+      }
+      
+      segment_vector_calls <- function(sv){
+        
+
+        sv1 <- lapply(sv, segment_element_calls)
+        st <- sv1[["segment_type"]]
+        sv1 <- unname(sv1)
+        if(st == "simple"){
+          segment_vector_simple(sv1)
+        } else {
+          segment_vector_sequence(sv1)
+        }
+        
+      }
+              
+      segment_ga4(
+        name = "",
+        user_segment = segment_define(unname(lapply(segment$user, segment_vector_calls))),
+        session_segment = segment_define(unname(lapply(segment$session, segment_vector_calls)))
+                  )
+      
       
     })
     
@@ -459,8 +502,8 @@ segmentElement <- function(input, output, session){
 
       if(operator == "NUMERIC_BETWEEN"){
         cvalue <- shiny::tagList(
-          shiny::numericInput(ns("minCompValue"), "Minimum", 0),
-          shiny::numericInput(ns("maxCompValue"), "Maximum", 1)
+          shiny::numericInput(ns("minComparisonValue"), "Minimum", 0),
+          shiny::numericInput(ns("maxComparisonValue"), "Maximum", 1)
         )
       } else {
         cvalue <-  shiny::tagList(
@@ -470,7 +513,7 @@ segmentElement <- function(input, output, session){
       
       if(!grepl("^NUMERIC_|IN_LIST",operator)){
         cs <- shiny::tagList(
-          shiny::radioButtons(ns("case_sensitive"), 
+          shiny::radioButtons(ns("caseSensitive"), 
                               "Case Sensitive?", 
                               choices = c(Yes = TRUE,
                                           No = FALSE))
@@ -485,7 +528,7 @@ segmentElement <- function(input, output, session){
      
       out <- shiny::tagList(
 
-        shiny::numericInput(ns("compValue"),
+        shiny::numericInput(ns("comparisonValue"),
                             "Value",
                             0),
         shiny::selectInput(ns("scope"), 
@@ -498,7 +541,7 @@ segmentElement <- function(input, output, session){
       
       if(operator == "BETWEEN"){
         cvalue <- shiny::tagList(
-          shiny::numericInput(ns("maxCompValue"), "Maximum", 1)
+          shiny::numericInput(ns("maxComparisonValue"), "Maximum", 1)
         )
         
         out <- c(cvalue, out)
@@ -557,11 +600,11 @@ segmentElement <- function(input, output, session){
     matchType = shiny::reactive(input$matchType),
     name = shiny::reactive(input$name),
     operator = shiny::reactive(input$operator),
-    minCompValue = shiny::reactive(input$minCompValue),
-    maxCompValue = shiny::reactive(input$maxCompValue),
+    minComparisonValue = shiny::reactive(input$minComparisonValue),
+    maxComparisonValue = shiny::reactive(input$maxComparisonValue),
     expressions = shiny::reactive(input$expressions),
-    case_sensitive = shiny::reactive(input$case_sensitive),
-    compValue = shiny::reactive(input$compValue),
+    caseSensitive = shiny::reactive(input$caseSensitive),
+    comparisonValue = shiny::reactive(input$comparisonValue),
     scope = shiny::reactive(input$scope),
     submit = shiny::reactive(input$submit),
     submit_segment_vector = shiny::reactive(input$submit_segment_vector),

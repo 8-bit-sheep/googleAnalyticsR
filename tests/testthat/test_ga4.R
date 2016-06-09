@@ -158,13 +158,15 @@ example_sequence_segment <- function(){
   se2 <- segment_element("medium", 
                          operator = "EXACT", 
                          type = "dimension", 
-                         expressions = "organic")
+                         expressions = "organic",
+                         matchType = "PRECEDES")
   
   se3 <- segment_element("medium",
                          operator = "EXACT",
                          type = "dimension",
                          not = TRUE,
-                         expressions = "organic")
+                         expressions = "organic",
+                         matchType = "PRECEDES")
   
   ## step sequence
   ## users who arrived via organic then via referral

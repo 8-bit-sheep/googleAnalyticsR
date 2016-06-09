@@ -233,17 +233,14 @@ makeOrFilters <- function(segment_element_list){
 #' }
 #' 
 #' @param segment_elements a list of OR lists of segment elements
-#' @param stepMatchList a list same length as segment_elements of
-#'   c("PRECEDES", "IMMEDIATELY_PRECEDES") for each step. 
-#'   If omitted, assumed all to be "PRECEDES"
 #' @param firstStepMatch FALSE default
 #' 
 #' @family v4 segment functions   
 #' @export
 segment_vector_sequence <- function(segment_elements,
-                                    stepMatchList=NULL,
                                     firstStepMatch=FALSE){
   
+  stepMatchList <- lapply(segment_elements, function(x) attr(x, "matchType"))
   if(!is.null(stepMatchList)){
     testthat::expect_equal(length(segment_elements), length(stepMatchList))
   } else {
@@ -382,6 +379,8 @@ segment_element <- function(name,
     
   }
   
+  ## put matchType for sequence segments as an attr
+  attr(sfc, "matchType") <- matchType
   sfc
   
 }
