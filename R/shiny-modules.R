@@ -10,10 +10,8 @@ segmentBuilderUI <- function(id){
   shiny::tagList(
     shiny::fluidRow(
       segmentElementUI(ns("ui1")),
-      segmentChainUI(ns("chain1")),
-      shiny::helpText("Simple segments combine their elements as OR, sequence segments use the Element Sequence setting.")
- 
-      
+      shiny::helpText("Simple segments combine their elements as OR, sequence segments use the Element Sequence setting."),
+      segmentChainUI(ns("chain1"))
     )
   )
   
@@ -36,8 +34,6 @@ segmentBuilder <- function(input, output, session){
 }
 
 segment_sequence_ui <- function(segment_sequence){
-  
-  str(segment_sequence)
   
   parse_sequence <- function(ss){
     segment_sequence_part <- segment_sequence[[ss]]
@@ -166,7 +162,15 @@ segmentChain <- function(input, output, session,
     
     ## keeps list of all elements added
     segment_vector <- shiny::reactiveValues()
+    ## remembers length of segment_vector
+    segment_length <- shiny::reactiveValues(i=1)
     
+    ## segment_vectors per user or session scope
+    segment_definition_user <- shiny::reactiveValues()
+    segment_definition_session <- shiny::reactiveValues()
+    segment_definition_length <- shiny::reactiveValues(u=1, s=1)    
+    
+    ## a simple or sequence segment element chain
     segment_chain <- shiny::reactive({
       
       chain <- character(1)
@@ -185,7 +189,8 @@ segmentChain <- function(input, output, session,
 
     })
     
-    segment_length <- shiny::reactiveValues(i=1)
+
+    ## upon Add segment element, add the segment chain to position X
     shiny::observeEvent(element_inputs$submit(), {
       
       sv <- shiny::reactiveValuesToList(segment_vector)
@@ -201,9 +206,7 @@ segmentChain <- function(input, output, session,
       
     })
     
-    segment_definition_user <- shiny::reactiveValues()
-    segment_definition_session <- shiny::reactiveValues()
-    segment_definition_length <- shiny::reactiveValues(u=1, s=1)
+
     
     segment_u_s <- shiny::reactiveValues()
     
@@ -213,39 +216,35 @@ segmentChain <- function(input, output, session,
       
       if(element_inputs$user_or_session() == "user"){
 
-        sdu <- shiny::reactiveValuesToList(segment_definition_user)
-
         position <- as.character(segment_definition_length$u)
-        message("user: ", position)       
+        segment_definition_length$u <- as.numeric(position) + 1
+  
         ## add to reactive vector segment_chain at moment submit button pressed
         segment_definition_user[[position]] <- shiny::isolate(sv)
         
-        segment_definition_length$u <- as.character(as.numeric(position) + 1)
-        
-        segment_u_s$user <-shiny::isolate(sdu)
+        ## add to user segment definition
+        segment_u_s$user <-shiny::isolate(shiny::reactiveValuesToList(segment_definition_user))
         
       } else if(element_inputs$user_or_session() == "session"){
         
-        sds <- shiny::reactiveValuesToList(segment_definition_session)
-        
         position <- as.character(segment_definition_length$s)
-        message("session: ", position)   
+        segment_definition_length$s <- as.numeric(position) + 1
+        
         ## add to reactive vector segment_chain at moment submit button pressed
         segment_definition_session[[position]] <- shiny::isolate(sv)
         
-        segment_definition_length$s <- as.character(as.numeric(position) + 1)
-        
-        segment_u_s$session <-shiny::isolate(sds)
+        ## add to session segment definition
+        segment_u_s$session <-shiny::isolate(shiny::reactiveValuesToList(segment_definition_session))
         
       }
       
+      ## reset segment vector
       segment_length$i <- 1
       
-      ## if this is pressed, reset the segment_vector
-      ## slow this down so it doesnøt clear segment_vector too soon....
       lapply(seq_along(sv), function(x) {
         segment_vector[[as.character(x)]] <- NULL
       })
+      
       
     })
     
