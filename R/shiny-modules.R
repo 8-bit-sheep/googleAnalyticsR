@@ -31,6 +31,8 @@ segmentBuilder <- function(input, output, session){
   segment_sequence <- shiny::callModule(segmentChain, "chain1", 
                                         element_inputs = element_inputs)
   
+  return(segment_sequence)
+  
 }
 
 segment_sequence_ui <- function(segment_sequence){
@@ -185,6 +187,30 @@ segmentChain <- function(input, output, session,
         chain <- c(chain, inputA)
       }
 
+      expected <- list(
+        type = "",
+        not = "",
+        matchType = "",
+        name = "",
+        operator = "",
+        minCompValue = "",
+        maxCompValue = "",
+        expressions = "",
+        case_sensitive = "",
+        compValue = "",
+        scope = "",
+        submit = "",
+        submit_segment_vector = "",
+        sequence_type = "",
+        user_or_session = "")
+      
+      chain <- lapply(names(expected), 
+                      function(x) if(!x %in% names(chain)) NULL else chain[[x]])
+      names(chain) <- names(expected)
+      str(chain)
+      
+
+
       chain
 
     })
@@ -287,19 +313,16 @@ segmentChain <- function(input, output, session,
     
     output$segment_u_s <- shiny::renderUI({
       shiny::validate(
-        shiny::need(element_inputs$submit_segment_vector(), "element_inputs$submit_segment_vector()")
+        shiny::need(element_inputs$submit_segment_vector(), "Add a segment vector")
       )
       
-      dummy <- element_inputs$submit_segment_vector()
-      segment1 <- shiny::reactiveValuesToList(segment_u_s)
-      
-      str(segment1)
+      segment <- shiny::reactiveValuesToList(segment_u_s)
       
       shiny::tagList(
         shiny::h2("User"),
-        segment_sequence_ui(segment1$user),
+        segment_sequence_ui(segment$user),
         shiny::h2("Session"),
-        segment_sequence_ui(segment1$session)
+        segment_sequence_ui(segment$session)
       )
 
       
