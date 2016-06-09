@@ -333,7 +333,7 @@ segmentChain <- function(input, output, session,
         
         if(class(se) != "list") return(se)
         
-        se_list <- list(name = se[["name"]],
+        se_list <- list(name = unname(se[["name"]]),
                         operator = se$operator,
                         type = se$type,
                         not = as.logical(se$not),
@@ -352,12 +352,15 @@ segmentChain <- function(input, output, session,
         
 
         sv1 <- lapply(sv, segment_element_calls)
+        
         st <- sv1[["segment_type"]]
+        sv1[["segment_type"]] <- NULL
         sv1 <- unname(sv1)
+        
         if(st == "simple"){
-          segment_vector_simple(sv1)
+          segment_vector_simple(list(sv1))
         } else {
-          segment_vector_sequence(sv1)
+          segment_vector_sequence(list(sv1))
         }
         
       }
