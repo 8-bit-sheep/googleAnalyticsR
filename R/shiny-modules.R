@@ -520,14 +520,34 @@ segmentElement <- function(input, output, session){
     )
     
     type <- input$type
+    meta_ex <- meta[grepl("XX",meta$name),]
+    
+    ## turn metrics like goalXXCompletions into goal1Completions, goal2Completions, etc. 
+    metrics_extra <- meta_ex[meta_ex$type == "METRIC",]
+    metrics_extra <- unlist(lapply(seq_along(metrics_extra$name), 
+                                   function(y) sapply(1:20, 
+                                                      function(x) gsub("XX", x, metrics_extra$name[y]))
+                                   )
+                            )
+    # dimensions_extra <- meta_ex[meta_ex$type == "DIMENSIONS",]
+    # dimensions_extra <- unlist(lapply(seq_along(dimensions_extra$name), 
+    #                                function(y) sapply(1:20, 
+    #                                                   function(x) gsub("XX", x, dimensions_extra$name[y]))
+    # )
+    # )
+    
     
     if(type == "metric"){
       
-      choices <- meta[meta$type == "METRIC" & meta$status == "PUBLIC", "name"]
+      choices <- meta[meta$type == "METRIC" & meta$status == "PUBLIC" & !grepl("XX", meta$name),
+                      "name"]
+      choices <- c(choices, metrics_extra)
       
     } else {
       
-      choices <- meta[meta$type == "DIMENSION" & meta$status == "PUBLIC", "name"]
+      choices <- meta[meta$type == "DIMENSION" & meta$status == "PUBLIC" & !grepl("XX", meta$name),
+                      "name"]
+      # choices <- c(choices, dimensions_extra)
       
     }
     

@@ -260,7 +260,7 @@ segment4_seq <- segment_ga4("sequence", user_segment = seq_defined2)
 
 ## Add the segments to the segments param
 segment_seq_example <- google_analytics_4(ga_id, 
-                                          c("2016-04-01","2016-05-01"), 
+                                          c("2015-01-01","2016-05-01"), 
                                           dimensions=c('source','segment'), 
                                           segments = segment4_seq,
                                           metrics = c('sessions','bounces')
