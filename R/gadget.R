@@ -18,6 +18,7 @@ gadget_GASegment <- function(inputValue1, inputValue2) {
       
       output_var <- input$output_var
       assign(output_var, segment, envir = .GlobalEnv)
+      message("Segment saved to variable: ", output_var)
       
       shiny::stopApp()
     })

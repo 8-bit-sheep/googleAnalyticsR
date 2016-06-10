@@ -136,11 +136,15 @@ segmentChainUI <- function(id){
   ns <- shiny::NS(id)
   
   shiny::tagList(
+    shiny::helpText("The current configuration of segment element."),
     shiny::uiOutput(ns("chain_text")),
     shiny::hr(),
+    shiny::helpText("The current simple or sequence vector of segment elements."),
     shiny::uiOutput(ns("segment_chain_sequence")),
     shiny::hr(),
+    shiny::helpText("Segment vectors can apply to users or sessions."),
     shiny::uiOutput(ns("segment_u_s"))
+
   )
 
 
@@ -237,7 +241,7 @@ segmentChain <- function(input, output, session,
     segment_u_s <- shiny::reactiveValues()
     
     shiny::observeEvent(element_inputs$submit_segment_vector(), {
-      message("submit segment vector")
+
       sv <- shiny::reactiveValuesToList(segment_vector)
       
       if(element_inputs$user_or_session() == "user"){
@@ -318,8 +322,8 @@ segmentChain <- function(input, output, session,
           shiny::column(width = 10, offset = 1,
             shiny::div(class = "panel panel-default",
                        shiny::div(class = "panel-heading", 
-                                  shiny::strong("Current Sequence Type ", paste(sequence_type))
-                                  ),
+                                  shiny::strong("Current Sequence"),
+                                  paste("type: ", sequence_type)),
                        out
             )
           )
@@ -352,10 +356,13 @@ segmentChain <- function(input, output, session,
       
       segment1 <- shiny::reactiveValuesToList(segment_u_s)
       
+      user_s <- segment_define(unname(lapply(segment1$user, segment_vector_calls)))
+      session_s <- segment_define(unname(lapply(segment1$session, segment_vector_calls)))
+      
       segment_ga4(
         name = element_inputs$segment_name(),
-        user_segment = segment_define(unname(lapply(segment1$user, segment_vector_calls))),
-        session_segment = segment_define(unname(lapply(segment1$session, segment_vector_calls)))
+        user_segment = if(length(user_s$segmentFilters) > 0) user_s else NULL,
+        session_segment = if(length(session_s$segmentFilters) > 0) session_s else NULL
                   )
       
       
