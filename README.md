@@ -273,6 +273,14 @@ segment_seq_example
 # 4                                bing sequence       22       2
 ```
 
+#### RStudio Addin: Segment helper
+
+New in version 0.2.0 is an RStudio Addin to help create segments via a UI rather than the lists above.
+
+You can call it via `googleAnalyticsR:::gadget_GASegment()` or within the RStudio interface like displayed below:
+
+![Google Analytics v4 segment RStudio Addin](http://g.recordit.co/v24pbsPHfd.gif)
+
 ### Cohort reports
 
 Details on [cohort reports and LTV can be found here](https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohorts).

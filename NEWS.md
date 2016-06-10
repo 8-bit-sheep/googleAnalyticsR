@@ -1,7 +1,6 @@
 # 0.1.0.9000
 
-* Update sequence segments: precedes now set in segment_element
-* segment helper as RStudio Addin
+* segment helper as RStudio Addin or `gadget_GASegment()`
 * Fix order_type() for v4 (#18)
 * Tests
 * Multi-account batching for v3 (#17)
