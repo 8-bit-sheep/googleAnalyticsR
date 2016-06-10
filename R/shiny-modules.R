@@ -8,7 +8,7 @@ segmentBuilderUI <- function(id){
   ns <- shiny::NS(id)
   
   shiny::tagList(
-    shiny::fluidRow(
+    shiny::fillCol(
       segmentElementUI(ns("ui1")),
       segmentChainUI(ns("chain1"))
     )
@@ -22,8 +22,6 @@ segmentBuilderUI <- function(id){
 #' 
 #' @export
 segmentBuilder <- function(input, output, session){
-  
-  ns <- session$ns
   
   element_inputs <- shiny::callModule(segmentElement, "ui1")
   
@@ -139,10 +137,10 @@ segmentChainUI <- function(id){
     shiny::helpText("The current configuration of segment element."),
     shiny::uiOutput(ns("chain_text")),
     shiny::hr(),
-    shiny::helpText("The current simple or sequence vector of segment elements.  Simple vectors combine as logical OR, sequence vectors combine in order of elements."),
+    shiny::helpText("The current simple or sequence vector of segment elements."),
     shiny::uiOutput(ns("segment_chain_sequence")),
     shiny::hr(),
-    shiny::helpText("Segment vectors can apply to users or sessions. Within each sub-segment segment vectors are combined as logical AND"),
+    shiny::helpText("Within sub-segments combine as logical AND"),
     shiny::uiOutput(ns("segment_u_s"))
 
   )
@@ -422,7 +420,9 @@ segmentElementUI <- function(id){
     shiny::tags$div(
       shiny::fluidRow(
         shiny::column(width = 6,
-          shiny::textInput(ns("segment_name"), label = "Segment Name", value = "segment1")
+          shiny::textInput(ns("segment_name"), 
+                           label = "Segment Name", 
+                           value = "segment1")
         ),
         shiny::column(width = 6,
           # shiny::helpText("Simple segments combine their elements as OR, sequence segments use the Element Sequence setting."),
@@ -582,7 +582,8 @@ segmentElement <- function(input, output, session){
           shiny::radioButtons(ns("caseSensitive"), 
                               "Case Sensitive?", 
                               choices = c(Yes = TRUE,
-                                          No = FALSE))
+                                          No = FALSE),
+                              inline = TRUE)
         )
         
         out <- c(cvalue, cs)
