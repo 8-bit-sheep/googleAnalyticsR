@@ -260,7 +260,7 @@ segment4_seq <- segment_ga4("sequence", user_segment = seq_defined2)
 
 ## Add the segments to the segments param
 segment_seq_example <- google_analytics_4(ga_id, 
-                                          c("2016-04-01","2016-05-01"), 
+                                          c("2015-01-01","2016-05-01"), 
                                           dimensions=c('source','segment'), 
                                           segments = segment4_seq,
                                           metrics = c('sessions','bounces')
@@ -272,6 +272,14 @@ segment_seq_example
 # 3      bestbackpackersinsurance.co.uk sequence        9       6
 # 4                                bing sequence       22       2
 ```
+
+#### RStudio Addin: Segment helper
+
+New in version 0.2.0 is an RStudio Addin to help create segments via a UI rather than the lists above.
+
+You can call it via `googleAnalyticsR:::gadget_GASegment()` or within the RStudio interface like displayed below:
+
+![Google Analytics v4 segment RStudio Addin](http://g.recordit.co/v24pbsPHfd.gif)
 
 ### Cohort reports
 
