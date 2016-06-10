@@ -4,13 +4,13 @@ gadget_GASegment <- function(inputValue1, inputValue2) {
     miniUI::gadgetTitleBar("Google Analytics v4 Segment Builder"),
     miniUI::miniContentPanel(
       shiny::textInput("output_var", "Output Variable Name", value = "segment_ga4"),
-      segmentBuilderUI("test1")
+      segmentBuilderUI("gadget")
     )
   )
   
   server <- function(input, output, session) {
     
-    segmentR <- shiny::callModule(segmentBuilder, "test1")
+    segmentR <- shiny::callModule(segmentBuilder, "gadget")
     
     shiny::observeEvent(input$done, {
       
@@ -25,7 +25,7 @@ gadget_GASegment <- function(inputValue1, inputValue2) {
   }
   
   viewer <- shiny::dialogViewer("GAv4 Segment Builder", 
-                                width = 850, height = 1000)
+                                width = 800, height = 1000)
   shiny::runGadget(ui, server, viewer = viewer)
 }
 
