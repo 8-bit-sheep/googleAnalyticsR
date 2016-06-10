@@ -1,34 +1,29 @@
-gadgetGARequest <- function(inputValue1, inputValue2) {
+gadget_GASegment <- function(inputValue1, inputValue2) {
   
   ui <- miniUI::miniPage(
     miniUI::gadgetTitleBar("Google Analytics v4 Segment Builder"),
-    miniUI::miniTabstripPanel(
-      miniUI::miniTabPanel("Segments", icon = shiny::icon("object-group"),
-        miniUI::miniContentPanel(
-          segmentBuilderUI("test1")
-        )
-      ),
-      miniUI::miniTabPanel("Metrics/Dimensions",icon = shiny::icon("sliders"),
-        shiny::br()
-      )
+    miniUI::miniContentPanel(
+      shiny::textInput("output_var", "Output Variable Name", value = "segment_ga4"),
+      segmentBuilderUI("test1")
     )
   )
   
   server <- function(input, output, session) {
-    # Define reactive expressions, outputs, etc.
     
     segmentR <- shiny::callModule(segmentBuilder, "test1")
     
-    # When the Done button is clicked, return a value
     shiny::observeEvent(input$done, {
-      segmentL <- shiny::reactiveValuesToList(segmentR)
       
-      str(segmentL)
+      segment <- segmentR()
       
-      shiny::stopApp(segmentL)
+      output_var <- input$output_var
+      assign(output_var, segment, envir = .GlobalEnv)
+      
+      shiny::stopApp()
     })
   }
   
-  shiny::runGadget(ui, server)
+  viewer <- shiny::dialogViewer("GAv4 Segment Builder", width = 800, height = 800)
+  shiny::runGadget(ui, server, viewer = viewer)
 }
 

@@ -10,7 +10,6 @@ segmentBuilderUI <- function(id){
   shiny::tagList(
     shiny::fluidRow(
       segmentElementUI(ns("ui1")),
-      shiny::helpText("Simple segments combine their elements as OR, sequence segments use the Element Sequence setting."),
       segmentChainUI(ns("chain1"))
     )
   )
@@ -202,7 +201,8 @@ segmentChain <- function(input, output, session,
         submit = "",
         submit_segment_vector = "",
         sequence_type = "",
-        user_or_session = "")
+        user_or_session = "",
+        segment_name = "")
       
       ## add NULLs for those not present expected metrics
       chain <- lapply(names(expected), 
@@ -317,67 +317,72 @@ segmentChain <- function(input, output, session,
       segment <- shiny::reactiveValuesToList(segment_u_s)
       
       shiny::tagList(
-        shiny::h2("User"),
-        segment_sequence_ui(segment$user),
-        shiny::h2("Session"),
-        segment_sequence_ui(segment$session)
+        shiny::column(width = 6,
+          shiny::h2("User"),
+          segment_sequence_ui(segment$user)
+        ),
+        shiny::column(width = 6,
+          shiny::h2("Session"),
+          segment_sequence_ui(segment$session)
+        )
       )
 
     })
     
     segmentga4 <- shiny::reactive({
       
-      segment <- shiny::reactiveValuesToList(segment_u_s)
+      segment1 <- shiny::reactiveValuesToList(segment_u_s)
       
-      segment_element_calls <- function(se){
-        
-        if(class(se) != "list") return(se)
-        
-        se_list <- list(name = unname(se[["name"]]),
-                        operator = se$operator,
-                        type = se$type,
-                        not = as.logical(se$not),
-                        expressions = se$expressions,
-                        caseSensitive = as.logical(se$caseSensitive),
-                        minComparisonValue = se$minComparisonValue,
-                        maxComparisonValue = se$maxComparisonValue,
-                        scope = se$scope,
-                        comparisonValue = as.numeric(se$comparisonValue),
-                        matchType = se$matchType)
-        
-        out <- do.call(segment_element, args = se_list)
-      }
-      
-      segment_vector_calls <- function(sv){
-        
-
-        sv1 <- lapply(sv, segment_element_calls)
-        
-        st <- sv1[["segment_type"]]
-        sv1[["segment_type"]] <- NULL
-        sv1 <- unname(sv1)
-        
-        if(st == "simple"){
-          segment_vector_simple(list(sv1))
-        } else {
-          segment_vector_sequence(list(sv1))
-        }
-        
-      }
-              
       segment_ga4(
-        name = "",
-        user_segment = segment_define(unname(lapply(segment$user, segment_vector_calls))),
-        session_segment = segment_define(unname(lapply(segment$session, segment_vector_calls)))
+        name = element_inputs$segment_name(),
+        user_segment = segment_define(unname(lapply(segment1$user, segment_vector_calls))),
+        session_segment = segment_define(unname(lapply(segment1$session, segment_vector_calls)))
                   )
       
       
     })
     
-    return(segment_u_s)
+    return(segmentga4)
     
 }
 
+## helper to turn segment elements into v4 object
+segment_element_calls <- function(se){
+  
+  if(class(se) != "list") return(se)
+  
+  se_list <- list(name = unname(se[["name"]]),
+                  operator = se$operator,
+                  type = se$type,
+                  not = as.logical(se$not),
+                  expressions = se$expressions,
+                  caseSensitive = as.logical(se$caseSensitive),
+                  minComparisonValue = se$minComparisonValue,
+                  maxComparisonValue = se$maxComparisonValue,
+                  scope = se$scope,
+                  comparisonValue = as.numeric(se$comparisonValue),
+                  matchType = se$matchType)
+  
+  out <- do.call(segment_element, args = se_list)
+}
+
+## helper to turn segment lists with segment elements into v4 object
+segment_vector_calls <- function(sv){
+  
+  
+  sv1 <- lapply(sv, segment_element_calls)
+  
+  st <- sv1[["segment_type"]]
+  sv1[["segment_type"]] <- NULL
+  sv1 <- unname(sv1)
+  
+  if(st == "simple"){
+    segment_vector_simple(list(sv1))
+  } else {
+    segment_vector_sequence(list(sv1))
+  }
+  
+}
 
 
 #' A GAv4 segment element row
@@ -389,6 +394,16 @@ segmentElementUI <- function(id){
   
   shiny::tagList(
     shiny::tags$div(
+      shiny::fluidRow(
+        shiny::column(width = 6,
+          shiny::textInput(ns("segment_name"), label = "Segment Name", value = "segment1")
+        ),
+        shiny::column(width = 6,
+          # shiny::helpText("Simple segments combine their elements as OR, sequence segments use the Element Sequence setting."),
+          shiny::br()
+        )
+
+      ),
       shiny::fluidRow(
         shiny::column(width = 4,
                       shiny::radioButtons(ns("type"), "Filter Type", 
@@ -612,7 +627,8 @@ segmentElement <- function(input, output, session){
     submit = shiny::reactive(input$submit),
     submit_segment_vector = shiny::reactive(input$submit_segment_vector),
     sequence_type = shiny::reactive(input$sequence_type),
-    user_or_session = shiny::reactive(input$user_or_session)
+    user_or_session = shiny::reactive(input$user_or_session),
+    segment_name = shiny::reactive(input$segment_name)
   ))
 
 }
