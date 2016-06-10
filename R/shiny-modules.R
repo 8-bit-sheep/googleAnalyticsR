@@ -139,10 +139,10 @@ segmentChainUI <- function(id){
     shiny::helpText("The current configuration of segment element."),
     shiny::uiOutput(ns("chain_text")),
     shiny::hr(),
-    shiny::helpText("The current simple or sequence vector of segment elements."),
+    shiny::helpText("The current simple or sequence vector of segment elements.  Simple vectors combine as logical OR, sequence vectors combine in order of elements."),
     shiny::uiOutput(ns("segment_chain_sequence")),
     shiny::hr(),
-    shiny::helpText("Segment vectors can apply to users or sessions."),
+    shiny::helpText("Segment vectors can apply to users or sessions. Within each sub-segment segment vectors are combined as logical AND"),
     shiny::uiOutput(ns("segment_u_s"))
 
   )
