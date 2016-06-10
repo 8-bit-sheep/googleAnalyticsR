@@ -81,7 +81,7 @@ segment_element_ui <- function(id, seq, segment_type=NULL){
   } else { ## dimension
     class <- "label label-primary"
     
-    if(seq[["caseSensitive"]]){
+    if(!is.null(seq[["caseSensitive"]]) && seq[["caseSensitive"]] == TRUE){
       cs <- " (case sensitive)"
     } else {
       cs <- " (not case sensitive)"
@@ -137,7 +137,9 @@ segmentChainUI <- function(id){
   
   shiny::tagList(
     shiny::uiOutput(ns("chain_text")),
+    shiny::hr(),
     shiny::uiOutput(ns("segment_chain_sequence")),
+    shiny::hr(),
     shiny::uiOutput(ns("segment_u_s"))
   )
 
@@ -279,7 +281,19 @@ segmentChain <- function(input, output, session,
       )
       chain <- segment_chain()
       
-      segment_element_ui(id = NULL, seq = chain)
+      shiny::tagList(
+        shiny::fluidRow(
+          shiny::column(width = 10, offset = 1,
+            shiny::div(class = "text-left",
+              shiny::strong(" Current Element : "),
+              segment_element_ui(id = NULL, seq = chain)         
+            )
+          ) 
+          
+        )
+
+        )
+
     })
     
     
@@ -300,30 +314,35 @@ segmentChain <- function(input, output, session,
       out <- lapply(names(segment_sequence), make_output)
       
       shiny::tagList(
-        shiny::div(class = "panel panel-default",
-                   shiny::div(class = "panel-heading", paste(sequence_type)),
-                   out
+        shiny::fluidRow(
+          shiny::column(width = 10, offset = 1,
+            shiny::div(class = "panel panel-default",
+                       shiny::div(class = "panel-heading", 
+                                  shiny::strong("Current Sequence Type ", paste(sequence_type))
+                                  ),
+                       out
+            )
+          )
         )
-        
       )
       
     })
     
     output$segment_u_s <- shiny::renderUI({
-      shiny::validate(
-        shiny::need(element_inputs$submit_segment_vector(), "Add a segment vector")
-      )
       
       segment <- shiny::reactiveValuesToList(segment_u_s)
       
+      user_ui <- segment_sequence_ui(segment$user)
+      session_ui <- segment_sequence_ui(segment$session)
+      
       shiny::tagList(
         shiny::column(width = 6,
-          shiny::h2("User"),
-          segment_sequence_ui(segment$user)
+          shiny::h2("User sub-segment"),
+          if(!is.null(user_ui)) user_ui else shiny::br()
         ),
         shiny::column(width = 6,
-          shiny::h2("Session"),
-          segment_sequence_ui(segment$session)
+          shiny::h2("Session sub-segment"),
+          if(!is.null(session_ui)) session_ui else shiny::br()
         )
       )
 
@@ -464,6 +483,8 @@ segmentElementUI <- function(id){
 segmentElement <- function(input, output, session){
   
   ns <- session$ns
+  
+  
   
   output$matchType_ui <- shiny::renderUI({
     shiny::validate(
