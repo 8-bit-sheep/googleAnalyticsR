@@ -7,10 +7,17 @@
 #' 
 #' Requires installation of bigQueryR and authentication under ga_bq_auth() 
 #' or googleAuthR::gar_auth() with BigQuery scope set.
+#' View your projectIds upon authentication via \code{\link[bigQueryR]{bqe_list_projects}}
 #' 
-#' No segments for now
+#' No segments for now.  
 #' 
-#' View your projectIds upon authentication via \code{\link[bigQueryR]{bqe_list_projects}}:
+#' Goals are not specified in BQ exports, so you need to look at how you define them and replicate per view
+#' e.g. unique pageviews or unique events.
+#' 
+#' Custom dimensions can be specified as sesion or hit level, so ignoring the setting in GA interface. 
+#' 
+#' 
+#' 
 #' 
 #' @param projectId The Google project Id where the BigQuery exports sit.
 #' @param datasetId DatasetId of GA export.  This should match the GA View ID.
@@ -76,6 +83,9 @@ google_analytics_bq <- function(projectId,
     }
     
     if(!is.null(dimensions)){
+      
+      ## add the 200 custom dims too
+      lookup_bq_query_d <- c(lookup_bq_query_d, customDimensionMaker())
       dims <- paste(lookup_bq_query_d[dimensions], collapse = ", ", sep = ", ")
       group_q <- paste("GROUP BY", paste(dimensions, collapse = ", "))
     } else {
@@ -83,6 +93,7 @@ google_analytics_bq <- function(projectId,
       group_q <- NULL
     }
     
+    lookup_bq_query_m <- c(lookup_bq_query_m, customMetricMaker())
     mets <- paste(lookup_bq_query_m[metrics], collapse = ", ", sep = ", ")
     select_q <- paste("SELECT", paste(dims, mets, sep = ", "))
     
@@ -133,8 +144,11 @@ lookup_bq_query_m <- c(visits = "SUM(totals.visits) as sessions",
                        pageviews = "SUM(totals.pageviews) as pageviews",
                        timeOnSite = "SUM(totals.timeOnSite) as timeOnSite",
                        bounces = "SUM(totals.bounces) as bounces",
+                       bounceRate = "(SUM(totals.bounces)/SUM(totals.visits))*100 as bounceRate",
                        transactions = "SUM(totals.transactions) as transactions",
                        transactionRevenue = "SUM(totals.transactionRevenue)/1000000 as transactionRevenue",
+                       transactionsPerSession = "(SUM(totals.transactions) / SUM(totals.visits)) as transactionsPerSession",
+                       revenuePerTransaction = "(SUM(totals.transactionRevenue)/1000000) / SUM(totals.transactions) as revenuePerTransaction",
                        newVisits = "SUM(totals.newVisits) as newVisits",
                        screenviews = "SUM(totals.screenviews) as screenviews",
                        uniqueScreenviews = "SUM(totals.uniqueScreenviews) as uniqueScreenviews",
@@ -182,5 +196,91 @@ lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPat
                        pagePath = "hits.page.pagePath as pagePath",
                        eventCategory = "hits.eventInfo.eventCategory as eventCategory",
                        eventAction = "hits.eventInfo.eventAction as eventAction",
-                       eventLabel = "hits.eventInfo.eventLabel as eventLabel"
-                       )
+                       eventLabel = "hits.eventInfo.eventLabel as eventLabel")
+
+
+## this is hit level: add session and product level too.
+
+customDimensionMaker <- function(customDimensionIndex=paste0("dimension",1:200)){
+  
+  testthat::expect_type(customDimensionIndex, "character")
+  indexes <- grep("^dimension(.+)", customDimensionIndex)
+  
+  if(length(indexes) < 1) stop("Custom dimension specified but no custom dimensions found")
+  
+  dimensionXX = "MAX(CASE WHEN hits.customDimensions.index = XX THEN hits.customDimensions.value END)) as dimensionXX"
+
+  out <- vapply(indexes, function(i) gsub("XX", i, dimensionXX), character(1))
+  names(out) <- customDimensionIndex
+  
+  out
+  
+}
+          
+customMetricMaker <- function(customMetricIndex=paste0("metric",1:200)){
+  
+  testthat::expect_type(customMetricIndex, "character")
+  indexes <- grep("^metric(.+)", customMetricIndex)
+  
+  if(length(indexes) < 1) stop("No custom metrics found")
+  
+  metricXX = "MAX(CASE WHEN hits.customMetrics.index = XX THEN hits.customMetrics.value END)) as metricXX"
+  
+  out <- vapply(indexes, function(i) gsub("XX", i, metricXX), character(1))
+  names(out) <- customMetricIndex
+  
+  out
+  
+}
+
+
+#' Example queries to add
+#' SELECT COUNT(1) as unique_pageviews
+#' 
+#' Unique pageviews:
+# FROM (
+#   SELECT 
+#   hits.page.pagePath, 
+#   hits.page.pageTitle,
+#   fullVisitorId,
+#   visitNumber,
+#   COUNT(1) as hits
+#   FROM [my_table]
+#   WHERE hits.type='PAGE' 
+#   GROUP BY 
+#   hits.page.pagePath, 
+#   hits.page.pageTitle,
+#   fullVisitorId,
+#   visitNumber
+# )
+
+## custom dimensions
+# SELECT
+# fullvisitorid,
+# concat(string(visitid), fullvisitorid) as sessionid,
+# hits.hitnumber as hitnumber,
+# max(case when hits.customdimensions.index = 7 then hits.customdimensions.value end) Author,
+# max(case when hits.customdimensions.index = 8 then hits.customdimensions.value end) Category,
+# max(case when hits.customdimensions.index = 9 then hits.customdimensions.value end) ISBN,
+# max(case when hits.customdimensions.index = 10 then hits.customdimensions.value end) Action
+# FROM 123456.ga_sessions_YYYYMMDD
+# GROUP EACH BY fullvisitorid,sessionid, hitnumber
+
+
+## or this?
+# custom dimension at the hit level
+# SELECT fullVisitorId, visitId, hits.hitNumber, hits.time,
+# MAX(IF(hits.customDimensions.index=1,
+#        hits.customDimensions.value,
+#        NULL)) WITHIN hits AS customDimension1,
+# FROM [tableID.ga_sessions_20150305]
+# LIMIT 100
+# 
+# 
+# custom dimension at the session level
+# SELECT fullVisitorId, visitId,
+# MAX(IF(customDimensions.index=2,
+#        customDimensions.value,
+#        NULL)) WITHIN RECORD AS customDimension2,
+# FROM [tableID.ga_sessions_20150305]
+# LIMIT 100 
