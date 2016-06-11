@@ -11,7 +11,7 @@ It is also currently the only API that has the WALK flag implemented, to avoid s
 
 ## Google Anaytics V3 API examples
 
-Examples for using the v3 of the API are shown below.
+Consult `?google_analytics` and see examples below:
 
 ```r
 library(googleAnalyticsR)
@@ -97,4 +97,4 @@ attr(gadata, "dateRange")
 
 For syntax of filters and dimensions, this library parses in exactly as specified in the [Google Analytics v3 API docs](https://developers.google.com/analytics/devguides/reporting/core/v3/reference?hl=en#filters), so check those out.  
 
-Note you do not need to encode symbols, but may have to encode URLs if you are filtering for those in say `ga:pagePath`
+Note you do not need to encode symbols if passed into `metrics` or `dimensions` parameters, but may have to encode URLs if you are filtering for those in say `ga:pagePath` via `utils::URLencode(url, reserved = TRUE)`

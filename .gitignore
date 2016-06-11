@@ -2,3 +2,5 @@
 .Rhistory
 .Rproj*
 .Rproj.user
+
+.httr-oauth

@@ -267,7 +267,7 @@ $(document).ready(function () {
 </div>
 <div id="google-anaytics-v3-api-examples" class="section level2">
 <h2>Google Anaytics V3 API examples</h2>
-<p>Examples for using the v3 of the API are shown below.</p>
+<p>Consult <code>?google_analytics</code> and see examples below:</p>
 <pre class="r"><code>library(googleAnalyticsR)
 
 ## Authenticate in Google OAuth2
@@ -349,7 +349,7 @@ attr(gadata, &quot;dateRange&quot;)
 <div id="other-details" class="section level2">
 <h2>Other details</h2>
 <p>For syntax of filters and dimensions, this library parses in exactly as specified in the <a href="https://developers.google.com/analytics/devguides/reporting/core/v3/reference?hl=en#filters">Google Analytics v3 API docs</a>, so check those out.</p>
-<p>Note you do not need to encode symbols, but may have to encode URLs if you are filtering for those in say <code>ga:pagePath</code></p>
+<p>Note you do not need to encode symbols if passed into <code>metrics</code> or <code>dimensions</code> parameters, but may have to encode URLs if you are filtering for those in say <code>ga:pagePath</code> via <code>utils::URLencode(url, reserved = TRUE)</code></p>
 </div>
 
 

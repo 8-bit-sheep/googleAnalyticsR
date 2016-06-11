@@ -288,6 +288,19 @@ account_list &lt;- google_analytics_account_list()
 ga_id &lt;- account_list[23,&#39;viewId&#39;]
 </code></pre>
 <p>Should you need to authenticate under a new user, use <code>ga_auth(new_user=TRUE)</code></p>
+</div>
+<div id="meta-data" class="section level2">
+<h2>Meta data</h2>
+<p>You can see what dimensions and metrics are available via the API, you can use this command:</p>
+<pre class="r"><code>## get a list of what metrics and dimensions you can use
+ga_auth()
+meta &lt;- google_analytics_meta()</code></pre>
+<div class="figure">
+<img src="meta_data_screenshot.png" />
+
+</div>
+<p>If offline, from <code>v0.2.0</code> this data is also available offline by typing <code>meta</code>. It does not include the multi-channel metrics as they are not available in the API.</p>
+<p>In API calls, you can call metrics and dimensions with or without the <code>ga:</code> prefix (<code>mcf:</code> for multi-channel metrics/dimensions.)</p>
 <div id="multiple-api-authentication" class="section level3">
 <h3>Multiple API authentication</h3>
 <p>If you are using more than one API for authentication (such as Search Console), then authenticate using <code>googleAuthR::gar_auth()</code> instead.</p>

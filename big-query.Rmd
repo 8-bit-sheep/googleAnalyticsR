@@ -2,11 +2,19 @@
 title: "Big Query Exports"
 ---
 
-Limited support for more user friendly calls to BigQuery Google Analytics 360 exports is implemented.
+Limited support for more user friendly calls to BigQuery Google Analytics 360 exports is implemented from version `0.2.0`.
+
+This is intended for users who may be familar with Google Analytics but not with SQL necessary to extract equivalent data from a BigQuery export of Google Analytics 360 data.
 
 `google_analytics_bq` parses your metrics and dimensions into BigQuery queries.  
 
-To use, you need to also install the `bigQueryR` library and authenticate to BigQuery:
+## To do
+
+This is under active development, and features will expand in the future. Eventually the BigQuery reports can do a lot more than the normal Google Analytics API as it allows for statistics, grouping, timestamps and unique visitor and visit Ids.
+
+## Setup
+
+To use, you need to also install the [`bigQueryR`](https://github.com/MarkEdmondson1234/bigQueryR) library and authenticate to BigQuery:
 
 ```r
 devtools::install_github("MarkEdmondson1234/bigQueryR")
@@ -14,15 +22,18 @@ library(googleAnalyticsR)
 library(bigQueryR)
 
 ## go through Google oAuth2 flow
+## needs email that has access to the BigQuery dataset
 bqr_auth()
 
-## get your project and datasets
+## get lists of your project and datasets
 bqr_list_projects()
 bqr_list_datasets("project-id")
 
 ```
 
 For BigQuery Google Analytics 360 exports, the dataset is the same as the GA View ID you are exporting.
+
+## Exporting data
 
 You can then export BigQuery data via:
 
@@ -56,7 +67,7 @@ bq2 <- google_analytics_bq("project-id", "dataset-id-ga-viewid",
 
 You can also query the BigQuery table directly using the query parameter.  
 
-This is just as you would in the BigQuery interface, and allows all complicated queries. 
+This is just as you would in the BigQuery interface, and allows queries you can also do there. 
 
 ```r
 q <- "SELECT
@@ -74,7 +85,28 @@ bq3 <- google_analytics_bq("project-id", "dataset-id-ga-viewid",
 
 ```
 
-The metrics and dimensions implemented so far are in the two lookups below.  They include the BigQuery exclusive `hitTimestamp`, `fullVisitorId`, `visitId` etc.  Read the full [Google Analytics 360 BigQuery data schema](https://support.google.com/analytics/answer/3437719?hl=en) for an idea on what can be queried.
+You can also just output the query for use within the interface, if you pass in the parameter `return_query_only`
+
+```r
+just_query <- google_analytics_bq("project-id", "dataset-id-ga-viewid", 
+                                  start = "2016-01-01", end = "2016-02-01", 
+                                  metrics = "users", 
+                                  dimensions = c("source","medium"),
+                                  return_query_only = TRUE)
+just_query
+# [1] "SELECT trafficSource.source as source, trafficSource.medium as medium, COUNT(fullVisitorId) as users # FROM (TABLE_DATE_RANGE([dataset-id-ga-viewid.ga_sessions_], TIMESTAMP('2016-01-01'),
+# TIMESTAMP('2016-02-01'))) GROUP BY source, medium  LIMIT 100"
+```
+
+You could then paste this query into BigQuery interface. 
+
+## Implemented metrics and dimensions
+
+The metrics and dimensions implemented so far are in the two lookups below.  
+
+They include the BigQuery exclusive `hitTimestamp`, `fullVisitorId`, `visitId` etc.  
+
+Read the full [Google Analytics 360 BigQuery data schema](https://support.google.com/analytics/answer/3437719?hl=en) for an idea on what can be queried.
 
 ```r
 lookup_bq_query_m <- c(visits = "SUM(totals.visits) as sessions",
@@ -91,7 +123,8 @@ lookup_bq_query_m <- c(visits = "SUM(totals.visits) as sessions",
                        users = "COUNT(fullVisitorId) as users",
                        exits = "COUNT(hits.isExit) as exits",
                        entrances = "COUNT(hits.isEntrance) as entrances",
-                       eventValue = "SUM(hits.eventinfo.eventValue) as eventValue")
+                       eventValue = "SUM(hits.eventinfo.eventValue) as eventValue",
+                       metricXX = {a function to output hit level custom metrics})
 
 lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPath",
                        hitTimestamp = "(visitStartTime + (hits.time/1000)) as hitTimestamp",
@@ -129,10 +162,10 @@ lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPat
                        pagePath = "hits.page.pagePath as pagePath",
                        eventCategory = "hits.eventInfo.eventCategory as eventCategory",
                        eventAction = "hits.eventInfo.eventAction as eventAction",
-                       eventLabel = "hits.eventInfo.eventLabel as eventLabel"
-                       )
+                       eventLabel = "hits.eventInfo.eventLabel as eventLabel",
+                       dimensionXX = {a function to output hit level custom dimensions})
 ```
 
 This will increase as I get time to work on it, but feel free to submit a pull request with more. 
 
-Eventually the BigQuery reports can do a lot more than the normal Google Analytics API as it allows for statistics, grouping, timestamps and unique visitor and visit Ids.
+

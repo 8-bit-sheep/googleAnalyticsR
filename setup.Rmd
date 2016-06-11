@@ -42,6 +42,22 @@ ga_id <- account_list[23,'viewId']
 
 Should you need to authenticate under a new user, use `ga_auth(new_user=TRUE)`
 
+## Meta data
+
+You can see what dimensions and metrics are available via the API, you can use this command:
+
+```r
+## get a list of what metrics and dimensions you can use
+ga_auth()
+meta <- google_analytics_meta()
+```
+
+![](meta_data_screenshot.png)
+
+If offline, from `v0.2.0` this data is also available offline by typing `meta`.  It does not include the multi-channel metrics as they are not available in the API. 
+
+In API calls, you can call metrics and dimensions with or without the `ga:` prefix (`mcf:` for multi-channel metrics/dimensions.)
+
 ### Multiple API authentication
 
 If you are using more than one API for authentication (such as Search Console), then authenticate using `googleAuthR::gar_auth()` instead.

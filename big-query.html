@@ -260,21 +260,32 @@ $(document).ready(function () {
 </div>
 
 
-<p>Limited support for more user friendly calls to BigQuery Google Analytics 360 exports is implemented.</p>
+<p>Limited support for more user friendly calls to BigQuery Google Analytics 360 exports is implemented from version <code>0.2.0</code>.</p>
+<p>This is intended for users who may be familar with Google Analytics but not with SQL necessary to extract equivalent data from a BigQuery export of Google Analytics 360 data.</p>
 <p><code>google_analytics_bq</code> parses your metrics and dimensions into BigQuery queries.</p>
-<p>To use, you need to also install the <code>bigQueryR</code> library and authenticate to BigQuery:</p>
+<div id="to-do" class="section level2">
+<h2>To do</h2>
+<p>This is under active development, and features will expand in the future. Eventually the BigQuery reports can do a lot more than the normal Google Analytics API as it allows for statistics, grouping, timestamps and unique visitor and visit Ids.</p>
+</div>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p>To use, you need to also install the <a href="https://github.com/MarkEdmondson1234/bigQueryR"><code>bigQueryR</code></a> library and authenticate to BigQuery:</p>
 <pre class="r"><code>devtools::install_github(&quot;MarkEdmondson1234/bigQueryR&quot;)
 library(googleAnalyticsR)
 library(bigQueryR)
 
 ## go through Google oAuth2 flow
+## needs email that has access to the BigQuery dataset
 bqr_auth()
 
-## get your project and datasets
+## get lists of your project and datasets
 bqr_list_projects()
 bqr_list_datasets(&quot;project-id&quot;)
 </code></pre>
 <p>For BigQuery Google Analytics 360 exports, the dataset is the same as the GA View ID you are exporting.</p>
+</div>
+<div id="exporting-data" class="section level2">
+<h2>Exporting data</h2>
 <p>You can then export BigQuery data via:</p>
 <pre class="r"><code>bq &lt;- google_analytics_bq(&quot;project-id&quot;, &quot;dataset-id-ga-viewid&quot;, 
                            start = &quot;2016-01-01&quot;, end = &quot;2016-02-01&quot;, 
@@ -298,7 +309,7 @@ Segments/filters are not supported. The data is unsampled though.</p>
 &gt; Error in google_analytics_bq(&quot;project-id&quot;, &quot;dataset-id-ga-viewid&quot;, start = &quot;2016-01-01&quot;,  : 
   dimension not yet supported. Must be one of referralPath, campaign, source, medium, keyword, adContent, adwordsCampaignID, adwordsAdGroupID, transactionId, date, visitorId, visitId, visitStartTime, visitNumber                           </code></pre>
 <p>You can also query the BigQuery table directly using the query parameter.</p>
-<p>This is just as you would in the BigQuery interface, and allows all complicated queries.</p>
+<p>This is just as you would in the BigQuery interface, and allows queries you can also do there.</p>
 <pre class="r"><code>q &lt;- &quot;SELECT
   date,
   SUM (totals.visits) visits,
@@ -312,7 +323,22 @@ ORDER BY date ASC &quot;
 bq3 &lt;- google_analytics_bq(&quot;project-id&quot;, &quot;dataset-id-ga-viewid&quot;, 
                            query = q)
 </code></pre>
-<p>The metrics and dimensions implemented so far are in the two lookups below. They include the BigQuery exclusive <code>hitTimestamp</code>, <code>fullVisitorId</code>, <code>visitId</code> etc. Read the full <a href="https://support.google.com/analytics/answer/3437719?hl=en">Google Analytics 360 BigQuery data schema</a> for an idea on what can be queried.</p>
+<p>You can also just output the query for use within the interface, if you pass in the parameter <code>return_query_only</code></p>
+<pre class="r"><code>just_query &lt;- google_analytics_bq(&quot;project-id&quot;, &quot;dataset-id-ga-viewid&quot;, 
+                                  start = &quot;2016-01-01&quot;, end = &quot;2016-02-01&quot;, 
+                                  metrics = &quot;users&quot;, 
+                                  dimensions = c(&quot;source&quot;,&quot;medium&quot;),
+                                  return_query_only = TRUE)
+just_query
+# [1] &quot;SELECT trafficSource.source as source, trafficSource.medium as medium, COUNT(fullVisitorId) as users # FROM (TABLE_DATE_RANGE([dataset-id-ga-viewid.ga_sessions_], TIMESTAMP(&#39;2016-01-01&#39;),
+# TIMESTAMP(&#39;2016-02-01&#39;))) GROUP BY source, medium  LIMIT 100&quot;</code></pre>
+<p>You could then paste this query into BigQuery interface.</p>
+</div>
+<div id="implemented-metrics-and-dimensions" class="section level2">
+<h2>Implemented metrics and dimensions</h2>
+<p>The metrics and dimensions implemented so far are in the two lookups below.</p>
+<p>They include the BigQuery exclusive <code>hitTimestamp</code>, <code>fullVisitorId</code>, <code>visitId</code> etc.</p>
+<p>Read the full <a href="https://support.google.com/analytics/answer/3437719?hl=en">Google Analytics 360 BigQuery data schema</a> for an idea on what can be queried.</p>
 <pre class="r"><code>lookup_bq_query_m &lt;- c(visits = &quot;SUM(totals.visits) as sessions&quot;,
                        sessions = &quot;SUM(totals.visits) as sessions&quot;,
                        pageviews = &quot;SUM(totals.pageviews) as pageviews&quot;,
@@ -327,7 +353,8 @@ bq3 &lt;- google_analytics_bq(&quot;project-id&quot;, &quot;dataset-id-ga-viewid
                        users = &quot;COUNT(fullVisitorId) as users&quot;,
                        exits = &quot;COUNT(hits.isExit) as exits&quot;,
                        entrances = &quot;COUNT(hits.isEntrance) as entrances&quot;,
-                       eventValue = &quot;SUM(hits.eventinfo.eventValue) as eventValue&quot;)
+                       eventValue = &quot;SUM(hits.eventinfo.eventValue) as eventValue&quot;,
+                       metricXX = {a function to output hit level custom metrics})
 
 lookup_bq_query_d &lt;- c(referralPath = &quot;trafficSource.referralPath as referralPath&quot;,
                        hitTimestamp = &quot;(visitStartTime + (hits.time/1000)) as hitTimestamp&quot;,
@@ -365,10 +392,10 @@ lookup_bq_query_d &lt;- c(referralPath = &quot;trafficSource.referralPath as ref
                        pagePath = &quot;hits.page.pagePath as pagePath&quot;,
                        eventCategory = &quot;hits.eventInfo.eventCategory as eventCategory&quot;,
                        eventAction = &quot;hits.eventInfo.eventAction as eventAction&quot;,
-                       eventLabel = &quot;hits.eventInfo.eventLabel as eventLabel&quot;
-                       )</code></pre>
+                       eventLabel = &quot;hits.eventInfo.eventLabel as eventLabel&quot;,
+                       dimensionXX = {a function to output hit level custom dimensions})</code></pre>
 <p>This will increase as I get time to work on it, but feel free to submit a pull request with more.</p>
-<p>Eventually the BigQuery reports can do a lot more than the normal Google Analytics API as it allows for statistics, grouping, timestamps and unique visitor and visit Ids.</p>
+</div>
 
 
 
