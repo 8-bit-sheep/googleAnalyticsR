@@ -4,6 +4,8 @@ title: "Welcome to googleAnalyticsR"
 
 [![Travis-CI Build Status](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master)](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR)
 
+![](gar_logo_1000.png)
+
 Welcome to the website for **googleAnalyticsR**, an R library for working with Google Analytics data.
 
 Follow development on the project's [Github development site.](https://github.com/MarkEdmondson1234/googleAnalyticsR)
