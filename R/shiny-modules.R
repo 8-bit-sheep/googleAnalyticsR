@@ -8,7 +8,7 @@ segmentBuilderUI <- function(id){
   ns <- shiny::NS(id)
   
   shiny::tagList(
-    shiny::fillCol(
+    shiny::fluidRow(
       segmentElementUI(ns("ui1")),
       segmentChainUI(ns("chain1"))
     )

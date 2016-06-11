@@ -24,8 +24,9 @@ gadget_GASegment <- function(inputValue1, inputValue2) {
     })
   }
   
-  viewer <- shiny::dialogViewer("GAv4 Segment Builder", 
+  viewer <- shiny::dialogViewer("GAv4 Segment Builder",
                                 width = 800, height = 1000)
+  # viewer <- shiny::browserViewer()
   shiny::runGadget(ui, server, viewer = viewer)
 }
 
