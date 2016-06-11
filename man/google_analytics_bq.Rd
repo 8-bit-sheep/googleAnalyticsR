@@ -43,10 +43,14 @@ All data will be unsampled, and requests will cost money against your BigQuery q
 
 Requires installation of bigQueryR and authentication under ga_bq_auth() 
 or googleAuthR::gar_auth() with BigQuery scope set.
+View your projectIds upon authentication via \code{\link[bigQueryR]{bqe_list_projects}}
 
-No segments for now
+No segments for now.
 
-View your projectIds upon authentication via \code{\link[bigQueryR]{bqe_list_projects}}:
+Goals are not specified in BQ exports, so you need to look at how you define them and replicate per view
+e.g. unique pageviews or unique events.
+
+Custom dimensions can be specified as sesion or hit level, so ignoring the setting in GA interface.
 }
 \seealso{
 \url{https://support.google.com/analytics/answer/4419694?hl=en}

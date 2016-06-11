@@ -111,12 +111,13 @@ make_ga_4_req <- function(viewId,
                           segments=NULL,
                           pivots=NULL,
                           cohorts=NULL,
-                          pageToken=1,
+                          pageToken=0,
                           pageSize=1000,
                           samplingLevel=c("DEFAULT", "SMALL","LARGE"),
                           metricFormat=NULL,
                           histogramBuckets=NULL) {
 
+  message("Fetching: ", viewId, " pageToken: ", pageToken, " pageSize: ", pageSize)
   samplingLevel <- match.arg(samplingLevel)
   
   if(all(is.null(date_range), is.null(cohorts))){
@@ -241,9 +242,10 @@ google_analytics_4 <- function(viewId,
                                metricFormat=NULL,
                                histogramBuckets=NULL){
 
+  max <- as.integer(max)
   ## for same Id and daterange, v4 batches can be made
   if(max > 10000){
-    ## how many v4 batch requests can be made at one time (5-1) due to bad maths
+    ## how many v4 batch requests can be made at one time
     batchLimit <- 5
     meta_batch_start_index <- seq(from=0, to=max, by=10000*batchLimit)
     batches <- length(meta_batch_start_index)
@@ -253,32 +255,35 @@ google_analytics_4 <- function(viewId,
     ## loop for each over 50000
     requests <- lapply(meta_batch_start_index, function(meta){
       
-      message("Outer batch loop:", meta)
+      ## to fix (#19) - silly bug were index of 10000 turned into 1e5 passed in as 1(!)
+      meta <- as.integer(meta)
+      
+      message("Outer batch loop: ", meta)
       batch_start_index <- seq(from=meta, to=min(meta+((batchLimit-1)*10000),max), 10000)
       
       ## loop for each 10000 fetch
       requests_in <- lapply(batch_start_index, function(x){
-        message("Inner batch loop:", x)
-        req <- make_ga_4_req(viewId=viewId,
-                             date_range=date_range,
-                             metrics=metrics,
-                             dimensions=dimensions,
-                             dim_filters=dim_filters,
-                             met_filters=met_filters,
-                             filtersExpression = filtersExpression,
-                             order=order,
-                             segments=segments,
-                             pivots=pivots,
-                             cohorts=cohorts,
-                             pageToken = x,
-                             pageSize = 10000,
-                             samplingLevel=samplingLevel,
-                             metricFormat=metricFormat,
-                             histogramBuckets=histogramBuckets)
+        message("Inner batch loop: ", x)
+        make_ga_4_req(viewId=viewId,
+                      date_range=date_range,
+                      metrics=metrics,
+                      dimensions=dimensions,
+                      dim_filters=dim_filters,
+                      met_filters=met_filters,
+                      filtersExpression = filtersExpression,
+                      order=order,
+                      segments=segments,
+                      pivots=pivots,
+                      cohorts=cohorts,
+                      pageToken = x,
+                      pageSize = 10000,
+                      samplingLevel=samplingLevel,
+                      metricFormat=metricFormat,
+                      histogramBuckets=histogramBuckets)
+
         
       })
       
-
       ## a list of gav4 results
       inner_reqs <- fetch_google_analytics_4(requests_in)
       
@@ -287,6 +292,8 @@ google_analytics_4 <- function(viewId,
         out <- Reduce(rbind, inner_reqs)
       } else if(inherits(inner_reqs, "data.frame")){
         out <- inner_reqs
+      } else if(is.null(inner_reqs)){
+        out <- NULL
       } else {
         stop("Output class not recognised: ", class(inner_reqs))
       }

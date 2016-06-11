@@ -7,7 +7,7 @@
 make_ga_4_req(viewId, date_range = NULL, metrics = NULL,
   dimensions = NULL, dim_filters = NULL, met_filters = NULL,
   filtersExpression = NULL, order = NULL, segments = NULL,
-  pivots = NULL, cohorts = NULL, pageToken = 1, pageSize = 1000,
+  pivots = NULL, cohorts = NULL, pageToken = 0, pageSize = 1000,
   samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
   histogramBuckets = NULL)
 }
