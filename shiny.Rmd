@@ -1,0 +1,49 @@
+---
+title: "Shiny"
+---
+
+To use in Shiny with a multi-user login, use googleAuth's `with_shiny`.  See the `googleAuthR` readme for details. 
+
+```r
+## in server.R
+library(googleAuthR)
+library(googleAnalyticsR)
+library(shiny)
+
+shinyServer(function(input, output, session){
+  
+  ## Get auth code from return URL
+  access_token  <- callModule(googleAuth, "auth1")
+
+  gadata <- reactive({
+
+    with_shiny(google_analytics,
+               id = "222222",
+               start="2015-08-01", end="2015-08-02", 
+               metrics = c("sessions", "bounceRate"), 
+               dimensions = c("source", "medium"),
+               shiny_access_token = access_token())
+  })
+  
+  output$something <- renderPlot({
+  
+    gadata <- gadata()
+    
+    plot(gadata)
+  
+  })
+  
+})
+
+## ui.R
+library(googleAuthR)
+library(shiny)
+
+shinyUI(fluidPage(
+
+  googleAuthUI("auth1"),
+  plotOutput("something")
+
+))
+
+```

@@ -1,0 +1,33 @@
+name: "googleAnalyticsR - An R Google Analytics Library"
+output_dir: "."
+navbar:
+  title: "googleAnalyticsR"
+  left:
+    - text: "Home"
+      href: index.html
+      icon: fa-home
+    - text: "Setup"
+      href: setup.html
+      icon: fa-wrench
+    - text: "v3 API"
+      href: v3.html
+      icon: fa-cog
+    - text: "v4 API"
+      href: v4.html
+      icon: fa-cogs
+    - text: "BigQuery"
+      icon: fa-search
+      href: big-query.html
+    - text: "Shiny"
+      icon: fa-cloud-upload
+      href: shiny.html
+  right:
+    - icon: fa-github
+      href: https://github.com/MarkEdmondson1234/googleAnalyticsR
+    - icon: fa-twitter
+      href: http://twitter.com/HoloMarkeD
+    - icon: fa-linkedin
+      href: https://dk.linkedin.com/in/markpeteredmondson
+    - icon: fa-rss
+      text: Blog
+      href: http://code.markedmondson.me

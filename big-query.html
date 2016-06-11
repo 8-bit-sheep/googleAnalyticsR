@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Big Query Exports</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="site_libs/highlight/default.css"
+      type="text/css" />
+<script src="site_libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">googleAnalyticsR</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="setup.html">
+    <span class="fa fa-wrench"></span>
+     
+    Setup
+  </a>
+</li>
+<li>
+  <a href="v3.html">
+    <span class="fa fa-cog"></span>
+     
+    v3 API
+  </a>
+</li>
+<li>
+  <a href="v4.html">
+    <span class="fa fa-cogs"></span>
+     
+    v4 API
+  </a>
+</li>
+<li>
+  <a href="big-query.html">
+    <span class="fa fa-search"></span>
+     
+    BigQuery
+  </a>
+</li>
+<li>
+  <a href="shiny.html">
+    <span class="fa fa-cloud-upload"></span>
+     
+    Shiny
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://twitter.com/HoloMarkeD">
+    <span class="fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://dk.linkedin.com/in/markpeteredmondson">
+    <span class="fa fa-linkedin"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://code.markedmondson.me">
+    <span class="fa fa-rss"></span>
+     
+    Blog
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Big Query Exports</h1>
+
+</div>
+
+
+<p>Limited support for more user friendly calls to BigQuery Google Analytics 360 exports is implemented.</p>
+<p><code>google_analytics_bq</code> parses your metrics and dimensions into BigQuery queries.</p>
+<p>To use, you need to also install the <code>bigQueryR</code> library and authenticate to BigQuery:</p>
+<pre class="r"><code>devtools::install_github(&quot;MarkEdmondson1234/bigQueryR&quot;)
+library(googleAnalyticsR)
+library(bigQueryR)
+
+## go through Google oAuth2 flow
+bqr_auth()
+
+## get your project and datasets
+bqr_list_projects()
+bqr_list_datasets(&quot;project-id&quot;)
+</code></pre>
+<p>For BigQuery Google Analytics 360 exports, the dataset is the same as the GA View ID you are exporting.</p>
+<p>You can then export BigQuery data via:</p>
+<pre class="r"><code>bq &lt;- google_analytics_bq(&quot;project-id&quot;, &quot;dataset-id-ga-viewid&quot;, 
+                           start = &quot;2016-01-01&quot;, end = &quot;2016-02-01&quot;, 
+                           metrics = &quot;users&quot;, 
+                           dimensions = c(&quot;source&quot;,&quot;medium&quot;))
+head(bq)
+             source   medium  users
+1   mavas|blahbs.ru  display  47837
+2          examp.ae referral   6090
+3   lm.facebook.com referral    335
+4       ghtie_yahoo  display 133900
+5      fjsfs_inmobi  display  19887
+6 tripadvisor.co.dk referral    307                         </code></pre>
+<p>At the moment the metrics/dimensions are limited as they need to added manually to a lookup table.<br />
+Segments/filters are not supported. The data is unsampled though.</p>
+<pre class="r"><code>bq2 &lt;- google_analytics_bq(&quot;project-id&quot;, &quot;dataset-id-ga-viewid&quot;, 
+                           start = &quot;2016-01-01&quot;, end = &quot;2016-02-01&quot;, 
+                           metrics = &quot;users&quot;, 
+                           dimensions = c(&quot;source&quot;,&quot;medium&quot;,&quot;landingPagePath&quot;))
+                           
+&gt; Error in google_analytics_bq(&quot;project-id&quot;, &quot;dataset-id-ga-viewid&quot;, start = &quot;2016-01-01&quot;,  : 
+  dimension not yet supported. Must be one of referralPath, campaign, source, medium, keyword, adContent, adwordsCampaignID, adwordsAdGroupID, transactionId, date, visitorId, visitId, visitStartTime, visitNumber                           </code></pre>
+<p>You can also query the BigQuery table directly using the query parameter.</p>
+<p>This is just as you would in the BigQuery interface, and allows all complicated queries.</p>
+<pre class="r"><code>q &lt;- &quot;SELECT
+  date,
+  SUM (totals.visits) visits,
+  SUM (totals.pageviews) pageviews,
+  SUM (totals.transactions) transactions,
+  SUM (totals.transactionRevenue)/1000000 revenue
+FROM [87010628.ga_sessions_20160327],[87010628.ga_sessions_20160328],[87010628.ga_sessions_20160329]
+GROUP BY date
+ORDER BY date ASC &quot;
+
+bq3 &lt;- google_analytics_bq(&quot;project-id&quot;, &quot;dataset-id-ga-viewid&quot;, 
+                           query = q)
+</code></pre>
+<p>The metrics and dimensions implemented so far are in the two lookups below. They include the BigQuery exclusive <code>hitTimestamp</code>, <code>fullVisitorId</code>, <code>visitId</code> etc. Read the full <a href="https://support.google.com/analytics/answer/3437719?hl=en">Google Analytics 360 BigQuery data schema</a> for an idea on what can be queried.</p>
+<pre class="r"><code>lookup_bq_query_m &lt;- c(visits = &quot;SUM(totals.visits) as sessions&quot;,
+                       sessions = &quot;SUM(totals.visits) as sessions&quot;,
+                       pageviews = &quot;SUM(totals.pageviews) as pageviews&quot;,
+                       timeOnSite = &quot;SUM(totals.timeOnSite) as timeOnSite&quot;,
+                       bounces = &quot;SUM(totals.bounces) as bounces&quot;,
+                       transactions = &quot;SUM(totals.transactions) as transactions&quot;,
+                       transactionRevenue = &quot;SUM(totals.transactionRevenue)/1000000 as transactionRevenue&quot;,
+                       newVisits = &quot;SUM(totals.newVisits) as newVisits&quot;,
+                       screenviews = &quot;SUM(totals.screenviews) as screenviews&quot;,
+                       uniqueScreenviews = &quot;SUM(totals.uniqueScreenviews) as uniqueScreenviews&quot;,
+                       timeOnScreen = &quot;SUM(totals.timeOnScreen) as timeOnScreen&quot;,
+                       users = &quot;COUNT(fullVisitorId) as users&quot;,
+                       exits = &quot;COUNT(hits.isExit) as exits&quot;,
+                       entrances = &quot;COUNT(hits.isEntrance) as entrances&quot;,
+                       eventValue = &quot;SUM(hits.eventinfo.eventValue) as eventValue&quot;)
+
+lookup_bq_query_d &lt;- c(referralPath = &quot;trafficSource.referralPath as referralPath&quot;,
+                       hitTimestamp = &quot;(visitStartTime + (hits.time/1000)) as hitTimestamp&quot;,
+                       campaign = &quot;trafficSource.campaign as campaign&quot;,
+                       source = &quot;trafficSource.source as source&quot;,
+                       medium = &quot;trafficSource.medium as medium&quot;,
+                       keyword = &quot;trafficSource.keyword as keyword&quot;,
+                       adContent = &quot;trafficSource.adContent as adContent&quot;,
+                       adwordsCampaignID = &quot;trafficSource.adwordsClickInfo.campaignId as adwordsCampaignId&quot;,
+                       adwordsAdGroupID = &quot;trafficSource.adwordsClickInfo.adGroupId as adwordsAdGroupId&quot;,
+                       # adwords...etc...
+                       transactionId = &quot;hits.transaction.transactionId as transactionId&quot;,
+                       date = &quot;date&quot;,
+                       fullVisitorId = &quot;fullVisitorId&quot;,
+                       userId = &quot;userId&quot;,
+                       visitorId = &quot;visitorId&quot;,
+                       visitId = &quot;visitId&quot;,
+                       visitStartTime = &quot;visitStartTime&quot;,
+                       visitNumber = &quot;visitNumber&quot;,
+                       browser = &quot;device.browser as browser&quot;,
+                       browserVersion = &quot;device.browserVersion as browserVersion&quot;,
+                       operatingSystem = &quot;device.operatingSystem as operatingSystem&quot;,
+                       operatingSystemVersion = &quot;device.operatingSystemVersion as operatingSystemVersion&quot;,
+                       mobileDeviceBranding = &quot;device.mobileDeviceBranding as mobileDeviceBranding&quot;,
+                       flashVersion = &quot;device.flashVersion as flashVersion&quot;,
+                       language = &quot;device.language as language&quot;,
+                       screenColors = &quot;device.screenColors as screenColors&quot;,
+                       screenResolution = &quot;device.screenResolution as screenResolution&quot;,
+                       deviceCategory = &quot;device.deviceCategory as deviceCategory&quot;,
+                       continent = &quot;geoNetwork.continent as continent&quot;,
+                       subContinent = &quot;geoNetwork.subContinent as subContinent&quot;,
+                       country = &quot;geoNetwork.country as country&quot;,
+                       region = &quot;geoNetwork.region as region&quot;,
+                       metro = &quot;geoNetwork.region as metro&quot;,
+                       pagePath = &quot;hits.page.pagePath as pagePath&quot;,
+                       eventCategory = &quot;hits.eventInfo.eventCategory as eventCategory&quot;,
+                       eventAction = &quot;hits.eventInfo.eventAction as eventAction&quot;,
+                       eventLabel = &quot;hits.eventInfo.eventLabel as eventLabel&quot;
+                       )</code></pre>
+<p>This will increase as I get time to work on it, but feel free to submit a pull request with more.</p>
+<p>Eventually the BigQuery reports can do a lot more than the normal Google Analytics API as it allows for statistics, grouping, timestamps and unique visitor and visit Ids.</p>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

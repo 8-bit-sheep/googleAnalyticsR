@@ -11,7 +11,7 @@
 
 
 
-<title>Introduction</title>
+<title>Initial setup</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -255,36 +255,63 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Introduction</h1>
+<h1 class="title toc-ignore">Initial setup</h1>
 
 </div>
 
 
-<p><a href="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR"><img src="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master" alt="Travis-CI Build Status" /></a></p>
-<p>Welcome to the website for <strong>googleAnalyticsR</strong>, an R library for working with Google Analytics data.</p>
-<div id="features" class="section level2">
-<h2>Features</h2>
-<ul>
-<li>First Google Analytics Reporting v4 API library for R</li>
-<li>v4 features include: dynamic calculated metrics, pivots, histograms, date comparisons, batching.</li>
-<li>Shiny App compatible</li>
-<li>Integration with BigQuery Google Analytics Premium/360 exports.</li>
-<li>Single authentication flow can be used with other <code>googleAuthR</code> apps like <a href="https://github.com/MarkEdmondson1234/searchConsoleR"><code>searchConsoleR</code></a></li>
-<li>Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnnel</li>
-<li>Support for <code>googleAuthR</code> batch, meaning 10 calls at once to GA - great for big fetches. For big data calls this is implemented automatically so could be 10x quicker than normal GA fetching</li>
-<li>Meta data included in attributes of returned dataframe including date ranges, totals, min and max</li>
-</ul>
+<div id="install" class="section level2">
+<h2>Install</h2>
+<p>The latest stable version of googleAnalyticsR is available on CRAN. You also need the version &gt; <code>0.3.0</code> of <code>googleAuthR</code></p>
+<pre class="r"><code>install.packages(&quot;googleAuthR&quot;)
+install.packages(&quot;googleAnalyticsR&quot;)</code></pre>
+<div id="development-version-off-github" class="section level3">
+<h3>Development version off github</h3>
+<p>Or you can use the latest development version is on github which you can install via the below.</p>
+<pre class="r"><code>devtools::install_github(&quot;MarkEdmondson1234/googleAnalyticsR&quot;)</code></pre>
+<p>Check out the <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md">NEWS</a> to see whats currently available in each version.</p>
 </div>
-<div id="thanks" class="section level2">
-<h2>Thanks</h2>
-<p>These are all great libraries that also work with Google Analytics data in R, that I have taken inspiration from.</p>
-<ul>
-<li><a href="https://github.com/skardhamar/rga">rga</a></li>
-<li><a href="https://bitbucket.org/unikum/rga">RGA</a></li>
-<li><a href="https://github.com/Tatvic/RGoogleAnalytics">RGoogleAnalytics</a></li>
-<li><a href="https://github.com/jdeboer/ganalytics">ganalytics</a></li>
-<li><a href="https://github.com/andrewgeisler/GAR">GAR</a></li>
-</ul>
+</div>
+<div id="authentication" class="section level2">
+<h2>Authentication</h2>
+<pre class="r"><code>## setup
+library(googleAnalyticsR)
+
+## This should send you to your browser to authenticate your email.
+## Authenticate with an email that has access to the Google Analytics View you want to use.
+ga_auth()
+
+## get your accounts
+account_list &lt;- google_analytics_account_list()
+
+## pick a profile with data to query
+ga_id &lt;- account_list[23,&#39;viewId&#39;]
+</code></pre>
+<p>Should you need to authenitcate under a new user, use <code>ga_auth(new_user=TRUE)</code></p>
+<div id="multiple-api-authentication" class="section level3">
+<h3>Multiple API authentication</h3>
+<p>If you are using more than one API for authentication (such as Search Console), then authenticate using <code>googleAuthR::gar_auth()</code> instead.</p>
+</div>
+</div>
+<div id="using-your-own-google-developer-project-api-key" class="section level2">
+<h2>Using your own Google Developer Project API Key</h2>
+<p>With the amount of API calls possible with this library via batching and walking, its more likely the shared Google API project will hit the 50,000 calls per day limit.</p>
+<p>To mitigate that, use your own Google Developer Console Project key, so it is not shared across all users of this library.</p>
+<div id="example-adding-your-own-google-developer-console-keys" class="section level3">
+<h3>Example adding your own Google Developer Console keys</h3>
+<p>Below a new client Id is set for both offline and Shiny use. Set the options before any call to <code>ga_auth()</code> or other data fetching calls.</p>
+<pre class="r"><code>options(googleAuthR.client_id = &quot;uxxxxxxx2fd4kesu6.apps.googleusercontent.com&quot;)
+options(googleAuthR.client_secret = &quot;3JhLa_GxxxxxCQYLe31c64&quot;)
+options(googleAuthR.scopes.selected = &quot;https://www.googleapis.com/auth/analytics&quot;)</code></pre>
+<p>In this example, the scopes are also set so a user can authenticate with searchConsoleR at the same time, which is possible as they both use <a href="http://code.markedmondson.me/googleAuthR/">googleAuthR</a> as a backend.</p>
+<pre class="r"><code>options(googleAuthR.client_id = &quot;tuxxxxxxx2fd4kesu6.apps.googleusercontent.com&quot;)
+options(googleAuthR.client_secret = &quot;3JhLa_GxxxxxCQYLe31c64&quot;)
+options(googleAuthR.scopes.selected = c(&quot;https://www.googleapis.com/auth/analytics&quot;,
+                                        &quot;https://www.googleapis.com/auth/webmasters&quot;))</code></pre>
+<p>If you want to use with Shiny, then also set the webapp clientId/secrets.</p>
+<pre class="r"><code>options(googleAnalyticsR.webapp.client_id = &quot;xxxxx9pcab1u005cv.apps.googleusercontent.com&quot;)
+options(googleAnalyticsR.webapp.client_secret = &quot;zcofxxxxxxElemXN5sf&quot;)</code></pre>
+</div>
 </div>
 
 

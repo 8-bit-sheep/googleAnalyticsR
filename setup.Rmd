@@ -1,0 +1,82 @@
+---
+title: "Initial setup"
+---
+
+## Install
+
+The latest stable version of googleAnalyticsR is available on CRAN.
+You also need the version > `0.3.0` of `googleAuthR`
+
+```r
+install.packages("googleAuthR")
+install.packages("googleAnalyticsR")
+```
+
+### Development version off github
+
+Or you can use the latest development version is on github which you can install via the below.
+
+```r
+devtools::install_github("MarkEdmondson1234/googleAnalyticsR")
+```
+
+Check out the [NEWS](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md) to see whats currently available in each version.
+
+## Authentication
+
+```r
+## setup
+library(googleAnalyticsR)
+
+## This should send you to your browser to authenticate your email.
+## Authenticate with an email that has access to the Google Analytics View you want to use.
+ga_auth()
+
+## get your accounts
+account_list <- google_analytics_account_list()
+
+## pick a profile with data to query
+ga_id <- account_list[23,'viewId']
+
+```
+
+Should you need to authenitcate under a new user, use `ga_auth(new_user=TRUE)`
+
+### Multiple API authentication
+
+If you are using more than one API for authentication (such as Search Console), then authenticate using `googleAuthR::gar_auth()` instead.
+
+## Using your own Google Developer Project API Key
+
+With the amount of API calls possible with this library via batching and walking, its more likely the shared
+Google API project will hit the 50,000 calls per day limit.
+
+To mitigate that, use your own Google Developer Console Project key, so it is not shared across all users of this library.
+
+### Example adding your own Google Developer Console keys
+
+Below a new client Id is set for both offline and Shiny use.  Set the options before any call to `ga_auth()` or other data fetching calls.
+
+
+```r
+options(googleAuthR.client_id = "uxxxxxxx2fd4kesu6.apps.googleusercontent.com")
+options(googleAuthR.client_secret = "3JhLa_GxxxxxCQYLe31c64")
+options(googleAuthR.scopes.selected = "https://www.googleapis.com/auth/analytics")
+```
+
+In this example, the scopes are also set so a user can authenticate with searchConsoleR at the same time, which is possible as they both use [googleAuthR](http://code.markedmondson.me/googleAuthR/) as a backend.
+
+```r
+options(googleAuthR.client_id = "tuxxxxxxx2fd4kesu6.apps.googleusercontent.com")
+options(googleAuthR.client_secret = "3JhLa_GxxxxxCQYLe31c64")
+options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
+                                        "https://www.googleapis.com/auth/webmasters"))
+```
+
+If you want to use with Shiny, then also set the webapp clientId/secrets.
+
+```r
+options(googleAnalyticsR.webapp.client_id = "xxxxx9pcab1u005cv.apps.googleusercontent.com")
+options(googleAnalyticsR.webapp.client_secret = "zcofxxxxxxElemXN5sf")
+```
+

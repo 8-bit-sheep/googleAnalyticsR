@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Reporting API v4</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="site_libs/highlight/default.css"
+      type="text/css" />
+<script src="site_libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">googleAnalyticsR</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="setup.html">
+    <span class="fa fa-wrench"></span>
+     
+    Setup
+  </a>
+</li>
+<li>
+  <a href="v3.html">
+    <span class="fa fa-cog"></span>
+     
+    v3 API
+  </a>
+</li>
+<li>
+  <a href="v4.html">
+    <span class="fa fa-cogs"></span>
+     
+    v4 API
+  </a>
+</li>
+<li>
+  <a href="big-query.html">
+    <span class="fa fa-search"></span>
+     
+    BigQuery
+  </a>
+</li>
+<li>
+  <a href="shiny.html">
+    <span class="fa fa-cloud-upload"></span>
+     
+    Shiny
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://twitter.com/HoloMarkeD">
+    <span class="fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://dk.linkedin.com/in/markpeteredmondson">
+    <span class="fa fa-linkedin"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://code.markedmondson.me">
+    <span class="fa fa-rss"></span>
+     
+    Blog
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Reporting API v4</h1>
+
+</div>
+
+
+<div id="v4-features" class="section level2">
+<h2>v4 features</h2>
+<p>The v4 API is where new features will appear in the future. It currently has these extras implemented over the v3 API:</p>
+<ul>
+<li>Cohorts</li>
+<li>Multiple date ranges</li>
+<li>Pivot tables</li>
+<li>Calculated metrics on the fly</li>
+<li>Much more powerful segments</li>
+</ul>
+</div>
+<div id="to-use---v4-api-calls" class="section level2">
+<h2>To use - v4 API calls</h2>
+<p>Consult <code>?google_analytics_4</code> and these example queries:</p>
+<pre class="r"><code>## setup
+library(googleAnalyticsR)
+
+## authenticate, or use the RStudio Addin &quot;Google API Auth&quot; with analytics scopes set
+ga_auth()
+
+## get your accounts
+account_list &lt;- google_analytics_account_list()
+
+## pick a profile with data to query
+ga_id &lt;- account_list[23,&#39;viewId&#39;]
+</code></pre>
+<div id="new-filter-syntax" class="section level3">
+<h3>New Filter Syntax</h3>
+<pre class="r"><code>## create filters on metrics
+mf &lt;- met_filter(&quot;bounces&quot;, &quot;GREATER_THAN&quot;, 0)
+mf2 &lt;- met_filter(&quot;sessions&quot;, &quot;GREATER&quot;, 2)
+
+## create filters on dimensions
+df &lt;- dim_filter(&quot;source&quot;,&quot;BEGINS_WITH&quot;,&quot;1&quot;,not = TRUE)
+df2 &lt;- dim_filter(&quot;source&quot;,&quot;BEGINS_WITH&quot;,&quot;a&quot;,not = TRUE)
+
+## construct filter objects
+fc2 &lt;- filter_clause_ga4(list(df, df2), operator = &quot;AND&quot;)
+fc &lt;- filter_clause_ga4(list(mf, mf2), operator = &quot;AND&quot;)
+
+## make v4 request
+## demo showing how the new filters work
+ga_data1 &lt;- google_analytics_4(ga_id, 
+                              date_range = c(&quot;2015-07-30&quot;,&quot;2015-10-01&quot;),
+                              dimensions=c(&#39;source&#39;,&#39;medium&#39;), 
+                              metrics = c(&#39;sessions&#39;,&#39;bounces&#39;), 
+                              met_filters = fc, 
+                              dim_filters = fc2, 
+                              filtersExpression = &quot;ga:source!=(direct)&quot;)
+
+ga_data1
+
+#                     source   medium sessions bounces
+# 1                  baby.dk referral        3       2
+# 2                     bing  organic       71      42
+# 3  buttons-for-website.com referral        7       7
+# 4           duckduckgo.com referral        5       3
+# 5                   google  organic      642     520
+# 6                google.se referral        3       2
+# 7                 izito.se referral        3       1
+# 8          success-seo.com referral       35      35
+# 9    video--production.com referral       11      11
+# 10                   yahoo  organic       66      43
+# 11              zapmeta.se referral        6       4</code></pre>
+</div>
+<div id="querying-multiple-report-types-at-a-time" class="section level3">
+<h3>Querying multiple report types at a time</h3>
+<p>Example with two date ranges and two reports.</p>
+<pre class="r"><code>## demo of querying two date ranges at a time   
+## we make the request via make_ga_4_req() to use in next demo
+multidate_test &lt;- make_ga_4_req(ga_id, 
+                                date_range = c(&quot;2015-07-30&quot;,
+                                               &quot;2015-10-01&quot;,
+                                               &quot;2014-07-30&quot;,
+                                               &quot;2014-10-01&quot;),
+                                dimensions = c(&#39;source&#39;,&#39;medium&#39;), 
+                                metrics = c(&#39;sessions&#39;,&#39;bounces&#39;),
+                                order = order_type(&quot;sessions&quot;, &quot;DESCENDING&quot;))
+                                
+ga_data2 &lt;- fetch_google_analytics_4(multidate_test)
+ga_data2
+#                                     source      medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
+# 1                                 (direct)      (none)        5923       3328           0          0
+# 2                        example_mem.co.uk    referral        5846       1100           0          0
+# 3                                   google         cpc        5476       2669           0          0
+# 4                           examp-link.net    referral        2241        653           0          0
+# 5                    moneysavingexampl.com    referral        1869        549           0          0
+# 6                            emailCampaign       email        1268        772           0          0
+
+
+## Demo querying two reports at the same time
+## Use make_ga_4_req() to make multiple requests and then send 
+##   them as a list to fetch_google_analytics_4()
+multi_test2 &lt;- make_ga_4_req(ga_id,
+                                date_range = c(&quot;2015-07-30&quot;,
+                                               &quot;2015-10-01&quot;,
+                                               &quot;2014-07-30&quot;,
+                                               &quot;2014-10-01&quot;),
+                             dimensions=c(&#39;hour&#39;,&#39;medium&#39;), 
+                             metrics = c(&#39;visitors&#39;,&#39;bounces&#39;))
+
+## all requests must have same viewID and dateRange
+ga_data3 &lt;- fetch_google_analytics_4(list(multidate_test, multi_test2)) 
+ga_data3
+# [[1]]
+#                     source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
+# 1                  baby.dk referral           3          2           6          3
+# 2                     bing  organic          71         42         217        126
+# 3  buttons-for-website.com referral           7          7           0          0
+# 4           duckduckgo.com referral           5          3           0          0
+# 5                   google  organic         642        520        1286        920
+# 6                google.se referral           3          2          12          9
+# 7                 izito.se referral           3          1           0          0
+# 8          success-seo.com referral          35         35           0          0
+# 9    video--production.com referral          11         11           0          0
+# 10                   yahoo  organic          66         43         236        178
+# 11              zapmeta.se referral           6          4           9          4
+# 
+# [[2]]
+#    hour   medium visitors.d1 bounces.d1 visitors.d2 bounces.d2
+# 1    00  organic          28         16          85         59
+# 2    00 referral           3          2           1          1
+# 3    01  organic          43         28          93         66
+
+</code></pre>
+</div>
+<div id="on-the-fly-calculated-metrics" class="section level3">
+<h3>On-the-fly calculated metrics</h3>
+<pre class="r"><code>ga_data4 &lt;- google_analytics_4(ga_id,
+                               date_range = c(&quot;2015-07-30&quot;,
+                                              &quot;2015-10-01&quot;),
+                              dimensions=c(&#39;medium&#39;), 
+                              metrics = c(visitsPerVisitor = &quot;ga:visits/ga:visitors&quot;,
+                                          &#39;bounces&#39;), 
+                              metricFormat = c(&quot;FLOAT&quot;,&quot;INTEGER&quot;))
+ga_data4
+#     medium visitsPerVisitor bounces
+# 1   (none)         1.000000     117
+# 2  organic         1.075137     612
+# 3 referral         1.012500      71</code></pre>
+</div>
+<div id="segments-v4" class="section level3">
+<h3>Segments v4</h3>
+<p>Segments are more complex to configure that v3, but more powerful and in line to how you configure them in the UI</p>
+<pre class="r"><code>## make a segment element
+se &lt;- segment_element(&quot;sessions&quot;, 
+                      operator = &quot;GREATER_THAN&quot;, 
+                      type = &quot;metric&quot;, 
+                      comparisonValue = 1, 
+                      scope = &quot;USER&quot;)
+                      
+se2 &lt;- segment_element(&quot;medium&quot;, 
+                      operator = &quot;EXACT&quot;, 
+                      type = &quot;dimension&quot;, 
+                      expressions = &quot;organic&quot;)
+
+## choose between segment_vector_simple or segment_vector_sequence
+## Elements can be combined into clauses, which can then be combined into OR filter clauses
+sv_simple &lt;- segment_vector_simple(list(list(se)))
+
+sv_simple2 &lt;- segment_vector_simple(list(list(se2)))
+
+## Each segment vector can then be combined into a logical AND
+seg_defined &lt;- segment_define(list(sv_simple, sv_simple2))
+
+## Each segement defintion can apply to users, sessions or both.
+## You can pass a list of several segments
+segment4 &lt;- segment_ga4(&quot;simple&quot;, user_segment = seg_defined)
+
+## Add the segments to the segments param
+segment_example &lt;- google_analytics_4(ga_id, 
+                                      c(&quot;2015-07-30&quot;,&quot;2015-10-01&quot;), 
+                                      dimensions=c(&#39;source&#39;,&#39;medium&#39;,&#39;segment&#39;), 
+                                      segments = segment4, 
+                                      metrics = c(&#39;sessions&#39;,&#39;bounces&#39;)
+                                      )
+
+segment_example
+#                            source   medium segment sessions bounces
+# 1                        24.co.uk referral  simple        1       1
+# 2                     aidsmap.com referral  simple        1       0
+# 3                             aol  organic  simple       30      19
+# 4                             ask  organic  simple       32      17
+
+
+## Sequence segment
+
+se2 &lt;- segment_element(&quot;medium&quot;, 
+                       operator = &quot;EXACT&quot;, 
+                       type = &quot;dimension&quot;, 
+                       expressions = &quot;organic&quot;)
+
+se3 &lt;- segment_element(&quot;medium&quot;,
+                       operator = &quot;EXACT&quot;,
+                       type = &quot;dimension&quot;,
+                       not = TRUE,
+                       expressions = &quot;organic&quot;)
+
+## step sequence
+## users who arrived via organic then via referral
+sv_sequence &lt;- segment_vector_sequence(list(list(se2), 
+                                             list(se3)))
+
+seq_defined2 &lt;- segment_define(list(sv_sequence))
+
+segment4_seq &lt;- segment_ga4(&quot;sequence&quot;, user_segment = seq_defined2)
+
+## Add the segments to the segments param
+segment_seq_example &lt;- google_analytics_4(ga_id, 
+                                          c(&quot;2015-01-01&quot;,&quot;2016-05-01&quot;), 
+                                          dimensions=c(&#39;source&#39;,&#39;segment&#39;), 
+                                          segments = segment4_seq,
+                                          metrics = c(&#39;sessions&#39;,&#39;bounces&#39;)
+                                          )
+segment_seq_example
+#                                source  segment sessions bounces
+# 1                                 aol sequence        1       0
+# 2                                 ask sequence        5       1
+# 3      bestbackpackersinsurance.co.uk sequence        9       6
+# 4                                bing sequence       22       2</code></pre>
+<div id="rstudio-addin-segment-helper" class="section level4">
+<h4>RStudio Addin: Segment helper</h4>
+<p>New in version 0.2.0 is an RStudio Addin to help create segments via a UI rather than the lists above.</p>
+<p>You can call it via <code>googleAnalyticsR:::gadget_GASegment()</code> or within the RStudio interface like displayed below:</p>
+<div class="figure">
+<img src="http://g.recordit.co/v24pbsPHfd.gif" alt="Google Analytics v4 segment RStudio Addin" />
+<p class="caption">Google Analytics v4 segment RStudio Addin</p>
+</div>
+</div>
+</div>
+<div id="cohort-reports" class="section level3">
+<h3>Cohort reports</h3>
+<p>Details on <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohorts">cohort reports and LTV can be found here</a>.</p>
+<pre class="r"><code>## first make a cohort group
+cohort4 &lt;- make_cohort_group(list(&quot;Jan2016&quot; = c(&quot;2016-01-01&quot;, &quot;2016-01-31&quot;), 
+                                &quot;Feb2016&quot; = c(&quot;2016-02-01&quot;,&quot;2016-02-28&quot;)))
+
+## then call cohort report.  No date_range and must include metrics and dimensions
+##   from the cohort list
+cohort_example &lt;- google_analytics_4(ga_id, 
+                                     dimensions=c(&#39;cohort&#39;), 
+                                     cohort = cohort4, 
+                                     metrics = c(&#39;cohortTotalUsers&#39;))
+
+cohort_example
+#    cohort cohortTotalUsers
+# 1 Feb2016            19040
+# 2 Jan2016            23378
+</code></pre>
+</div>
+<div id="pivot-requests" class="section level3">
+<h3>Pivot Requests</h3>
+<pre class="r"><code>
+## filter pivot results to 
+pivot_dim_filter1 &lt;- dim_filter(&quot;medium&quot;,
+                                &quot;REGEXP&quot;,
+                                &quot;organic|social|email|cpc&quot;)
+                                
+pivot_dim_clause &lt;- filter_clause_ga4(list(pivot_dim_filter1))
+
+pivme &lt;- pivot_ga4(&quot;medium&quot;,
+                   metrics = c(&quot;sessions&quot;), 
+                   maxGroupCount = 4, 
+                   dim_filter_clause = pivot_dim_clause)
+
+pivtest1 &lt;- google_analytics_4(ga_id, 
+                               c(&quot;2016-01-30&quot;,&quot;2016-10-01&quot;), 
+                               dimensions=c(&#39;source&#39;), 
+                               metrics = c(&#39;sessions&#39;), 
+                               pivots = list(pivme))
+
+
+names(pivtest1)
+#  [1] &quot;source&quot;                      &quot;sessions&quot;                    &quot;medium.referral.sessions&quot;   
+#  [4] &quot;medium..none..sessions&quot;      &quot;medium.cpc.sessions&quot;         &quot;medium.email.sessions&quot;      
+#  [7] &quot;medium.social.sessions&quot;      &quot;medium.twitter.sessions&quot;     &quot;medium.socialMedia.sessions&quot;
+# [10] &quot;medium.Social.sessions&quot;      &quot;medium.linkedin.sessions&quot;  
+</code></pre>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

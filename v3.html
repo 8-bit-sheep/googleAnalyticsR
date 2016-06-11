@@ -11,7 +11,7 @@
 
 
 
-<title>Introduction</title>
+<title>Reporting API v3</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -255,36 +255,101 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Introduction</h1>
+<h1 class="title toc-ignore">Reporting API v3</h1>
 
 </div>
 
 
-<p><a href="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR"><img src="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master" alt="Travis-CI Build Status" /></a></p>
-<p>Welcome to the website for <strong>googleAnalyticsR</strong>, an R library for working with Google Analytics data.</p>
-<div id="features" class="section level2">
-<h2>Features</h2>
-<ul>
-<li>First Google Analytics Reporting v4 API library for R</li>
-<li>v4 features include: dynamic calculated metrics, pivots, histograms, date comparisons, batching.</li>
-<li>Shiny App compatible</li>
-<li>Integration with BigQuery Google Analytics Premium/360 exports.</li>
-<li>Single authentication flow can be used with other <code>googleAuthR</code> apps like <a href="https://github.com/MarkEdmondson1234/searchConsoleR"><code>searchConsoleR</code></a></li>
-<li>Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnnel</li>
-<li>Support for <code>googleAuthR</code> batch, meaning 10 calls at once to GA - great for big fetches. For big data calls this is implemented automatically so could be 10x quicker than normal GA fetching</li>
-<li>Meta data included in attributes of returned dataframe including date ranges, totals, min and max</li>
-</ul>
+<div id="v3-features" class="section level2">
+<h2>v3 features</h2>
+<p>New API features will no longer occur for the v3 API, but it still carries a lot of useful capabilties, such as the multi-channel API.</p>
+<p>It is also currently the only API that has the WALK falg implemented, to avoid sampling via breaking up big data fetches into multiple batched calls.</p>
 </div>
-<div id="thanks" class="section level2">
-<h2>Thanks</h2>
-<p>These are all great libraries that also work with Google Analytics data in R, that I have taken inspiration from.</p>
-<ul>
-<li><a href="https://github.com/skardhamar/rga">rga</a></li>
-<li><a href="https://bitbucket.org/unikum/rga">RGA</a></li>
-<li><a href="https://github.com/Tatvic/RGoogleAnalytics">RGoogleAnalytics</a></li>
-<li><a href="https://github.com/jdeboer/ganalytics">ganalytics</a></li>
-<li><a href="https://github.com/andrewgeisler/GAR">GAR</a></li>
-</ul>
+<div id="google-anaytics-v3-api-examples" class="section level2">
+<h2>Google Anaytics V3 API examples</h2>
+<p>Examples for using the v3 of the API are shown below.</p>
+<pre class="r"><code>library(googleAnalyticsR)
+
+## Authenticate in Google OAuth2
+## this also sets options
+ga_auth()
+
+## if you need to re-authenticate use ga_auth(new_user=TRUE)
+
+## if you have your own Google Dev console project keys, 
+## then don&#39;t run ga_auth() as that will set the authentication project to the defaults.
+## instead put your options here, and run googleAuthR::gar_auth()
+
+## get account info, including View Ids
+account_list &lt;- google_analytics_account_list()
+ga_id &lt;- account_list$viewId[1]
+
+## get a list of what metrics and dimensions you can use
+meta &lt;- google_analytics_meta()
+head(meta)
+
+## pick the account_list$viewId you want to see data for.
+## metrics and dimensions can have or have not &quot;ga:&quot; prefix
+gadata &lt;- google_analytics(id = ga_id, 
+                           start=&quot;2015-08-01&quot;, end=&quot;2015-08-02&quot;, 
+                           metrics = c(&quot;sessions&quot;, &quot;bounceRate&quot;), 
+                           dimensions = c(&quot;source&quot;, &quot;medium&quot;))
+
+## multi accounts, pass character vector of viewIds
+## outputs a list of data.frames, named after the viewId
+multi_gadata &lt;- google_analytics(id = c(&quot;123456&quot;,&quot;9876545&quot;,&quot;765432&quot;), 
+                                 start=&quot;2015-08-01&quot;, end=&quot;2015-08-02&quot;, 
+                                 metrics = c(&quot;sessions&quot;, &quot;bounceRate&quot;), 
+                                 dimensions = c(&quot;source&quot;, &quot;medium&quot;))
+
+## if more than 10000 rows in results, auto batching
+## example is setting lots of dimensions to try and create big sampled data
+batch_gadata &lt;- google_analytics(id = account_list$viewId[1], 
+                                 start=&quot;2014-08-01&quot;, end=&quot;2015-08-02&quot;, 
+                                 metrics = c(&quot;sessions&quot;, &quot;bounceRate&quot;), 
+                                 dimensions = c(&quot;source&quot;, &quot;medium&quot;, &quot;landingPagePath&quot;,&quot;hour&quot;,&quot;minute&quot;),
+                                 max=99999999)
+
+## mitigate sampling by setting samplingLevel=&quot;WALK&quot;
+## this will send lots and lots of calls to the Google API limits, beware
+walk_gadata &lt;- google_analytics(id = account_list$viewId[1], 
+                                start=&quot;2014-08-01&quot;, end=&quot;2015-08-02&quot;, 
+                                metrics = c(&quot;sessions&quot;, &quot;bounceRate&quot;), 
+                                dimensions = c(&quot;source&quot;, &quot;medium&quot;, &quot;landingPagePath&quot;), 
+                                max=99999999, samplingLevel=&quot;WALK&quot;)
+
+## multi-channel funnels set type=&quot;mcf&quot;
+mcf_gadata &lt;- google_analytics(id = account_list$viewId[1], 
+                               start=&quot;2015-08-01&quot;, end=&quot;2015-08-02&quot;, 
+                               metrics = c(&quot;totalConversions&quot;), 
+                               dimensions = c(&quot;sourcePath&quot;), 
+                               type=&quot;mcf&quot;)
+
+## google_analytics dataframes include these meta data attributes:
+- attr(*, &quot;containsSampledData&quot;)= logi FALSE
+ - attr(*, &quot;samplePercent&quot;)= num 100
+ - attr(*, &quot;samplingLevel&quot;)= chr &quot;DEFAULT&quot;
+ - attr(*, &quot;profileInfo&quot;)=List of 6
+  ..$ profileId            : chr &quot;535656&quot;
+  ..$ accountId            : chr &quot;2748374&quot;
+  ..$ webPropertyId        : chr &quot;UA-278374-1&quot;
+  ..$ internalWebPropertyId: chr &quot;5279208&quot;
+  ..$ profileName          : chr &quot;XXXXX&quot;
+  ..$ tableId              : chr &quot;mcf:539656&quot;
+ - attr(*, &quot;dateRange&quot;)=List of 2
+  ..$ startDate: chr &quot;2015-08-01&quot;
+  ..$ endDate  : chr &quot;2015-08-02&quot;
+ - attr(*, &quot;totalResults&quot;)= int 4
+
+## reach meta-data via attr()
+attr(gadata, &quot;profileInfo&quot;)
+attr(gadata, &quot;dateRange&quot;)
+</code></pre>
+</div>
+<div id="other-details" class="section level2">
+<h2>Other details</h2>
+<p>For syntax of filters and dimensions, this library parses in exactly as specified in the <a href="https://developers.google.com/analytics/devguides/reporting/core/v3/reference?hl=en#filters">Google Analytics v3 API docs</a>, so check those out.</p>
+<p>Note you do not need to encode symbols, but may have to encode URLs if you are filtering for those in say ga:pagePath</p>
 </div>
 
 

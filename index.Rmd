@@ -1,0 +1,30 @@
+---
+title: "Introduction"
+---
+
+[![Travis-CI Build Status](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master)](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR)
+
+Welcome to the website for **googleAnalyticsR**, an R library for working with Google Analytics data.
+
+## Features
+
+* First Google Analytics Reporting v4 API library for R
+* v4 features include: dynamic calculated metrics, pivots, histograms, date comparisons, batching.
+* Shiny App compatible
+* Integration with BigQuery Google Analytics Premium/360 exports.
+* Single authentication flow can be used with other `googleAuthR` apps like [`searchConsoleR`](https://github.com/MarkEdmondson1234/searchConsoleR)
+* Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnnel
+* Support for `googleAuthR` batch, meaning 10 calls at once to GA - great for big fetches.  For big data calls this is implemented automatically so could be 10x quicker than normal GA fetching
+* Meta data included in attributes of returned dataframe including date ranges, totals, min and max
+
+## Thanks 
+
+These are all great libraries that also work with Google Analytics data in R, that I have taken inspiration from.
+
+* [rga](https://github.com/skardhamar/rga)
+* [RGA](https://bitbucket.org/unikum/rga)
+* [RGoogleAnalytics](https://github.com/Tatvic/RGoogleAnalytics)
+* [ganalytics](https://github.com/jdeboer/ganalytics)
+* [GAR](https://github.com/andrewgeisler/GAR)
+
+
