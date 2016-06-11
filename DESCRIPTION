@@ -23,7 +23,8 @@ Suggests:
     rmarkdown,
     testthat (>= 1.0.2),
     miniUI (>= 0.1.1),
-    shiny (>= 0.13.2)
+    shiny (>= 0.13.2),
+    bigQueryR
 License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr
