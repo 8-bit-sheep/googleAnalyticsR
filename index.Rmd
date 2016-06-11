@@ -1,10 +1,16 @@
 ---
-title: "Introduction"
+title: "Welcome to googleAnalyticsR"
 ---
 
 [![Travis-CI Build Status](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master)](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR)
 
 Welcome to the website for **googleAnalyticsR**, an R library for working with Google Analytics data.
+
+Follow development on the project's [Github development site.](https://github.com/MarkEdmondson1234/googleAnalyticsR)
+
+Any bugs or feature requests please [file an issue.](https://github.com/MarkEdmondson1234/googleAnalyticsR/issues)
+
+Collaboration is welcomed and encouraged, if you are interested get in touch.
 
 ## Features
 
@@ -12,9 +18,9 @@ Welcome to the website for **googleAnalyticsR**, an R library for working with G
 * v4 features include: dynamic calculated metrics, pivots, histograms, date comparisons, batching.
 * Shiny App compatible
 * Integration with BigQuery Google Analytics Premium/360 exports.
-* Single authentication flow can be used with other `googleAuthR` apps like [`searchConsoleR`](https://github.com/MarkEdmondson1234/searchConsoleR)
+* Single authentication flow can be used with other [`googleAuthR`](http://code.markedmondson.me/googleAuthR/) apps like [`searchConsoleR`](https://github.com/MarkEdmondson1234/searchConsoleR)
 * Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnnel
-* Support for `googleAuthR` batch, meaning 10 calls at once to GA - great for big fetches.  For big data calls this is implemented automatically so could be 10x quicker than normal GA fetching
+* Support for `googleAuthR` batch, meaning 10 calls at once to GA - great for big fetches.  For big data calls this could be 10x quicker than normal GA fetching
 * Meta data included in attributes of returned dataframe including date ranges, totals, min and max
 
 ## Thanks 

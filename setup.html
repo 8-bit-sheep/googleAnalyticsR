@@ -287,7 +287,7 @@ account_list &lt;- google_analytics_account_list()
 ## pick a profile with data to query
 ga_id &lt;- account_list[23,&#39;viewId&#39;]
 </code></pre>
-<p>Should you need to authenitcate under a new user, use <code>ga_auth(new_user=TRUE)</code></p>
+<p>Should you need to authenticate under a new user, use <code>ga_auth(new_user=TRUE)</code></p>
 <div id="multiple-api-authentication" class="section level3">
 <h3>Multiple API authentication</h3>
 <p>If you are using more than one API for authentication (such as Search Console), then authenticate using <code>googleAuthR::gar_auth()</code> instead.</p>
@@ -295,7 +295,7 @@ ga_id &lt;- account_list[23,&#39;viewId&#39;]
 </div>
 <div id="using-your-own-google-developer-project-api-key" class="section level2">
 <h2>Using your own Google Developer Project API Key</h2>
-<p>With the amount of API calls possible with this library via batching and walking, its more likely the shared Google API project will hit the 50,000 calls per day limit.</p>
+<p>With the amount of API calls possible with this library via batching and walking, its more likely the default shared Google API project will hit the 50,000 calls per day limit.</p>
 <p>To mitigate that, use your own Google Developer Console Project key, so it is not shared across all users of this library.</p>
 <div id="example-adding-your-own-google-developer-console-keys" class="section level3">
 <h3>Example adding your own Google Developer Console keys</h3>

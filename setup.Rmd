@@ -40,7 +40,7 @@ ga_id <- account_list[23,'viewId']
 
 ```
 
-Should you need to authenitcate under a new user, use `ga_auth(new_user=TRUE)`
+Should you need to authenticate under a new user, use `ga_auth(new_user=TRUE)`
 
 ### Multiple API authentication
 
@@ -48,8 +48,7 @@ If you are using more than one API for authentication (such as Search Console), 
 
 ## Using your own Google Developer Project API Key
 
-With the amount of API calls possible with this library via batching and walking, its more likely the shared
-Google API project will hit the 50,000 calls per day limit.
+With the amount of API calls possible with this library via batching and walking, its more likely the default shared Google API project will hit the 50,000 calls per day limit.
 
 To mitigate that, use your own Google Developer Console Project key, so it is not shared across all users of this library.
 

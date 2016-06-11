@@ -4,7 +4,9 @@ title: "Reporting API v4"
 
 ## v4 features
 
-The v4 API is where new features will appear in the future.  It currently has these extras implemented over the v3 API:
+The v4 API is where new features will appear in the future.  
+
+It currently has these extras implemented over the v3 API:
 
 * Cohorts
 * Multiple date ranges

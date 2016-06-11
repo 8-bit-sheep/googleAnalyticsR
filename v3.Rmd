@@ -4,9 +4,9 @@ title: "Reporting API v3"
 
 ## v3 features
 
-New API features will no longer occur for the v3 API, but it still carries a lot of useful capabilties, such as the multi-channel API.  
+New API features will no longer occur for the v3 API, but it still carries a lot of useful capabilties, such as the multi-channel API, and multi-account batching.  
 
-It is also currently the only API that has the WALK falg implemented, to avoid sampling via breaking up big data fetches into multiple batched calls.
+It is also currently the only API that has the WALK flag implemented, to avoid sampling via breaking up big data fetches into multiple batched calls.
 
 
 ## Google Anaytics V3 API examples
@@ -17,7 +17,6 @@ Examples for using the v3 of the API are shown below.
 library(googleAnalyticsR)
 
 ## Authenticate in Google OAuth2
-## this also sets options
 ga_auth()
 
 ## if you need to re-authenticate use ga_auth(new_user=TRUE)
@@ -43,6 +42,7 @@ gadata <- google_analytics(id = ga_id,
 
 ## multi accounts, pass character vector of viewIds
 ## outputs a list of data.frames, named after the viewId
+## This fetches 10 accounts per API call. 
 multi_gadata <- google_analytics(id = c("123456","9876545","765432"), 
                                  start="2015-08-01", end="2015-08-02", 
                                  metrics = c("sessions", "bounceRate"), 
@@ -97,4 +97,4 @@ attr(gadata, "dateRange")
 
 For syntax of filters and dimensions, this library parses in exactly as specified in the [Google Analytics v3 API docs](https://developers.google.com/analytics/devguides/reporting/core/v3/reference?hl=en#filters), so check those out.  
 
-Note you do not need to encode symbols, but may have to encode URLs if you are filtering for those in say ga:pagePath
+Note you do not need to encode symbols, but may have to encode URLs if you are filtering for those in say `ga:pagePath`

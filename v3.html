@@ -262,8 +262,8 @@ $(document).ready(function () {
 
 <div id="v3-features" class="section level2">
 <h2>v3 features</h2>
-<p>New API features will no longer occur for the v3 API, but it still carries a lot of useful capabilties, such as the multi-channel API.</p>
-<p>It is also currently the only API that has the WALK falg implemented, to avoid sampling via breaking up big data fetches into multiple batched calls.</p>
+<p>New API features will no longer occur for the v3 API, but it still carries a lot of useful capabilties, such as the multi-channel API, and multi-account batching.</p>
+<p>It is also currently the only API that has the WALK flag implemented, to avoid sampling via breaking up big data fetches into multiple batched calls.</p>
 </div>
 <div id="google-anaytics-v3-api-examples" class="section level2">
 <h2>Google Anaytics V3 API examples</h2>
@@ -271,7 +271,6 @@ $(document).ready(function () {
 <pre class="r"><code>library(googleAnalyticsR)
 
 ## Authenticate in Google OAuth2
-## this also sets options
 ga_auth()
 
 ## if you need to re-authenticate use ga_auth(new_user=TRUE)
@@ -297,6 +296,7 @@ gadata &lt;- google_analytics(id = ga_id,
 
 ## multi accounts, pass character vector of viewIds
 ## outputs a list of data.frames, named after the viewId
+## This fetches 10 accounts per API call. 
 multi_gadata &lt;- google_analytics(id = c(&quot;123456&quot;,&quot;9876545&quot;,&quot;765432&quot;), 
                                  start=&quot;2015-08-01&quot;, end=&quot;2015-08-02&quot;, 
                                  metrics = c(&quot;sessions&quot;, &quot;bounceRate&quot;), 
@@ -349,7 +349,7 @@ attr(gadata, &quot;dateRange&quot;)
 <div id="other-details" class="section level2">
 <h2>Other details</h2>
 <p>For syntax of filters and dimensions, this library parses in exactly as specified in the <a href="https://developers.google.com/analytics/devguides/reporting/core/v3/reference?hl=en#filters">Google Analytics v3 API docs</a>, so check those out.</p>
-<p>Note you do not need to encode symbols, but may have to encode URLs if you are filtering for those in say ga:pagePath</p>
+<p>Note you do not need to encode symbols, but may have to encode URLs if you are filtering for those in say <code>ga:pagePath</code></p>
 </div>
 
 
