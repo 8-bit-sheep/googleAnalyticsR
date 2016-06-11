@@ -94,11 +94,12 @@ just_query <- google_analytics_bq("project-id", "dataset-id-ga-viewid",
                                   dimensions = c("source","medium"),
                                   return_query_only = TRUE)
 just_query
-# [1] "SELECT trafficSource.source as source, trafficSource.medium as medium, COUNT(fullVisitorId) as users # FROM (TABLE_DATE_RANGE([dataset-id-ga-viewid.ga_sessions_], TIMESTAMP('2016-01-01'),
+# [1] "SELECT trafficSource.source as source, trafficSource.medium as medium, COUNT(fullVisitorId) as users 
+# FROM (TABLE_DATE_RANGE([dataset-id-ga-viewid.ga_sessions_], TIMESTAMP('2016-01-01'),
 # TIMESTAMP('2016-02-01'))) GROUP BY source, medium  LIMIT 100"
 ```
 
-You could then paste this query into BigQuery interface. 
+You could then paste this query into the BigQuery interface. 
 
 ## Implemented metrics and dimensions
 
