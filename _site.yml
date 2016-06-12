@@ -1,5 +1,9 @@
 name: "googleAnalyticsR - An R Google Analytics Library"
 output_dir: "."
+output:
+  html_document:
+    include: 
+      after_body: footer.html
 navbar:
   title: "googleAnalyticsR"
   left:
@@ -21,13 +25,3 @@ navbar:
     - text: "Shiny"
       icon: fa-cloud-upload
       href: shiny.html
-  right:
-    - icon: fa-github
-      href: https://github.com/MarkEdmondson1234/googleAnalyticsR
-    - icon: fa-twitter
-      href: http://twitter.com/HoloMarkeD
-    - icon: fa-linkedin
-      href: https://dk.linkedin.com/in/markpeteredmondson
-    - icon: fa-rss
-      text: Blog
-      href: http://code.markedmondson.me

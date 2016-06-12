@@ -221,6 +221,91 @@ $(document).ready(function () {
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Initial setup</h1>
+
+</div>
+
+
+<div id="install" class="section level2">
+<h2>Install</h2>
+<p>The latest stable version of googleAnalyticsR is available on CRAN. You also need the version &gt; <code>0.3.0</code> of <code>googleAuthR</code></p>
+<pre class="r"><code>install.packages(&quot;googleAuthR&quot;)
+install.packages(&quot;googleAnalyticsR&quot;)</code></pre>
+<div id="development-version-off-github" class="section level3">
+<h3>Development version off github</h3>
+<p>Or you can use the latest development version is on github which you can install via the below.</p>
+<p>Current CRAN check status: <a href="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR"><img src="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master" alt="Travis-CI Build Status" /></a></p>
+<pre class="r"><code>devtools::install_github(&quot;MarkEdmondson1234/googleAnalyticsR&quot;)</code></pre>
+<p>Check out the <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md">NEWS</a> to see whats currently available in each version.</p>
+</div>
+</div>
+<div id="authentication" class="section level2">
+<h2>Authentication</h2>
+<pre class="r"><code>## setup
+library(googleAnalyticsR)
+
+## This should send you to your browser to authenticate your email.
+## Authenticate with an email that has access to the Google Analytics View you want to use.
+ga_auth()
+
+## get your accounts
+account_list &lt;- google_analytics_account_list()
+
+## pick a profile with data to query
+ga_id &lt;- account_list[23,&#39;viewId&#39;]
+</code></pre>
+<p>Should you need to authenticate under a new user, use <code>ga_auth(new_user=TRUE)</code></p>
+</div>
+<div id="meta-data" class="section level2">
+<h2>Meta data</h2>
+<p>To see what dimensions and metrics are available via the API, you can use this command:</p>
+<pre class="r"><code>## get a list of what metrics and dimensions you can use
+ga_auth()
+meta &lt;- google_analytics_meta()</code></pre>
+<div class="figure">
+<img src="meta_data_screenshot.png" />
+
+</div>
+<p>If offline, from <code>v0.2.0</code> this data is also available offline by typing <code>meta</code>, although it won’t be quite as up to date.</p>
+<p>The meta data does not include multi-channel as they are not available to download, for those <a href="https://developers.google.com/analytics/devguides/reporting/mcf/dimsmets/">see the online version</a>.</p>
+<p>When using the library, you can call metrics and dimensions with or without the <code>ga:</code> prefix (<code>mcf:</code> for multi-channel metrics/dimensions.)</p>
+<div id="multiple-api-authentication" class="section level3">
+<h3>Multiple API authentication</h3>
+<p>If you are using more than one API for authentication (such as Search Console), then authenticate using <code>googleAuthR::gar_auth()</code> instead, to ensure you are authenticate with the correct scopes.</p>
+</div>
+</div>
+<div id="using-your-own-google-developer-project-api-key" class="section level2">
+<h2>Using your own Google Developer Project API Key</h2>
+<p>With the amount of API calls possible with this library via batching and walking, its more likely the default shared Google API project will hit the 50,000 calls per day limit.</p>
+<p>To mitigate that, use your own Google Developer Console Project key, so it is not shared across all users of this library.</p>
+<div id="example-adding-your-own-google-developer-console-keys" class="section level3">
+<h3>Example adding your own Google Developer Console keys</h3>
+<p>Set the options before any call to <code>ga_auth()</code> or other data fetching calls.</p>
+<pre class="r"><code>options(googleAuthR.client_id = &quot;uxxxxxxx2fd4kesu6.apps.googleusercontent.com&quot;)
+options(googleAuthR.client_secret = &quot;3JhLa_GxxxxxCQYLe31c64&quot;)
+options(googleAuthR.scopes.selected = &quot;https://www.googleapis.com/auth/analytics&quot;)</code></pre>
+<p>In the next example, the scopes are also set so a user can authenticate with <code>searchConsoleR</code> at the same time, which is possible as they both use <a href="http://code.markedmondson.me/googleAuthR/">googleAuthR</a> as a backend.</p>
+<pre class="r"><code>options(googleAuthR.client_id = &quot;tuxxxxxxx2fd4kesu6.apps.googleusercontent.com&quot;)
+options(googleAuthR.client_secret = &quot;3JhLa_GxxxxxCQYLe31c64&quot;)
+options(googleAuthR.scopes.selected = c(&quot;https://www.googleapis.com/auth/analytics&quot;,
+                                        &quot;https://www.googleapis.com/auth/webmasters&quot;))</code></pre>
+<p>If you want to use with Shiny, then also set the webapp clientId/secrets.</p>
+<pre class="r"><code>options(googleAnalyticsR.webapp.client_id = &quot;xxxxx9pcab1u005cv.apps.googleusercontent.com&quot;)
+options(googleAnalyticsR.webapp.client_secret = &quot;zcofxxxxxxElemXN5sf&quot;)</code></pre>
+</div>
+</div>
+
+<ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR">
     <span class="fa fa-github"></span>
@@ -247,86 +332,16 @@ $(document).ready(function () {
   </a>
 </li>
       </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
-
-
-
-<h1 class="title toc-ignore">Initial setup</h1>
-
-</div>
-
-
-<div id="install" class="section level2">
-<h2>Install</h2>
-<p>The latest stable version of googleAnalyticsR is available on CRAN. You also need the version &gt; <code>0.3.0</code> of <code>googleAuthR</code></p>
-<pre class="r"><code>install.packages(&quot;googleAuthR&quot;)
-install.packages(&quot;googleAnalyticsR&quot;)</code></pre>
-<div id="development-version-off-github" class="section level3">
-<h3>Development version off github</h3>
-<p>Or you can use the latest development version is on github which you can install via the below.</p>
-<pre class="r"><code>devtools::install_github(&quot;MarkEdmondson1234/googleAnalyticsR&quot;)</code></pre>
-<p>Check out the <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md">NEWS</a> to see whats currently available in each version.</p>
-</div>
-</div>
-<div id="authentication" class="section level2">
-<h2>Authentication</h2>
-<pre class="r"><code>## setup
-library(googleAnalyticsR)
-
-## This should send you to your browser to authenticate your email.
-## Authenticate with an email that has access to the Google Analytics View you want to use.
-ga_auth()
-
-## get your accounts
-account_list &lt;- google_analytics_account_list()
-
-## pick a profile with data to query
-ga_id &lt;- account_list[23,&#39;viewId&#39;]
-</code></pre>
-<p>Should you need to authenticate under a new user, use <code>ga_auth(new_user=TRUE)</code></p>
-</div>
-<div id="meta-data" class="section level2">
-<h2>Meta data</h2>
-<p>You can see what dimensions and metrics are available via the API, you can use this command:</p>
-<pre class="r"><code>## get a list of what metrics and dimensions you can use
-ga_auth()
-meta &lt;- google_analytics_meta()</code></pre>
-<div class="figure">
-<img src="meta_data_screenshot.png" />
-
-</div>
-<p>If offline, from <code>v0.2.0</code> this data is also available offline by typing <code>meta</code>. It does not include the multi-channel metrics as they are not available in the API.</p>
-<p>In API calls, you can call metrics and dimensions with or without the <code>ga:</code> prefix (<code>mcf:</code> for multi-channel metrics/dimensions.)</p>
-<div id="multiple-api-authentication" class="section level3">
-<h3>Multiple API authentication</h3>
-<p>If you are using more than one API for authentication (such as Search Console), then authenticate using <code>googleAuthR::gar_auth()</code> instead.</p>
-</div>
-</div>
-<div id="using-your-own-google-developer-project-api-key" class="section level2">
-<h2>Using your own Google Developer Project API Key</h2>
-<p>With the amount of API calls possible with this library via batching and walking, its more likely the default shared Google API project will hit the 50,000 calls per day limit.</p>
-<p>To mitigate that, use your own Google Developer Console Project key, so it is not shared across all users of this library.</p>
-<div id="example-adding-your-own-google-developer-console-keys" class="section level3">
-<h3>Example adding your own Google Developer Console keys</h3>
-<p>Below a new client Id is set for both offline and Shiny use. Set the options before any call to <code>ga_auth()</code> or other data fetching calls.</p>
-<pre class="r"><code>options(googleAuthR.client_id = &quot;uxxxxxxx2fd4kesu6.apps.googleusercontent.com&quot;)
-options(googleAuthR.client_secret = &quot;3JhLa_GxxxxxCQYLe31c64&quot;)
-options(googleAuthR.scopes.selected = &quot;https://www.googleapis.com/auth/analytics&quot;)</code></pre>
-<p>In this example, the scopes are also set so a user can authenticate with searchConsoleR at the same time, which is possible as they both use <a href="http://code.markedmondson.me/googleAuthR/">googleAuthR</a> as a backend.</p>
-<pre class="r"><code>options(googleAuthR.client_id = &quot;tuxxxxxxx2fd4kesu6.apps.googleusercontent.com&quot;)
-options(googleAuthR.client_secret = &quot;3JhLa_GxxxxxCQYLe31c64&quot;)
-options(googleAuthR.scopes.selected = c(&quot;https://www.googleapis.com/auth/analytics&quot;,
-                                        &quot;https://www.googleapis.com/auth/webmasters&quot;))</code></pre>
-<p>If you want to use with Shiny, then also set the webapp clientId/secrets.</p>
-<pre class="r"><code>options(googleAnalyticsR.webapp.client_id = &quot;xxxxx9pcab1u005cv.apps.googleusercontent.com&quot;)
-options(googleAnalyticsR.webapp.client_secret = &quot;zcofxxxxxxElemXN5sf&quot;)</code></pre>
-</div>
-</div>
-
+<p>Copyright (c) 2016 Sunholo Ltd.  Released under <a href="https://opensource.org/licenses/MIT">MIT LICENSE.</a></p>
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-WFFMBH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WFFMBH');</script>
+<!-- End Google Tag Manager -->
 
 
 

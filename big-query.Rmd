@@ -99,7 +99,7 @@ just_query
 # TIMESTAMP('2016-02-01'))) GROUP BY source, medium  LIMIT 100"
 ```
 
-You could then paste this query into the BigQuery interface. 
+You could then paste this query into the BigQuery interface, or modify it and send it back in via `google_analytics_q`.
 
 ## Implemented metrics and dimensions
 
