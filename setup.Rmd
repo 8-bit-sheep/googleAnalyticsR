@@ -16,6 +16,8 @@ install.packages("googleAnalyticsR")
 
 Or you can use the latest development version is on github which you can install via the below.
 
+Current CRAN check status: [![Travis-CI Build Status](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master)](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR)
+
 ```r
 devtools::install_github("MarkEdmondson1234/googleAnalyticsR")
 ```
@@ -44,7 +46,7 @@ Should you need to authenticate under a new user, use `ga_auth(new_user=TRUE)`
 
 ## Meta data
 
-You can see what dimensions and metrics are available via the API, you can use this command:
+To see what dimensions and metrics are available via the API, you can use this command:
 
 ```r
 ## get a list of what metrics and dimensions you can use
@@ -54,13 +56,15 @@ meta <- google_analytics_meta()
 
 ![](meta_data_screenshot.png)
 
-If offline, from `v0.2.0` this data is also available offline by typing `meta`.  It does not include the multi-channel metrics as they are not available in the API. 
+If offline, from `v0.2.0` this data is also available offline by typing `meta`, although it won't be quite as up to date.  
 
-In API calls, you can call metrics and dimensions with or without the `ga:` prefix (`mcf:` for multi-channel metrics/dimensions.)
+The meta data does not include multi-channel as they are not available to download, for those [see the online version](https://developers.google.com/analytics/devguides/reporting/mcf/dimsmets/).
+
+When using the library, you can call metrics and dimensions with or without the `ga:` prefix (`mcf:` for multi-channel metrics/dimensions.)
 
 ### Multiple API authentication
 
-If you are using more than one API for authentication (such as Search Console), then authenticate using `googleAuthR::gar_auth()` instead.
+If you are using more than one API for authentication (such as Search Console), then authenticate using `googleAuthR::gar_auth()` instead, to ensure you are authenticate with the correct scopes. 
 
 ## Using your own Google Developer Project API Key
 
@@ -70,8 +74,7 @@ To mitigate that, use your own Google Developer Console Project key, so it is no
 
 ### Example adding your own Google Developer Console keys
 
-Below a new client Id is set for both offline and Shiny use.  Set the options before any call to `ga_auth()` or other data fetching calls.
-
+Set the options before any call to `ga_auth()` or other data fetching calls.
 
 ```r
 options(googleAuthR.client_id = "uxxxxxxx2fd4kesu6.apps.googleusercontent.com")
@@ -79,7 +82,7 @@ options(googleAuthR.client_secret = "3JhLa_GxxxxxCQYLe31c64")
 options(googleAuthR.scopes.selected = "https://www.googleapis.com/auth/analytics")
 ```
 
-In this example, the scopes are also set so a user can authenticate with searchConsoleR at the same time, which is possible as they both use [googleAuthR](http://code.markedmondson.me/googleAuthR/) as a backend.
+In the next example, the scopes are also set so a user can authenticate with `searchConsoleR` at the same time, which is possible as they both use [googleAuthR](http://code.markedmondson.me/googleAuthR/) as a backend.
 
 ```r
 options(googleAuthR.client_id = "tuxxxxxxx2fd4kesu6.apps.googleusercontent.com")
