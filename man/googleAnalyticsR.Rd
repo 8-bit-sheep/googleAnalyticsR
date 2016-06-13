@@ -6,6 +6,23 @@
 \alias{googleAnalyticsR-package}
 \title{Library for getting Google Analytics data into R}
 \description{
-https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/reports/batchGet
+Follow the online documentation here: \url{http://code.markedmondson.me/googleAnalyticsR/}
+}
+\details{
+\itemize{
+  \item First Google Analytics Reporting v4 API library for R
+  \item v4 features include: dynamic calculated metrics, pivots, 
+    histograms, date comparisons, batching
+  \item Multi-user login in Shiny App
+  \item Integration with BigQuery Google Analytics Premium/360 exports
+  \item Single authentication flow with other 'googleAuthR' apps
+  \item Automatic batching
+  \item sampling avoidance with daily walk
+  \item multi-account fetching
+  \item multi-channel funnnels
+  \item Support for batch. For big data calls this could 
+    be 10x quicker than normal GA fetching
+  \item Meta data included in attributes of returned dataframe
+ }
 }
 

@@ -1,9 +1,35 @@
 #' Create a GAv4 Segment Builder
 #' 
+#' Shiny Module for use with \link{segmentBuilder}
+#' 
 #' @param id Shiny id
 #' 
-#' For use with \link{segmentBuilder}
+#' @return Shiny UI for use in app
 #' 
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' library(shiny)
+#' library(googleAnalyticsR)
+#' 
+#' ui <- shinyUI(fluidPage(
+#'                segmentBuilderUI("test1")
+#'                ))
+#'                
+#'                
+#' server <- shinyServer(function(input, output, session) {
+#' 
+#' segment <- callModule(segmentBuilder, "test1")
+#' 
+#'   .. use segment() in further gav4 calls.
+#'   
+#' })
+#' 
+#' 
+#' # Run the application 
+#' shinyApp(ui = ui, server = server)
+#' }
 #' @export
 segmentBuilderUI <- function(id){
   
@@ -20,11 +46,42 @@ segmentBuilderUI <- function(id){
 
 #' Create a GAv4 Segment Builder
 #' 
+#' Shiny Module for use with \link{segmentBuilderUI}
+#' 
 #' @param input shiny input
 #' @param output shiny output
 #' @param session shiny session
 #' 
-#' For use with \link{segmentBuilderUI}
+#' @details 
+#'
+#' Call via \code{shiny::callModule(segmentBuilder, "your_id")}
+#' 
+#' @return A segment definition
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' library(shiny)
+#' library(googleAnalyticsR)
+#' 
+#' ui <- shinyUI(fluidPage(
+#'                segmentBuilderUI("test1")
+#'                ))
+#'                
+#'                
+#' server <- shinyServer(function(input, output, session) {
+#' 
+#' segment <- callModule(segmentBuilder, "test1")
+#' 
+#'   .. use segment() in further gav4 calls.
+#'   
+#' })
+#' 
+#' 
+#' # Run the application 
+#' shinyApp(ui = ui, server = server)
+#' }
 #' 
 #' @export
 segmentBuilder <- function(input, output, session){
@@ -135,6 +192,7 @@ segment_element_ui <- function(id, seq, segment_type=NULL){
 #' @param id Shiny id
 #'
 #' @return Shiny UI
+#' @keywords internal
 segmentChainUI <- function(id){
 
   ns <- shiny::NS(id)
@@ -166,6 +224,7 @@ segmentChainUI <- function(id){
 #' @param element_inputs from \link{segmentElementUI}
 #'
 #' @return Something
+#' @keywords internal
 segmentChain <- function(input, output, session,
                          element_inputs){
 
@@ -417,8 +476,9 @@ segment_vector_calls <- function(sv){
 
 #' A GAv4 segment element row
 #' 
-#' @param shiny id
+#' @param id shiny id
 #' 
+#' @keywords internal
 segmentElementUI <- function(id){
   
   ns <- shiny::NS(id)
@@ -527,6 +587,7 @@ segmentElement <- function(input, output, session){
     )
     
     type <- input$type
+    meta <- googleAnalyticsR::meta
     meta_ex <- meta[grepl("XX",meta$name),]
     
     ## turn metrics like goalXXCompletions into goal1Completions, goal2Completions, etc. 

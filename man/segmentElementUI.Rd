@@ -6,7 +6,11 @@
 \usage{
 segmentElementUI(id)
 }
+\arguments{
+\item{id}{shiny id}
+}
 \description{
 A GAv4 segment element row
 }
+\keyword{internal}
 

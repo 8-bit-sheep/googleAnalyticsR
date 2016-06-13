@@ -6,7 +6,46 @@
 \usage{
 segmentBuilder(input, output, session)
 }
+\arguments{
+\item{input}{shiny input}
+
+\item{output}{shiny output}
+
+\item{session}{shiny session}
+}
+\value{
+A segment definition
+}
 \description{
-For use with \link{segmentBuilderUI}
+Shiny Module for use with \link{segmentBuilderUI}
+}
+\details{
+Call via \code{shiny::callModule(segmentBuilder, "your_id")}
+}
+\examples{
+
+\dontrun{
+
+library(shiny)
+library(googleAnalyticsR)
+
+ui <- shinyUI(fluidPage(
+               segmentBuilderUI("test1")
+               ))
+               
+               
+server <- shinyServer(function(input, output, session) {
+
+segment <- callModule(segmentBuilder, "test1")
+
+  .. use segment() in further gav4 calls.
+  
+})
+
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+}
+
 }
 

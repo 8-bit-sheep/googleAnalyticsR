@@ -6,7 +6,38 @@
 \usage{
 segmentBuilderUI(id)
 }
+\arguments{
+\item{id}{Shiny id}
+}
+\value{
+Shiny UI for use in app
+}
 \description{
-For use with \link{segmentBuilder}
+Shiny Module for use with \link{segmentBuilder}
+}
+\examples{
+
+\dontrun{
+
+library(shiny)
+library(googleAnalyticsR)
+
+ui <- shinyUI(fluidPage(
+               segmentBuilderUI("test1")
+               ))
+               
+               
+server <- shinyServer(function(input, output, session) {
+
+segment <- callModule(segmentBuilder, "test1")
+
+  .. use segment() in further gav4 calls.
+  
+})
+
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+}
 }
 
