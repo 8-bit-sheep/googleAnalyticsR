@@ -1,5 +1,6 @@
 # googleAnalyticsR
 [![Travis-CI Build Status](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master)](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR)
+![CRAN](http://www.r-pkg.org/badges/version/googleAnalyticsR)
 
 Get more examples and tutorials at the [googleAnalyticsR website](http://code.markedmondson.me/googleAnalyticsR)
 
