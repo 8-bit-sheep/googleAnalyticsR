@@ -14,11 +14,23 @@ This is under active development, and features will expand in the future. Eventu
 
 ## Setup
 
-To use, you need to also install the [`bigQueryR`](https://github.com/MarkEdmondson1234/bigQueryR) library and authenticate to BigQuery:
+To use, you need to also install the [`bigQueryR`](http://code.markedmondson.me/bigQueryR/) library.
+
+Stable version is on CRAN:
+
+```r
+install.packages("bigQueryR")
+```
+
+Development version on devtools:
 
 ```r
 devtools::install_github("MarkEdmondson1234/bigQueryR")
-library(googleAnalyticsR)
+```
+
+Once installed, authenticate to BigQuery:
+
+```r
 library(bigQueryR)
 
 ## go through Google oAuth2 flow
@@ -28,12 +40,28 @@ bqr_auth()
 ## get lists of your project and datasets
 bqr_list_projects()
 bqr_list_datasets("project-id")
-
 ```
 
-For BigQuery Google Analytics 360 exports, the dataset is the same as the GA View ID you are exporting.
+If you want to authenticate with Google Analytics and BigQuery in the same session (or others) then its best to authenticate with `googleAuthR::gar_auth()` with the appropriate scopes set.  The below lets you authenticate with Google Analytics, Google Cloud Storage and BigQuery:
+
+```r
+options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
+                                        "https://www.googleapis.com/auth/cloud-platform",
+                                        "https://www.googleapis.com/auth/bigquery"))
+googleAuthR::gar_auth()
+```
+
+You may also want to use a JSON file to authenticate with BigQuery.  Make sure to add the service email to the users of the Google project, and then download the JSON file and authenitcate via:
+
+```r
+googleAuthR::gar_auth_service("gwt-download-XXXX.json")
+```
+
+See [`googleAuthR` help](https://github.com/MarkEdmondson1234/googleAuthR) for more details. 
 
 ## Exporting data
+
+For BigQuery Google Analytics 360 exports, the dataset is the same as the GA View ID you are exporting.
 
 You can then export BigQuery data via:
 
