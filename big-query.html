@@ -245,10 +245,13 @@ $(document).ready(function () {
 </div>
 <div id="setup" class="section level2">
 <h2>Setup</h2>
-<p>To use, you need to also install the <a href="https://github.com/MarkEdmondson1234/bigQueryR"><code>bigQueryR</code></a> library and authenticate to BigQuery:</p>
-<pre class="r"><code>devtools::install_github(&quot;MarkEdmondson1234/bigQueryR&quot;)
-library(googleAnalyticsR)
-library(bigQueryR)
+<p>To use, you need to also install the <a href="http://code.markedmondson.me/bigQueryR/"><code>bigQueryR</code></a> library.</p>
+<p>Stable version is on CRAN:</p>
+<pre class="r"><code>install.packages(&quot;bigQueryR&quot;)</code></pre>
+<p>Development version on devtools:</p>
+<pre class="r"><code>devtools::install_github(&quot;MarkEdmondson1234/bigQueryR&quot;)</code></pre>
+<p>Once installed, authenticate to BigQuery:</p>
+<pre class="r"><code>library(bigQueryR)
 
 ## go through Google oAuth2 flow
 ## needs email that has access to the BigQuery dataset
@@ -256,12 +259,19 @@ bqr_auth()
 
 ## get lists of your project and datasets
 bqr_list_projects()
-bqr_list_datasets(&quot;project-id&quot;)
-</code></pre>
-<p>For BigQuery Google Analytics 360 exports, the dataset is the same as the GA View ID you are exporting.</p>
+bqr_list_datasets(&quot;project-id&quot;)</code></pre>
+<p>If you want to authenticate with Google Analytics and BigQuery in the same session (or others) then its best to authenticate with <code>googleAuthR::gar_auth()</code> with the appropriate scopes set. The below lets you authenticate with Google Analytics, Google Cloud Storage and BigQuery:</p>
+<pre class="r"><code>options(googleAuthR.scopes.selected = c(&quot;https://www.googleapis.com/auth/analytics&quot;,
+                                        &quot;https://www.googleapis.com/auth/cloud-platform&quot;,
+                                        &quot;https://www.googleapis.com/auth/bigquery&quot;))
+googleAuthR::gar_auth()</code></pre>
+<p>You may also want to use a JSON file to authenticate with BigQuery. Make sure to add the service email to the users of the Google project, and then download the JSON file and authenitcate via:</p>
+<pre class="r"><code>googleAuthR::gar_auth_service(&quot;gwt-download-XXXX.json&quot;)</code></pre>
+<p>See <a href="https://github.com/MarkEdmondson1234/googleAuthR"><code>googleAuthR</code> help</a> for more details.</p>
 </div>
 <div id="exporting-data" class="section level2">
 <h2>Exporting data</h2>
+<p>For BigQuery Google Analytics 360 exports, the dataset is the same as the GA View ID you are exporting.</p>
 <p>You can then export BigQuery data via:</p>
 <pre class="r"><code>bq &lt;- google_analytics_bq(&quot;project-id&quot;, &quot;dataset-id-ga-viewid&quot;, 
                            start = &quot;2016-01-01&quot;, end = &quot;2016-02-01&quot;, 
@@ -309,7 +319,7 @@ just_query
 # [1] &quot;SELECT trafficSource.source as source, trafficSource.medium as medium, COUNT(fullVisitorId) as users 
 # FROM (TABLE_DATE_RANGE([dataset-id-ga-viewid.ga_sessions_], TIMESTAMP(&#39;2016-01-01&#39;),
 # TIMESTAMP(&#39;2016-02-01&#39;))) GROUP BY source, medium  LIMIT 100&quot;</code></pre>
-<p>You could then paste this query into the BigQuery interface.</p>
+<p>You could then paste this query into the BigQuery interface, or modify it and send it back in via <code>google_analytics_q</code>.</p>
 </div>
 <div id="implemented-metrics-and-dimensions" class="section level2">
 <h2>Implemented metrics and dimensions</h2>
@@ -402,7 +412,7 @@ lookup_bq_query_d &lt;- c(referralPath = &quot;trafficSource.referralPath as ref
 </li>
       </ul>
 
-<p>Copyright (c) 2016 Sunholo Ltd.  Released under <a href="https://opensource.org/licenses/MIT">MIT LICENSE.</a></p>
+<p>Copyright (c) 2016 Sunholo Ltd.  Released under <a target="_blank" href="https://opensource.org/licenses/MIT">MIT license.</a></p>
 <!-- Google Tag Manager -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-WFFMBH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
