@@ -7,7 +7,7 @@
 #' 
 #' Requires installation of bigQueryR and authentication under ga_bq_auth() 
 #' or googleAuthR::gar_auth() with BigQuery scope set.
-#' View your projectIds upon authentication via \code{\link[bigQueryR]{bqe_list_projects}}
+#' View your projectIds upon authentication via \code{\link[bigQueryR]{bqr_list_projects}}
 #' 
 #' No segments for now.  
 #' 

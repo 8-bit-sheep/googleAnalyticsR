@@ -1,5 +1,7 @@
 #' Create a GAv4 Segment Builder
 #' 
+#' @param id Shiny id
+#' 
 #' For use with \link{segmentBuilder}
 #' 
 #' @export
@@ -17,6 +19,10 @@ segmentBuilderUI <- function(id){
 }
 
 #' Create a GAv4 Segment Builder
+#' 
+#' @param input shiny input
+#' @param output shiny output
+#' @param session shiny session
 #' 
 #' For use with \link{segmentBuilderUI}
 #' 
@@ -411,6 +417,7 @@ segment_vector_calls <- function(sv){
 
 #' A GAv4 segment element row
 #' 
+#' @param shiny id
 #' 
 segmentElementUI <- function(id){
   
