@@ -5,6 +5,8 @@ title: "Initial setup"
 ## Install
 
 The latest stable version of googleAnalyticsR is available on CRAN.
+![CRAN](http://www.r-pkg.org/badges/version/googleAnalyticsR)
+
 You also need the version > `0.3.0` of `googleAuthR`
 
 ```r
