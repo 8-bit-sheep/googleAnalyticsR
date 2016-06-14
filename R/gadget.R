@@ -1,4 +1,4 @@
-gadget_GASegment <- function(inputValue1, inputValue2) {
+gadget_GASegment <- function() {
   
   ui <- miniUI::miniPage(
     miniUI::gadgetTitleBar("Google Analytics v4 Segment Builder"),
