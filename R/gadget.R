@@ -15,11 +15,12 @@ gadget_GASegment <- function() {
     shiny::observeEvent(input$done, {
       
       segment <- segmentR()
+      output_var <- input$output_var
       
       ## hack around 'assignments to global environment'
       eee <- globalenv()
       ## globalenv()[[input$output_var]] doesn't work(?)
-      eee[[input$output_var]] <- segment
+      eee[[output_var]] <- segment
       
       message("Segment saved to variable: ", output_var)
       
