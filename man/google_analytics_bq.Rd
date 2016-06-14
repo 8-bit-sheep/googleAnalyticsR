@@ -51,6 +51,9 @@ Goals are not specified in BQ exports, so you need to look at how you define the
 e.g. unique pageviews or unique events.
 
 Custom dimensions can be specified as sesion or hit level, so ignoring the setting in GA interface.
+
+You can get a sample Google Analytics dataset in bigquery by following the instructions
+  here: \url{https://support.google.com/analytics/answer/3416091?hl=en}
 }
 \seealso{
 \url{https://support.google.com/analytics/answer/4419694?hl=en}

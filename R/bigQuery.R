@@ -16,7 +16,8 @@
 #' 
 #' Custom dimensions can be specified as sesion or hit level, so ignoring the setting in GA interface. 
 #' 
-#' 
+#' You can get a sample Google Analytics dataset in bigquery by following the instructions
+#'   here: \url{https://support.google.com/analytics/answer/3416091?hl=en}
 #' 
 #' 
 #' @param projectId The Google project Id where the BigQuery exports sit.
