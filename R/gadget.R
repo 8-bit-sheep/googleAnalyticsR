@@ -16,8 +16,12 @@ gadget_GASegment <- function() {
       
       segment <- segmentR()
       
-      output_var <- input$output_var
-      assign(output_var, segment, envir = .GlobalEnv)
+      ## hack around 'no visible binding for global variable'
+      output_var <- NULL
+      ## hack around 'assignments to global environment'
+      eee <- globalenv()
+      eee[[output_var]] <- input$output_var
+      
       message("Segment saved to variable: ", output_var)
       
       shiny::stopApp()
