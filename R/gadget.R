@@ -16,12 +16,10 @@ gadget_GASegment <- function() {
       
       segment <- segmentR()
       
-      ## hack around 'no visible binding for global variable'
-      output_var <- NULL
-      output_var <- input$output_var
       ## hack around 'assignments to global environment'
       eee <- globalenv()
-      eee[[output_var]] <- segment
+      ## globalenv()[[input$output_var]] doesn't work(?)
+      eee[[input$output_var]] <- segment
       
       message("Segment saved to variable: ", output_var)
       
