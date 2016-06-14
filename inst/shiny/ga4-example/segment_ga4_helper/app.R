@@ -10,8 +10,7 @@ ui <- shinyUI(fluidPage(
 
 server <- shinyServer(function(input, output, session) {
    
-  segment <- callModule(segmentBuilder, "test1")
-  str(segment)
+  callModule(segmentBuilder, "test1")
   
 })
 
