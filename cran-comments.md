@@ -5,21 +5,15 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 2 note
+0 errors | 0 warnings | 1 note
 
-## 2 Notes
+## 1 Note
 
 * Possibly mis-spelled words in DESCRIPTION:
   API (4:25, 6:13)
   Analytics (4:15, 5:56)
   
 These words are spelt correctly.
-
-* Found the following assignments to the global environment:
-File ‘googleAnalyticsR/R/gadget.R’:
-  assign(output_var, segment, envir = .GlobalEnv)
-
-This is a RStudio Addin that creates an assignment only with user consent.
 
 ---
 
