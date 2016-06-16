@@ -1,6 +1,6 @@
 Package: googleAnalyticsR
 Type: Package
-Version: 0.2.0.9000
+Version: 0.2.1
 Title: Google Analytics API into R
 Description: R library for interacting with the Google Analytics 
   Reporting API v3 and v4.
