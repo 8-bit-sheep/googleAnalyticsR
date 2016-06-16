@@ -47,7 +47,7 @@ google_analytics_4_parse <- function(x){
   # met_types <- unlist(lapply(columnHeader$metricHeader$metricHeaderEntries, function(x) x$type))
   
   if(is.null(data)){
-    message("No data found")
+    # message("No data found")
     return(NULL)
   }
   

@@ -117,7 +117,7 @@ make_ga_4_req <- function(viewId,
                           metricFormat=NULL,
                           histogramBuckets=NULL) {
 
-  message("Fetching: ", viewId, " pageToken: ", pageToken, " pageSize: ", pageSize)
+  # message("Fetching: ", viewId, " pageToken: ", pageToken, " pageSize: ", pageSize)
   samplingLevel <- match.arg(samplingLevel)
   
   if(all(is.null(date_range), is.null(cohorts))){
@@ -252,43 +252,65 @@ google_analytics_4 <- function(viewId,
     
     message("V4 Batching data into [", batches, "] calls.")
 
+    # message(paste(meta_batch_start_index, collapse = " "))
     ## loop for each over 50000
+    
+    do_it <- TRUE
     requests <- lapply(meta_batch_start_index, function(meta){
       
       ## to fix (#19) - silly bug were index of 10000 turned into 1e5 passed in as 1(!)
       meta <- as.integer(meta)
       
-      message("Outer batch loop: ", meta)
+      # message("Outer batch loop: ", meta)
       batch_start_index <- seq(from=meta, to=min(meta+((batchLimit-1)*10000),max), 10000)
+
+      # message(paste(batch_start_index, collapse = " "))
       
       ## loop for each 10000 fetch
       requests_in <- lapply(batch_start_index, function(x){
-        message("Inner batch loop: ", x)
-        make_ga_4_req(viewId=viewId,
-                      date_range=date_range,
-                      metrics=metrics,
-                      dimensions=dimensions,
-                      dim_filters=dim_filters,
-                      met_filters=met_filters,
-                      filtersExpression = filtersExpression,
-                      order=order,
-                      segments=segments,
-                      pivots=pivots,
-                      cohorts=cohorts,
-                      pageToken = x,
-                      pageSize = 10000,
-                      samplingLevel=samplingLevel,
-                      metricFormat=metricFormat,
-                      histogramBuckets=histogramBuckets)
+        
+        if(do_it){
+          # message("Inner batch loop: ", x)
+          ## to fix (#19) - silly bug were index of 10000 turned into 1e5 passed in as 1(!)
+          x <- as.integer(x)
+          out <- make_ga_4_req(viewId=viewId,
+                               date_range=date_range,
+                               metrics=metrics,
+                               dimensions=dimensions,
+                               dim_filters=dim_filters,
+                               met_filters=met_filters,
+                               filtersExpression = filtersExpression,
+                               order=order,
+                               segments=segments,
+                               pivots=pivots,
+                               cohorts=cohorts,
+                               pageToken = x,
+                               pageSize = 10000,
+                               samplingLevel=samplingLevel,
+                               metricFormat=metricFormat,
+                               histogramBuckets=histogramBuckets)
+          
+        } else {
+          out <- NULL
+        }
 
+        out
         
       })
       
-      ## a list of gav4 results
-      inner_reqs <- fetch_google_analytics_4(requests_in)
-      
-      ## make it one dataframe
-      if(inherits(inner_reqs, "list")){
+      if(all(vapply(requests_in, is.null, logical(1)))){
+        inner_reqs <- NULL
+      } else {
+        ## a list of gav4 results
+        inner_reqs <- fetch_google_analytics_4(requests_in)
+      }
+
+      ## is all empty stop
+      if(all(vapply(inner_reqs, is.null, logical(1)))){
+        do_it <<- FALSE
+        out <- NULL
+      } else if(inherits(inner_reqs, "list")){
+        ## make it one dataframe
         out <- Reduce(rbind, inner_reqs)
       } else if(inherits(inner_reqs, "data.frame")){
         out <- inner_reqs
