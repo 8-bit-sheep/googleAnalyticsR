@@ -749,3 +749,119 @@ segmentElement <- function(input, output, session){
   ))
 
 }
+
+
+#' authDropdown UI
+#'
+#' Shiny Module for use with \link{authDropdown}
+#' 
+#' @param id Shiny id
+#'
+#' @return Shiny UI
+authDropdownUI <- function(id){
+  
+  ns <- shiny::NS(id)
+  
+  tagList(
+    fluidRow(
+      box(
+        selectInput(ns("accounts"),
+                    label="Accounts",
+                    choices = NULL)
+        , width = 4, title="Select Account", status="success", solidHeader=TRUE),
+      box(
+        selectInput(ns("web.prop"),
+                    label="WebProperty",
+                    choices = NULL)
+        , width = 4, title="Select Web Property", status="success", solidHeader=TRUE),
+      box(
+        selectInput(ns("view"),
+                    label="Select View",
+                    choices = NULL)
+        , width = 4, title="Pick View (ID)", status="success", solidHeader=TRUE)
+    )
+  )
+  
+}
+
+#' authDropdown
+#'
+#' Shiny Module for use with \link{authDropdownUI}
+#'
+#' Call via \code{shiny::callModule(authDropdown, "your_id")}
+#'
+#' @param input shiny input
+#' @param output shiny output
+#' @param session shiny session
+#' @param ga.table A table of GA tables
+#'
+#' @return GA View Id selected
+authDropdown <- function(input, output, session, ga.table){
+  
+  ns <- session$ns
+  
+  pList <- reactive({
+    ga.table <- ga.table()
+    
+    ga.table[,c('accountName','webPropertyId','websiteUrl','viewName', 'viewId')]
+    
+  })
+  
+  observe({
+    validate(
+      need(pList(), "Need profiles")
+    )
+    pList  <- pList()
+    
+    choice <- unique(pList$accountName)
+    
+    updateSelectInput(session, 
+                      "accounts",
+                      label="Accounts",
+                      choices = choice)
+  })
+  
+  observe({
+    validate(
+      need(input$accounts, "Need accounts")
+    )
+    pList  <- pList()
+    
+    pList <- pList[input$accounts == pList$accountName,]
+    
+    choice <- pList$websiteUrl
+    
+    updateSelectInput(session, 
+                      "web.prop", label="WebProperty",
+                      choices = choice)
+  })
+  
+  observe({
+    validate(
+      need(input$web.prop, "Need web")
+    )
+    pList <- pList()
+    
+    pList <- pList[input$web.prop == pList$websiteUrl,]
+    
+    choice <- pList$viewId 
+    
+    names(choice) <- paste(pList$viewName, pList$viewId)
+    
+    updateSelectInput(session, "view",
+                      label="Views",
+                      choices = choice)
+  })
+  
+  chosen_view <- reactive({
+    validate(
+      need(input$view, "View")
+    )
+    pList <- pList()
+    
+    pList[input$view == pList$viewId,]
+  })
+  
+  return(chosen_view)
+  
+}
