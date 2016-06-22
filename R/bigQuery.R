@@ -20,8 +20,8 @@
 #'   here: \url{https://support.google.com/analytics/answer/3416091?hl=en}
 #' 
 #' 
-#' @param projectId The Google project Id where the BigQuery exports sit.
-#' @param datasetId DatasetId of GA export.  This should match the GA View ID.
+#' @param projectId The Google project Id where the BigQuery exports sit
+#' @param datasetId DatasetId of GA export.  This should match the GA View ID
 #' @param start start date
 #' @param end end date
 #' @param metrics metrics to query
@@ -30,7 +30,9 @@
 #' @param filters filter results
 #' @param max_results How many results to fetch
 #' @param query If query is non-NULL then it will use that and ignore above
-#' @param return_query_only Only return the constructed query, don't call BigQuery.
+#' @param return_query_only Only return the constructed query, don't call BigQuery
+#' @param bucket if over 100000 results, specify a Google Cloud bucket to send data to
+#' @param download_file Where to save asynch files.  If NULL saves to current working directory. 
 #' 
 #' @return data.frame of results
 #' 
@@ -49,7 +51,9 @@ google_analytics_bq <- function(projectId,
                                 # segment=NULL,
                                 max_results=100,
                                 query=NULL,
-                                return_query_only=FALSE){
+                                return_query_only=FALSE,
+                                bucket = NULL,
+                                download_file = NULL){
   
   projectId <- as.character(projectId)
   datasetID <- as.character(datasetId)
@@ -104,7 +108,7 @@ google_analytics_bq <- function(projectId,
       order_q <- NULL
     }
     
-    limit_q <- paste("LIMIT", as.character(max_results))
+    limit_q <- paste("LIMIT", as.character(as.integer(max_results)))
     
     query <- paste(select_q, from_q, group_q, order_q, limit_q)
     
@@ -115,12 +119,22 @@ google_analytics_bq <- function(projectId,
     }
   }
   
-  if(max_results < 70000){
+  if(max_results < 1000000){
 
-    out <- bigQueryR::bqr_query(projectId, datasetId, query)
+    out <- bigQueryR::bqr_query(projectId, as.character(datasetId), query)
   } else {
     ## do an async query
-    message("Currently only up to 70,000 rows fetched per call.")
+    if (!requireNamespace("googleCloudStorageR", quietly = TRUE)) {
+      stop("googleCloudStorageR needed for large extracts. Please install it via devtools::install_github('cloudyr/googleCloudStorageR')",
+           call. = FALSE)
+    }
+    
+    message("## Over 1,000,000 rows to fetch, creating asynchronous query via Google Cloud Storage.")
+    google_analytics_bq_asynch(projectId = projectId,
+                               datasetId = as.character(datasetId),
+                               query = query,
+                               bucket = bucket,
+                               download_file = download_file)
     return()
   }
   
@@ -138,6 +152,83 @@ google_analytics_bq <- function(projectId,
   }
   
   out
+}
+
+google_analytics_bq_asynch <- function(projectId,
+                                       datasetId,
+                                       query,
+                                       bucket,
+                                       download_file){
+  time0 <- Sys.time()
+  required_scopes <- c("https://www.googleapis.com/auth/devstorage.full_control", 
+                       "https://www.googleapis.com/auth/cloud-platform")
+  
+  if(!any(getOption("googleAuthR.scopes.selected") %in% required_scopes)){
+    stop("Need re-authentication with googleAuthR::gar_auth() with one of scopes:", 
+         paste(required_scopes, collapse = " "))
+  }
+  
+  if(is.null(bucket)){
+    ## maybe call googleCloudStorgeR to create bucket?
+    stop("Need a Google Cloud bucket to send data to.  Please create one at https://cloud.google.com/storage/")
+  }
+  
+  tableId <- paste0("googleAnalyticsRjob_", 
+                    gsub("-|:| ","",as.character(Sys.time())), 
+                    "_",
+                    idempotency())
+  
+  query_job <- bigQueryR::bqr_query_asynch(projectId = projectId,
+                                           datasetId = datasetId,
+                                           query = query,
+                                           destinationTableId = tableId)
+  
+  status1 <- FALSE
+  time1 <- Sys.time()
+  
+  while(!status1){
+    Sys.sleep(5)
+    message("Waiting for BigQuery query job.....job time:", format(difftime(Sys.time(), time1), format = "%H:%M:%S"))
+    
+    query_job <- bigQueryR::bqr_get_job(projectId, query_job$jobReference$jobId)
+    
+    if(query_job$status$state == "DONE") {
+      status1 <- TRUE 
+    } else {
+      status1 <- FALSE
+    }
+  }
+  
+  message("\nBigQuery query successful and now in BigQuery tableId: ", tableId,
+          "\n - now extracting data to Cloud Storage bucket", bucket)
+  
+  extract_job <- bigQueryR::bqr_extract_data(projectId = projectId,
+                                             datasetId = datasetId,
+                                             tableId = tableId,
+                                             cloudStorageBucket = bucket)
+  
+  status2 <- FALSE
+  time2 <- Sys.time()
+  while(!status2){
+    Sys.sleep(5)
+    message("Waiting for BigQuery extract job....job time:", format(difftime(Sys.time(), time2), format = "%H:%M:%S"))
+    extract_job <- bigQueryR::bqr_get_job(projectId, extract_job$jobReference$jobId)
+    
+    if(extract_job$status$state == "DONE"){
+      status2 <- TRUE 
+    } else {
+      status2 <- FALSE
+    }
+  }
+  
+  message("\nBigQuery extract successful to ", bucket,
+          " - now downloading data from Google Cloud Storage")
+  
+  bigQueryR::bqr_download_extract(extract_job,
+                                  file = download_file)
+  
+  message("All finished, total job time:", format(difftime(Sys.time(), time0), format = "%H:%M:%S"))
+  
 }
 
 lookup_bq_query_m <- c(visits = "SUM(totals.visits) as sessions",

@@ -6,12 +6,13 @@
 \usage{
 google_analytics_bq(projectId, datasetId, start = NULL, end = NULL,
   metrics = NULL, dimensions = NULL, sort = NULL, filters = NULL,
-  max_results = 100, query = NULL, return_query_only = FALSE)
+  max_results = 100, query = NULL, return_query_only = FALSE,
+  bucket = NULL, download_file = NULL)
 }
 \arguments{
-\item{projectId}{The Google project Id where the BigQuery exports sit.}
+\item{projectId}{The Google project Id where the BigQuery exports sit}
 
-\item{datasetId}{DatasetId of GA export.  This should match the GA View ID.}
+\item{datasetId}{DatasetId of GA export.  This should match the GA View ID}
 
 \item{start}{start date}
 
@@ -29,7 +30,11 @@ google_analytics_bq(projectId, datasetId, start = NULL, end = NULL,
 
 \item{query}{If query is non-NULL then it will use that and ignore above}
 
-\item{return_query_only}{Only return the constructed query, don't call BigQuery.}
+\item{return_query_only}{Only return the constructed query, don't call BigQuery}
+
+\item{bucket}{if over 100000 results, specify a Google Cloud bucket to send data to}
+
+\item{download_file}{Where to save asynch files.  If NULL saves to current working directory.}
 }
 \value{
 data.frame of results

@@ -190,4 +190,12 @@ error.message <- function(test_me){
   if(is.error(test_me)) attr(test_me, "condition")$message
 }
 
-
+#' Idempotency
+#'
+#' A random code to ensure no repeats
+#'
+#' @return A random 15 digit hash
+#' @keywords internal
+idempotency <- function(){
+  paste(sample(c(LETTERS, letters, 0:9), 15, TRUE),collapse="")
+}
