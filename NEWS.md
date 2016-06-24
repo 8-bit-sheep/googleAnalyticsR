@@ -1,3 +1,7 @@
+# 0.2.1.9000
+
+* add bigQuery asynch to Google Analytics 360 exports, for over 1,000,000 rows.
+
 # 0.2.1 CRAN
 
 * Fix v4 bug where batches over 10000 had extra rows added (#19)

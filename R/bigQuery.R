@@ -56,17 +56,16 @@ google_analytics_bq <- function(projectId,
                                 download_file = NULL){
   
   projectId <- as.character(projectId)
-  datasetID <- as.character(datasetId)
+  datasetId <- as.character(datasetId)
   start <- if(!is.null(start)) as.character(as.Date(start))
   end <- if(!is.null(end)) as.character(as.Date(end))
+  max_results <- as.integer(max_results)
 
   
   if (!requireNamespace("bigQueryR", quietly = TRUE)) {
     stop("bigQueryR needed for this function to work. Please install it via devtools::install_github('MarkEdmondson1234/bigQueryR')",
          call. = FALSE)
   }
-  
-  # bq_tables <- bigQueryR::bqr_list_tables(projectId, datasetId)
   
   ## if Sys.Date() == end then construct for ga_sessions_intradata_ too.
   if(is.null(query)){
@@ -108,7 +107,7 @@ google_analytics_bq <- function(projectId,
       order_q <- NULL
     }
     
-    limit_q <- paste("LIMIT", as.character(as.integer(max_results)))
+    limit_q <- paste("LIMIT", as.character(max_results))
     
     query <- paste(select_q, from_q, group_q, order_q, limit_q)
     
@@ -119,9 +118,9 @@ google_analytics_bq <- function(projectId,
     }
   }
   
-  if(max_results < 1000000){
+  if(max_results < 100000){
 
-    out <- bigQueryR::bqr_query(projectId, as.character(datasetId), query)
+    out <- bigQueryR::bqr_query(projectId, datasetId, query)
   } else {
     ## do an async query
     if (!requireNamespace("googleCloudStorageR", quietly = TRUE)) {
@@ -129,9 +128,9 @@ google_analytics_bq <- function(projectId,
            call. = FALSE)
     }
     
-    message("## Over 1,000,000 rows to fetch, creating asynchronous query via Google Cloud Storage.")
+    message("## Over 100,000 rows to fetch, creating asynchronous query via Google Cloud Storage.")
     google_analytics_bq_asynch(projectId = projectId,
-                               datasetId = as.character(datasetId),
+                               datasetId = datasetId,
                                query = query,
                                bucket = bucket,
                                download_file = download_file)
@@ -182,22 +181,7 @@ google_analytics_bq_asynch <- function(projectId,
                                            datasetId = datasetId,
                                            query = query,
                                            destinationTableId = tableId)
-  
-  status1 <- FALSE
-  time1 <- Sys.time()
-  
-  while(!status1){
-    Sys.sleep(5)
-    message("Waiting for BigQuery query job.....job time:", format(difftime(Sys.time(), time1), format = "%H:%M:%S"))
-    
-    query_job <- bigQueryR::bqr_get_job(projectId, query_job$jobReference$jobId)
-    
-    if(query_job$status$state == "DONE") {
-      status1 <- TRUE 
-    } else {
-      status1 <- FALSE
-    }
-  }
+  query_job <- bigQueryR::bqr_wait_for_job(query_job)
   
   message("\nBigQuery query successful and now in BigQuery tableId: ", tableId,
           "\n - now extracting data to Cloud Storage bucket", bucket)
@@ -206,26 +190,13 @@ google_analytics_bq_asynch <- function(projectId,
                                              datasetId = datasetId,
                                              tableId = tableId,
                                              cloudStorageBucket = bucket)
-  
-  status2 <- FALSE
-  time2 <- Sys.time()
-  while(!status2){
-    Sys.sleep(5)
-    message("Waiting for BigQuery extract job....job time:", format(difftime(Sys.time(), time2), format = "%H:%M:%S"))
-    extract_job <- bigQueryR::bqr_get_job(projectId, extract_job$jobReference$jobId)
-    
-    if(extract_job$status$state == "DONE"){
-      status2 <- TRUE 
-    } else {
-      status2 <- FALSE
-    }
-  }
+  extract_job <- bigQueryR::bqr_wait_for_job(extract_job)
   
   message("\nBigQuery extract successful to ", bucket,
           " - now downloading data from Google Cloud Storage")
   
   bigQueryR::bqr_download_extract(extract_job,
-                                  file = download_file)
+                                  filename = download_file)
   
   message("All finished, total job time:", format(difftime(Sys.time(), time0), format = "%H:%M:%S"))
   
@@ -241,7 +212,8 @@ lookup_bq_query_m <- c(visits = "SUM(totals.visits) as sessions",
                        transactionRevenue = "SUM(totals.transactionRevenue)/1000000 as transactionRevenue",
                        transactionsPerSession = "(SUM(totals.transactions) / SUM(totals.visits)) as transactionsPerSession",
                        revenuePerTransaction = "(SUM(totals.transactionRevenue)/1000000) / SUM(totals.transactions) as revenuePerTransaction",
-                       newVisits = "SUM(totals.newVisits) as newVisits",
+                       newSessions = "SUM(totals.newVisits) as newVisits",
+                       percentNewSessions = "(SUM(totals.newVisits) / SUM(totals.visits))*100 AS percentNewSessions",
                        screenviews = "SUM(totals.screenviews) as screenviews",
                        uniqueScreenviews = "SUM(totals.uniqueScreenviews) as uniqueScreenviews",
                        timeOnScreen = "SUM(totals.timeOnScreen) as timeOnScreen",
@@ -288,7 +260,9 @@ lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPat
                        pagePath = "hits.page.pagePath as pagePath",
                        eventCategory = "hits.eventInfo.eventCategory as eventCategory",
                        eventAction = "hits.eventInfo.eventAction as eventAction",
-                       eventLabel = "hits.eventInfo.eventLabel as eventLabel")
+                       eventLabel = "hits.eventInfo.eventLabel as eventLabel",
+                       ## from http://www.lunametrics.com/blog/2016/06/23/google-analytics-bigquery-export-schema/
+                       landingPagePath = "FIRST(IF(hits.type = 'PAGE', hits.page.pagePath, NULL)) WITHIN RECORD AS landingPagePath")
 
 
 ## this is hit level: add session and product level too.

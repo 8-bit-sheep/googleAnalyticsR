@@ -756,25 +756,27 @@ segmentElement <- function(input, output, session){
 #' Shiny Module for use with \link{authDropdown}
 #' 
 #' @param id Shiny id
-#'
+#' 
+#' @import shiny
 #' @return Shiny UI
+#' @export
 authDropdownUI <- function(id){
   
   ns <- shiny::NS(id)
   
   tagList(
     fluidRow(
-      box(
+      column(
         selectInput(ns("accounts"),
                     label="Accounts",
                     choices = NULL)
         , width = 4, title="Select Account", status="success", solidHeader=TRUE),
-      box(
+      column(
         selectInput(ns("web.prop"),
                     label="WebProperty",
                     choices = NULL)
         , width = 4, title="Select Web Property", status="success", solidHeader=TRUE),
-      box(
+      column(
         selectInput(ns("view"),
                     label="Select View",
                     choices = NULL)
@@ -795,6 +797,8 @@ authDropdownUI <- function(id){
 #' @param session shiny session
 #' @param ga.table A table of GA tables
 #'
+#' @import shiny
+#' @export
 #' @return GA View Id selected
 authDropdown <- function(input, output, session, ga.table){
   

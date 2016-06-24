@@ -21,4 +21,31 @@ shinyServer(function(input, output, session){
   
   segment_built <- callModule(segmentBuilder, "demo_segments")
   
+  segment_metrics <- callModule(multi_select, "metric_seg", type = "METRIC")
+  segment_dims <- callModule(multi_select, "dim_seg", type = "DIMENSION")
+  
+  segment_data <- eventReactive(input$get_seg, {
+    
+    viewId <- selected_id()
+    metrics <- segment_metrics()
+    dims <- segment_dims()
+    dates <- input$date_seg
+    segment_dims <- segment_dims()
+    
+    with_shiny(google_analytics_4,
+               shiny_access_token = token(),
+               viewId = viewId,
+               date_range = c(dates[1], dates[2]),
+               metrics = metrics,
+               dimensions = dims,
+               segments = segment_dims)
+    
+  })
+  
+  output$segment_table <- renderDataTable({
+    
+    segment_data()
+    
+  })
+  
 })
