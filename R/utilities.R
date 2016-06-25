@@ -27,7 +27,7 @@ allowed_metric_dim <- function(type = c("METRIC", "DIMENSION"),
   filtered_md <- switch(subType,
                         all = meta,
                         segment = meta[grepl("true",meta$allowedInSegments),],
-                        cohort = meta)
+                        cohort = meta[grepl("Lifetime Value and Cohort", meta$group),])
   
   ## only public (not deprecated) varaibles
   filtered_md <- filtered_md[filtered_md$type == type & 
@@ -35,19 +35,19 @@ allowed_metric_dim <- function(type = c("METRIC", "DIMENSION"),
   
   ## replace XX with 1 to 20
   meta_ex <- filtered_md[grepl("XX",filtered_md$name),]
+  
   f <- function(y) vapply(1:20, function(x) gsub("XX", x, meta_ex$name[y]), character(1))
   meta_expanded <- unlist(lapply(seq_along(meta_ex$name), f))
   
   ## repeat with names
-  meta_ex2 <- filtered_md[grepl("XX",filtered_md$uiName),]
-  f2 <- function(y) vapply(1:20, function(x) gsub("XX", x, meta_ex2$uiName[y]), character(1))
-  meta_expanded_names <- unlist(lapply(seq_along(meta_ex2$uiName), f2))
+  f2 <- function(y) vapply(1:20, function(x) gsub("XX", x, meta_ex$uiName[y]), character(1))
+  meta_expanded_names <- unlist(lapply(seq_along(meta_ex$uiName), f2))
   
   
   ## take out XX from filtered_md
-  out <- c(setdiff(filtered_md$name, meta_ex$name),
+  out <- c(filtered_md$name[!filtered_md$name %in% meta_ex$name],
            meta_expanded)
-  names(out) <- c(setdiff(filtered_md$uiName, meta_ex$uiName),
+  names(out) <- c(filtered_md$uiName[!filtered_md$uiName %in% meta_ex$uiName],
                   meta_expanded_names)
   
   out
