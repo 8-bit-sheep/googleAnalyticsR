@@ -129,7 +129,7 @@ segment_element_ui <- function(id, seq, segment_type=NULL){
   ## UI not fully loaded
   if(length(seq) < 9) return(NULL)
   
-  if(seq[["type"]] == "metric"){
+  if(seq[["type"]] == "METRIC"){
     class <- "label label-warning"
     
     exps <- paste(seq[["comparisonValue"]],
@@ -500,8 +500,8 @@ segmentElementUI <- function(id){
       shiny::fluidRow(
         shiny::column(width = 4,
                       shiny::radioButtons(ns("type"), "Filter Type", 
-                                          choices = c(Metric = "metric", 
-                                                      Dimension = "dimension"), 
+                                          choices = c(Metric = "METRIC", 
+                                                      Dimension = "DIMENSION"), 
                                           inline = TRUE)
         ),
         shiny::column(width = 4,
@@ -532,13 +532,13 @@ segmentElementUI <- function(id){
       ),
       shiny::fluidRow(
         shiny::column(width = 4,
-                      shiny::actionButton(ns("submit"), "Add Segment Element", 
+                      shiny::actionButton(ns("submit"), "Add Element", 
                                           icon = shiny::icon("plus-square-o"),
                                           class = "btn btn-success")           
         ),
         shiny::column(width = 4,
                       shiny::actionButton(ns("submit_segment_vector"),
-                                          "Add Segment Vector", 
+                                          "Add Vector", 
                                           icon = shiny::icon("plus-square-o"),
                                           class = "btn btn-success")
                       ),
@@ -587,37 +587,7 @@ segmentElement <- function(input, output, session){
     )
     
     type <- input$type
-    meta <- googleAnalyticsR::meta
-    meta_ex <- meta[grepl("XX",meta$name),]
-    
-    ## turn metrics like goalXXCompletions into goal1Completions, goal2Completions, etc. 
-    metrics_extra <- meta_ex[meta_ex$type == "METRIC",]
-    metrics_extra <- unlist(lapply(seq_along(metrics_extra$name), 
-                                   function(y) sapply(1:20, 
-                                                      function(x) gsub("XX", x, metrics_extra$name[y]))
-                                   )
-                            )
-    # dimensions_extra <- meta_ex[meta_ex$type == "DIMENSIONS",]
-    # dimensions_extra <- unlist(lapply(seq_along(dimensions_extra$name), 
-    #                                function(y) sapply(1:20, 
-    #                                                   function(x) gsub("XX", x, dimensions_extra$name[y]))
-    # )
-    # )
-    
-    
-    if(type == "metric"){
-      
-      choices <- meta[meta$type == "METRIC" & meta$status == "PUBLIC" & !grepl("XX", meta$name),
-                      "name"]
-      choices <- c(choices, metrics_extra)
-      
-    } else {
-      
-      choices <- meta[meta$type == "DIMENSION" & meta$status == "PUBLIC" & !grepl("XX", meta$name),
-                      "name"]
-      # choices <- c(choices, dimensions_extra)
-      
-    }
+    choices <- allowed_metric_dim(type, "segment")
     
     shiny::selectInput(ns("name"), type, choices = choices)
     
@@ -632,7 +602,7 @@ segmentElement <- function(input, output, session){
     type <- input$type
     operator <- input$operator
     
-    if(type == "dimension"){
+    if(type == "DIMENSION"){
 
       if(operator == "NUMERIC_BETWEEN"){
         cvalue <- shiny::tagList(
@@ -659,7 +629,7 @@ segmentElement <- function(input, output, session){
         out <- cvalue
       }
       
-    } else if(type == "metric"){
+    } else if(type == "METRIC"){
      
       out <- shiny::tagList(
 
@@ -699,14 +669,14 @@ segmentElement <- function(input, output, session){
     
     type <- input$type
     
-    if(type == "metric"){
+    if(type == "METRIC"){
       
       choice <- c("<" = "LESS_THAN",
                   ">" = "GREATER_THAN",
                   "=" = "EQUAL",
                   "between" = "BETWEEN")
       
-    } else if(type == "dimension"){
+    } else if(type == "DIMENSION"){
       
       choice <- c(
         "regex" = "REGEXP",
@@ -863,9 +833,74 @@ authDropdown <- function(input, output, session, ga.table){
     )
     pList <- pList()
     
-    pList[input$view == pList$viewId,]
+    out <- pList[input$view == pList$viewId,]
+
+    out$viewId
   })
   
   return(chosen_view)
+  
+}
+
+#' multi_select UI
+#'
+#' Shiny Module for use with \link{multi_select}
+#' 
+#' Create a Google Analytics variable selector
+#' 
+#' @param id Shiny id
+#' @param label label
+#' @param multiple
+#'
+#' @return Shiny UI
+#' @export
+multi_selectUI <- function(id, 
+                           label = "Metric",
+                           multiple = TRUE,
+                           width = NULL){
+  
+  ns <- shiny::NS(id)
+  
+  selectInput(ns("multi_select"),
+              label=label,
+              choices = NULL,
+              multiple = multiple,
+              width = width)
+  
+}
+
+#' multi_select
+#'
+#' Shiny Module for use with \link{multi_selectUI}
+#'
+#' Call via \code{shiny::callModule(multi_select, "your_id")}
+#'
+#' @param input shiny input
+#' @param output shiny output
+#' @param session shiny session
+#' @param type metric or dimension
+#'
+#' @return the selected variable
+#' @export
+multi_select <- function(input, output, session, 
+                         type = c("METRIC","DIMENSION"),
+                         subType = c("none","segment","cohort")){
+  
+  type <- match.arg(type)
+  
+  ns <- session$ns
+  
+  ## update select from meta
+  observe({
+    
+    choice <- allowed_metric_dim(type = type, subType = subType)
+    
+    updateSelectInput(session,
+                      "multi_select",
+                      choices = choice,
+                      selected = choice[1])
+  })
+  
+  return(shiny::reactive(input$multi_select))
   
 }
