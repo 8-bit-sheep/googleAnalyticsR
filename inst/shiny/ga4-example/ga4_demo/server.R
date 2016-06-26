@@ -7,6 +7,8 @@ source("modules.R")
 
 shinyServer(function(input, output, session){
   
+  #####--------- Setup
+  
   token <- callModule(googleAuth, "login")
   
   ga_accounts <- reactive({
@@ -18,6 +20,8 @@ shinyServer(function(input, output, session){
   })
   
   selected_id <- callModule(authDropdown, "auth_menu", ga.table = ga_accounts)
+  
+  #####--------- Segments
   
   segment_built <- callModule(segmentBuilder, "demo_segments")
   
@@ -47,6 +51,8 @@ shinyServer(function(input, output, session){
     segment_data()
     
   })
+  
+  #####--------- Cohorts
   
   cohort_metrics <- callModule(multi_select, "metric_coh", type = "METRIC", subType = "cohort")
   cohort_dims <- callModule(multi_select, "dim_coh", type = "DIMENSION", subType = "cohort")
@@ -94,6 +100,8 @@ shinyServer(function(input, output, session){
     
   })
   
+  #####--------- Multi-date
+  
   md_metrics <- callModule(multi_select, "metric_md", type = "METRIC", subType = "all")
   md_dims <- callModule(multi_select, "dim_md", type = "DIMENSION", subType = "all")
   
@@ -118,6 +126,82 @@ shinyServer(function(input, output, session){
     
     md_data()
     
+  })
+  
+  #####--------- Pivots 
+  
+  pv_metrics <- callModule(multi_select, "metric_pivot", type = "METRIC", subType = "all") 
+  pv_dims <- callModule(multi_select, "dim_pivot", type = "DIMENSION", subType = "all")
+  pv_metrics2 <- callModule(multi_select, "metric_pivot2", type = "METRIC", subType = "all")
+  pv_dims2 <- callModule(multi_select, "dim_pivot2", type = "DIMENSION", subType = "all")
+  
+  pivot_object <- reactive({
+    
+
+    pv_metrics2 <- pv_metrics2()
+    pv_dims2 <- pv_dims2()
+    
+    pivot_ga4(pv_dims2, pv_metrics2)
+    
+  })
+  
+  pivot_data <- eventReactive(input$get_pivot,{
+    
+    viewId <- selected_id()
+    metrics <- pv_metrics() 
+    dims <- pv_dims()
+    dates <- input$date_pivot
+    pivot_object <- pivot_object()
+    
+    with_shiny(google_analytics_4,
+               shiny_access_token = token(),
+               viewId = viewId,
+               date_range = c(dates[1], dates[2]),
+               metrics = metrics,
+               dimensions = dims,
+               pivots = list(pivot_object))
+    
+    
+  })
+  
+  output$pivot_table <- renderDataTable({
+    
+    out <- pivot_data()
+    browser()
+    out
+  })
+  
+  #####--------- Calculated Metrics
+  
+  calc_dim <- callModule(multi_select, "dim_calc", type = "DIMENSION", subType = "all")
+  calc_met <- callModule(multi_select, "metric_calc", type = "METRIC", subType = "all")
+  
+  calc_data <- eventReactive(input$get_calc, {
+    
+    viewId <- selected_id()
+    dims <- calc_dim()
+    dates <- input$date_clac
+    metric_name <- gsub(" ", "", input$calculated_name)
+    metric_exp <- input$calculated_exp
+    normal_metrics <- calc_met()
+    
+    exp_metrics <- setNames(metric_exp, metric_name)
+    metrics <- c(exp_metrics, normal_metrics)
+    
+    with_shiny(google_analytics_4,
+               shiny_access_token = token(),
+               viewId = viewId,
+               date_range = c(dates[1], dates[2]),
+               metrics = metrics,
+               dimensions = dims)
+    
+    
+  })
+  
+  output$calc_table <- renderDataTable({
+    
+    calc_data()
+
   })
   
   
