@@ -20,8 +20,25 @@ navbarPage("GA v4 API",
              actionButton("get_seg", "Fetch Segment Data"),
              dataTableOutput("segment_table")
            )),
-  tabPanel("Calculated Metrics", tabName = "calc_metrics", icon = icon("calculator")),
-  tabPanel("Pivots", tabName = "pivots", icon = icon("sort-amount-desc")),
+  tabPanel("Calculated Metrics", tabName = "calc_metrics", icon = icon("calculator"),
+           textInput("calculated_name", label = "Calculated Name", value = "Sessions Per Pageview"),
+           textInput("calculated_exp", label = "Calculated Expression", value = "ga:sessions / ga:pageviews"),
+           multi_selectUI("dim_calc", "Dimensions"),
+           dateRangeInput("date_clac", "Date Range"),
+           actionButton("get_calc", "Fetch Calculated Metric data"),
+           dataTableOutput("calc_table")
+           
+           ),
+  tabPanel("Pivots", tabName = "pivots", icon = icon("sort-amount-desc"),
+           multi_selectUI("metric_pivot", "Metric"),
+           multi_selectUI("dim_pivot", "Dimensions"),
+           dateRangeInput("date_pivot", "Date Range"),
+           multi_selectUI("metric_pivot_2", "Pivot Metric"),
+           multi_selectUI("dimension_pivot2", "Pivot Dimension"),
+           actionButton("get_pivot", "Fetch Pivot Data"),
+           dataTableOutput("pivot_table")
+           
+           ),
   tabPanel("Multiple Dates", tabName = "multi_dates", icon = icon("calendar"),
            multi_selectUI("metric_md", "Metric"),
            multi_selectUI("dim_md", "Dimensions"),
