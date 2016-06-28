@@ -1,6 +1,7 @@
 # 0.2.1.9000
 
 * add bigQuery asynch to Google Analytics 360 exports, for over 1,000,000 rows.
+* A GA v4 example Shiny app added
 
 # 0.2.1 CRAN
 
