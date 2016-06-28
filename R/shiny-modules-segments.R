@@ -402,16 +402,31 @@ segmentChain <- function(input, output, session,
     user_ui <- segment_sequence_ui(segment$user)
     session_ui <- segment_sequence_ui(segment$session)
     
-    shiny::tagList(
-      shiny::column(width = 6,
-                    shiny::h2("User sub-segment"),
-                    if(!is.null(user_ui)) user_ui else shiny::br()
-      ),
-      shiny::column(width = 6,
-                    shiny::h2("Session sub-segment"),
-                    if(!is.null(session_ui)) session_ui else shiny::br()
+    if(length(user_ui[[1]]) > 0 | length(session_ui[[1]]) > 0){
+      shiny::tagList(
+        shiny::fluidRow(
+          shiny::column(width = 12,
+                        shiny::div(class = "panel panel-default",
+                                   shiny::div(class = "panel-heading", 
+                                              shiny::h2("User sub-segment"),
+                                              if(!is.null(user_ui)) user_ui else shiny::br()
+                          ))
+          ),
+          shiny::column(width = 12,
+                        shiny::div(class = "panel panel-default",
+                                   shiny::div(class = "panel-heading", 
+                                              shiny::h2("Session sub-segment"),
+                                              if(!is.null(session_ui)) session_ui else shiny::br()
+                                   ))
+          )
+        )
       )
-    )
+      
+    } else {
+      shiny::br()
+    }
+    
+
     
   })
   

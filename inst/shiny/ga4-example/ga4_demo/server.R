@@ -2,8 +2,10 @@ library(shiny)
 library(googleAuthR)
 library(googleAnalyticsR)
 
+## this is set before you launch the app, 
+## as the default local port is 1221
+## change this to the port you use if on your own Google project keys
 options(shiny.port = 1221)
-source("modules.R")
 
 shinyServer(function(input, output, session){
   
