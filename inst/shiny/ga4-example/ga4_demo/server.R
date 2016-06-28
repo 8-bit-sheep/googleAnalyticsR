@@ -54,8 +54,14 @@ shinyServer(function(input, output, session){
   
   #####--------- Cohorts
   
-  cohort_metrics <- callModule(multi_select, "metric_coh", type = "METRIC", subType = "cohort")
-  cohort_dims <- callModule(multi_select, "dim_coh", type = "DIMENSION", subType = "cohort")
+  cohort_metrics <- callModule(multi_select, "metric_coh", 
+                               type = "METRIC", 
+                               subType = "cohort")
+  
+  cohort_dims <- callModule(multi_select, "dim_coh", 
+                            type = "DIMENSION", 
+                            subType = "cohort", 
+                            default = "ga:cohort")
   
   cohort_built <- reactive({
     
@@ -68,11 +74,11 @@ shinyServer(function(input, output, session){
     coh3 <- input$coh3
     coh4 <- input$coh4
     
-    c_list <- list(coh1 = c(coh_d1[1], coh_d1[2]),
-                   coh2 = c(coh_d2[1], coh_d2[2]),
-                   coh3 = c(coh_d3[1], coh_d3[2]),
-                   coh4 = c(coh_d4[1], coh_d4[2]))
-    setNames(c_list, c(coh1, coh2, coh3, coh4))
+    c_list <- list(c(coh_d1[1], coh_d1[2]),
+                   c(coh_d2[1], coh_d2[2]),
+                   c(coh_d3[1], coh_d3[2]),
+                   c(coh_d4[1], coh_d4[2]))
+    names(c_list) <-  c(coh1, coh2, coh3, coh4)
     
     make_cohort_group(c_list)
     
@@ -131,9 +137,18 @@ shinyServer(function(input, output, session){
   #####--------- Pivots 
   
   pv_metrics <- callModule(multi_select, "metric_pivot", type = "METRIC", subType = "all") 
-  pv_dims <- callModule(multi_select, "dim_pivot", type = "DIMENSION", subType = "all")
+  
+  pv_dims <- callModule(multi_select, "dim_pivot", 
+                        type = "DIMENSION", 
+                        subType = "all", 
+                        default = "ga:source")
+  
   pv_metrics2 <- callModule(multi_select, "metric_pivot2", type = "METRIC", subType = "all")
-  pv_dims2 <- callModule(multi_select, "dim_pivot2", type = "DIMENSION", subType = "all")
+  
+  pv_dims2 <- callModule(multi_select, "dim_pivot2", 
+                         type = "DIMENSION", 
+                         subType = "all",
+                         default = "ga:medium")
   
   pivot_object <- reactive({
     
@@ -166,9 +181,8 @@ shinyServer(function(input, output, session){
   
   output$pivot_table <- renderDataTable({
     
-    out <- pivot_data()
-    browser()
-    out
+    pivot_data()
+
   })
   
   #####--------- Calculated Metrics

@@ -7,7 +7,7 @@
 segment_element(name, operator = c("REGEXP", "BEGINS_WITH", "ENDS_WITH",
   "PARTIAL", "EXACT", "IN_LIST", "NUMERIC_LESS_THAN", "NUMERIC_GREATER_THAN",
   "NUMERIC_BETWEEN", "LESS_THAN", "GREATER_THAN", "EQUAL", "BETWEEN"),
-  type = c("metric", "dimension"), not = FALSE, expressions = NULL,
+  type = c("METRIC", "DIMENSION"), not = FALSE, expressions = NULL,
   caseSensitive = NULL, minComparisonValue = NULL,
   maxComparisonValue = NULL, scope = c("SESSION", "USER", "HIT", "PRODUCT"),
   comparisonValue = NULL, matchType = c("PRECEDES", "IMMEDIATELY_PRECEDES"))

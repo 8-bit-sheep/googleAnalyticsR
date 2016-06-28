@@ -156,26 +156,39 @@ multi_selectUI <- function(id,
 #' @param output shiny output
 #' @param session shiny session
 #' @param type metric or dimension
+#' @param default The default selected choice. First element if NULL
 #'
 #' @return the selected variable
 #' @export
 multi_select <- function(input, output, session, 
                          type = c("METRIC","DIMENSION"),
-                         subType = c("none","segment","cohort")){
+                         subType = c("none","segment","cohort"),
+                         default = NULL){
   
   type <- match.arg(type)
-  
-  ns <- session$ns
   
   ## update select from meta
   observe({
     
     choice <- allowed_metric_dim(type = type, subType = subType)
+
+    s <- choice[1]
+    
+    if(!is.null(default)){
+      
+      default <- checkPrefix(default)
+      
+      if(all(default %in% choice)){
+        s <- default
+      } else {
+        warning("default '", default, "' not in choice")
+      }
+    }
     
     updateSelectInput(session,
                       "multi_select",
                       choices = choice,
-                      selected = choice[1])
+                      selected = s)
   })
   
   return(shiny::reactive(input$multi_select))

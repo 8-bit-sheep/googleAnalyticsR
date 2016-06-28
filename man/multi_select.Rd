@@ -5,7 +5,7 @@
 \title{multi_select}
 \usage{
 multi_select(input, output, session, type = c("METRIC", "DIMENSION"),
-  subType = c("none", "segment", "cohort"))
+  subType = c("none", "segment", "cohort"), default = NULL)
 }
 \arguments{
 \item{input}{shiny input}
@@ -15,6 +15,8 @@ multi_select(input, output, session, type = c("METRIC", "DIMENSION"),
 \item{session}{shiny session}
 
 \item{type}{metric or dimension}
+
+\item{default}{The default selected choice. First element if NULL}
 }
 \value{
 the selected variable

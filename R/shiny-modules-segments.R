@@ -638,8 +638,8 @@ segmentElement <- function(input, output, session){
                             0),
         shiny::selectInput(ns("scope"), 
                            "Scope",
-                           choices = c("SESSION",
-                                       "USER",
+                           choices = c("USER",
+                                       "SESSION",
                                        "HIT",
                                        "PRODUCT"))
       )
@@ -671,8 +671,8 @@ segmentElement <- function(input, output, session){
     
     if(type == "METRIC"){
       
-      choice <- c("<" = "LESS_THAN",
-                  ">" = "GREATER_THAN",
+      choice <- c(">" = "GREATER_THAN",
+                  "<" = "LESS_THAN",
                   "=" = "EQUAL",
                   "between" = "BETWEEN")
       

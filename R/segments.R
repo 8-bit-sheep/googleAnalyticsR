@@ -37,7 +37,7 @@
 #' ## make a segment element
 #' se <- segment_element("sessions", 
 #'                       operator = "GREATER_THAN", 
-#'                       type = "metric", 
+#'                       type = ""metric"", 
 #'                       comparisonValue = 1, 
 #'                       scope = "USER")
 #'                       
@@ -297,7 +297,7 @@ segment_element <- function(name,
                                          "GREATER_THAN",
                                          "EQUAL",
                                          "BETWEEN"),
-                            type = c("metric", "dimension"),
+                            type = c("METRIC", "DIMENSION"),
                             not = FALSE,
                             expressions=NULL,
                             caseSensitive=NULL,
@@ -321,7 +321,7 @@ segment_element <- function(name,
   
   name <- sapply(name, checkPrefix, prefix = "ga")
   
-  if(type == "metric"){
+  if(type == "METRIC"){
     
     if(!operator %in% c("LESS_THAN","GREATER_THAN","EQUAL","BETWEEN")){
       stop('You have the wrong operator, 
