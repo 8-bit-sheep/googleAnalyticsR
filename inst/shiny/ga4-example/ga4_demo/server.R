@@ -1,11 +1,15 @@
 library(shiny)
 library(googleAuthR)
 library(googleAnalyticsR)
+library(listviewer)
 
 ## this is set before you launch the app, 
 ## as the default local port is 1221
 ## change this to the port you use if on your own Google project keys
 options(shiny.port = 1221)
+options(googleAuthR.webapp.client_id = "289759286325-42j8nmkeq5n9v9eb1kiuj2i97v9oea1f.apps.googleusercontent.com")
+options(googleAuthR.webapp.client_secret = "0zBtmZ_klTEzXUaTUTP5AkNQ")
+options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics.readonly"))
 
 shinyServer(function(input, output, session){
   
@@ -54,6 +58,19 @@ shinyServer(function(input, output, session){
     
   })
   
+  output$segment_object <- renderJsonedit({
+    
+    jsonedit(
+      as.list( segment_built() )
+      ,"change" = htmlwidgets::JS('function(){
+                                  console.log( event.currentTarget.parentNode.editor.get() )
+  }')
+    )
+    
+    
+    
+})
+  
   #####--------- Cohorts
   
   cohort_metrics <- callModule(multi_select, "metric_coh", 
@@ -92,7 +109,7 @@ shinyServer(function(input, output, session){
     metrics <- cohort_metrics()
     dims <- cohort_dims()
     cohort_built <- cohort_built()
-
+    
     with_shiny(google_analytics_4,
                shiny_access_token = token(),
                viewId = viewId,
@@ -107,6 +124,19 @@ shinyServer(function(input, output, session){
     cohort_data()
     
   })
+  
+  output$cohort_object <- renderJsonedit({
+    
+    jsonedit(
+      as.list( cohort_built() )
+      ,"change" = htmlwidgets::JS('function(){
+                                  console.log( event.currentTarget.parentNode.editor.get() )
+  }')
+    )
+    
+    
+    
+})
   
   #####--------- Multi-date
   
@@ -136,6 +166,37 @@ shinyServer(function(input, output, session){
     
   })
   
+  md_object <- reactive({
+    
+    viewId <- selected_id()
+    metrics <- md_metrics()
+    dims <- md_dims()
+    dates1 <- input$date1_md
+    dates2 <- input$date2_md
+    
+    out <- make_ga_4_req(google_analytics_4,
+                         viewId = viewId,
+                         date_range = c(dates1[1], dates1[2], dates2[1], dates2[2]),
+                         metrics = metrics,
+                         dimensions = dims)
+    out$dimensionFilterClauses <- NULL
+    out
+    
+  })
+  
+  output$md_object <- renderJsonedit({
+    
+    jsonedit(
+      as.list( md_object() )
+      ,"change" = htmlwidgets::JS('function(){
+                                  console.log( event.currentTarget.parentNode.editor.get() )
+  }')
+    )
+    
+    
+    
+})
+  
   #####--------- Pivots 
   
   pv_metrics <- callModule(multi_select, "metric_pivot", type = "METRIC", subType = "all") 
@@ -154,7 +215,7 @@ shinyServer(function(input, output, session){
   
   pivot_object <- reactive({
     
-
+    
     pv_metrics2 <- pv_metrics2()
     pv_dims2 <- pv_dims2()
     
@@ -184,8 +245,21 @@ shinyServer(function(input, output, session){
   output$pivot_table <- renderDataTable({
     
     pivot_data()
-
+    
   })
+  
+  output$pivot_object <- renderJsonedit({
+    
+    jsonedit(
+      as.list( pivot_object() )
+      ,"change" = htmlwidgets::JS('function(){
+                                  console.log( event.currentTarget.parentNode.editor.get() )
+  }')
+    )
+    
+    
+    
+})
   
   #####--------- Calculated Metrics
   
@@ -217,8 +291,40 @@ shinyServer(function(input, output, session){
   output$calc_table <- renderDataTable({
     
     calc_data()
-
+    
+  })
+  
+  calc_object <- reactive({
+    
+    viewId <- selected_id()
+    dims <- calc_dim()
+    dates <- input$date_clac
+    metric_name <- gsub(" ", "", input$calculated_name)
+    metric_exp <- input$calculated_exp
+    normal_metrics <- calc_met()
+    
+    exp_metrics <- setNames(metric_exp, metric_name)
+    metrics <- c(exp_metrics, normal_metrics)
+    
+    make_ga_4_req(viewId = viewId,
+                  date_range = c(dates[1], dates[2]),
+                  metrics = metrics,
+                  dimensions = dims)
+    
+  })
+  
+  output$calc_object <- renderJsonedit({
+    
+    jsonedit(
+      as.list( calc_object() )
+      ,"change" = htmlwidgets::JS('function(){
+                                  console.log( event.currentTarget.parentNode.editor.get() )
+  }')
+    )
+    
+    
+    
   })
   
   
-})
+  })
