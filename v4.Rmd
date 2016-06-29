@@ -14,6 +14,12 @@ It currently has these extras implemented over the v3 API:
 * Calculated metrics on the fly
 * Much more powerful segments
 
+## v4 API Explorer Shiny app
+
+A demo Shiny app where you can [explore the new v4 features](https://mark.shinyapps.io/googleAnalyticsRv4Demo/) is available.
+
+![Google Analytics v4 example](v4demoappexample.png)
+
 ## To use - v4 API calls
 
 Consult `?google_analytics_4` and these example queries:
