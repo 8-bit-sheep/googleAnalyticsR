@@ -278,6 +278,54 @@ shinyUI(fluidPage(
 
 ))
 </code></pre>
+<div id="shiny-modules" class="section level2">
+<h2>Shiny Modules</h2>
+<p>To aid with creating Shiny apps using this package, some <a href="http://shiny.rstudio.com/articles/modules.html">Shiny modules</a> are available.</p>
+<div id="authentication-modules" class="section level3">
+<h3>Authentication modules</h3>
+<p><code>authDropdown</code> and <code>authDropdownUI</code> create a row of selects to help with choosing a GA View.</p>
+<div class="figure">
+<img src="authDropdown.png" />
+
+</div>
+<p>This is useful in combination with <code>googleAuthR</code>’s <code>googleAuth</code> module that helps with user login:</p>
+<pre class="r"><code>## ui.R
+googleAuthUI(&quot;login&quot;),
+authDropdownUI(&quot;auth_menu&quot;)</code></pre>
+<pre class="r"><code>## server.R 
+
+(...)
+
+token &lt;- callModule(googleAuth, &quot;login&quot;)
+
+ga_accounts &lt;- reactive({
+  validate(
+    need(token(), &quot;Authenticate&quot;)
+  )
+
+  with_shiny(google_analytics_account_list, shiny_access_token = token())
+  
+  })
+
+selected_id &lt;- callModule(authDropdown, &quot;auth_menu&quot;, ga.table = ga_accounts)
+
+(...)
+</code></pre>
+</div>
+<div id="parameter-selects" class="section level3">
+<h3>Parameter selects</h3>
+<p><code>multiSelect</code> and <code>multiSelectUI</code> create select dropdowns with the GA API parameters filled in, taken from the meta API.</p>
+<p><img src="metricDropdown.png" /> <img src="dimDropdown.png" /></p>
+</div>
+<div id="segment-helper" class="section level3">
+<h3>Segment helper</h3>
+<p><code>segmentBuilder</code> and <code>segmentBuilderUI</code> creates a segment builder interface. This is also available as an RStudio gadget to help create segments more easily.</p>
+<div class="figure">
+<img src="segmentBuilder.png" />
+
+</div>
+</div>
+</div>
 <div id="v4-api-shiny-app" class="section level2">
 <h2>V4 API Shiny app</h2>
 <p>An example of a Shiny app is the <a href="https://mark.shinyapps.io/googleAnalyticsRv4Demo/">V4 API explorer</a>, this code is available in the package and at <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/tree/master/inst/shiny/ga4-example/ga4_demo">Github here</a></p>
