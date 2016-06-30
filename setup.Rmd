@@ -16,9 +16,9 @@ install.packages("googleAnalyticsR")
 
 ### Development version off github
 
-Or you can use the latest development version is on github which you can install via the below.
+You may prefer to use the latest development version is on github which you can install via the below.
 
-Current CRAN check status: [![Travis-CI Build Status](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master)](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR)
+Github check status: [![Travis-CI Build Status](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master)](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR)
 
 ```r
 devtools::install_github("MarkEdmondson1234/googleAnalyticsR")
@@ -93,7 +93,7 @@ options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analyti
                                         "https://www.googleapis.com/auth/webmasters"))
 ```
 
-If you want to use with Shiny, then also set the webapp clientId/secrets.
+If you want to use with Shiny, then set the webapp clientId/secrets.
 
 ```r
 options(googleAnalyticsR.webapp.client_id = "xxxxx9pcab1u005cv.apps.googleusercontent.com")

@@ -265,9 +265,9 @@ bqr_list_datasets(&quot;project-id&quot;)</code></pre>
                                         &quot;https://www.googleapis.com/auth/cloud-platform&quot;,
                                         &quot;https://www.googleapis.com/auth/bigquery&quot;))
 googleAuthR::gar_auth()</code></pre>
-<p>You may also want to use a JSON file to authenticate with BigQuery. Make sure to add the service email to the users of the Google project, and then download the JSON file and authenitcate via:</p>
+<p>You may also want to use a JSON file to authenticate with BigQuery. Make sure to add the service email to the users of the Google project, and then download the JSON file and authenticate via:</p>
 <pre class="r"><code>googleAuthR::gar_auth_service(&quot;gwt-download-XXXX.json&quot;)</code></pre>
-<p>See <a href="https://github.com/MarkEdmondson1234/googleAuthR"><code>googleAuthR</code> help</a> for more details.</p>
+<p>See <a href="http://code.markedmondson.me/googleAuthR/"><code>googleAuthR</code> help</a> for more details.</p>
 </div>
 <div id="exporting-data" class="section level2">
 <h2>Exporting data</h2>
@@ -294,7 +294,10 @@ Segments/filters are not supported. The data is unsampled though.</p>
                            
 &gt; Error in google_analytics_bq(&quot;project-id&quot;, &quot;dataset-id-ga-viewid&quot;, start = &quot;2016-01-01&quot;,  : 
   dimension not yet supported. Must be one of referralPath, campaign, source, medium, keyword, adContent, adwordsCampaignID, adwordsAdGroupID, transactionId, date, visitorId, visitId, visitStartTime, visitNumber                           </code></pre>
-<p>You can also query the BigQuery table directly using the query parameter.</p>
+</div>
+<div id="raw-bigquery-sql" class="section level2">
+<h2>Raw BigQuery SQL</h2>
+<p>You can query the BigQuery table directly using the <code>query</code> parameter.</p>
 <p>This is just as you would in the BigQuery interface, and allows queries you can also do there.</p>
 <pre class="r"><code>q &lt;- &quot;SELECT
   date,
@@ -309,7 +312,7 @@ ORDER BY date ASC &quot;
 bq3 &lt;- google_analytics_bq(&quot;project-id&quot;, &quot;dataset-id-ga-viewid&quot;, 
                            query = q)
 </code></pre>
-<p>You can also just output the query for use within the interface, if you pass in the parameter <code>return_query_only</code></p>
+<p>If you pass in the parameter <code>return_query_only</code> you can output the query for use within the interface:</p>
 <pre class="r"><code>just_query &lt;- google_analytics_bq(&quot;project-id&quot;, &quot;dataset-id-ga-viewid&quot;, 
                                   start = &quot;2016-01-01&quot;, end = &quot;2016-02-01&quot;, 
                                   metrics = &quot;users&quot;, 
@@ -319,7 +322,7 @@ just_query
 # [1] &quot;SELECT trafficSource.source as source, trafficSource.medium as medium, COUNT(fullVisitorId) as users 
 # FROM (TABLE_DATE_RANGE([dataset-id-ga-viewid.ga_sessions_], TIMESTAMP(&#39;2016-01-01&#39;),
 # TIMESTAMP(&#39;2016-02-01&#39;))) GROUP BY source, medium  LIMIT 100&quot;</code></pre>
-<p>You could then paste this query into the BigQuery interface, or modify it and send it back in via <code>google_analytics_q</code>.</p>
+<p>You could then paste this query into the BigQuery interface, or modify it and send it back in via <code>google_analytics_bq</code>.</p>
 </div>
 <div id="implemented-metrics-and-dimensions" class="section level2">
 <h2>Implemented metrics and dimensions</h2>

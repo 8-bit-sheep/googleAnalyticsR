@@ -244,8 +244,8 @@ $(document).ready(function () {
 install.packages(&quot;googleAnalyticsR&quot;)</code></pre>
 <div id="development-version-off-github" class="section level3">
 <h3>Development version off github</h3>
-<p>Or you can use the latest development version is on github which you can install via the below.</p>
-<p>Current CRAN check status: <a href="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR"><img src="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master" alt="Travis-CI Build Status" /></a></p>
+<p>You may prefer to use the latest development version is on github which you can install via the below.</p>
+<p>Github check status: <a href="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR"><img src="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master" alt="Travis-CI Build Status" /></a></p>
 <pre class="r"><code>devtools::install_github(&quot;MarkEdmondson1234/googleAnalyticsR&quot;)</code></pre>
 <p>Check out the <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md">NEWS</a> to see whats currently available in each version.</p>
 </div>
@@ -300,7 +300,7 @@ options(googleAuthR.scopes.selected = &quot;https://www.googleapis.com/auth/anal
 options(googleAuthR.client_secret = &quot;3JhLa_GxxxxxCQYLe31c64&quot;)
 options(googleAuthR.scopes.selected = c(&quot;https://www.googleapis.com/auth/analytics&quot;,
                                         &quot;https://www.googleapis.com/auth/webmasters&quot;))</code></pre>
-<p>If you want to use with Shiny, then also set the webapp clientId/secrets.</p>
+<p>If you want to use with Shiny, then set the webapp clientId/secrets.</p>
 <pre class="r"><code>options(googleAnalyticsR.webapp.client_id = &quot;xxxxx9pcab1u005cv.apps.googleusercontent.com&quot;)
 options(googleAnalyticsR.webapp.client_secret = &quot;zcofxxxxxxElemXN5sf&quot;)</code></pre>
 </div>

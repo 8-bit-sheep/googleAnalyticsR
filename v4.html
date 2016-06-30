@@ -312,7 +312,7 @@ ga_data1
 </div>
 <div id="querying-multiple-report-types-at-a-time" class="section level3">
 <h3>Querying multiple report types at a time</h3>
-<p>Example with two date ranges and two reports.</p>
+<p>Example with two date ranges and two reports. When querying two date ranges, you can sort the metrics by how much they have changed by using <code>orderType = DELTA</code> e.g. <code>order_type(&quot;sessions&quot;, &quot;DESCENDING&quot;, &quot;DELTA&quot;)</code></p>
 <pre class="r"><code>## demo of querying two date ranges at a time   
 ## we make the request via make_ga_4_req() to use in next demo
 multidate_test &lt;- make_ga_4_req(ga_id, 
@@ -322,7 +322,7 @@ multidate_test &lt;- make_ga_4_req(ga_id,
                                                &quot;2014-10-01&quot;),
                                 dimensions = c(&#39;source&#39;,&#39;medium&#39;), 
                                 metrics = c(&#39;sessions&#39;,&#39;bounces&#39;),
-                                order = order_type(&quot;sessions&quot;, &quot;DESCENDING&quot;))
+                                order = order_type(&quot;sessions&quot;, &quot;DESCENDING&quot;, &quot;DELTA&quot;))
                                 
 ga_data2 &lt;- fetch_google_analytics_4(multidate_test)
 ga_data2

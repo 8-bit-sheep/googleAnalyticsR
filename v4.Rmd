@@ -83,7 +83,7 @@ ga_data1
 
 ### Querying multiple report types at a time
 
-Example with two date ranges and two reports.
+Example with two date ranges and two reports.  When querying two date ranges, you can sort the metrics by how much they have changed by using `orderType = DELTA` e.g. `order_type("sessions", "DESCENDING", "DELTA")`
 
 
 ```r
@@ -96,7 +96,7 @@ multidate_test <- make_ga_4_req(ga_id,
                                                "2014-10-01"),
                                 dimensions = c('source','medium'), 
                                 metrics = c('sessions','bounces'),
-                                order = order_type("sessions", "DESCENDING"))
+                                order = order_type("sessions", "DESCENDING", "DELTA"))
                                 
 ga_data2 <- fetch_google_analytics_4(multidate_test)
 ga_data2
