@@ -11,7 +11,6 @@
 vignettes/*.html
 vignettes/*.pdf
 .Rproj.user
-*.Rproj
 inst/doc
 
 .httr-oauth
