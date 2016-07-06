@@ -3,33 +3,57 @@
 #' Shiny Module for use with \link{authDropdown}
 #' 
 #' @param id Shiny id
+#' @param width The width of the input, e.g. '400px', or '100%'
+#' @param inColumns whether to wrap selectInputs in width=4 columns.
 #' 
 #' @import shiny
 #' @return Shiny UI
 #' @export
-authDropdownUI <- function(id){
+authDropdownUI <- function(id, 
+                           width = NULL,
+                           inColumns = FALSE){
   
   ns <- shiny::NS(id)
   
-  tagList(
-    fluidRow(
-      column(
-        selectInput(ns("accounts"),
-                    label="Accounts",
-                    choices = NULL)
-        , width = 4, title="Select Account", status="success", solidHeader=TRUE),
-      column(
-        selectInput(ns("web.prop"),
-                    label="WebProperty",
-                    choices = NULL)
-        , width = 4, title="Select Web Property", status="success", solidHeader=TRUE),
-      column(
-        selectInput(ns("view"),
-                    label="Select View",
-                    choices = NULL)
-        , width = 4, title="Pick View (ID)", status="success", solidHeader=TRUE)
+  if(inColumns){
+    out <- tagList(
+      column(width = 4,
+             selectInput(ns("accounts"),
+                         label="Accounts",
+                         choices = NULL,
+                         width = width)    
+             ),
+      column(width = 4,
+             selectInput(ns("web.prop"),
+                         label="WebProperty",
+                         choices = NULL,
+                         width = width) 
+             ),
+      column(width = 4,
+             selectInput(ns("view"),
+                         label="Select View",
+                         choices = NULL,
+                         width = width)    
+             )
     )
-  )
+  } else {
+    out <- tagList(
+      selectInput(ns("accounts"),
+                  label="Accounts",
+                  choices = NULL,
+                  width = width),
+      selectInput(ns("web.prop"),
+                  label="WebProperty",
+                  choices = NULL,
+                  width = width),
+      selectInput(ns("view"),
+                  label="Select View",
+                  choices = NULL,
+                  width = width)
+    )
+  }
+
+  out
   
 }
 

@@ -4,10 +4,14 @@
 \alias{authDropdownUI}
 \title{authDropdown UI}
 \usage{
-authDropdownUI(id)
+authDropdownUI(id, width = NULL, inColumns = FALSE)
 }
 \arguments{
 \item{id}{Shiny id}
+
+\item{width}{The width of the input, e.g. '400px', or '100%'}
+
+\item{inColumns}{whether to wrap selectInputs in width=4 columns.}
 }
 \value{
 Shiny UI
