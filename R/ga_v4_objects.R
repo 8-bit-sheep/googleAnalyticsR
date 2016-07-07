@@ -64,8 +64,21 @@ metric_ga4 <- function(vector, metricFormat=NULL){
 
   testthat::expect_type(vector, "character")
 
-  ## metrics may have a named vector so USE.NAMES must be TRUE
-  metrics <- vapply(vector, checkPrefix, character(1), prefix="ga", USE.NAMES = TRUE)
+  ## dont do prefix check for unnamed metrics if any named
+  if(!is.null(names(vector))){
+    do_prefix_check <- vector[names(vector) == ""]
+    ## metrics may have a named vector so USE.NAMES must be TRUE
+    metrics <- vapply(do_prefix_check, checkPrefix, character(1), prefix="ga", USE.NAMES = TRUE)
+    metrics <- c(vector[names(vector) != ""], metrics)
+  } else {
+    do_prefix_check <- vector
+    ## metrics may have a named vector so USE.NAMES must be TRUE
+    metrics <- vapply(do_prefix_check, checkPrefix, character(1), prefix="ga", USE.NAMES = TRUE)
+  }
+  
+  metrics
+  
+
 
   if(is.null(metricFormat)) metricFormat <- rep("METRIC_TYPE_UNSPECIFIED",
                                                 length(metrics))
