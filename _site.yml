@@ -25,3 +25,6 @@ navbar:
     - text: "Shiny"
       icon: fa-cloud-upload
       href: shiny.html
+    - text: "RMarkdown"
+      icon: fa-pencil-square
+      href: rmarkdown.html
