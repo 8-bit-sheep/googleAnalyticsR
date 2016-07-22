@@ -3,6 +3,7 @@
 * add bigQuery asynch to Google Analytics 360 exports, for over 1,000,000 rows.
 * A GA v4 example Shiny app added that runs on `https://mark.shinyapps.io/googleAnalyticsRv4Demo/`
 * Fix bug for calculated metrics if expression not starting with `ga:` (#28)
+* Add several management functions: accounts, webproperties, goals, adwords, custom data sources, custom metrics and dimensions etc.
 
 # 0.2.1 CRAN
 

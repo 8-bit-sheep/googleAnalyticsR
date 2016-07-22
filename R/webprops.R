@@ -15,7 +15,8 @@ ga_webproperty <- function(accountId,
                                path_args = list(
                                  accounts = accountId,
                                  webproperties = webPropertyId
-                               ))
+                               ),
+                               data_parse_function = function(x) x)
   
   web_prop()
   

@@ -25,7 +25,8 @@ ga_accounts <- function(){
   
   url <- "https://www.googleapis.com/analytics/v3/management/accounts"
   acc_sum <- gar_api_generator(url,
-                               "GET")
+                               "GET",
+                               data_parse_function = function(x) x)
   
   acc_sum()
 }

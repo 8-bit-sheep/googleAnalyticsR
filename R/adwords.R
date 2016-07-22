@@ -6,8 +6,8 @@
 #' @return AdWords Links
 #' @importFrom googleAuthR gar_api_generator
 #' @export
-ga_goals_list <- function(accountId,
-                          webPropertyId){
+ga_adwords <- function(accountId,
+                       webPropertyId){
   
   url <- "https://www.googleapis.com/analytics/v3/management/"
   adwords <- gar_api_generator(url,
@@ -16,7 +16,8 @@ ga_goals_list <- function(accountId,
                                accounts = accountId,
                                webproperties = webPropertyId,
                                entityAdWordsLinks = ""
-                             ))
+                             ),
+                             data_parse_function = function(x) x)
   
   adwords()
   

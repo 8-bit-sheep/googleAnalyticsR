@@ -1,14 +1,18 @@
 #' authDropdown UI
-#'
-#' Shiny Module for use with \link{authDropdown}
 #' 
-#' @param id Shiny id
-#' @param width The width of the input, e.g. '400px', or '100%'
+#' @description Makes a dropdown row for use for authentication.
+#' 
+#' @param id Shiny id.
+#' @param width The width of the input, e.g. \code{400px}, or \code{100%}.
 #' @param inColumns whether to wrap selectInputs in width=4 columns.
-#' 
+#'   
+#'   Shiny Module for use with \link{authDropdown}.
+#'   
+#'   
 #' @import shiny
 #' @return Shiny UI
 #' @export
+#' 
 authDropdownUI <- function(id, 
                            width = NULL,
                            inColumns = FALSE){

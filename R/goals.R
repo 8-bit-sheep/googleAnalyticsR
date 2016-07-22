@@ -19,7 +19,8 @@ ga_goals_list <- function(accountId,
                                   webproperties = webPropertyId,
                                   profiles = profileId,
                                   goals = ""
-                                ))
+                                ),
+                             data_parse_function = function(x) x)
   
   goals()
   
