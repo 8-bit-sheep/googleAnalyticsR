@@ -188,40 +188,5 @@ google_analytics <- function(id,
   
 }
 
-#' Get current dimensions and metrics available in GA API.
-#'
-#' @return dataframe of dimensions and metrics available to use
-#'
-#' @seealso \url{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}
-#' 
-#' @importFrom googleAuthR gar_api_generator
-#' 
-#' @export
-google_analytics_meta <- function(){
-  
-  meta <- gar_api_generator("https://www.googleapis.com/analytics/v3",
-                            "GET",
-                            path_args = list(metadata = "ga",
-                                             columns = ""),
-                            data_parse_function = parse_google_analytics_meta )
-  
-  meta()
-  
-}
 
-#' Get account list data including web property and View Id
-#'
-#' @seealso https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountSummaries/list
-#'
-#' @return a dataframe of all account, webproperty and view data
-#' @importFrom googleAuthR gar_api_generator
-#' @export
-google_analytics_account_list <- function(){
-  
-  url <- "https://www.googleapis.com/analytics/v3/management/accountSummaries"
-  acc_sum <- gar_api_generator(url,
-                               "GET",
-                               data_parse_function = parse_ga_account_summary)
-  
-  acc_sum()
-}
+

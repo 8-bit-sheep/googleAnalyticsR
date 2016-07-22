@@ -349,4 +349,4 @@ customMetricMaker <- function(customMetricIndex=paste0("metric",1:200)){
 #        customDimensions.value,
 #        NULL)) WITHIN RECORD AS customDimension2,
 # FROM [tableID.ga_sessions_20150305]
-# LIMIT 100 
+# LIMIT 100
