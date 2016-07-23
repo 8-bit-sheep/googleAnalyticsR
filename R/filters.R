@@ -1,3 +1,114 @@
+#' List filters for view (profile)
+#'
+#' @param accountId Account Id
+#' @param webPropertyId Web Property Id
+#' @param profileId Profile Id
+#' @param linkId Link Id
+#'
+#' @return filter list
+#' @importFrom googleAuthR gar_api_generator
+#' @family managementAPI functions
+#' @export
+ga_filter_view_list <- function(accountId,
+                                webPropertyId,
+                                profileId){
+  
+  url <- "https://www.googleapis.com/analytics/v3/management/"
+  filters <- gar_api_generator(url,
+                               "GET",
+                               path_args = list(
+                                 accounts = accountId,
+                                 webproperties = webPropertyId,
+                                 profiles = profileId,
+                                 profileFilterLinks = ""
+                               ),
+                               data_parse_function = function(x) x)
+  
+  filters()
+  
+}
+
+#' Get specific filter for view (profile)
+#'
+#' @param accountId Account Id
+#' @param webPropertyId Web Property Id
+#' @param profileId Profile Id
+#' @param linkId Link Id
+#'
+#' @return filter list
+#' @importFrom googleAuthR gar_api_generator
+#' @family managementAPI functions
+#' @export
+ga_filter_view <- function(accountId,
+                           webPropertyId,
+                           profileId,
+                           linkId){
+  
+  url <- "https://www.googleapis.com/analytics/v3/management/"
+  filters <- gar_api_generator(url,
+                               "GET",
+                               path_args = list(
+                                 accounts = accountId,
+                                 webproperties = webPropertyId,
+                                 profiles = profileId,
+                                 profileFilterLinks = linkId
+                               ),
+                               data_parse_function = function(x) x)
+  
+  filters()
+  
+}
+
+#' Get specific filter for account
+#'
+#' @param accountId Account Id
+#' @param filterId Filter Id
+#'
+#' @return filter list
+#' @importFrom googleAuthR gar_api_generator
+#' @family managementAPI functions
+#' @export
+ga_filter <- function(accountId,
+                      filterId){
+  
+  url <- "https://www.googleapis.com/analytics/v3/management/"
+  filters <- gar_api_generator(url,
+                               "GET",
+                               path_args = list(
+                                 accounts = accountId,
+                                 filters = filterId
+                               ),
+                               data_parse_function = function(x) x)
+  
+  filters()
+  
+}
+
+#' List filters for account
+#'
+#' @param accountId Account Id
+#'
+#' @return filter list
+#' @importFrom googleAuthR gar_api_generator
+#' @family managementAPI functions
+#' @export
+ga_filter_list <- function(accountId){
+  
+  url <- "https://www.googleapis.com/analytics/v3/management/"
+  filters <- gar_api_generator(url,
+                               "GET",
+                               path_args = list(
+                                 accounts = accountId,
+                                 filters = ""
+                               ),
+                               data_parse_function = function(x) x)
+  
+  filters()
+  
+}
+
+
+
 #' Make a dimension or metric filter clause object
 #'
 #' @param filters a list of \link{dim_filter} or \link{met_filter}. Only one type allowed.

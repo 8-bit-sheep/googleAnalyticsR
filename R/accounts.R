@@ -4,6 +4,7 @@
 #'
 #' @return a dataframe of all account, webproperty and view data
 #' @importFrom googleAuthR gar_api_generator
+#' @family managementAPI functions
 #' @export
 google_analytics_account_list <- function(){
   
@@ -20,6 +21,7 @@ google_analytics_account_list <- function(){
 #'
 #' @return a dataframe of accounts
 #' @importFrom googleAuthR gar_api_generator
+#' @family managementAPI functions
 #' @export
 ga_accounts <- function(){
   

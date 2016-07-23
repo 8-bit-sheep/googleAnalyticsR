@@ -2,19 +2,41 @@
 % Please edit documentation in R/adwords.R
 \name{ga_adwords}
 \alias{ga_adwords}
-\title{List AdWords}
+\title{Get AdWords Link meta data}
 \usage{
-ga_adwords(accountId, webPropertyId)
+ga_adwords(accountId, webPropertyId, webPropertyAdWordsLinkId)
 }
 \arguments{
 \item{accountId}{Account Id}
 
 \item{webPropertyId}{Web Property Id}
+
+\item{webPropertyAdWordsLinkId}{AdWords Link Id}
 }
 \value{
-AdWords Links
+AdWords Meta data
 }
 \description{
-List AdWords
+Get AdWords Link meta data
+}
+\seealso{
+Other managementAPI functions: \code{\link{ga_accounts}},
+  \code{\link{ga_adwords_list}},
+  \code{\link{ga_custom_datasource}},
+  \code{\link{ga_custom_upload_list}},
+  \code{\link{ga_custom_vars_list}},
+  \code{\link{ga_custom_vars}},
+  \code{\link{ga_experiment_list}},
+  \code{\link{ga_experiment}},
+  \code{\link{ga_filter_list}},
+  \code{\link{ga_filter_view_list}},
+  \code{\link{ga_filter_view}}, \code{\link{ga_filter}},
+  \code{\link{ga_goal_list}}, \code{\link{ga_goal}},
+  \code{\link{ga_segment_list}},
+  \code{\link{ga_unsampled_list}},
+  \code{\link{ga_unsampled}}, \code{\link{ga_view_list}},
+  \code{\link{ga_view}}, \code{\link{ga_webproperty_list}},
+  \code{\link{ga_webproperty}},
+  \code{\link{google_analytics_account_list}}
 }
 

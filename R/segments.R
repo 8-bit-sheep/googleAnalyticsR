@@ -1,3 +1,20 @@
+#' Get segments user has access to
+#'
+#' @return Segment list
+#' @importFrom googleAuthR gar_api_generator
+#' @family managementAPI functions
+#' @export
+ga_segment_list <- function(){
+  
+  url <- "https://www.googleapis.com/analytics/v3/management/segments"
+  segs <- gar_api_generator(url,
+                            "GET",
+                            data_parse_function = function(x) x)
+  
+  segs()
+  
+}
+
 #' Make a segment object for use
 #'
 #' A Segment is a subset of the Analytics data. 

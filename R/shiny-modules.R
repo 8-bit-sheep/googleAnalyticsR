@@ -3,7 +3,7 @@
 #' @description Makes a dropdown row for use for authentication.
 #' 
 #' @param id Shiny id.
-#' @param width The width of the input, e.g. \code{400px}, or \code{100%}.
+#' @param width The width of the input
 #' @param inColumns whether to wrap selectInputs in width=4 columns.
 #'   
 #'   Shiny Module for use with \link{authDropdown}.

@@ -17,13 +17,13 @@ Imports:
     googleAuthR (>= 0.3.0),
     tidyjson (>= 0.2.1),
     magrittr,
-    jsonlite
+    jsonlite,
+    shiny (>= 0.13.2)
 Suggests:
     knitr,
     rmarkdown,
     testthat (>= 1.0.2),
     miniUI (>= 0.1.1),
-    shiny (>= 0.13.2),
     bigQueryR (>= 0.1.0)
 License: MIT + file LICENSE
 LazyData: TRUE
