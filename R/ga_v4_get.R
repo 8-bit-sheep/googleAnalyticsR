@@ -244,13 +244,16 @@ google_analytics_4 <- function(viewId,
 
   max <- as.integer(max)
   ## for same Id and daterange, v4 batches can be made
-  if(max > 10000){
+  reqRowLimit <- 10000
+  batchLimit <- 5
+  
+  if(max > reqRowLimit){
     ## how many v4 batch requests can be made at one time
-    batchLimit <- 5
-    meta_batch_start_index <- seq(from=0, to=max, by=10000*batchLimit)
+
+    meta_batch_start_index <- seq(from=0, to=max, by=reqRowLimit*batchLimit)
     batches <- length(meta_batch_start_index)
     
-    message("V4 Batching data into [", batches, "] calls.")
+    # message("V4 Batching data into [", batches, "] calls.")
 
     # message(paste(meta_batch_start_index, collapse = " "))
     ## loop for each over 50000
@@ -261,8 +264,8 @@ google_analytics_4 <- function(viewId,
       ## to fix (#19) - silly bug were index of 10000 turned into 1e5 passed in as 1(!)
       meta <- as.integer(meta)
       
-      # message("Outer batch loop: ", meta)
-      batch_start_index <- seq(from=meta, to=min(meta+((batchLimit-1)*10000),max), 10000)
+      message("Fetching row [", meta, "] to [", as.integer(meta + batchLimit*reqRowLimit), "]")
+      batch_start_index <- seq(from=meta, to=min(meta+((batchLimit-1)*reqRowLimit), max), by = reqRowLimit)
 
       # message(paste(batch_start_index, collapse = " "))
       
@@ -285,7 +288,7 @@ google_analytics_4 <- function(viewId,
                                pivots=pivots,
                                cohorts=cohorts,
                                pageToken = x,
-                               pageSize = 10000,
+                               pageSize = reqRowLimit,
                                samplingLevel=samplingLevel,
                                metricFormat=metricFormat,
                                histogramBuckets=histogramBuckets)
@@ -303,6 +306,14 @@ google_analytics_4 <- function(viewId,
       } else {
         ## a list of gav4 results
         inner_reqs <- fetch_google_analytics_4(requests_in)
+
+        api_max <- attr(inner_reqs[[1]], "rowCount")
+        if(!is.null(api_max) && max > api_max){
+          # max <<- api_max
+
+          batches <- length(seq(from=0, to=api_max, by=reqRowLimit*batchLimit))
+          message("Found total of ", api_max, " rows in results. Number of batches is [",batches,"]")
+        } 
       }
 
       ## is all empty stop
@@ -401,22 +412,30 @@ fetch_google_analytics_4 <- function(request_list){
   
   testthat::expect_type(request_list, "list")
 
-  body <- list(
-    reportRequests = request_list
-  )
+  if(length(request_list) <= 5){
+    
+    body <- list(
+      reportRequests = request_list
+    )
+    
+    f <- gar_api_generator("https://analyticsreporting.googleapis.com/v4/reports:batchGet",
+                           "POST",
+                           data_parse_function = google_analytics_4_parse_batch,
+                           # data_parse_function = function(x) x,
+                           simplifyVector = FALSE)
+    
+    message("Fetching Google Analytics v4 API data")
+    
+    out <- f(the_body = body)
+    
+    ## if only one entry in the list, return the dataframe
+    if(length(out) == 1) out <- out[[1]]
+    
+  } else {
+    ## do gar_batching
+    stop("Too many requests to V4 batch, must be 5 or under.")
+  }
 
-  f <- gar_api_generator("https://analyticsreporting.googleapis.com/v4/reports:batchGet",
-                         "POST",
-                         data_parse_function = google_analytics_4_parse_batch,
-                         # data_parse_function = function(x) x,
-                         simplifyVector = FALSE)
-
-  message("Fetching Google Analytics v4 API data")
-
-  out <- f(the_body = body)
-  
-  ## if only one entry in the list, return the dataframe
-  if(length(out) == 1) out <- out[[1]]
 
   out
 }

@@ -107,8 +107,13 @@ google_analytics_4_parse <- function(x){
   
   samplePercent <-  100
   if(!is.null(x$data$samplesReadCounts)){
-      samplePercent <- round(100 * (as.numeric(x$data$samplesReadCounts) / as.numeric(x$data$samplingSpaceSizes)), 2)
+      samplePercent <- get_samplePercent(x$data$samplesReadCounts[[1]], x$data$samplingSpaceSizes[[1]])
       message("Data is sampled, based on ", samplePercent, "% of visits." )
+      
+      if(hasDateComparison){
+        samplePercent <- get_samplePercent(x$data$samplesReadCounts[[2]], x$data$samplingSpaceSizes[[2]])
+        message("Data Comparison is sampled, based on ", samplePercent, "% of visits." )
+        }
   }
   
   testthat::expect_s3_class(out, "data.frame")
@@ -117,6 +122,9 @@ google_analytics_4_parse <- function(x){
   
 }
 
+get_samplePercent <- function(sampleReadCounts, samplingSpaceSizes){
+  round(100 * (as.numeric(sampleReadCounts) / as.numeric(samplingSpaceSizes)), 2)
+}
 
 #' New parse GA account summary
 #' 
