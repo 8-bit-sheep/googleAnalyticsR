@@ -51,8 +51,13 @@ google_analytics_4_parse <- function(x){
     return(NULL)
   }
   
-  dims <- matrix(unlist(lapply(data, function(x) x$dimensions)),
-                 ncol = length(dim_names), byrow = TRUE)
+  if(!is.null(dim_names)){
+    dims <- matrix(unlist(lapply(data, function(x) x$dimensions)),
+                   ncol = length(dim_names), byrow = TRUE)
+  } else {
+    dims <- NULL
+  }
+
   mets <- matrix(unlist(lapply(data, function(x) x$metrics[[1]]$values)),
                  ncol = length(met_names), byrow = TRUE)
   
@@ -65,7 +70,7 @@ google_analytics_4_parse <- function(x){
   }
   
   ## construct the dataframe
-  out <- data.frame(dims, mets,
+  out <- data.frame(cbind(dims, mets),
                     stringsAsFactors = FALSE, row.names = 1:nrow(mets))
   
   out_names <- c(dim_names, met_names)
