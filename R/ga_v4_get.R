@@ -117,7 +117,6 @@ make_ga_4_req <- function(viewId,
                           metricFormat=NULL,
                           histogramBuckets=NULL) {
 
-  # message("Fetching: ", viewId, " pageToken: ", pageToken, " pageSize: ", pageSize)
   samplingLevel <- match.arg(samplingLevel)
   
   if(all(is.null(date_range), is.null(cohorts))){
@@ -254,7 +253,7 @@ google_analytics_4 <- function(viewId,
   reqRowLimit <- as.integer(10000)
   
   if(anti_sample){
-    message("Mitigating sampling via multiple API calls. 'max' argument ignored, all rows to be returned. sampling Level set to 'LARGE'.")
+    myMessage("anti_sample set to TRUE. Mitigating sampling via multiple API calls.", level = 3)
     return(anti_sample(viewId            = viewId,
                        date_range        = date_range,
                        metrics           = metrics,
@@ -271,7 +270,7 @@ google_analytics_4 <- function(viewId,
   }
   
   if(max > reqRowLimit){
-    message("Batching requests as max over ", reqRowLimit)
+    myMessage("Multi-call to API", level = 2)
   }
   
 
@@ -360,7 +359,6 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE){
   ## amount of batches at once
   gar_batch_size <- 10
   
-
   if(length(unique((lapply(request_list, function(x) x$viewId)))) != 1){
     stop("request_list must all have the same viewId")
   }
@@ -381,7 +379,7 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE){
     stop("request_list must all have the same cohortGroup")
   }
   
-  message("Fetching Google Analytics v4 API data")
+  myMessage("Calling APIv4....", level = 3)
   ## make the function
   f <- gar_api_generator("https://analyticsreporting.googleapis.com/v4/reports:batchGet",
                          "POST",
@@ -391,7 +389,7 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE){
   
   ## if under 5, one call
   if(!is.null(request_list$viewId) || length(request_list) <= ga_batch_limit){
-    
+    myMessage("Single v4 batch", level = 2)
     request_list <- unitToList(request_list)
     
     body <- list(
@@ -402,6 +400,7 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE){
     
   } else {
 
+    myMessage("Multiple v4 batch", level = 2)
     ## get list of lists of ga_batch_limit
     request_list_index <- seq(1, length(request_list), ga_batch_limit)
     batch_list <- lapply(request_list_index, 
@@ -431,24 +430,22 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE){
       response_list <- lapply(call_list, googleAuthR::gar_batch)
       
     } else {
-
+      
       ## loop over the requests normally
-      # last_body_list <- body_list[[length(body_list)]]
-      # lb <- last_body_list$reportRequests[[length(last_body_list$reportRequests)]]
-      # max_rows <- as.integer(lb$pageToken) + as.integer(lb$pageSize)
-      # pb <- txtProgressBar(min = 0, max = max_rows, title = "Fetching rows")
+      myMessage("Looping over [", length(body_list), "] batches.", level = 3)
       response_list <- lapply(body_list, function(b){
         
-        # lbr <- b$reportRequests[[length(b$reportRequests)]]
-        # setTxtProgressBar(pb, lbr$pageToken)
+        myMessage("Fetching data...", level = 3)
         f(the_body = b)
         
       })
-      # close(pb)
+
       out <- unlist(response_list, recursive = FALSE)
     }
     
   }
+  
+
   
   ## if only one entry in the list, return the dataframe
   if(length(out) == 1){
@@ -456,9 +453,11 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE){
   } else {
     ## returned a list of data.frames
     if(merge){
-      
-      if(length(unique((lapply(out, function(x) names(x))))) != 1){
-        stop("List of dataframes have non-identical column names")
+
+      df_names <- rmNullObs(lapply(out, function(x) names(x)))
+      if(length(unique(df_names)) != 1){
+        stop("List of dataframes have non-identical column names. Got ", 
+             paste(lapply(out, function(x) names(x)), collapse = " "))
       }
       
       out <- Reduce(rbind, out)
@@ -467,5 +466,6 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE){
   }
 
 
+  message("Downloaded [",NROW(out),"] rows from a total of [",attr(out, "rowCount"), "].")
   out
 }
