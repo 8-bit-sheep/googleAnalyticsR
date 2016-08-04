@@ -28,6 +28,7 @@
     - `ga_webproperty`
     - `ga_webproperty_list`
 * Fix a bad parse if only metrics and no dimensions were used in `google_analytics_4()`
+* Improvements to v4 batching
 
 # 0.2.1 CRAN
 

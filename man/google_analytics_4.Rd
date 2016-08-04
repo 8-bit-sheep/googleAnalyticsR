@@ -9,7 +9,7 @@ google_analytics_4(viewId, date_range = NULL, metrics = NULL,
   filtersExpression = NULL, order = NULL, segments = NULL,
   pivots = NULL, cohorts = NULL, max = 1000,
   samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
-  histogramBuckets = NULL)
+  histogramBuckets = NULL, anti_sample = FALSE)
 }
 \arguments{
 \item{viewId}{viewId of data to get.}
@@ -43,6 +43,8 @@ for two date ranges: \code{c(start1,end1,start2,end2)}}
 
 \item{histogramBuckets}{For numeric dimensions such as hour, a list of buckets of data.
 See details in \link{make_ga_4_req}}
+
+\item{anti_sample}{If TRUE will split up the call to avoid sampling.}
 }
 \value{
 A Google Analytics data.frame
@@ -51,7 +53,14 @@ A Google Analytics data.frame
 A convenience function that wraps \link{make_ga_4_req} and \link{fetch_google_analytics_4}
  for the common case of one GA data request.
  
-Will perform batching if over the 10000 row per API call limit.
+Will perform automatic batching if over the 10000 row per API call limit.
+}
+\details{
+\code{anti_sample} being TRUE ignores \code{max} as the API call is split over days 
+  to mitigate the sampling session limit, in which case a row limit won't work.  Take the top rows
+  of the result yourself instead e.g. \code{head(ga_data_unsampled, 50300)}
+
+Max row limit is 99,999,999
 }
 \examples{
 

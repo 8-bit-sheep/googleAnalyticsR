@@ -194,10 +194,17 @@ make_ga_4_req <- function(viewId,
 #' A convenience function that wraps \link{make_ga_4_req} and \link{fetch_google_analytics_4}
 #'  for the common case of one GA data request.
 #'  
-#' Will perform batching if over the 10000 row per API call limit.
+#' Will perform automatic batching if over the 10000 row per API call limit.
+#' 
+#' \code{anti_sample} being TRUE ignores \code{max} as the API call is split over days 
+#'   to mitigate the sampling session limit, in which case a row limit won't work.  Take the top rows
+#'   of the result yourself instead e.g. \code{head(ga_data_unsampled, 50300)}
+#' 
+#' Max row limit is 99,999,999
 #' 
 #' @inheritParams make_ga_4_req
 #' @param max Maximum number of rows to fetch. Defaults at 1000.
+#' @param anti_sample If TRUE will split up the call to avoid sampling.
 #' 
 #' @return A Google Analytics data.frame
 #' 
@@ -240,14 +247,34 @@ google_analytics_4 <- function(viewId,
                                max=1000,
                                samplingLevel=c("DEFAULT", "SMALL","LARGE"),
                                metricFormat=NULL,
-                               histogramBuckets=NULL){
+                               histogramBuckets=NULL,
+                               anti_sample = FALSE){
 
   max         <- as.integer(max)
   reqRowLimit <- as.integer(10000)
   
+  if(anti_sample){
+    message("Mitigating sampling via multiple API calls. 'max' argument ignored, all rows to be returned. sampling Level set to 'LARGE'.")
+    return(anti_sample(viewId            = viewId,
+                       date_range        = date_range,
+                       metrics           = metrics,
+                       dimensions        = dimensions,
+                       dim_filters       = dim_filters,
+                       met_filters       = met_filters,
+                       filtersExpression = filtersExpression,
+                       order             = order,
+                       segments          = segments,
+                       pivots            = pivots,
+                       cohorts           = cohorts,
+                       metricFormat      = metricFormat,
+                       histogramBuckets  = histogramBuckets))
+  }
+  
   if(max > reqRowLimit){
     message("Batching requests as max over ", reqRowLimit)
   }
+  
+
   
   meta_batch_start_index <- seq(from=0, to=max, by=reqRowLimit)
   
@@ -406,13 +433,13 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE){
     } else {
 
       ## loop over the requests normally
-      last_body_list <- body_list[[length(body_list)]]
-      lb <- last_body_list$reportRequests[[length(last_body_list$reportRequests)]]
-      max_rows <- as.integer(lb$pageToken) + as.integer(lb$pageSize)
+      # last_body_list <- body_list[[length(body_list)]]
+      # lb <- last_body_list$reportRequests[[length(last_body_list$reportRequests)]]
+      # max_rows <- as.integer(lb$pageToken) + as.integer(lb$pageSize)
       # pb <- txtProgressBar(min = 0, max = max_rows, title = "Fetching rows")
       response_list <- lapply(body_list, function(b){
         
-        lbr <- b$reportRequests[[length(b$reportRequests)]]
+        # lbr <- b$reportRequests[[length(b$reportRequests)]]
         # setTxtProgressBar(pb, lbr$pageToken)
         f(the_body = b)
         
