@@ -39,6 +39,76 @@ ga_id <- account_list[23,'viewId']
 
 ```
 
+### Anti-sampling v4
+
+A new feature from version `0.3.0` is anti-sampling via batching.
+
+Sampling is due to your API request being over the session limits [outlined in this Google article](https://support.google.com/analytics/answer/2637192).  This limit is higher for Google Analytics 360.  
+
+If you split up your API request so that the number of sessions falls under these limits, sampling will not occur.
+
+#### Sampled data example
+
+If you have sampling in your data request, `googleAnalyticsR` reports it back to you in the console when making the request. 
+
+```r
+> library(googleAnalyticsR)
+> ga_auth()
+> sampled_data_fetch <- google_analytics_4(id, 
+                                           date_range = c(“2015-01-01”,”2015-06-21"), 
+                                           metrics = c("users","sessions","bounceRate"), 
+                                           dimensions = c("date","landingPagePath","source"))
+Calling APIv4....
+Data is sampled, based on 39.75% of visits.
+```
+
+#### Unsampled data example
+
+Setting the new argument `anti_sample=TRUE` in a `google_analytics_4()` request now causes the calls to be split up into small enough chunks to avoid sampling.  This uses more API calls so the data will reach you slower, but it should hold more detail.
+
+```r
+> library(googleAnalyticsR)
+> ga_auth()
+> unsampled_data_fetch <- google_analytics_4(id, 
+                                             date_range = c(“2015-01-01”,”2015-06-21"), 
+                                             metrics = c("users","sessions","bounceRate"), 
+                                             dimensions = c("date","landingPagePath","source"),
+                                             anti_sample = TRUE)
+
+anti_sample set to TRUE. Mitigating sampling via multiple API calls.
+Finding how much sampling in data request...
+Data is sampled, based on 39.75% of visits.
+Downloaded [10] rows from a total of [59235].
+Finding number of sessions for anti-sample calculations...
+Downloaded [172] rows from a total of [172].
+Calculated [3] batches are needed to download [59235] rows unsampled.
+Anti-sample call covering 128 days: 2015-01-01, 2015-05-08
+Looping over [2] batches.
+Fetching data...
+Fetching data...
+Downloaded [59235] rows from a total of [59235].
+Anti-sample call covering 23 days: 2015-05-09, 2015-05-31
+Looping over [2] batches.
+Fetching data...
+Fetching data...
+Downloaded [20239] rows from a total of [20239].
+Anti-sample call covering 21 days: 2015-06-01, 2015-06-21
+Looping over [2] batches.
+Fetching data...
+Fetching data...
+Downloaded [21340] rows from a total of [21340].
+Finished unsampled data request, total rows [100814]
+Successfully avoid sampling
+```
+
+The sequence involves a couple of exploratory API calls to determine the best split.  This method will adjust the time periods to have the batch sizes large enough to not take too long, but small enough to have unsampled data.
+
+#### Hourly anti-sampling calls
+
+For large traffic websites, sometimes even if the batches are down to one API call per day, it isn't enough to remove sampling.  In those cases, `googleAnalyticsR` will split the calls further into hourly batches.
+
+If you are still experiencing sampling with hourly batches, then its time to use the [google_analytics_bq](big-query.html) function :)
+
 ### New Filter Syntax
 
 ```r

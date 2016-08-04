@@ -278,6 +278,66 @@ account_list &lt;- google_analytics_account_list()
 ## pick a profile with data to query
 ga_id &lt;- account_list[23,&#39;viewId&#39;]
 </code></pre>
+<div id="anti-sampling-v4" class="section level3">
+<h3>Anti-sampling v4</h3>
+<p>A new feature from version <code>0.3.0</code> is anti-sampling via batching.</p>
+<p>Sampling is due to your API request being over the session limits <a href="https://support.google.com/analytics/answer/2637192">outlined in this Google article</a>. This limit is higher for Google Analytics 360.</p>
+<p>If you split up your API request so that the number of sessions falls under these limits, sampling will not occur.</p>
+<div id="sampled-data-example" class="section level4">
+<h4>Sampled data example</h4>
+<p>If you have sampling in your data request, <code>googleAnalyticsR</code> reports it back to you in the console when making the request.</p>
+<pre class="r"><code>&gt; library(googleAnalyticsR)
+&gt; ga_auth()
+&gt; sampled_data_fetch &lt;- google_analytics_4(id, 
+                                           date_range = c(“2015-01-01”,”2015-06-21&quot;), 
+                                           metrics = c(&quot;users&quot;,&quot;sessions&quot;,&quot;bounceRate&quot;), 
+                                           dimensions = c(&quot;date&quot;,&quot;landingPagePath&quot;,&quot;source&quot;))
+Calling APIv4....
+Data is sampled, based on 39.75% of visits.</code></pre>
+</div>
+<div id="unsampled-data-example" class="section level4">
+<h4>Unsampled data example</h4>
+<p>Setting the new argument <code>anti_sample=TRUE</code> in a <code>google_analytics_4()</code> request now causes the calls to be split up into small enough chunks to avoid sampling. This uses more API calls so the data will reach you slower, but it should hold more detail.</p>
+<pre class="r"><code>&gt; library(googleAnalyticsR)
+&gt; ga_auth()
+&gt; unsampled_data_fetch &lt;- google_analytics_4(id, 
+                                             date_range = c(“2015-01-01”,”2015-06-21&quot;), 
+                                             metrics = c(&quot;users&quot;,&quot;sessions&quot;,&quot;bounceRate&quot;), 
+                                             dimensions = c(&quot;date&quot;,&quot;landingPagePath&quot;,&quot;source&quot;),
+                                             anti_sample = TRUE)
+
+anti_sample set to TRUE. Mitigating sampling via multiple API calls.
+Finding how much sampling in data request...
+Data is sampled, based on 39.75% of visits.
+Downloaded [10] rows from a total of [59235].
+Finding number of sessions for anti-sample calculations...
+Downloaded [172] rows from a total of [172].
+Calculated [3] batches are needed to download [59235] rows unsampled.
+Anti-sample call covering 128 days: 2015-01-01, 2015-05-08
+Looping over [2] batches.
+Fetching data...
+Fetching data...
+Downloaded [59235] rows from a total of [59235].
+Anti-sample call covering 23 days: 2015-05-09, 2015-05-31
+Looping over [2] batches.
+Fetching data...
+Fetching data...
+Downloaded [20239] rows from a total of [20239].
+Anti-sample call covering 21 days: 2015-06-01, 2015-06-21
+Looping over [2] batches.
+Fetching data...
+Fetching data...
+Downloaded [21340] rows from a total of [21340].
+Finished unsampled data request, total rows [100814]
+Successfully avoid sampling</code></pre>
+<p>The sequence involves a couple of exploratory API calls to determine the best split. This method will adjust the time periods to have the batch sizes large enough to not take too long, but small enough to have unsampled data.</p>
+</div>
+<div id="hourly-anti-sampling-calls" class="section level4">
+<h4>Hourly anti-sampling calls</h4>
+<p>For large traffic websites, sometimes even if the batches are down to one API call per day, it isn’t enough to remove sampling. In those cases, <code>googleAnalyticsR</code> will split the calls further into hourly batches.</p>
+<p>If you are still experiencing sampling with hourly batches, then its time to use the <a href="big-query.html">google_analytics_bq</a> function :)</p>
+</div>
+</div>
 <div id="new-filter-syntax" class="section level3">
 <h3>New Filter Syntax</h3>
 <pre class="r"><code>## create filters on metrics
