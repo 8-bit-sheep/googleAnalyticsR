@@ -242,38 +242,37 @@ google_analytics_4 <- function(viewId,
                                metricFormat=NULL,
                                histogramBuckets=NULL){
 
-  max <- as.integer(max)
-  ## for same Id and daterange, v4 batches can be made
-  reqRowLimit <- 10000
+  max         <- as.integer(max)
+  reqRowLimit <- as.integer(10000)
   
   if(max > reqRowLimit){
     message("Batching requests as max over ", reqRowLimit)
-    ## how many v4 batch requests can be made at one time
   }
+  
   meta_batch_start_index <- seq(from=0, to=max, by=reqRowLimit)
-  # batches <- length(meta_batch_start_index)
   
   ## make a list of the requests
   requests <- lapply(meta_batch_start_index, function(start_index){
-    start_index <- as.integer(start_index)
-    remaining <- max - start_index
     
-    out <- make_ga_4_req(viewId=viewId,
-                         date_range=date_range,
-                         metrics=metrics,
-                         dimensions=dimensions,
-                         dim_filters=dim_filters,
-                         met_filters=met_filters,
+    start_index <- as.integer(start_index)
+    remaining   <- min(as.integer(max - start_index), reqRowLimit)
+    
+    out <- make_ga_4_req(viewId            = viewId,
+                         date_range        = date_range,
+                         metrics           = metrics,
+                         dimensions        = dimensions,
+                         dim_filters       = dim_filters,
+                         met_filters       = met_filters,
                          filtersExpression = filtersExpression,
-                         order=order,
-                         segments=segments,
-                         pivots=pivots,
-                         cohorts=cohorts,
-                         pageToken = start_index,
-                         pageSize = min(remaining, reqRowLimit),
-                         samplingLevel=samplingLevel,
-                         metricFormat=metricFormat,
-                         histogramBuckets=histogramBuckets)
+                         order             = order,
+                         segments          = segments,
+                         pivots            = pivots,
+                         cohorts           = cohorts,
+                         pageToken         = start_index,
+                         pageSize          = remaining,
+                         samplingLevel     = samplingLevel,
+                         metricFormat      = metricFormat,
+                         histogramBuckets  = histogramBuckets)
     
     })
     
@@ -284,6 +283,8 @@ google_analytics_4 <- function(viewId,
 #' Fetch multiple GAv4 requests
 #' 
 #' Fetch the GAv4 requests as created by \link{make_ga_4_req}
+#' 
+#' For same viewId, daterange, segments, samplingLevel and cohortGroup, v4 batches can be made
 #'
 #' @param request_list A list of requests created by \link{make_ga_4_req}
 #' @param merge If TRUE then will rbind that list of data.frames
@@ -327,47 +328,117 @@ google_analytics_4 <- function(viewId,
 fetch_google_analytics_4 <- function(request_list, merge = FALSE){
 
   testthat::expect_type(request_list, "list")
+  ## amount of batches per v4 api call
+  ga_batch_limit <- 5
+  ## amount of batches at once
+  gar_batch_size <- 10
+  
 
-  if(!is.null(request_list$viewId) || length(request_list) <= 5){
+  if(length(unique((lapply(request_list, function(x) x$viewId)))) != 1){
+    stop("request_list must all have the same viewId")
+  }
+  
+  if(length(unique((lapply(request_list, function(x) x$dateRanges)))) != 1){
+    stop("request_list must all have the same dateRanges")
+  }
+  
+  if(length(unique((lapply(request_list, function(x) x$segments)))) != 1){
+    stop("request_list must all have the same segments")
+  }
+  
+  if(length(unique((lapply(request_list, function(x) x$samplingLevel)))) != 1){
+    stop("request_list must all have the same samplingLevel")
+  }
+  
+  if(length(unique((lapply(request_list, function(x) x$cohortGroup)))) != 1){
+    stop("request_list must all have the same cohortGroup")
+  }
+  
+  message("Fetching Google Analytics v4 API data")
+  ## make the function
+  f <- gar_api_generator("https://analyticsreporting.googleapis.com/v4/reports:batchGet",
+                         "POST",
+                         data_parse_function = google_analytics_4_parse_batch,
+                         # data_parse_function = function(x) x,
+                         simplifyVector = FALSE)
+  
+  ## if under 5, one call
+  if(!is.null(request_list$viewId) || length(request_list) <= ga_batch_limit){
     
     request_list <- unitToList(request_list)
     
     body <- list(
       reportRequests = request_list
     )
-    
-    f <- gar_api_generator("https://analyticsreporting.googleapis.com/v4/reports:batchGet",
-                           "POST",
-                           data_parse_function = google_analytics_4_parse_batch,
-                           # data_parse_function = function(x) x,
-                           simplifyVector = FALSE)
-    
-    message("Fetching Google Analytics v4 API data")
-    
+
     out <- f(the_body = body)
     
-    ## if only one entry in the list, return the dataframe
-    if(length(out) == 1){
-      out <- out[[1]]
+  } else {
+
+    ## get list of lists of ga_batch_limit
+    request_list_index <- seq(1, length(request_list), ga_batch_limit)
+    batch_list <- lapply(request_list_index, 
+                         function(x) request_list[x:(x+(ga_batch_limit-1))])
+    
+    ## make the body for each v4 api call
+    body_list <- lapply(batch_list, function(x) list(reportRequests = x))
+    body_list <- rmNullObs(body_list)
+    
+    ## Only if supported in Google batching
+    GOOGLE_BATCHING <- FALSE
+    if(GOOGLE_BATCHING){
+      ## make the list of 10 for each gar_batch call
+      batch_list_index <- seq(1, length(body_list), gar_batch_size)
+      batch_body_list <- lapply(batch_list_index,
+                                function(x) body_list[x:(x+(gar_batch_size-1))])
+      batch_body_list <- rmNullObs(batch_body_list)
+
+      ## make the call list
+      call_list <- lapply(batch_body_list, function(bl){
+        lapply(bl, function(rr){
+          f(the_body = rr, batch = TRUE)
+        })
+      })
+
+      ## make the batch calls
+      response_list <- lapply(call_list, googleAuthR::gar_batch)
+      
     } else {
-      ## returned a list of data.frames
-      if(merge){
-       
-        if(length(unique((lapply(out, function(x) names(x))))) != 1){
-         stop("List of dataframes have non-identical column names")
-        }
+
+      ## loop over the requests normally
+      last_body_list <- body_list[[length(body_list)]]
+      lb <- last_body_list$reportRequests[[length(last_body_list$reportRequests)]]
+      max_rows <- as.integer(lb$pageToken) + as.integer(lb$pageSize)
+      # pb <- txtProgressBar(min = 0, max = max_rows, title = "Fetching rows")
+      response_list <- lapply(body_list, function(b){
         
-        out <- Reduce(rbind, out)
+        lbr <- b$reportRequests[[length(b$reportRequests)]]
+        # setTxtProgressBar(pb, lbr$pageToken)
+        f(the_body = b)
         
-      }
+      })
+      # close(pb)
+      out <- unlist(response_list, recursive = FALSE)
     }
     
+  }
+  
+  ## if only one entry in the list, return the dataframe
+  if(length(out) == 1){
+    out <- out[[1]]
   } else {
-    ## do gar_batching
-    stop("Too many requests to V4 batch, must be 5 or under.")
+    ## returned a list of data.frames
+    if(merge){
+      
+      if(length(unique((lapply(out, function(x) names(x))))) != 1){
+        stop("List of dataframes have non-identical column names")
+      }
+      
+      out <- Reduce(rbind, out)
+      
+    }
   }
 
 
   out
 }
-

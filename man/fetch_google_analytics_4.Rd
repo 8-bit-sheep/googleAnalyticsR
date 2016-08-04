@@ -17,6 +17,9 @@ A dataframe if one request, or a list of data.frames if multiple.
 \description{
 Fetch the GAv4 requests as created by \link{make_ga_4_req}
 }
+\details{
+For same viewId, daterange, segments, samplingLevel and cohortGroup, v4 batches can be made
+}
 \examples{
 
 \dontrun{

@@ -28,17 +28,12 @@ google_analytics_4_parse <- function(x){
   data <- x$data$rows
   hasDateComparison <- if(length(data[[1]]$metrics) == 2) TRUE else FALSE
   
-  if(!is.null(data$isDataGolden)){
-    if(!data$isDataGolden)
+  if(!is.null(x$data$isDataGolden) && !x$data$isDataGolden){
       warning("Data is not Golden - may change on subsequent API calls.")
   }
   
-  if(!is.null(data$filteredForPrivacyReasons)){
+  if(!is.null(x$data$filteredForPrivacyReasons)){
     warning("Some data has been filtered for privacy reasons.")
-  }
-  
-  if(!is.null(data$samplesReadCounts)){
-    warning("Data is sampled.")
   }
   
   dim_names <- unlist(columnHeader$dimensions)
