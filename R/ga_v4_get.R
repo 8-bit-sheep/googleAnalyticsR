@@ -379,7 +379,7 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE){
     stop("request_list must all have the same cohortGroup")
   }
   
-  myMessage("Calling APIv4....", level = 3)
+  myMessage("Calling APIv4....", level = 2)
   ## make the function
   f <- gar_api_generator("https://analyticsreporting.googleapis.com/v4/reports:batchGet",
                          "POST",

@@ -34,7 +34,7 @@ anti_sample <- function(viewId,
   space_size <- as.integer(attr(test_call, "samplingSpaceSizes")[[1]])
   samplingPer <- get_samplePercent(read_counts, space_size)
   rowCount <- as.integer(attr(test_call, "rowCount")[[1]])
-  ## adds 10% to read_counts as its flaky
+  ## adds 10% to read_counts as its flakey
   m_error <- 0.9 
   
   if(identical(samplingPer, numeric(0))){
