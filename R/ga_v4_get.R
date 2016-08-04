@@ -245,102 +245,20 @@ google_analytics_4 <- function(viewId,
   max <- as.integer(max)
   ## for same Id and daterange, v4 batches can be made
   reqRowLimit <- 10000
-  batchLimit <- 5
   
   if(max > reqRowLimit){
+    message("Batching requests as max over ", reqRowLimit)
     ## how many v4 batch requests can be made at one time
-
-    meta_batch_start_index <- seq(from=0, to=max, by=reqRowLimit*batchLimit)
-    batches <- length(meta_batch_start_index)
+  }
+  meta_batch_start_index <- seq(from=0, to=max, by=reqRowLimit)
+  # batches <- length(meta_batch_start_index)
+  
+  ## make a list of the requests
+  requests <- lapply(meta_batch_start_index, function(start_index){
+    start_index <- as.integer(start_index)
+    remaining <- max - start_index
     
-    # message("V4 Batching data into [", batches, "] calls.")
-
-    # message(paste(meta_batch_start_index, collapse = " "))
-    ## loop for each over 50000
-    
-    do_it <- TRUE
-    requests <- lapply(meta_batch_start_index, function(meta){
-      
-      ## to fix (#19) - silly bug were index of 10000 turned into 1e5 passed in as 1(!)
-      meta <- as.integer(meta)
-      
-      message("Fetching row [", meta, "] to [", as.integer(meta + batchLimit*reqRowLimit), "]")
-      batch_start_index <- seq(from=meta, to=min(meta+((batchLimit-1)*reqRowLimit), max), by = reqRowLimit)
-
-      # message(paste(batch_start_index, collapse = " "))
-      
-      ## loop for each 10000 fetch
-      requests_in <- lapply(batch_start_index, function(x){
-        
-        if(do_it){
-          # message("Inner batch loop: ", x)
-          ## to fix (#19) - silly bug were index of 10000 turned into 1e5 passed in as 1(!)
-          x <- as.integer(x)
-          out <- make_ga_4_req(viewId=viewId,
-                               date_range=date_range,
-                               metrics=metrics,
-                               dimensions=dimensions,
-                               dim_filters=dim_filters,
-                               met_filters=met_filters,
-                               filtersExpression = filtersExpression,
-                               order=order,
-                               segments=segments,
-                               pivots=pivots,
-                               cohorts=cohorts,
-                               pageToken = x,
-                               pageSize = reqRowLimit,
-                               samplingLevel=samplingLevel,
-                               metricFormat=metricFormat,
-                               histogramBuckets=histogramBuckets)
-          
-        } else {
-          out <- NULL
-        }
-
-        out
-        
-      })
-      
-      if(all(vapply(requests_in, is.null, logical(1)))){
-        inner_reqs <- NULL
-      } else {
-        ## a list of gav4 results
-        inner_reqs <- fetch_google_analytics_4(requests_in)
-
-        api_max <- attr(inner_reqs[[1]], "rowCount")
-        if(!is.null(api_max) && max > api_max){
-          # max <<- api_max
-
-          batches <- length(seq(from=0, to=api_max, by=reqRowLimit*batchLimit))
-          message("Found total of ", api_max, " rows in results. Number of batches is [",batches,"]")
-        } 
-      }
-
-      ## is all empty stop
-      if(all(vapply(inner_reqs, is.null, logical(1)))){
-        do_it <<- FALSE
-        out <- NULL
-      } else if(inherits(inner_reqs, "list")){
-        ## make it one dataframe
-        out <- Reduce(rbind, inner_reqs)
-      } else if(inherits(inner_reqs, "data.frame")){
-        out <- inner_reqs
-      } else if(is.null(inner_reqs)){
-        out <- NULL
-      } else {
-        stop("Output class not recognised: ", class(inner_reqs))
-      }
-      
-      out
-      
-    })
-
-    ## a list of dataframes, to one
-    out <- Reduce(rbind, requests)
-    
-  } else {
-    ## normal under 10000
-    req <- make_ga_4_req(viewId=viewId,
+    out <- make_ga_4_req(viewId=viewId,
                          date_range=date_range,
                          metrics=metrics,
                          dimensions=dimensions,
@@ -351,16 +269,15 @@ google_analytics_4 <- function(viewId,
                          segments=segments,
                          pivots=pivots,
                          cohorts=cohorts,
-                         pageToken = 0,
-                         pageSize = max,
+                         pageToken = start_index,
+                         pageSize = min(remaining, reqRowLimit),
                          samplingLevel=samplingLevel,
                          metricFormat=metricFormat,
                          histogramBuckets=histogramBuckets)
-    out <- fetch_google_analytics_4(req)
-  }
-  
-  out
-
+    
+    })
+    
+  fetch_google_analytics_4(requests, merge = TRUE)
 
 }
 
@@ -369,6 +286,7 @@ google_analytics_4 <- function(viewId,
 #' Fetch the GAv4 requests as created by \link{make_ga_4_req}
 #'
 #' @param request_list A list of requests created by \link{make_ga_4_req}
+#' @param merge If TRUE then will rbind that list of data.frames
 #'
 #' @return A dataframe if one request, or a list of data.frames if multiple.
 #'
@@ -406,13 +324,13 @@ google_analytics_4 <- function(viewId,
 #' 
 #' @family GAv4 fetch functions
 #' @export
-fetch_google_analytics_4 <- function(request_list){
+fetch_google_analytics_4 <- function(request_list, merge = FALSE){
 
-  request_list <- unitToList(request_list)
-  
   testthat::expect_type(request_list, "list")
 
-  if(length(request_list) <= 5){
+  if(!is.null(request_list$viewId) || length(request_list) <= 5){
+    
+    request_list <- unitToList(request_list)
     
     body <- list(
       reportRequests = request_list
@@ -429,7 +347,20 @@ fetch_google_analytics_4 <- function(request_list){
     out <- f(the_body = body)
     
     ## if only one entry in the list, return the dataframe
-    if(length(out) == 1) out <- out[[1]]
+    if(length(out) == 1){
+      out <- out[[1]]
+    } else {
+      ## returned a list of data.frames
+      if(merge){
+       
+        if(length(unique((lapply(out, function(x) names(x))))) != 1){
+         stop("List of dataframes have non-identical column names")
+        }
+        
+        out <- Reduce(rbind, out)
+        
+      }
+    }
     
   } else {
     ## do gar_batching
