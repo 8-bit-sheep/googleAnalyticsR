@@ -29,7 +29,7 @@
     - `ga_webproperty_list`
 * Fix a bad parse if only metrics and no dimensions were used in `google_analytics_4()`
 * Improvements to v4 batching
-* New argument `anti_sample` for `google_analytics_4` which will split up the call into efficient batches to avoid sampling. 
+* New argument `anti_sample` for `google_analytics_4` which will split up the calls into efficient batches to avoid sampling. Includes sub-day hourly batching if necessary.
 
 # 0.2.1 CRAN
 

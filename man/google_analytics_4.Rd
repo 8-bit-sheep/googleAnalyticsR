@@ -55,12 +55,19 @@ A convenience function that wraps \link{make_ga_4_req} and \link{fetch_google_an
  
 Will perform automatic batching if over the 10000 row per API call limit.
 }
-\details{
+\section{Anti-sampling}{
+
+
 \code{anti_sample} being TRUE ignores \code{max} as the API call is split over days 
   to mitigate the sampling session limit, in which case a row limit won't work.  Take the top rows
   of the result yourself instead e.g. \code{head(ga_data_unsampled, 50300)}
 
-Max row limit is 99,999,999
+If you are lucky enough to need sub-day sampling, it will attempt to fetch per hour, but you are
+  restricted to not using \code{dim_filter} argument if this is the case.  
+  Try using \code{filtersExpression} instead.
+  
+\code{anti_sample} being TRUE will also set \code{samplingLevel='LARGE'} to minimise 
+  the number of calls.
 }
 \examples{
 
