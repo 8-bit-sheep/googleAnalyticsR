@@ -17,7 +17,9 @@ anti_sample <- function(viewId,
                         cohorts,
                         metricFormat,
                         histogramBuckets){
-
+  
+  if(length(date_range) > 2) stop("Anti-sampling not available for comparison date ranges.")
+  
   myMessage("Finding how much sampling in data request...", level = 3)
   test_call <- google_analytics_4(viewId            = viewId,
                                   date_range        = date_range,
@@ -35,6 +37,7 @@ anti_sample <- function(viewId,
                                   samplingLevel     = "LARGE",
                                   histogramBuckets  = histogramBuckets)
   
+
   ## reduce read counts by 10% to get more calls as returned figure is flakey
   read_counts <- round(as.integer(attr(test_call,"samplesReadCounts")[[1]]) * 0.9)
   space_size  <- as.integer(attr(test_call, "samplingSpaceSizes")[[1]])

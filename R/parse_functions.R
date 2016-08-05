@@ -100,21 +100,23 @@ google_analytics_4_parse <- function(x){
   attr(out, "samplingSpaceSizes") <- x$data$samplingSpaceSizes
   attr(out, "nextPageToken") <- x$nextPageToken
   
-  samplePercent <-  100
-  if(!is.null(x$data$samplesReadCounts)){
-      samplePercent <- get_samplePercent(x$data$samplesReadCounts[[1]], x$data$samplingSpaceSizes[[1]])
-      message("Data is sampled, based on ", samplePercent, "% of visits." )
-      
-      if(hasDateComparison){
-        samplePercent <- get_samplePercent(x$data$samplesReadCounts[[2]], x$data$samplingSpaceSizes[[2]])
-        message("Data Comparison is sampled, based on ", samplePercent, "% of visits." )
-        }
-  }
-  
   testthat::expect_s3_class(out, "data.frame")
   
   out
   
+}
+
+sampling_message <- function(samplesReadCounts, samplingSpaceSizes, hasDateComparison = FALSE){
+  samplePercent <-  100
+  if(!is.null(samplesReadCounts)){
+    samplePercent <- get_samplePercent(samplesReadCounts[[1]], samplingSpaceSizes[[1]])
+    message("Data is sampled, based on ", samplePercent, "% of sessions." )
+    
+    if(hasDateComparison){
+      samplePercent <- get_samplePercent(samplesReadCounts[[2]], samplingSpaceSizes[[2]])
+      message("Data Comparison is sampled, based on ", samplePercent, "% of sessions." )
+    }
+  }
 }
 
 get_samplePercent <- function(sampleReadCounts, samplingSpaceSizes){
