@@ -155,7 +155,8 @@ authDropdown <- function(input, output, session, ga.table){
 #' 
 #' @param id Shiny id
 #' @param label label
-#' @param multiple
+#' @param multiple multiple select
+#' @param width width of select
 #'
 #' @return Shiny UI
 #' @export
@@ -184,6 +185,7 @@ multi_selectUI <- function(id,
 #' @param output shiny output
 #' @param session shiny session
 #' @param type metric or dimension
+#' @param subType Limit selections to those relevant
 #' @param default The default selected choice. First element if NULL
 #'
 #' @return the selected variable

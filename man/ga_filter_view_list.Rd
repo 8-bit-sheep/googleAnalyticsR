@@ -12,8 +12,6 @@ ga_filter_view_list(accountId, webPropertyId, profileId)
 \item{webPropertyId}{Web Property Id}
 
 \item{profileId}{Profile Id}
-
-\item{linkId}{Link Id}
 }
 \value{
 filter list

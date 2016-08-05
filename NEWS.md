@@ -1,6 +1,6 @@
 # 0.2.1.9000
 
-* add BigQuery asynch fetch to Google Analytics 360 exports, for over 1,000,000 rows.
+* Add BigQuery asynch fetch to Google Analytics 360 exports, for over 1,000,000 rows.
 * A GA v4 example Shiny app added that runs on `https://mark.shinyapps.io/googleAnalyticsRv4Demo/`
 * Fix bug for calculated metrics if expression not starting with `ga:` (#28)
 * Add several management API functions:
@@ -27,10 +27,10 @@
     - `ga_view_list`
     - `ga_webproperty`
     - `ga_webproperty_list`
-* Fix a bad parse if only metrics and no dimensions were used in `google_analytics_4()`
-* Improvements to v4 batching
-* New argument `anti_sample` for `google_analytics_4` which will split up the calls into efficient batches to avoid sampling. Includes sub-day hourly batching if necessary.
-* Set argument `max = -1` to fetch all results. 
+* Fix a parse bug if only metrics and no dimensions were used in `google_analytics_4()`
+* Refactoring v4 batching
+* New argument `anti_sample` for `google_analytics_4()` which will split up the calls into efficient batches to avoid sampling. Includes experimental sub-day hourly batching.
+* Set argument `max = -1` in `google_analytics_4()` to fetch all results. 
 
 # 0.2.1 CRAN
 

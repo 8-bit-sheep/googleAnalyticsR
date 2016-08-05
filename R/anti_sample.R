@@ -110,7 +110,6 @@ anti_sample <- function(viewId,
                                 cohorts           = cohorts,
                                 max               = attr(out, "rowCount"),
                                 metricFormat      = metricFormat,
-                                samplingLevel     = "LARGE",
                                 histogramBuckets  = histogramBuckets,
                                 read_counts = read_counts)
     }

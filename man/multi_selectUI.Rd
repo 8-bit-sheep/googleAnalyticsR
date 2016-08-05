@@ -11,7 +11,9 @@ multi_selectUI(id, label = "Metric", multiple = TRUE, width = NULL)
 
 \item{label}{label}
 
-\item{multiple}{}
+\item{multiple}{multiple select}
+
+\item{width}{width of select}
 }
 \value{
 Shiny UI

@@ -18,13 +18,14 @@ Imports:
     tidyjson (>= 0.2.1),
     magrittr,
     jsonlite,
-    shiny (>= 0.13.2)
+    shiny (>= 0.13.2),
+    bigQueryR (>= 0.1.0)
 Suggests:
     knitr,
     rmarkdown,
     testthat (>= 1.0.2),
     miniUI (>= 0.1.1),
-    bigQueryR (>= 0.1.0)
+    googleCloudStorageR
 License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr

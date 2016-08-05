@@ -3,7 +3,6 @@
 #' @param accountId Account Id
 #' @param webPropertyId Web Property Id
 #' @param profileId Profile Id
-#' @param linkId Link Id
 #'
 #' @return filter list
 #' @importFrom googleAuthR gar_api_generator

@@ -16,6 +16,8 @@ multi_select(input, output, session, type = c("METRIC", "DIMENSION"),
 
 \item{type}{metric or dimension}
 
+\item{subType}{Limit selections to those relevant}
+
 \item{default}{The default selected choice. First element if NULL}
 }
 \value{

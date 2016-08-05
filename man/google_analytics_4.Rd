@@ -17,7 +17,7 @@ google_analytics_4(viewId, date_range = NULL, metrics = NULL,
 \item{date_range}{character or date vector of format \code{c(start, end)} or 
 for two date ranges: \code{c(start1,end1,start2,end2)}}
 
-\item{metrics}{Metric to fetch. Required. Supports calculated metrics.}
+\item{metrics}{Metric to fetch. Supports calculated metrics.}
 
 \item{dimensions}{Dimensions to fetch.}
 
