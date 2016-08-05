@@ -110,7 +110,7 @@ sampling_message <- function(samplesReadCounts, samplingSpaceSizes, hasDateCompa
   samplePercent <-  100
   if(!is.null(samplesReadCounts)){
     samplePercent <- get_samplePercent(samplesReadCounts[[1]], samplingSpaceSizes[[1]])
-    message("Data is sampled, based on ", samplePercent, "% of sessions." )
+    message("Data is sampled, based on ", samplePercent, "% of sessions. Use argument anti_sample = TRUE to request unsampled data." )
     
     if(hasDateComparison){
       samplePercent <- get_samplePercent(samplesReadCounts[[2]], samplingSpaceSizes[[2]])
@@ -120,13 +120,15 @@ sampling_message <- function(samplesReadCounts, samplingSpaceSizes, hasDateCompa
 }
 
 get_samplePercent <- function(sampleReadCounts, samplingSpaceSizes){
-  sampleReadCounts <- as.numeric(sampleReadCounts)
+  sampleReadCounts   <- as.numeric(sampleReadCounts)
   samplingSpaceSizes <- as.numeric(samplingSpaceSizes)
 
-  if(sampleReadCounts == 0 || samplingSpaceSizes == 0 || 
-     identical(sampleReadCounts, numeric(0)) || identical(samplingSpaceSizes, numeric(0))) return(numeric(0))
+  if(sampleReadCounts == 0 || 
+     samplingSpaceSizes == 0 || 
+     identical(sampleReadCounts, numeric(0)) || 
+     identical(samplingSpaceSizes, numeric(0))) return(numeric(0))
 
-  round(100 * (as.numeric(sampleReadCounts) / as.numeric(samplingSpaceSizes)), 2)
+  round(100 * (sampleReadCounts / samplingSpaceSizes), 1)
 }
 
 #' New parse GA account summary

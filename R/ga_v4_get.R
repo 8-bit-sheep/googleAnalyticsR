@@ -7,7 +7,7 @@
 #' @param viewId viewId of data to get.
 #' @param date_range character or date vector of format \code{c(start, end)} or 
 #'   for two date ranges: \code{c(start1,end1,start2,end2)}
-#' @param metrics Metric to fetch. Required. Supports calculated metrics.
+#' @param metrics Metric to fetch. Supports calculated metrics.
 #' @param dimensions Dimensions to fetch.
 #' @param dim_filters A \link{filter_clause_ga4} wrapping \link{dim_filter}
 #' @param met_filters A \link{filter_clause_ga4} wrapping \link{met_filter}
@@ -351,7 +351,7 @@ google_analytics_4 <- function(viewId,
       })
       the_rest <- fetch_google_analytics_4(requests2, merge = TRUE)
       out <- rbind(out, the_rest)
-      myMessage("All data downloaded, total [",all_rows,"]", level = 3)
+      myMessage("All data downloaded, total of [",all_rows,"]", level = 3)
       
     } else {
       myMessage("One batch enough to get all results", level = 1)
