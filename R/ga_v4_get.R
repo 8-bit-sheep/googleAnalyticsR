@@ -439,10 +439,10 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE){
     } else {
       
       ## loop over the requests normally
-      myMessage("Looping over [", length(body_list), "] batches.", level = 3)
+      myMessage("Looping over maximum [", length(body_list), "] batches.", level = 1)
       response_list <- lapply(body_list, function(b){
         
-        myMessage("Fetching data...", level = 3)
+        myMessage("Fetching data batch...", level = 1)
         f(the_body = b)
         
       })

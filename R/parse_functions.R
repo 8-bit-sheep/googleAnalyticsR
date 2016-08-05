@@ -118,6 +118,12 @@ google_analytics_4_parse <- function(x){
 }
 
 get_samplePercent <- function(sampleReadCounts, samplingSpaceSizes){
+  sampleReadCounts <- as.numeric(sampleReadCounts)
+  samplingSpaceSizes <- as.numeric(samplingSpaceSizes)
+
+  if(sampleReadCounts == 0 || samplingSpaceSizes == 0 || 
+     identical(sampleReadCounts, numeric(0)) || identical(samplingSpaceSizes, numeric(0))) return(numeric(0))
+
   round(100 * (as.numeric(sampleReadCounts) / as.numeric(samplingSpaceSizes)), 2)
 }
 

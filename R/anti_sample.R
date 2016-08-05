@@ -34,13 +34,14 @@ anti_sample <- function(viewId,
                                   metricFormat      = metricFormat,
                                   samplingLevel     = "LARGE",
                                   histogramBuckets  = histogramBuckets)
-  ## adds 10% to read_counts as its flakey
-  read_counts <- as.integer(attr(test_call,"samplesReadCounts")[[1]]) * 0.9
+  
+  ## reduce read counts by 10% to get more calls as returned figure is flakey
+  read_counts <- round(as.integer(attr(test_call,"samplesReadCounts")[[1]]) * 0.9)
   space_size  <- as.integer(attr(test_call, "samplingSpaceSizes")[[1]])
   samplingPer <- get_samplePercent(read_counts, space_size)
   
-  ## add 20% to rowCount as its flakey
-  rowCount <- as.integer(attr(test_call, "rowCount")[[1]]) * 1.2
+  ## add 20% to rowCount as its flakey (sampled rows of 0 not included?)
+  rowCount <- round(as.integer(attr(test_call, "rowCount")[[1]]) * 1.2)
   
   if(identical(samplingPer, numeric(0))){
     message("No sampling found, returning call")
@@ -55,69 +56,77 @@ anti_sample <- function(viewId,
                                          dimensions = "date")
   explore_sessions$cumulative <- cumsum(explore_sessions$sessions)
   explore_sessions$sample_bucket <- as.factor((explore_sessions$cumulative %/% read_counts) + 1)
+  
+  ## split to find new date ranges
   splits <- split(explore_sessions, explore_sessions[["sample_bucket"]])
   
   new_date_ranges <- lapply(splits, function(x) {list(start_date = min(x$date), 
                                                      end_date = max(x$date),
                                                      range_date = nrow(x))})
+  myMessage("Calculated [", length(new_date_ranges), "] batches are needed to download approx. [", rowCount,"] rows unsampled.", 
+            level = 3)
+  myMessage("Found [", read_counts, "] sampleReadCounts from a [", space_size, "] samplingSpaceSize.", 
+            level = 2)
   
   ## send to fetch
-  myMessage("Calculated [", length(new_date_ranges), "] batches are needed to download [", rowCount,"] rows unsampled.", level = 3)
-  myMessage("Found [", read_counts, "] sampleReadCounts from a [", space_size, "] samplingSpaceSize.", level = 2)
-  
   did_it_work <- TRUE
   unsampled_list <- lapply(new_date_ranges, function(x){
-    myMessage("Anti-sample call covering ", x$range_date, " days: ", x$start_date, ", ", x$end_date, level = 3)
-    out <- google_analytics_4(viewId            = viewId,
-                              date_range        = c(x$start_date,x$end_date),
-                              metrics           = metrics,
-                              dimensions        = dimensions,
-                              dim_filters       = dim_filters,
-                              met_filters       = met_filters,
-                              filtersExpression = filtersExpression,
-                              order             = order,
-                              segments          = segments,
-                              pivots            = pivots,
-                              cohorts           = cohorts,
-                              max               = rowCount,
-                              metricFormat      = metricFormat,
-                              samplingLevel     = "LARGE",
-                              histogramBuckets  = histogramBuckets)
+    
+    if(x$range_date > 1){
+      
+      myMessage("Anti-sample call covering ", x$range_date, " days: ", x$start_date, ", ", x$end_date, level = 3)
+      out <- google_analytics_4(viewId            = viewId,
+                                date_range        = c(x$start_date,x$end_date),
+                                metrics           = metrics,
+                                dimensions        = dimensions,
+                                dim_filters       = dim_filters,
+                                met_filters       = met_filters,
+                                filtersExpression = filtersExpression,
+                                order             = order,
+                                segments          = segments,
+                                pivots            = pivots,
+                                cohorts           = cohorts,
+                                max               = rowCount,
+                                metricFormat      = metricFormat,
+                                samplingLevel     = "LARGE",
+                                histogramBuckets  = histogramBuckets)
+      
+    } else {
+      ## if any new_date_ranges range_date is 1 then possibily will still sample.
+      myMessage("Attempting hourly anti-sampling...", level = 3)
+      out <- hourly_anti_sample(viewId            = viewId,
+                                the_day           = x$start_date,
+                                metrics           = metrics,
+                                dimensions        = dimensions,
+                                dim_filters       = dim_filters,
+                                met_filters       = met_filters,
+                                filtersExpression = filtersExpression,
+                                order             = order,
+                                segments          = segments,
+                                pivots            = pivots,
+                                cohorts           = cohorts,
+                                max               = attr(out, "rowCount"),
+                                metricFormat      = metricFormat,
+                                samplingLevel     = "LARGE",
+                                histogramBuckets  = histogramBuckets,
+                                read_counts = read_counts)
+    }
     
     read_counts2 <- as.integer(attr(out,"samplesReadCounts")[[1]])
     space_size2  <- as.integer(attr(out, "samplingSpaceSizes")[[1]])
-    samplingPer  <- get_samplePercent(read_counts2, space_size2)
+    samplingPer2  <- get_samplePercent(read_counts2, space_size2)
     
-    if(!identical(samplingPer, numeric(0))){
+    if(!identical(samplingPer2, numeric(0))){
       myMessage("Anti-sampling failed", level = 3)
-      if(x$range_date == 1){
-        ## if any new_date_ranges range_date is 1 then possibily will still sample.
-        myMessage("Attempting hourly anti-sampling...", level = 3)
-        out <- hourly_anti_sample(viewId            = viewId,
-                                  the_day           = x$start_date,
-                                  metrics           = metrics,
-                                  dimensions        = dimensions,
-                                  dim_filters       = dim_filters,
-                                  met_filters       = met_filters,
-                                  filtersExpression = filtersExpression,
-                                  order             = order,
-                                  segments          = segments,
-                                  pivots            = pivots,
-                                  cohorts           = cohorts,
-                                  max               = attr(out, "rowCount"),
-                                  metricFormat      = metricFormat,
-                                  samplingLevel     = "LARGE",
-                                  histogramBuckets  = histogramBuckets,
-                                  read_counts = read_counts)
-      } else {
-        did_it_work <<- FALSE
-      }
-
+      did_it_work <<- FALSE
     }
+    
     out
   })
   
   out <- Reduce(rbind, unsampled_list)
+  
+  ## fill these in later
   attr(out, "totals") <- NULL
   attr(out, "minimums") <- NULL
   attr(out, "maximums") <- NULL
@@ -164,6 +173,9 @@ hourly_anti_sample <- function(viewId,
 
   
   ## do calls
+  
+  all_samplesReadCounts <- 0
+  all_samplingSpaceSizes <- 0
   unsampled_list <- lapply(new_hour_ranges, function(x){
 
     myMessage("Anti-sample call covering ", x$range_date, " hours: ", paste(x$hours, collapse = " "), 
@@ -198,9 +210,14 @@ hourly_anti_sample <- function(viewId,
     
     if(!identical(samplingPer, numeric(0))){
       myMessage("Hourly anti-sampling failed. Holy-moly, you should try GA 360 and BigQuery.", level = 3)
+      all_samplesReadCounts  <<- all_samplesReadCounts + read_counts3
+      all_samplingSpaceSizes <<- all_samplingSpaceSizes + space_size3
     }
     out
   })
   ## output rbind
-  Reduce(rbind, unsampled_list)
+  hour_out <- Reduce(rbind, unsampled_list)
+  attr(hour_out, "samplesReadCounts")  <- all_samplesReadCounts
+  attr(hour_out, "samplingSpaceSizes") <- all_samplingSpaceSizes
+  hour_out
 }
