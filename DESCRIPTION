@@ -25,7 +25,8 @@ Suggests:
     rmarkdown,
     testthat (>= 1.0.2),
     miniUI (>= 0.1.1),
-    googleCloudStorageR
+Remotes:
+    cloudyr/googleCloudStorageR
 License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr
