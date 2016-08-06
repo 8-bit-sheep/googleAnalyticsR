@@ -24,7 +24,8 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 1.0.2),
-    miniUI (>= 0.1.1),
+    miniUI (>= 0.1.1),,
+    covr
 Remotes:
     cloudyr/googleCloudStorageR
 License: MIT + file LICENSE
