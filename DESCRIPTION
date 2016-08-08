@@ -17,17 +17,16 @@ Imports:
     googleAuthR (>= 0.3.0),
     tidyjson (>= 0.2.1),
     magrittr,
-    jsonlite,
-    shiny (>= 0.13.2),
-    bigQueryR (>= 0.1.0)
+    jsonlite
 Suggests:
     knitr,
+    shiny (>= 0.13.2),
+    bigQueryR (>= 0.1.0),
+    googleCloudStorageR (>= 0.1.0),
     rmarkdown,
     testthat (>= 1.0.2),
-    miniUI (>= 0.1.1),,
+    miniUI (>= 0.1.1),
     covr
-Remotes:
-    cloudyr/googleCloudStorageR
 License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr

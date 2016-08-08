@@ -48,7 +48,22 @@ anti_sample <- function(viewId,
   
   if(identical(samplingPer, numeric(0))){
     message("No sampling found, returning call")
-    return(test_call)
+    unsampled <- google_analytics_4(viewId            = viewId,
+                                    date_range        = date_range,
+                                    metrics           = metrics,
+                                    dimensions        = dimensions,
+                                    dim_filters       = dim_filters,
+                                    met_filters       = met_filters,
+                                    filtersExpression = filtersExpression,
+                                    order             = order,
+                                    segments          = segments,
+                                    pivots            = pivots,
+                                    cohorts           = cohorts,
+                                    max               = -1,
+                                    metricFormat      = metricFormat,
+                                    samplingLevel     = "LARGE",
+                                    histogramBuckets  = histogramBuckets)
+    return(unsampled)
   }
   
   ## sampling
