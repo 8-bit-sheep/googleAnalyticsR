@@ -125,7 +125,7 @@ google_analytics_bq <- function(projectId,
   } else {
     ## do an async query
     if (!requireNamespace("googleCloudStorageR", quietly = TRUE)) {
-      stop("googleCloudStorageR needed for large extracts. Please install it via devtools::install_github('cloudyr/googleCloudStorageR')",
+      stop("googleCloudStorageR needed for large extracts. Please install it via install.packages('googleCloudStorageR')",
            call. = FALSE)
     }
     
@@ -154,6 +154,7 @@ google_analytics_bq <- function(projectId,
   out
 }
 
+#' @import bigQueryR,
 google_analytics_bq_asynch <- function(projectId,
                                        datasetId,
                                        query,
