@@ -64,7 +64,7 @@ google_analytics_bq <- function(projectId,
 
   
   if (!requireNamespace("bigQueryR", quietly = TRUE)) {
-    stop("bigQueryR needed for this function to work. Please install it via devtools::install_github('MarkEdmondson1234/bigQueryR')",
+    stop("bigQueryR needed for this function to work. Please install it via install.packages('bigQueryR')",
          call. = FALSE)
   }
   
@@ -154,7 +154,9 @@ google_analytics_bq <- function(projectId,
   out
 }
 
-#' @import bigQueryR,
+#' Asynch fetch
+#' @import bigQueryR
+#' @keywords internal
 google_analytics_bq_asynch <- function(projectId,
                                        datasetId,
                                        query,
