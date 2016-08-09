@@ -136,6 +136,7 @@ get_samplePercent <- function(sampleReadCounts, samplingSpaceSizes){
 #' @param x The account summary items
 #' @import tidyjson
 #' @importFrom jsonlite toJSON
+#' @importFrom dplyr select filter
 #' @keywords internal
 parse_ga_account_summary <- function(x){
   
@@ -144,10 +145,12 @@ parse_ga_account_summary <- function(x){
   tidy_json <- json_accounts %>% as.tbl_json()
   
   tidy_json <- tidy_json %>% 
+    json_lengths() %>% filter(length != 0) %>% select(-length) %>%
     gather_array() %>% 
     spread_values(accountId = jstring("id"), 
                   accountName = jstring("name")) %>%
     enter_object("webProperties") %>%
+    json_lengths() %>% filter(length != 0) %>% select(-length) %>%
     gather_array() %>%
     spread_values(webPropertyId = jstring("id"), 
                   webPropertyName = jstring("name"),
@@ -155,6 +158,7 @@ parse_ga_account_summary <- function(x){
                   level = jstring("level"),
                   websiteUrl = jstring("websiteUrl")) %>%
     enter_object("profiles") %>%
+    json_lengths() %>% filter(length != 0) %>% select(-length) %>%
     gather_array() %>%
     spread_values(viewId = jstring("id"), 
                   viewName = jstring("name"),
@@ -166,7 +170,6 @@ parse_ga_account_summary <- function(x){
   
   out
 }
-
 
 
 parse_google_analytics <- function(x){
