@@ -270,8 +270,7 @@ google_analytics_4 <- function(viewId,
   
   if(anti_sample){
     myMessage("anti_sample set to TRUE. Mitigating sampling via multiple API calls.", level = 3)
-    return(anti_sample(anti_sample_batches = anti_sample_batches,
-                       viewId            = viewId,
+    return(anti_sample(viewId            = viewId,
                        date_range        = date_range,
                        metrics           = metrics,
                        dimensions        = dimensions,
@@ -283,7 +282,8 @@ google_analytics_4 <- function(viewId,
                        pivots            = pivots,
                        cohorts           = cohorts,
                        metricFormat      = metricFormat,
-                       histogramBuckets  = histogramBuckets))
+                       histogramBuckets  = histogramBuckets,
+                       anti_sample_batches = anti_sample_batches))
   }
   
   if(max > reqRowLimit){
@@ -320,7 +320,7 @@ google_analytics_4 <- function(viewId,
                   histogramBuckets  = histogramBuckets)
     
     })
-    
+
   out <- fetch_google_analytics_4(requests, merge = TRUE)
   
   if(allResults){

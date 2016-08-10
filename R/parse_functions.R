@@ -110,7 +110,7 @@ sampling_message <- function(samplesReadCounts, samplingSpaceSizes, hasDateCompa
   samplePercent <-  100
   if(!is.null(samplesReadCounts)){
     samplePercent <- get_samplePercent(samplesReadCounts[[1]], samplingSpaceSizes[[1]])
-    message("Data is sampled, based on ", samplePercent, "% of sessions. Use argument anti_sample = TRUE to request unsampled data." )
+    message("Data is sampled, based on ", samplePercent, "% of sessions." )
     
     if(hasDateComparison){
       samplePercent <- get_samplePercent(samplesReadCounts[[2]], samplingSpaceSizes[[2]])

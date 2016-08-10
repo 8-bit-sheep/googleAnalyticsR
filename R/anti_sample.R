@@ -133,7 +133,7 @@ anti_sample <- function(anti_sample_batches,
                                 segments          = segments,
                                 pivots            = pivots,
                                 cohorts           = cohorts,
-                                max               = attr(out, "rowCount"),
+                                max               = attr(test_call, "rowCount"),
                                 metricFormat      = metricFormat,
                                 histogramBuckets  = histogramBuckets,
                                 read_counts = read_counts)
@@ -208,18 +208,28 @@ hourly_anti_sample <- function(viewId,
     myMessage("Anti-sample call covering ", x$range_date, " hours: ", paste(x$hours, collapse = " "), 
               level = 3)
     
-    hour_filter <- filter_clause_ga4(list(dim_filter("hour", "IN_LIST", x$hours)))
+    hour_filter <- dim_filter("hour", "IN_LIST", x$hours)
     
     if(!is.null(dim_filters)){
-      stop("Can't use dim_filters argument with hourly anti-sampling, sorry!  
-           Can you use filtersExpression instead?")
+      ## rebuild dim_filter
+      if(dim_filters$operator == "OR") warning("dim_filter operator changed to AND as needed by hourly sampling")
+      existing_filters <- dim_filters$filters
+      new_filters <- c(existing_filters, list(hour_filter))
+      new_filter_exp <- filter_clause_ga4(new_filters, operator = "AND")
+
+    } else {
+      new_filter_exp <- filter_clause_ga4(list(hour_filter))
     }
     
+    if(!is.null(filtersExpression)){
+      stop("Can't use filtersExpression argument with hourly anti-sampling, sorry!")
+    }
+
     out <- google_analytics_4(viewId            = viewId,
                               date_range        = c(the_day, the_day),
                               metrics           = metrics,
                               dimensions        = dimensions,
-                              dim_filters       = hour_filter,
+                              dim_filters       = new_filter_exp,
                               met_filters       = met_filters,
                               filtersExpression = filtersExpression,
                               order             = order,
@@ -230,7 +240,7 @@ hourly_anti_sample <- function(viewId,
                               metricFormat      = metricFormat,
                               samplingLevel     = "LARGE",
                               histogramBuckets  = histogramBuckets)
-    
+
     read_counts3 <- as.integer(attr(out,"samplesReadCounts")[[1]])
     space_size3  <- as.integer(attr(out, "samplingSpaceSizes")[[1]])
     samplingPer  <- get_samplePercent(read_counts3, space_size3)
