@@ -32,6 +32,7 @@
 * New argument `anti_sample` for `google_analytics_4()` which will split up the calls into efficient batches to avoid sampling. Includes experimental sub-day hourly batching.
 * Set argument `max = -1` in `google_analytics_4()` to fetch all results. 
 * Add fix for `google_analytics_account_summary` parsing when no views in web properties.
+* New argument `anti_sample_batches` lets you choose batch sizes (daily is equal to `anti_sample_batches=1`)
 
 # 0.2.1 CRAN
 

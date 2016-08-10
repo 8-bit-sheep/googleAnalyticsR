@@ -4,9 +4,9 @@
 \alias{anti_sample}
 \title{Get a GA request with anti-sampling}
 \usage{
-anti_sample(viewId, date_range, metrics, dimensions, dim_filters, met_filters,
-  filtersExpression, order, segments, pivots, cohorts, metricFormat,
-  histogramBuckets)
+anti_sample(anti_sample_batches, viewId, date_range, metrics, dimensions,
+  dim_filters, met_filters, filtersExpression, order, segments, pivots, cohorts,
+  metricFormat, histogramBuckets)
 }
 \arguments{
 \item{viewId}{viewId of data to get.}

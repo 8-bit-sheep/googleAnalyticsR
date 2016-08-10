@@ -211,6 +211,7 @@ make_ga_4_req <- function(viewId,
 #' @inheritParams make_ga_4_req
 #' @param max Maximum number of rows to fetch. Defaults at 1000. Use -1 to fetch all results.
 #' @param anti_sample If TRUE will split up the call to avoid sampling.
+#' @param anti_sample_batches "auto" default, or set to number of days per batch. 1 = daily.
 #' 
 #' @return A Google Analytics data.frame
 #' 
@@ -254,7 +255,8 @@ google_analytics_4 <- function(viewId,
                                samplingLevel=c("DEFAULT", "SMALL","LARGE"),
                                metricFormat=NULL,
                                histogramBuckets=NULL,
-                               anti_sample = FALSE){
+                               anti_sample = FALSE,
+                               anti_sample_batches = "auto"){
 
   
   max         <- as.integer(max)
@@ -268,7 +270,8 @@ google_analytics_4 <- function(viewId,
   
   if(anti_sample){
     myMessage("anti_sample set to TRUE. Mitigating sampling via multiple API calls.", level = 3)
-    return(anti_sample(viewId            = viewId,
+    return(anti_sample(anti_sample_batches = anti_sample_batches,
+                       viewId            = viewId,
                        date_range        = date_range,
                        metrics           = metrics,
                        dimensions        = dimensions,

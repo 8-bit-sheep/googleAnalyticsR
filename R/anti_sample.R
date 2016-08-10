@@ -4,7 +4,8 @@
 #' 
 #' @inheritParams make_ga_4_req
 #' @keywords internal
-anti_sample <- function(viewId,
+anti_sample <- function(anti_sample_batches,
+                        viewId,
                         date_range,
                         metrics,
                         dimensions,
@@ -66,18 +67,27 @@ anti_sample <- function(viewId,
     return(unsampled)
   }
   
-  ## sampling
-  myMessage("Finding number of sessions for anti-sample calculations...", level = 3)
-  explore_sessions <- google_analytics_4(viewId = viewId,
-                                         date_range = date_range,
-                                         metrics = "sessions",
-                                         dimensions = "date")
-  explore_sessions$cumulative <- cumsum(explore_sessions$sessions)
-  explore_sessions$sample_bucket <- as.factor((explore_sessions$cumulative %/% read_counts) + 1)
+  if(anti_sample_batches == "auto"){
+    ## sampling
+    myMessage("Finding number of sessions for anti-sample calculations...", level = 3)
+    explore_sessions <- google_analytics_4(viewId = viewId,
+                                           date_range = date_range,
+                                           metrics = "sessions",
+                                           dimensions = "date")
+    explore_sessions$cumulative <- cumsum(explore_sessions$sessions)
+    explore_sessions$sample_bucket <- as.factor((explore_sessions$cumulative %/% read_counts) + 1)
+    
+  } else {
+    stopifnot(anti_sample_batches >= 1)
+    asb <- as.integer(anti_sample_batches)
+    date_col <- seq(date_range[1], date_range[2], by = 1)
+    sample_bucket <- as.factor((1:length(date_col) %/% asb) + 1)
+    explore_sessions <- data.frame(date = date_col, sample_bucket = sample_bucket)
+  }
   
   ## split to find new date ranges
   splits <- split(explore_sessions, explore_sessions[["sample_bucket"]])
-  
+
   new_date_ranges <- lapply(splits, function(x) {list(start_date = min(x$date), 
                                                      end_date = max(x$date),
                                                      range_date = nrow(x))})

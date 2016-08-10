@@ -9,7 +9,8 @@ google_analytics_4(viewId, date_range = NULL, metrics = NULL,
   filtersExpression = NULL, order = NULL, segments = NULL,
   pivots = NULL, cohorts = NULL, max = 1000,
   samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
-  histogramBuckets = NULL, anti_sample = FALSE)
+  histogramBuckets = NULL, anti_sample = FALSE,
+  anti_sample_batches = "auto")
 }
 \arguments{
 \item{viewId}{viewId of data to get.}
@@ -45,6 +46,8 @@ for two date ranges: \code{c(start1,end1,start2,end2)}}
 See details in \link{make_ga_4_req}}
 
 \item{anti_sample}{If TRUE will split up the call to avoid sampling.}
+
+\item{anti_sample_batches}{"auto" default, or set to number of days per batch. 1 = daily.}
 }
 \value{
 A Google Analytics data.frame
