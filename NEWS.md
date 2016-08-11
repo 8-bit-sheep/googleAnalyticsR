@@ -1,4 +1,4 @@
-# 0.2.1.9000
+# 0.3.0 CRAN
 
 * Add BigQuery asynch fetch to Google Analytics 360 exports, for over 1,000,000 rows.
 * A GA v4 example Shiny app added that runs on `https://mark.shinyapps.io/googleAnalyticsRv4Demo/`
@@ -34,7 +34,7 @@
 * Add fix for `google_analytics_account_summary` parsing when no views in web properties.
 * New argument `anti_sample_batches` lets you choose batch sizes (daily is equal to `anti_sample_batches=1`)
 
-# 0.2.1 CRAN
+# 0.2.1 
 
 * Fix v4 bug where batches over 10000 had extra rows added (#19)
 

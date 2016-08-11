@@ -1,4 +1,7 @@
 library(googleAnalyticsR)
+library(testthat)
+
+context("Authentication")
 
 test_that("Auth check", {
   skip_on_cran()
@@ -8,6 +11,7 @@ test_that("Auth check", {
 
 ga_id <- 106249469
 
+context("Data fetching")
 vanilla_test <- function(){
   skip_on_cran()
   skip_on_travis()
@@ -75,7 +79,7 @@ example_multidate <- function(){
                                   dimensions = c('source','medium'), 
                                   metrics = c('sessions','bounces'))
   
-  fetch_google_analytics_4(multidate_test)
+  fetch_google_analytics_4(list(multidate_test))
 }
 
 example_multifetch <- function(){
