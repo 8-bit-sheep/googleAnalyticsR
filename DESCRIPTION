@@ -14,10 +14,10 @@ BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
 Depends:
     R (>= 3.2.0)
 Imports:
-    bigQueryR (>= 0.1.0),
+    bigQueryR (>= 0.2.0),
     dplyr (>= 0.5.0),
     googleAuthR (>= 0.3.1),
-    googleCloudStorageR (>= 0.1.0),
+    googleCloudStorageR,
     jsonlite (>= 1.0),
     magrittr (>= 1.5),
     shiny (>= 0.13.2),
