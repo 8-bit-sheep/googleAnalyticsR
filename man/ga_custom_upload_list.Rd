@@ -2,7 +2,7 @@
 % Please edit documentation in R/custom_data_source.R
 \name{ga_custom_upload_list}
 \alias{ga_custom_upload_list}
-\title{List Custom Data Uploads}
+\title{Get Custom Data Source Data}
 \usage{
 ga_custom_upload_list(accountId, webPropertyId, customDataSourceId)
 }
@@ -17,7 +17,7 @@ ga_custom_upload_list(accountId, webPropertyId, customDataSourceId)
 Custom Data Source Uploads List
 }
 \description{
-List Custom Data Uploads
+Get Custom Data Source Data
 }
 \seealso{
 Other managementAPI functions: \code{\link{ga_accounts}},

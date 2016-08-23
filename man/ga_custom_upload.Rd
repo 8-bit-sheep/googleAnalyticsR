@@ -2,7 +2,7 @@
 % Please edit documentation in R/custom_data_source.R
 \name{ga_custom_upload}
 \alias{ga_custom_upload}
-\title{Get Custom Data Upload Meta data}
+\title{Get Custom Data Source Upload Meta data}
 \usage{
 ga_custom_upload(accountId, webPropertyId, customDataSourceId, uploadId)
 }
@@ -19,6 +19,6 @@ ga_custom_upload(accountId, webPropertyId, customDataSourceId, uploadId)
 Custom Data Source Upload Meta data
 }
 \description{
-Get Custom Data Upload Meta data
+Get Custom Data Source Upload Meta data
 }
 

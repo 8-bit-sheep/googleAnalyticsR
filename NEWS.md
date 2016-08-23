@@ -1,3 +1,7 @@
+# 0.3.0.9000
+
+* Add custom data uploads via `ga_custom_upload_file()`
+
 # 0.3.0 CRAN
 
 * Add BigQuery asynch fetch to Google Analytics 360 exports, for over 1,000,000 rows.
