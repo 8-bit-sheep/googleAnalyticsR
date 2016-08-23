@@ -21,7 +21,9 @@ Imports:
     jsonlite (>= 1.0),
     magrittr (>= 1.5),
     shiny (>= 0.13.2),
-    tidyjson (>= 0.2.1)
+    tidyjson (>= 0.2.1),
+    httr (>= 1.2.1),
+    utils
 Suggests:
     knitr,
     rmarkdown,

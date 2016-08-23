@@ -112,6 +112,7 @@ ga_custom_upload <- function(accountId,
 #'
 #' @return A custom upload Id object
 #' @importFrom googleAuthR gar_api_generator
+#' @importFrom utils write.csv
 #' @export
 ga_custom_upload_file <- function(accountId,
                                   webPropertyId,
