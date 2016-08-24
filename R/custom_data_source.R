@@ -122,10 +122,8 @@ ga_custom_upload_file <- function(accountId,
   if(inherits(upload, "data.frame")){
     temp <- tempfile()
     on.exit(unlink(temp))
+    
     names(upload) <- vapply(names(upload), checkPrefix, character(1))
-    if(!"ga:date" %in% names(upload)){
-      stop("Need at least one column with 'date'")
-    }
     write.csv(upload, file = temp, row.names = FALSE)
   } else if(inherits(upload, "character")){
     temp <- upload
