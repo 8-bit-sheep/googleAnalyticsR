@@ -19,8 +19,11 @@ ga_custom_datasource <- function(accountId,
                              customDataSources = ""
                            ),
                            data_parse_function = function(x) x)
+  res <- cds()
+  out <- res$items
+  attr(out, "meta") <- res[setdiff(names(res),"items")]
   
-  cds()
+  structure(out, class = c("ga_custom_datasource","data.frame"))
   
 }
 
@@ -49,7 +52,9 @@ ga_custom_upload_list <- function(accountId,
                            ),
                            data_parse_function = function(x) x)
   
-  cds()
+  out <- cds()
+  
+  out$items[,c("id","accountId","customDataSourceId","status")]
   
 }
 
@@ -79,7 +84,10 @@ ga_custom_upload <- function(accountId,
                            ),
                            data_parse_function = function(x) x)
   
-  cds()
+  out <- cds()
+  
+  structure(c(out,webPropertyId = webPropertyId), 
+            class = "ga_custom_data_source_upload")
   
 }
 
@@ -98,10 +106,10 @@ ga_custom_upload <- function(accountId,
 #' 
 #' If you are uploading an R data frame, the function will prefix the column names with \code{"ga:"} for you if necessary.
 #'   
-#' After upload check the status by listing the data sources using \link{ga_custom_upload} 
+#' After upload check the status by querying data sources using \link{ga_custom_upload} 
 #'   and examining the \code{status} field.
 #'
-#' Currently only supports simple uploads.
+#' Currently only supports simple uploads (not resumable).
 #' 
 #' @seealso 
 #' 
@@ -152,5 +160,10 @@ ga_custom_upload_file <- function(accountId,
     message("Problem upload file")
   }
   
-  httr::content(req, as = "raw")
+  res <- httr::content(req, as = "raw")
+  
+  structure(
+    c(res, webPropertyId = webPropertyId), 
+    class = "ga_custom_data_source_upload"
+  )
 }

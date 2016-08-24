@@ -1,3 +1,19 @@
+#' Timestamp to R date
+#' @keywords internal
+timestamp_to_r <- function(t){
+  as.POSIXct(t, format = "%Y-%m-%dT%H:%M:%S")
+}
+
+#' if argument is NULL, no line output
+#'
+#' @keywords internal
+cat0 <- function(prefix = "", x){
+  if(!is.null(x)){
+    cat(prefix, x, "\n")
+  }
+}
+
+
 #' Create named list of allowed GA metrics/dimensions
 #' 
 #' @param type Type of parameter to create

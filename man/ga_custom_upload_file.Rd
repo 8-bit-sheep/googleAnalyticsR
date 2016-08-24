@@ -26,10 +26,10 @@ You need to create a custom data source in the web UI first.
 
 If you are uploading an R data frame, the function will prefix the column names with \code{"ga:"} for you if necessary.
   
-After upload check the status by listing the data sources using \link{ga_custom_upload} 
+After upload check the status by querying data sources using \link{ga_custom_upload} 
   and examining the \code{status} field.
 
-Currently only supports simple uploads.
+Currently only supports simple uploads (not resumable).
 }
 \seealso{
 A guide for preparing the data is available \href{from Google here}{https://developers.google.com/analytics/solutions/data-import-cost}.
