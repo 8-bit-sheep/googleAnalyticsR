@@ -1,4 +1,4 @@
-#' google_analytics_bq
+#' Get Google Analytics 360 BigQuery data
 #' 
 #' Turn a google_analytics style call into BigQuery SQL. 
 #' Used with Google Analytics 360 BigQuery exports.

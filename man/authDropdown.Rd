@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny-modules.R
 \name{authDropdown}
 \alias{authDropdown}
-\title{authDropdown}
+\title{authDropdown [Shiny Module]}
 \usage{
 authDropdown(input, output, session, ga.table)
 }
@@ -23,5 +23,9 @@ Shiny Module for use with \link{authDropdownUI}
 }
 \details{
 Call via \code{shiny::callModule(authDropdown, "your_id")}
+}
+\seealso{
+Other Shiny modules: \code{\link{authDropdownUI}},
+  \code{\link{multi_selectUI}}, \code{\link{multi_select}}
 }
 

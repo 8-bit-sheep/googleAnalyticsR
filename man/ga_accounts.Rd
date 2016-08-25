@@ -15,8 +15,6 @@ Get account list
 \seealso{
 Other managementAPI functions: \code{\link{ga_adwords_list}},
   \code{\link{ga_adwords}},
-  \code{\link{ga_custom_datasource}},
-  \code{\link{ga_custom_upload_list}},
   \code{\link{ga_custom_vars_list}},
   \code{\link{ga_custom_vars}},
   \code{\link{ga_experiment_list}},

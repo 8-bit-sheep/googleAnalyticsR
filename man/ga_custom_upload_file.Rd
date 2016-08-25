@@ -16,7 +16,7 @@ ga_custom_upload_file(accountId, webPropertyId, customDataSourceId, upload)
 \item{upload}{An R data.frame or a file path location (character).}
 }
 \value{
-A custom upload Id object
+An object of class \code{ga_custom_data_source_upload}
 }
 \description{
 Upload external data up to 1GB to Google Analytics via the management API.
@@ -31,9 +31,51 @@ After upload check the status by querying data sources using \link{ga_custom_upl
 
 Currently only supports simple uploads (not resumable).
 }
-\seealso{
-A guide for preparing the data is available \href{from Google here}{https://developers.google.com/analytics/solutions/data-import-cost}.
+\examples{
 
-See also \href{Data Import Developer Guide}{https://developers.google.com/analytics/devguides/config/mgmt/v3/data-import#format}
+\dontrun{
+
+upload_me <- data.frame(medium = "shinyapps", 
+                        source = "referral", 
+                        adCost = 1, 
+                        date = "20160801")
+                        
+obj <- ga_custom_upload_file(47850439, 
+                             "UA-4748043-2", 
+                             "_jDsJHSFSU-uw038Bh8fUg", 
+                             upload_me)
+                             
+## obj will initially have status = PENDING
+obj
+==Google Analytics Custom Data Source Upload==
+Custom Data Source ID:  _jDsJHSFSU-uw038Bh8fUg 
+Account ID:             47850439 
+Web Property Id:        UA-4748043-2 
+Upload ID:              7yHLAkeLSiK1zveVTiWZwA 
+Status:                 PENDING 
+
+## Send obj to ga_custom_upload() to check and renew status
+obj <- ga_custom_upload(upload_object = obj)
+obj
+
+==Google Analytics Custom Data Source Upload==
+Custom Data Source ID:  _jDsJHSFSU-uw038Bh8fUg 
+Account ID:             47850439 
+Web Property Id:        UA-4748043-2 
+Upload ID:              7yHLAkeLSiK1zveVTiWZwA 
+Status:                 COMPLETED 
+
+}
+
+
+}
+\seealso{
+A guide for preparing the data is available: \href{https://developers.google.com/analytics/solutions/data-import-cost}{from Google here}.
+
+The dev guide for this function: \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/data-import#format}{Data Import Developer Guide}
+
+Other custom datasource functions: \code{\link{ga_custom_datasource}},
+  \code{\link{ga_custom_upload_list}},
+  \code{\link{ga_custom_upload}}
 }
 

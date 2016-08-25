@@ -2,7 +2,7 @@
 % Please edit documentation in R/bigQuery.R
 \name{google_analytics_bq}
 \alias{google_analytics_bq}
-\title{google_analytics_bq}
+\title{Get Google Analytics 360 BigQuery data}
 \usage{
 google_analytics_bq(projectId, datasetId, start = NULL, end = NULL,
   metrics = NULL, dimensions = NULL, sort = NULL, filters = NULL,

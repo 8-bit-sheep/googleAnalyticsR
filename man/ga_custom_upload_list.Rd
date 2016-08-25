@@ -2,7 +2,7 @@
 % Please edit documentation in R/custom_data_source.R
 \name{ga_custom_upload_list}
 \alias{ga_custom_upload_list}
-\title{Get Custom Data Source Data}
+\title{List Custom Data Source Uploads}
 \usage{
 ga_custom_upload_list(accountId, webPropertyId, customDataSourceId)
 }
@@ -17,25 +17,11 @@ ga_custom_upload_list(accountId, webPropertyId, customDataSourceId)
 Custom Data Source Uploads List
 }
 \description{
-Get Custom Data Source Data
+List Custom Data Source Uploads
 }
 \seealso{
-Other managementAPI functions: \code{\link{ga_accounts}},
-  \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}},
-  \code{\link{ga_custom_datasource}},
-  \code{\link{ga_custom_vars_list}},
-  \code{\link{ga_custom_vars}},
-  \code{\link{ga_experiment_list}},
-  \code{\link{ga_experiment}},
-  \code{\link{ga_filter_list}},
-  \code{\link{ga_filter_view_list}},
-  \code{\link{ga_filter_view}}, \code{\link{ga_filter}},
-  \code{\link{ga_goal_list}}, \code{\link{ga_goal}},
-  \code{\link{ga_segment_list}},
-  \code{\link{ga_unsampled_list}},
-  \code{\link{ga_unsampled}}, \code{\link{ga_view_list}},
-  \code{\link{ga_view}}, \code{\link{ga_webproperty_list}},
-  \code{\link{ga_webproperty}},
-  \code{\link{google_analytics_account_list}}
+Other custom datasource functions: \code{\link{ga_custom_datasource}},
+  \code{\link{ga_custom_upload_file}},
+  \code{\link{ga_custom_upload}}
 }
 

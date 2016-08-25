@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny-modules.R
 \name{authDropdownUI}
 \alias{authDropdownUI}
-\title{authDropdown UI}
+\title{authDropdown UI [Shiny Module]}
 \usage{
 authDropdownUI(id, width = NULL, inColumns = FALSE)
 }
@@ -20,5 +20,9 @@ Shiny UI
 }
 \description{
 Makes a dropdown row for use for authentication.
+}
+\seealso{
+Other Shiny modules: \code{\link{authDropdown}},
+  \code{\link{multi_selectUI}}, \code{\link{multi_select}}
 }
 

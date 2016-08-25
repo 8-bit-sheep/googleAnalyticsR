@@ -1,11 +1,17 @@
 #' List Custom Data Sources
+#' 
+#' Get a list of custom data sources you have configured in Google Analytics web UI.
 #'
 #' @param accountId Account Id
 #' @param webPropertyId Web Property Id
+#' 
+#' @details 
+#' 
+#' You primarily need this to get the \code{customDataSourceId} for the uploads via \link{ga_custom_upload_file}
 #'
 #' @return Custom Data Source
 #' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
+#' @family custom datasource functions
 #' @export
 ga_custom_datasource <- function(accountId,
                                  webPropertyId){
@@ -27,7 +33,7 @@ ga_custom_datasource <- function(accountId,
   
 }
 
-#' Get Custom Data Source Data
+#' List Custom Data Source Uploads
 #'
 #' @param accountId Account Id
 #' @param webPropertyId Web Property Id
@@ -35,7 +41,7 @@ ga_custom_datasource <- function(accountId,
 #'
 #' @return Custom Data Source Uploads List
 #' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
+#' @family custom datasource functions
 #' @export
 ga_custom_upload_list <- function(accountId,
                                   webPropertyId,
@@ -58,20 +64,79 @@ ga_custom_upload_list <- function(accountId,
   
 }
 
-#' Get Custom Data Source Upload Meta data
+#' Custom Data Source Upload Status
 #'
+#' Get the status of a custom upload
+#' 
 #' @param accountId Account Id
 #' @param webPropertyId Web Property Id
 #' @param customDataSourceId Custom data source Id
 #' @param uploadId upload Id
+#' @param upload_object A custom upload Id object. Supply this or the other arguments.
+#' 
+#' @details
+#' 
+#' You can supply either \code{upload_object} generated via function or \link{ga_custom_upload_file}, or make an \code{}
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' upload_me <- data.frame(medium = "shinyapps", 
+#'                         source = "referral", 
+#'                         adCost = 1, 
+#'                         date = "20160801")
+#'                         
+#' obj <- ga_custom_upload_file(47850439, 
+#'                              "UA-4748043-2", 
+#'                              "_jDsJHSFSU-uw038Bh8fUg", 
+#'                              upload_me)
+#'                              
+#' ## obj will initially have status = PENDING
+#' obj
+#' ==Google Analytics Custom Data Source Upload==
+#' Custom Data Source ID:  _jDsJHSFSU-uw038Bh8fUg 
+#' Account ID:             47850439 
+#' Web Property Id:        UA-4748043-2 
+#' Upload ID:              7yHLAkeLSiK1zveVTiWZwA 
+#' Status:                 PENDING 
+#' 
+#' ## Send obj to ga_custom_upload() to check and renew status
+#' obj <- ga_custom_upload(upload_object = obj)
+#' obj
+#' 
+#' ==Google Analytics Custom Data Source Upload==
+#' Custom Data Source ID:  _jDsJHSFSU-uw038Bh8fUg 
+#' Account ID:             47850439 
+#' Web Property Id:        UA-4748043-2 
+#' Upload ID:              7yHLAkeLSiK1zveVTiWZwA 
+#' Status:                 COMPLETED 
+#' 
+#' }
 #'
-#' @return Custom Data Source Upload Meta data
+#' @return An object of class \code{ga_custom_data_source_upload}
 #' @importFrom googleAuthR gar_api_generator
+#' @family custom datasource functions
 #' @export
 ga_custom_upload <- function(accountId,
                              webPropertyId,
                              customDataSourceId,
-                             uploadId){
+                             uploadId,
+                             upload_object){
+  
+  if(missing(upload_object)){
+    if(any(missing(accountId), 
+           missing(webPropertyId), 
+           missing(customDataSourceId),
+           missing(uploadId))){
+      stop("Must supply one of upload_object or all other arguments")
+    }
+  } else {
+    accountId <- upload_object$accountId
+    webPropertyId <- upload_object$webPropertyId
+    customDataSourceId <- upload_object$customDataSourceId
+    uploadId <- upload_object$id
+  }
   
   url <- "https://www.googleapis.com/analytics/v3/management/"
   cds <- gar_api_generator(url,
@@ -113,14 +178,53 @@ ga_custom_upload <- function(accountId,
 #' 
 #' @seealso 
 #' 
-#' A guide for preparing the data is available \href{from Google here}{https://developers.google.com/analytics/solutions/data-import-cost}.
+#' A guide for preparing the data is available: \href{https://developers.google.com/analytics/solutions/data-import-cost}{from Google here}.
 #' 
-#' See also \href{Data Import Developer Guide}{https://developers.google.com/analytics/devguides/config/mgmt/v3/data-import#format}
+#' The dev guide for this function: \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/data-import#format}{Data Import Developer Guide}
 #' 
 #'
-#' @return A custom upload Id object
+#' @return An object of class \code{ga_custom_data_source_upload}
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' upload_me <- data.frame(medium = "shinyapps", 
+#'                         source = "referral", 
+#'                         adCost = 1, 
+#'                         date = "20160801")
+#'                         
+#' obj <- ga_custom_upload_file(47850439, 
+#'                              "UA-4748043-2", 
+#'                              "_jDsJHSFSU-uw038Bh8fUg", 
+#'                              upload_me)
+#'                              
+#' ## obj will initially have status = PENDING
+#' obj
+#' ==Google Analytics Custom Data Source Upload==
+#' Custom Data Source ID:  _jDsJHSFSU-uw038Bh8fUg 
+#' Account ID:             47850439 
+#' Web Property Id:        UA-4748043-2 
+#' Upload ID:              7yHLAkeLSiK1zveVTiWZwA 
+#' Status:                 PENDING 
+#' 
+#' ## Send obj to ga_custom_upload() to check and renew status
+#' obj <- ga_custom_upload(upload_object = obj)
+#' obj
+#' 
+#' ==Google Analytics Custom Data Source Upload==
+#' Custom Data Source ID:  _jDsJHSFSU-uw038Bh8fUg 
+#' Account ID:             47850439 
+#' Web Property Id:        UA-4748043-2 
+#' Upload ID:              7yHLAkeLSiK1zveVTiWZwA 
+#' Status:                 COMPLETED 
+#' 
+#' }
+#' 
+#' 
 #' @importFrom googleAuthR gar_api_generator
 #' @importFrom utils write.csv
+#' @family custom datasource functions
 #' @export
 ga_custom_upload_file <- function(accountId,
                                   webPropertyId,

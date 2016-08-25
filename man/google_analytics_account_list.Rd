@@ -2,7 +2,7 @@
 % Please edit documentation in R/accounts.R
 \name{google_analytics_account_list}
 \alias{google_analytics_account_list}
-\title{Get account summary list data including web property and View Id}
+\title{Get account summary including the ViewId}
 \usage{
 google_analytics_account_list()
 }
@@ -10,15 +10,13 @@ google_analytics_account_list()
 a dataframe of all account, webproperty and view data
 }
 \description{
-Get account summary list data including web property and View Id
+Get account summary including the ViewId
 }
 \seealso{
 https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountSummaries/list
 
 Other managementAPI functions: \code{\link{ga_accounts}},
   \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}},
-  \code{\link{ga_custom_datasource}},
-  \code{\link{ga_custom_upload_list}},
   \code{\link{ga_custom_vars_list}},
   \code{\link{ga_custom_vars}},
   \code{\link{ga_experiment_list}},

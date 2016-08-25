@@ -2,7 +2,7 @@
 % Please edit documentation in R/ga_v4_get.R
 \name{make_ga_4_req}
 \alias{make_ga_4_req}
-\title{Google Analytics v4 API fetch}
+\title{Make a Google Analytics v4 API fetch}
 \usage{
 make_ga_4_req(viewId, date_range = NULL, metrics = NULL,
   dimensions = NULL, dim_filters = NULL, met_filters = NULL,

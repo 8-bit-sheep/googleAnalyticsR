@@ -2,7 +2,7 @@
 % Please edit documentation in R/ga_v4_get.R
 \name{google_analytics_4}
 \alias{google_analytics_4}
-\title{GAv4 single request}
+\title{Get Google Analytics v4 data (single request)}
 \usage{
 google_analytics_4(viewId, date_range = NULL, metrics = NULL,
   dimensions = NULL, dim_filters = NULL, met_filters = NULL,

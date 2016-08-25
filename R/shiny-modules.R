@@ -1,4 +1,4 @@
-#' authDropdown UI
+#' authDropdown UI [Shiny Module]
 #' 
 #' @description Makes a dropdown row for use for authentication.
 #' 
@@ -11,6 +11,7 @@
 #'   
 #' @import shiny
 #' @return Shiny UI
+#' @family Shiny modules
 #' @export
 #' 
 authDropdownUI <- function(id, 
@@ -61,7 +62,7 @@ authDropdownUI <- function(id,
   
 }
 
-#' authDropdown
+#' authDropdown [Shiny Module]
 #'
 #' Shiny Module for use with \link{authDropdownUI}
 #'
@@ -72,12 +73,12 @@ authDropdownUI <- function(id,
 #' @param session shiny session
 #' @param ga.table A table of GA tables
 #'
-#' @import shiny
-#' @export
 #' @return GA View Id selected
+#' 
+#' @import shiny
+#' @family Shiny modules
+#' @export
 authDropdown <- function(input, output, session, ga.table){
-  
-  ns <- session$ns
   
   pList <- reactive({
     ga.table <- ga.table()
@@ -147,7 +148,7 @@ authDropdown <- function(input, output, session, ga.table){
   
 }
 
-#' multi_select UI
+#' multi_select UI [Shiny Module]
 #'
 #' Shiny Module for use with \link{multi_select}
 #' 
@@ -159,6 +160,7 @@ authDropdown <- function(input, output, session, ga.table){
 #' @param width width of select
 #'
 #' @return Shiny UI
+#' @family Shiny modules
 #' @export
 multi_selectUI <- function(id, 
                            label = "Metric",
@@ -175,7 +177,7 @@ multi_selectUI <- function(id,
   
 }
 
-#' multi_select
+#' multi_select [Shiny Module]
 #'
 #' Shiny Module for use with \link{multi_selectUI}
 #'
@@ -189,6 +191,7 @@ multi_selectUI <- function(id,
 #' @param default The default selected choice. First element if NULL
 #'
 #' @return the selected variable
+#' @family Shiny modules
 #' @export
 multi_select <- function(input, output, session, 
                          type = c("METRIC","DIMENSION"),

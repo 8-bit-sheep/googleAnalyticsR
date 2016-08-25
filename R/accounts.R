@@ -1,4 +1,4 @@
-#' Get account summary list data including web property and View Id
+#' Get account summary including the ViewId
 #'
 #' @seealso https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountSummaries/list
 #'

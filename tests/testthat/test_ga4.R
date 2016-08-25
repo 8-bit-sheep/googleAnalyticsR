@@ -255,4 +255,7 @@ test_that("Can upload a data.frame ", {
   
   rr <- ga_custom_upload_file(47480439, "UA-47480439-2", "_jDsJHSFSU-uw038Bh8fUg", upload_me)
   expect_equal(rr$kind, "analytics#upload")
+  
+  new_rr <- ga_custom_upload(upload_object = rr)
+  expect_equal(rr$kind, "analytics#upload")
 })

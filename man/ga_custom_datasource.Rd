@@ -15,25 +15,14 @@ ga_custom_datasource(accountId, webPropertyId)
 Custom Data Source
 }
 \description{
-List Custom Data Sources
+Get a list of custom data sources you have configured in Google Analytics web UI.
+}
+\details{
+You primarily need this to get the \code{customDataSourceId} for the uploads via \link{ga_custom_upload_file}
 }
 \seealso{
-Other managementAPI functions: \code{\link{ga_accounts}},
-  \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}},
+Other custom datasource functions: \code{\link{ga_custom_upload_file}},
   \code{\link{ga_custom_upload_list}},
-  \code{\link{ga_custom_vars_list}},
-  \code{\link{ga_custom_vars}},
-  \code{\link{ga_experiment_list}},
-  \code{\link{ga_experiment}},
-  \code{\link{ga_filter_list}},
-  \code{\link{ga_filter_view_list}},
-  \code{\link{ga_filter_view}}, \code{\link{ga_filter}},
-  \code{\link{ga_goal_list}}, \code{\link{ga_goal}},
-  \code{\link{ga_segment_list}},
-  \code{\link{ga_unsampled_list}},
-  \code{\link{ga_unsampled}}, \code{\link{ga_view_list}},
-  \code{\link{ga_view}}, \code{\link{ga_webproperty_list}},
-  \code{\link{ga_webproperty}},
-  \code{\link{google_analytics_account_list}}
+  \code{\link{ga_custom_upload}}
 }
 

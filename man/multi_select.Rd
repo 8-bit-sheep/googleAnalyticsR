@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny-modules.R
 \name{multi_select}
 \alias{multi_select}
-\title{multi_select}
+\title{multi_select [Shiny Module]}
 \usage{
 multi_select(input, output, session, type = c("METRIC", "DIMENSION"),
   subType = c("none", "segment", "cohort"), default = NULL)
@@ -28,5 +28,9 @@ Shiny Module for use with \link{multi_selectUI}
 }
 \details{
 Call via \code{shiny::callModule(multi_select, "your_id")}
+}
+\seealso{
+Other Shiny modules: \code{\link{authDropdownUI}},
+  \code{\link{authDropdown}}, \code{\link{multi_selectUI}}
 }
 

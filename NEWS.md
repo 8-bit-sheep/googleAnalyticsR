@@ -1,6 +1,7 @@
 # 0.3.0.9000
 
 * Add custom data uploads via `ga_custom_upload_file()`
+* Cleaned up documentation a bit
 
 # 0.3.0 CRAN
 

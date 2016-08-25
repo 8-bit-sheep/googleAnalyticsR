@@ -1,4 +1,4 @@
-#' Google Analytics v4 API fetch
+#' Make a Google Analytics v4 API fetch
 #' 
 #' @description
 #'   This function constructs the Google Analytics API v4 call to be called
@@ -188,7 +188,7 @@ make_ga_4_req <- function(viewId,
 
 
 
-#' GAv4 single request
+#' Get Google Analytics v4 data (single request)
 #'
 #' A convenience function that wraps \link{make_ga_4_req} and \link{fetch_google_analytics_4}
 #'  for the common case of one GA data request.

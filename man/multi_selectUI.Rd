@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny-modules.R
 \name{multi_selectUI}
 \alias{multi_selectUI}
-\title{multi_select UI}
+\title{multi_select UI [Shiny Module]}
 \usage{
 multi_selectUI(id, label = "Metric", multiple = TRUE, width = NULL)
 }
@@ -23,5 +23,9 @@ Shiny Module for use with \link{multi_select}
 }
 \details{
 Create a Google Analytics variable selector
+}
+\seealso{
+Other Shiny modules: \code{\link{authDropdownUI}},
+  \code{\link{authDropdown}}, \code{\link{multi_select}}
 }
 
