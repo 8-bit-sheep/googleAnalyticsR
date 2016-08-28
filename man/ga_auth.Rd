@@ -4,10 +4,12 @@
 \alias{ga_auth}
 \title{Authenticate with Google Analytics OAuth2}
 \usage{
-ga_auth(new_user = FALSE)
+ga_auth(new_user = FALSE, no_auto = FALSE)
 }
 \arguments{
 \item{new_user}{If TRUE, reauthenticate via Google login screen}
+
+\item{no_auto}{Skip auto authentication}
 }
 \value{
 Invisibly, the token that has been saved to the session

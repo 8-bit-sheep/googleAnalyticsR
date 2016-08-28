@@ -30,6 +30,8 @@ Suggests:
     testthat (>= 1.0.2),
     miniUI (>= 0.1.1),
     covr
+Remotes:
+    MarkEdmondson1234/googleAuthR
 License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr

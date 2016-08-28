@@ -3,6 +3,7 @@
 #' A wrapper for \link[googleAuthR]{gar_auth} and \link[googleAuthR]{gar_auth_service}
 #'
 #' @param new_user If TRUE, reauthenticate via Google login screen
+#' @param no_auto Skip auto authentication
 #' 
 #' @details
 #' 
@@ -37,7 +38,7 @@
 #' @import googleAuthR
 #' @importFrom tools file_ext
 #' @export
-ga_auth <- function(new_user = FALSE){
+ga_auth <- function(new_user = FALSE, no_auto = FALSE){
   
   needed <- c("https://www.googleapis.com/auth/analytics", 
               "https://www.googleapis.com/auth/analytics.readonly",
@@ -46,34 +47,12 @@ ga_auth <- function(new_user = FALSE){
               "https://www.googleapis.com/auth/analytics.manage.users",
               "https://www.googleapis.com/auth/analytics.provision"	)
   
-  if(!any(getOption("googleAuthR.scopes.selected") %in% needed)){
-    stop("Cannot authenticate - getOption('googleAuthR.scopes.selected') needs to include at least https://www.googleapis.com/auth/analytics.readonly")
-  }
+  out <- gar_auto_auth(needed,
+                       new_user = new_user,
+                       no_auto = no_auto,
+                       environment_var = "GA_AUTH_FILE",
+                       travis_environment_var = "TRAVIS_GA_AUTH_FILE")
   
-  auth_file <- Sys.getenv("GA_AUTH_FILE")
-  
-  if(auth_file == ""){
-    ## normal auth looking for .httr-oauth in working folder or new user
-    out <- googleAuthR::gar_auth(new_user = new_user)
-  } else {
-    ## auth_file specified in GCS_AUTH_FILE
-    if(file.exists(auth_file)){
-      ## Service JSON file
-      if(tools::file_ext(auth_file) == "json"){
-        out <- googleAuthR::gar_auth_service(auth_file)
-      } else {
-        ## .httr-oauth file
-        token <- readRDS(auth_file)
-        out <- googleAuthR::gar_auth(token = token[[1]])
-      }
-    } else {
-      ## auth_file specified but not present
-      stop("GA_AUTH_FILE specified in environment variables but file not found.")
-    }
-  }
-  
-
-  out <- googleAuthR::gar_auth(new_user = new_user)
-  message("Authenticated")
+  myMessage("Authenticated", level = 3)
   out
 }
