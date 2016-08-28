@@ -1,8 +1,10 @@
-# Sample .travis.yml for R projects
-
 language: r
 cache: packages
-
+r_packages:
+- knitr
+- covr
+r_github_packages:
+- MarkEdmondson1234/googleAuthR
 notifications:
   email:
     on_success: change
