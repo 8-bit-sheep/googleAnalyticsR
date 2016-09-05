@@ -1,5 +1,5 @@
 ---
-title: "RMarkdown reports with Google Analytics data"
+title: "RMarkdown reports with Google Analytics API data"
 ---
 
 `googleAnalyticsR` can be used to generate reports in RMarkdown documents.
@@ -7,13 +7,6 @@ title: "RMarkdown reports with Google Analytics data"
 ## Authentication with RMarkdown
 
 Run your authentication in the setup block, making sure you have run the authentication first outside of RMarkdown, to ensure the necessary `.httr-oauth` file is in the same working directory as the RMarkdown document.
-
-## Multi-user authentication
-
-A new feature of `googleAuthR` is authentication from within RMarkdown using javascript authentication instead of Shiny.  A demo of using this with G+ is here: 
-https://mark.shinyapps.io/googleAuthRMarkdown/
-
-Similar code can be adapted to use with Google Analytics data.  You will still need to host the RMarkdown document on a Shiny server though, such as http://shinyapps.io
 
 ### Example
 
@@ -43,6 +36,13 @@ ga_data <- google_analytics_4(viewId = 12345,
 </code></pre>
 
 Alternatively, you can use `googleAuthR::gar_auth_service()` and use the authentication JSON downloaded from the Google console.
+
+## Multi-user authentication
+
+A new feature of `googleAuthR` is authentication from within RMarkdown using javascript authentication instead of Shiny.  A demo of using this with G+ is here: 
+https://mark.shinyapps.io/googleAuthRMarkdown/
+
+Similar code can be adapted to use with Google Analytics data.  You will still need to host the RMarkdown document on a Shiny server though, such as http://shinyapps.io
 
 ## Uploading RMarkdown files to Shinyapps.io/Shiny Server
 

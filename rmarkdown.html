@@ -11,7 +11,7 @@
 
 
 
-<title>RMarkdown</title>
+<title>RMarkdown reports with Google Analytics API data</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -238,7 +238,7 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">RMarkdown</h1>
+<h1 class="title toc-ignore">RMarkdown reports with Google Analytics API data</h1>
 
 </div>
 
@@ -247,7 +247,6 @@ $(document).ready(function () {
 <div id="authentication-with-rmarkdown" class="section level2">
 <h2>Authentication with RMarkdown</h2>
 <p>Run your authentication in the setup block, making sure you have run the authentication first outside of RMarkdown, to ensure the necessary <code>.httr-oauth</code> file is in the same working directory as the RMarkdown document.</p>
-<p>Multi-user login via Shiny is not available, as this needs to fetch authentication details from the URL which isn’t possible in RMarkdown.</p>
 <div id="example" class="section level3">
 <h3>Example</h3>
 <pre class="markdown"><code>
@@ -276,6 +275,11 @@ ga_data <- google_analytics_4(viewId = 12345,
 </code></pre>
 <p>Alternatively, you can use <code>googleAuthR::gar_auth_service()</code> and use the authentication JSON downloaded from the Google console.</p>
 </div>
+</div>
+<div id="multi-user-authentication" class="section level2">
+<h2>Multi-user authentication</h2>
+<p>A new feature of <code>googleAuthR</code> is authentication from within RMarkdown using javascript authentication instead of Shiny. A demo of using this with G+ is here: <a href="https://mark.shinyapps.io/googleAuthRMarkdown/" class="uri">https://mark.shinyapps.io/googleAuthRMarkdown/</a></p>
+<p>Similar code can be adapted to use with Google Analytics data. You will still need to host the RMarkdown document on a Shiny server though, such as <a href="http://shinyapps.io" class="uri">http://shinyapps.io</a></p>
 </div>
 <div id="uploading-rmarkdown-files-to-shinyapps.ioshiny-server" class="section level2">
 <h2>Uploading RMarkdown files to Shinyapps.io/Shiny Server</h2>
