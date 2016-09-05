@@ -1,5 +1,5 @@
 ---
-title: "Big Query Exports"
+title: "Big Query Exports from Google Analytics 360 to R"
 ---
 
 Limited support for more user friendly calls to BigQuery Google Analytics 360 exports is implemented from version `0.2.0`.

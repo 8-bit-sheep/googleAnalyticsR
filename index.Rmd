@@ -1,5 +1,5 @@
 ---
-title: "Welcome to googleAnalyticsR"
+title: "googleAnalyticsR - Google Analytics API to R"
 ---
 
 ![](gar_logo_1000.png)

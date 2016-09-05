@@ -1,5 +1,5 @@
 ---
-title: "Reporting API v4"
+title: "Google Analytics Reporting API v4"
 ---
 
 ## v4 features

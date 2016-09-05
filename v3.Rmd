@@ -1,5 +1,5 @@
 ---
-title: "Reporting API v3"
+title: "Google Analytics Reporting API v3"
 ---
 
 ## v3 features

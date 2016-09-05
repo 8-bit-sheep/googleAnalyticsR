@@ -1,5 +1,5 @@
 ---
-title: "Initial setup"
+title: "Setting up Google Analytics downloads to R"
 ---
 
 ## Install

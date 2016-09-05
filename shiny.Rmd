@@ -1,5 +1,5 @@
 ---
-title: "Shiny"
+title: "Shiny Apps with Google Analytics"
 ---
 
 To use in Shiny with a multi-user login, use googleAuth's `with_shiny`.  See the [`googleAuthR` readme](http://code.markedmondson.me/googleAuthR/) for details on general Google authentication with Shiny. 
