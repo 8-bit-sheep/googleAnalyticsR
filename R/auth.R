@@ -54,5 +54,5 @@ ga_auth <- function(new_user = FALSE, no_auto = FALSE){
                        travis_environment_var = "TRAVIS_GA_AUTH_FILE")
   
   myMessage("Authenticated", level = 3)
-  out
+  invisible(out)
 }

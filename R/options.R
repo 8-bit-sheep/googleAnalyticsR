@@ -6,12 +6,7 @@
 
 .onAttach <- function(libname, pkgname){
   
-  needed <- c("https://www.googleapis.com/auth/analytics", 
-              "https://www.googleapis.com/auth/analytics.readonly",
-              "https://www.googleapis.com/auth/analytics.manage.users.readonly",
-              "https://www.googleapis.com/auth/analytics.edit",
-              "https://www.googleapis.com/auth/analytics.manage.users",
-              "https://www.googleapis.com/auth/analytics.provision"	)
+  needed <- c("https://www.googleapis.com/auth/analytics.readonly")
 
   googleAuthR::gar_attach_auto_auth(needed, "GA_AUTH_FILE", "TRAVIS_GA_AUTH_FILE")
   
