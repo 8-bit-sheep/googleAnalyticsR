@@ -332,6 +332,11 @@ Finished unsampled data request, total rows [100814]
 Successfully avoided sampling</code></pre>
 <p>The sequence involves a couple of exploratory API calls to determine the best split. This method will adjust the time periods to have the batch sizes large enough to not take too long, but small enough to have unsampled data.</p>
 </div>
+<div id="auto-anti-sampling-failure" class="section level4">
+<h4>Auto-anti sampling failure</h4>
+<p>In some cases the anti-sampling won’t work. This will mainly be due to filters for the View you are using meaning that the calculation for the sampling sessions are incorrect - Google Analytics vanilla samples on a property level (whilst GA360 samples on a View level).</p>
+<p>Try using a raw profile if you can, otherwise you can set your own sample period by using the <code>anti_sample_batches</code> flag to indicate the sample size. Pick a number that is a little lower than the smallest period you saw in the auto-sample batches. If in doubt, setting <code>anti_sample_batches</code> to 1 will make a daily fetch.</p>
+</div>
 <div id="hourly-anti-sampling-calls" class="section level4">
 <h4>Hourly anti-sampling calls</h4>
 <p>For large traffic websites, sometimes even if the batches are down to one API call per day, it isn’t enough to remove sampling. In those cases, <code>googleAnalyticsR</code> will split the calls further into hourly batches.</p>
@@ -455,17 +460,83 @@ ga_data4
 </div>
 <div id="segments-v4" class="section level3">
 <h3>Segments v4</h3>
-<p>Segments are more complex to configure that v3, but more powerful and in line to how you configure them in the UI</p>
-<pre class="r"><code>## make a segment element
+<p>Segments are more complex to configure that v3, but more powerful and in line to how you configure them in the UI.</p>
+<p>A lot of feedback for the library is on how to get the sample syntax right, so the examples below try to cover common scenarios.</p>
+<div id="v3-segments" class="section level4">
+<h4>v3 segments</h4>
+<p>You can choose to create segments via the v4 syntax or the v3 syntax for backward compatibility.</p>
+<p>If you want to use v3 segments, then they can be used in the <code>segment_id</code> argument of the <code>segment_ga4()</code> function.</p>
+<p>You can view the segment Ids by using <code>ga_segment_list()</code> and the data.frame in <code>$items</code></p>
+<pre class="r"><code>## get list of segments
+my_segments &lt;- ga_segment_list()
+
+## just the segment items
+segs &lt;- my_segments$items
+
+## segment Ids and name:
+segs[,c(&quot;name&quot;,&quot;id&quot;,&quot;defintion&quot;)]
+
+## example output
+  id            name                                                          definition
+1 -1       All Users                                                                    
+2 -2       New Users                       sessions::condition::ga:userType==New Visitor
+3 -3 Returning Users                 sessions::condition::ga:userType==Returning Visitor
+4 -4    Paid Traffic         sessions::condition::ga:medium=~^(cpc|ppc|cpa|cpm|cpv|cpp)$
+5 -5 Organic Traffic                             sessions::condition::ga:medium==organic
+6 -6  Search Traffic sessions::condition::ga:medium=~^(cpc|ppc|cpa|cpm|cpv|cpp|organic)$
+....
+</code></pre>
+<p>The ID you require is in the <code>$id</code> column which you need to prefix with “gaid::”</p>
+<pre class="r"><code>## choose the v3 segment
+segment_for_call &lt;- &quot;gaid::-4&quot;
+
+## make the v3 segment object in the v4 segment object:
+seg_obj &lt;- segment_ga4(&quot;PaidTraffic&quot;, segment_id = segment_for_call)
+
+## make the segment call
+segmented_ga1 &lt;- google_analytics_4(ga_id, 
+                                    c(&quot;2015-07-30&quot;,&quot;2015-10-01&quot;), 
+                                    dimensions=c(&#39;source&#39;,&#39;medium&#39;,&#39;segment&#39;), 
+                                    segments = seg_obj, 
+                                    metrics = c(&#39;sessions&#39;,&#39;bounces&#39;)
+                                    )
+  </code></pre>
+<p>…or you can pass the v3 syntax for dynamic segments found from the <code>$definition</code> column:</p>
+<pre class="r"><code>## or pass the segment v3 defintion in directly:
+segment_def_for_call &lt;- &quot;sessions::condition::ga:medium=~^(cpc|ppc|cpa|cpm|cpv|cpp)$&quot;
+
+## make the v3 segment object in the v4 segment object:
+seg_obj &lt;- segment_ga4(&quot;PaidTraffic&quot;, segment_id = segment_def_for_call)
+
+## make the segment call
+segmented_ga1 &lt;- google_analytics_4(ga_id, 
+                                    c(&quot;2015-07-30&quot;,&quot;2015-10-01&quot;), 
+                                    dimensions=c(&#39;source&#39;,&#39;medium&#39;,&#39;segment&#39;), 
+                                    segments = seg_obj, 
+                                    metrics = c(&#39;sessions&#39;,&#39;bounces&#39;)
+                                    )</code></pre>
+</div>
+<div id="v4-segment-syntax" class="section level4">
+<h4>v4 segment syntax</h4>
+<p>However, its recommended you embrace the new v4 syntax, as its more flexible and powerful in the long run.</p>
+<p>The hierarachy of the segment elements you will need are:</p>
+<ul>
+<li><em><code>segment_ga4()</code></em> - this is the top of the segment tree. You can pass one or a list of these into a <code>google_analytics_4()</code> segment argument. Here you name the segment as it will appear in the <code>segment</code> dimension, and pass in segment definitions either via an existing segmentID or v3 definition; via a user scoped level; or via a session scoped level. The user and session scopes can have one or a list of <code>segment_define()</code> functions.</li>
+<li><em><code>segment_define()</code></em> - this is where you define the types of segment filters that you are passing in - they are combined in a logical AND. The segment filters can be of a <code>segment_vector_simple</code> type (where order doesn’t matter) or a <code>segment_vector_sequence</code> type (where order does matter.) You can also pass in a <code>not_vector</code> of the same length as the list of segment filters, which dictates if the segments you pass in are included (the default) or excluded.</li>
+<li><em><code>segment_vector_simple()</code></em> and <em><code>segment_vector_sequence()</code></em> - these are vectors of <code>segment_element</code>, and determine if the conditions are included in a logical OR fashion, or if the sequence of steps is important (for instance users who saw this page, then that page.)<br />
+</li>
+<li><em><code>segment_element</code></em> - this is the lowest atom of segments, and lets you define on which metric or dimension you are segmenting on. You pass one or a list of these to <em><code>segment_vector_simple()</code></em> or <em><code>segment_vector_sequence()</code></em></li>
+</ul>
+<pre class="r"><code>## make two segment elements
 se &lt;- segment_element(&quot;sessions&quot;, 
                       operator = &quot;GREATER_THAN&quot;, 
-                      type = &quot;metric&quot;, 
+                      type = &quot;METRIC&quot;, 
                       comparisonValue = 1, 
                       scope = &quot;USER&quot;)
                       
 se2 &lt;- segment_element(&quot;medium&quot;, 
                       operator = &quot;EXACT&quot;, 
-                      type = &quot;dimension&quot;, 
+                      type = &quot;DIMENSION&quot;, 
                       expressions = &quot;organic&quot;)
 
 ## choose between segment_vector_simple or segment_vector_sequence
@@ -532,6 +603,7 @@ segment_seq_example
 # 2                                 ask sequence        5       1
 # 3      bestbackpackersinsurance.co.uk sequence        9       6
 # 4                                bing sequence       22       2</code></pre>
+</div>
 <div id="rstudio-addin-segment-helper" class="section level4">
 <h4>RStudio Addin: Segment helper</h4>
 <p>New in version 0.2.0 is an RStudio Addin to help create segments via a UI rather than the lists above.</p>

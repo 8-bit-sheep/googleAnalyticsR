@@ -103,6 +103,12 @@ Successfully avoided sampling
 
 The sequence involves a couple of exploratory API calls to determine the best split.  This method will adjust the time periods to have the batch sizes large enough to not take too long, but small enough to have unsampled data.
 
+#### Auto-anti sampling failure
+
+In some cases the anti-sampling won't work.  This will mainly be due to filters for the View you are using meaning that the calculation for the sampling sessions are incorrect - Google Analytics vanilla samples on a property level (whilst GA360 samples on a View level).  
+
+Try using a raw profile if you can, otherwise you can set your own sample period by using the `anti_sample_batches` flag to indicate the sample size.  Pick a number that is a little lower than the smallest period you saw in the auto-sample batches.  If in doubt, setting `anti_sample_batches` to 1 will make a daily fetch.
+
 #### Hourly anti-sampling calls
 
 For large traffic websites, sometimes even if the batches are down to one API call per day, it isn't enough to remove sampling.  In those cases, `googleAnalyticsR` will split the calls further into hourly batches.
@@ -236,19 +242,101 @@ ga_data4
 
 ### Segments v4
 
-Segments are more complex to configure that v3, but more powerful and in line to how you configure them in the UI
+Segments are more complex to configure that v3, but more powerful and in line to how you configure them in the UI.
+
+A lot of feedback for the library is on how to get the sample syntax right, so the examples below try to cover common scenarios.
+
+#### v3 segments
+
+You can choose to create segments via the v4 syntax or the v3 syntax for backward compatibility.
+
+If you want to use v3 segments, then they can be used in the `segment_id` argument of the `segment_ga4()` function.
+
+You can view the segment Ids by using `ga_segment_list()` and the data.frame in `$items`
 
 ```r
-## make a segment element
+## get list of segments
+my_segments <- ga_segment_list()
+
+## just the segment items
+segs <- my_segments$items
+
+## segment Ids and name:
+segs[,c("name","id","defintion")]
+
+## example output
+  id            name                                                          definition
+1 -1       All Users                                                                    
+2 -2       New Users                       sessions::condition::ga:userType==New Visitor
+3 -3 Returning Users                 sessions::condition::ga:userType==Returning Visitor
+4 -4    Paid Traffic         sessions::condition::ga:medium=~^(cpc|ppc|cpa|cpm|cpv|cpp)$
+5 -5 Organic Traffic                             sessions::condition::ga:medium==organic
+6 -6  Search Traffic sessions::condition::ga:medium=~^(cpc|ppc|cpa|cpm|cpv|cpp|organic)$
+....
+
+```
+
+The ID you require is in the `$id` column which you need to prefix with "gaid::"
+
+```r
+## choose the v3 segment
+segment_for_call <- "gaid::-4"
+
+## make the v3 segment object in the v4 segment object:
+seg_obj <- segment_ga4("PaidTraffic", segment_id = segment_for_call)
+
+## make the segment call
+segmented_ga1 <- google_analytics_4(ga_id, 
+                                    c("2015-07-30","2015-10-01"), 
+                                    dimensions=c('source','medium','segment'), 
+                                    segments = seg_obj, 
+                                    metrics = c('sessions','bounces')
+                                    )
+  
+``` 
+
+...or you can pass the v3 syntax for dynamic segments found from the `$definition` column:
+
+```r
+## or pass the segment v3 defintion in directly:
+segment_def_for_call <- "sessions::condition::ga:medium=~^(cpc|ppc|cpa|cpm|cpv|cpp)$"
+
+## make the v3 segment object in the v4 segment object:
+seg_obj <- segment_ga4("PaidTraffic", segment_id = segment_def_for_call)
+
+## make the segment call
+segmented_ga1 <- google_analytics_4(ga_id, 
+                                    c("2015-07-30","2015-10-01"), 
+                                    dimensions=c('source','medium','segment'), 
+                                    segments = seg_obj, 
+                                    metrics = c('sessions','bounces')
+                                    )
+```
+
+
+#### v4 segment syntax
+
+However, its recommended you embrace the new v4 syntax, as its more flexible and powerful in the long run.
+
+The hierarachy of the segment elements you will need are:
+
+* *`segment_ga4()`* - this is the top of the segment tree.  You can pass one or a list of these into a `google_analytics_4()` segment argument.  Here you name the segment as it will appear in the `segment` dimension, and pass in segment definitions either via an existing segmentID or v3 definition; via a user scoped level; or via a session scoped level.  The user and session scopes can have one or a list of `segment_define()` functions.
+* *`segment_define()`* - this is where you define the types of segment filters that you are passing in - they are combined in a logical AND.  The segment filters can be of a `segment_vector_simple` type (where order doesn't matter) or a `segment_vector_sequence` type (where order does matter.)  You can also pass in a `not_vector` of the same length as the list of segment filters, which dictates if the segments you pass in are included (the default) or excluded.
+* *`segment_vector_simple()`* and *`segment_vector_sequence()`* - these are vectors of `segment_element`, and determine if the conditions are included in a logical OR fashion, or if the sequence of steps is important (for instance users who saw this page, then that page.)  
+* *`segment_element`* - this is the lowest atom of segments, and lets you define on which metric or dimension you are segmenting on. You pass one or a list of these to *`segment_vector_simple()`* or *`segment_vector_sequence()`*
+
+
+```r
+## make two segment elements
 se <- segment_element("sessions", 
                       operator = "GREATER_THAN", 
-                      type = "metric", 
+                      type = "METRIC", 
                       comparisonValue = 1, 
                       scope = "USER")
                       
 se2 <- segment_element("medium", 
                       operator = "EXACT", 
-                      type = "dimension", 
+                      type = "DIMENSION", 
                       expressions = "organic")
 
 ## choose between segment_vector_simple or segment_vector_sequence
