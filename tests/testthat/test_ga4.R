@@ -5,8 +5,9 @@ context("Authentication")
 
 test_that("Auth check", {
   skip_on_cran()
-  skip_on_travis()
-  expect_s3_class(ga_auth(), "Token2.0")
+  # skip_on_travis()
+  # expect_s3_class(ga_auth(), "Token2.0")
+  expect_s3_class(gar_auth("httr-oauth.rds"), "Token2.0")
 })
 
 ga_id <- 106249469

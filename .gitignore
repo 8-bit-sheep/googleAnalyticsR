@@ -14,3 +14,4 @@ vignettes/*.pdf
 inst/doc
 
 .httr-oauth
+tests/testthat/httr-oauth.rds
