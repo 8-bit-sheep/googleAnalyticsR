@@ -369,34 +369,35 @@ segment_example
 
 
 ## Sequence segment
-
-se2 <- segment_element("medium", 
-                       operator = "EXACT", 
-                       type = "dimension", 
-                       expressions = "organic")
-
-se3 <- segment_element("medium",
-                       operator = "EXACT",
-                       type = "dimension",
-                       not = TRUE,
-                       expressions = "organic")
-
-## step sequence
-## users who arrived via organic then via referral
-sv_sequence <- segment_vector_sequence(list(list(se2), 
-                                             list(se3)))
-
-seq_defined2 <- segment_define(list(sv_sequence))
-
-segment4_seq <- segment_ga4("sequence", user_segment = seq_defined2)
-
-## Add the segments to the segments param
-segment_seq_example <- google_analytics_4(ga_id, 
-                                          c("2015-01-01","2016-05-01"), 
-                                          dimensions=c('source','segment'), 
-                                          segments = segment4_seq,
-                                          metrics = c('sessions','bounces')
-                                          )
+  
+  se2 <- segment_element("medium", 
+                         operator = "EXACT", 
+                         type = "DIMENSION", 
+                         expressions = "organic")
+  
+  se3 <- segment_element("medium",
+                         operator = "EXACT",
+                         type = "DIMENSION",
+                         not = TRUE,
+                         expressions = "organic")
+  
+  ## step sequence
+  ## users who arrived via organic then via referral
+  sv_sequence <- segment_vector_sequence(list(list(se2), 
+                                              list(se3)))
+  
+  seq_defined2 <- segment_define(list(sv_sequence))
+  
+  segment4_seq <- segment_ga4("sequence", user_segment = seq_defined2)
+  
+  ## Add the segments to the segments param
+  segment_seq_example <- google_analytics_4(ga_id, 
+                                            c("2016-01-01","2016-03-01"), 
+                                            dimensions=c('source','segment'), 
+                                            segments = segment4_seq,
+                                            metrics = c('sessions','bounces')
+  )
+  
 segment_seq_example
 #                                source  segment sessions bounces
 # 1                                 aol sequence        1       0

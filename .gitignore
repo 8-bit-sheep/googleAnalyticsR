@@ -5,3 +5,5 @@
 .httr-oauth
 .RData
 
+
+tests/testthat/httr-oauth.rds
