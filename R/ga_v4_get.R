@@ -134,6 +134,12 @@ make_ga_4_req <- function(viewId,
   if(is.null(metrics)){
     stop("Must supply a metric")
   }
+  
+  if(!is.null(segments)){
+    if(!any("segment" %in% dimensions)){
+      dimensions <- c(dimensions, "segment")
+    }
+  }
 
   id <- sapply(viewId, checkPrefix, prefix = "ga")
 

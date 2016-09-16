@@ -9,21 +9,5 @@ simpleSegment(orFiltersForSegmentList)
 \description{
 Simple Segment
 }
-\seealso{
-Other v4 segment functions: \code{\link{dynamicSegment}},
-  \code{\link{orFiltersForSegment}},
-  \code{\link{segmentDefinition}},
-  \code{\link{segmentDimensionFilter}},
-  \code{\link{segmentFilterClause}},
-  \code{\link{segmentFilter}},
-  \code{\link{segmentMetricFilter}},
-  \code{\link{segmentObj_ga4}},
-  \code{\link{segmentSequenceStep}},
-  \code{\link{segment_define}},
-  \code{\link{segment_element}},
-  \code{\link{segment_vector_sequence}},
-  \code{\link{segment_vector_simple}},
-  \code{\link{sequenceSegment}}
-}
 \keyword{internal}
 

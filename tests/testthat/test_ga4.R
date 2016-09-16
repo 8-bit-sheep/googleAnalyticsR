@@ -125,13 +125,13 @@ example_simple_segment <- function(){
   ## make a segment element
   se <- segment_element("sessions", 
                         operator = "GREATER_THAN", 
-                        type = "metric", 
+                        type = "METRIC", 
                         comparisonValue = 1, 
                         scope = "USER")
   
   se2 <- segment_element("medium", 
                          operator = "EXACT", 
-                         type = "dimension", 
+                         type = "DIMENSION", 
                          expressions = "organic")
   
   ## choose between segment_vector_simple or segment_vector_sequence
@@ -161,13 +161,13 @@ example_sequence_segment <- function(){
   skip_on_travis()
   se2 <- segment_element("medium", 
                          operator = "EXACT", 
-                         type = "dimension", 
+                         type = "DIMENSION", 
                          expressions = "organic",
                          matchType = "PRECEDES")
   
   se3 <- segment_element("medium",
                          operator = "EXACT",
-                         type = "dimension",
+                         type = "DIMENSION",
                          not = TRUE,
                          expressions = "organic",
                          matchType = "PRECEDES")

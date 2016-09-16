@@ -20,21 +20,5 @@ Segment Filter
 If true, match the complement of simple or sequence segment above.
 For example, to match all visits not from "New York", set to TRUE.
 }
-\seealso{
-Other v4 segment functions: \code{\link{dynamicSegment}},
-  \code{\link{orFiltersForSegment}},
-  \code{\link{segmentDefinition}},
-  \code{\link{segmentDimensionFilter}},
-  \code{\link{segmentFilterClause}},
-  \code{\link{segmentMetricFilter}},
-  \code{\link{segmentObj_ga4}},
-  \code{\link{segmentSequenceStep}},
-  \code{\link{segment_define}},
-  \code{\link{segment_element}},
-  \code{\link{segment_vector_sequence}},
-  \code{\link{segment_vector_simple}},
-  \code{\link{sequenceSegment}},
-  \code{\link{simpleSegment}}
-}
 \keyword{internal}
 

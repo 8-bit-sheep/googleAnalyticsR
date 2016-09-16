@@ -21,12 +21,6 @@ ga_segment_list <- function(){
 #' For example, of the entire set of users, one Segment 
 #' might be users from a particular country or city.
 #' 
-#' \code{segment_ga4} is the top heirarchy of segment creation, for which you will also need:
-#' \itemize{
-#'  \item \link{segment_define} : AND combination of segmentFilters
-#'  \item \link{segment_vector_simple} or \link{segment_vector_sequence}
-#'  \item \link{segment_element} that are combined in OR lists for \code{segment_vectors_*}
-#' }
 #' 
 #' @param name The name of the segment for the reports.
 #' @param segment_id The segment ID of a built in or custom segment e.g. gaid::-3
@@ -34,7 +28,19 @@ ga_segment_list <- function(){
 #' @param session_segment A list of \code{segment_define}'s that apply to sessions
 #'
 #' @return a segmentFilter object. You can pass a list of these to the request.
+#' 
+#' @details 
+#' \code{segment_ga4} is the top heirarchy of segment creation, for which you will also need:
+#' \itemize{
+#'  \item \link{segment_define} : AND combination of segmentFilters
+#'  \item \link{segment_vector_simple} or \link{segment_vector_sequence}
+#'  \item \link{segment_element} that are combined in OR lists for \code{segment_vectors_*}
+#' }
+#' 
+#' 
 #' @family v4 segment functions
+#' 
+#' @examples
 #' 
 #' \dontrun{
 #' library(googleAnalyticsR)
@@ -134,9 +140,22 @@ segment_ga4 <- function(name,
                         session_segment=NULL){
   
   testthat::expect_type(name, "character")
-  expect_null_or_type(segment_id, "character")
-
+  
   if(!is.null(segment_id)){
+    testthat::expect_type(segment_id, "character")
+    testthat::expect_length(segment_id, 1)
+  }
+
+  
+  if(!is.null(segment_id)){
+    
+    if(grepl("^sessions",segment_id)){
+      myMessage("Segment v3 dynamic segment", level=1)
+    } else if (!grepl("^gaid::")){
+      segment_id <- paste0("gaid::",segment_id)
+      myMessage("segment_id passed but doesn't begin with gaid:: - adding it: ", segment_id, level = 3)
+    }
+    
     out <- segmentObj_ga4(
       segmentId = segment_id
     )
@@ -409,7 +428,6 @@ segment_element <- function(name,
 #'
 #' @return a list of class \code{segment_ga4}
 #'
-#' @family v4 segment functions
 #' @keywords internal
 segmentObj_ga4 <- function(dynamicSegment=NULL, segmentId=NULL){
   
@@ -434,7 +452,6 @@ segmentObj_ga4 <- function(dynamicSegment=NULL, segmentId=NULL){
 #' @param userSegment userSegment to include in the segment
 #' @param sessionSegment sessionSegment to include in the segment
 #'
-#' @family v4 segment functions
 #' @keywords internal
 dynamicSegment <- function(name, userSegment, sessionSegment){
   
@@ -458,7 +475,6 @@ dynamicSegment <- function(name, userSegment, sessionSegment){
 #' SegmentDefinition defines the segment to be a set of 
 #'   SegmentFilters which are combined together with a logical AND operation.
 #' 
-#' @family v4 segment functions
 #' @keywords internal
 segmentDefinition <- function(segmentFilterList){
   
@@ -481,7 +497,6 @@ segmentDefinition <- function(segmentFilterList){
 #' If true, match the complement of simple or sequence segment above.
 #' For example, to match all visits not from "New York", set to TRUE.
 #'
-#' @family v4 segment functions
 #' @keywords internal
 segmentFilter <- function(not=FALSE, simpleSegment=NULL, sequenceSegment=NULL){
   
@@ -508,7 +523,6 @@ segmentFilter <- function(not=FALSE, simpleSegment=NULL, sequenceSegment=NULL){
 
 #' Simple Segment
 #'
-#' @family v4 segment functions
 #' @keywords internal
 simpleSegment <- function(orFiltersForSegmentList){
   
@@ -523,7 +537,6 @@ simpleSegment <- function(orFiltersForSegmentList){
 
 #' orFiltersForSegment
 #'
-#' @family v4 segment functions
 #' @keywords internal
 orFiltersForSegment <- function(segmentFilterClauseList){
   
@@ -540,7 +553,6 @@ orFiltersForSegment <- function(segmentFilterClauseList){
 #'
 #' Make this internal
 #'
-#' @family v4 segment functions
 #' @keywords internal
 segmentFilterClause <- function(not=FALSE,
                                 dimensionFilter=NULL,
@@ -561,7 +573,6 @@ segmentFilterClause <- function(not=FALSE,
 
 #' segmentDimensionFilter
 #'
-#' @family v4 segment functions
 #' @keywords internal
 segmentDimensionFilter <- function(name,
                                    expressions,
@@ -599,7 +610,6 @@ segmentDimensionFilter <- function(name,
 
 #' segmentMetricFilter
 #'
-#' @family v4 segment functions
 #' @keywords internal
 segmentMetricFilter <- function(name,
                                 scope = c("PRODUCT", "HIT","SESSION","USER"),
@@ -631,7 +641,6 @@ segmentMetricFilter <- function(name,
 #' 
 #' @return A sequenceSegment object
 #'
-#' @family v4 segment functions
 #' @keywords internal
 sequenceSegment <- function(segmentSequenceStepList, firstStepMatch=FALSE){
   
@@ -653,7 +662,6 @@ sequenceSegment <- function(segmentSequenceStepList, firstStepMatch=FALSE){
 #' 
 #' @return segmentSequenceStep object
 #' 
-#' @family v4 segment functions
 #' @keywords internal
 segmentSequenceStep <- function(orFiltersForSegmentList,
                                 matchType = c("PRECEDES", "IMMEDIATELY_PRECEDES")){
