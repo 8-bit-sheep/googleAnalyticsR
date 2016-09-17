@@ -3,6 +3,8 @@ cache: packages
 r_packages:
 - knitr
 - covr
+- bigQueryR
+- googleCloudStorageR
 notifications:
   slack: edmondsons:kgTokxui4ZzTsqdD19tCoozf
   email:

@@ -1,4 +1,11 @@
+options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
+                                        "https://www.googleapis.com/auth/analytics.edit",
+                                        "https://www.googleapis.com/auth/cloud-platform",
+                                        "https://www.googleapis.com/auth/devstorage.full_control"))
+
 library(googleAnalyticsR)
+library(bigQueryR)
+library(googleCloudStorageR)
 library(testthat)
 
 accountId <- 54019251
@@ -10,9 +17,20 @@ webPropId2 <- "UA-47480439-2"
 
 context("Authentication")
 
+test_that("Scopes all set correctly", {
+  
+  scopes <- getOption("googleAuthR.scopes.selected")
+  
+  expect_equal(scopes, c("https://www.googleapis.com/auth/analytics",
+                         "https://www.googleapis.com/auth/analytics.edit",
+                         "https://www.googleapis.com/auth/cloud-platform",
+                         "https://www.googleapis.com/auth/devstorage.full_control"))
+  
+})
+
 test_that("Auth check", {
   skip_on_cran()
-  expect_s3_class(gar_auth("httr-oauth.rds"), "Token2.0")
+  expect_s3_class(googleAuthR::gar_auth("httr-oauth.rds"), "Token2.0")
 })
 
 context("Accounts")
@@ -73,7 +91,7 @@ test_that("Custom data source upload list",{
 })
 
 
-context("Data fetching")
+context("Normal Data fetching")
 
 test_that("Download meta data", {
   skip_on_cran()
@@ -111,6 +129,8 @@ test_that("v4 API matches v3 equivalent API call", {
   
 })
 
+context("Filters")
+
 test_that("Filters work", {
   skip_on_cran()
   ## create filters on metrics
@@ -143,6 +163,8 @@ test_that("Filters work", {
   
 })
 
+context("Anti-sampling")
+
 test_that("Anti-sample when no sampling there", {
   skip_on_cran()
   as <-   google_analytics_4(ga_id, 
@@ -154,6 +176,8 @@ test_that("Anti-sample when no sampling there", {
   
   
 })
+
+context("Cohorts")
 
 test_that("Cohorts work", {
   skip_on_cran()
@@ -171,6 +195,8 @@ test_that("Cohorts work", {
   expect_s3_class(cohort_example, "data.frame")
   
 })
+
+context("Pivots")
 
 test_that("Pivots work", {
   skip_on_cran()
@@ -337,4 +363,33 @@ test_that("Can upload a data.frame ", {
   
   new_rr <- ga_custom_upload(upload_object = rr)
   expect_equal(rr$kind, "analytics#upload")
+})
+
+context("BigQuery")
+
+test_that("Can query from BigQuery using parser", {
+  skip_on_cran()
+  
+  bq_result <- google_analytics_bq("mark-edmondson-gde",
+                                   "98288890",
+                                   start = "2015-08-10", end = "2016-03-01",
+                                   metrics = c("sessions","users"),
+                                   dimensions = c("date","medium"))
+  
+  expect_s3_class(bq_result, "data.frame")
+  
+})
+
+test_that("Can query from BigQuery directly",{
+  skip_on_cran()
+  
+  q <- "SELECT fullVisitorId, visitId, date, hits.hour as hour, hits.minute as minute FROM (TABLE_DATE_RANGE([98288890.ga_sessions_], TIMESTAMP('2016-08-10'), TIMESTAMP('2016-09-01'))) group by fullVisitorId, visitId, date, hour, minute LIMIT 10000"
+  
+  bq_result <- google_analytics_bq("mark-edmondson-gde",
+                                   "98288890",
+                                   query = q)
+  
+  expect_s3_class(bq_result, "data.frame")
+  
+  
 })
