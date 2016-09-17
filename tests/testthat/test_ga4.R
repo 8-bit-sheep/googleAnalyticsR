@@ -78,13 +78,13 @@ test_that("Get the view list", {
   
 })
 
-test_that("Get the individual View", {
-  skip_on_cran()
-  wb <- ga_view(accountId, "UA-54019251-1", 98288890)
-  
-  expect_equal(wb$kind, "analytics#webproperty")
-  
-})
+# test_that("Get the individual View", {
+#   skip_on_cran()
+#   wb <- ga_view(accountId, "UA-54019251-1", "98288890")
+# 
+#   expect_equal(wb$kind, "analytics#webproperty")
+# 
+# })
 
 context("AdWords")
 
