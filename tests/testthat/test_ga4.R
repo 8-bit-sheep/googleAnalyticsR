@@ -50,6 +50,42 @@ test_that("Get the account list", {
   
 })
 
+context("Webproperties")
+
+test_that("Get the webproperty list", {
+  skip_on_cran()
+  wb <- ga_webproperty_list(accountId)
+  
+  expect_equal(wb$kind, "analytics#webproperties")
+  
+})
+
+test_that("Get the web property", {
+  skip_on_cran()
+  wb <- ga_webproperty(accountId, "UA-54019251-1")
+  
+  expect_equal(wb$kind, "analytics#webproperty")
+  
+})
+
+context("Views")
+
+test_that("Get the view list", {
+  skip_on_cran()
+  wb <- ga_view_list(accountId, webPropId)
+  
+  expect_equal(wb$kind, "analytics#profiles")
+  
+})
+
+test_that("Get the individual View", {
+  skip_on_cran()
+  wb <- ga_view(accountId, "UA-54019251-1", 98288890)
+  
+  expect_equal(wb$kind, "analytics#webproperty")
+  
+})
+
 context("AdWords")
 
 test_that("Get Adwords list", {
@@ -126,6 +162,18 @@ test_that("v4 API matches v3 equivalent API call", {
   
   expect_equal(v3$medium, v4$medium)
   expect_equal(v3$sessions, v4$sessions)
+  
+})
+
+test_that("v3 Multi-channel funnels", {
+  skip_on_cran()
+  v3 <- google_analytics(ga_id, 
+                         start = "2015-07-30", end = "2015-10-01",
+                         dimensions=c('sourcePath'), 
+                         metrics = c('totalConversions'),
+                         type = "mcf")  
+  
+  expect_s3_class(v3, "data.frame")
   
 })
 
@@ -364,6 +412,25 @@ test_that("Can upload a data.frame ", {
   new_rr <- ga_custom_upload(upload_object = rr)
   expect_equal(rr$kind, "analytics#upload")
 })
+
+context("Custom metrics download")
+
+test_that("Can get list of custom metrics and dimensions", {
+  
+  gacl <- ga_custom_vars_list(accountId, webPropId, type = "customMetrics")
+  gacl2 <- ga_custom_vars_list(accountId, webPropId, type = "customDimensions") 
+  
+  expect_equal(gacl$kind, "analytics#customMetrics")
+  expect_equal(gacl2$kind, "analytics#customDimensions")
+})
+
+test_that("Can get specific custom dimension", {
+  
+  gacm <- ga_custom_vars(accountId, webPropId, type = "customDimensions", customId = "ga:dimension1") 
+  
+  expect_equal(gacm$kind,"analytics#customDimension")
+})
+
 
 context("BigQuery")
 
