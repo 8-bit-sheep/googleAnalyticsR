@@ -14,6 +14,7 @@ ga_id <- 106249469
 
 accountId2 <- 47480439
 webPropId2 <- "UA-47480439-2"
+ga_id2 <- 81416156
 
 context("Authentication")
 
@@ -147,6 +148,32 @@ test_that("Vanilla test data fetch", {
   expect_s3_class(t11, "data.frame")
 })
 
+test_that("Big v4 batch", {
+  skip_on_cran()
+  big <-   google_analytics_4(ga_id, 
+                              date_range = c("2015-07-30","2016-09-01"),
+                              dimensions=c('medium','source','hour','minute','campaign','pagePath'), 
+                              metrics = c('sessions'),
+                              max = -1)  
+  expect_s3_class(big, "data.frame")
+})
+
+test_that("v3 multi account batching", {
+  
+  
+  multi <- google_analytics(c(ga_id, ga_id2),
+                            start = "2015-07-30", end = "2015-10-01",
+                            dimensions=c('medium'), 
+                            metrics = c('sessions'),
+                            sort = "ga:sessions")
+  
+  expect_length(multi, 2)
+  
+  expect_s3_class(multi[[1]], "data.frame")
+  expect_s3_class(multi[[2]], "data.frame")  
+  
+})
+
 test_that("v4 API matches v3 equivalent API call", {
   skip_on_cran()
   v3 <- google_analytics(ga_id, 
@@ -179,7 +206,7 @@ test_that("v3 Multi-channel funnels", {
 
 context("Filters")
 
-test_that("Filters work", {
+test_that("Filter v4 GA fetches work", {
   skip_on_cran()
   ## create filters on metrics
   mf <- met_filter("bounces", "GREATER_THAN", 0)
@@ -208,6 +235,42 @@ test_that("Filters work", {
   source_beginnings <- unique(vapply(out$source, function(x) substr(x, 1, 1), character(1)))
   expect_false("1" %in% source_beginnings)
   expect_false("a" %in% source_beginnings)
+  
+})
+
+test_that("Get Filter View list", {
+  skip_on_cran()
+  
+  fits <- ga_filter_view_list(accountId, webPropId, ga_id)
+  
+  expect_equal(fits$kind, "analytics#profileFilterLinks")
+  
+})
+
+test_that("Get Filter list for account", {
+  skip_on_cran()
+  
+  fits <- ga_filter_list(accountId)
+  
+  expect_equal(fits$kind, "analytics#filters")
+  
+})
+
+test_that("Get Specific Filter", {
+  skip_on_cran()
+  
+  fits <- ga_filter(accountId, "22248057")
+  
+  expect_equal(fits$kind, "analytics#filter")
+  
+})
+
+test_that("Get Filter View", {
+  skip_on_cran()
+  
+  fits <- ga_filter_view(accountId, webPropId, ga_id, "106249469:22248057")
+  
+  expect_equal(fits$kind, "analytics#profileFilterLink")
   
 })
 
@@ -283,7 +346,7 @@ test_that("Fetch segment list", {
 })
 
 test_that("Segment v3 syntax work", {
-  
+  skip_on_cran()
   ## choose the v3 segment
   segment_for_call <- "gaid::-4"
   
@@ -293,7 +356,7 @@ test_that("Segment v3 syntax work", {
   ## make the segment call
   segmented_ga1 <- google_analytics_4(ga_id, 
                                       c("2015-07-30","2015-10-01"), 
-                                      dimensions=c('source','medium','segment'), 
+                                      dimensions=c('source','medium'), 
                                       segments = seg_obj, 
                                       metrics = c('sessions','bounces')
   )
@@ -319,7 +382,7 @@ test_that("Segment v3 syntax work", {
 })
 
 test_that("Segment v4 syntax works - simple", {
-  
+  skip_on_cran()
   ## make two segment elements
   se <- segment_element("sessions", 
                         operator = "GREATER_THAN", 
@@ -360,7 +423,7 @@ test_that("Segment v4 syntax works - simple", {
 })
 
 test_that("Segment v4 Syntax - step sequence", {
-  
+  skip_on_cran()
   ## Sequence segment
   
   se2 <- segment_element("medium", 
@@ -410,13 +473,14 @@ test_that("Can upload a data.frame ", {
   expect_equal(rr$kind, "analytics#upload")
   
   new_rr <- ga_custom_upload(upload_object = rr)
+  print(new_rr)
   expect_equal(rr$kind, "analytics#upload")
 })
 
 context("Custom metrics download")
 
 test_that("Can get list of custom metrics and dimensions", {
-  
+  skip_on_cran()
   gacl <- ga_custom_vars_list(accountId, webPropId, type = "customMetrics")
   gacl2 <- ga_custom_vars_list(accountId, webPropId, type = "customDimensions") 
   
@@ -460,3 +524,42 @@ test_that("Can query from BigQuery directly",{
   
   
 })
+
+context("Goals")
+
+test_that("Can get a goal list", {
+  skip_on_cran()
+  goals <- ga_goal_list(accountId, webPropId, ga_id)
+  
+  expect_equal(goals$kind, "analytics#goals")
+  
+  
+})
+
+
+test_that("Can get a goal entry", {
+  skip_on_cran()
+  goal <- ga_goal(accountId, webPropId, ga_id, 1)
+  
+  expect_equal(goal$kind, "analytics#goal")
+  
+  
+})
+
+context("Experiments")
+
+test_that("Can fetch experiment list", {
+  skip_on_cran()
+  exper <- ga_experiment_list(accountId, webPropId, ga_id)
+  
+  expect_equal(exper, "analytics#experiments")
+})
+
+
+## I have no experiment to fetch....
+# test_that("Can fetch experiment", {
+#   skip_on_cran()
+#   exper <- ga_experiment(accountId, webPropId, ga_id, expId)
+#   
+#   expect_equal(exper, "analytics#experiment")
+# })
