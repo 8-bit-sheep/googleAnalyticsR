@@ -158,7 +158,7 @@ test_that("Big v4 batch", {
   expect_s3_class(big, "data.frame")
 })
 
-test_that("v3 multi account batching", {
+test_that("v3 multi account batching without flag", {
   
   
   multi <- google_analytics(c(ga_id, ga_id2),
@@ -166,6 +166,23 @@ test_that("v3 multi account batching", {
                             dimensions=c('medium'), 
                             metrics = c('sessions'),
                             sort = "ga:sessions")
+  
+  expect_length(multi, 2)
+  
+  expect_s3_class(multi[[1]], "data.frame")
+  expect_s3_class(multi[[2]], "data.frame")  
+  
+})
+
+test_that("v3 multi account batching with flag", {
+  
+  
+  multi <- google_analytics(c(ga_id, ga_id2),
+                            start = "2015-07-30", end = "2015-10-01",
+                            dimensions=c('medium'), 
+                            metrics = c('sessions'),
+                            sort = "ga:sessions",
+                            multi_account_batching = TRUE)
   
   expect_length(multi, 2)
   
