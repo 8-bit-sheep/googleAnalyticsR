@@ -608,3 +608,31 @@ test_that("Can fetch experiment list", {
 #   
 #   expect_equal(exper, "analytics#experiment")
 # })
+
+context("Allow metrics and dimensions")
+
+test_that("Allowed metrics call", {
+  skip_on_cran()
+  
+  m1 <- allowed_metric_dim("METRIC")
+  m2 <- allowed_metric_dim("METRIC", "segment")
+  m3 <- allowed_metric_dim("METRIC", "cohort")
+  d1 <- allowed_metric_dim("DIMENSION")
+  d2 <- allowed_metric_dim("DIMENSION", "segment")
+  d3 <- allowed_metric_dim("DIMENSION", "cohort")
+  
+  expect_named(m1)
+  expect_named(m2)
+  expect_named(m3)
+  expect_named(d1)
+  expect_named(d2)
+  expect_named(d3)
+  
+  expect_type(m1, "character")
+  expect_type(m2, "character")
+  expect_type(m3, "character")
+  expect_type(d1, "character")
+  expect_type(d2, "character")
+  expect_type(d3, "character")
+  
+})
