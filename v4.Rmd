@@ -406,6 +406,48 @@ segment_seq_example
 # 4                                bing sequence       22       2
 ```
 
+Some more examples, using some of the match types, contributed by Pawel Kapuscinski:
+
+```r
+con1 <-segment_vector_simple(list(list(segment_element("ga:dimension1", 
+                      operator = "REGEXP", 
+                      type = "DIMENSION", 
+                      expressions = ".*", 
+                      scope = "SESSION"))))
+
+con2 <-segment_vector_simple(list(list(segment_element("ga:deviceCategory", 
+                      operator = "EXACT", 
+                      type = "DIMENSION", 
+                      expressions = "Desktop", 
+                      scope = "SESSION"))))
+
+seq1 <- segment_element("ga:pagePath", 
+                         operator = "EXACT", 
+                         type = "DIMENSION", 
+                         expressions = "yourdomain.com/page-path", 
+                         scope = "SESSION")
+
+
+seq2 <- segment_element("ga:eventAction", 
+                         operator = "REGEXP", 
+                         type = "DIMENSION", 
+                         expressions = "english", 
+                         scope = "SESSION",
+                         matchType = "IMMEDIATELY_PRECEDES")
+
+allSEQ <- segment_vector_sequence(list(list(seq1), list(seq2)))
+
+results <- google_analytics_4(ga_id, 
+                             date_range = c("2016-08-08","2016-09-08"),
+                             segments = segment_ga4("sequence+condition",
+                                                    user_segment = segment_define(list(con1,con2,allSEQ))
+                                                    ),
+                             metrics = c('ga:users'),
+                             dimensions = c('ga:segment'))
+
+
+```
+
 #### RStudio Addin: Segment helper
 
 New in version 0.2.0 is an RStudio Addin to help create segments via a UI rather than the lists above.

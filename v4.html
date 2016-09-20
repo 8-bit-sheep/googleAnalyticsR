@@ -569,40 +569,79 @@ segment_example
 
 
 ## Sequence segment
-
-se2 &lt;- segment_element(&quot;medium&quot;, 
-                       operator = &quot;EXACT&quot;, 
-                       type = &quot;dimension&quot;, 
-                       expressions = &quot;organic&quot;)
-
-se3 &lt;- segment_element(&quot;medium&quot;,
-                       operator = &quot;EXACT&quot;,
-                       type = &quot;dimension&quot;,
-                       not = TRUE,
-                       expressions = &quot;organic&quot;)
-
-## step sequence
-## users who arrived via organic then via referral
-sv_sequence &lt;- segment_vector_sequence(list(list(se2), 
-                                             list(se3)))
-
-seq_defined2 &lt;- segment_define(list(sv_sequence))
-
-segment4_seq &lt;- segment_ga4(&quot;sequence&quot;, user_segment = seq_defined2)
-
-## Add the segments to the segments param
-segment_seq_example &lt;- google_analytics_4(ga_id, 
-                                          c(&quot;2015-01-01&quot;,&quot;2016-05-01&quot;), 
-                                          dimensions=c(&#39;source&#39;,&#39;segment&#39;), 
-                                          segments = segment4_seq,
-                                          metrics = c(&#39;sessions&#39;,&#39;bounces&#39;)
-                                          )
+  
+  se2 &lt;- segment_element(&quot;medium&quot;, 
+                         operator = &quot;EXACT&quot;, 
+                         type = &quot;DIMENSION&quot;, 
+                         expressions = &quot;organic&quot;)
+  
+  se3 &lt;- segment_element(&quot;medium&quot;,
+                         operator = &quot;EXACT&quot;,
+                         type = &quot;DIMENSION&quot;,
+                         not = TRUE,
+                         expressions = &quot;organic&quot;)
+  
+  ## step sequence
+  ## users who arrived via organic then via referral
+  sv_sequence &lt;- segment_vector_sequence(list(list(se2), 
+                                              list(se3)))
+  
+  seq_defined2 &lt;- segment_define(list(sv_sequence))
+  
+  segment4_seq &lt;- segment_ga4(&quot;sequence&quot;, user_segment = seq_defined2)
+  
+  ## Add the segments to the segments param
+  segment_seq_example &lt;- google_analytics_4(ga_id, 
+                                            c(&quot;2016-01-01&quot;,&quot;2016-03-01&quot;), 
+                                            dimensions=c(&#39;source&#39;,&#39;segment&#39;), 
+                                            segments = segment4_seq,
+                                            metrics = c(&#39;sessions&#39;,&#39;bounces&#39;)
+  )
+  
 segment_seq_example
 #                                source  segment sessions bounces
 # 1                                 aol sequence        1       0
 # 2                                 ask sequence        5       1
 # 3      bestbackpackersinsurance.co.uk sequence        9       6
 # 4                                bing sequence       22       2</code></pre>
+<p>Some more examples, using some of the match types, contributed by Pawel Kapuscinski:</p>
+<pre class="r"><code>con1 &lt;-segment_vector_simple(list(list(segment_element(&quot;ga:dimension1&quot;, 
+                      operator = &quot;REGEXP&quot;, 
+                      type = &quot;DIMENSION&quot;, 
+                      expressions = &quot;.*&quot;, 
+                      scope = &quot;SESSION&quot;))))
+
+con2 &lt;-segment_vector_simple(list(list(segment_element(&quot;ga:deviceCategory&quot;, 
+                      operator = &quot;EXACT&quot;, 
+                      type = &quot;DIMENSION&quot;, 
+                      expressions = &quot;Desktop&quot;, 
+                      scope = &quot;SESSION&quot;))))
+
+seq1 &lt;- segment_element(&quot;ga:pagePath&quot;, 
+                         operator = &quot;EXACT&quot;, 
+                         type = &quot;DIMENSION&quot;, 
+                         expressions = &quot;yourdomain.com/page-path&quot;, 
+                         scope = &quot;SESSION&quot;)
+
+
+seq2 &lt;- segment_element(&quot;ga:eventAction&quot;, 
+                         operator = &quot;REGEXP&quot;, 
+                         type = &quot;DIMENSION&quot;, 
+                         expressions = &quot;english&quot;, 
+                         scope = &quot;SESSION&quot;,
+                         matchType = &quot;IMMEDIATELY_PRECEDES&quot;)
+
+allSEQ &lt;- segment_vector_sequence(list(list(seq1), list(seq2)))
+
+results &lt;- google_analytics_4(ga_id, 
+                             date_range = c(&quot;2016-08-08&quot;,&quot;2016-09-08&quot;),
+                             segments = segment_ga4(&quot;sequence+condition&quot;,
+                                                    user_segment = segment_define(list(con1,con2,allSEQ))
+                                                    ),
+                             metrics = c(&#39;ga:users&#39;),
+                             dimensions = c(&#39;ga:segment&#39;))
+
+</code></pre>
 </div>
 <div id="rstudio-addin-segment-helper" class="section level4">
 <h4>RStudio Addin: Segment helper</h4>
