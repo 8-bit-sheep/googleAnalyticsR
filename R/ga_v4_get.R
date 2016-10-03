@@ -525,13 +525,20 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE){
     ## returned a list of data.frames
     if(merge){
 
-      df_names <- rmNullObs(lapply(out, function(x) names(x)))
-      if(length(unique(df_names)) != 1){
-        stop("List of dataframes have non-identical column names. Got ", 
-             paste(lapply(out, function(x) names(x)), collapse = " "))
+      ## if an empty list, return NULL
+      if(all(vapply(out, is.null, logical(1)))){
+        out <- NULL
+      } else {
+        ## check all dataframes have same columns
+        df_names <- rmNullObs(lapply(out, function(x) names(x)))
+        if(length(unique(df_names)) != 1){
+          stop("List of dataframes have non-identical column names. Got ", 
+               paste(lapply(out, function(x) names(x)), collapse = " "))
+        }
+        
+        out <- Reduce(rbind, out)
       }
-      
-      out <- Reduce(rbind, out)
+
       
     }
   }

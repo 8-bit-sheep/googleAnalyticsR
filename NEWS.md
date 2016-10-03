@@ -3,6 +3,7 @@
 * Add custom data uploads via `ga_custom_upload_file()`
 * Cleaned up documentation a bit
 * Added auto-authentication if you specify environment var `GA_AUTH_FILE`
+* Fix bug with anti-sample when periods included 0-row data (#42)
 
 # 0.3.0 CRAN
 
