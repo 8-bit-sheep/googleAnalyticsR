@@ -18,7 +18,7 @@ shinyServer(function(input, output, session){
   gadata <- reactive({
 
     with_shiny(google_analytics,
-               id = "222222",
+               id = "222222", ## replace with your View ID
                start="2015-08-01", end="2015-08-02", 
                metrics = c("sessions", "bounceRate"), 
                dimensions = c("source", "medium"),
@@ -27,6 +27,9 @@ shinyServer(function(input, output, session){
   
   output$something <- renderPlot({
   
+    ## only trigger once authenticated
+    req(access_token())
+    
     gadata <- gadata()
     
     plot(gadata)
