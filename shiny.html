@@ -95,6 +95,7 @@ button.code-folding-btn:focus {
 }
 </style>
 
+
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
@@ -257,7 +258,7 @@ shinyServer(function(input, output, session){
   gadata &lt;- reactive({
 
     with_shiny(google_analytics,
-               id = &quot;222222&quot;,
+               id = &quot;222222&quot;, ## replace with your View ID
                start=&quot;2015-08-01&quot;, end=&quot;2015-08-02&quot;, 
                metrics = c(&quot;sessions&quot;, &quot;bounceRate&quot;), 
                dimensions = c(&quot;source&quot;, &quot;medium&quot;),
@@ -266,6 +267,9 @@ shinyServer(function(input, output, session){
   
   output$something &lt;- renderPlot({
   
+    ## only trigger once authenticated
+    req(access_token())
+    
     gadata &lt;- gadata()
     
     plot(gadata)
@@ -925,6 +929,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
 
 </script>
 
