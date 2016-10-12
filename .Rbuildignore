@@ -8,3 +8,5 @@
 ^data-raw*
 ^codecov\.yml$
 ^httr-oauth\.rds\.enc$
+^docs*
+^_pkgdown\.yml$
