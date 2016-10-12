@@ -12,8 +12,8 @@
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -37,7 +37,7 @@
     <div class="container">
       <header>
       
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -50,16 +50,94 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="articles/setup.html">
+    <span class="fa fa-wrench"></span>
+     
+    Setup
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Reporting API
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="articles/v4.html">
+        <span class="fa fa-cogs"></span>
+         
+        v4
+      </a>
+    </li>
+    <li>
+      <a href="articles/v3.html">
+        <span class="fa fa-cog"></span>
+         
+        v3
+      </a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="articles/index.html">Articles</a>
+  <a href="articles/big-query.html">
+    <span class="fa fa-search"></span>
+     
+    Big Query
+  </a>
 </li>
-<li>
-  <a href="news/index.html">News</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Reporting
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="articles/shiny.html">
+        <span class="fa fa-cloud-upload"></span>
+         
+        Shiny
+      </a>
+    </li>
+    <li>
+      <a href="articles/rmarkdown.html">
+        <span class="fa fa-pencil-square"></span>
+         
+        RMarkdown
+      </a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Help
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="reference/index.html">
+        <span class="fa fa-question-circle"></span>
+         
+        Reference
+      </a>
+    </li>
+    <li>
+      <a href="news/index.html">
+        <span class="fa fa-newspaper-o"></span>
+         
+        News
+      </a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -74,18 +152,35 @@
       <div class="row">
   <div class="col-md-9">
     
-<h1 id="googleanalyticsr">googleAnalyticsR</h1>
-<p><a href="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR"><img src="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master" alt="Travis-CI Build Status"></a> <img src="http://www.r-pkg.org/badges/version/googleAnalyticsR" alt="CRAN"><a href="https://codecov.io/github/MarkEdmondson1234/googleAnalyticsR?branch=master"><img src="https://img.shields.io/codecov/c/github/MarkEdmondson1234/googleAnalyticsR/master.svg" alt="Coverage Status"></a></p>
-<p>Get more examples and tutorials at the <a href="http://code.markedmondson.me/googleAnalyticsR">googleAnalyticsR website</a></p>
-<h2 id="wasson">Wasson?</h2>
-<p>Work is currently focused on quashing bugs and updating the BigQuery parser.</p>
-<p>If you find any bugs please log any problems here in the issues tracker.</p>
-<h2 id="install">Install</h2>
-<p>You also need the version &gt; <code>0.3.0</code> of <code>googleAuthR</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"googleAuthR"</span>)
-<span class="kw">install.packages</span>(<span class="st">"googleAnalyticsR"</span>)</code></pre></div>
-<h3 id="development-version-off-github">Development version off github</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"MarkEdmondson1234/googleAnalyticsR"</span>)</code></pre></div>
+<p><img src="vignettes/website/gar_logo_1000.png"></p>
+<p>Welcome to the website for <strong>googleAnalyticsR</strong>, an R library for working with Google Analytics data.</p>
+<p>Follow development on the project&rsquo;s <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR">Github development site.</a></p>
+<p>Any bugs or feature requests please <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/issues">file an issue.</a></p>
+<p>Collaboration is welcomed and encouraged, if you are interested get in touch.</p>
+<p><a href="http://www.r-pkg.org/pkg/googleAnalyticsR"><img src="http://cranlogs.r-pkg.org/badges/googleAnalyticsR" alt="Downloads"></a> <img src="http://www.r-pkg.org/badges/version/googleAnalyticsR" alt="CRAN"><a href="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR"><img src="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master" alt="Travis-CI Build Status"></a></p>
+<h2 id="features">Features</h2>
+<ul>
+<li>First Google Analytics Reporting v4 API library for R</li>
+<li>v4 features include: dynamic calculated metrics, pivots, histograms, date comparisons, batching.</li>
+<li>v4 API explorer</li>
+<li>API metadata of possible metrics and dimensions</li>
+<li>Multi-user login in Shiny App</li>
+<li>Integration with BigQuery Google Analytics Premium/360 exports.</li>
+<li>Single authentication flow can be used with other <a href="http://code.markedmondson.me/googleAuthR/"><code>googleAuthR</code></a> apps like <a href="https://github.com/MarkEdmondson1234/searchConsoleR"><code>searchConsoleR</code></a>
+</li>
+<li>Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnnel</li>
+<li>Support for <code>googleAuthR</code> batch. For big data calls this could be 10x quicker than normal GA fetching.</li>
+<li>Meta data in attributes of returned dataframe including date ranges, totals, min and max</li>
+</ul>
+<h2 id="thanks">Thanks</h2>
+<p>These are all great libraries that also work with Google Analytics data in R, that I have taken inspiration from.</p>
+<ul>
+<li><a href="https://github.com/skardhamar/rga">rga</a></li>
+<li><a href="https://bitbucket.org/unikum/rga">RGA</a></li>
+<li><a href="https://github.com/Tatvic/RGoogleAnalytics">RGoogleAnalytics</a></li>
+<li><a href="https://github.com/jdeboer/ganalytics">ganalytics</a></li>
+<li><a href="https://github.com/andrewgeisler/GAR">GAR</a></li>
+</ul>
 
   </div>
 </div>

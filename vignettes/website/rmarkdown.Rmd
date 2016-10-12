@@ -1,0 +1,66 @@
+---
+title: "RMarkdown reports with Google Analytics API data"
+---
+
+`googleAnalyticsR` can be used to generate reports in RMarkdown documents.
+
+## Authentication with RMarkdown
+
+Run your authentication in the setup block, making sure you have run the authentication first outside of RMarkdown, to ensure the necessary `.httr-oauth` file is in the same working directory as the RMarkdown document.
+
+### Example
+
+<pre class="markdown"><code>
+---
+title: "Google Analytics Report"
+author: "Mark Edmondson"
+date: "8 July 2016"
+output: html_document
+---
+
+&#96;&#96;&#96;{r}
+knitr::opts_chunk$set(echo = TRUE)
+library(googleAnalyticsR)
+## Make sure to run this at least once outside of the document to
+##   ensure the .httr-oauth file is present. 
+ga_auth()
+
+ga_data <- google_analytics_4(viewId = 12345, 
+                              dateRange = c(Sys.Date()-30, Sys.Date()), 
+                              metrics = "sessions",
+                              dimensions = "medium")
+&#96;&#96;&#96;
+
+....use ga_data to generate plots/tables later in the document....
+
+</code></pre>
+
+Alternatively, you can use `googleAuthR::gar_auth_service()` and use the authentication JSON downloaded from the Google console.
+
+## Multi-user authentication
+
+A new feature of `googleAuthR` is authentication from within RMarkdown using javascript authentication instead of Shiny.  A demo of using this with G+ is here: 
+https://mark.shinyapps.io/googleAuthRMarkdown/
+
+Similar code can be adapted to use with Google Analytics data.  You will still need to host the RMarkdown document on a Shiny server though, such as http://shinyapps.io
+
+## Uploading RMarkdown files to Shinyapps.io/Shiny Server
+
+To see the reports online, you can upload RMarkdown documents to Shiny servers or shinyapps.io.  
+
+However, you need to ensure that the authentication file is present when uploaded.  This can be specified in the meta data via `resource_files`
+
+<pre class="markdown"><code>
+---
+title: "Google Analytics Report"
+author: "Mark Edmondson"
+date: "8 July 2016"
+output: html_document
+resource_files:
+  - .httr-oauth
+---
+</code></pre>
+
+Then when you upload to Shiny Server or shinyapps.io, you should see the file in your upload choices:
+
+![](auth_token_markdown.png)

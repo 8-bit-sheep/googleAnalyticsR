@@ -10,3 +10,4 @@
 ^httr-oauth\.rds\.enc$
 ^docs*
 ^_pkgdown\.yml$
+^vignettes/website/*

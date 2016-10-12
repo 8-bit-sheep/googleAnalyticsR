@@ -1,0 +1,100 @@
+---
+title: "Google Analytics Reporting API v3 R functions"
+---
+
+## v3 features
+
+New API features will no longer occur for the v3 API, but it still carries a lot of useful capabilties, such as the multi-channel API, and multi-account batching.  
+
+It is also currently the only API that has the WALK flag implemented, to avoid sampling via breaking up big data fetches into multiple batched calls.
+
+
+## Google Anaytics V3 API examples
+
+Consult `?google_analytics` and see examples below:
+
+```r
+library(googleAnalyticsR)
+
+## Authenticate in Google OAuth2
+ga_auth()
+
+## if you need to re-authenticate use ga_auth(new_user=TRUE)
+
+## if you have your own Google Dev console project keys, 
+## then don't run ga_auth() as that will set the authentication project to the defaults.
+## instead put your options here, and run googleAuthR::gar_auth()
+
+## get account info, including View Ids
+account_list <- google_analytics_account_list()
+ga_id <- account_list$viewId[1]
+
+## get a list of what metrics and dimensions you can use
+meta <- google_analytics_meta()
+head(meta)
+
+## pick the account_list$viewId you want to see data for.
+## metrics and dimensions can have or have not "ga:" prefix
+gadata <- google_analytics(id = ga_id, 
+                           start="2015-08-01", end="2015-08-02", 
+                           metrics = c("sessions", "bounceRate"), 
+                           dimensions = c("source", "medium"))
+
+## multi accounts, pass character vector of viewIds
+## outputs a list of data.frames, named after the viewId
+## This fetches 10 accounts per API call. 
+multi_gadata <- google_analytics(id = c("123456","9876545","765432"), 
+                                 start="2015-08-01", end="2015-08-02", 
+                                 metrics = c("sessions", "bounceRate"), 
+                                 dimensions = c("source", "medium"))
+
+## if more than 10000 rows in results, auto batching
+## example is setting lots of dimensions to try and create big sampled data
+batch_gadata <- google_analytics(id = account_list$viewId[1], 
+                                 start="2014-08-01", end="2015-08-02", 
+                                 metrics = c("sessions", "bounceRate"), 
+                                 dimensions = c("source", "medium", "landingPagePath","hour","minute"),
+                                 max=99999999)
+
+## mitigate sampling by setting samplingLevel="WALK"
+## this will send lots and lots of calls to the Google API limits, beware
+walk_gadata <- google_analytics(id = account_list$viewId[1], 
+                                start="2014-08-01", end="2015-08-02", 
+                                metrics = c("sessions", "bounceRate"), 
+                                dimensions = c("source", "medium", "landingPagePath"), 
+                                max=99999999, samplingLevel="WALK")
+
+## multi-channel funnels set type="mcf"
+mcf_gadata <- google_analytics(id = account_list$viewId[1], 
+                               start="2015-08-01", end="2015-08-02", 
+                               metrics = c("totalConversions"), 
+                               dimensions = c("sourcePath"), 
+                               type="mcf")
+
+## google_analytics dataframes include these meta data attributes:
+- attr(*, "containsSampledData")= logi FALSE
+ - attr(*, "samplePercent")= num 100
+ - attr(*, "samplingLevel")= chr "DEFAULT"
+ - attr(*, "profileInfo")=List of 6
+  ..$ profileId            : chr "535656"
+  ..$ accountId            : chr "2748374"
+  ..$ webPropertyId        : chr "UA-278374-1"
+  ..$ internalWebPropertyId: chr "5279208"
+  ..$ profileName          : chr "XXXXX"
+  ..$ tableId              : chr "mcf:539656"
+ - attr(*, "dateRange")=List of 2
+  ..$ startDate: chr "2015-08-01"
+  ..$ endDate  : chr "2015-08-02"
+ - attr(*, "totalResults")= int 4
+
+## reach meta-data via attr()
+attr(gadata, "profileInfo")
+attr(gadata, "dateRange")
+
+```
+
+## Other details
+
+For syntax of filters and dimensions, this library parses in exactly as specified in the [Google Analytics v3 API docs](https://developers.google.com/analytics/devguides/reporting/core/v3/reference?hl=en#filters), so check those out.  
+
+Note you do not need to encode symbols if passed into `metrics` or `dimensions` parameters, but may have to encode URLs if you are filtering for those in say `ga:pagePath` via `utils::URLencode(url, reserved = TRUE)`
