@@ -6,6 +6,8 @@
 * Cleaned up documentation a bit
 * Added auto-authentication if you specify environment var `GA_AUTH_FILE`
 * Add Remarketing Audience functions - `ga_remarketing_get` and `ga_remarketing_list`
+* Add `aggregateGAData` which will aggregate over GA dimensions
+* Use `aggregateGAData` to solve issue with anti_sampling repeating rows (#49)
 
 ## Fixed 
 
