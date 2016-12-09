@@ -156,6 +156,9 @@ anti_sample <- function(anti_sample_batches,
   
   out <- Reduce(rbind, unsampled_list)
   
+  ## get rid of duplicate rows per sample call
+  out <- aggregateGAData(out, agg_names = dimensions)
+  
   ## fill these in later
   attr(out, "totals") <- NULL
   attr(out, "minimums") <- NULL
