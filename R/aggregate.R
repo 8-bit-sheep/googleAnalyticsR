@@ -1,7 +1,8 @@
 #' Gets the names of a dataframe's columns of a certain class
 #'
 #' @param df dataframe
-#' @param class Col type to return e.g. "character"
+#' @param class_name the R class to return columns of
+#' @return names of columns of class 
 getColNameOfClass <- function(df, class_name){
   stopifnot(inherits(df, "data.frame"),
             inherits(class_name, "character"))
@@ -14,7 +15,7 @@ getColNameOfClass <- function(df, class_name){
 #' 
 #' A helper function to aggregate over dimensions
 #'
-#' @param camp_data A dataframe of data to aggregate
+#' @param ga_data A dataframe of data to aggregate
 #' @param agg_names The columns to aggregate over
 #' @param mean_regex The regex for column names to do mean() rather than sum()
 #'

@@ -9,7 +9,10 @@ getColNameOfClass(df, class_name)
 \arguments{
 \item{df}{dataframe}
 
-\item{class}{Col type to return e.g. "character"}
+\item{class_name}{the R class to return columns of}
+}
+\value{
+names of columns of class
 }
 \description{
 Gets the names of a dataframe's columns of a certain class

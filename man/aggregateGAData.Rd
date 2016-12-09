@@ -8,11 +8,11 @@ aggregateGAData(ga_data, agg_names = NULL,
   mean_regex = "^avg|Rate|^CPC$|^CTR$|Average|\%| Per ")
 }
 \arguments{
+\item{ga_data}{A dataframe of data to aggregate}
+
 \item{agg_names}{The columns to aggregate over}
 
 \item{mean_regex}{The regex for column names to do mean() rather than sum()}
-
-\item{camp_data}{A dataframe of data to aggregate}
 }
 \description{
 A helper function to aggregate over dimensions

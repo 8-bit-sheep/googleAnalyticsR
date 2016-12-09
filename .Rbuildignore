@@ -11,3 +11,5 @@
 ^docs*
 ^_pkgdown\.yml$
 ^vignettes/website/*
+^index\.md$
+^index\.Rmd$
