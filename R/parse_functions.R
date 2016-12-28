@@ -165,8 +165,8 @@ parse_ga_account_summary <- function(x){
                   type = jstring("type"),
                   starred = jstring("starred"))
   
-  ## remove tidyjson artifacts
-  out <- tidy_json[,setdiff(names(tidy_json), c("document.id","array.index"))]
+  ## remove tidyjson artifacts, drop for issue #41 and #52
+  out <- tidy_json[,setdiff(names(tidy_json), c("document.id","array.index")), drop = FALSE]
   
   out
 }

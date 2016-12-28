@@ -66,7 +66,8 @@ anti_sample <- function(anti_sample_batches,
                                     max               = -1,
                                     metricFormat      = metricFormat,
                                     samplingLevel     = "LARGE",
-                                    histogramBuckets  = histogramBuckets)
+                                    histogramBuckets  = histogramBuckets,
+                                    anti_sample       = FALSE)
     return(unsampled)
   }
   
