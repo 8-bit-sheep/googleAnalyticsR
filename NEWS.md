@@ -9,6 +9,7 @@
 * Add `aggregateGAData` which will aggregate over GA dimensions
 * Use `aggregateGAData` to solve issue with anti_sampling repeating rows (#49)
 * Fix `google_analytics_account_list()` if only one view available (#52, #41)
+* Add `antiSampleWorked` TRUE/FALSE attribute to tables when anti-sampling attempted
 
 ## Fixed 
 

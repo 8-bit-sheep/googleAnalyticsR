@@ -166,6 +166,7 @@ anti_sample <- function(anti_sample_batches,
   attr(out, "maximums") <- NULL
   attr(out, "rowCount") <- as.character(nrow(out))
   attr(out, "nextPageToken") <- NULL
+  attr(out, "antiSampleWorked") <- did_it_work
   myMessage("Finished unsampled data request, total rows [", nrow(out),"]", level = 3)
   if(did_it_work) myMessage("Successfully avoided sampling", level = 3)
   out
