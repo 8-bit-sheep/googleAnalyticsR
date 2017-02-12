@@ -10,7 +10,7 @@ google_analytics_4(viewId, date_range = NULL, metrics = NULL,
   pivots = NULL, cohorts = NULL, max = 1000,
   samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
   histogramBuckets = NULL, anti_sample = FALSE,
-  anti_sample_batches = "auto")
+  anti_sample_batches = "auto", slow_fetch = FALSE)
 }
 \arguments{
 \item{viewId}{viewId of data to get.}
@@ -48,6 +48,8 @@ See details in \link{make_ga_4_req}}
 \item{anti_sample}{If TRUE will split up the call to avoid sampling.}
 
 \item{anti_sample_batches}{"auto" default, or set to number of days per batch. 1 = daily.}
+
+\item{slow_fetch}{For large results this slows down the API requests to avoid 500 errors}
 }
 \value{
 A Google Analytics data.frame
@@ -97,7 +99,8 @@ ga_data <- google_analytics_4(ga_id,
 
 }
 \seealso{
-Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4}},
+Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4_slow}},
+  \code{\link{fetch_google_analytics_4}},
   \code{\link{make_ga_4_req}}
 }
 

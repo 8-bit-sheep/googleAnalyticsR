@@ -10,10 +10,12 @@
 * Use `aggregateGAData` to solve issue with anti_sampling repeating rows (#49)
 * Fix `google_analytics_account_list()` if only one view available (#52, #41)
 * Add `antiSampleWorked` TRUE/FALSE attribute to tables when anti-sampling attempted
+* Add a `slow_fetch` flag to `google_analytics_4` that will avoid batching for big complicated fetchess
 
 ## Fixed 
 
 * Fix bug with anti-sample when periods included 0-row data (#42)
+* Fix `google_analytics_account_list()` parsing bug if only one view available (#52, #41)
 
 # googleAnalyticsR  0.3.0
 
