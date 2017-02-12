@@ -6,7 +6,7 @@
 \usage{
 hourly_anti_sample(viewId, the_day, metrics, dimensions, dim_filters,
   met_filters, filtersExpression, order, segments, max, pivots, cohorts,
-  metricFormat, histogramBuckets, read_counts)
+  metricFormat, histogramBuckets, read_counts, slow_fetch)
 }
 \description{
 hourly get request with anti-sampling

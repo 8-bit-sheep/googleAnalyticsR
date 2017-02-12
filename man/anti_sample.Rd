@@ -6,9 +6,11 @@
 \usage{
 anti_sample(anti_sample_batches, viewId, date_range, metrics, dimensions,
   dim_filters, met_filters, filtersExpression, order, segments, pivots, cohorts,
-  metricFormat, histogramBuckets)
+  metricFormat, histogramBuckets, slow_fetch)
 }
 \arguments{
+\item{anti_sample_batches}{"auto" default, or set to number of days per batch. 1 = daily.}
+
 \item{viewId}{viewId of data to get.}
 
 \item{date_range}{character or date vector of format \code{c(start, end)} or 
@@ -36,6 +38,8 @@ for two date ranges: \code{c(start1,end1,start2,end2)}}
 
 \item{histogramBuckets}{For numeric dimensions such as hour, a list of buckets of data.
 See details in \link{make_ga_4_req}}
+
+\item{slow_fetch}{For large results this slows down the API requests to avoid 500 errors}
 }
 \description{
 Calculates multiple API calls to avoid sampling
