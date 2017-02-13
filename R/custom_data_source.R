@@ -163,7 +163,7 @@ ga_custom_upload <- function(accountId,
 #' @param accountId Account Id
 #' @param webPropertyId Web Property Id
 #' @param customDataSourceId Custom data source Id
-#' @param upload An R data.frame or a file path location (character).
+#' @param upload An R data.frame or a file path location (character)
 #' 
 #' @details 
 #' 
@@ -237,15 +237,12 @@ ga_custom_upload_file <- function(accountId,
     
     names(upload) <- vapply(names(upload), checkPrefix, character(1))
     write.csv(upload, file = temp, row.names = FALSE)
-    upload_name <- deparse(substitute(upload))
+
   } else if(inherits(upload, "character")){
     temp <- upload
-    upload_name <- upload
   } else {
     stop("Unsupported upload, must be a file location or R data.frame, got:", class(upload))
   }
-  
-
   
   url <- "https://www.googleapis.com/upload/analytics/v3/management/"
   cds <- gar_api_generator(url,
@@ -262,14 +259,18 @@ ga_custom_upload_file <- function(accountId,
   
   ## from https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/40#issuecomment-258287829
   ## to get name of file in data uploads
-  metadata <- tempfile()
+  # metadata <- tempfile()
 
-  writeLines(jsonlite::toJSON(list(title = jsonlite::unbox(paste0("gar_",upload_name)))), metadata)
+  # metadata_content <- jsonlite::toJSON(list(title = jsonlite::unbox(upload_name)))
+  
+  # writeLines(metadata_content, metadata)
 
-  upload_me <- list(
-    metadata = httr::upload_file(metadata, type = "application/json; charset=UTF-8"), 
-    media = httr::upload_file(temp, "application/octet-stream")
-  )
+  # upload_me <- list(
+  #   metadata = httr::upload_file(metadata, type = "application/json; charset=UTF-8"),
+  #   media = httr::upload_file(temp, "application/octet-stream")
+  # )
+  
+  upload_me <- httr::upload_file(temp, "application/octet-stream")
   
   req <- cds(the_body = upload_me)
   

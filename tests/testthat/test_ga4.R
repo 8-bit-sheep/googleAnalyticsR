@@ -158,6 +158,17 @@ test_that("Big v4 batch", {
   expect_s3_class(big, "data.frame")
 })
 
+test_that("Slow big v4 batch", {
+  skip_on_cran()
+  big <-   google_analytics_4(ga_id, 
+                              date_range = c("2015-07-30","2016-09-01"),
+                              dimensions=c('medium','source','hour','minute','campaign','pagePath'), 
+                              metrics = c('sessions'),
+                              max = -1,
+                              slow_fetch = TRUE)  
+  expect_s3_class(big, "data.frame")
+})
+
 test_that("v3 multi account batching without flag", {
   
   skip_on_cran()

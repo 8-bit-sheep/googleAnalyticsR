@@ -13,7 +13,7 @@ ga_custom_upload_file(accountId, webPropertyId, customDataSourceId, upload)
 
 \item{customDataSourceId}{Custom data source Id}
 
-\item{upload}{An R data.frame or a file path location (character).}
+\item{upload}{An R data.frame or a file path location (character)}
 }
 \value{
 An object of class \code{ga_custom_data_source_upload}
