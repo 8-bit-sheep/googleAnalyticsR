@@ -291,7 +291,8 @@ google_analytics_4 <- function(viewId,
                        cohorts           = cohorts,
                        metricFormat      = metricFormat,
                        histogramBuckets  = histogramBuckets,
-                       anti_sample_batches = anti_sample_batches))
+                       anti_sample_batches = anti_sample_batches,
+                       slow_fetch = slow_fetch))
   }
   
   if(max > reqRowLimit){
