@@ -608,9 +608,27 @@ test_that("Can fetch experiment list", {
   skip_on_cran()
   exper <- ga_experiment_list(accountId, webPropId, ga_id)
   
-  expect_equal(exper, "analytics#experiments")
+  expect_equal(exper$kind, "analytics#experiments")
 })
 
+context("Users")
+
+test_that("Can fetch users list", {
+  skip_on_cran()
+  
+  accountId <- 54019251
+  webPropId <- "UA-54019251-4"
+  ga_id <- 106249469
+  
+  acc <- ga_users_list(accountId)
+  web <- ga_users_list(accountId, webPropertyId = webPropId)
+  view <- ga_users_list(accountId, webPropertyId = webPropId, viewId = ga_id)
+  
+  expect_equal(acc$kind, "analytics#entityUserLinks")
+  expect_equal(web$kind, "analytics#entityUserLinks")
+  expect_equal(view$kind, "analytics#entityUserLinks")
+  
+})
 
 ## I have no experiment to fetch....
 # test_that("Can fetch experiment", {

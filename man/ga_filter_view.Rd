@@ -37,8 +37,9 @@ Other managementAPI functions: \code{\link{ga_accounts}},
   \code{\link{ga_remarketing_list}},
   \code{\link{ga_segment_list}},
   \code{\link{ga_unsampled_list}},
-  \code{\link{ga_unsampled}}, \code{\link{ga_view_list}},
-  \code{\link{ga_view}}, \code{\link{ga_webproperty_list}},
+  \code{\link{ga_unsampled}}, \code{\link{ga_users_list}},
+  \code{\link{ga_view_list}}, \code{\link{ga_view}},
+  \code{\link{ga_webproperty_list}},
   \code{\link{ga_webproperty}},
   \code{\link{google_analytics_account_list}}
 }
