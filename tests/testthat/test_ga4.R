@@ -1,5 +1,6 @@
 options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
                                         "https://www.googleapis.com/auth/analytics.edit",
+                                        "https://www.googleapis.com/auth/analytics.manage.users.readonly",
                                         "https://www.googleapis.com/auth/cloud-platform",
                                         "https://www.googleapis.com/auth/devstorage.full_control"))
 
@@ -24,6 +25,7 @@ test_that("Scopes all set correctly", {
   
   expect_equal(scopes, c("https://www.googleapis.com/auth/analytics",
                          "https://www.googleapis.com/auth/analytics.edit",
+                         "https://www.googleapis.com/auth/analytics.manage.users.readonly",
                          "https://www.googleapis.com/auth/cloud-platform",
                          "https://www.googleapis.com/auth/devstorage.full_control"))
   
