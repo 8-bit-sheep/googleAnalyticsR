@@ -5,6 +5,8 @@ r_packages:
 - covr
 - bigQueryR
 - googleCloudStorageR
+r_github_packages:
+- MarkEdmondson1234/googleAuthR
 notifications:
   slack: edmondsons:kgTokxui4ZzTsqdD19tCoozf
   email:

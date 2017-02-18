@@ -84,7 +84,7 @@ test_that("Get the view list", {
 
 test_that("Get the individual View", {
   skip_on_cran()
-  wb <- ga_view(accountId, "UA-54019251-1", "98288890")
+  wb <- ga_view(accountId, webPropertyId = webPropId, profileId = ga_id)
 
   expect_equal(wb$kind, "analytics#webproperty")
 
