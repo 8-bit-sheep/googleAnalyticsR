@@ -8,7 +8,6 @@
 * Add Remarketing Audience functions - `ga_remarketing_get` and `ga_remarketing_list`
 * Add `aggregateGAData` which will aggregate over GA dimensions
 * Use `aggregateGAData` to solve issue with anti_sampling repeating rows (#49)
-* Fix `google_analytics_account_list()` if only one view available (#52, #41)
 * Add `antiSampleWorked` TRUE/FALSE attribute to tables when anti-sampling attempted
 * Add a `slow_fetch` flag to `google_analytics_4` that will avoid batching for big complicated fetchess
 * Add `ga_users_list` for listing users on account, webProperty or View level

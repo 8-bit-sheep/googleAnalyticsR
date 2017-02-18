@@ -5,7 +5,7 @@
 \title{Aggregate a Google Analytics dataframe over inputted columns}
 \usage{
 aggregateGAData(ga_data, agg_names = NULL,
-  mean_regex = "^avg|Rate|^CPC$|^CTR$|Average|\%| Per ")
+  mean_regex = "^avg|^percent|Rate$|^CPC$|^CTR$|^CPM$|^RPC$|^ROI$|^ROAS$|Per")
 }
 \arguments{
 \item{ga_data}{A dataframe of data to aggregate}
