@@ -31,6 +31,7 @@ test_that("Scopes all set correctly", {
 
 test_that("Auth check", {
   skip_on_cran()
+  options(googleAuthR.httr_oauth_cache = "httr-oauth.rds")
   expect_s3_class(googleAuthR::gar_auth("httr-oauth.rds"), "Token2.0")
 })
 
