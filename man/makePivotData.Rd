@@ -19,4 +19,3 @@ Other pivot functions: \code{\link{makePivotNames}},
   \code{\link{pivot_ga4_parse}}
 }
 \keyword{internal}
-

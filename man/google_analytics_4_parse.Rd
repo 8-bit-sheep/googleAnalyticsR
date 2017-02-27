@@ -10,4 +10,3 @@ google_analytics_4_parse(x)
 x is response_list$reports[[1]] from google_analytics_4_parse_batch
 }
 \keyword{internal}
-

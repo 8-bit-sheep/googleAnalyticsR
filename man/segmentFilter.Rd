@@ -21,4 +21,3 @@ If true, match the complement of simple or sequence segment above.
 For example, to match all visits not from "New York", set to TRUE.
 }
 \keyword{internal}
-

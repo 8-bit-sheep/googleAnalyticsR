@@ -15,4 +15,3 @@ Get current dimensions and metrics available in GA API.
 \seealso{
 \url{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}
 }
-

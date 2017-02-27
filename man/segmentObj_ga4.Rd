@@ -18,4 +18,3 @@ a list of class \code{segment_ga4}
 Segment objects
 }
 \keyword{internal}
-

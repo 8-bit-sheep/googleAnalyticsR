@@ -67,4 +67,3 @@ pivtest <- google_analytics_4(ga_id,
 
 
 }
-

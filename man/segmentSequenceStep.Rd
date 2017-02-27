@@ -19,4 +19,3 @@ segmentSequenceStep object
 segmentSequenceStep
 }
 \keyword{internal}
-

@@ -18,4 +18,3 @@ A sequenceSegment object
 sequenceSegment
 }
 \keyword{internal}
-

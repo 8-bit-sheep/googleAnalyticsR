@@ -10,4 +10,3 @@ rmNullObs(x)
 Recursively step down into list, removing all such objects
 }
 \keyword{internal}
-

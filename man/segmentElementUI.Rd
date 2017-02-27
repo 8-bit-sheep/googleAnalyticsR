@@ -13,4 +13,3 @@ segmentElementUI(id)
 A GAv4 segment element row
 }
 \keyword{internal}
-

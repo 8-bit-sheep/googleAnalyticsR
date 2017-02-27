@@ -10,4 +10,3 @@ cat0(prefix = "", x)
 if argument is NULL, no line output
 }
 \keyword{internal}
-

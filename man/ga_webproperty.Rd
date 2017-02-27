@@ -38,4 +38,3 @@ Other managementAPI functions: \code{\link{ga_accounts}},
   \code{\link{ga_webproperty_list}},
   \code{\link{google_analytics_account_list}}
 }
-

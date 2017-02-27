@@ -132,4 +132,3 @@ Other v4 segment functions: \code{\link{segment_define}},
   \code{\link{segment_vector_sequence}},
   \code{\link{segment_vector_simple}}
 }
-

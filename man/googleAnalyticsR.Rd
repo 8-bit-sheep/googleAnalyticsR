@@ -25,4 +25,3 @@ Follow the online documentation here: \url{http://code.markedmondson.me/googleAn
   \item Meta data included in attributes of returned dataframe
  }
 }
-

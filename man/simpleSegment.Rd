@@ -10,4 +10,3 @@ simpleSegment(orFiltersForSegmentList)
 Simple Segment
 }
 \keyword{internal}
-

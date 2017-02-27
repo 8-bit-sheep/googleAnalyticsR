@@ -12,4 +12,3 @@ segmentMetricFilter(name, scope = c("PRODUCT", "HIT", "SESSION", "USER"),
 segmentMetricFilter
 }
 \keyword{internal}
-

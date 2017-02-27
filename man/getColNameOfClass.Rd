@@ -17,4 +17,3 @@ names of columns of class
 \description{
 Gets the names of a dataframe's columns of a certain class
 }
-

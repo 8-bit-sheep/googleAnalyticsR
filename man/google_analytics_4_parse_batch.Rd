@@ -10,4 +10,3 @@ google_analytics_4_parse_batch(response_list)
 ga v4 parse batching
 }
 \keyword{internal}
-

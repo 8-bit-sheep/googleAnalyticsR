@@ -10,4 +10,3 @@ expect_null_or_s3_class(thing, s3class)
 wraps testthat::expect_type() to run if not NULL
 }
 \keyword{internal}
-

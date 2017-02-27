@@ -10,4 +10,3 @@ timestamp_to_r(t)
 Timestamp to R date
 }
 \keyword{internal}
-

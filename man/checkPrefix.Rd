@@ -10,4 +10,3 @@ checkPrefix(x, prefix = c("ga", "mcf"))
 check it starts with ga: and if not puts it on
 }
 \keyword{internal}
-

@@ -45,7 +45,8 @@ cohort_dimension_check <- function(dimensions){
                     "ga:acquisitionSource",
                     "ga:acquisitionMedium",
                     "ga:acquisitionSourceMedium",
-                    "ga:acquisitionCampaign")
+                    "ga:acquisitionCampaign",
+                    "ga:segment")
   
   if(all(dimensions %in% allowed_dims)){
     out <- TRUE

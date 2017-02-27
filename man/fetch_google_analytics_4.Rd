@@ -56,4 +56,3 @@ Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4_slow}},
   \code{\link{google_analytics_4}},
   \code{\link{make_ga_4_req}}
 }
-

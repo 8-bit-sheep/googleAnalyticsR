@@ -20,4 +20,3 @@ Other v4 cohort functions: \code{\link{cohort_dimension_check}},
   \code{\link{make_cohort_group}}
 }
 \keyword{internal}
-

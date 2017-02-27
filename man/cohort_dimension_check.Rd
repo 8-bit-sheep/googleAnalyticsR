@@ -18,4 +18,3 @@ Other v4 cohort functions: \code{\link{cohortGroup}},
   \code{\link{make_cohort_group}}
 }
 \keyword{internal}
-

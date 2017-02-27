@@ -17,4 +17,3 @@ dynamicSegment(name, userSegment, sessionSegment)
 Dynamic Segment v4 object
 }
 \keyword{internal}
-

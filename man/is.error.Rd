@@ -16,4 +16,3 @@ Boolean
 Utility to test errors
 }
 \keyword{internal}
-

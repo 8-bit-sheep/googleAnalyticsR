@@ -119,4 +119,3 @@ attr(gadata, "dateRange")
 \seealso{
 https://developers.google.com/analytics/devguides/reporting/core/v3/
 }
-

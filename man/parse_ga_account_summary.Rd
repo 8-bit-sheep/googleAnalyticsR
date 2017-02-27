@@ -13,4 +13,3 @@ parse_ga_account_summary(x)
 New parse GA account summary
 }
 \keyword{internal}
-

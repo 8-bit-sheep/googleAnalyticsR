@@ -12,4 +12,3 @@ hourly_anti_sample(viewId, the_day, metrics, dimensions, dim_filters,
 hourly get request with anti-sampling
 }
 \keyword{internal}
-

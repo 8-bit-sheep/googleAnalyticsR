@@ -14,4 +14,3 @@ segmentDimensionFilter(name, expressions, operator = c("REGEXP",
 segmentDimensionFilter
 }
 \keyword{internal}
-

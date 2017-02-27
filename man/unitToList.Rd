@@ -19,4 +19,3 @@ If you need a list but only get one element, make it a list.
 Makes it easier for users to use some functions by not worrying about list wrapping.
 }
 \keyword{internal}
-

@@ -45,4 +45,3 @@ See details in \link{make_ga_4_req}}
 Calculates multiple API calls to avoid sampling
 }
 \keyword{internal}
-

@@ -25,4 +25,3 @@ Shiny Module for use with \link{segmentChainUI}
 Call via \code{shiny::callModule(segmentChain, "your_id")}
 }
 \keyword{internal}
-

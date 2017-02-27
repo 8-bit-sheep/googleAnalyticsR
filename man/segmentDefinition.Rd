@@ -16,4 +16,3 @@ SegmentDefinition defines the segment to be a set of
 Segment Definition
 }
 \keyword{internal}
-

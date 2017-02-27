@@ -10,4 +10,3 @@ orFiltersForSegment(segmentFilterClauseList)
 orFiltersForSegment
 }
 \keyword{internal}
-

@@ -40,4 +40,3 @@ segment <- callModule(segmentBuilder, "test1")
 shinyApp(ui = ui, server = server)
 }
 }
-

@@ -25,4 +25,3 @@ A named list of parameters for use in API calls
 \description{
 Create named list of allowed GA metrics/dimensions
 }
-

@@ -11,4 +11,3 @@ segmentFilterClause(not = FALSE, dimensionFilter = NULL,
 Make this internal
 }
 \keyword{internal}
-

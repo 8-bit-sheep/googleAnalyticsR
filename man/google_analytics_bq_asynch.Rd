@@ -10,4 +10,3 @@ google_analytics_bq_asynch(projectId, datasetId, query, bucket, download_file)
 Asynch fetch
 }
 \keyword{internal}
-

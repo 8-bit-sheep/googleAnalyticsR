@@ -10,4 +10,3 @@ makeOrFilters(segment_element_list)
 Make orFiltersForSegment
 }
 \keyword{internal}
-

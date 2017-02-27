@@ -16,4 +16,3 @@ Shiny UI
 Shiny Module for use with \link{segmentChain}
 }
 \keyword{internal}
-

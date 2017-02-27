@@ -74,6 +74,7 @@ If you are lucky enough to need sub-day sampling, it will attempt to fetch per h
 \code{anti_sample} being TRUE will also set \code{samplingLevel='LARGE'} to minimise 
   the number of calls.
 }
+
 \examples{
 
 \dontrun{
@@ -103,4 +104,3 @@ Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4_slow}},
   \code{\link{fetch_google_analytics_4}},
   \code{\link{make_ga_4_req}}
 }
-

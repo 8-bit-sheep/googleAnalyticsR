@@ -29,5 +29,5 @@ Make a dimension object
 
  Warning: only makes sense to apply to dimensions that are numeric e.g. ga:hour
 }
-\keyword{internal}
 
+\keyword{internal}

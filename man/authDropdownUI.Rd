@@ -25,4 +25,3 @@ Makes a dropdown row for use for authentication.
 Other Shiny modules: \code{\link{authDropdown}},
   \code{\link{multi_selectUI}}, \code{\link{multi_select}}
 }
-

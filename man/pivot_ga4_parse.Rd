@@ -14,4 +14,3 @@ Other pivot functions: \code{\link{makePivotData}},
   \code{\link{makePivotNames}}
 }
 \keyword{internal}
-

@@ -16,4 +16,3 @@ The error message
 Get the error message
 }
 \keyword{internal}
-

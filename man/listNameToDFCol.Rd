@@ -10,4 +10,3 @@ listNameToDFCol(named_list, colName = "listName")
 Add name of list entry of dataframe to dataframe colum
 }
 \keyword{internal}
-

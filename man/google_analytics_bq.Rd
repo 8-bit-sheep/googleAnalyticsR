@@ -64,4 +64,3 @@ You can get a sample Google Analytics dataset in bigquery by following the instr
 \url{https://support.google.com/analytics/answer/4419694?hl=en}
          \url{https://support.google.com/analytics/answer/3437719?hl=en}
 }
-

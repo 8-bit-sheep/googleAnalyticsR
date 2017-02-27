@@ -19,4 +19,3 @@ a list suitable for parsing in req
 Make a metric object
 }
 \keyword{internal}
-

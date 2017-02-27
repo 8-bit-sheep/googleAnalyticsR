@@ -18,4 +18,3 @@ Customer message log level
 0 = everything, 1 = debug, 2=normal, 3=important
 }
 \keyword{internal}
-

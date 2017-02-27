@@ -10,4 +10,3 @@ expect_null_or_type(thing, type)
 wraps testthat::expect_type() to run if not NULL
 }
 \keyword{internal}
-
