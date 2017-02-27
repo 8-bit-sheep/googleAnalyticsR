@@ -45,7 +45,7 @@ anti_sample <- function(anti_sample_batches,
                                   metricFormat      = metricFormat,
                                   samplingLevel     = "LARGE",
                                   histogramBuckets  = histogramBuckets,
-                                  slow_fetch = FALSE)
+                                  slow_fetch        = FALSE)
   
 
   ## reduce read counts by 10% to get more calls as returned figure is flakey
@@ -74,7 +74,7 @@ anti_sample <- function(anti_sample_batches,
                                     samplingLevel     = "LARGE",
                                     histogramBuckets  = histogramBuckets,
                                     anti_sample       = FALSE,
-                                    slow_fetch = slow_fetch)
+                                    slow_fetch        = slow_fetch)
     return(unsampled)
   }
   
@@ -129,7 +129,7 @@ anti_sample <- function(anti_sample_batches,
                                 metricFormat      = metricFormat,
                                 samplingLevel     = "LARGE",
                                 histogramBuckets  = histogramBuckets,
-                                slow_fetch = slow_fetch)
+                                slow_fetch        = slow_fetch)
       
     } else {
       ## if any new_date_ranges range_date is 1 then possibily will still sample.
@@ -148,8 +148,8 @@ anti_sample <- function(anti_sample_batches,
                                 max               = attr(test_call, "rowCount"),
                                 metricFormat      = metricFormat,
                                 histogramBuckets  = histogramBuckets,
-                                read_counts = read_counts,
-                                slow_fetch = slow_fetch)
+                                read_counts       = read_counts,
+                                slow_fetch        = slow_fetch)
     }
     
     read_counts2 <- as.integer(attr(out,"samplesReadCounts")[[1]])
