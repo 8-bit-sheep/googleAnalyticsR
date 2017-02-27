@@ -24,7 +24,10 @@ anti_sample <- function(anti_sample_batches,
   if(length(date_range) > 2) stop("Anti-sampling not available for comparison date ranges.")
   
   ## stop bug where batch sizes break
-  date_range <- as.Date(date_range)
+  if(!is.null(date_range)){
+    date_range <- as.Date(date_range)
+  }
+
   
   myMessage("Finding how much sampling in data request...", level = 3)
   test_call <- google_analytics_4(viewId            = viewId,

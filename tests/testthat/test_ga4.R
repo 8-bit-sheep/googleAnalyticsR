@@ -366,6 +366,47 @@ test_that("Cohorts work", {
   
 })
 
+test_that("Cohorts work with segments", {
+  skip_on_cran()
+  ## first make a cohort group
+  cohort4 <- make_cohort_group(list("Jan2016" = c("2016-01-01", "2016-01-31"), 
+                                    "Feb2016" = c("2016-02-01","2016-02-28")))
+  ## make two segment elements
+  se <- segment_element("sessions", 
+                        operator = "GREATER_THAN", 
+                        type = "METRIC", 
+                        comparisonValue = 1, 
+                        scope = "USER")
+  
+  se2 <- segment_element("medium", 
+                         operator = "EXACT", 
+                         type = "DIMENSION", 
+                         expressions = "organic")
+  
+  ## choose between segment_vector_simple or segment_vector_sequence
+  ## Elements can be combined into clauses, which can then be combined into OR filter clauses
+  sv_simple <- segment_vector_simple(list(list(se)))
+  
+  sv_simple2 <- segment_vector_simple(list(list(se2)))
+  
+  ## Each segment vector can then be combined into a logical AND
+  seg_defined <- segment_define(list(sv_simple, sv_simple2))
+  
+  ## Each segement defintion can apply to users, sessions or both.
+  ## You can pass a list of several segments
+  segment4 <- segment_ga4("simple", user_segment = seg_defined)
+  ## then call cohort report.  No date_range and must include metrics and dimensions
+  ##   from the cohort list
+  cohort_example <- google_analytics_4(ga_id, 
+                                       dimensions=c('cohort'), 
+                                       cohorts = cohort4, 
+                                       segments = segment4,
+                                       metrics = c('cohortTotalUsers'))
+  
+  expect_s3_class(cohort_example, "data.frame")
+  
+})
+
 context("Pivots")
 
 test_that("Pivots work", {

@@ -16,6 +16,7 @@
 
 * Fix bug with anti-sample when periods included 0-row data (#42)
 * Fix `google_analytics_account_list()` parsing bug if only one view available (#52, #41)
+* Fix segments not being able to be used in Cohort reports (#63)
 
 # googleAnalyticsR  0.3.0
 
