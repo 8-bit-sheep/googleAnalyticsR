@@ -2,6 +2,11 @@
 title: "Setting up Google Analytics API downloads to R"
 ---
 
+## Video tutorial
+
+Ryan Prazki has very kindly created a video tutorial on how to get up and running quickly, which you can find on his website: 
+[Google Analytics R Video Tutorial](http://www.ryanpraski.com/google-analytics-r-tutorial/)
+
 ## Install
 
 The latest stable version of googleAnalyticsR is available on CRAN.
