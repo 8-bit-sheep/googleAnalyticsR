@@ -127,7 +127,8 @@ make_ga_4_req <- function(viewId,
     testthat::expect_true(cohort_metric_check(metrics))
     testthat::expect_true(cohort_dimension_check(dimensions))
     if(!is.null(date_range)){
-      stop("Don't supply date_range when using cohorts")
+      warning("Don't supply date_range when using cohorts, setting date_range to NULL")
+      date_range <- NULL
     }
   }
   
@@ -275,6 +276,10 @@ google_analytics_4 <- function(viewId,
     allResults <- TRUE
   }
   reqRowLimit <- as.integer(10000)
+  
+  if(!is.null(cohorts)){
+    anti_sample <- FALSE
+  }
   
   if(anti_sample){
     myMessage("anti_sample set to TRUE. Mitigating sampling via multiple API calls.", level = 3)
