@@ -39,4 +39,17 @@ These are all great libraries that also work with Google Analytics data in R, th
 * [ganalytics](https://github.com/jdeboer/ganalytics)
 * [GAR](https://github.com/andrewgeisler/GAR)
 
+## Tutorials
 
+If you have used the package and published online then get in touch and I'll list it here so others can benefit.
+
+* [Dartistics.com](http://www.dartistics.com/) is a website dedicated to using R with digital analytics, and has a page on getting up and running with [googleAnalyticsR](http://www.dartistics.com/api-google-analytics.html)
+* Michal Brys has an online book on using [Google Analytics with R](https://michalbrys.gitbooks.io/r-google-analytics/content/) that uses googleAnalyticsR
+* Ryan Prazki has very kindly created a video tutorial on how to get up and running quickly, which you can find on his website: [Google Analytics R Video Tutorial](http://www.ryanpraski.com/google-analytics-r-tutorial/)
+* Ryan also has a tutorial on using googleAnalyticsR to do [scroll tracking analysis in a heatmap](http://www.ryanpraski.com/scroll-depth-tracking-analysis-with-google-analytics-r)
+* Jules has a nice post on using a [Markov model to create an attribution model with googleAnalyticsR data](http://stuifbergen.com/2016/11/conversion-attribution-markov-model-r/)
+* Tim Wilson has a guide on getting up and running with [R for digital analysts](http://analyticsdemystified.com/google-analytics/tutorial_pulling_google_analytics_data_with_r/)
+* Guide to using [googleAnalyticsR in Japanese](https://www.karada-good.net/analyticsr/r-520) and [here](http://abrahamcow.hatenablog.com/entry/2016/05/22/121721)
+* [Alenlytics](http://alenlytics.com/connecting-r-with-google-analytics/) has a guide that also includes using the RStudio Addin for authentication
+* Mario Martinez has a guide on using [googleAnalyticsR in Spanish](http://www.doctormetrics.com/2017/01/03/nueva-version-de-la-api-de-google-analytics-r-statistics/#.WLVOWhAvpBI)
+* Vincent has a tutorial on using [Twitters AnomalyDetection package with googleAnalyticsR](https://data-seo.fr/2016/05/02/detecter-vos-marronniers-avec-r/) in French
