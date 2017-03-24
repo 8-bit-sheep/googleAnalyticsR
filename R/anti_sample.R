@@ -84,7 +84,8 @@ anti_sample <- function(anti_sample_batches,
     explore_sessions <- google_analytics_4(viewId = viewId,
                                            date_range = date_range,
                                            metrics = "sessions",
-                                           dimensions = "date")
+                                           dimensions = "date",
+                                           max = -1) ## download all days! #66
     explore_sessions$cumulative <- cumsum(explore_sessions$sessions)
     explore_sessions$sample_bucket <- as.factor((explore_sessions$cumulative %/% read_counts) + 1)
     
