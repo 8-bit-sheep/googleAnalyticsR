@@ -66,7 +66,7 @@ google_analytics_4(868768, date_range = c("5daysAgo", "yesterday"), metrics = "s
 
 ### Compare date ranges
 
-New to v4 you can compare date ranges and return the two data sets in one call.  Simply send in a 4-length vector of dates in the form `(range1_start, range1_end, range2_start, range3_end)`
+New to v4 you can compare date ranges and return the two data sets in one call.  Simply send in a 4-length vector of dates in the form `(range1_start, range1_end, range2_start, range2_end)`
 
 ```r
 google_analytics_4(868768, 
