@@ -244,7 +244,7 @@ $(document).ready(function () {
 
 <div id="v4-features" class="section level2">
 <h2>v4 features</h2>
-<p>The v4 API is where new features will appear in the future.</p>
+<p>The v4 API will be where new features will appear in the future.</p>
 <p>It currently has these extras implemented over the v3 API:</p>
 <ul>
 <li>Cohorts</li>
@@ -254,17 +254,9 @@ $(document).ready(function () {
 <li>Much more powerful segments</li>
 </ul>
 </div>
-<div id="v4-api-explorer-shiny-app" class="section level2">
-<h2>v4 API Explorer Shiny app</h2>
-<p>A demo Shiny app where you can <a href="https://mark.shinyapps.io/googleAnalyticsRv4Demo/">explore the new v4 features</a> is available.</p>
-<div class="figure">
-<img src="v4demoappexample.png" />
-
-</div>
-</div>
 <div id="to-use---v4-api-calls" class="section level2">
 <h2>To use - v4 API calls</h2>
-<p>Consult <code>?google_analytics_4</code> and these example queries:</p>
+<p>To get started refer to th tutorials linked on the homepage, consult <code>?google_analytics_4</code> when within R to see the documentation, and refer to these example queries:</p>
 <pre class="r"><code>## setup
 library(googleAnalyticsR)
 
@@ -274,9 +266,29 @@ ga_auth()
 ## get your accounts
 account_list &lt;- google_analytics_account_list()
 
-## pick a profile with data to query
-ga_id &lt;- account_list[23,&#39;viewId&#39;]
-</code></pre>
+## account_list will have a column called &quot;viewId&quot;
+account_list$viewId
+
+## View account_list and pick the viewId you want to extract data from
+ga_id &lt;- 123456
+
+## simple query to test connection
+google_analytics_4(ga_id, 
+                   date_range = c(&quot;2017-01-01&quot;, &quot;2017-03-01&quot;), 
+                   metrics = &quot;sessions&quot;, 
+                   dimensions = &quot;date&quot;)</code></pre>
+</div>
+<div id="date-ranges" class="section level2">
+<h2>Date Ranges</h2>
+<p>You can send in dates in <code>YYYY-MM-DD</code> format:</p>
+<pre class="r"><code>google_analytics_4(868768, date_range = c(&quot;2016-12-31&quot;, &quot;2017-02-01&quot;), metrics = &quot;sessions&quot;)</code></pre>
+<p>Character dates are converted into <code>Date</code> objects, so you can supply those directly, and use R’s Date handling to specify rolling dates:</p>
+<pre class="r"><code>yesterday &lt;- Sys.Date() - 1
+3daysAgo &lt;- Sys.Date() - 3
+
+google_analytics_4(868768, date_range = c(3daysAgo, yesterday), metrics = &quot;sessions&quot;)</code></pre>
+<p>Or use the v4 API shortcuts directly such as <code>&quot;yesterday&quot;</code>, <code>&quot;today&quot;</code> or <code>&quot;XDaysAgo&quot;</code>:</p>
+<pre class="r"><code>google_analytics_4(868768, date_range = c(&quot;5daysAgo&quot;, &quot;yesterday&quot;), metrics = &quot;sessions&quot;)</code></pre>
 <div id="anti-sampling-v4" class="section level3">
 <h3>Anti-sampling v4</h3>
 <p>A new feature from version <code>0.3.0</code> is anti-sampling via batching.</p>
@@ -288,7 +300,7 @@ ga_id &lt;- account_list[23,&#39;viewId&#39;]
 <pre class="r"><code>&gt; library(googleAnalyticsR)
 &gt; ga_auth()
 &gt; sampled_data_fetch &lt;- google_analytics_4(id, 
-                                           date_range = c(“2015-01-01”,”2015-06-21&quot;), 
+                                           date_range = c(&quot;2015-01-01&quot;,&quot;2015-06-21&quot;), 
                                            metrics = c(&quot;users&quot;,&quot;sessions&quot;,&quot;bounceRate&quot;), 
                                            dimensions = c(&quot;date&quot;,&quot;landingPagePath&quot;,&quot;source&quot;))
 Calling APIv4....
@@ -300,7 +312,7 @@ Data is sampled, based on 39.75% of visits.</code></pre>
 <pre class="r"><code>&gt; library(googleAnalyticsR)
 &gt; ga_auth()
 &gt; unsampled_data_fetch &lt;- google_analytics_4(id, 
-                                             date_range = c(“2015-01-01”,”2015-06-21&quot;), 
+                                             date_range = c(&quot;2015-01-01&quot;,&quot;2015-06-21&quot;), 
                                              metrics = c(&quot;users&quot;,&quot;sessions&quot;,&quot;bounceRate&quot;), 
                                              dimensions = c(&quot;date&quot;,&quot;landingPagePath&quot;,&quot;source&quot;),
                                              anti_sample = TRUE)
@@ -344,7 +356,22 @@ Successfully avoided sampling</code></pre>
 </div>
 <div id="new-filter-syntax" class="section level3">
 <h3>New Filter Syntax</h3>
-<pre class="r"><code>## create filters on metrics
+<p>Filters need to be built up from the <code>met_filter</code> and <code>dim_filter</code> R objects.</p>
+<p>These then need to be wrapped in <code>filter_clause_ga4</code> function, which lets you specify the combination rules (<code>AND</code> or <code>OR</code>). The <code>met_filter</code> and <code>dim_filter</code> you pass in should be wrapped in a <code>list()</code> - see examples:</p>
+<pre class="r"><code>
+## one filter
+campaign_filter &lt;- dim_filter(dimension=&quot;campaign&quot;,operator=&quot;REGEXP&quot;,expressions=&quot;welcome&quot;)
+
+my_filter_clause &lt;- filter_clause_ga4(list(campaign_filter))
+
+data_fetch &lt;- google_analytics_4(ga_id,date_range = c(&quot;2016-01-01&quot;,&quot;2016-12-31&quot;),
+                                 metrics = c(&quot;itemRevenue&quot;,&quot;itemQuantity&quot;),
+                                 dimensions = c(&quot;campaign&quot;,&quot;transactionId&quot;,&quot;dateHour&quot;),
+                                 dim_filters = my_filter_clause,
+                                 anti_sample = TRUE)</code></pre>
+<p>Example with multiple filters:</p>
+<pre class="r"><code>
+## create filters on metrics
 mf &lt;- met_filter(&quot;bounces&quot;, &quot;GREATER_THAN&quot;, 0)
 mf2 &lt;- met_filter(&quot;sessions&quot;, &quot;GREATER&quot;, 2)
 
@@ -384,6 +411,7 @@ ga_data1
 <div id="querying-multiple-report-types-at-a-time" class="section level3">
 <h3>Querying multiple report types at a time</h3>
 <p>Example with two date ranges and two reports. When querying two date ranges, you can sort the metrics by how much they have changed by using <code>orderType = DELTA</code> e.g. <code>order_type(&quot;sessions&quot;, &quot;DESCENDING&quot;, &quot;DELTA&quot;)</code></p>
+<p>When fetching multiple reports, you need to wrap the <code>make_ga_4_req()</code> created objects in a <code>list()</code></p>
 <pre class="r"><code>## demo of querying two date ranges at a time   
 ## we make the request via make_ga_4_req() to use in next demo
 multidate_test &lt;- make_ga_4_req(ga_id, 
@@ -394,8 +422,9 @@ multidate_test &lt;- make_ga_4_req(ga_id,
                                 dimensions = c(&#39;source&#39;,&#39;medium&#39;), 
                                 metrics = c(&#39;sessions&#39;,&#39;bounces&#39;),
                                 order = order_type(&quot;sessions&quot;, &quot;DESCENDING&quot;, &quot;DELTA&quot;))
-                                
-ga_data2 &lt;- fetch_google_analytics_4(multidate_test)
+
+## wrap the request in a list - makes more sense when more than one.                                
+ga_data2 &lt;- fetch_google_analytics_4(list(multidate_test))
 ga_data2
 #                                     source      medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
 # 1                                 (direct)      (none)        5923       3328           0          0

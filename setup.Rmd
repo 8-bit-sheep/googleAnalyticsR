@@ -7,11 +7,8 @@ title: "Setting up Google Analytics API downloads to R"
 The latest stable version of googleAnalyticsR is available on CRAN.
 ![CRAN](http://www.r-pkg.org/badges/version/googleAnalyticsR)
 
-You also need the version > `0.3.0` of `googleAuthR`
-
 ```r
-install.packages("googleAuthR")
-install.packages("googleAnalyticsR")
+install.package("googleAnalyticsR", dependencies = TRUE)
 ```
 
 ### Development version off github
@@ -25,6 +22,12 @@ devtools::install_github("MarkEdmondson1234/googleAnalyticsR")
 ```
 
 Check out the [NEWS](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md) to see whats currently available in each version.
+
+## Dependencies
+
+`googleAnalyticsR` requires the packages described in the [`Imports` field of the `DESCRIPTION` file](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/DESCRIPTION) to be installed first, which it will do via `install.package("googleAnalyticsR", dependencies = TRUE)`
+
+Noteably, due to its reliance on [`httr`]( https://CRAN.R-project.org/package=httr ) and in turn [`curl`]( https://CRAN.R-project.org/package=curl), on linux systems it may require installation of these linux dependencies: `libssl-dev` and `libcurl4-openssl-dev`.
 
 ## Authentication
 

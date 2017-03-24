@@ -245,9 +245,7 @@ $(document).ready(function () {
 <div id="install" class="section level2">
 <h2>Install</h2>
 <p>The latest stable version of googleAnalyticsR is available on CRAN. <img src="http://www.r-pkg.org/badges/version/googleAnalyticsR" alt="CRAN" /></p>
-<p>You also need the version &gt; <code>0.3.0</code> of <code>googleAuthR</code></p>
-<pre class="r"><code>install.packages(&quot;googleAuthR&quot;)
-install.packages(&quot;googleAnalyticsR&quot;)</code></pre>
+<pre class="r"><code>install.package(&quot;googleAnalyticsR&quot;, dependencies = TRUE)</code></pre>
 <div id="development-version-off-github" class="section level3">
 <h3>Development version off github</h3>
 <p>You may prefer to use the latest development version is on github which you can install via the below.</p>
@@ -255,6 +253,11 @@ install.packages(&quot;googleAnalyticsR&quot;)</code></pre>
 <pre class="r"><code>devtools::install_github(&quot;MarkEdmondson1234/googleAnalyticsR&quot;)</code></pre>
 <p>Check out the <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md">NEWS</a> to see whats currently available in each version.</p>
 </div>
+</div>
+<div id="dependencies" class="section level2">
+<h2>Dependencies</h2>
+<p><code>googleAnalyticsR</code> requires the packages described in the <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/DESCRIPTION"><code>Imports</code> field of the <code>DESCRIPTION</code> file</a> to be installed first, which it will do via <code>install.package(&quot;googleAnalyticsR&quot;, dependencies = TRUE)</code></p>
+<p>Noteably, due to its reliance on <a href="https://CRAN.R-project.org/package=httr"><code>httr</code></a> and in turn <a href="https://CRAN.R-project.org/package=curl"><code>curl</code></a>, on linux systems it may require installation of these linux dependencies: <code>libssl-dev</code> and <code>libcurl4-openssl-dev</code>.</p>
 </div>
 <div id="authentication" class="section level2">
 <h2>Authentication</h2>

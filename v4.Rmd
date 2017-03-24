@@ -4,7 +4,7 @@ title: "Google Analytics Reporting API v4 R Examples"
 
 ## v4 features
 
-The v4 API is where new features will appear in the future.  
+The v4 API will be where new features will appear in the future.  
 
 It currently has these extras implemented over the v3 API:
 
@@ -14,15 +14,9 @@ It currently has these extras implemented over the v3 API:
 * Calculated metrics on the fly
 * Much more powerful segments
 
-## v4 API Explorer Shiny app
-
-A demo Shiny app where you can [explore the new v4 features](https://mark.shinyapps.io/googleAnalyticsRv4Demo/) is available.
-
-![](v4demoappexample.png)
-
 ## To use - v4 API calls
 
-Consult `?google_analytics_4` and these example queries:
+To get started refer to th tutorials linked on the homepage, consult `?google_analytics_4` when within R to see the documentation, and refer to these example queries:
 
 ```r
 ## setup
@@ -34,9 +28,40 @@ ga_auth()
 ## get your accounts
 account_list <- google_analytics_account_list()
 
-## pick a profile with data to query
-ga_id <- account_list[23,'viewId']
+## account_list will have a column called "viewId"
+account_list$viewId
 
+## View account_list and pick the viewId you want to extract data from
+ga_id <- 123456
+
+## simple query to test connection
+google_analytics_4(ga_id, 
+                   date_range = c("2017-01-01", "2017-03-01"), 
+                   metrics = "sessions", 
+                   dimensions = "date")
+```
+
+## Date Ranges
+
+You can send in dates in `YYYY-MM-DD` format:
+
+```r
+google_analytics_4(868768, date_range = c("2016-12-31", "2017-02-01"), metrics = "sessions")
+```
+
+Character dates are converted into `Date` objects, so you can supply those directly, and use R's Date handling to specify rolling dates:
+
+```r
+yesterday <- Sys.Date() - 1
+3daysAgo <- Sys.Date() - 3
+
+google_analytics_4(868768, date_range = c(3daysAgo, yesterday), metrics = "sessions")
+```
+
+Or use the v4 API shortcuts directly such as `"yesterday"`, `"today"` or `"XDaysAgo"`:
+
+```r
+google_analytics_4(868768, date_range = c("5daysAgo", "yesterday"), metrics = "sessions")
 ```
 
 ### Anti-sampling v4
@@ -55,7 +80,7 @@ If you have sampling in your data request, `googleAnalyticsR` reports it back to
 > library(googleAnalyticsR)
 > ga_auth()
 > sampled_data_fetch <- google_analytics_4(id, 
-                                           date_range = c(“2015-01-01”,”2015-06-21"), 
+                                           date_range = c("2015-01-01","2015-06-21"), 
                                            metrics = c("users","sessions","bounceRate"), 
                                            dimensions = c("date","landingPagePath","source"))
 Calling APIv4....
@@ -70,7 +95,7 @@ Setting the new argument `anti_sample=TRUE` in a `google_analytics_4()` request 
 > library(googleAnalyticsR)
 > ga_auth()
 > unsampled_data_fetch <- google_analytics_4(id, 
-                                             date_range = c(“2015-01-01”,”2015-06-21"), 
+                                             date_range = c("2015-01-01","2015-06-21"), 
                                              metrics = c("users","sessions","bounceRate"), 
                                              dimensions = c("date","landingPagePath","source"),
                                              anti_sample = TRUE)
@@ -117,7 +142,28 @@ If you are still experiencing sampling with hourly batches, then its time to use
 
 ### New Filter Syntax
 
+Filters need to be built up from the `met_filter` and `dim_filter` R objects.
+
+These then need to be wrapped in `filter_clause_ga4` function, which lets you specify the combination rules (`AND` or `OR`).  The `met_filter` and `dim_filter` you pass in should be wrapped in a `list()` - see examples:
+
 ```r
+
+## one filter
+campaign_filter <- dim_filter(dimension="campaign",operator="REGEXP",expressions="welcome")
+
+my_filter_clause <- filter_clause_ga4(list(campaign_filter))
+
+data_fetch <- google_analytics_4(ga_id,date_range = c("2016-01-01","2016-12-31"),
+                                 metrics = c("itemRevenue","itemQuantity"),
+                                 dimensions = c("campaign","transactionId","dateHour"),
+                                 dim_filters = my_filter_clause,
+                                 anti_sample = TRUE)
+```
+
+Example with multiple filters:
+
+```r
+
 ## create filters on metrics
 mf <- met_filter("bounces", "GREATER_THAN", 0)
 mf2 <- met_filter("sessions", "GREATER", 2)
@@ -161,6 +207,8 @@ ga_data1
 
 Example with two date ranges and two reports.  When querying two date ranges, you can sort the metrics by how much they have changed by using `orderType = DELTA` e.g. `order_type("sessions", "DESCENDING", "DELTA")`
 
+When fetching multiple reports, you need to wrap the `make_ga_4_req()` created objects in a `list()`
+
 
 ```r
 ## demo of querying two date ranges at a time   
@@ -173,8 +221,9 @@ multidate_test <- make_ga_4_req(ga_id,
                                 dimensions = c('source','medium'), 
                                 metrics = c('sessions','bounces'),
                                 order = order_type("sessions", "DESCENDING", "DELTA"))
-                                
-ga_data2 <- fetch_google_analytics_4(multidate_test)
+
+## wrap the request in a list - makes more sense when more than one.                                
+ga_data2 <- fetch_google_analytics_4(list(multidate_test))
 ga_data2
 #                                     source      medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
 # 1                                 (direct)      (none)        5923       3328           0          0
