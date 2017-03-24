@@ -64,6 +64,32 @@ Or use the v4 API shortcuts directly such as `"yesterday"`, `"today"` or `"XDays
 google_analytics_4(868768, date_range = c("5daysAgo", "yesterday"), metrics = "sessions")
 ```
 
+### Compare date ranges
+
+New to v4 you can compare date ranges and return the two data sets in one call.  Simply send in a 4-length vector of dates in the form `(range1_start, range1_end, range2_start, range3_end)`
+
+```r
+google_analytics_4(868768, 
+                   date_range = c("16daysAgo", "9daysAgo", "8daysAgo", "yesterday"), 
+                   metrics = "sessions")
+```
+
+When requesting multiple date ranges, you can use a new ordering feature of v4 to find the 10 most changed dimensions, rather than just say the top 10.  [An article about using this feature can be found here](http://code.markedmondson.me/quicker-insight-sort-metric-delta/).
+
+An example is shown below, using the `order_type` function to sort by the change (`DELTA`) between dates:
+
+```r
+delta_sess <- order_type("sessions","DESCENDING", "DELTA")
+
+## find top 20 landing pages that changed most in sessions comparing this week and last week
+gadata <- google_analytics_4(gaid,
+                             date_range = c("16daysAgo", "9daysAgo", "8daysAgo", "yesterday"),
+                             metrics = c("sessions"),
+                             dimensions = c("landingPagePath"),
+                             order = delta_sess,
+                             max = 20)
+```
+
 ### Anti-sampling v4
 
 A new feature from version `0.3.0` is anti-sampling via batching.

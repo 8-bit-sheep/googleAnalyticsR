@@ -289,6 +289,24 @@ google_analytics_4(ga_id,
 google_analytics_4(868768, date_range = c(3daysAgo, yesterday), metrics = &quot;sessions&quot;)</code></pre>
 <p>Or use the v4 API shortcuts directly such as <code>&quot;yesterday&quot;</code>, <code>&quot;today&quot;</code> or <code>&quot;XDaysAgo&quot;</code>:</p>
 <pre class="r"><code>google_analytics_4(868768, date_range = c(&quot;5daysAgo&quot;, &quot;yesterday&quot;), metrics = &quot;sessions&quot;)</code></pre>
+<div id="compare-date-ranges" class="section level3">
+<h3>Compare date ranges</h3>
+<p>New to v4 you can compare date ranges and return the two data sets in one call. Simply send in a 4-length vector of dates in the form <code>(range1_start, range1_end, range2_start, range3_end)</code></p>
+<pre class="r"><code>google_analytics_4(868768, 
+                   date_range = c(&quot;16daysAgo&quot;, &quot;9daysAgo&quot;, &quot;8daysAgo&quot;, &quot;yesterday&quot;), 
+                   metrics = &quot;sessions&quot;)</code></pre>
+<p>When requesting multiple date ranges, you can use a new ordering feature of v4 to find the 10 most changed dimensions, rather than just say the top 10. <a href="http://code.markedmondson.me/quicker-insight-sort-metric-delta/">An article about using this feature can be found here</a>.</p>
+<p>An example is shown below, using the <code>order_type</code> function to sort by the change (<code>DELTA</code>) between dates:</p>
+<pre class="r"><code>delta_sess &lt;- order_type(&quot;sessions&quot;,&quot;DESCENDING&quot;, &quot;DELTA&quot;)
+
+## find top 20 landing pages that changed most in sessions comparing this week and last week
+gadata &lt;- google_analytics_4(gaid,
+                             date_range = c(&quot;16daysAgo&quot;, &quot;9daysAgo&quot;, &quot;8daysAgo&quot;, &quot;yesterday&quot;),
+                             metrics = c(&quot;sessions&quot;),
+                             dimensions = c(&quot;landingPagePath&quot;),
+                             order = delta_sess,
+                             max = 20)</code></pre>
+</div>
 <div id="anti-sampling-v4" class="section level3">
 <h3>Anti-sampling v4</h3>
 <p>A new feature from version <code>0.3.0</code> is anti-sampling via batching.</p>
