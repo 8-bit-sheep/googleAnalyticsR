@@ -80,21 +80,25 @@ If you are lucky enough to need sub-day sampling, it will attempt to fetch per h
 \dontrun{
 library(googleAnalyticsR)
 
-## authenticate, 
-## or use the RStudio Addin "Google API Auth" with analytics scopes set
+## authenticate, or use the RStudio Addin "Google API Auth" with analytics scopes set
+
 ga_auth()
 
 ## get your accounts
+
 account_list <- google_analytics_account_list()
 
-## pick a profile with data to query
+## account_list will have a column called "viewId"
+account_list$viewId
 
-ga_id <- account_list[23,'viewId']
+## View account_list and pick the viewId you want to extract data from
+ga_id <- 123456
 
-ga_data <- google_analytics_4(ga_id, 
-                              date_range = c("2015-07-30","2015-10-01"),
-                              dimensions=c('source','medium'), 
-                              metrics = c('sessions','bounces'))
+## simple query to test connection
+google_analytics_4(ga_id, 
+                   date_range = c("2017-01-01", "2017-03-01"), 
+                   metrics = "sessions", 
+                   dimensions = "date")
 
 }
 

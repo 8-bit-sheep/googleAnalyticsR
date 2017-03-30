@@ -11,12 +11,20 @@
 * Add `antiSampleWorked` TRUE/FALSE attribute to tables when anti-sampling attempted
 * Add a `slow_fetch` flag to `google_analytics_4` that will avoid batching for big complicated fetchess
 * Add `ga_users_list` for listing users on account, webProperty or View level
+* Documentation updates
+* Set default Google Project API permissions to:
+    - `"https://www.googleapis.com/auth/analytics"`
+    - `"https://www.googleapis.com/auth/analytics.readonly"`
+    - `"https://www.googleapis.com/auth/analytics.manage.users.readonly"`
+    - `"https://www.googleapis.com/auth/analytics.edit"`
+    - `"https://www.googleapis.com/auth/analytics.manage.users"`
 
 ## Fixed 
 
 * Fix bug with anti-sample when periods included 0-row data (#42)
 * Fix `google_analytics_account_list()` parsing bug if only one view available (#52, #41)
 * Fix segments not being able to be used in Cohort reports (#63)
+* Fix bug with anti-sample when querying over 1000 days (#66 - thanks @olivia-icivics)
 
 # googleAnalyticsR  0.3.0
 
