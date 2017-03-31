@@ -1,6 +1,6 @@
 Package: googleAnalyticsR
 Type: Package
-Version: 0.3.0.9000
+Version: 0.4.0
 Title: Google Analytics API into R
 Description: R library for interacting with the Google Analytics 
   Reporting API v3 and v4.
@@ -16,7 +16,7 @@ Depends:
 Imports:
     bigQueryR (>= 0.2.0),
     dplyr (>= 0.5.0),
-    googleAuthR (>= 0.3.1),
+    googleAuthR (>= 0.5.1),
     googleCloudStorageR,
     jsonlite (>= 1.0),
     magrittr (>= 1.5),
@@ -30,8 +30,6 @@ Suggests:
     testthat (>= 1.0.2),
     miniUI (>= 0.1.1),
     covr
-Remotes:
-    MarkEdmondson1234/googleAuthR
 License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr

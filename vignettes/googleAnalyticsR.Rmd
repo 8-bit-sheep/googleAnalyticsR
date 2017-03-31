@@ -35,7 +35,7 @@ These are all great libraries, that I have taken inspiration from.
 
 ## Install
 
-You need the version > `0.3.0` of `googleAuthR` too:
+You will also need `googleAuthR` too:
 
 ```r
 install.packages("googleAuthR")

@@ -347,6 +347,21 @@ test_that("Anti-sample when no sampling there", {
   
 })
 
+test_that("Aggregation works", {
+  skip_on_cran()
+  as <-   google_analytics_4(ga_id, 
+                             date_range = c("2015-07-30","2016-10-01"),
+                             dimensions=c('minute','hour','landingPagePath','medium','eventLabel','campaign'), 
+                             metrics = c('sessions', 'avgSessionDuration'),
+                             anti_sample = TRUE)  
+  expect_s3_class(as, "data.frame")
+  
+  agg <- aggregateGAData(as, agg_names = "medium")
+  expect_equal(names(agg), c("medium", "sessions", "avgSessionDuration"))
+  expect_lt(max(agg$avgSessionDuration), max(as$avgSessionDuration))
+  
+})
+
 context("Cohorts")
 
 test_that("Cohorts work", {
@@ -680,6 +695,16 @@ test_that("Can fetch users list", {
 #   exper <- ga_experiment(accountId, webPropId, ga_id, expId)
 #   
 #   expect_equal(exper, "analytics#experiment")
+# })
+
+# context("Remarketing")
+# 
+# test_that("List remarketing", {
+#   
+# })
+# 
+# test_that("Get a remarketing object", {
+#   
 # })
 
 context("Allow metrics and dimensions")

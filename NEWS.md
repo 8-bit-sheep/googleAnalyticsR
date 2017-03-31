@@ -1,4 +1,4 @@
-# googleAnalyticsR 0.3.0.9000
+# googleAnalyticsR 0.4.0
 
 ## Added
 
