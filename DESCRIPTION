@@ -17,17 +17,17 @@ Imports:
     bigQueryR (>= 0.2.0),
     dplyr (>= 0.5.0),
     googleAuthR (>= 0.5.1),
-    googleCloudStorageR,
+    httr (>= 1.2.1),
     jsonlite (>= 1.0),
     magrittr (>= 1.5),
     shiny (>= 0.13.2),
     tidyjson (>= 0.2.1),
-    httr (>= 1.2.1),
+    testthat (>= 1.0.2),
     utils
 Suggests:
     knitr,
     rmarkdown,
-    testthat (>= 1.0.2),
+    googleCloudStorageR,
     miniUI (>= 0.1.1),
     covr
 License: MIT + file LICENSE

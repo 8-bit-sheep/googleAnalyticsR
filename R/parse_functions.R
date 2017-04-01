@@ -20,7 +20,7 @@ google_analytics_4_parse_batch <- function(response_list){
 #' @keywords internal
 google_analytics_4_parse <- function(x){
   
-  # message("Parsing GA API v4")
+  myMessage("Parsing GA API v4", level = 1)
  
   #### x <- ga_data2$reports[[1]]
   
@@ -42,7 +42,7 @@ google_analytics_4_parse <- function(x){
   # met_types <- unlist(lapply(columnHeader$metricHeader$metricHeaderEntries, function(x) x$type))
   
   if(is.null(data)){
-    # message("No data found")
+    myMessage("No data found", level = 1)
     return(NULL)
   }
   
@@ -110,11 +110,11 @@ sampling_message <- function(samplesReadCounts, samplingSpaceSizes, hasDateCompa
   samplePercent <-  100
   if(!is.null(samplesReadCounts)){
     samplePercent <- get_samplePercent(samplesReadCounts[[1]], samplingSpaceSizes[[1]])
-    message("Data is sampled, based on ", samplePercent, "% of sessions." )
+    myMessage("Data is sampled, based on ", samplePercent, "% of sessions.", level = 3)
     
     if(hasDateComparison){
       samplePercent <- get_samplePercent(samplesReadCounts[[2]], samplingSpaceSizes[[2]])
-      message("Data Comparison is sampled, based on ", samplePercent, "% of sessions." )
+      myMessage("Data Comparison is sampled, based on ", samplePercent, "% of sessions.", level = 3 )
     }
   }
 }
@@ -174,10 +174,10 @@ parse_ga_account_summary <- function(x){
 
 parse_google_analytics <- function(x){
 
-  message("Request to profileId: ", x$profileInfo$profileId,
+  myMessage("Request to profileId: ", x$profileInfo$profileId,
           #     " accountId: ", x$profileInfo$accountId,
           #     " webPropertyId: ", x$profileInfo$webPropertyId,
-          " (", x$profileInfo$profileName, ")")
+          " (", x$profileInfo$profileName, ")", level = 3)
   
   if(!is.null(x$error)){
     stop(x$error$message)
@@ -187,7 +187,7 @@ parse_google_analytics <- function(x){
   if(!is.null(x$containsSampledData)){
     if(x$containsSampledData) {
       samplePercent <- round(100 * (as.numeric(x$sampleSize) / as.numeric(x$sampleSpace)), 2)
-      message("Data is sampled, based on ", samplePercent, "% of visits. Use samplingLevel='WALK' to mitigate it." )
+      myMessage("Data is sampled, based on ", samplePercent, "% of visits. Use samplingLevel='WALK' to mitigate it.", level = 3 )
     }
   }
 
@@ -197,9 +197,9 @@ parse_google_analytics <- function(x){
     gadata <- parse_google_analytics_mcf(x)
   }
 
-  message("Fetched: ",
+  myMessage("Fetched: ",
           paste(colnames(gadata), collapse = " "),
-          ". [", NROW(gadata), "] total results out of a possible [", x$totalResults, "], Start-Index: ", x$query$`start-index`)
+          ". [", NROW(gadata), "] total results out of a possible [", x$totalResults, "], Start-Index: ", x$query$`start-index`, level = 3)
 
   attr(gadata, "containsSampledData") <- x$containsSampledData
   attr(gadata, "samplePercent") <- samplePercent

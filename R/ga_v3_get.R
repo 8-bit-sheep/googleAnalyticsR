@@ -165,7 +165,7 @@ google_analytics <- function(id,
                           data_parse_function = parse_google_analytics)
   
   if(multi_account_batching){
-    message("Fetching all ids at same time (max 10 per API call")
+    myMessage("Fetching all ids at same time (max 10 per API call)", level = 3)
     all_data <- googleAuthR::gar_batch_walk(ga,
                                             walk_vector = id,
                                             gar_pars = ga_pars,

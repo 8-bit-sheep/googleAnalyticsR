@@ -22,7 +22,7 @@ gadget_GASegment <- function() {
       ## globalenv()[[input$output_var]] doesn't work(?)
       eee[[output_var]] <- segment
       
-      message("Segment saved to variable: ", output_var)
+      myMessage("Segment saved to variable: ", output_var, level = 3)
       
       shiny::stopApp()
     })

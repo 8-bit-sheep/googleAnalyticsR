@@ -8,7 +8,7 @@ pivot_ga4_parse <- function(x, hasDateComparison){
     return(NULL)
   }
   
-  message("Adding pivot data")
+  myMessage("Adding pivot data", level = 2)
   
   pivotHeaders <- x$columnHeader$metricHeader$pivotHeaders
   pivot_col_names <- makePivotNames(pivotHeaders)

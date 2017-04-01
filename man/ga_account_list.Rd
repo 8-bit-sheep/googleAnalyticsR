@@ -2,9 +2,12 @@
 % Please edit documentation in R/accounts.R
 \name{google_analytics_account_list}
 \alias{google_analytics_account_list}
+\alias{ga_account_list}
 \title{Get account summary including the ViewId}
 \usage{
 google_analytics_account_list()
+
+ga_account_list()
 }
 \value{
 a dataframe of all account, webproperty and view data

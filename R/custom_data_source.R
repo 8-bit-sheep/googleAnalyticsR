@@ -275,9 +275,9 @@ ga_custom_upload_file <- function(accountId,
   req <- cds(the_body = upload_me)
   
   if(req$status == 200){
-    message("File uploaded")
+    myMessage("File uploaded", level = 3)
   } else {
-    message("Problem upload file")
+    myMessage("Problem upload file", level = 3)
   }
   
   res <- httr::content(req, as = "raw")

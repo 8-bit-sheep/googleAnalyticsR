@@ -115,7 +115,7 @@ google_analytics_bq <- function(projectId,
     if(return_query_only){
       return(query)
     } else {
-      message("Query: ", query)
+      myMessage("Query: ", query, level = 3)
     }
   }
   
@@ -129,7 +129,7 @@ google_analytics_bq <- function(projectId,
            call. = FALSE)
     }
     
-    message("## Over 100,000 rows to fetch, creating asynchronous query via Google Cloud Storage.")
+    myMessage("Over 100,000 rows to fetch, creating asynchronous query via Google Cloud Storage.", level = 2)
     google_analytics_bq_asynch(projectId = projectId,
                                datasetId = datasetId,
                                query = query,
@@ -187,8 +187,8 @@ google_analytics_bq_asynch <- function(projectId,
                                            destinationTableId = tableId)
   query_job <- bigQueryR::bqr_wait_for_job(query_job)
   
-  message("\nBigQuery query successful and now in BigQuery tableId: ", tableId,
-          "\n - now extracting data to Cloud Storage bucket", bucket)
+  myMessage("\nBigQuery query successful and now in BigQuery tableId: ", tableId,
+          "\n - now extracting data to Cloud Storage bucket", bucket, level = 3)
   
   extract_job <- bigQueryR::bqr_extract_data(projectId = projectId,
                                              datasetId = datasetId,
@@ -196,13 +196,13 @@ google_analytics_bq_asynch <- function(projectId,
                                              cloudStorageBucket = bucket)
   extract_job <- bigQueryR::bqr_wait_for_job(extract_job)
   
-  message("\nBigQuery extract successful to ", bucket,
-          " - now downloading data from Google Cloud Storage")
+  myMessage("\nBigQuery extract successful to ", bucket,
+          " - now downloading data from Google Cloud Storage", level = 3)
   
   bigQueryR::bqr_download_extract(extract_job,
                                   filename = download_file)
   
-  message("All finished, total job time:", format(difftime(Sys.time(), time0), format = "%H:%M:%S"))
+  myMessage("All finished, total job time:", format(difftime(Sys.time(), time0), format = "%H:%M:%S"), level = 3)
   
 }
 

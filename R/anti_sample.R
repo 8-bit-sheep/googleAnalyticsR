@@ -57,7 +57,7 @@ anti_sample <- function(anti_sample_batches,
   rowCount <- round(as.integer(attr(test_call, "rowCount")[[1]]) * 1.2)
   
   if(identical(samplingPer, numeric(0))){
-    message("No sampling found, returning call")
+    myMessage("No sampling found, returning call", level = 3)
     unsampled <- google_analytics_4(viewId            = viewId,
                                     date_range        = date_range,
                                     metrics           = metrics,

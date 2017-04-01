@@ -2,6 +2,7 @@
 
 ## Added
 
+* Deprecate `google_analytics_account_list` for `ga_account_list` to be in line with other functions
 * Add custom data uploads via `ga_custom_upload_file()`
 * Cleaned up documentation a bit
 * Added auto-authentication if you specify environment var `GA_AUTH_FILE`
