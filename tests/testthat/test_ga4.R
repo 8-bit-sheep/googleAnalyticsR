@@ -41,7 +41,7 @@ context("Accounts")
 
 test_that("Get the account summary list", {
   skip_on_cran()
-  al <- google_analytics_account_list()
+  al <- ga_account_list()
   expect_s3_class(al, "data.frame")
   
 })

@@ -8,9 +8,9 @@
 * Added auto-authentication if you specify environment var `GA_AUTH_FILE`
 * Add Remarketing Audience functions - `ga_remarketing_get` and `ga_remarketing_list`
 * Add `aggregateGAData` which will aggregate over GA dimensions
-* Use `aggregateGAData` to solve issue with anti_sampling repeating rows (#49)
+
 * Add `antiSampleWorked` TRUE/FALSE attribute to tables when anti-sampling attempted
-* Add a `slow_fetch` flag to `google_analytics_4` that will avoid batching for big complicated fetchess
+* Add a `slow_fetch` flag to `google_analytics_4` that will avoid batching for big complicated fetches
 * Add `ga_users_list` for listing users on account, webProperty or View level
 * Documentation updates
 * Set default Google Project API permissions to:
@@ -22,6 +22,7 @@
 
 ## Fixed 
 
+* Use `aggregateGAData` to solve issue with anti_sampling repeating rows (#49)
 * Fix bug with anti-sample when periods included 0-row data (#42)
 * Fix `google_analytics_account_list()` parsing bug if only one view available (#52, #41)
 * Fix segments not being able to be used in Cohort reports (#63)
