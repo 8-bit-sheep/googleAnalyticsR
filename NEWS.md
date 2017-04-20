@@ -12,11 +12,9 @@
 * Added auto-authentication if you specify environment var `GA_AUTH_FILE`
 * Add Remarketing Audience functions - `ga_remarketing_get` and `ga_remarketing_list`
 * Add `aggregateGAData` which will aggregate over GA dimensions
-
 * Add `antiSampleWorked` TRUE/FALSE attribute to tables when anti-sampling attempted
 * Add a `slow_fetch` flag to `google_analytics_4` that will avoid batching for big complicated fetches
 * Add `ga_users_list` for listing users on account, webProperty or View level
-* Documentation updates
 * Set default Google Project API permissions to:
     - `"https://www.googleapis.com/auth/analytics"`
     - `"https://www.googleapis.com/auth/analytics.readonly"`

@@ -13,7 +13,7 @@ If you find any bugs please log any problems here in the issues tracker.
 
 ## Install
 
-You also need the version > `0.3.0` of `googleAuthR`
+You also need `googleAuthR`
 
 ```r
 install.packages("googleAuthR")

@@ -274,7 +274,13 @@ hourly_anti_sample <- function(viewId,
   })
   ## output rbind
   hour_out <- Reduce(rbind, unsampled_list)
-  attr(hour_out, "samplesReadCounts")  <- all_samplesReadCounts
-  attr(hour_out, "samplingSpaceSizes") <- all_samplingSpaceSizes
+  
+  if(!is.null(hour_out)){
+    attr(hour_out, "samplesReadCounts")  <- all_samplesReadCounts
+    attr(hour_out, "samplingSpaceSizes") <- all_samplingSpaceSizes
+  } else {
+    myMessage("No data found for hourly sample", level = 3)
+  }
+
   hour_out
 }
