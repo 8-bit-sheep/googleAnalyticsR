@@ -46,6 +46,8 @@ aggregateGAData <- function(ga_data,
   mean_metrics <- metrics[grepl(mean_regex, metrics)]
   sum_metrics  <- metrics[!grepl(mean_regex, metrics)]
   
+  dimensions <- names(ga_data)[!(names(ga_data) %in% metrics)]
+  
   date_col <- getColNameOfClass(ga_data, "Date")
   
   ## do aggregations
@@ -75,7 +77,8 @@ aggregateGAData <- function(ga_data,
   
   ## join up all the aggregations
   if(!is.null(agg_names)){
-    ga_agg <- dplyr::left_join(sumAgg, meanAgg) %>% dplyr::left_join(dateAgg)
+    ga_agg <- dplyr::left_join(sumAgg, meanAgg, by = dimensions) %>%
+      dplyr::left_join(dateAgg, by = dimensions)
   } else {
     sumAgg  <- if(ncol(sumAgg) == 0) NULL else sumAgg
     meanAgg <- if(ncol(meanAgg) == 0) NULL else meanAgg
