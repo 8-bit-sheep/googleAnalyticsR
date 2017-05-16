@@ -202,7 +202,7 @@ chunkify <- function(sessions_vec, limit = 250e3) {
     batch_size <- batch_size + sessions
     
     #If today puts up above the limit, it starts a new batch!
-    if (batch_size > limit) {
+    if (batch_size >= limit) {
       batch_number <- batch_number + 1
       batch_size   <- sessions
     }
