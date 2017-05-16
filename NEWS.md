@@ -1,6 +1,6 @@
 # googleAnalyticsR 0.4.0.9000
 
-* ...
+* Fixed `anti_sample="auto"` math to actually limit the number of sessions for the auto-batches
 
 # googleAnalyticsR 0.4.0
 
