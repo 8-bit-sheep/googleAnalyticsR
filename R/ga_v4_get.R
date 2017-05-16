@@ -276,7 +276,7 @@ google_analytics_4 <- function(viewId,
   allResults  <- FALSE
   if(max < 0){
     ## size of 1 v4 batch 0 indexed
-    max <- as.integer(49999)
+    max <- 49999
     allResults <- TRUE
   }
   reqRowLimit <- as.integer(10000)
