@@ -87,7 +87,7 @@ anti_sample <- function(anti_sample_batches,
                                            dimensions = "date",
                                            max = -1) ## download all days! #66
     explore_sessions$cumulative <- cumsum(explore_sessions$sessions)
-    explore_sessions$sample_bucket <- as.factor((explore_sessions$cumulative %/% read_counts) + 1)
+    explore_sessions$sample_bucket <- chunkify(explore_sessions$sessions, limit = 250e3)
     
   } else {
     stopifnot(anti_sample_batches >= 1)
@@ -180,6 +180,37 @@ anti_sample <- function(anti_sample_batches,
   myMessage("Finished unsampled data request, total rows [", nrow(out),"]", level = 3)
   if(did_it_work) myMessage("Successfully avoided sampling", level = 3)
   out
+}
+
+
+#' Break down a request into unsampled chunks
+#' 
+#' @param sessions_vec A vector, ordered by date, with the number of sessions
+#' @param limit This is the upper bound for the number of sessions in one chunk
+#'   
+#' @return A vector with the batch number of each date. This allows for usage in
+#'   a mutate.
+#' @keyword internal
+chunkify <- function(sessions_vec, limit = 250e3) {
+  #Accumulators
+  batch_size    <- 0
+  batch_number  <- 1
+  batch_numbers <- rep(1, length(sessions))
+  
+  for (i in 1:nrow(sessions_vec)) {
+    sessions <- sessions_vec[1]
+    batch_size <- batch_size + sessions
+    
+    #If today puts up above the limit, it starts a new batch!
+    if (batch_size > limit) {
+      batch_number <- batch_number + 1
+      batch_size   <- sessions
+    }
+    
+    batch_numbers[i] <- batch_number
+  }
+  
+  batch_numbers
 }
 
 #' hourly get request with anti-sampling
