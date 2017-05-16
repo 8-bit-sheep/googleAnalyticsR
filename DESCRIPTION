@@ -8,7 +8,8 @@ Authors@R: c(person("Mark", "Edmondson",email = "m@sunholo.com",
                   role = c("aut", "cre")),
              person(given = "Artem", family = "Klevtsov",
                     email = "a.a.klevtsov@gmail.com", role = "ctb"),
-           person("Johann", "deBoer", email="johanndeboer@gmail.com", role = "ctb"))
+           person("Johann", "deBoer", email="johanndeboer@gmail.com", role = "ctb"),
+           person("Olivia", "Brode-Roger", email="nibr@mit.edu", role="ctb"))
 URL: http://code.markedmondson.me/googleAnalyticsR/
 BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
 Depends:
