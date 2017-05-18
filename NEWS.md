@@ -1,6 +1,6 @@
 # googleAnalyticsR 0.4.0.9000
 
-* ...
+* Fix `attempt to set an attribute on NULL` error for hourly anti-sample
 
 # googleAnalyticsR 0.4.0
 
