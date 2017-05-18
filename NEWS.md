@@ -2,6 +2,7 @@
 
 * Fix `attempt to set an attribute on NULL` error for anti-sample
 * Fixed `anti_sample="auto"` math to actually limit the number of sessions for the auto-batches
+* Add warning if using default project, and if API quota is tripped (#79)
 
 # googleAnalyticsR 0.4.0
 
