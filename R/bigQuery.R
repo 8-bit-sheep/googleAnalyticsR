@@ -39,7 +39,6 @@
 #' @seealso \url{https://support.google.com/analytics/answer/4419694?hl=en}
 #'          \url{https://support.google.com/analytics/answer/3437719?hl=en}
 #' 
-#' @import bigQueryR
 #' @export
 google_analytics_bq <- function(projectId,
                                 datasetId,
@@ -155,7 +154,6 @@ google_analytics_bq <- function(projectId,
 }
 
 #' Asynch fetch
-#' @import bigQueryR
 #' @keywords internal
 google_analytics_bq_asynch <- function(projectId,
                                        datasetId,

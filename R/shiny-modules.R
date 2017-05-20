@@ -21,43 +21,43 @@ authDropdownUI <- function(id,
   ns <- shiny::NS(id)
   
   if(inColumns){
-    out <- tagList(
-      column(width = 4,
-             selectInput(ns("accounts"),
-                         label="Accounts",
-                         choices = NULL,
-                         width = width)    
-             ),
-      column(width = 4,
-             selectInput(ns("web.prop"),
-                         label="WebProperty",
-                         choices = NULL,
-                         width = width) 
-             ),
-      column(width = 4,
-             selectInput(ns("view"),
-                         label="Select View",
-                         choices = NULL,
-                         width = width)    
-             )
+    out <- shiny::tagList(
+      shiny::column(width = 4,
+                    shiny::selectInput(ns("accounts"),
+                                       label="Accounts",
+                                       choices = NULL,
+                                       width = width)    
+      ),
+      shiny::column(width = 4,
+                    shiny::selectInput(ns("web.prop"),
+                                       label="WebProperty",
+                                       choices = NULL,
+                                       width = width) 
+      ),
+      shiny::column(width = 4,
+                    shiny::selectInput(ns("view"),
+                                       label="Select View",
+                                       choices = NULL,
+                                       width = width)    
+      )
     )
   } else {
-    out <- tagList(
-      selectInput(ns("accounts"),
-                  label="Accounts",
-                  choices = NULL,
-                  width = width),
-      selectInput(ns("web.prop"),
-                  label="WebProperty",
-                  choices = NULL,
-                  width = width),
-      selectInput(ns("view"),
-                  label="Select View",
-                  choices = NULL,
-                  width = width)
+    out <- shiny::tagList(
+      shiny::selectInput(ns("accounts"),
+                         label="Accounts",
+                         choices = NULL,
+                         width = width),
+      shiny::selectInput(ns("web.prop"),
+                         label="WebProperty",
+                         choices = NULL,
+                         width = width),
+      shiny::selectInput(ns("view"),
+                         label="Select View",
+                         choices = NULL,
+                         width = width)
     )
   }
-
+  
   out
   
 }
@@ -75,35 +75,34 @@ authDropdownUI <- function(id,
 #'
 #' @return GA View Id selected
 #' 
-#' @import shiny
 #' @family Shiny modules
 #' @export
 authDropdown <- function(input, output, session, ga.table){
   
-  pList <- reactive({
+  pList <- shiny::reactive({
     ga.table <- ga.table()
     
     ga.table[,c('accountName','webPropertyId','websiteUrl','viewName', 'viewId')]
     
   })
   
-  observe({
-    validate(
-      need(pList(), "Need profiles")
+  shiny::observe({
+    shiny::validate(
+      shiny::need(pList(), "Need profiles")
     )
     pList  <- pList()
     
     choice <- unique(pList$accountName)
     
-    updateSelectInput(session, 
+    shiny::updateSelectInput(session, 
                       "accounts",
                       label="Accounts",
                       choices = choice)
   })
   
-  observe({
-    validate(
-      need(input$accounts, "Need accounts")
+  shiny::observe({
+    shiny::validate(
+      shiny::need(input$accounts, "Need accounts")
     )
     pList  <- pList()
     
@@ -111,14 +110,14 @@ authDropdown <- function(input, output, session, ga.table){
     
     choice <- pList$websiteUrl
     
-    updateSelectInput(session, 
+    shiny::updateSelectInput(session, 
                       "web.prop", label="WebProperty",
                       choices = choice)
   })
   
-  observe({
-    validate(
-      need(input$web.prop, "Need web")
+  shiny::observe({
+    shiny::validate(
+      shiny::need(input$web.prop, "Need web")
     )
     pList <- pList()
     
@@ -128,14 +127,14 @@ authDropdown <- function(input, output, session, ga.table){
     
     names(choice) <- paste(pList$viewName, pList$viewId)
     
-    updateSelectInput(session, "view",
+    shiny::updateSelectInput(session, "view",
                       label="Views",
                       choices = choice)
   })
   
-  chosen_view <- reactive({
-    validate(
-      need(input$view, "Please login")
+  chosen_view <- shiny::reactive({
+    shiny::validate(
+      shiny::need(input$view, "Please login")
     )
     pList <- pList()
     
@@ -169,7 +168,7 @@ multi_selectUI <- function(id,
   
   ns <- shiny::NS(id)
   
-  selectInput(ns("multi_select"),
+  shiny::selectInput(ns("multi_select"),
               label=label,
               choices = NULL,
               multiple = multiple,
@@ -201,7 +200,7 @@ multi_select <- function(input, output, session,
   type <- match.arg(type)
   
   ## update select from meta
-  observe({
+  shiny::observe({
     
     choice <- allowed_metric_dim(type = type, subType = subType)
 
@@ -218,7 +217,7 @@ multi_select <- function(input, output, session,
       }
     }
     
-    updateSelectInput(session,
+    shiny::updateSelectInput(session,
                       "multi_select",
                       choices = choice,
                       selected = s)
