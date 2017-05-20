@@ -1,16 +1,16 @@
 #' Make a date object
 #'
 #' @keywords internal
-date_ga4 <- function(vector){
-  if(is.null(vector)) return(NULL)
+date_ga4 <- function(dvector){
+  if(is.null(dvector)) return(NULL)
 
-  testthat::expect_length(vector, 2)
+  assertthat::assert_that(length(dvector) == 2)
 
-  vector <- as.character(vector)
+  dvector <- as.character(dvector)
 
   structure(
-    list(startDate = vector[1],
-         endDate = vector[2]),
+    list(startDate = dvector[1],
+         endDate = dvector[2]),
     class = "date_ga4"
   )
 }
@@ -38,7 +38,7 @@ dimension_ga4 <- function(vector, histogramBuckets=NULL){
   
   if(is.null(vector)) return(NULL)
 
-  testthat::expect_type(vector, "character")
+  assertthat::assert_that(is.character(vector))
   expect_null_or_type(histogramBuckets, "list")
 
   dimensions <- vapply(vector, checkPrefix, character(1), prefix="ga", USE.NAMES = FALSE)
@@ -62,7 +62,7 @@ dimension_ga4 <- function(vector, histogramBuckets=NULL){
 #' @return a list suitable for parsing in req
 metric_ga4 <- function(vector, metricFormat=NULL){
 
-  testthat::expect_type(vector, "character")
+  assertthat::assert_that(is.character(vector))
 
   ## dont do prefix check for unnamed metrics if any named
   if(!is.null(names(vector))){
@@ -83,14 +83,13 @@ metric_ga4 <- function(vector, metricFormat=NULL){
   if(is.null(metricFormat)) metricFormat <- rep("METRIC_TYPE_UNSPECIFIED",
                                                 length(metrics))
 
-  testthat::expect_true(any(metricFormat %in% c("METRIC_TYPE_UNSPECIFIED",
-                                            "INTEGER",
-                                            "FLOAT",
-                                            "CURRENCY",
-                                            "PERCENT",
-                                            "TIME")))
-  
-  testthat::expect_true(length(metricFormat) == length(metrics))
+  assertthat::assert_that(any(metricFormat %in% c("METRIC_TYPE_UNSPECIFIED",
+                                                  "INTEGER",
+                                                  "FLOAT",
+                                                  "CURRENCY",
+                                                  "PERCENT",
+                                                  "TIME")),
+                          length(metricFormat) == length(metrics))
 
   metrics <- lapply(seq_along(metrics), function(x) {
     entry <- metrics[x]
@@ -131,7 +130,7 @@ order_type <- function(field,
   sort_order <- match.arg(sort_order)
   orderType <- match.arg(orderType)
   
-  testthat::expect_length(field, 1)
+  assertthat::assert_that(length(field) == 1)
 
   field <- vapply(field, checkPrefix, character(1), prefix = "ga")
 

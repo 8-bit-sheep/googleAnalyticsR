@@ -124,8 +124,8 @@ make_ga_4_req <- function(viewId,
   }
   
   if(!is.null(cohorts)){
-    testthat::expect_true(cohort_metric_check(metrics))
-    testthat::expect_true(cohort_dimension_check(dimensions))
+    assertthat::assert_that(cohort_metric_check(metrics),
+                            cohort_dimension_check(dimensions))
     if(!is.null(date_range)){
       warning("Don't supply date_range when using cohorts, setting date_range to NULL")
       date_range <- NULL
@@ -507,7 +507,7 @@ fetch_google_analytics_4_slow <- function(request_list, max_rows, allRows = FALS
 #' @export
 fetch_google_analytics_4 <- function(request_list, merge = FALSE){
 
-  testthat::expect_type(request_list, "list")
+  assertthat::assert_that(is.list(request_list))
   ## amount of batches per v4 api call
   ga_batch_limit <- 5
   

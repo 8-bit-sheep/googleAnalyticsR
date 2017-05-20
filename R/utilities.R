@@ -1,3 +1,9 @@
+# from https://github.com/hadley/assertthat/blob/master/R/assertions.r
+is.named <- function(x) {
+  nm <- names(x)
+  !is.null(nm) && all(!is.na(nm) & nm != "")
+}
+
 #' Timestamp to R date
 #' @keywords internal
 timestamp_to_r <- function(t){
@@ -47,11 +53,13 @@ unitToList <- function(perhaps_list){
 
 #' Expect NULL or type
 #' 
-#' wraps testthat::expect_type() to run if not NULL
+#' wraps assertthat::assert_that to run if not NULL
 #' @keywords internal
 expect_null_or_type <- function(thing, type){
   if(!is.null(thing)){
-    testthat::expect_type(thing, type)
+    assertthat::assert_that(inherits(thing, type))
+  } else {
+    TRUE
   }
 }
 
@@ -62,6 +70,9 @@ expect_null_or_type <- function(thing, type){
 expect_null_or_s3_class <- function(thing, s3class){
   if(!is.null(thing)){
     testthat::expect_s3_class(thing, s3class)
+    assertthat::assert_that(inherits(thing, s3class))
+  } else {
+    TRUE
   }
 }
 

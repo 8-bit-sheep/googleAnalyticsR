@@ -140,8 +140,9 @@ makePivotNames <- function(pivotHeaders){
 pivot_ga4 <- function(pivot_dim, metrics, dim_filter_clause=NULL,
                       startGroup = 1, maxGroupCount = 5){
   
-  testthat::expect_type(pivot_dim, "character")
-  testthat::expect_type(metrics, "character")  
+  assertthat::assert_that(is.character(pivot_dim),
+                          is.character(metrics))
+  
   expect_null_or_s3_class(dim_filter_clause, "dim_fil_ga4")
   
   dim_list <- dimension_ga4(pivot_dim)

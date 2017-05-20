@@ -100,7 +100,7 @@ google_analytics_4_parse <- function(x){
   attr(out, "samplingSpaceSizes") <- x$data$samplingSpaceSizes
   attr(out, "nextPageToken") <- x$nextPageToken
   
-  testthat::expect_s3_class(out, "data.frame")
+  assertthat::assert_that(is.data.frame(out))
   
   out
   

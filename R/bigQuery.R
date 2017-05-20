@@ -273,7 +273,7 @@ lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPat
 
 customDimensionMaker <- function(customDimensionIndex=paste0("dimension",1:200)){
   
-  testthat::expect_type(customDimensionIndex, "character")
+  assertthat::assert_that(is.character(customDimensionIndex))
   indexes <- grep("^dimension(.+)", customDimensionIndex)
   
   if(length(indexes) < 1) stop("Custom dimension specified but no custom dimensions found")
@@ -289,7 +289,7 @@ customDimensionMaker <- function(customDimensionIndex=paste0("dimension",1:200))
           
 customMetricMaker <- function(customMetricIndex=paste0("metric",1:200)){
   
-  testthat::expect_type(customMetricIndex, "character")
+  assertthat::assert_that(is.character(customMetricIndex))
   indexes <- grep("^metric(.+)", customMetricIndex)
   
   if(length(indexes) < 1) stop("No custom metrics found")

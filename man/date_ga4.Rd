@@ -4,7 +4,7 @@
 \alias{date_ga4}
 \title{Make a date object}
 \usage{
-date_ga4(vector)
+date_ga4(dvector)
 }
 \description{
 Make a date object

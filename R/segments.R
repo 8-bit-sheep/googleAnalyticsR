@@ -138,12 +138,12 @@ segment_ga4 <- function(name,
                         segment_id=NULL,
                         user_segment=NULL,
                         session_segment=NULL){
-  
-  testthat::expect_type(name, "character")
+
+  assertthat::assert_that(is.character(name))
   
   if(!is.null(segment_id)){
-    testthat::expect_type(segment_id, "character")
-    testthat::expect_length(segment_id, 1)
+    assertthat::assert_that(is.character(segment_id),
+                            length(segment_id) == 1)
   }
 
   
@@ -240,7 +240,7 @@ segment_define <- function(segment_filters,
 #' @export
 segment_vector_simple <- function(segment_elements){
   
-  testthat::expect_type(segment_elements, "list")
+  assertthat::assert_that(is.list(segment_elements))
   
   orFiltersList <- makeOrFilters(segment_elements)
   
@@ -278,7 +278,7 @@ segment_vector_sequence <- function(segment_elements,
   
   stepMatchList <- lapply(segment_elements, function(x) attr(x, "matchType"))
   if(!is.null(stepMatchList)){
-    testthat::expect_equal(length(segment_elements), length(stepMatchList))
+    assertthat::assert_that(length(segment_elements) == length(stepMatchList))
   } else {
     stepMatchList <- as.list(rep("PRECEDES", length(segment_elements)))
   }
@@ -343,10 +343,10 @@ segment_element <- function(name,
                             comparisonValue=NULL,
                             matchType = c("PRECEDES", "IMMEDIATELY_PRECEDES")){
 
-  testthat::expect_type(name, "character")
+  assertthat::assert_that(is.character(name))
   operator <- match.arg(operator)
   type <- match.arg(type)
-  testthat::expect_type(not, "logical")
+  assertthat::assert_that(is.logical(not))
   expect_null_or_type(expressions, "character")
   expect_null_or_type(caseSensitive, "logical")  
   expect_null_or_type(minComparisonValue, "double")  
@@ -370,7 +370,7 @@ segment_element <- function(name,
                               comparisonValue = as.character(comparisonValue),
                               maxComparisonValue = as.character(maxComparisonValue))
     
-    testthat::expect_s3_class(smf, "segmentMetFilter_ga4")
+    assertthat::assert_that(inherits(smf, "segmentMetFilter_ga4"))
     
     sfc <- segmentFilterClause(not = not, metricFilter = smf)
     
@@ -410,7 +410,7 @@ segment_element <- function(name,
                                  minComparisonValue = as.character(minComparisonValue),
                                  maxComparisonValue = as.character(maxComparisonValue))
     
-    testthat::expect_s3_class(sdf, "segmentDimFilter_ga4")
+    assertthat::assert_that(inherits(sdf, "segmentDimFilter_ga4"))
     sfc <- segmentFilterClause(not = not, dimensionFilter = sdf)
     
   }
@@ -454,8 +454,8 @@ segmentObj_ga4 <- function(dynamicSegment=NULL, segmentId=NULL){
 #'
 #' @keywords internal
 dynamicSegment <- function(name, userSegment, sessionSegment){
-  
-  testthat::expect_type(name, "character")
+
+  assertthat::assert_that(is.character(name))
   
   structure(
     list(
@@ -500,7 +500,7 @@ segmentDefinition <- function(segmentFilterList){
 #' @keywords internal
 segmentFilter <- function(not=FALSE, simpleSegment=NULL, sequenceSegment=NULL){
   
-  testthat::expect_type(not, "logical")
+  assertthat::assert_that(is.logical(not))
   
   if(!is.null(simpleSegment) && !is.null(sequenceSegment)){
     stop("Only one of either simpleSegment or sequenceSegment allowed")
@@ -644,7 +644,7 @@ segmentMetricFilter <- function(name,
 #' @keywords internal
 sequenceSegment <- function(segmentSequenceStepList, firstStepMatch=FALSE){
   
-  testthat::expect_type(firstStepMatch, "logical")
+  assertthat::assert_that(is.logical(firstStepMatch))
   
   structure(
     list(

@@ -13,3 +13,4 @@
 ^vignettes/website/*
 ^index\.md$
 ^index\.Rmd$
+^CODE_OF_CONDUCT\.md$

@@ -193,7 +193,7 @@ anti_sample <- function(anti_sample_batches,
 #'   
 #' @return A vector with the batch number of each date. This allows for usage in
 #'   a mutate.
-#' @keyword internal
+#' @keywords internal
 chunkify <- function(sessions_vec, limit = 250e3) {
   #Accumulators
   batch_size    <- 0
