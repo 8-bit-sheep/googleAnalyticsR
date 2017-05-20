@@ -24,15 +24,7 @@ getColNameOfClass <- function(df, class_name){
 #'   Will auto perform mean aggregation it metric names match \code{mean_regex} argument
 #'   If agg_names is NULL will aggregate over all
 #'
-#' @importFrom dplyr %>%
-#' @importFrom dplyr select_
-#' @importFrom dplyr group_by_
-#' @importFrom dplyr summarise_each
-#' @importFrom dplyr funs
-#' @importFrom dplyr ungroup
-#' @importFrom dplyr left_join
-#' @importFrom dplyr mutate
-#' @importFrom dplyr bind_cols
+#' @importFrom magrittr %>%
 #' @export
 aggregateGAData <- function(ga_data, 
                             agg_names=NULL,
