@@ -116,7 +116,7 @@ make_ga_4_req <- function(viewId,
                           samplingLevel=c("DEFAULT", "SMALL","LARGE"),
                           metricFormat=NULL,
                           histogramBuckets=NULL) {
-  default_project_message()
+
   samplingLevel <- match.arg(samplingLevel)
   
   if(all(is.null(date_range), is.null(cohorts))){
@@ -270,7 +270,8 @@ google_analytics_4 <- function(viewId,
                                anti_sample = FALSE,
                                anti_sample_batches = "auto",
                                slow_fetch = FALSE){
-
+  
+  default_project_message()
   
   max         <- as.integer(max)
   allResults  <- FALSE
@@ -353,6 +354,7 @@ google_analytics_4 <- function(viewId,
   if(allResults){
     all_rows <- as.integer(attr(out, "rowCount"))
     if(nrow(out) < all_rows){
+    # if(!is.null(out) && nrow(out) < all_rows){
       ## create the remaining requests
       meta_batch_start_index2 <- seq(from=50000, to=all_rows, by=reqRowLimit)
       ## make a list of the requests
@@ -570,7 +572,7 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE){
       
       myMessage("Fetching data batch...", level = 3)
       
-      out <- try(f(the_body = body))
+      out <- try(f(the_body = b))
       
       error_check(out)
       
