@@ -30,15 +30,13 @@ aggregateGAData <- function(ga_data,
                             agg_names=NULL,
                             mean_regex="^avg|^percent|Rate$|^CPC$|^CTR$|^CPM$|^RPC$|^ROI$|^ROAS$|Per"){
   
-  stopifnot(inherits(ga_data, "data.frame"))
+  assertthat::assert_that(is.data.frame(ga_data))
   
-  if(!is.null(agg_names)) stopifnot(inherits(agg_names, "character"))
+  if(!is.null(agg_names)) assertthat::assert_that(inherits(agg_names, "character"))
   
   metrics <- getColNameOfClass(ga_data, "numeric")
   mean_metrics <- metrics[grepl(mean_regex, metrics)]
   sum_metrics  <- metrics[!grepl(mean_regex, metrics)]
-  
-  dimensions <- names(ga_data)[!(names(ga_data) %in% metrics)]
   
   date_col <- getColNameOfClass(ga_data, "Date")
   
@@ -48,7 +46,7 @@ aggregateGAData <- function(ga_data,
   date_selects <- lapply(c(agg_names, date_col), as.symbol)
   
   dots <- lapply(agg_names, as.symbol)
-  
+
   ## metrics to take mean as per mean_regex
   meanAgg <- ga_data %>%
     dplyr::select_(.dots = mean_selects) %>%
@@ -69,8 +67,8 @@ aggregateGAData <- function(ga_data,
   
   ## join up all the aggregations
   if(!is.null(agg_names)){
-    ga_agg <- dplyr::left_join(sumAgg, meanAgg, by = dimensions) %>%
-      dplyr::left_join(dateAgg, by = dimensions)
+    ga_agg <- dplyr::left_join(sumAgg, meanAgg, by = agg_names) %>%
+      dplyr::left_join(dateAgg, by = agg_names)
   } else {
     sumAgg  <- if(ncol(sumAgg) == 0) NULL else sumAgg
     meanAgg <- if(ncol(meanAgg) == 0) NULL else meanAgg
