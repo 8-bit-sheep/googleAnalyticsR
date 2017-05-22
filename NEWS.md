@@ -4,6 +4,7 @@
 * Fixed `anti_sample="auto"` math to actually limit the number of sessions for the auto-batches
 * Add warning if using default project, and if API quota is tripped (#79)
 * Fixed error when no data present in requested `date_range` for a view, and `max = -1`
+* refactor defensive checks from `testthat` to `assertthat
 
 # googleAnalyticsR 0.4.0
 
