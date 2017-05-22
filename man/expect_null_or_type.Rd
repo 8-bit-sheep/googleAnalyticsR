@@ -7,6 +7,6 @@
 expect_null_or_type(thing, type)
 }
 \description{
-wraps assertthat::assert_that to run if not NULL
+wraps testthat::expect_type() to run if not NULL
 }
 \keyword{internal}

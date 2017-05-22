@@ -9,13 +9,14 @@ Authors@R: c(person("Mark", "Edmondson",email = "m@sunholo.com",
              person(given = "Artem", family = "Klevtsov",
                     email = "a.a.klevtsov@gmail.com", role = "ctb"),
            person("Johann", "deBoer", email="johanndeboer@gmail.com", role = "ctb"),
-           person("Olivia", "Brode-Roger", email="nibr@mit.edu", role="ctb"))
+           person("Olivia", "Brode-Roger", email="nibr@mit.edu", role="ctb"), 
+           person("David", "Watkins", email = "wm.david.watkins@gmail.com", role="ctb"))
 URL: http://code.markedmondson.me/googleAnalyticsR/
 BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
 Depends:
     R (>= 3.2.0)
 Imports:
-    assertthat (>= 0.2.0),
+    bigQueryR (>= 0.2.0),
     dplyr (>= 0.5.0),
     googleAuthR (>= 0.5.1),
     httr (>= 1.2.1),
@@ -23,15 +24,14 @@ Imports:
     magrittr (>= 1.5),
     shiny (>= 0.13.2),
     tidyjson (>= 0.2.1),
+    testthat (>= 1.0.2),
     utils
 Suggests:
-    bigQueryR (>= 0.3.1),
-    covr,
-    googleCloudStorageR (>= 0.2.0),
     knitr,
-    miniUI (>= 0.1.1),
     rmarkdown,
-    testthat (>= 1.0.2)
+    googleCloudStorageR,
+    miniUI (>= 0.1.1),
+    covr
 License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr

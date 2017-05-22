@@ -124,8 +124,8 @@ make_ga_4_req <- function(viewId,
   }
   
   if(!is.null(cohorts)){
-    assertthat::assert_that(cohort_metric_check(metrics),
-                            cohort_dimension_check(dimensions))
+    testthat::expect_true(cohort_metric_check(metrics))
+    testthat::expect_true(cohort_dimension_check(dimensions))
     if(!is.null(date_range)){
       warning("Don't supply date_range when using cohorts, setting date_range to NULL")
       date_range <- NULL
@@ -352,7 +352,7 @@ google_analytics_4 <- function(viewId,
   ## if batching, get the rest of the results now we now precise rowCount
   if(allResults){
     all_rows <- as.integer(attr(out, "rowCount"))
-    if(nrow(out) < all_rows){
+    if(!is.null(out) && nrow(out) < all_rows){
       ## create the remaining requests
       meta_batch_start_index2 <- seq(from=50000, to=all_rows, by=reqRowLimit)
       ## make a list of the requests
@@ -507,7 +507,7 @@ fetch_google_analytics_4_slow <- function(request_list, max_rows, allRows = FALS
 #' @export
 fetch_google_analytics_4 <- function(request_list, merge = FALSE){
 
-  assertthat::assert_that(is.list(request_list))
+  testthat::expect_type(request_list, "list")
   ## amount of batches per v4 api call
   ga_batch_limit <- 5
   

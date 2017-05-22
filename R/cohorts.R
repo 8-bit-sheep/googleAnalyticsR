@@ -111,9 +111,8 @@ cohort_dimension_check <- function(dimensions){
 #' @export
 make_cohort_group <- function(cohorts, lifetimeValue=FALSE, cohort_types=NULL){
   
-  assertthat::assert_that(is.list(cohorts),
-                          is.named(cohorts),
-                          is.logical(lifetimeValue))
+  testthat::expect_type(cohorts, "list")
+  testthat::expect_named(cohorts)
   
   cs <- lapply(names(cohorts), function(x) {
     cohort(name = x, dateRange = date_ga4(cohorts[[x]]))
@@ -159,8 +158,8 @@ cohort <- function(name,
   
   type <- match.arg(type)
   
-  assertthat::assert_that(is.character(name),
-                          inherits(dateRange, "date_ga4"))
+  testthat::expect_type(name, "character")
+  testthat::expect_s3_class(dateRange, "date_ga4")
   
   structure(
     list(

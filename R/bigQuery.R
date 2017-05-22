@@ -39,6 +39,7 @@
 #' @seealso \url{https://support.google.com/analytics/answer/4419694?hl=en}
 #'          \url{https://support.google.com/analytics/answer/3437719?hl=en}
 #' 
+#' @import bigQueryR
 #' @export
 google_analytics_bq <- function(projectId,
                                 datasetId,
@@ -154,6 +155,7 @@ google_analytics_bq <- function(projectId,
 }
 
 #' Asynch fetch
+#' @import bigQueryR
 #' @keywords internal
 google_analytics_bq_asynch <- function(projectId,
                                        datasetId,
@@ -282,7 +284,7 @@ lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPat
 
 customDimensionMaker <- function(customDimensionIndex=paste0("dimension",1:200)){
   
-  assertthat::assert_that(is.character(customDimensionIndex))
+  testthat::expect_type(customDimensionIndex, "character")
   indexes <- grep("^dimension(.+)", customDimensionIndex)
   
   if(length(indexes) < 1) stop("Custom dimension specified but no custom dimensions found")
@@ -298,7 +300,7 @@ customDimensionMaker <- function(customDimensionIndex=paste0("dimension",1:200))
           
 customMetricMaker <- function(customMetricIndex=paste0("metric",1:200)){
   
-  assertthat::assert_that(is.character(customMetricIndex))
+  testthat::expect_type(customMetricIndex, "character")
   indexes <- grep("^metric(.+)", customMetricIndex)
   
   if(length(indexes) < 1) stop("No custom metrics found")

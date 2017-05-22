@@ -7,6 +7,7 @@ options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analyti
 library(googleAnalyticsR)
 library(bigQueryR)
 library(googleCloudStorageR)
+library(testthat)
 
 accountId <- 54019251
 webPropId <- "UA-54019251-4"
