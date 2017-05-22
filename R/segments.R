@@ -349,10 +349,10 @@ segment_element <- function(name,
   assertthat::assert_that(is.logical(not))
   expect_null_or_type(expressions, "character")
   expect_null_or_type(caseSensitive, "logical")  
-  expect_null_or_type(minComparisonValue, "double")  
-  expect_null_or_type(maxComparisonValue, "double")  
+  expect_null_or_type(minComparisonValue, "numeric")  
+  expect_null_or_type(maxComparisonValue, "numeric")  
   scope <- match.arg(scope)
-  expect_null_or_type(comparisonValue, "double")  
+  expect_null_or_type(comparisonValue, "numeric")  
   matchType <- match.arg(matchType)
   
   name <- sapply(name, checkPrefix, prefix = "ga")
