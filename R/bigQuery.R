@@ -160,6 +160,17 @@ google_analytics_bq_asynch <- function(projectId,
                                        query,
                                        bucket,
                                        download_file){
+  
+  if (!requireNamespace("bigQueryR", quietly = TRUE)) {
+    stop("bigQueryR needed for this function to work. Please install it via install.packages('bigQueryR')",
+         call. = FALSE)
+  }
+  
+  if (!requireNamespace("googleCloudStorageR", quietly = TRUE)) {
+    stop("googleCloudStorageR needed for this function to work. Please install it via install.packages('googleCloudStorageR')",
+         call. = FALSE)
+  }
+  
   time0 <- Sys.time()
   required_scopes <- c("https://www.googleapis.com/auth/devstorage.full_control", 
                        "https://www.googleapis.com/auth/cloud-platform")
