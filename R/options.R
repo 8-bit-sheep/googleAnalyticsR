@@ -17,7 +17,7 @@
   toset <- !(names(op.googleAnalyticsR) %in% names(op))
   
   if(any(toset)) options(op.googleAnalyticsR[toset])
-  
+  default_project_message()
   invisible()
   
 }

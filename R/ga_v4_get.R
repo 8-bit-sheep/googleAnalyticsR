@@ -271,8 +271,6 @@ google_analytics_4 <- function(viewId,
                                anti_sample_batches = "auto",
                                slow_fetch = FALSE){
   
-  default_project_message()
-  
   max         <- as.integer(max)
   allResults  <- FALSE
   if(max < 0){
