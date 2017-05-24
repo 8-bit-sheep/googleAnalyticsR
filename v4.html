@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -291,7 +291,7 @@ google_analytics_4(868768, date_range = c(3daysAgo, yesterday), metrics = &quot;
 <pre class="r"><code>google_analytics_4(868768, date_range = c(&quot;5daysAgo&quot;, &quot;yesterday&quot;), metrics = &quot;sessions&quot;)</code></pre>
 <div id="compare-date-ranges" class="section level3">
 <h3>Compare date ranges</h3>
-<p>New to v4 you can compare date ranges and return the two data sets in one call. Simply send in a 4-length vector of dates in the form <code>(range1_start, range1_end, range2_start, range3_end)</code></p>
+<p>New to v4 you can compare date ranges and return the two data sets in one call. Simply send in a 4-length vector of dates in the form <code>(range1_start, range1_end, range2_start, range2_end)</code></p>
 <pre class="r"><code>google_analytics_4(868768, 
                    date_range = c(&quot;16daysAgo&quot;, &quot;9daysAgo&quot;, &quot;8daysAgo&quot;, &quot;yesterday&quot;), 
                    metrics = &quot;sessions&quot;)</code></pre>
@@ -810,7 +810,7 @@ $(document).ready(function () {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
