@@ -3,8 +3,9 @@
 * Fix `attempt to set an attribute on NULL` error for anti-sample
 * Fixed `anti_sample="auto"` math to actually limit the number of sessions for the auto-batches
 * Add warning if using default project, and if API quota is tripped (#79)
-* refactor defensive checks from `testthat` to `assertthat
+* refactor defensive checks from `testthat` to `assertthat`
 * Fixed error when no data present in requested `date_range` for a view, and `max = -1`
+* Fix logic of `anti_sample_batches` to allow accurate day batches. (#74)
 
 # googleAnalyticsR 0.4.0
 
