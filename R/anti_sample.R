@@ -93,7 +93,7 @@ anti_sample <- function(anti_sample_batches,
     stopifnot(anti_sample_batches >= 1)
     asb <- as.integer(anti_sample_batches)
     date_col <- seq(date_range[1], date_range[2], by = 1)
-    sample_bucket <- as.factor((1:length(date_col) %/% asb) + 1)
+    sample_bucket <- as.factor((0:(length(date_col)-1) %/% asb) + 1) # 0 indexed lengths (#74)
     explore_sessions <- data.frame(date = date_col, sample_bucket = sample_bucket)
   }
   
