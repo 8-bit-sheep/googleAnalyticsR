@@ -1,12 +1,16 @@
+options(googleAuthR.mock_test = TRUE)
+options(googleAuthR.mock_package = "googleAnalyticsR")
+
+library(testthat)
+library(googleAnalyticsR)
+library(bigQueryR)
+library(googleCloudStorageR)
+
 options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
                                         "https://www.googleapis.com/auth/analytics.edit",
                                         "https://www.googleapis.com/auth/analytics.manage.users.readonly",
                                         "https://www.googleapis.com/auth/cloud-platform",
                                         "https://www.googleapis.com/auth/devstorage.full_control"))
-
-library(googleAnalyticsR)
-library(bigQueryR)
-library(googleCloudStorageR)
 
 accountId <- 54019251
 webPropId <- "UA-54019251-4"
