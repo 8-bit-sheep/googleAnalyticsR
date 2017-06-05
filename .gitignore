@@ -16,4 +16,4 @@ inst/doc
 .httr-oauth
 tests/testthat/httr-oauth.rds
 
-tests/testthat/tests/mock/
+tests/testthat/mock/

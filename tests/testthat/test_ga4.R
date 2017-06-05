@@ -1,5 +1,5 @@
 options(googleAuthR.mock_test = TRUE)
-options(googleAuthR.mock_package = "googleAnalyticsR")
+options(googleAuthR.cache_package = "googleAnalyticsR")
 
 library(testthat)
 library(googleAnalyticsR)
@@ -179,7 +179,7 @@ test_that("v3 multi account batching without flag", {
   
   skip_on_cran()
   multi <- google_analytics(c(ga_id, ga_id2),
-                            start = "2015-07-30", end = "2015-10-01",
+                            start = "2015-07-31", end = "2015-10-01",
                             dimensions=c('medium'), 
                             metrics = c('sessions'),
                             sort = "ga:sessions")
@@ -194,7 +194,7 @@ test_that("v3 multi account batching without flag", {
 test_that("v3 multi account batching with flag", {
   skip_on_cran()
   
-  multi <- google_analytics(c(ga_id, ga_id2),
+  multi <- google_analytics(c(ga_id2, ga_id),
                             start = "2015-07-30", end = "2015-10-01",
                             dimensions=c('medium'), 
                             metrics = c('sessions'),
