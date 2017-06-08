@@ -1,10 +1,13 @@
-options(googleAuthR.mock_test = TRUE)
+# options(googleAuthR.mock_test = TRUE)
+
 options(googleAuthR.cache_package = "googleAnalyticsR")
 
 library(testthat)
 library(googleAnalyticsR)
 library(bigQueryR)
 library(googleCloudStorageR)
+library(googleAuthR)
+gar_cache_set_loc("memory")
 
 options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
                                         "https://www.googleapis.com/auth/analytics.edit",
