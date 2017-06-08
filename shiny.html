@@ -337,545 +337,71 @@ selected_id &lt;- callModule(authDropdown, &quot;auth_menu&quot;, ga.table = ga_
 </div>
 <div id="v4-api-shiny-app" class="section level2">
 <h2>V4 API Shiny app</h2>
-<p>An example of a Shiny app is the <a href="https://mark.shinyapps.io/googleAnalyticsRv4Demo/">V4 API explorer</a>, this code is available in the package and at <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/tree/master/inst/shiny/ga4-example/ga4_demo">Github here</a></p>
+<p>An example of a Shiny app is shown below, that allows users to login in, select an account using the modules above, and then see their data via Highcharts</p>
 <p>The code for the explorer is included below:</p>
 <div id="ui.r" class="section level3">
 <h3>ui.R</h3>
-<pre class="r"><code>library(shiny)
+<pre class="r"><code>## ui.R
 library(googleAuthR)
 library(googleAnalyticsR)
-library(listviewer)
-library(testthat)
+library(shiny)
+library(highcharter)
 
-
-navbarPage(&quot;GA v4 API&quot;,
-           tabPanel(&quot;Setup&quot;, tabName = &quot;setup&quot;, icon = icon(&quot;cogs&quot;),
-                    h1(&quot;A tour of GA reporting API v4&quot;),
-                    helpText(&quot;A demonstration of some of the new features available over the traditional v3 API.&quot;),
-                    helpText(&quot;Start by logging in to your Google Analytics account.&quot;),
-                    googleAuthUI(&quot;login&quot;),
-                    authDropdownUI(&quot;auth_menu&quot;)
-           ),
-           tabPanel(&quot;Segments&quot;, tabName = &quot;segments&quot;, icon = icon(&quot;object-group&quot;),
-                    fluidRow(
-                      column(width = 8, offset = 2,
-                             h2(&quot;Segment setup&quot;),
-                             segmentBuilderUI(&quot;demo_segments&quot;)
-                      )
-                    ),
-                    fluidRow(
-                      column(width = 8, offset = 2,
-                             h2(&quot;GA Data to Segment&quot;),
-                             multi_selectUI(&quot;metric_seg&quot;, &quot;Metric&quot;, width = &quot;100%&quot;),
-                             multi_selectUI(&quot;dim_seg&quot;, &quot;Dimensions&quot;, width = &quot;100%&quot;),
-                             dateRangeInput(&quot;date_seg&quot;, &quot;Date Range&quot;, start = Sys.Date() - 30, width = &quot;100%&quot;),
-                             helpText(&quot;Segments are more in line to what can be configured in the GA interface.&quot;),
-                             helpText(&quot;They are a lot more powerful, but complex to configure.&quot;),
-                             actionButton(&quot;get_seg&quot;, &quot;Fetch Segment Data&quot;, icon = icon(&quot;download&quot;), class = &quot;btn-success&quot;),
-                             hr(),
-                             h2(&quot;Results&quot;),
-                             dataTableOutput(&quot;segment_table&quot;),
-                             hr(),
-                             h2(&quot;JSON API object&quot;),
-                             helpText(&quot;The JSON object for segments is shown below for reference.&quot;),
-                             jsoneditOutput(&quot;segment_object&quot;)
-                      ))),
-           tabPanel(&quot;Calculated Metrics&quot;, tabName = &quot;calc_metrics&quot;, icon = icon(&quot;calculator&quot;),
-                    h2(&quot;Calculated Metrics&quot;),
-                    fluidRow(
-                      column(width = 6,
-                             textInput(&quot;calculated_name&quot;, label = &quot;Calculated Name&quot;, value = &quot;Sessions Per Pageview&quot;)
-                      ),
-                      column(width = 6,
-                             textInput(&quot;calculated_exp&quot;, label = &quot;Calculated Expression&quot;, value = &quot;ga:sessions / ga:pageviews&quot;)   
-                      )
-                    ),
-                    fluidRow(
-                      column(width = 6,
-                             multi_selectUI(&quot;metric_calc&quot;, &quot;Normal Metrics&quot;)     
-                      ),
-                      column(width = 6,
-                             multi_selectUI(&quot;dim_calc&quot;, &quot;Dimensions&quot;)  
-                      )
-                    ),
-                    fluidRow(
-                      column(width = 6,
-                             dateRangeInput(&quot;date_clac&quot;, &quot;Date Range&quot;) 
-                      ),
-                      column(width = 6,
-                             br()
-                      )
-                    ),
-                    helpText(&quot;Calculated metrics let you create your own metrics on the fly&quot;),
-                    actionButton(&quot;get_calc&quot;, &quot;Fetch Calculated Metric data&quot;, icon = icon(&quot;download&quot;), class = &quot;btn-success&quot;),
-                    hr(),
-                    h2(&quot;Results&quot;),
-                    dataTableOutput(&quot;calc_table&quot;),
-                    hr(),
-                    h2(&quot;JSON API object&quot;),
-                    helpText(&quot;The JSON object for calculated metrics is shown below for reference.&quot;),
-                    jsoneditOutput(&quot;calc_object&quot;)
-           ),
-           tabPanel(&quot;Pivots&quot;, tabName = &quot;pivots&quot;, icon = icon(&quot;sort-amount-desc&quot;),
-                    h2(&quot;Pivots&quot;),
-                    fluidRow(
-                      column(width = 6,
-                             multi_selectUI(&quot;metric_pivot&quot;, &quot;Metric&quot;)   
-                      ),
-                      column(width = 6,
-                             multi_selectUI(&quot;dim_pivot&quot;, &quot;Dimensions&quot;)   
-                      )
-                    ),
-                    fluidRow(
-                      column(width = 6,
-                             dateRangeInput(&quot;date_pivot&quot;, &quot;Date Range&quot;) 
-                      ),
-                      column(width = 6,
-                             br() 
-                      )
-                    ),
-                    fluidRow(
-                      column(width = 6,
-                             multi_selectUI(&quot;metric_pivot2&quot;, &quot;Pivot Metric&quot;) 
-                      ),
-                      column(width = 6,
-                             multi_selectUI(&quot;dim_pivot2&quot;, &quot;Pivot Dimension&quot;)  
-                      )
-                      
-                    ),
-                    
-                    helpText(&quot;Pivot fetches reshape the data you can fetch from the API. Useful for making &#39;long&#39; data &#39;wide&#39;, it means you don&#39;t have to perform more data transformation yourself.&quot;),
-                    helpText(&quot;Examples include breaking out traffic sources per column, or event labels per category.&quot;),
-                    actionButton(&quot;get_pivot&quot;, &quot;Fetch Pivot Data&quot;, icon = icon(&quot;download&quot;), class = &quot;btn-success&quot;),
-                    hr(),
-                    h2(&quot;Results&quot;),
-                    dataTableOutput(&quot;pivot_table&quot;),
-                    hr(),
-                    h2(&quot;JSON API object&quot;),
-                    helpText(&quot;The JSON object for pivots is shown below for reference.&quot;),
-                    jsoneditOutput(&quot;pivot_object&quot;)
-           ),
-           tabPanel(&quot;Multiple Dates&quot;, tabName = &quot;multi_dates&quot;, icon = icon(&quot;calendar&quot;),
-                    h2(&quot;Multiple Dates&quot;),
-                    fluidRow(
-                      column(width = 6,
-                             multi_selectUI(&quot;metric_md&quot;, &quot;Metric&quot;)
-                      ),
-                      column(width = 6,
-                             multi_selectUI(&quot;dim_md&quot;, &quot;Dimensions&quot;)
-                      )
-                    ),
-                    fluidRow(
-                      column(width = 6,
-                             dateRangeInput(&quot;date1_md&quot;, &quot;Date Range 1&quot;, start = Sys.Date() - 30)   
-                      ),
-                      column(width = 6,
-                             dateRangeInput(&quot;date2_md&quot;, &quot;Date Range 2&quot;, start = Sys.Date() - 60, end = Sys.Date() - 31)
-                      )
-                      
-                    ),
-                    
-                    helpText(&quot;Multiple date range fetches let you do direct comparisons without needing two API calls.&quot;),
-                    actionButton(&quot;get_md&quot;, &quot;Fetch Multidate Data&quot;, icon = icon(&quot;download&quot;), class = &quot;btn-success&quot;),
-                    hr(),
-                    h2(&quot;Results&quot;),
-                    dataTableOutput(&quot;md_table&quot;),
-                    hr(),
-                    h2(&quot;JSON API object&quot;),
-                    helpText(&quot;The JSON object for multi-date is shown below for reference.&quot;),
-                    jsoneditOutput(&quot;md_object&quot;)
-           ),
-           tabPanel(&quot;Cohorts&quot;, tabName = &quot;cohorts&quot;, icon = icon(&quot;users&quot;),
-                    h2(&quot;Cohorts&quot;),
-                    fluidRow(
-                      column(width = 6,
-                             multi_selectUI(&quot;metric_coh&quot;, &quot;Metric&quot;)  
-                      ),
-                      column(width = 6,
-                             multi_selectUI(&quot;dim_coh&quot;, &quot;Dimensions&quot;)  
-                      )
-                    ),
-                    fluidRow(
-                      column(width = 6,
-                             textInput(&quot;coh1&quot;, label = &quot;Cohort 1 Name&quot;, value = &quot;Cohort 1&quot;)     
-                      ),
-                      column(width = 6,
-                             dateRangeInput(&quot;date_coh1&quot;, &quot;Cohort 1 Range&quot;, start = Sys.Date() - 30, end = Sys.Date())
-                      )
-                    ),
-                    fluidRow(
-                      column(width = 6,
-                             textInput(&quot;coh2&quot;, label = &quot;Cohort 2 Name&quot;, value = &quot;Cohort 2&quot;)
-                      ),
-                      column(width = 6,
-                             dateRangeInput(&quot;date_coh2&quot;, &quot;Cohort 2 Range&quot;, start = Sys.Date() - 60, end = Sys.Date() - 30)
-                      )
-                    ),
-                    fluidRow(
-                      column(width = 6,
-                             textInput(&quot;coh3&quot;, label = &quot;Cohort 3 Name&quot;, value = &quot;Cohort 3&quot;)
-                      ),
-                      column(width = 6,
-                             dateRangeInput(&quot;date_coh3&quot;, &quot;Cohort 3 Range&quot;, start = Sys.Date() - 90, end = Sys.Date() - 60) 
-                      )
-                    ),
-                    fluidRow(
-                      column(width = 6,
-                             textInput(&quot;coh4&quot;, label = &quot;Cohort 4 Name&quot;, value = &quot;Cohort 4&quot;)   
-                      ),
-                      column(width = 6,
-                             dateRangeInput(&quot;date_coh4&quot;, &quot;Cohort 4 Range&quot;, start = Sys.Date() - 120, end = Sys.Date() - 90)
-                      )
-                    ),
-                    helpText(&quot;Cohorts are unique to the v4 API, letting you examine user behaviour as it changes over time.&quot;),
-                    actionButton(&quot;get_cohort&quot;, &quot;Fetch Cohorts Data&quot;, icon = icon(&quot;download&quot;), class = &quot;btn-success&quot;),
-                    hr(),
-                    h2(&quot;Results&quot;),
-                    dataTableOutput(&quot;cohort_table&quot;),
-                    hr(),
-                    h2(&quot;JSON API object&quot;),
-                    helpText(&quot;The JSON object for cohorts is shown below for reference.&quot;),
-                    jsoneditOutput(&quot;cohort_object&quot;)
-           ),
-           helpText(&quot;Copyright 2016 Sunholo Ltd. Released under MIT license.&quot;),
-           helpText(&quot;Created using R, Shiny and &quot;, a(href = &quot;http://code.markedmondson.me/googleAnalyticsR&quot;, &quot;googleAnalyticsR&quot;)),
-           helpText(a(href = &quot;http://code.markedmondson.me&quot;, &quot;Blog&quot;),&quot; | &quot;, a(href = &quot;http://twitter.com/HoloMarkeD&quot;, &quot;@HoloMarkeD&quot;))
-)
-</code></pre>
+shinyUI(
+  fluidPage(
+    googleAuthUI(&quot;login&quot;),
+    authDropdownUI(&quot;auth_menu&quot;),
+    highchartOutput(&quot;something&quot;)
+    
+  ))</code></pre>
 </div>
 <div id="server.r" class="section level3">
 <h3>server.R</h3>
-<pre class="r"><code>library(shiny)
+<pre class="r"><code>## in server.R
 library(googleAuthR)
 library(googleAnalyticsR)
-library(listviewer)
+library(shiny)
+library(highcharter)
 
-## this is set before you launch the app, 
-## as the default local port is 1221
-## change this to the port you use if on your own Google project keys
-options(shiny.port = 1221)
-options(googleAuthR.webapp.client_id = &quot;289759286325-42j8nmkeq5n9v9eb1kiuj2i97v9oea1f.apps.googleusercontent.com&quot;)
-options(googleAuthR.webapp.client_secret = &quot;0zBtmZ_klTEzXUaTUTP5AkNQ&quot;)
-options(googleAuthR.scopes.selected = c(&quot;https://www.googleapis.com/auth/analytics.readonly&quot;))
-
-shinyServer(function(input, output, session){
+function(input, output, session){
   
-  #####--------- Setup
-  
+  ## Get auth code from return URL
   token &lt;- callModule(googleAuth, &quot;login&quot;)
   
   ga_accounts &lt;- reactive({
-    validate(
-      need(token(), &quot;Authenticate&quot;)
-    )
+    req(token())
     
-    with_shiny(google_analytics_account_list, shiny_access_token = token())
+    with_shiny(ga_account_list, shiny_access_token = token())
+    
   })
   
   selected_id &lt;- callModule(authDropdown, &quot;auth_menu&quot;, ga.table = ga_accounts)
   
-  #####--------- Segments
-  
-  segment_built &lt;- callModule(segmentBuilder, &quot;demo_segments&quot;)
-  
-  segment_metrics &lt;- callModule(multi_select, &quot;metric_seg&quot;, type = &quot;METRIC&quot;, subType = &quot;segment&quot;)
-  segment_dims &lt;- callModule(multi_select, &quot;dim_seg&quot;, type = &quot;DIMENSION&quot;, subType = &quot;segment&quot;)
-  
-  segment_data &lt;- eventReactive(input$get_seg, {
+  gadata &lt;- reactive({
     
-    viewId &lt;- selected_id()
-    metrics &lt;- segment_metrics()
-    dims &lt;- c(&quot;ga:segment&quot;, segment_dims())
-    dates &lt;- input$date_seg
-    segment_built &lt;- segment_built()
+    req(selected_id())
+    gaid &lt;- selected_id()
+    with_shiny(google_analytics,
+               id = gaid,
+               start=&quot;2015-08-01&quot;, end=&quot;2017-08-02&quot;, 
+               metrics = c(&quot;sessions&quot;), 
+               dimensions = c(&quot;date&quot;),
+               shiny_access_token = token())
+  })
+  
+  output$something &lt;- renderHighchart({
     
-    with_shiny(google_analytics_4,
-               shiny_access_token = token(),
-               viewId = viewId,
-               date_range = c(dates[1], dates[2]),
-               metrics = metrics,
-               dimensions = dims,
-               segments = segment_built)
+    ## only trigger once authenticated
+    req(gadata())
+    
+    gadata &lt;- gadata()
+    
+    ## creates a line chart using highcharts
+    hchart(gadata, &quot;line&quot; , hcaes(x = date, y = sessions))
     
   })
   
-  output$segment_table &lt;- renderDataTable({
-    
-    segment_data()
-    
-  })
-  
-  output$segment_object &lt;- renderJsonedit({
-    
-    jsonedit(
-      as.list( segment_built() )
-      ,&quot;change&quot; = htmlwidgets::JS(&#39;function(){
-                                  console.log( event.currentTarget.parentNode.editor.get() )
-  }&#39;)
-    )
-    
-    
-    
-})
-  
-  #####--------- Cohorts
-  
-  cohort_metrics &lt;- callModule(multi_select, &quot;metric_coh&quot;, 
-                               type = &quot;METRIC&quot;, 
-                               subType = &quot;cohort&quot;)
-  
-  cohort_dims &lt;- callModule(multi_select, &quot;dim_coh&quot;, 
-                            type = &quot;DIMENSION&quot;, 
-                            subType = &quot;cohort&quot;, 
-                            default = &quot;ga:cohort&quot;)
-  
-  cohort_built &lt;- reactive({
-    
-    coh_d1 &lt;- as.character(input$date_coh1)
-    coh_d2 &lt;- as.character(input$date_coh2)    
-    coh_d3 &lt;- as.character(input$date_coh3)
-    coh_d4 &lt;- as.character(input$date_coh4)
-    coh1 &lt;- input$coh1
-    coh2 &lt;- input$coh2
-    coh3 &lt;- input$coh3
-    coh4 &lt;- input$coh4
-    
-    c_list &lt;- list(c(coh_d1[1], coh_d1[2]),
-                   c(coh_d2[1], coh_d2[2]),
-                   c(coh_d3[1], coh_d3[2]),
-                   c(coh_d4[1], coh_d4[2]))
-    names(c_list) &lt;-  c(coh1, coh2, coh3, coh4)
-    
-    make_cohort_group(c_list)
-    
-  })
-  
-  cohort_data &lt;- eventReactive(input$get_cohort, {
-    
-    viewId &lt;- selected_id()
-    metrics &lt;- cohort_metrics()
-    dims &lt;- cohort_dims()
-    cohort_built &lt;- cohort_built()
-    
-    with_shiny(google_analytics_4,
-               shiny_access_token = token(),
-               viewId = viewId,
-               metrics = metrics,
-               dimensions = dims,
-               cohort = cohort_built)
-    
-  })
-  
-  output$cohort_table &lt;- renderDataTable({
-    
-    cohort_data()
-    
-  })
-  
-  output$cohort_object &lt;- renderJsonedit({
-    
-    jsonedit(
-      as.list( cohort_built() )
-      ,&quot;change&quot; = htmlwidgets::JS(&#39;function(){
-                                  console.log( event.currentTarget.parentNode.editor.get() )
-  }&#39;)
-    )
-    
-    
-    
-})
-  
-  #####--------- Multi-date
-  
-  md_metrics &lt;- callModule(multi_select, &quot;metric_md&quot;, type = &quot;METRIC&quot;, subType = &quot;all&quot;)
-  md_dims &lt;- callModule(multi_select, &quot;dim_md&quot;, type = &quot;DIMENSION&quot;, subType = &quot;all&quot;)
-  
-  md_data &lt;- eventReactive(input$get_md, {
-    
-    viewId &lt;- selected_id()
-    metrics &lt;- md_metrics()
-    dims &lt;- md_dims()
-    dates1 &lt;- input$date1_md
-    dates2 &lt;- input$date2_md
-    
-    with_shiny(google_analytics_4,
-               shiny_access_token = token(),
-               viewId = viewId,
-               date_range = c(dates1[1], dates1[2], dates2[1], dates2[2]),
-               metrics = metrics,
-               dimensions = dims)
-    
-  })
-  
-  output$md_table &lt;- renderDataTable({
-    
-    md_data()
-    
-  })
-  
-  md_object &lt;- reactive({
-    
-    viewId &lt;- selected_id()
-    metrics &lt;- md_metrics()
-    dims &lt;- md_dims()
-    dates1 &lt;- input$date1_md
-    dates2 &lt;- input$date2_md
-    
-    out &lt;- make_ga_4_req(google_analytics_4,
-                         viewId = viewId,
-                         date_range = c(dates1[1], dates1[2], dates2[1], dates2[2]),
-                         metrics = metrics,
-                         dimensions = dims)
-    out$dimensionFilterClauses &lt;- NULL
-    out
-    
-  })
-  
-  output$md_object &lt;- renderJsonedit({
-    
-    jsonedit(
-      as.list( md_object() )
-      ,&quot;change&quot; = htmlwidgets::JS(&#39;function(){
-                                  console.log( event.currentTarget.parentNode.editor.get() )
-  }&#39;)
-    )
-    
-    
-    
-})
-  
-  #####--------- Pivots 
-  
-  pv_metrics &lt;- callModule(multi_select, &quot;metric_pivot&quot;, type = &quot;METRIC&quot;, subType = &quot;all&quot;) 
-  
-  pv_dims &lt;- callModule(multi_select, &quot;dim_pivot&quot;, 
-                        type = &quot;DIMENSION&quot;, 
-                        subType = &quot;all&quot;, 
-                        default = &quot;ga:source&quot;)
-  
-  pv_metrics2 &lt;- callModule(multi_select, &quot;metric_pivot2&quot;, type = &quot;METRIC&quot;, subType = &quot;all&quot;)
-  
-  pv_dims2 &lt;- callModule(multi_select, &quot;dim_pivot2&quot;, 
-                         type = &quot;DIMENSION&quot;, 
-                         subType = &quot;all&quot;,
-                         default = &quot;ga:medium&quot;)
-  
-  pivot_object &lt;- reactive({
-    
-    
-    pv_metrics2 &lt;- pv_metrics2()
-    pv_dims2 &lt;- pv_dims2()
-    
-    pivot_ga4(pv_dims2, pv_metrics2)
-    
-  })
-  
-  pivot_data &lt;- eventReactive(input$get_pivot,{
-    
-    viewId &lt;- selected_id()
-    metrics &lt;- pv_metrics() 
-    dims &lt;- pv_dims()
-    dates &lt;- input$date_pivot
-    pivot_object &lt;- pivot_object()
-    
-    with_shiny(google_analytics_4,
-               shiny_access_token = token(),
-               viewId = viewId,
-               date_range = c(dates[1], dates[2]),
-               metrics = metrics,
-               dimensions = dims,
-               pivots = list(pivot_object))
-    
-    
-  })
-  
-  output$pivot_table &lt;- renderDataTable({
-    
-    pivot_data()
-    
-  })
-  
-  output$pivot_object &lt;- renderJsonedit({
-    
-    jsonedit(
-      as.list( pivot_object() )
-      ,&quot;change&quot; = htmlwidgets::JS(&#39;function(){
-                                  console.log( event.currentTarget.parentNode.editor.get() )
-  }&#39;)
-    )
-    
-    
-    
-})
-  
-  #####--------- Calculated Metrics
-  
-  calc_dim &lt;- callModule(multi_select, &quot;dim_calc&quot;, type = &quot;DIMENSION&quot;, subType = &quot;all&quot;)
-  calc_met &lt;- callModule(multi_select, &quot;metric_calc&quot;, type = &quot;METRIC&quot;, subType = &quot;all&quot;)
-  
-  calc_data &lt;- eventReactive(input$get_calc, {
-    
-    viewId &lt;- selected_id()
-    dims &lt;- calc_dim()
-    dates &lt;- input$date_clac
-    metric_name &lt;- gsub(&quot; &quot;, &quot;&quot;, input$calculated_name)
-    metric_exp &lt;- input$calculated_exp
-    normal_metrics &lt;- calc_met()
-    
-    exp_metrics &lt;- setNames(metric_exp, metric_name)
-    metrics &lt;- c(exp_metrics, normal_metrics)
-    
-    with_shiny(google_analytics_4,
-               shiny_access_token = token(),
-               viewId = viewId,
-               date_range = c(dates[1], dates[2]),
-               metrics = metrics,
-               dimensions = dims)
-    
-    
-  })
-  
-  output$calc_table &lt;- renderDataTable({
-    
-    calc_data()
-    
-  })
-  
-  calc_object &lt;- reactive({
-    
-    viewId &lt;- selected_id()
-    dims &lt;- calc_dim()
-    dates &lt;- input$date_clac
-    metric_name &lt;- gsub(&quot; &quot;, &quot;&quot;, input$calculated_name)
-    metric_exp &lt;- input$calculated_exp
-    normal_metrics &lt;- calc_met()
-    
-    exp_metrics &lt;- setNames(metric_exp, metric_name)
-    metrics &lt;- c(exp_metrics, normal_metrics)
-    
-    make_ga_4_req(viewId = viewId,
-                  date_range = c(dates[1], dates[2]),
-                  metrics = metrics,
-                  dimensions = dims)
-    
-  })
-  
-  output$calc_object &lt;- renderJsonedit({
-    
-    jsonedit(
-      as.list( calc_object() )
-      ,&quot;change&quot; = htmlwidgets::JS(&#39;function(){
-                                  console.log( event.currentTarget.parentNode.editor.get() )
-  }&#39;)
-    )
-    
-    
-    
-  })
-  
-  
-  })
-</code></pre>
+}</code></pre>
 </div>
 </div>
 

@@ -7,3 +7,4 @@
 
 
 tests/testthat/httr-oauth.rds
+tests/testthat/mock
