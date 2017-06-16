@@ -134,9 +134,6 @@ get_samplePercent <- function(sampleReadCounts, samplingSpaceSizes){
 #' New parse GA account summary
 #' 
 #' @param x The account summary items
-#' @import tidyjson
-#' @importFrom jsonlite toJSON
-#' @importFrom dplyr select filter
 #' @keywords internal
 parse_ga_account_summary <- function(x){
   

@@ -6,6 +6,7 @@
 * refactor defensive checks from `testthat` to `assertthat`
 * Fixed error when no data present in requested `date_range` for a view, and `max = -1`
 * Fix logic of `anti_sample_batches` to allow accurate day batches. (#74)
+* Fix parsing of `ga_account_summary` broken by upgrade from `dplyr 0.5.0` > `dplyr 0.7.0`
 
 # googleAnalyticsR 0.4.0
 
