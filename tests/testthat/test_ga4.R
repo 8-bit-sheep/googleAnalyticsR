@@ -7,7 +7,7 @@ library(googleAnalyticsR)
 library(bigQueryR)
 library(googleCloudStorageR)
 library(googleAuthR)
-gar_cache_set_loc("memory")
+gar_cache_set_loc("mock")
 
 options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
                                         "https://www.googleapis.com/auth/analytics.edit",
@@ -43,14 +43,7 @@ test_that("Auth check", {
   expect_s3_class(googleAuthR::gar_auth("httr-oauth.rds"), "Token2.0")
 })
 
-context("Accounts")
 
-test_that("Get the account summary list", {
-  skip_on_cran()
-  al <- ga_account_list()
-  expect_s3_class(al, "data.frame")
-  
-})
 
 test_that("Get the account list", {
   skip_on_cran()

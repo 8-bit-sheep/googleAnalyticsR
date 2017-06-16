@@ -140,35 +140,20 @@ get_samplePercent <- function(sampleReadCounts, samplingSpaceSizes){
 #' @keywords internal
 parse_ga_account_summary <- function(x){
   
-  json_accounts <- jsonlite::toJSON(x$items)
-  class(json_accounts) <- c(class(json_accounts), "character")
-  tidy_json <- json_accounts %>% as.tbl_json()
+  x$items %>%
+    dplyr::mutate_if(is.list, simplify_all) %>%    # flatten each list element internally 
+    dplyr::transmute(accountId = id,
+                     accountName = name,
+                     webProperties = webProperties) %>% 
+    tidyr::unnest() %>% ##unnest webprops
+    dplyr::mutate(webPropertyId = id,
+                  webPropertyName = name) %>% 
+    dplyr::select(-kind, -id, -name) %>% 
+    tidyr::unnest() %>% ## unnest profiles
+    dplyr::mutate(viewId = id,
+                  viewName = name) %>% 
+    dplyr::select(-kind, -id, -name)
   
-  tidy_json <- tidy_json %>% 
-    json_lengths() %>% filter(length != 0) %>% select(-length) %>%
-    gather_array() %>% 
-    spread_values(accountId = jstring("id"), 
-                  accountName = jstring("name")) %>%
-    enter_object("webProperties") %>%
-    json_lengths() %>% filter(length != 0) %>% select(-length) %>%
-    gather_array() %>%
-    spread_values(webPropertyId = jstring("id"), 
-                  webPropertyName = jstring("name"),
-                  internalWebPropertyId = jstring("internalWebPropertyId"),
-                  level = jstring("level"),
-                  websiteUrl = jstring("websiteUrl")) %>%
-    enter_object("profiles") %>%
-    json_lengths() %>% filter(length != 0) %>% select(-length) %>%
-    gather_array() %>%
-    spread_values(viewId = jstring("id"), 
-                  viewName = jstring("name"),
-                  type = jstring("type"),
-                  starred = jstring("starred"))
-  
-  ## remove tidyjson artifacts, drop for issue #41 and #52
-  out <- tidy_json[,setdiff(names(tidy_json), c("document.id","array.index")), drop = FALSE]
-  
-  out
 }
 
 
