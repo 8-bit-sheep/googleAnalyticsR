@@ -4,7 +4,7 @@
 #' @param subType to restrict to only those in this type
 #' @param callAPI This will update the meta table (Requires online authorization)
 #' 
-#' This is useful to expand goalXCompletions to all the possiblilties,
+#' This is useful to expand goalXCompletions to all the possibilities,
 #'   as well as restricting to those that variables that work with your API call.
 #' 
 #' Use internal meta table, but you have option to update to the latest version.

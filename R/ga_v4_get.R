@@ -399,7 +399,7 @@ google_analytics_4 <- function(viewId,
 
 #' Fetch GAv4 requests one at a time
 #' 
-#' Due to large compilcated queries causing the v4 API to timeout, 
+#' Due to large complicated queries causing the v4 API to timeout, 
 #'   this option is added to fetch via the more traditional one report per request
 #' 
 #' @param request_list A list of requests created by \link{make_ga_4_req}
