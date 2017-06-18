@@ -138,7 +138,7 @@ get_samplePercent <- function(sampleReadCounts, samplingSpaceSizes){
 parse_ga_account_summary <- function(x){
   
   x$items %>%
-    dplyr::mutate_if(is.list, simplify_all) %>%    # flatten each list element internally 
+    dplyr::mutate_if(is.list, purrr::simplify_all) %>%    # flatten each list element internally 
     dplyr::transmute(accountId = id,
                      accountName = name,
                      webProperties = webProperties) %>% 

@@ -1,13 +1,8 @@
-# options(googleAuthR.mock_test = TRUE)
-
-options(googleAuthR.cache_package = "googleAnalyticsR")
-
 library(testthat)
 library(googleAnalyticsR)
-library(bigQueryR)
-library(googleCloudStorageR)
 library(googleAuthR)
-gar_cache_set_loc("mock")
+
+googleAuthR::gar_cache_setup("googleAnalyticsR", location = "mock")
 
 options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
                                         "https://www.googleapis.com/auth/analytics.edit",
@@ -23,27 +18,10 @@ accountId2 <- 47480439
 webPropId2 <- "UA-47480439-2"
 ga_id2 <- 81416156
 
-context("Authentication")
+# when not mocking
+# googleAuthR::gar_auth()
 
-test_that("Scopes all set correctly", {
-  
-  scopes <- getOption("googleAuthR.scopes.selected")
-  
-  expect_equal(scopes, c("https://www.googleapis.com/auth/analytics",
-                         "https://www.googleapis.com/auth/analytics.edit",
-                         "https://www.googleapis.com/auth/analytics.manage.users.readonly",
-                         "https://www.googleapis.com/auth/cloud-platform",
-                         "https://www.googleapis.com/auth/devstorage.full_control"))
-  
-})
-
-test_that("Auth check", {
-  skip_on_cran()
-  options(googleAuthR.httr_oauth_cache = "httr-oauth.rds")
-  expect_s3_class(googleAuthR::gar_auth("httr-oauth.rds"), "Token2.0")
-})
-
-
+context("Accounts")
 
 test_that("Get the account list", {
   skip_on_cran()
@@ -52,6 +30,16 @@ test_that("Get the account list", {
   expect_equal(al$kind, "analytics#accounts")
   
 })
+
+
+
+test_that("Get the account summary list", {
+  skip_on_cran()
+  al <- ga_account_list()
+  expect_s3_class(al, "data.frame")
+  
+})
+
 
 context("Webproperties")
 
