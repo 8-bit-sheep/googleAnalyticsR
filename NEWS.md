@@ -1,4 +1,4 @@
-# googleAnalyticsR 0.4.0.9000
+# googleAnalyticsR 0.4.1
 
 * Fix `attempt to set an attribute on NULL` error for anti-sample
 * Fixed `anti_sample="auto"` math to actually limit the number of sessions for the auto-batches
