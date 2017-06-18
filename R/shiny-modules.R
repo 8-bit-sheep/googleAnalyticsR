@@ -9,7 +9,6 @@
 #'   Shiny Module for use with \link{authDropdown}.
 #'   
 #'   
-#' @import shiny
 #' @return Shiny UI
 #' @family Shiny modules
 #' @export
