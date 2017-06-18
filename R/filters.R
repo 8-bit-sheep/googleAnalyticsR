@@ -114,7 +114,7 @@ ga_filter_list <- function(accountId){
 #' @param operator combination of filter.
 #'
 #' @details If you have dimension and metric filters,
-#'   make the clauses in two seperate calls, then pass the objects to \link{make_ga_4_req}
+#'   make the clauses in two separate calls, then pass the objects to \link{make_ga_4_req}
 #'
 #'
 #' @return An object of class \code{dim_fil_ga4} or \code{met_fil_ga4} 

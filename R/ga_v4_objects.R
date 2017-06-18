@@ -116,7 +116,7 @@ metric_ga4 <- function(vector, metricFormat=NULL){
 #'
 #' @return A order_type_ga4 object for use in GAv4 fetch
 #'
-#' @details For multiple order sorting, create seperate OrderType objects to pass
+#' @details For multiple order sorting, create separate OrderType objects to pass
 #'
 #' @export
 order_type <- function(field,
