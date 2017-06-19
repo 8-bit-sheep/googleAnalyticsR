@@ -658,7 +658,7 @@ sequenceSegment <- function(segmentSequenceStepList, firstStepMatch=FALSE){
 #' segmentSequenceStep
 #'
 #' @param orFiltersForSegmentList A list of \link{orFiltersForSegment}
-#' @param matchType Should it precede or immediatley precede the next step
+#' @param matchType Should it precede or immediately precede the next step
 #' 
 #' @return segmentSequenceStep object
 #' 

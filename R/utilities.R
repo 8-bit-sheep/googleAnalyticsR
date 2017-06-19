@@ -107,7 +107,7 @@ checkPrefix <- function(x, prefix=c("ga", "mcf")){
   if(grepl(prefix_reg, x)) x else paste0(prefix,":",x)
 }
 
-#' Add name of list entry of dataframe to dataframe colum
+#' Add name of list entry of dataframe to dataframe column
 #'
 #' @keywords internal
 listNameToDFCol <- function(named_list, colName = "listName"){

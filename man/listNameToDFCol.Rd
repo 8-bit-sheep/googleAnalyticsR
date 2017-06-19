@@ -2,11 +2,11 @@
 % Please edit documentation in R/utilities.R
 \name{listNameToDFCol}
 \alias{listNameToDFCol}
-\title{Add name of list entry of dataframe to dataframe colum}
+\title{Add name of list entry of dataframe to dataframe column}
 \usage{
 listNameToDFCol(named_list, colName = "listName")
 }
 \description{
-Add name of list entry of dataframe to dataframe colum
+Add name of list entry of dataframe to dataframe column
 }
 \keyword{internal}
