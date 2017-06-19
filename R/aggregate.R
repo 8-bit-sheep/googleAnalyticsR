@@ -51,19 +51,19 @@ aggregateGAData <- function(ga_data,
   meanAgg <- ga_data %>%
     dplyr::select_(.dots = mean_selects) %>%
     dplyr::group_by_(.dots=dots) %>%
-    dplyr::summarise_each(dplyr::funs(mean(., na.rm = TRUE))) %>% dplyr::ungroup()
+    dplyr::summarise_all(dplyr::funs(mean(., na.rm = TRUE))) %>% dplyr::ungroup()
   
   ## metrics to sum over
   sumAgg <- ga_data %>%
     dplyr::select_(.dots = sum_selects) %>%
     dplyr::group_by_(.dots=dots) %>%
-    dplyr::summarise_each(dplyr::funs(sum(., na.rm = TRUE))) %>% dplyr::ungroup()
+    dplyr::summarise_all(dplyr::funs(sum(., na.rm = TRUE))) %>% dplyr::ungroup()
   
   ## date dimensions take the first entry
   dateAgg <- ga_data %>%
     dplyr::select_(.dots = date_selects) %>%
     dplyr::group_by_(.dots=dots) %>%
-    dplyr::summarise_each(dplyr::funs(min(., na.rm = TRUE))) %>% dplyr::ungroup()
+    dplyr::summarise_all(dplyr::funs(min(., na.rm = TRUE))) %>% dplyr::ungroup()
   
   ## join up all the aggregations
   if(!is.null(agg_names)){

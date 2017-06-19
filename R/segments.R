@@ -30,7 +30,7 @@ ga_segment_list <- function(){
 #' @return a segmentFilter object. You can pass a list of these to the request.
 #' 
 #' @details 
-#' \code{segment_ga4} is the top hierarchyof segment creation, for which you will also need:
+#' \code{segment_ga4} is the top hierarchy of segment creation, for which you will also need:
 #' \itemize{
 #'  \item \link{segment_define} : AND combination of segmentFilters
 #'  \item \link{segment_vector_simple} or \link{segment_vector_sequence}
@@ -175,7 +175,7 @@ segment_ga4 <- function(name,
 #' Defines the segment to be a set of SegmentFilters 
 #'   which are combined together with a logical AND operation.
 #'   
-#' \code{segment_define} is in the hierarchyof segment creation, for which you will also need:
+#' \code{segment_define} is in the hierarchy of segment creation, for which you will also need:
 #' \itemize{
 #'  \item \link{segment_define} : AND combination of segmentFilters
 #'  \item \link{segment_vector_simple} or \link{segment_vector_sequence}
@@ -226,7 +226,7 @@ segment_define <- function(segment_filters,
 
 #' Make a simple segment vector
 #' 
-#' \code{segment_vector_simple} is in the hierarchyof segment creation, for which you will also need:
+#' \code{segment_vector_simple} is in the hierarchy of segment creation, for which you will also need:
 #' \itemize{
 #'  \item \link{segment_define} : AND combination of segmentFilters
 #'  \item \link{segment_vector_simple} or \link{segment_vector_sequence}
@@ -261,7 +261,7 @@ makeOrFilters <- function(segment_element_list){
 #' Make sequenceSegment
 #' 
 #' 
-#' \code{segment_vector_sequence} is in the hierarchyof segment creation, for which you will also need:
+#' \code{segment_vector_sequence} is in the hierarchy of segment creation, for which you will also need:
 #' \itemize{
 #'  \item \link{segment_define} : AND combination of segmentFilters
 #'  \item \link{segment_vector_simple} or \link{segment_vector_sequence}
@@ -296,7 +296,7 @@ segment_vector_sequence <- function(segment_elements,
 
 #' Make a segment element
 #' 
-#' \code{segment_element} is the lowest hierarchyof segment creation, for which you will also need:
+#' \code{segment_element} is the lowest hierarchy of segment creation, for which you will also need:
 #' \itemize{
 #'  \item \link{segment_define} : AND combination of segmentFilters
 #'  \item \link{segment_vector_simple} or \link{segment_vector_sequence}
