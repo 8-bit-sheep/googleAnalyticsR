@@ -25,7 +25,7 @@ For example, of the entire set of users, one Segment
 might be users from a particular country or city.
 }
 \details{
-\code{segment_ga4} is the top heirarchy of segment creation, for which you will also need:
+\code{segment_ga4} is the top hierarchy of segment creation, for which you will also need:
 \itemize{
  \item \link{segment_define} : AND combination of segmentFilters
  \item \link{segment_vector_simple} or \link{segment_vector_sequence}

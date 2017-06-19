@@ -12,7 +12,7 @@ segment_vector_sequence(segment_elements, firstStepMatch = FALSE)
 \item{firstStepMatch}{FALSE default}
 }
 \description{
-\code{segment_vector_sequence} is in the heirarchy of segment creation, for which you will also need:
+\code{segment_vector_sequence} is in the hierarchy of segment creation, for which you will also need:
 \itemize{
  \item \link{segment_define} : AND combination of segmentFilters
  \item \link{segment_vector_simple} or \link{segment_vector_sequence}

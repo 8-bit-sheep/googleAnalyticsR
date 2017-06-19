@@ -139,15 +139,17 @@ parse_ga_account_summary <- function(x){
   
   ## hack to get rid of global variables warning
   id <- name <- webProperties <- kind <- NULL
-  
   x$items %>%
     dplyr::mutate_if(is.list, purrr::simplify_all) %>%    # flatten each list element internally 
     dplyr::transmute(accountId = id,
                      accountName = name,
-                     webProperties = webProperties) %>% 
+                     ## fix bug if webProperties is NULL
+                     webProperties = purrr::map_if(webProperties, is.null, ~ data.frame())) %>% 
     tidyr::unnest() %>% ##unnest webprops
     dplyr::mutate(webPropertyId = id,
-                  webPropertyName = name) %>% 
+                  webPropertyName = name,
+                  ## fix bug if profiles is NULL
+                  profiles = purrr::map_if(profiles, is.null, ~ data.frame())) %>% 
     dplyr::select(-kind, -id, -name) %>% 
     tidyr::unnest() %>% ## unnest profiles
     dplyr::mutate(viewId = id,

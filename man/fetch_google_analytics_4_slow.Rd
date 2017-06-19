@@ -17,7 +17,7 @@ fetch_google_analytics_4_slow(request_list, max_rows, allRows = FALSE)
 A dataframe of all the requests
 }
 \description{
-Due to large compilcated queries causing the v4 API to timeout, 
+Due to large complicated queries causing the v4 API to timeout, 
   this option is added to fetch via the more traditional one report per request
 }
 \seealso{

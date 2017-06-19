@@ -10,7 +10,7 @@ segmentSequenceStep(orFiltersForSegmentList, matchType = c("PRECEDES",
 \arguments{
 \item{orFiltersForSegmentList}{A list of \link{orFiltersForSegment}}
 
-\item{matchType}{Should it precede or immediatly precede the next step}
+\item{matchType}{Should it precede or immediatley precede the next step}
 }
 \value{
 segmentSequenceStep object
