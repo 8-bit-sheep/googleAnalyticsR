@@ -39,7 +39,11 @@ segment_element(name, operator = c("REGEXP", "BEGINS_WITH", "ENDS_WITH",
 An SegmentFilterClause object
 }
 \description{
+<<<<<<< HEAD
 \code{segment_element} is the lowest hierarchyof segment creation, for which you will also need:
+=======
+\code{segment_element} is the lowest hierarchy of segment creation, for which you will also need:
+>>>>>>> 1fc37ce5aacd101792fc8266b7907cc086eb77b6
 \itemize{
  \item \link{segment_define} : AND combination of segmentFilters
  \item \link{segment_vector_simple} or \link{segment_vector_sequence}

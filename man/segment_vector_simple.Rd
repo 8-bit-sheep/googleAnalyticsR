@@ -13,7 +13,11 @@ segment_vector_simple(segment_elements)
 A segment vector you can put in a list for use in \link{segment_ga4}
 }
 \description{
+<<<<<<< HEAD
 \code{segment_vector_simple} is in the hierarchyof segment creation, for which you will also need:
+=======
+\code{segment_vector_simple} is in the hierarchy of segment creation, for which you will also need:
+>>>>>>> 1fc37ce5aacd101792fc8266b7907cc086eb77b6
 \itemize{
  \item \link{segment_define} : AND combination of segmentFilters
  \item \link{segment_vector_simple} or \link{segment_vector_sequence}
