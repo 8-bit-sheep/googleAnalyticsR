@@ -20,7 +20,7 @@ Make a dimension or metric filter clause object
 }
 \details{
 If you have dimension and metric filters,
-  make the clauses in two seperate calls, then pass the objects to \link{make_ga_4_req}
+  make the clauses in two separate calls, then pass the objects to \link{make_ga_4_req}
 }
 \examples{
 

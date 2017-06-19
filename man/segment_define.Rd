@@ -19,7 +19,7 @@ segmentDefinition object for \link{segment_ga4}
 Defines the segment to be a set of SegmentFilters 
   which are combined together with a logical AND operation.
   
-\code{segment_define} is in the heirarchy of segment creation, for which you will also need:
+\code{segment_define} is in the hierarchyof segment creation, for which you will also need:
 \itemize{
  \item \link{segment_define} : AND combination of segmentFilters
  \item \link{segment_vector_simple} or \link{segment_vector_sequence}

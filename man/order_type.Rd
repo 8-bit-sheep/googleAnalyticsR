@@ -22,5 +22,5 @@ A order_type_ga4 object for use in GAv4 fetch
 Make an OrderType object
 }
 \details{
-For multiple order sorting, create seperate OrderType objects to pass
+For multiple order sorting, create separate OrderType objects to pass
 }
