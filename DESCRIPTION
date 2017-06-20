@@ -17,7 +17,7 @@ Depends:
     R (>= 3.2.0)
 Imports:
     assertthat (>= 0.2.0),
-    dplyr (>= 0.5.0),
+    dplyr (>= 0.7.0),
     googleAuthR (>= 0.5.1),
     httr (>= 1.2.1),
     magrittr (>= 1.5),
