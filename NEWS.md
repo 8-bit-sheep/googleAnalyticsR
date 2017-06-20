@@ -1,3 +1,7 @@
+# googleAnalytics 0.4.1.9000
+
+* ...
+
 # googleAnalyticsR 0.4.1
 
 * Fix `attempt to set an attribute on NULL` error for anti-sample
