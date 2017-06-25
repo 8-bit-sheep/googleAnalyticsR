@@ -93,6 +93,10 @@ With the amount of API calls possible with this library via batching and walking
 
 To mitigate that, use your own Google Developer Console Project key, so it is not shared across all users of this library.
 
+[Donal Phipps](http://donalphipps.co.uk/) has very kindly created a screencast on how to set this up that you can find embedded below and via [this link](https://www.youtube.com/watch?v=4B88dRbwNfc).
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/4B88dRbwNfc?rel=0" frameborder="0" allowfullscreen></iframe>
+
 ### Example adding your own Google Developer Console keys
 
 Set the options before any call to `ga_auth()` or other data fetching calls.
