@@ -28,11 +28,11 @@ Suggests:
     bigQueryR (>= 0.3.1),
     covr,
     googleCloudStorageR (>= 0.2.0),
+    httptest,
     knitr,
     miniUI (>= 0.1.1),
     rmarkdown,
-    shiny (>= 0.13.2),
-    testthat (>= 1.0.2)
+    shiny (>= 0.13.2)
 License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr

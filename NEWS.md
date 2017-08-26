@@ -1,6 +1,6 @@
 # googleAnalytics 0.4.1.9000
 
-* ...
+* Fix bug of argument match in `multi_select`(#99 - thanks @sdhaus)
 
 # googleAnalyticsR 0.4.1
 

@@ -1,0 +1,1390 @@
+{
+  "reports": [
+    {
+      "columnHeader": {
+        "dimensions": [
+          "ga:source",
+          "ga:medium",
+          "ga:segment"
+        ],
+        "metricHeader": {
+          "metricHeaderEntries": [
+            {
+              "name": "sessions",
+              "type": "INTEGER"
+            },
+            {
+              "name": "bounces",
+              "type": "INTEGER"
+            }
+          ]
+        }
+      },
+      "data": {
+        "rows": [
+          {
+            "dimensions": [
+              "(direct)",
+              "(none)",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "122",
+                  "42"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "24.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "aidsmap.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "aol",
+              "organic",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "30",
+                  "19"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "ask",
+              "organic",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "32",
+                  "17"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "astrofund.org.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "3",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "avg",
+              "organic",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "baidu",
+              "organic",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "bestbackpackersinsurance.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "3",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "bing",
+              "cpc",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "74",
+                  "24"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "bing",
+              "organic",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "277",
+                  "148"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "blog.world-first.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "6",
+                  "5"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "blogmetrics.org",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "btmail.bt.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "2"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "cancerresearchuk.org",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "9",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "cheaptravelinsurance.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "101",
+                  "76"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "cpw.mail.aol.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "5",
+                  "2"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "dub109.mail.live.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "dub110.mail.live.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "3",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "dub112.mail.live.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "dub113.mail.live.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "dub114.mail.live.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "dub118.mail.live.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "dub121.mail.live.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "dub122.mail.live.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "dub123.mail.live.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "dub124.mail.live.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "dub125.mail.live.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "5",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "dub126.mail.live.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "dub129.mail.live.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "dub130.mail.live.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "6",
+                  "2"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "dub131.mail.live.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "3",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "duckduckgo.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "email10.orange.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "emailCampaign",
+              "email",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "33",
+                  "14"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "facebook",
+              "social",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "3",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "facebook.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "facebook.com",
+              "social",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "forum.alzheimers.org.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "fsmail02.orange.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "2"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "gocompare.theidol.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "9",
+                  "2"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "google",
+              "cpc",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "619",
+                  "266"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "google",
+              "organic",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "8070",
+                  "4634"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "guestfirst.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "4",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "haemophilia.org.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "haosou.com",
+              "organic",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "hemihelp.org.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "imgeurope.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "l.facebook.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "linkedin",
+              "social",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "linkedin.com",
+              "social",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "mail.aol.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "5",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "mail.candwmail.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "mail.uk2.net",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "mail2.virginmedia.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "3",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "money.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "8",
+                  "3"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "moneysavingexpert.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "68",
+                  "19"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "myholidayinsurance.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "9",
+                  "5"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "netdoctor.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "news.google.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "plus.google.com",
+              "social",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "plus.url.google.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "project-himalaya.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "promopro.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "quote-link.net",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "46",
+                  "15"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "rapidfinder.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "rothwellandtowler.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "25",
+                  "9"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "savingstory.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "2"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "search.1and1.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "2"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "search.sky.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "3",
+                  "3"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "singletrackworld.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "stage.new.medibroker.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "3",
+                  "2"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "t.co",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "3",
+                  "3"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "talktalk.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "telegraph.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "15",
+                  "6"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "thebraintumourcharity.org",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "tht.org.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "10",
+                  "8"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "track.webgains.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "travelbundles.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "3",
+                  "3"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "travelinsurance.confused.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "3",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "tripadvisor.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "5",
+                  "4"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "uk-mg42.mail.yahoo.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "3",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "uk.promopro.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "uk.search.yahoo.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "6",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "uk.wow.com",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "webmail.quantockonline.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "whitminsterhousecottages.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "0"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "world-first.co.uk",
+              "referral",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "3333",
+                  "691"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "yahoo",
+              "organic",
+              "simple"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "218",
+                  "116"
+                ]
+              }
+            ]
+          }
+        ],
+        "totals": [
+          {
+            "values": [
+              "13251",
+              "6170"
+            ]
+          }
+        ],
+        "rowCount": 89,
+        "minimums": [
+          {
+            "values": [
+              "1",
+              "0"
+            ]
+          }
+        ],
+        "maximums": [
+          {
+            "values": [
+              "8070",
+              "4634"
+            ]
+          }
+        ],
+        "isDataGolden": true
+      }
+    }
+  ]
+}

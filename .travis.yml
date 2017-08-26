@@ -8,7 +8,7 @@ r_packages:
 r_github_packages:
 - MarkEdmondson1234/googleAuthR
 notifications:
-  slack: edmondsons:kgTokxui4ZzTsqdD19tCoozf
+  slack: googleauthrverse:tGfXjSD58cQSEr1YuzQ5hKPS
   email:
     on_success: change
     on_failure: change

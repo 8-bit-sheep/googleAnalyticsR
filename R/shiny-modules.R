@@ -193,7 +193,7 @@ multi_selectUI <- function(id,
 #' @export
 multi_select <- function(input, output, session, 
                          type = c("METRIC","DIMENSION"),
-                         subType = c("none","segment","cohort"),
+                         subType = c("all","segment","cohort"),
                          default = NULL){
   
   type <- match.arg(type)

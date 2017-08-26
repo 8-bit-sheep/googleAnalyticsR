@@ -1,8 +1,8 @@
-library(testthat)
-library(googleAnalyticsR)
-library(googleAuthR)
+library(httptest)
+.mockPaths(path.expand(file.path(getwd(),"mock")))
 
-googleAuthR::gar_cache_setup("googleAnalyticsR", location = "mock")
+library(googleAnalyticsR)
+
 
 options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
                                         "https://www.googleapis.com/auth/analytics.edit",
@@ -18,8 +18,324 @@ accountId2 <- 47480439
 webPropId2 <- "UA-47480439-2"
 ga_id2 <- 81416156
 
-# when not mocking
-# googleAuthR::gar_auth()
+local_auth <- Sys.getenv("GA_AUTH_FILE") != ""
+if(!local_auth){
+  cat("\nNo authentication file detected - skipping integration tests\n")
+} else {
+  cat("\nPerforming API calls for integration tests\n")
+}
+
+on_travis <- Sys.getenv("CI") == "true"
+if(on_travis){
+  cat("\n#testing on CI - working dir: ", path.expand(getwd()), "\n")
+} else {
+  cat("\n#testing not on CI - auth via GA_AUTH_FILE environment arg\n")
+}
+
+context("API Mocking")
+
+test_that("Record requests if online", {
+  skip_if_disconnected()
+  skip_if_not(local_auth)
+  
+  ## test reqs
+  capture_requests(
+    path = "mock", {
+      ga_accounts()
+      ga_account_list()
+      ga_webproperty_list(accountId)
+      ga_webproperty(accountId, "UA-54019251-1")
+      ga_view_list(accountId, webPropId)
+      ga_view(accountId, webPropertyId = webPropId, profileId = ga_id)      
+      al <- ga_adwords_list(accountId, webPropertyId = webPropId)      
+      al <- ga_adwords(accountId, 
+                       webPropertyId = webPropId, 
+                       webPropertyAdWordsLinkId = "34H8JW1_R4K3Nh4uZpsIvw")      
+      ds <- ga_custom_datasource(accountId2, webPropId2)      
+      ds <- ga_custom_upload_list(accountId2, 
+                                  webPropertyId = webPropId2, 
+                                  customDataSourceId = "_jDsJHSFSU-uw038Bh8fUg")      
+      meta <- google_analytics_meta()
+      t11 <-   google_analytics_4(ga_id, 
+                                  date_range = c("2015-07-30","2015-10-01"),
+                                  dimensions=c('medium'), 
+                                  metrics = c('sessions'),
+                                  order = order_type("sessions"))  
+    big <-   google_analytics_4(ga_id, 
+                                date_range = c("2015-07-30","2016-09-01"),
+                                dimensions=c('medium','source','hour','minute','campaign','pagePath'), 
+                                metrics = c('sessions'),
+                                max = -1)  
+
+    big <-   google_analytics_4(ga_id, 
+                                date_range = c("2015-07-30","2016-09-01"),
+                                dimensions=c('medium','source','hour','minute','campaign','pagePath'), 
+                                metrics = c('sessions'),
+                                max = -1,
+                                slow_fetch = TRUE)  
+
+    multi <- google_analytics(c(ga_id, ga_id2),
+                              start = "2015-07-31", end = "2015-10-01",
+                              dimensions=c('medium'), 
+                              metrics = c('sessions'),
+                              sort = "ga:sessions")
+    
+    multi <- google_analytics(c(ga_id2, ga_id),
+                              start = "2015-07-30", end = "2015-10-01",
+                              dimensions=c('medium'), 
+                              metrics = c('sessions'),
+                              sort = "ga:sessions",
+                              multi_account_batching = TRUE)
+    
+    walked <- suppressWarnings(
+      google_analytics(ga_id,
+                       start = "2015-07-30", end = "2015-10-01",
+                       dimensions=c('medium'), 
+                       metrics = c('sessions'),
+                       sort = "ga:sessions",
+                       samplingLevel = "WALK"))
+    
+    bb <- google_analytics(ga_id,
+                           start = "2015-07-30", end = "2015-10-01",
+                           dimensions=c('medium','source','hour','minute','pagePath'), 
+                           metrics = c('sessions'),
+                           sort = "ga:sessions",
+                           max_results = 30000)
+
+    v3 <- google_analytics(ga_id, 
+                           start = "2015-07-30", end = "2015-10-01",
+                           dimensions=c('medium'), 
+                           metrics = c('sessions'),
+                           sort = "ga:sessions")  
+    v4 <-  google_analytics_4(ga_id, 
+                              date_range = c("2015-07-30","2015-10-01"),
+                              dimensions=c('medium'), 
+                              metrics = c('sessions'),
+                              order = order_type("sessions")) 
+
+    v3 <- google_analytics(ga_id, 
+                           start = "2015-07-30", end = "2015-10-01",
+                           dimensions=c('sourcePath'), 
+                           metrics = c('totalConversions'),
+                           type = "mcf")  
+
+    ## create filters on metrics
+    mf <- met_filter("bounces", "GREATER_THAN", 0)
+    mf2 <- met_filter("sessions", "GREATER", 2)
+    
+    ## create filters on dimensions
+    df <- dim_filter("source","BEGINS_WITH","1",not = TRUE)
+    df2 <- dim_filter("source","BEGINS_WITH","a",not = TRUE)
+    
+    ## construct filter objects
+    fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
+    fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
+    
+    out <- google_analytics_4(ga_id, 
+                              date_range = c("2015-07-30","2015-10-01"),
+                              dimensions=c('source','medium'), 
+                              metrics = c('sessions','bounces'), 
+                              met_filters = fc, 
+                              dim_filters = fc2, 
+                              filtersExpression = "ga:source!=(direct)")
+
+    
+    fits <- ga_filter_view_list(accountId, webPropId, ga_id)
+    
+    fits <- ga_filter_list(accountId)
+    
+    fits <- ga_filter(accountId, "22248057")
+    
+    fits <- ga_filter_view(accountId, webPropId, ga_id, "106249469:22248057")
+
+    as <-   google_analytics_4(ga_id, 
+                               date_range = c("2015-07-30","2016-10-01"),
+                               dimensions=c('minute','hour','landingPagePath','medium','eventLabel','campaign'), 
+                               metrics = c('sessions', 'avgSessionDuration'),
+                               anti_sample = TRUE)  
+    expect_s3_class(as, "data.frame")
+
+    ## first make a cohort group
+    cohort4 <- make_cohort_group(list("Jan2016" = c("2016-01-01", "2016-01-31"), 
+                                      "Feb2016" = c("2016-02-01","2016-02-28")))
+    
+    ## then call cohort report.  No date_range and must include metrics and dimensions
+    ##   from the cohort list
+    cohort_example <- google_analytics_4(ga_id, 
+                                         dimensions=c('cohort'), 
+                                         cohorts = cohort4, 
+                                         metrics = c('cohortTotalUsers'))
+
+    ## first make a cohort group
+    cohort4 <- make_cohort_group(list("Jan2016" = c("2016-01-01", "2016-01-31"), 
+                                      "Feb2016" = c("2016-02-01","2016-02-28")))
+    ## make two segment elements
+    se <- segment_element("sessions", 
+                          operator = "GREATER_THAN", 
+                          type = "METRIC", 
+                          comparisonValue = 1, 
+                          scope = "USER")
+    
+    se2 <- segment_element("medium", 
+                           operator = "EXACT", 
+                           type = "DIMENSION", 
+                           expressions = "organic")
+    
+    ## choose between segment_vector_simple or segment_vector_sequence
+    ## Elements can be combined into clauses, which can then be combined into OR filter clauses
+    sv_simple <- segment_vector_simple(list(list(se)))
+    
+    sv_simple2 <- segment_vector_simple(list(list(se2)))
+    
+    ## Each segment vector can then be combined into a logical AND
+    seg_defined <- segment_define(list(sv_simple, sv_simple2))
+    
+    ## Each segement defintion can apply to users, sessions or both.
+    ## You can pass a list of several segments
+    segment4 <- segment_ga4("simple", user_segment = seg_defined)
+    ## then call cohort report.  No date_range and must include metrics and dimensions
+    ##   from the cohort list
+    cohort_example <- google_analytics_4(ga_id, 
+                                         dimensions=c('cohort'), 
+                                         cohorts = cohort4, 
+                                         segments = segment4,
+                                         metrics = c('cohortTotalUsers'))
+
+    
+    ## filter pivot results to 
+    pivot_dim_filter1 <- dim_filter("source",
+                                    "REGEXP",
+                                    "organic|social|email|cpc")
+    
+    pivot_dim_clause <- filter_clause_ga4(list(pivot_dim_filter1))
+    
+    pivme <- pivot_ga4("source",
+                       metrics = c("sessions"), 
+                       maxGroupCount = 4, 
+                       dim_filter_clause = pivot_dim_clause)
+    
+    pivtest1 <- google_analytics_4(ga_id, 
+                                   c("2016-01-30","2016-10-01"), 
+                                   dimensions=c('source'), 
+                                   metrics = c('sessions'), 
+                                   pivots = list(pivme))
+
+    ## get list of segments
+    my_segments <- ga_segment_list()
+
+  
+    ## choose the v3 segment
+    segment_for_call <- "gaid::-4"
+    
+    ## make the v3 segment object in the v4 segment object:
+    seg_obj <- segment_ga4("PaidTraffic", segment_id = segment_for_call)
+    
+    ## make the segment call
+    segmented_ga1 <- google_analytics_4(ga_id, 
+                                        c("2015-07-30","2015-10-01"), 
+                                        dimensions=c('source','medium'), 
+                                        segments = seg_obj, 
+                                        metrics = c('sessions','bounces'))
+
+    
+    ## or pass the segment v3 defintion in directly:
+    segment_def_for_call <- "sessions::condition::ga:medium=~^(cpc|ppc|cpa|cpm|cpv|cpp)$"
+    
+    ## make the v3 segment object in the v4 segment object:
+    seg_obj <- segment_ga4("PaidTraffic", segment_id = segment_def_for_call)
+    
+    ## make the segment call
+    segmented_ga1 <- google_analytics_4(ga_id, 
+                                        c("2015-07-30","2015-10-01"), 
+                                        dimensions=c('source','medium','segment'), 
+                                        segments = seg_obj, 
+                                        metrics = c('sessions','bounces'))
+
+    se <- segment_element("sessions", 
+                          operator = "GREATER_THAN", 
+                          type = "METRIC", 
+                          comparisonValue = 1, 
+                          scope = "USER")
+    
+    se2 <- segment_element("medium", 
+                           operator = "EXACT", 
+                           type = "DIMENSION", 
+                           expressions = "organic")
+    
+    ## choose between segment_vector_simple or segment_vector_sequence
+    ## Elements can be combined into clauses, which can then be combined into OR filter clauses
+    sv_simple <- segment_vector_simple(list(list(se)))
+    
+    sv_simple2 <- segment_vector_simple(list(list(se2)))
+    
+    ## Each segment vector can then be combined into a logical AND
+    seg_defined <- segment_define(list(sv_simple, sv_simple2))
+    
+    ## Each segement defintion can apply to users, sessions or both.
+    ## You can pass a list of several segments
+    segment4 <- segment_ga4("simple", user_segment = seg_defined)
+    
+    ## Add the segments to the segments param
+    segment_example <- google_analytics_4(ga_id, 
+                                          c("2015-07-30","2015-10-01"), 
+                                          dimensions=c('source','medium','segment'), 
+                                          segments = segment4, 
+                                          metrics = c('sessions','bounces'))
+    
+    se2 <- segment_element("medium", 
+                           operator = "EXACT", 
+                           type = "DIMENSION", 
+                           expressions = "organic")
+    
+    se3 <- segment_element("medium",
+                           operator = "EXACT",
+                           type = "DIMENSION",
+                           not = TRUE,
+                           expressions = "organic")
+    
+    ## step sequence
+    ## users who arrived via organic then via referral
+    sv_sequence <- segment_vector_sequence(list(list(se2), 
+                                                list(se3)))
+    
+    seq_defined2 <- segment_define(list(sv_sequence))
+    
+    segment4_seq <- segment_ga4("sequence", user_segment = seq_defined2)
+    
+    ## Add the segments to the segments param
+    segment_seq_example <- google_analytics_4(ga_id, 
+                                              c("2016-01-01","2016-03-01"), 
+                                              dimensions=c('source','segment'), 
+                                              segments = segment4_seq,
+                                              metrics = c('sessions','bounces'))
+    gacl <- ga_custom_vars_list(accountId, webPropId, type = "customMetrics")
+    gacl2 <- ga_custom_vars_list(accountId, webPropId, type = "customDimensions") 
+
+    gacm <- ga_custom_vars(accountId, webPropId, type = "customDimensions", customId = "ga:dimension1") 
+
+    goals <- ga_goal_list(accountId, webPropId, ga_id)
+
+    goal <- ga_goal(accountId, webPropId, ga_id, 1)
+
+  
+    exper <- ga_experiment_list(accountId, webPropId, ga_id)
+
+  
+
+    acc <- ga_users_list(accountId)
+    web <- ga_users_list(accountId, webPropertyId = webPropId)
+    view <- ga_users_list(accountId, webPropertyId = webPropId, viewId = ga_id)
+
+    
+  })
+  
+
+  
+})
+
+with_mock_API({
+  
+  
 
 context("Accounts")
 
@@ -719,3 +1035,5 @@ test_that("Allowed metrics call", {
 #   
 #   
 # })
+
+})
