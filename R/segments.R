@@ -149,9 +149,9 @@ segment_ga4 <- function(name,
   
   if(!is.null(segment_id)){
     
-    if(grepl("^sessions",segment_id)){
+    if(grepl("^(sessions|users)",segment_id)){
       myMessage("Segment v3 dynamic segment", level=1)
-    } else if (!grepl("^gaid::", segment_id)){
+    } else if (!grepl("^(users|gaid)::", segment_id)){
       segment_id <- paste0("gaid::",segment_id)
       myMessage("segment_id passed but doesn't begin with gaid:: - adding it: ", segment_id, level = 3)
     }

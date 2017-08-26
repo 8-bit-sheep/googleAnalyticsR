@@ -5,7 +5,7 @@
 \title{multi_select [Shiny Module]}
 \usage{
 multi_select(input, output, session, type = c("METRIC", "DIMENSION"),
-  subType = c("none", "segment", "cohort"), default = NULL)
+  subType = c("all", "segment", "cohort"), default = NULL)
 }
 \arguments{
 \item{input}{shiny input}
