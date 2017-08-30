@@ -111,47 +111,24 @@ anti_sample <- function(anti_sample_batches,
   ## send to fetch
   did_it_work <- TRUE
   unsampled_list <- lapply(new_date_ranges, function(x){
-    
-    if(x$range_date > 1){
       
-      myMessage("Anti-sample call covering ", x$range_date, " days: ", x$start_date, ", ", x$end_date, level = 3)
-      out <- google_analytics_4(viewId            = viewId,
-                                date_range        = c(x$start_date,x$end_date),
-                                metrics           = metrics,
-                                dimensions        = dimensions,
-                                dim_filters       = dim_filters,
-                                met_filters       = met_filters,
-                                filtersExpression = filtersExpression,
-                                order             = order,
-                                segments          = segments,
-                                pivots            = pivots,
-                                cohorts           = cohorts,
-                                max               = rowCount,
-                                metricFormat      = metricFormat,
-                                samplingLevel     = "LARGE",
-                                histogramBuckets  = histogramBuckets,
-                                slow_fetch        = slow_fetch)
-      
-    } else {
-      ## if any new_date_ranges range_date is 1 then possibily will still sample.
-      myMessage("Attempting hourly anti-sampling...", level = 3)
-      out <- hourly_anti_sample(viewId            = viewId,
-                                the_day           = x$start_date,
-                                metrics           = metrics,
-                                dimensions        = dimensions,
-                                dim_filters       = dim_filters,
-                                met_filters       = met_filters,
-                                filtersExpression = filtersExpression,
-                                order             = order,
-                                segments          = segments,
-                                pivots            = pivots,
-                                cohorts           = cohorts,
-                                max               = attr(test_call, "rowCount"),
-                                metricFormat      = metricFormat,
-                                histogramBuckets  = histogramBuckets,
-                                read_counts       = read_counts,
-                                slow_fetch        = slow_fetch)
-    }
+    myMessage("Anti-sample call covering ", x$range_date, " days: ", x$start_date, ", ", x$end_date, level = 3)
+    out <- google_analytics_4(viewId            = viewId,
+                              date_range        = c(x$start_date,x$end_date),
+                              metrics           = metrics,
+                              dimensions        = dimensions,
+                              dim_filters       = dim_filters,
+                              met_filters       = met_filters,
+                              filtersExpression = filtersExpression,
+                              order             = order,
+                              segments          = segments,
+                              pivots            = pivots,
+                              cohorts           = cohorts,
+                              max               = rowCount,
+                              metricFormat      = metricFormat,
+                              samplingLevel     = "LARGE",
+                              histogramBuckets  = histogramBuckets,
+                              slow_fetch        = slow_fetch)
     
     read_counts2 <- as.integer(attr(out,"samplesReadCounts")[[1]])
     space_size2  <- as.integer(attr(out, "samplingSpaceSizes")[[1]])
@@ -214,107 +191,4 @@ chunkify <- function(sessions_vec, limit = 250e3) {
   }
   
   batch_numbers
-}
-
-#' hourly get request with anti-sampling
-#' @keywords internal
-hourly_anti_sample <- function(viewId,
-                               the_day,
-                               metrics,
-                               dimensions,
-                               dim_filters,
-                               met_filters,
-                               filtersExpression,
-                               order,
-                               segments,
-                               max,
-                               pivots,
-                               cohorts,
-                               metricFormat,
-                               histogramBuckets,
-                               read_counts,
-                               slow_fetch){
-  
-  ## get session distribution per hour
-  ## sampling
-  myMessage("Finding number of hourly sessions for anti-sample calculations...", level = 3)
-  explore_sessions <- google_analytics_4(viewId = viewId,
-                                         date_range = c(the_day, the_day),
-                                         metrics = "sessions",
-                                         dimensions = "hour")
-  
-  ## work out batches
-  explore_sessions$cumulative <- cumsum(explore_sessions$sessions)
-  explore_sessions$sample_bucket <- as.factor((explore_sessions$cumulative %/% read_counts) + 1)
-  splits <- split(explore_sessions, explore_sessions[["sample_bucket"]])
-  
-  new_hour_ranges <- lapply(splits, function(x) {list(hours = x$hour,
-                                                      range_date = nrow(x))})
-
-  
-  ## do calls
-  
-  all_samplesReadCounts <- 0
-  all_samplingSpaceSizes <- 0
-  unsampled_list <- lapply(new_hour_ranges, function(x){
-
-    myMessage("Anti-sample call covering ", x$range_date, " hours: ", paste(x$hours, collapse = " "), 
-              level = 3)
-    
-    hour_filter <- dim_filter("hour", "IN_LIST", x$hours)
-    
-    if(!is.null(dim_filters)){
-      ## rebuild dim_filter
-      if(dim_filters$operator == "OR") warning("dim_filter operator changed to AND as needed by hourly sampling")
-      existing_filters <- dim_filters$filters
-      new_filters <- c(existing_filters, list(hour_filter))
-      new_filter_exp <- filter_clause_ga4(new_filters, operator = "AND")
-
-    } else {
-      new_filter_exp <- filter_clause_ga4(list(hour_filter))
-    }
-    
-    if(!is.null(filtersExpression)){
-      stop("Can't use filtersExpression argument with hourly anti-sampling, sorry!")
-    }
-
-    out <- google_analytics_4(viewId            = viewId,
-                              date_range        = c(the_day, the_day),
-                              metrics           = metrics,
-                              dimensions        = dimensions,
-                              dim_filters       = new_filter_exp,
-                              met_filters       = met_filters,
-                              filtersExpression = filtersExpression,
-                              order             = order,
-                              segments          = segments,
-                              pivots            = pivots,
-                              cohorts           = cohorts,
-                              max               = max,
-                              metricFormat      = metricFormat,
-                              samplingLevel     = "LARGE",
-                              histogramBuckets  = histogramBuckets,
-                              slow_fetch = slow_fetch)
-
-    read_counts3 <- as.integer(attr(out,"samplesReadCounts")[[1]])
-    space_size3  <- as.integer(attr(out, "samplingSpaceSizes")[[1]])
-    samplingPer  <- get_samplePercent(read_counts3, space_size3)
-    
-    if(!identical(samplingPer, numeric(0))){
-      myMessage("Hourly anti-sampling failed. Holy-moly, you should try GA 360 and BigQuery.", level = 3)
-      all_samplesReadCounts  <<- all_samplesReadCounts + read_counts3
-      all_samplingSpaceSizes <<- all_samplingSpaceSizes + space_size3
-    }
-    out
-  })
-  ## output rbind
-  hour_out <- Reduce(rbind, unsampled_list)
-  
-  if(!is.null(hour_out)){
-    attr(hour_out, "samplesReadCounts")  <- all_samplesReadCounts
-    attr(hour_out, "samplingSpaceSizes") <- all_samplingSpaceSizes
-  } else {
-    myMessage("No data found for hourly sample", level = 3)
-  }
-
-  hour_out
 }
