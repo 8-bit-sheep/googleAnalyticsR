@@ -1,6 +1,7 @@
 # googleAnalytics 0.4.1.9000
 
 * Fix bug of argument match in `multi_select`(#99 - thanks @sdhaus)
+* Fix bug for data dimensions starting with a number (#100 - thanks @kennyengci)
 
 # googleAnalyticsR 0.4.1
 
