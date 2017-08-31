@@ -2,7 +2,6 @@ library(shiny)
 library(googleAuthR)
 library(googleAnalyticsR)
 library(listviewer)
-library(testthat)
 
 
 navbarPage("GA v4 API",

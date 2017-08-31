@@ -65,11 +65,10 @@ expect_null_or_type <- function(thing, type){
 
 #' Expect NULL or class (s3)
 #' 
-#' wraps testthat::expect_type() to run if not NULL
+#' wraps assertthat::assert_that(inherits(thing, s3class))() to run if not NULL
 #' @keywords internal
 expect_null_or_s3_class <- function(thing, s3class){
   if(!is.null(thing)){
-    testthat::expect_s3_class(thing, s3class)
     assertthat::assert_that(inherits(thing, s3class))
   } else {
     TRUE
