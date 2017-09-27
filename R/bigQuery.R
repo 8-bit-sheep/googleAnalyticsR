@@ -70,14 +70,6 @@ google_analytics_bq <- function(projectId,
   ## if Sys.Date() == end then construct for ga_sessions_intradata_ too.
   if(is.null(query)){
     
-    if(any(is.na(lookup_bq_query_m[metrics]))){
-      stop("metric not yet supported. Must be one of ", paste(names(lookup_bq_query_m), collapse = ", "))
-    }
-    
-    if(any(is.na(lookup_bq_query_d[dimensions]))){
-      stop("dimension not yet supported. Must be one of ", paste(names(lookup_bq_query_d), collapse = ", "))
-    }
-    
     if(as.Date(end) == Sys.Date()){
       from_q <- sprintf("FROM (TABLE_DATE_RANGE([%s.ga_sessions_], TIMESTAMP('%s'), DATE_ADD(CURRENT_TIMESTAMP(), -1, 'DAY'))), (TABLE_DATE_RANGE([%s.ga_sessions_intraday_], DATE_ADD(CURRENT_TIMESTAMP(), -1, 'DAY'), CURRENT_TIMESTAMP()))", 
                         datasetId, start, datasetId)
