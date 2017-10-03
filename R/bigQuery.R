@@ -279,8 +279,8 @@ customDimensionMaker <- function(customDimensionIndex=paste0("dimension",1:200))
   
   if(length(indexes) < 1) stop("Custom dimension specified but no custom dimensions found")
   
-  dimensionXX = "MAX(CASE WHEN hits.customDimensions.index = XX THEN hits.customDimensions.value END)) as dimensionXX"
-
+  dimensionXX = "MAX(IF (hits.customDimensions.index = XX, hits.customDimensions.value, NULL)) WITHIN RECORD AS dimensionXX"
+                     
   out <- vapply(indexes, function(i) gsub("XX", i, dimensionXX), character(1))
   names(out) <- customDimensionIndex
   
@@ -295,8 +295,8 @@ customMetricMaker <- function(customMetricIndex=paste0("metric",1:200)){
   
   if(length(indexes) < 1) stop("No custom metrics found")
   
-  metricXX = "MAX(CASE WHEN hits.customMetrics.index = XX THEN hits.customMetrics.value END)) as metricXX"
-  
+  metricXX <- "MAX(IF (hits.customMetrics.index = XX, hits.customMetrics.value, NULL)) WITHIN RECORD AS metricXX"
+
   out <- vapply(indexes, function(i) gsub("XX", i, metricXX), character(1))
   names(out) <- customMetricIndex
   
