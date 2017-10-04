@@ -351,8 +351,7 @@ google_analytics_4 <- function(viewId,
   ## if batching, get the rest of the results now we now precise rowCount
   if(allResults){
     all_rows <- as.integer(attr(out, "rowCount"))
-    if(nrow(out) < all_rows){
-    # if(!is.null(out) && nrow(out) < all_rows){
+    if(!is.null(out) && nrow(out) < all_rows){
       ## create the remaining requests
       meta_batch_start_index2 <- seq(from=50000, to=all_rows, by=reqRowLimit)
       ## make a list of the requests
