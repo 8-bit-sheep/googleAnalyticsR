@@ -144,7 +144,7 @@ get_samplePercent <- function(sampleReadCounts, samplingSpaceSizes){
 #' @importFrom tidyr unnest
 #' @importFrom purrr map_if
 parse_ga_account_summary <- function(x){
-  browser()
+
   ## hack to get rid of global variables warning
   id <- name <- webProperties <- kind <- profiles <- NULL
   x$items %>%
