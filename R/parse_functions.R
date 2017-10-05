@@ -241,7 +241,7 @@ parse_google_analytics_mcf <- function(x){
   names <- gsub("^mcf:", "", x$columnHeaders$name)
   types <- x$columnHeaders$dataType
 
-  if ("MCF_SEQUENCE" %in% types) {
+  if ("MCF_SEQUENCE" %in% types && !is.null(x$rows)) {
     ## take out null object lists that the JSON sometimes strangely returns
     type_check <- vapply(x$rows, function(x) inherits(x[1]$conversionPathValue[[1]], "list"), FUN.VALUE=TRUE)
     x$rows <- x$rows[!type_check]
@@ -260,7 +260,13 @@ parse_google_analytics_mcf <- function(x){
     colnames(conversion) <- names[cv_idx]
     data_df <- data.frame(primitive, conversion, stringsAsFactors = FALSE)[, names]
   } else {
-    data_df <- as.data.frame(do.call(rbind, lapply(x$rows, unlist)), stringsAsFactors = FALSE)
+    # empty data.frame if no rows available
+    if (is.null(x$rows)) {
+      data_df <- data.frame(matrix(ncol = length(names), nrow = 0))
+    } else {
+      data_df <- as.data.frame(do.call(rbind, lapply(x$rows, unlist)), stringsAsFactors = FALSE)
+    }
+    
     colnames(data_df) <- names
   }
   return(data_df)
