@@ -16,3 +16,4 @@
 ^CODE_OF_CONDUCT\.md$
 ^data-raw$
 ^tests/testthat/mock/*
+^\.httr-oauth$

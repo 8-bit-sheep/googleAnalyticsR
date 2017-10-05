@@ -140,26 +140,28 @@ get_samplePercent <- function(sampleReadCounts, samplingSpaceSizes){
 #' 
 #' @param x The account summary items
 #' @keywords internal
+#' @importFrom dplyr transmute mutate select
+#' @importFrom tidyr unnest
+#' @importFrom purrr map_if
 parse_ga_account_summary <- function(x){
-  
+  browser()
   ## hack to get rid of global variables warning
   id <- name <- webProperties <- kind <- profiles <- NULL
   x$items %>%
-    dplyr::mutate_if(is.list, purrr::simplify_all) %>%    # flatten each list element internally 
-    dplyr::transmute(accountId = id,
-                     accountName = name,
-                     ## fix bug if webProperties is NULL
-                     webProperties = purrr::map_if(webProperties, is.null, ~ data.frame())) %>% 
-    tidyr::unnest() %>% ##unnest webprops
-    dplyr::mutate(webPropertyId = id,
-                  webPropertyName = name,
-                  ## fix bug if profiles is NULL
-                  profiles = purrr::map_if(profiles, is.null, ~ data.frame())) %>% 
-    dplyr::select(-kind, -id, -name) %>% 
-    tidyr::unnest() %>% ## unnest profiles
-    dplyr::mutate(viewId = id,
-                  viewName = name) %>% 
-    dplyr::select(-kind, -id, -name)
+    transmute(accountId = id,
+              accountName = name,
+              ## fix bug if webProperties is NULL
+              webProperties = purrr::map_if(webProperties, is.null, ~ data.frame())) %>% 
+    unnest() %>% ##unnest webprops
+    mutate(webPropertyId = id,
+           webPropertyName = name,
+           ## fix bug if profiles is NULL
+           profiles = purrr::map_if(profiles, is.null, ~ data.frame())) %>% 
+    select(-kind, -id, -name) %>% 
+    unnest() %>% ## unnest profiles
+    mutate(viewId = id,
+           viewName = name) %>% 
+    select(-kind, -id, -name)
   
 }
 
