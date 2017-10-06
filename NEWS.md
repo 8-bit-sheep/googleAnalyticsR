@@ -3,6 +3,11 @@
 * Fix bug of argument match in `multi_select`(#99 - thanks @sdhaus)
 * Fix bug for data dimensions starting with a number (#100 - thanks @kennyengci)
 * Remove hourly anti-sampling as it doesn't work
+* Use tidy eval instead of dplyr underscore funcs (thanks @kiendang)
+* Fix multi-channel funnels raising error when no data available (thanks @octaviancorlade)
+* Fix NULL validaation if no results returns in v4 API (#81 again - thanks @ricardopinto)
+* You can now set your `GA_CLIENT_ID`, `GA_CLIENT_SECRET` in environment arguments and they will be added to the project options on startup. 
+* Authenticate on startup with `GA_AUTH_FILE` pointing to your cache file. 
 
 # googleAnalyticsR 0.4.1
 

@@ -17,6 +17,16 @@
 #'     be 10x quicker than normal GA fetching
 #'   \item Meta data included in attributes of returned dataframe
 #'  }
+#'  
+#' You may wish to set the below environment arguments for easier authentication
+#' 
+#' \code{
+#' GA_CLIENT_ID
+#' GA_CLIENT_SECRET
+#' GA_WEB_CLIENT_ID
+#' GA_WEB_CLIENT_SECRET
+#' GA_AUTH_FILE
+#' }
 #' 
 #' @docType package
 #' @name googleAnalyticsR
