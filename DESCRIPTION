@@ -22,8 +22,8 @@ Imports:
     httr (>= 1.2.1),
     magrittr (>= 1.5),
     purrr (>= 0.2.2),
-    tidyr (>= 0.6.3),
     rlang (>= 0.1.0),
+    tidyr (>= 0.6.3),
     utils
 Suggests:
     bigQueryR (>= 0.3.1),
