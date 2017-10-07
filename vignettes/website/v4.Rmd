@@ -244,7 +244,7 @@ ga_data4
 
 Segments are more complex to configure that v3, but more powerful and in line to how you configure them in the UI.
 
-A lot of feedback for the library is on how to get the sample syntax right, so the examples below try to cover common scenarios.
+A lot of feedback for the library is on how to get the segment syntax right, so the examples below try to cover common scenarios.
 
 #### v3 segments
 
