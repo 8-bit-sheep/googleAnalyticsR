@@ -70,13 +70,7 @@ google_analytics_4_parse <- function(x){
   
   out_names <- c(dim_names, met_names)
   out_names <- gsub("ga:","",out_names)
-  
-  safe_names <- make.names(out_names, unique=TRUE)
-  
-  ## hack around names such as 7dayUsers (issue #100)
-  safe_names <- gsub("^X([[:digit:]]+)","\\1",safe_names)
-  
-  names(out) <- safe_names
+  names(out) <- out_names
   
   ## type conversion
   met_names <- gsub("ga:","",met_names)
