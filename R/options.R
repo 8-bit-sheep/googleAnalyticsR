@@ -35,6 +35,9 @@
   }
   
   default_project_message()
+  
+  googleAuthR::gar_cache_setup()
+  
   invisible()
   
 }

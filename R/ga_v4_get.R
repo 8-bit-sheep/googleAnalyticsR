@@ -271,6 +271,8 @@ google_analytics_4 <- function(viewId,
                                anti_sample_batches = "auto",
                                slow_fetch = FALSE){
   
+  # cache_call(cache)
+  
   max         <- as.integer(max)
   allResults  <- FALSE
   if(max < 0){
