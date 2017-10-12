@@ -36,7 +36,14 @@
   
   default_project_message()
   
-  googleAuthR::gar_cache_setup()
+  f <- function(req){
+    if(!is.null(req$content$reports)){
+      return(TRUE)
+    } else {
+      return(FALSE)
+    }}
+  
+  googleAuthR::gar_cache_setup(invalid_func = f)
   
   invisible()
   
