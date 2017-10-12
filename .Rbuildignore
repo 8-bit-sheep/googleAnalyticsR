@@ -17,3 +17,4 @@
 ^data-raw$
 ^tests/testthat/mock/*
 ^\.httr-oauth$
+^/Users/mark/dev/auth/googleAnalyticsR\.httr-oauth$

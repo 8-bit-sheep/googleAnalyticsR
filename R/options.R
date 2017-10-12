@@ -60,8 +60,7 @@
   needed <- c("https://www.googleapis.com/auth/analytics.readonly")
   
   googleAuthR::gar_attach_auto_auth(needed, 
-                                    environment_var = "GA_AUTH_FILE", 
-                                    travis_environment_var = "TRAVIS_GA_AUTH_FILE")
+                                    environment_var = "GA_AUTH_FILE")
   
   invisible()
   

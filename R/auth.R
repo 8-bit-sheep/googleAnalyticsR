@@ -65,12 +65,9 @@ ga_auth <- function(new_user = FALSE, no_auto = FALSE){
               "https://www.googleapis.com/auth/analytics.manage.users",
               "https://www.googleapis.com/auth/analytics.provision"	)
   
-  out <- gar_auto_auth(needed,
-                       new_user = new_user,
-                       no_auto = no_auto,
-                       environment_var = "GA_AUTH_FILE",
-                       travis_environment_var = "TRAVIS_GA_AUTH_FILE")
-  
-  myMessage("Authenticated", level = 3)
-  invisible(out)
+ gar_auto_auth(needed,
+               new_user = new_user,
+               no_auto = no_auto,
+               environment_var = "GA_AUTH_FILE")
+ 
 }
