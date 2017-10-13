@@ -1,0 +1,85 @@
+{
+  "reports": [
+    {
+      "columnHeader": {
+        "dimensions": [
+          "ga:source",
+          "ga:medium",
+          "ga:segment"
+        ],
+        "metricHeader": {
+          "metricHeaderEntries": [
+            {
+              "name": "sessions",
+              "type": "INTEGER"
+            },
+            {
+              "name": "bounces",
+              "type": "INTEGER"
+            }
+          ]
+        }
+      },
+      "data": {
+        "rows": [
+          {
+            "dimensions": [
+              "bing",
+              "cpc",
+              "Paid Traffic"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "984",
+                  "389"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "google",
+              "cpc",
+              "Paid Traffic"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "5476",
+                  "2669"
+                ]
+              }
+            ]
+          }
+        ],
+        "totals": [
+          {
+            "values": [
+              "6460",
+              "3058"
+            ]
+          }
+        ],
+        "rowCount": 2,
+        "minimums": [
+          {
+            "values": [
+              "984",
+              "389"
+            ]
+          }
+        ],
+        "maximums": [
+          {
+            "values": [
+              "5476",
+              "2669"
+            ]
+          }
+        ],
+        "isDataGolden": true
+      }
+    }
+  ]
+}

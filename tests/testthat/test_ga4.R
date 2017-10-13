@@ -1,14 +1,17 @@
 library(httptest)
-.mockPaths(path.expand(file.path(getwd(),"mock")))
-
-library(googleAnalyticsR)
-
+.mockPaths("..")
 
 options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
                                         "https://www.googleapis.com/auth/analytics.edit",
                                         "https://www.googleapis.com/auth/analytics.manage.users.readonly",
                                         "https://www.googleapis.com/auth/cloud-platform",
-                                        "https://www.googleapis.com/auth/devstorage.full_control"))
+                                        "https://www.googleapis.com/auth/devstorage.full_control"),
+        googleAuthR.client_id = "289759286325-da3fr5kq4nl4nkhmhs2uft776kdsggbo.apps.googleusercontent.com",
+        googleAuthR.client_secret = "1mKySbffYRyWevGkjL0LMJYu")
+
+library(googleAnalyticsR)
+
+
 
 accountId <- 54019251
 webPropId <- "UA-54019251-4"
@@ -18,102 +21,89 @@ accountId2 <- 47480439
 webPropId2 <- "UA-47480439-2"
 ga_id2 <- 81416156
 
-local_auth <- Sys.getenv("GA_AUTH_FILE") != ""
-if(!local_auth){
-  cat("\nNo authentication file detected - skipping integration tests\n")
-} else {
-  cat("\nPerforming API calls for integration tests\n")
-}
-
-on_travis <- Sys.getenv("CI") == "true"
-if(on_travis){
-  cat("\n#testing on CI - working dir: ", path.expand(getwd()), "\n")
-} else {
-  cat("\n#testing not on CI - auth via GA_AUTH_FILE environment arg\n")
-}
+local_auth <- "GA_AUTH_FILE"
 
 context("API Mocking")
 
 test_that("Record requests if online", {
   skip_if_disconnected()
-  skip_if_not(local_auth)
+  skip_if_no_env_auth(local_auth)
   
   ## test reqs
   capture_requests(
-    path = "mock", {
+    {
       ga_accounts()
       ga_account_list()
       ga_webproperty_list(accountId)
       ga_webproperty(accountId, "UA-54019251-1")
       ga_view_list(accountId, webPropId)
       ga_view(accountId, webPropertyId = webPropId, profileId = ga_id)      
-      al <- ga_adwords_list(accountId, webPropertyId = webPropId)      
-      al <- ga_adwords(accountId, 
+      ga_adwords_list(accountId, webPropertyId = webPropId)      
+      ga_adwords(accountId, 
                        webPropertyId = webPropId, 
                        webPropertyAdWordsLinkId = "34H8JW1_R4K3Nh4uZpsIvw")      
-      ds <- ga_custom_datasource(accountId2, webPropId2)      
-      ds <- ga_custom_upload_list(accountId2, 
+      ga_custom_datasource(accountId2, webPropId2)      
+      ga_custom_upload_list(accountId2, 
                                   webPropertyId = webPropId2, 
                                   customDataSourceId = "_jDsJHSFSU-uw038Bh8fUg")      
-      meta <- google_analytics_meta()
-      t11 <-   google_analytics_4(ga_id, 
+      google_analytics_meta()
+      google_analytics_4(ga_id, 
                                   date_range = c("2015-07-30","2015-10-01"),
                                   dimensions=c('medium'), 
                                   metrics = c('sessions'),
                                   order = order_type("sessions"))  
-    big <-   google_analytics_4(ga_id, 
+      google_analytics_4(ga_id, 
                                 date_range = c("2015-07-30","2016-09-01"),
                                 dimensions=c('medium','source','hour','minute','campaign','pagePath'), 
                                 metrics = c('sessions'),
                                 max = -1)  
 
-    big <-   google_analytics_4(ga_id, 
+    google_analytics_4(ga_id, 
                                 date_range = c("2015-07-30","2016-09-01"),
                                 dimensions=c('medium','source','hour','minute','campaign','pagePath'), 
                                 metrics = c('sessions'),
                                 max = -1,
                                 slow_fetch = TRUE)  
 
-    multi <- google_analytics(c(ga_id, ga_id2),
+    google_analytics(c(ga_id, ga_id2),
                               start = "2015-07-31", end = "2015-10-01",
                               dimensions=c('medium'), 
                               metrics = c('sessions'),
                               sort = "ga:sessions")
     
-    multi <- google_analytics(c(ga_id2, ga_id),
+    google_analytics(c(ga_id2, ga_id),
                               start = "2015-07-30", end = "2015-10-01",
                               dimensions=c('medium'), 
                               metrics = c('sessions'),
                               sort = "ga:sessions",
                               multi_account_batching = TRUE)
     
-    walked <- suppressWarnings(
       google_analytics(ga_id,
                        start = "2015-07-30", end = "2015-10-01",
                        dimensions=c('medium'), 
                        metrics = c('sessions'),
                        sort = "ga:sessions",
-                       samplingLevel = "WALK"))
+                       samplingLevel = "WALK")
     
-    bb <- google_analytics(ga_id,
+    google_analytics(ga_id,
                            start = "2015-07-30", end = "2015-10-01",
                            dimensions=c('medium','source','hour','minute','pagePath'), 
                            metrics = c('sessions'),
                            sort = "ga:sessions",
                            max_results = 30000)
 
-    v3 <- google_analytics(ga_id, 
+    google_analytics(ga_id, 
                            start = "2015-07-30", end = "2015-10-01",
                            dimensions=c('medium'), 
                            metrics = c('sessions'),
                            sort = "ga:sessions")  
-    v4 <-  google_analytics_4(ga_id, 
+    google_analytics_4(ga_id, 
                               date_range = c("2015-07-30","2015-10-01"),
                               dimensions=c('medium'), 
                               metrics = c('sessions'),
                               order = order_type("sessions")) 
 
-    v3 <- google_analytics(ga_id, 
+    google_analytics(ga_id, 
                            start = "2015-07-30", end = "2015-10-01",
                            dimensions=c('sourcePath'), 
                            metrics = c('totalConversions'),

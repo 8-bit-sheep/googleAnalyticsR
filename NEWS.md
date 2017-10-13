@@ -1,24 +1,34 @@
 # googleAnalytics 0.4.1.9000
 
+## Bug fixes
+
 * Fix bug of argument match in `multi_select`(#99 - thanks @sdhaus)
 * Fix bug for data dimensions starting with a number (#100 - thanks @kennyengci)
 * Remove hourly anti-sampling as it doesn't work
 * Use tidy eval instead of dplyr underscore funcs (thanks @kiendang)
 * Fix multi-channel funnels raising error when no data available (thanks @octaviancorlade)
 * Fix NULL validaation if no results returns in v4 API (#81 again - thanks @ricardopinto)
+
+## Additions
+
 * You can now set your `GA_CLIENT_ID`, `GA_CLIENT_SECRET` in environment arguments and they will be added to the project options on startup. 
 * Authenticate on startup with `GA_AUTH_FILE` pointing to your cache file.
 * Add support for "today" and "yesterday" date values in anti_sample (#112)
 
 # googleAnalyticsR 0.4.1
 
+## Fixed
+
 * Fix `attempt to set an attribute on NULL` error for anti-sample
 * Fixed `anti_sample="auto"` math to actually limit the number of sessions for the auto-batches
-* Add warning if using default project, and if API quota is tripped (#79)
-* refactor defensive checks from `testthat` to `assertthat`
 * Fixed error when no data present in requested `date_range` for a view, and `max = -1`
 * Fix logic of `anti_sample_batches` to allow accurate day batches. (#74)
 * Fix parsing of `ga_account_summary` broken by upgrade from `dplyr 0.5.0` > `dplyr 0.7.0`
+
+## Added
+
+* Add warning if using default project, and if API quota is tripped (#79)
+* refactor defensive checks from `testthat` to `assertthat`
 
 # googleAnalyticsR 0.4.0
 
