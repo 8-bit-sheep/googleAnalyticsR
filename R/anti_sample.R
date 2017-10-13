@@ -25,9 +25,14 @@ anti_sample <- function(anti_sample_batches,
   
   ## stop bug where batch sizes break
   if(!is.null(date_range)){
+    
+    ## issue 112 - support "today" and "yesterday"
+    ## to lower - we want to allow Today and Yesterday or TODAY and YESTERDAY
+    date_range <- gsub("^today$", Sys.Date(), tolower(date_range))
+    date_range <- gsub("^yesterday$", Sys.Date() - 1, tolower(date_range))   
+    
     date_range <- as.Date(date_range)
   }
-
   
   myMessage("Finding how much sampling in data request...", level = 3)
   test_call <- google_analytics_4(viewId            = viewId,

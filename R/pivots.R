@@ -77,10 +77,8 @@ makePivotNames <- function(pivotHeaders){
                 )
   )
   
-  pivNames <- lapply(n, make.names, unique = TRUE)
+  out <- unlist(n)
   
-  out <- unlist(pivNames)
-
   out
 }
 
