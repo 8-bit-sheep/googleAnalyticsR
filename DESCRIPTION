@@ -4,13 +4,14 @@ Version: 0.4.1.9000
 Title: Google Analytics API into R
 Description: R library for interacting with the Google Analytics 
   Reporting API v3 and v4.
-Authors@R: c(person("Mark", "Edmondson",email = "m@sunholo.com",
+Authors@R: c(person("Mark", "Edmondson", email = "m@sunholo.com",
                   role = c("aut", "cre")),
              person(given = "Artem", family = "Klevtsov",
                     email = "a.a.klevtsov@gmail.com", role = "ctb"),
-           person("Johann", "deBoer", email="johanndeboer@gmail.com", role = "ctb"),
-           person("David", "Watkins", email = "wm.david.watkins@gmail.com", role="ctb"),
-           person("Olivia", "Brode-Roger", email="nibr@mit.edu", role="ctb"))
+           person("Johann", "deBoer", email = "johanndeboer@gmail.com", role = "ctb"),
+           person("David", "Watkins", email = "wm.david.watkins@gmail.com", role = "ctb"),
+           person("Olivia", "Brode-Roger", email = "nibr@mit.edu", role = "ctb"),
+           person("Jas", "Sohi", email = "contact@jassohi.com", role = "ctb"))
 URL: http://code.markedmondson.me/googleAnalyticsR/
 BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
 Depends:
