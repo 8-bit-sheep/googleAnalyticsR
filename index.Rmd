@@ -58,4 +58,5 @@ If you have used the package and published online then get in touch and I'll lis
 * Anita makes some [pie and bar charts](https://rpubs.com/anitaowens/googleapi) from channel data 
 * Creating [Google Analytics non-sampled scheduled reports](https://2steps.pro/google-anslytics-data-without-sampling-scheduler.html) [Russian]
 * Fredrik [forecasts sales from Google Analytics and sends it to your own Slack bot](http://www.insightworks.se/forecast-google-analytics-r-slack/) [Swedish]
+* Omar shows some [heatmaps and ggplot2 using googleAnalyticsR](http://omargonzalesdiaz.com/blog/googleanalytics-ggplot2.html) in Spanish
 
