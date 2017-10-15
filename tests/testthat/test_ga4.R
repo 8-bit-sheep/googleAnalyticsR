@@ -51,52 +51,53 @@ test_that("Record requests if online", {
                                   date_range = c("2015-07-30","2015-10-01"),
                                   dimensions=c('medium'), 
                                   metrics = c('sessions'),
-                                  order = order_type("sessions"))  
-      google_analytics_4(ga_id, 
-                                date_range = c("2015-07-30","2016-09-01"),
+                                  order = order_type("sessions"))
+    
+    google_analytics_4(ga_id, 
+                                date_range = c("2015-07-30","2015-12-31"),
                                 dimensions=c('medium','source','hour','minute','campaign','pagePath'), 
                                 metrics = c('sessions'),
                                 max = -1)  
 
     google_analytics_4(ga_id, 
-                                date_range = c("2015-07-30","2016-09-01"),
+                                date_range = c("2015-07-30","2015-09-01"),
                                 dimensions=c('medium','source','hour','minute','campaign','pagePath'), 
                                 metrics = c('sessions'),
                                 max = -1,
                                 slow_fetch = TRUE)  
 
-    google_analytics(c(ga_id, ga_id2),
-                              start = "2015-07-31", end = "2015-10-01",
-                              dimensions=c('medium'), 
-                              metrics = c('sessions'),
-                              sort = "ga:sessions")
+    # google_analytics(c(ga_id, ga_id2),
+    #                           start = "2015-07-31", end = "2015-10-01",
+    #                           dimensions=c('medium'), 
+    #                           metrics = c('sessions'),
+    #                           sort = "ga:sessions")
     
-    google_analytics(c(ga_id2, ga_id),
-                              start = "2015-07-30", end = "2015-10-01",
-                              dimensions=c('medium'), 
-                              metrics = c('sessions'),
-                              sort = "ga:sessions",
-                              multi_account_batching = TRUE)
+    # google_analytics(c(ga_id2, ga_id),
+    #                           start = "2015-07-30", end = "2015-10-01",
+    #                           dimensions=c('medium'), 
+    #                           metrics = c('sessions'),
+    #                           sort = "ga:sessions",
+    #                           multi_account_batching = TRUE)
     
-      google_analytics(ga_id,
-                       start = "2015-07-30", end = "2015-10-01",
-                       dimensions=c('medium'), 
-                       metrics = c('sessions'),
-                       sort = "ga:sessions",
-                       samplingLevel = "WALK")
-    
-    google_analytics(ga_id,
-                           start = "2015-07-30", end = "2015-10-01",
-                           dimensions=c('medium','source','hour','minute','pagePath'), 
-                           metrics = c('sessions'),
-                           sort = "ga:sessions",
-                           max_results = 30000)
-
-    google_analytics(ga_id, 
-                           start = "2015-07-30", end = "2015-10-01",
-                           dimensions=c('medium'), 
-                           metrics = c('sessions'),
-                           sort = "ga:sessions")  
+    #   google_analytics(ga_id,
+    #                    start = "2015-07-30", end = "2015-10-01",
+    #                    dimensions=c('medium'), 
+    #                    metrics = c('sessions'),
+    #                    sort = "ga:sessions",
+    #                    samplingLevel = "WALK")
+    # 
+    # google_analytics(ga_id,
+    #                        start = "2015-07-30", end = "2015-10-01",
+    #                        dimensions=c('medium','source','hour','minute','pagePath'), 
+    #                        metrics = c('sessions'),
+    #                        sort = "ga:sessions",
+    #                        max_results = 30000)
+    # 
+    # google_analytics(ga_id, 
+    #                        start = "2015-07-30", end = "2015-10-01",
+    #                        dimensions=c('medium'), 
+    #                        metrics = c('sessions'),
+    #                        sort = "ga:sessions")  
     google_analytics_4(ga_id, 
                               date_range = c("2015-07-30","2015-10-01"),
                               dimensions=c('medium'), 
@@ -445,7 +446,7 @@ test_that("Vanilla test data fetch", {
 test_that("Big v4 batch", {
   skip_on_cran()
   big <-   google_analytics_4(ga_id, 
-                              date_range = c("2015-07-30","2016-09-01"),
+                              date_range = c("2015-07-30","2015-12-31"),
                               dimensions=c('medium','source','hour','minute','campaign','pagePath'), 
                               metrics = c('sessions'),
                               max = -1)  
@@ -455,7 +456,7 @@ test_that("Big v4 batch", {
 test_that("Slow big v4 batch", {
   skip_on_cran()
   big <-   google_analytics_4(ga_id, 
-                              date_range = c("2015-07-30","2016-09-01"),
+                              date_range = c("2015-07-30","2015-09-01"),
                               dimensions=c('medium','source','hour','minute','campaign','pagePath'), 
                               metrics = c('sessions'),
                               max = -1,
@@ -463,85 +464,85 @@ test_that("Slow big v4 batch", {
   expect_s3_class(big, "data.frame")
 })
 
-test_that("v3 multi account batching without flag", {
-  
-  skip_on_cran()
-  multi <- google_analytics(c(ga_id, ga_id2),
-                            start = "2015-07-31", end = "2015-10-01",
-                            dimensions=c('medium'), 
-                            metrics = c('sessions'),
-                            sort = "ga:sessions")
-  
-  expect_length(multi, 2)
-  
-  expect_s3_class(multi[[1]], "data.frame")
-  expect_s3_class(multi[[2]], "data.frame")  
-  
-})
-
-test_that("v3 multi account batching with flag", {
-  skip_on_cran()
-  
-  multi <- google_analytics(c(ga_id2, ga_id),
-                            start = "2015-07-30", end = "2015-10-01",
-                            dimensions=c('medium'), 
-                            metrics = c('sessions'),
-                            sort = "ga:sessions",
-                            multi_account_batching = TRUE)
-  
-  expect_length(multi, 2)
-  
-  expect_s3_class(multi[[1]], "data.frame")
-  expect_s3_class(multi[[2]], "data.frame")  
-  
-})
-
-test_that("v3 WALK data", {
-  skip_on_cran()
-  
-  walked <- suppressWarnings(
-    google_analytics(ga_id,
-                     start = "2015-07-30", end = "2015-10-01",
-                     dimensions=c('medium'), 
-                     metrics = c('sessions'),
-                     sort = "ga:sessions",
-                     samplingLevel = "WALK"))
-  
-  expect_s3_class(walked, "data.frame")  
-  
-})
-
-test_that("v3 Batch data", {
-  skip_on_cran()
-  
-  bb <- google_analytics(ga_id,
-                             start = "2015-07-30", end = "2015-10-01",
-                             dimensions=c('medium','source','hour','minute','pagePath'), 
-                             metrics = c('sessions'),
-                             sort = "ga:sessions",
-                             max_results = 30000)
-  
-  expect_s3_class(bb, "data.frame")  
-  
-})
-
-test_that("v4 API matches v3 equivalent API call", {
-  skip_on_cran()
-  v3 <- google_analytics(ga_id, 
-                         start = "2015-07-30", end = "2015-10-01",
-                         dimensions=c('medium'), 
-                         metrics = c('sessions'),
-                         sort = "ga:sessions")  
-  v4 <-  google_analytics_4(ga_id, 
-                            date_range = c("2015-07-30","2015-10-01"),
-                            dimensions=c('medium'), 
-                            metrics = c('sessions'),
-                            order = order_type("sessions")) 
-  
-  expect_equal(v3$medium, v4$medium)
-  expect_equal(v3$sessions, v4$sessions)
-  
-})
+# test_that("v3 multi account batching without flag", {
+#   
+#   skip_on_cran()
+#   multi <- google_analytics(c(ga_id, ga_id2),
+#                             start = "2015-07-31", end = "2015-10-01",
+#                             dimensions=c('medium'), 
+#                             metrics = c('sessions'),
+#                             sort = "ga:sessions")
+#   
+#   expect_length(multi, 2)
+#   
+#   expect_s3_class(multi[[1]], "data.frame")
+#   expect_s3_class(multi[[2]], "data.frame")  
+#   
+# })
+# 
+# test_that("v3 multi account batching with flag", {
+#   skip_on_cran()
+#   
+#   multi <- google_analytics(c(ga_id2, ga_id),
+#                             start = "2015-07-30", end = "2015-10-01",
+#                             dimensions=c('medium'), 
+#                             metrics = c('sessions'),
+#                             sort = "ga:sessions",
+#                             multi_account_batching = TRUE)
+#   
+#   expect_length(multi, 2)
+#   
+#   expect_s3_class(multi[[1]], "data.frame")
+#   expect_s3_class(multi[[2]], "data.frame")  
+#   
+# })
+# 
+# test_that("v3 WALK data", {
+#   skip_on_cran()
+#   
+#   walked <- suppressWarnings(
+#     google_analytics(ga_id,
+#                      start = "2015-07-30", end = "2015-09-01",
+#                      dimensions=c('medium'), 
+#                      metrics = c('sessions'),
+#                      sort = "ga:sessions",
+#                      samplingLevel = "WALK"))
+#   
+#   expect_s3_class(walked, "data.frame")  
+#   
+# })
+# 
+# test_that("v3 Batch data", {
+#   skip_on_cran()
+#   
+#   bb <- google_analytics(ga_id,
+#                              start = "2015-07-30", end = "2015-10-01",
+#                              dimensions=c('medium','source','hour','minute','pagePath'), 
+#                              metrics = c('sessions'),
+#                              sort = "ga:sessions",
+#                              max_results = 30000)
+#   
+#   expect_s3_class(bb, "data.frame")  
+#   
+# })
+# 
+# test_that("v4 API matches v3 equivalent API call", {
+#   skip_on_cran()
+#   v3 <- google_analytics(ga_id, 
+#                          start = "2015-07-30", end = "2015-10-01",
+#                          dimensions=c('medium'), 
+#                          metrics = c('sessions'),
+#                          sort = "ga:sessions")  
+#   v4 <-  google_analytics_4(ga_id, 
+#                             date_range = c("2015-07-30","2015-10-01"),
+#                             dimensions=c('medium'), 
+#                             metrics = c('sessions'),
+#                             order = order_type("sessions")) 
+#   
+#   expect_equal(v3$medium, v4$medium)
+#   expect_equal(v3$sessions, v4$sessions)
+#   
+# })
 
 test_that("v3 Multi-channel funnels", {
   skip_on_cran()
@@ -625,19 +626,19 @@ test_that("Get Filter View", {
   
 })
 
-context("Anti-sampling")
-
-test_that("Anti-sample when no sampling there", {
-  skip_on_cran()
-  as <-   google_analytics_4(ga_id, 
-                            date_range = c("2015-07-30","2016-10-01"),
-                            dimensions=c('minute','hour','landingPagePath','medium','eventLabel','campaign'), 
-                            metrics = c('sessions'),
-                            anti_sample = TRUE)  
-  expect_s3_class(as, "data.frame")
-  
-  
-})
+# context("Anti-sampling")
+# 
+# test_that("Anti-sample when no sampling there", {
+#   skip_on_cran()
+#   as <-   google_analytics_4(ga_id, 
+#                             date_range = c("2015-07-30","2016-10-01"),
+#                             dimensions=c('minute','hour','landingPagePath','medium','eventLabel','campaign'), 
+#                             metrics = c('sessions'),
+#                             anti_sample = TRUE)  
+#   expect_s3_class(as, "data.frame")
+#   
+#   
+# })
 
 test_that("Aggregation works", {
   skip_on_cran()

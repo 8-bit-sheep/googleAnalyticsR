@@ -1,5 +1,7 @@
 # googleAnalytics 0.4.1.9000
 
+* note to self -  CRAN submission, use CRAN branch that ignores tests
+
 ## Bug fixes
 
 * Fix bug of argument match in `multi_select`(#99 - thanks @sdhaus)
