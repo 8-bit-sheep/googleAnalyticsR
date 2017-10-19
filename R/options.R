@@ -40,14 +40,14 @@
   
   default_project_message()
   
-  f <- function(req){
-    if(!is.null(req$content$reports)){
-      return(TRUE)
-    } else {
-      return(FALSE)
-    }}
+  # f <- function(req){
+  #   if(!is.null(req$content$reports)){
+  #     return(TRUE)
+  #   } else {
+  #     return(FALSE)
+  #   }}
   
-  googleAuthR::gar_cache_setup(invalid_func = f)
+  #googleAuthR::gar_cache_setup(invalid_func = f)
   
   invisible()
   
