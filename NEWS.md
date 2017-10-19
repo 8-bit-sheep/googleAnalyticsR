@@ -1,6 +1,4 @@
-# googleAnalytics 0.4.1.9000
-
-* note to self -  CRAN submission, use CRAN branch that ignores tests
+# googleAnalytics 0.4.2
 
 ## Bug fixes
 
