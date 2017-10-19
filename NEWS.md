@@ -16,6 +16,7 @@
 * You can now set your `GA_CLIENT_ID`, `GA_CLIENT_SECRET` in environment arguments and they will be added to the project options on startup. 
 * Authenticate on startup with `GA_AUTH_FILE` pointing to your cache file.
 * Add support for "today" and "yesterday" date values in anti_sample (#112)
+* Add that `max` is ignored during `anti_sample=TRUE` (#111)
 
 # googleAnalyticsR 0.4.1
 
