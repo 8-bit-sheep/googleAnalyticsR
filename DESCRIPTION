@@ -40,4 +40,3 @@ License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
-Remotes: MarkEdmondson1234/googleAuthR
