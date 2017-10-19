@@ -1,11 +1,12 @@
 library(httptest)
 .mockPaths("..")
 
-options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
-                                        "https://www.googleapis.com/auth/analytics.edit",
-                                        "https://www.googleapis.com/auth/analytics.manage.users.readonly",
-                                        "https://www.googleapis.com/auth/cloud-platform",
-                                        "https://www.googleapis.com/auth/devstorage.full_control"),
+options(googleAuthR.scopes.selected = 
+          c("https://www.googleapis.com/auth/analytics",
+            "https://www.googleapis.com/auth/analytics.edit",
+            "https://www.googleapis.com/auth/analytics.manage.users.readonly",
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/devstorage.full_control"),
         googleAuthR.client_id = "289759286325-da3fr5kq4nl4nkhmhs2uft776kdsggbo.apps.googleusercontent.com",
         googleAuthR.client_secret = "1mKySbffYRyWevGkjL0LMJYu")
 

@@ -15,8 +15,12 @@
   )
   
   toset <- !(names(op.googleAnalyticsR) %in% names(op))
-  
+  ## only set those not set already
   if(any(toset)) options(op.googleAnalyticsR[toset])
+  
+  ## override existing options
+  options(
+    googleAuthR.batch_endpoint = "https://www.googleapis.com/batch/analytics/v3")
   
   if(Sys.getenv("GA_CLIENT_ID") != ""){
     options(googleAuthR.client_id = Sys.getenv("GA_CLIENT_ID"))
