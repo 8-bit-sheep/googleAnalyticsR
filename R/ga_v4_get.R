@@ -216,7 +216,7 @@ make_ga_4_req <- function(viewId,
 #'   the number of calls.
 #' 
 #' @inheritParams make_ga_4_req
-#' @param max Maximum number of rows to fetch. Defaults at 1000. Use -1 to fetch all results.
+#' @param max Maximum number of rows to fetch. Defaults at 1000. Use -1 to fetch all results. Ignored when \code{anti_sample=TRUE}.
 #' @param anti_sample If TRUE will split up the call to avoid sampling.
 #' @param anti_sample_batches "auto" default, or set to number of days per batch. 1 = daily.
 #' @param slow_fetch For large results this slows down the API requests to avoid 500 errors

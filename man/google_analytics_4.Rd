@@ -36,7 +36,7 @@ for two date ranges: \code{c(start1,end1,start2,end2)}}
 
 \item{cohorts}{Cohorts created by \link{make_cohort_group}}
 
-\item{max}{Maximum number of rows to fetch. Defaults at 1000. Use -1 to fetch all results.}
+\item{max}{Maximum number of rows to fetch. Defaults at 1000. Use -1 to fetch all results. Ignored when \code{anti_sample=TRUE}.}
 
 \item{samplingLevel}{Sample level}
 
