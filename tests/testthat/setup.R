@@ -1,6 +1,6 @@
 library(httptest)
 library(googleAnalyticsR)
-.mockPaths("..")
+.mockPaths("/Users/mark/dev/R/googleAnalyticsR_mocks")
 
 options(googleAuthR.scopes.selected = 
           c("https://www.googleapis.com/auth/analytics",
