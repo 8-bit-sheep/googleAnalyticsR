@@ -19,7 +19,8 @@ anti_sample <- function(anti_sample_batches,
                         cohorts,
                         metricFormat,
                         histogramBuckets,
-                        slow_fetch){
+                        slow_fetch,
+                        useResourceQuotas){
   
   if(length(date_range) > 2) stop("Anti-sampling not available for comparison date ranges.")
   
