@@ -278,7 +278,7 @@ google_analytics_4 <- function(viewId,
                                anti_sample = FALSE,
                                anti_sample_batches = "auto",
                                slow_fetch = FALSE,
-                               useResourceQuotas= FALSE){
+                               useResourceQuotas= NULL){
   
   # cache_call(cache)
   

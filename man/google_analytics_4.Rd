@@ -11,7 +11,7 @@ google_analytics_4(viewId, date_range = NULL, metrics = NULL,
   samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
   histogramBuckets = NULL, anti_sample = FALSE,
   anti_sample_batches = "auto", slow_fetch = FALSE,
-  useResourceQuotas = FALSE)
+  useResourceQuotas = NULL)
 }
 \arguments{
 \item{viewId}{viewId of data to get.}
