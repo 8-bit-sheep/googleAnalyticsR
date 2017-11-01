@@ -2,7 +2,7 @@
 % Please edit documentation in R/ga_v4_get.R
 \name{google_analytics_4}
 \alias{google_analytics_4}
-\title{Get Google Analytics v4 data (single request)}
+\title{Get Google Analytics v4 data}
 \usage{
 google_analytics_4(viewId, date_range = NULL, metrics = NULL,
   dimensions = NULL, dim_filters = NULL, met_filters = NULL,
@@ -10,7 +10,8 @@ google_analytics_4(viewId, date_range = NULL, metrics = NULL,
   pivots = NULL, cohorts = NULL, max = 1000,
   samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
   histogramBuckets = NULL, anti_sample = FALSE,
-  anti_sample_batches = "auto", slow_fetch = FALSE)
+  anti_sample_batches = "auto", slow_fetch = FALSE,
+  useResourceQuotas = FALSE)
 }
 \arguments{
 \item{viewId}{viewId of data to get.}
@@ -50,13 +51,14 @@ See details in \link{make_ga_4_req}}
 \item{anti_sample_batches}{"auto" default, or set to number of days per batch. 1 = daily.}
 
 \item{slow_fetch}{For large results this slows down the API requests to avoid 500 errors}
+
+\item{useResourceQuotas}{If using GA360, access increased sampling limits}
 }
 \value{
 A Google Analytics data.frame
 }
 \description{
-A convenience function that wraps \link{make_ga_4_req} and \link{fetch_google_analytics_4}
- for the common case of one GA data request.
+Fetch Google Analytics data using the v4 API for one view
  
 Will perform automatic batching if over the 10000 row per API call limit.
 }
