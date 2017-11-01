@@ -1,6 +1,7 @@
 # googleAnalytics 0.4.2.9000
 
 * note to self -  CRAN submission, use CRAN branch that ignores tests
+* Add support for [resource based quotas](`https://developers.google.com/analytics/devguides/reporting/core/v4/resource-based-quota`) (#127)
 
 # googleAnalytics 0.4.2
 

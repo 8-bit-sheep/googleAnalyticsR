@@ -2,6 +2,10 @@
 #' @keywords internal
 google_analytics_4_parse_batch <- function(response_list){
   
+  if(!is.null(response_list$queryCost)){
+    myMessage("useResourceQuotas cost: ", response_list$queryCost, level = 3)
+  }
+  
   if(!is.null(response_list$reports)){
     parsed <- lapply(response_list$reports, google_analytics_4_parse)
   } else {
