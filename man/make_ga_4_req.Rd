@@ -9,7 +9,7 @@ make_ga_4_req(viewId, date_range = NULL, metrics = NULL,
   filtersExpression = NULL, order = NULL, segments = NULL,
   pivots = NULL, cohorts = NULL, pageToken = 0, pageSize = 1000,
   samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
-  histogramBuckets = NULL, useResourceQuotas = FALSE)
+  histogramBuckets = NULL, useResourceQuotas = NULL)
 }
 \arguments{
 \item{viewId}{viewId of data to get.}
@@ -46,7 +46,8 @@ for two date ranges: \code{c(start1,end1,start2,end2)}}
 \item{histogramBuckets}{For numeric dimensions such as hour, a list of buckets of data.
 See details in \link{make_ga_4_req}}
 
-\item{useResourceQuotas}{If using GA360, access increased sampling limits}
+\item{useResourceQuotas}{If using GA360, access increased sampling limits. 
+Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to this feature.}
 }
 \description{
 This function constructs the Google Analytics API v4 call to be called

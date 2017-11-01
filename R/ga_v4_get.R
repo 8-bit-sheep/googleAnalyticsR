@@ -22,7 +22,8 @@
 #' @param metricFormat If supplying calculated metrics, specify the metric type
 #' @param histogramBuckets For numeric dimensions such as hour, a list of buckets of data.
 #'   See details in \link{make_ga_4_req}
-#' @param useResourceQuotas If using GA360, access increased sampling limits
+#' @param useResourceQuotas If using GA360, access increased sampling limits. 
+#'   Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to this feature. 
 #'
 #' @section Metrics:
 #'   Metrics support calculated metrics like ga:users / ga:sessions if you supply
@@ -118,10 +119,13 @@ make_ga_4_req <- function(viewId,
                           samplingLevel=c("DEFAULT", "SMALL","LARGE"),
                           metricFormat=NULL,
                           histogramBuckets=NULL,
-                          useResourceQuotas=FALSE) {
+                          useResourceQuotas=NULL) {
 
   samplingLevel <- match.arg(samplingLevel)
-  assert_that(is.flag(useResourceQuotas))
+
+  if(!is.null(useResourceQuotas)){
+    assert_that(is.flag(useResourceQuotas))
+  }
   
   if(all(is.null(date_range), is.null(cohorts))){
     stop("Must supply one of date_range or cohorts")
