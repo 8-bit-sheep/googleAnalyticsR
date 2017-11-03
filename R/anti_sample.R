@@ -19,8 +19,7 @@ anti_sample <- function(anti_sample_batches,
                         cohorts,
                         metricFormat,
                         histogramBuckets,
-                        slow_fetch,
-                        useResourceQuotas){
+                        slow_fetch){
   
   if(length(date_range) > 2) stop("Anti-sampling not available for comparison date ranges.")
   
@@ -51,8 +50,7 @@ anti_sample <- function(anti_sample_batches,
                                   metricFormat      = metricFormat,
                                   samplingLevel     = "LARGE",
                                   histogramBuckets  = histogramBuckets,
-                                  slow_fetch        = FALSE,
-                                  useResourceQuotas = useResourceQuotas)
+                                  slow_fetch        = FALSE)
   
 
   ## reduce read counts by 10% to get more calls as returned figure is flakey
@@ -81,8 +79,7 @@ anti_sample <- function(anti_sample_batches,
                                     samplingLevel     = "LARGE",
                                     histogramBuckets  = histogramBuckets,
                                     anti_sample       = FALSE,
-                                    slow_fetch        = slow_fetch,
-                                    useResourceQuotas = useResourceQuotas)
+                                    slow_fetch        = slow_fetch)
     return(unsampled)
   }
   
@@ -136,8 +133,7 @@ anti_sample <- function(anti_sample_batches,
                               metricFormat      = metricFormat,
                               samplingLevel     = "LARGE",
                               histogramBuckets  = histogramBuckets,
-                              slow_fetch        = slow_fetch,
-                              useResourceQuotas = useResourceQuotas)
+                              slow_fetch        = slow_fetch)
     
     read_counts2 <- as.integer(attr(out,"samplesReadCounts")[[1]])
     space_size2  <- as.integer(attr(out, "samplingSpaceSizes")[[1]])

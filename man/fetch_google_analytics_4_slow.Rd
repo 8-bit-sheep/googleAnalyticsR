@@ -4,7 +4,8 @@
 \alias{fetch_google_analytics_4_slow}
 \title{Fetch GAv4 requests one at a time}
 \usage{
-fetch_google_analytics_4_slow(request_list, max_rows, allRows = FALSE)
+fetch_google_analytics_4_slow(request_list, max_rows, allRows = FALSE,
+  useResourceQuotas = NULL)
 }
 \arguments{
 \item{request_list}{A list of requests created by \link{make_ga_4_req}}
@@ -12,6 +13,9 @@ fetch_google_analytics_4_slow(request_list, max_rows, allRows = FALSE)
 \item{max_rows}{Number of rows requested (if not fetched)}
 
 \item{allRows}{Whether to fetch all available rows}
+
+\item{useResourceQuotas}{If using GA360, access increased sampling limits. 
+Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to this feature.}
 }
 \value{
 A dataframe of all the requests

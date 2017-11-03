@@ -110,7 +110,7 @@ library(googleAnalyticsR)
 googleAuthR::gar_auth("~/auth/client_one.httr-oauth")
 
 client_one <- google_analytics_4(ga_id_one, date_range = my_date_range, 
-                                 metrics = "sessions", dimensions = c("date", "medium"))
+                                 metrics = "sessions", dimensions = c("date", "medium"), )
 
 googleAuthR::gar_auth("~/auth/client_two.httr-oauth")
 
