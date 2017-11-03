@@ -220,7 +220,9 @@ make_ga_4_req <- function(viewId,
 #' @param anti_sample If TRUE will split up the call to avoid sampling.
 #' @param anti_sample_batches "auto" default, or set to number of days per batch. 1 = daily.
 #' @param slow_fetch For large results this slows down the API requests to avoid 500 errors
-#' 
+#' @param useResourceQuotas If using GA360, access increased sampling limits. 
+#'   Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to this feature. 
+#'   
 #' @return A Google Analytics data.frame
 #' 
 #' @examples 
@@ -479,7 +481,7 @@ fetch_google_analytics_4_slow <- function(request_list, max_rows, allRows = FALS
 #' @param merge If TRUE then will rbind that list of data.frames
 #' @param useResourceQuotas If using GA360, access increased sampling limits. 
 #'   Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to this feature. 
-#'   
+#'     
 #' @return A dataframe if one request, or a list of data.frames if multiple.
 #'
 #' @importFrom googleAuthR gar_api_generator

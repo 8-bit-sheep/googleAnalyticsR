@@ -51,6 +51,9 @@ See details in \link{make_ga_4_req}}
 \item{anti_sample_batches}{"auto" default, or set to number of days per batch. 1 = daily.}
 
 \item{slow_fetch}{For large results this slows down the API requests to avoid 500 errors}
+
+\item{useResourceQuotas}{If using GA360, access increased sampling limits. 
+Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to this feature.}
 }
 \value{
 A Google Analytics data.frame
