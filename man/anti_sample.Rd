@@ -6,7 +6,7 @@
 \usage{
 anti_sample(anti_sample_batches, viewId, date_range, metrics, dimensions,
   dim_filters, met_filters, filtersExpression, order, segments, pivots, cohorts,
-  metricFormat, histogramBuckets, slow_fetch)
+  metricFormat, histogramBuckets, slow_fetch, useResourceQuotas)
 }
 \arguments{
 \item{anti_sample_batches}{"auto" default, or set to number of days per batch. 1 = daily.}
@@ -40,6 +40,9 @@ for two date ranges: \code{c(start1,end1,start2,end2)}}
 See details in \link{make_ga_4_req}}
 
 \item{slow_fetch}{For large results this slows down the API requests to avoid 500 errors}
+
+\item{useResourceQuotas}{If using GA360, access increased sampling limits. 
+Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to this feature.}
 }
 \description{
 Calculates multiple API calls to avoid sampling

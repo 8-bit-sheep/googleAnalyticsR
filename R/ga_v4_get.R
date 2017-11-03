@@ -22,6 +22,8 @@
 #' @param metricFormat If supplying calculated metrics, specify the metric type
 #' @param histogramBuckets For numeric dimensions such as hour, a list of buckets of data.
 #'   See details in \link{make_ga_4_req}
+#' @param useResourceQuotas If using GA360, access increased sampling limits. 
+#'   Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to this feature. 
 #'
 #' @section Metrics:
 #'   Metrics support calculated metrics like ga:users / ga:sessions if you supply
@@ -99,6 +101,7 @@
 #' 
 #' 
 #' @family GAv4 fetch functions
+#' @import assertthat
 #' @export
 make_ga_4_req <- function(viewId,
                           date_range=NULL,
@@ -115,16 +118,21 @@ make_ga_4_req <- function(viewId,
                           pageSize=1000,
                           samplingLevel=c("DEFAULT", "SMALL","LARGE"),
                           metricFormat=NULL,
-                          histogramBuckets=NULL) {
+                          histogramBuckets=NULL,
+                          useResourceQuotas=NULL) {
 
   samplingLevel <- match.arg(samplingLevel)
+
+  if(!is.null(useResourceQuotas)){
+    assert_that(is.flag(useResourceQuotas))
+  }
   
   if(all(is.null(date_range), is.null(cohorts))){
     stop("Must supply one of date_range or cohorts")
   }
   
   if(!is.null(cohorts)){
-    assertthat::assert_that(cohort_metric_check(metrics),
+    assert_that(cohort_metric_check(metrics),
                             cohort_dimension_check(dimensions))
     if(!is.null(date_range)){
       warning("Don't supply date_range when using cohorts, setting date_range to NULL")
@@ -184,7 +192,8 @@ make_ga_4_req <- function(viewId,
         cohortGroup=cohorts,
         pageToken=as.character(pageToken),
         pageSize = pageSize,
-        includeEmptyRows = TRUE
+        includeEmptyRows = TRUE,
+        useResourceQuotas = useResourceQuotas
       ),
       class = "ga4_req")
 
@@ -195,10 +204,9 @@ make_ga_4_req <- function(viewId,
 
 
 
-#' Get Google Analytics v4 data (single request)
+#' Get Google Analytics v4 data
 #'
-#' A convenience function that wraps \link{make_ga_4_req} and \link{fetch_google_analytics_4}
-#'  for the common case of one GA data request.
+#' Fetch Google Analytics data using the v4 API for one view
 #'  
 #' Will perform automatic batching if over the 10000 row per API call limit.
 #' 
@@ -269,7 +277,8 @@ google_analytics_4 <- function(viewId,
                                histogramBuckets=NULL,
                                anti_sample = FALSE,
                                anti_sample_batches = "auto",
-                               slow_fetch = FALSE){
+                               slow_fetch = FALSE,
+                               useResourceQuotas= NULL){
   
   # cache_call(cache)
   
@@ -302,7 +311,8 @@ google_analytics_4 <- function(viewId,
                        metricFormat      = metricFormat,
                        histogramBuckets  = histogramBuckets,
                        anti_sample_batches = anti_sample_batches,
-                       slow_fetch = slow_fetch))
+                       slow_fetch          = slow_fetch,
+                       useResourceQuotas = useResourceQuotas))
   }
   
   if(max > reqRowLimit){
@@ -337,7 +347,8 @@ google_analytics_4 <- function(viewId,
                   pageSize          = remaining,
                   samplingLevel     = samplingLevel,
                   metricFormat      = metricFormat,
-                  histogramBuckets  = histogramBuckets)
+                  histogramBuckets  = histogramBuckets,
+                  useResourceQuotas = useResourceQuotas)
     
     })
   
@@ -377,7 +388,8 @@ google_analytics_4 <- function(viewId,
                       pageSize          = remaining,
                       samplingLevel     = samplingLevel,
                       metricFormat      = metricFormat,
-                      histogramBuckets  = histogramBuckets)
+                      histogramBuckets  = histogramBuckets,
+                      useResourceQuotas = useResourceQuotas)
         
       })
       the_rest <- fetch_google_analytics_4(requests2, merge = TRUE)
@@ -505,10 +517,11 @@ fetch_google_analytics_4_slow <- function(request_list, max_rows, allRows = FALS
 #' }
 #' 
 #' @family GAv4 fetch functions
+#' @import assertthat
 #' @export
 fetch_google_analytics_4 <- function(request_list, merge = FALSE){
 
-  assertthat::assert_that(is.list(request_list))
+  assert_that(is.list(request_list))
   ## amount of batches per v4 api call
   ga_batch_limit <- 5
   
@@ -537,7 +550,6 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE){
   f <- gar_api_generator("https://analyticsreporting.googleapis.com/v4/reports:batchGet",
                          "POST",
                          data_parse_function = google_analytics_4_parse_batch,
-                         # data_parse_function = function(x) x,
                          simplifyVector = FALSE)
   
   ## if under 5, one call
