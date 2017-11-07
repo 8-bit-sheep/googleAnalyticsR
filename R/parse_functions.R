@@ -1,9 +1,10 @@
 #' ga v4 parse batching
 #' @keywords internal
 google_analytics_4_parse_batch <- function(response_list){
-  
-  if(!is.null(response_list$queryCost)){
-    myMessage("useResourceQuotas cost: ", response_list$queryCost, level = 3)
+
+  if(!is.null(response_list$resourceQuotasRemaining)){
+    myMessage("dailyQuotaTokensRemaining: ", response_list$resourceQuotasRemaining$dailyQuotaTokensRemaining, level = 3)
+    myMessage("hourlyQuotaTokensRemaining: ", response_list$resourceQuotasRemaining$hourlyQuotaTokensRemaining, level = 3)
   }
   
   if(!is.null(response_list$reports)){
@@ -25,9 +26,7 @@ google_analytics_4_parse_batch <- function(response_list){
 google_analytics_4_parse <- function(x){
   
   myMessage("Parsing GA API v4", level = 1)
- 
-  #### x <- ga_data2$reports[[1]]
-  
+
   columnHeader <- x$columnHeader
   data <- x$data$rows
   hasDateComparison <- if(length(data[[1]]$metrics) == 2) TRUE else FALSE
