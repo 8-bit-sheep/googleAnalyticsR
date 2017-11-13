@@ -41,7 +41,10 @@
   default_project_message()
   
   f <- function(req){
-    if(!is.null(req$content$reports)){
+    
+    stuff <- tryCatch(req$content$reports, error = function(x) NULL)
+    
+    if(!is.null(stuff)){
       return(TRUE)
     } else {
       return(FALSE)
