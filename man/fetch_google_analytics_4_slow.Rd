@@ -26,6 +26,6 @@ Due to large complicated queries causing the v4 API to timeout,
 }
 \seealso{
 Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4}},
-  \code{\link{google_analytics_4}},
+  \code{\link{google_analytics}},
   \code{\link{make_ga_4_req}}
 }

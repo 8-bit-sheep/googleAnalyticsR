@@ -57,6 +57,6 @@ fetch_google_analytics_4(list(ga_req1, ga_req2))
 }
 \seealso{
 Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4_slow}},
-  \code{\link{google_analytics_4}},
+  \code{\link{google_analytics}},
   \code{\link{make_ga_4_req}}
 }

@@ -121,20 +121,21 @@ make_ga_4_req <- function(viewId,
   samplingLevel <- match.arg(samplingLevel)
   
   if(all(is.null(date_range), is.null(cohorts))){
-    stop("Must supply one of date_range or cohorts")
+    stop("Must supply one of date_range or cohorts", call. = FALSE)
   }
   
   if(!is.null(cohorts)){
     assert_that(cohort_metric_check(metrics),
                             cohort_dimension_check(dimensions))
     if(!is.null(date_range)){
-      warning("Don't supply date_range when using cohorts, setting date_range to NULL")
+      warning("Don't supply date_range when using cohorts, setting date_range to NULL", 
+              call. = FALSE)
       date_range <- NULL
     }
   }
   
   if(is.null(metrics)){
-    stop("Must supply a metric")
+    stop("Must supply a metric", call. = FALSE)
   }
   
   if(!is.null(segments)){
@@ -207,13 +208,25 @@ make_ga_4_req <- function(viewId,
 #' \code{anti_sample} being TRUE ignores \code{max} as the API call is split over days 
 #'   to mitigate the sampling session limit, in which case a row limit won't work.  Take the top rows
 #'   of the result yourself instead e.g. \code{head(ga_data_unsampled, 50300)}
-#' 
-#' If you are lucky enough to need sub-day sampling, it will attempt to fetch per hour, but you are
-#'   restricted to not using \code{dim_filter} argument if this is the case.  
-#'   Try using \code{filtersExpression} instead.
 #'   
 #' \code{anti_sample} being TRUE will also set \code{samplingLevel='LARGE'} to minimise 
 #'   the number of calls.
+#' 
+#' @section Resource Quotas:
+#' 
+#' If you are on GA360 and have access to resource quotas,
+#'   set the \code{useResourceQuotas=TRUE} and set the Google Cloud 
+#'   client ID to the project that has resource quotas activated, 
+#'   via \link[googleAuthR]{gar_set_client} or options.
+#'   
+#' @section Caching:
+#' 
+#' By default local caching is turned on for v4 API requests.  This means that
+#'   making the same request as one this session will read from memory and not
+#'   make an API call. You can also set the cache to disk via 
+#'   the \link[googleAuthR]{gar_cache_setup} function.  This can be useful
+#'   when running RMarkdown reports using data. To empty the cache use 
+#'   \link[googleAuthR]{gar_cache_empty}.
 #' 
 #' @inheritParams make_ga_4_req
 #' @param max Maximum number of rows to fetch. Defaults at 1000. Use -1 to fetch all results. Ignored when \code{anti_sample=TRUE}.
@@ -223,7 +236,7 @@ make_ga_4_req <- function(viewId,
 #' @param useResourceQuotas If using GA360, access increased sampling limits. 
 #'   Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to this feature. 
 #'   
-#' @return A Google Analytics data.frame
+#' @return A Google Analytics data.frame, with attributes showing row totals, sampling etc. 
 #' 
 #' @examples 
 #' 
@@ -254,25 +267,25 @@ make_ga_4_req <- function(viewId,
 #' 
 #' @family GAv4 fetch functions
 #' @export
-google_analytics_4 <- function(viewId,
-                               date_range=NULL,
-                               metrics=NULL,
-                               dimensions=NULL,
-                               dim_filters=NULL,
-                               met_filters=NULL,
-                               filtersExpression=NULL,
-                               order=NULL,
-                               segments=NULL,
-                               pivots=NULL,
-                               cohorts=NULL,
-                               max=1000,
-                               samplingLevel=c("DEFAULT", "SMALL","LARGE"),
-                               metricFormat=NULL,
-                               histogramBuckets=NULL,
-                               anti_sample = FALSE,
-                               anti_sample_batches = "auto",
-                               slow_fetch = FALSE,
-                               useResourceQuotas= NULL){
+google_analytics <- function(viewId,
+                             date_range=NULL,
+                             metrics=NULL,
+                             dimensions=NULL,
+                             dim_filters=NULL,
+                             met_filters=NULL,
+                             filtersExpression=NULL,
+                             order=NULL,
+                             segments=NULL,
+                             pivots=NULL,
+                             cohorts=NULL,
+                             max=1000,
+                             samplingLevel=c("DEFAULT", "SMALL","LARGE"),
+                             metricFormat=NULL,
+                             histogramBuckets=NULL,
+                             anti_sample = FALSE,
+                             anti_sample_batches = "auto",
+                             slow_fetch = FALSE,
+                             useResourceQuotas= NULL){
   
   if(!is.null(useResourceQuotas)){
     assert_that(is.flag(useResourceQuotas))
@@ -401,6 +414,13 @@ google_analytics_4 <- function(viewId,
   
   out
 
+}
+
+#' @rdname google_analytics
+#' @export
+google_analytics_4 <- function(...){
+  .Deprecated("google_analytics", package = "googleAnalyticsR")
+  google_analytics(...)
 }
 
 #' Fetch GAv4 requests one at a time
