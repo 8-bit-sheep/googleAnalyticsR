@@ -4,6 +4,8 @@
 * Add support for [resource based quotas](`https://developers.google.com/analytics/devguides/reporting/core/v4/resource-based-quota`) (#127)
 * Improve support for using different auth cache files with `ga_auth()`
 * Changed `google_analytics` to be the v4 API, `google_analytics_3` now supports v3
+* change default cache token name from `.httr-oauth` to `ga.oauth` to avoid clashes
+
 
 # googleAnalytics 0.4.2
 

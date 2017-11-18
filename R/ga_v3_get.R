@@ -1,4 +1,4 @@
-#' Get Google Analytics v3 data
+#' Get Google Analytics v3 data (formerly google_analytics())
 #'
 #' @param id A character vector of View Ids to fetch from.
 #' @param start Start date in YYY-MM-DD format.
@@ -94,21 +94,21 @@
 #' @importFrom googleAuthR gar_api_generator
 #' 
 #' @export
-google_analytics <- function(id,
-                             start,
-                             end,
-                             metrics = c('sessions', 'bounceRate'),
-                             dimensions=NULL,
-                             sort=NULL,
-                             filters=NULL,
-                             segment=NULL,
-                             samplingLevel=c("DEFAULT", 
-                                             "FASTER",
-                                             "HIGHER_PRECISION", 
-                                             "WALK"),
-                             max_results=100,
-                             multi_account_batching = FALSE,
-                             type = c("ga", "mcf")) {
+google_analytics_3 <- function(id,
+                               start,
+                               end,
+                               metrics = c('sessions', 'bounceRate'),
+                               dimensions=NULL,
+                               sort=NULL,
+                               filters=NULL,
+                               segment=NULL,
+                               samplingLevel=c("DEFAULT", 
+                                               "FASTER",
+                                               "HIGHER_PRECISION", 
+                                               "WALK"),
+                               max_results=100,
+                               multi_account_batching = FALSE,
+                               type = c("ga", "mcf")) {
   
   samplingLevel <- match.arg(samplingLevel)
   start <- as.character(start)
