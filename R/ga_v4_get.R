@@ -199,7 +199,7 @@ make_ga_4_req <- function(viewId,
 
 #' Get Google Analytics v4 data
 #'
-#' Fetch Google Analytics data using the v4 API for one view
+#' Fetch Google Analytics data using the v4 API.  For the v3 API use \link{google_analytics_3}.
 #'  
 #' Will perform automatic batching if over the 10000 row per API call limit.
 #' 
@@ -417,6 +417,7 @@ google_analytics <- function(viewId,
 }
 
 #' @rdname google_analytics
+#' @param ... Arguments passed to \link{google_analytics}
 #' @export
 google_analytics_4 <- function(...){
   .Deprecated("google_analytics", package = "googleAnalyticsR")

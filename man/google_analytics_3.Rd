@@ -41,7 +41,7 @@ For one id a data.frame of data, with meta-data in attributes.
   For multiple id's, a list of dataframes.
 }
 \description{
-Get Google Analytics v3 data (formerly google_analytics())
+Legacy v3 API, for more modern API use \link{google_analytics}.
 }
 \examples{
 

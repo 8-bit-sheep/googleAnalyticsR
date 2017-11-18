@@ -1,11 +1,14 @@
 # googleAnalytics 0.4.2.9000
 
+**Breaking changes!**
+
+If you were using `google_analytics()` before to fetch the v3 API, this is now available via `google_analytics_3()` - replace all instances and it should work as before.  However, you are encouraged to migrate to v4, which now runs when you use `google_analytics()`(and for a while still at `google_analytics_4()` too)
+
 * note to self -  CRAN submission, use CRAN branch that ignores tests
 * Add support for [resource based quotas](`https://developers.google.com/analytics/devguides/reporting/core/v4/resource-based-quota`) (#127)
 * Improve support for using different auth cache files with `ga_auth()`
 * Changed `google_analytics` to be the v4 API, `google_analytics_3` now supports v3
 * change default cache token name from `.httr-oauth` to `ga.oauth` to avoid clashes
-
 
 # googleAnalytics 0.4.2
 
