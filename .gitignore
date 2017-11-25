@@ -1,18 +1,17 @@
 # History files
 .Rhistory
 .Rapp.history
-
+.RData
 # Example code in package build process
 *-Ex.R
-
 # RStudio files
 .Rproj.user/
-
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
 .Rproj.user
-
-.Rbuildignore
-
-*.Rproj
+inst/doc
+.httr-oauth
+tests/testthat/httr-oauth.rds
+#tests/testthat/mock/
+/Users/mark/dev/auth/googleAnalyticsR.httr-oauth

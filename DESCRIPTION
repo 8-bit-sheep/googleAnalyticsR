@@ -1,16 +1,45 @@
 Package: googleAnalyticsR
 Type: Package
+Version: 0.4.2.9000
 Title: Google Analytics API into R
-Version: 0.0.9001
-Date: 2015-08-15
-Authors@R: c(person("Mark", "Edmondson",email = "r@sunholo.com",
-                  role = c("aut", "cre")))
-URL: https://github.com/MarkEdmondson1234/googleAnalyticsR_public
-BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR_public/issues
-Description: Google Analytics API using googleAuthR
-License: MIT
-LazyData: TRUE
+Description: Interact with the Google Analytics 
+  APIs <https://developers.google.com/analytics/>, including 
+  the Core Reporting API (v3 and v4), Management API, and Multi-Channel
+  Funnel API
+Authors@R: c(person("Mark", "Edmondson", email = "m@sunholo.com",
+                  role = c("aut", "cre")),
+             person(given = "Artem", family = "Klevtsov",
+                    email = "a.a.klevtsov@gmail.com", role = "ctb"),
+           person("Johann", "deBoer", email = "johanndeboer@gmail.com", role = "ctb"),
+           person("David", "Watkins", email = "wm.david.watkins@gmail.com", role = "ctb"),
+           person("Olivia", "Brode-Roger", email = "nibr@mit.edu", role = "ctb"),
+           person("Jas", "Sohi", email = "contact@jassohi.com", role = "ctb"))
+URL: http://code.markedmondson.me/googleAnalyticsR/
+BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
 Depends:
     R (>= 3.2.0)
 Imports:
-    googleAuthR (>= 0.1.1.9002)
+    assertthat (>= 0.2.0),
+    dplyr (>= 0.7.0),
+    googleAuthR (>= 0.6.2),
+    httr (>= 1.3.1),
+    magrittr (>= 1.5),
+    memoise,
+    purrr (>= 0.2.2),
+    rlang (>= 0.1.0),
+    tidyr (>= 0.6.3),
+    utils
+Suggests:
+    bigQueryR (>= 0.3.1),
+    covr,
+    googleCloudStorageR (>= 0.2.0),
+    httptest,
+    knitr,
+    miniUI (>= 0.1.1),
+    rmarkdown,
+    shiny (>= 0.13.2)
+License: MIT + file LICENSE
+LazyData: TRUE
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
+Remotes: MarkEdmondson1234/googleAuthR

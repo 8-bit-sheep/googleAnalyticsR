@@ -1,0 +1,4 @@
+Name: GAv4 Segment Builder
+Description: Helper to construct GAv4 API calls.
+Binding: gadget_GASegment
+Interactive: true

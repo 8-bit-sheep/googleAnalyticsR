@@ -1,0 +1,686 @@
+---
+title: "googleAnalyticsR"
+author: "Mark Edmondson"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{googleAnalyticsR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+[googleAnalyticsR guide online](http://code.markedmondson.me/googleAnalyticsR)
+
+A new Google Analytics R library using the new v4 of the Google Analytics Reporting API.  Built using [`googleAuthR`](https://github.com/MarkEdmondson1234/googleAuthR). The successor to [`shinyga`](https://github.com/MarkEdmondson1234/shinyga) it allows online OAuth2 authentication within Shiny apps, along with new features such as batching and compatibility with other Google APIs.
+
+## Other GA R libraries
+
+These are all great libraries, that I have taken inspiration from.
+
+* [rga](https://github.com/skardhamar/rga)
+* [RGA](https://bitbucket.org/unikum/rga)
+* [RGoogleAnalytics](https://github.com/Tatvic/RGoogleAnalytics)
+* [ganalytics](https://github.com/jdeboer/ganalytics)
+* [GAR](https://github.com/andrewgeisler/GAR)
+
+## Why do we need another GA library?
+
+* First Google Analytics Reporting v4 API library for R
+* v4 features include: dynamic calculated metrics, pivots, histograms, date comparisons, batching.
+* Shiny App compatible
+* The same authentication flow can be used with other `googleAuthR` apps like [`searchConsoleR`](https://github.com/MarkEdmondson1234/searchConsoleR)
+* Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnnel
+* Support for `googleAuthR` batch, meaning 10 calls at once to GA - great for big fetches.  For big data calls this is implemented automatically so could be 10x quicker than normal GA fetching
+* Meta data included in attributes of returned dataframe including date ranges, totals, min and max
+
+## Install
+
+You will also need `googleAuthR` too:
+
+```r
+install.packages("googleAuthR")
+install.packages("googleAnalyticsR")
+```
+
+### Development version off github
+
+```r
+devtools::install_github("MarkEdmondson1234/googleAnalyticsR")
+```
+
+## To use - v4 API calls
+
+Todo.  But check out `?google_analytics_4` and these example queries:
+
+```r
+## setup
+library(googleAnalyticsR)
+
+## authenticate, or use the RStudio Addin "Google API Auth" with analytics scopes set
+ga_auth()
+
+## get your accounts
+account_list <- google_analytics_account_list()
+
+## pick a profile with data to query
+ga_id <- account_list[23,'viewId']
+
+```
+
+### New Filter Syntax
+
+```r
+## create filters on metrics
+mf <- met_filter("bounces", "GREATER_THAN", 0)
+mf2 <- met_filter("sessions", "GREATER", 2)
+
+## create filters on dimensions
+df <- dim_filter("source","BEGINS_WITH","1",not = TRUE)
+df2 <- dim_filter("source","BEGINS_WITH","a",not = TRUE)
+
+## construct filter objects
+fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
+fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
+
+## make v4 request
+## demo showing how the new filters work
+ga_data1 <- google_analytics_4(ga_id, 
+                              date_range = c("2015-07-30","2015-10-01"),
+                              dimensions=c('source','medium'), 
+                              metrics = c('sessions','bounces'), 
+                              met_filters = fc, 
+                              dim_filters = fc2, 
+                              filtersExpression = "ga:source!=(direct)")
+
+ga_data1
+
+#                     source   medium sessions bounces
+# 1                  baby.dk referral        3       2
+# 2                     bing  organic       71      42
+# 3  buttons-for-website.com referral        7       7
+# 4           duckduckgo.com referral        5       3
+# 5                   google  organic      642     520
+# 6                google.se referral        3       2
+# 7                 izito.se referral        3       1
+# 8          success-seo.com referral       35      35
+# 9    video--production.com referral       11      11
+# 10                   yahoo  organic       66      43
+# 11              zapmeta.se referral        6       4
+``` 
+
+
+### Querying multiple report types at a time
+
+Example with two date ranges and two reports.
+
+
+```r
+## demo of querying two date ranges at a time   
+## we make the request via make_ga_4_req() to use in next demo
+multidate_test <- make_ga_4_req(ga_id, 
+                                date_range = c("2015-07-30",
+                                               "2015-10-01",
+                                               "2014-07-30",
+                                               "2014-10-01"),
+                                dimensions = c('source','medium'), 
+                                metrics = c('sessions','bounces'))
+                                
+ga_data2 <- fetch_google_analytics_4(multidate_test)
+ga_data2
+#                     source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
+# 1                  baby.dk referral           3          2           6          3
+# 2                     bing  organic          71         42         217        126
+# 3  buttons-for-website.com referral           7          7           0          0
+# 4           duckduckgo.com referral           5          3           0          0
+# 5                   google  organic         642        520        1286        920
+# 6                google.se referral           3          2          12          9
+# 7                 izito.se referral           3          1           0          0
+# 8          success-seo.com referral          35         35           0          0
+# 9    video--production.com referral          11         11           0          0
+# 10                   yahoo  organic          66         43         236        178
+# 11              zapmeta.se referral           6          4           9          4
+
+
+## Demo querying two reports at the same time
+## Use make_ga_4_req() to make multiple requests and then send 
+##   them as a list to fetch_google_analytics_4()
+multi_test2 <- make_ga_4_req(ga_id,
+                                date_range = c("2015-07-30",
+                                               "2015-10-01",
+                                               "2014-07-30",
+                                               "2014-10-01"),
+                             dimensions=c('hour','medium'), 
+                             metrics = c('visitors','bounces'))
+
+## all requests must have same viewID and dateRange
+ga_data3 <- fetch_google_analytics_4(list(multidate_test, multi_test2)) 
+ga_data3
+# [[1]]
+#                     source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
+# 1                  baby.dk referral           3          2           6          3
+# 2                     bing  organic          71         42         217        126
+# 3  buttons-for-website.com referral           7          7           0          0
+# 4           duckduckgo.com referral           5          3           0          0
+# 5                   google  organic         642        520        1286        920
+# 6                google.se referral           3          2          12          9
+# 7                 izito.se referral           3          1           0          0
+# 8          success-seo.com referral          35         35           0          0
+# 9    video--production.com referral          11         11           0          0
+# 10                   yahoo  organic          66         43         236        178
+# 11              zapmeta.se referral           6          4           9          4
+# 
+# [[2]]
+#    hour   medium visitors.d1 bounces.d1 visitors.d2 bounces.d2
+# 1    00  organic          28         16          85         59
+# 2    00 referral           3          2           1          1
+# 3    01  organic          43         28          93         66
+
+
+```
+
+### On-the-fly calculated metrics
+
+
+```r
+ga_data4 <- google_analytics_4(ga_id,
+                               date_range = c("2015-07-30",
+                                              "2015-10-01"),
+                              dimensions=c('medium'), 
+                              metrics = c(visitsPerVisitor = "ga:visits/ga:visitors",
+                                          'bounces'), 
+                              metricFormat = c("FLOAT","INTEGER"))
+ga_data4
+#     medium visitsPerVisitor bounces
+# 1   (none)         1.000000     117
+# 2  organic         1.075137     612
+# 3 referral         1.012500      71
+```
+
+### Segments v4
+
+Segments are more complex to configure that v3, but more powerful and in line to how you configure them in the UI
+
+```r
+## make a segment element
+se <- segment_element("sessions", 
+                      operator = "GREATER_THAN", 
+                      type = "metric", 
+                      comparisonValue = 1, 
+                      scope = "USER")
+                      
+se2 <- segment_element("medium", 
+                      operator = "EXACT", 
+                      type = "dimension", 
+                      expressions = "organic")
+
+## choose between segment_vector_simple or segment_vector_sequence
+## Elements can be combined into clauses, which can then be combined into OR filter clauses
+sv_simple <- segment_vector_simple(list(list(se)))
+
+sv_simple2 <- segment_vector_simple(list(list(se2)))
+
+## Each segment vector can then be combined into a logical AND
+seg_defined <- segment_define(list(sv_simple, sv_simple2))
+
+## if only one AND definition, you can leave out wrapper list()
+seg_defined_one <- segment_define(sv_simple)
+
+
+## Each segement defintion can apply to users, sessions or both.
+## You can pass a list of several segments
+segment4 <- segment_ga4("simple", user_segment = seg_defined)
+
+## Add the segments to the segments param
+segment_example <- google_analytics_4(ga_id, 
+                                      c("2015-07-30","2015-10-01"), 
+                                      dimensions=c('source','medium','segment'), 
+                                      segments = segment4, 
+                                      metrics = c('sessions','bounces')
+                                      )
+
+segment_example
+#                            source   medium segment sessions bounces
+# 1                        24.co.uk referral  simple        1       1
+# 2                     aidsmap.com referral  simple        1       0
+# 3                             aol  organic  simple       30      19
+# 4                             ask  organic  simple       32      17
+
+
+## Sequence segment
+
+se2 <- segment_element("medium", 
+                       operator = "EXACT", 
+                       type = "dimension", 
+                       expressions = "organic")
+
+se3 <- segment_element("medium",
+                       operator = "EXACT",
+                       type = "dimension",
+                       not = TRUE,
+                       expressions = "organic")
+
+## step sequence
+## users who arrived via organic then via referral
+sv_sequence <- segment_vector_sequence(list(list(se2), 
+                                             list(se3)))
+
+seq_defined2 <- segment_define(list(sv_sequence))
+
+segment4_seq <- segment_ga4("sequence", user_segment = seq_defined2)
+
+## Add the segments to the segments param
+segment_seq_example <- google_analytics_4(ga_id, 
+                                          c("2016-04-01","2016-05-01"), 
+                                          dimensions=c('source','segment'), 
+                                          segments = segment4_seq,
+                                          metrics = c('sessions','bounces')
+                                          )
+segment_seq_example
+#                                source  segment sessions bounces
+# 1                                 aol sequence        1       0
+# 2                                 ask sequence        5       1
+# 3      bestbackpackersinsurance.co.uk sequence        9       6
+# 4                                bing sequence       22       2
+```
+
+### Cohort reports
+
+Details on [cohort reports and LTV can be found here](https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohorts).
+
+```r
+## first make a cohort group
+cohort4 <- make_cohort_group(list("cohort 1" = c("2015-08-01", "2015-08-01"), 
+                                "cohort 2" = c("2015-07-01","2015-07-01")))
+
+## then call cohort report.  No date_range and must include metrics and dimensions
+##   from the cohort list
+cohort_example <- google_analytics_4(ga_id, 
+                                     dimensions=c('cohort'), 
+                                     cohort = cohort4, 
+                                     metrics = c('cohortTotalUsers'))
+
+cohort_example
+#     cohort cohortTotalUsers
+# 1 cohort 1               14
+# 2 cohort 2               20
+
+```
+
+### Pivot Requests
+
+
+```r
+
+## filter pivot results to 
+pivot_dim_filter1 <- dim_filter("medium",
+                                "REGEXP",
+                                "organic|social|email|cpc")
+                                
+pivot_dim_clause <- filter_clause_ga4(list(pivot_dim_filter1))
+
+pivme <- pivot_ga4("medium",
+                   metrics = c("sessions"), 
+                   maxGroupCount = 4, 
+                   dim_filter_clause = pivot_dim_clause)
+
+pivtest1 <- google_analytics_4(ga_id, 
+                               c("2016-01-30","2016-10-01"), 
+                               dimensions=c('source'), 
+                               metrics = c('sessions'), 
+                               pivots = list(pivme))
+
+
+names(pivtest1)
+#  [1] "source"                      "sessions"                    "medium.referral.sessions"   
+#  [4] "medium..none..sessions"      "medium.cpc.sessions"         "medium.email.sessions"      
+#  [7] "medium.social.sessions"      "medium.twitter.sessions"     "medium.socialMedia.sessions"
+# [10] "medium.Social.sessions"      "medium.linkedin.sessions"  
+
+```
+
+
+## To use - v3 API calls
+
+v3 API calls are also tried and tested.
+
+For syntax of filters and dimensions, this library parses in exactly as specified in the [Google Analytics v3 API docs](https://developers.google.com/analytics/devguides/reporting/core/v3/reference?hl=en#filters), so check those out.  Note you do not need to encode symbols, but may have to encode URLs if you are filtering for those in say ga:pagePath
+
+```r
+library(googleAnalyticsR)
+
+## Authenticate in Google OAuth2
+## this also sets options
+ga_auth()
+
+## if you need to re-authenticate use ga_auth(new_user=TRUE)
+
+## if you have your own Google Dev console project keys, 
+## then don't run ga_auth() as that will set the authentication project to the defaults.
+## instead put your options here, and run googleAuthR::gar_auth()
+
+## get account info, including View Ids
+account_list <- google_analytics_account_list()
+ga_id <- account_list$viewId[1]
+
+## get a list of what metrics and dimensions you can use
+meta <- google_analytics_meta()
+head(meta)
+
+## pick the account_list$viewId you want to see data for.
+## metrics and dimensions can have or have not "ga:" prefix
+gadata <- google_analytics(id = ga_id, 
+                           start="2015-08-01", end="2015-08-02", 
+                           metrics = c("sessions", "bounceRate"), 
+                           dimensions = c("source", "medium"))
+
+## multi accounts, pass character vector of viewIds
+## outputs a list of data.frames, named after the viewId
+multi_gadata <- google_analytics(id = c("123456","9876545","765432"), 
+                                 start="2015-08-01", end="2015-08-02", 
+                                 metrics = c("sessions", "bounceRate"), 
+                                 dimensions = c("source", "medium"))
+
+## if more than 10000 rows in results, auto batching
+## example is setting lots of dimensions to try and create big sampled data
+batch_gadata <- google_analytics(id = account_list$viewId[1], 
+                                 start="2014-08-01", end="2015-08-02", 
+                                 metrics = c("sessions", "bounceRate"), 
+                                 dimensions = c("source", "medium", "landingPagePath","hour","minute"),
+                                 max=99999999)
+
+## mitigate sampling by setting samplingLevel="WALK"
+## this will send lots and lots of calls to the Google API limits, beware
+walk_gadata <- google_analytics(id = account_list$viewId[1], 
+                                start="2014-08-01", end="2015-08-02", 
+                                metrics = c("sessions", "bounceRate"), 
+                                dimensions = c("source", "medium", "landingPagePath"), 
+                                max=99999999, samplingLevel="WALK")
+
+## multi-channel funnels set type="mcf"
+mcf_gadata <- google_analytics(id = account_list$viewId[1], 
+                               start="2015-08-01", end="2015-08-02", 
+                               metrics = c("totalConversions"), 
+                               dimensions = c("sourcePath"), 
+                               type="mcf")
+
+## google_analytics dataframes include these meta data attributes:
+- attr(*, "containsSampledData")= logi FALSE
+ - attr(*, "samplePercent")= num 100
+ - attr(*, "samplingLevel")= chr "DEFAULT"
+ - attr(*, "profileInfo")=List of 6
+  ..$ profileId            : chr "535656"
+  ..$ accountId            : chr "2748374"
+  ..$ webPropertyId        : chr "UA-278374-1"
+  ..$ internalWebPropertyId: chr "5279208"
+  ..$ profileName          : chr "XXXXX"
+  ..$ tableId              : chr "mcf:539656"
+ - attr(*, "dateRange")=List of 2
+  ..$ startDate: chr "2015-08-01"
+  ..$ endDate  : chr "2015-08-02"
+ - attr(*, "totalResults")= int 4
+
+## reach meta-data via attr()
+attr(gadata, "profileInfo")
+attr(gadata, "dateRange")
+
+```
+## Using your own Google Developer Project API Key
+
+With the amount of API calls possible with this library via batching and walking, its more likely the shared
+Google API project will hit the 50,000 calls per day limit.
+
+To mitigate that, use your own Google Developer Console Project key, so it is not shared across all users of this library.
+
+Get your own OAuth2 clientID and client secret and add to the options like so:
+
+TODO: guide on how you get your own client Id.
+
+### Example adding your own Google Developer Console keys
+
+Below a new client Id is set for both offline and Shiny use.  Put the lines at the top of your R script with your
+own credentials.
+
+In this example, the scopes are also set so a user can authenticate with searchConsoleR at the same time, which 
+is possible as they both use googleAuthR as a backend.
+
+```r
+options("googleAuthR.client_id" = "994xxx55706-afliqtuxxxxxxx2fd4kesu6.apps.googleusercontent.com")
+options("googleAuthR.client_secret" = "3JhLa_GxxxxxCQYLe31c64")
+options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/analytics", 
+                                          "https://www.googleapis.com/auth/analytics.readonly", 
+                                          "https://www.googleapis.com/auth/webmasters"))
+options("googleAnalyticsR.webapp.client_id" = "994xxxx55706-e9qompxxxxx9pcab1u005cv.apps.googleusercontent.com")
+options("googleAnalyticsR.webapp.client_secret" = "zcofxxxxxxElemXN5sf")
+```
+
+
+## Shiny
+
+To use in Shiny, use the googleAuth `with_shiny`
+
+```r
+
+## in server.R
+library(googleAuthR)
+library(googleAnalyticsR)
+library(shiny)
+
+shinyServer(function(input, output, session){
+  
+  ## Get auth code from return URL
+  access_token  <- reactiveAccessToken(session)
+  
+  ## Make a loginButton to display using loginOutput
+  output$loginButton <- renderLogin(session, access_token(),
+                                    logout_class = "btn btn-danger")
+
+  gadata <- reactive({
+
+    gadata <- with_shiny(google_analytics,
+                         id = "222222",
+                         start="2015-08-01", end="2015-08-02", 
+                         metrics = c("sessions", "bounceRate"), 
+                         dimensions = c("source", "medium"),
+                         shiny_access_token = access_token())
+
+})
+```
+
+## BigQuery
+
+Limited support for more user friendly calls to BigQuery Google Analytics 360 exports is implemented from version `0.2.0`.
+
+This is intended for users who may be familar with Google Analytics but not with SQL necessary to extract equivalent data from a BigQuery export of Google Analytics 360 data.
+
+`google_analytics_bq` parses your metrics and dimensions into BigQuery queries.  
+
+### To do
+
+This is under active development, and features will expand in the future. Eventually the BigQuery reports can do a lot more than the normal Google Analytics API as it allows for statistics, grouping, timestamps and unique visitor and visit Ids.
+
+### Setup
+
+To use, you need to also install the [`bigQueryR`](http://code.markedmondson.me/bigQueryR/) library.
+
+Stable version is on CRAN:
+
+```r
+install.packages("bigQueryR")
+```
+
+Development version on devtools:
+
+```r
+devtools::install_github("MarkEdmondson1234/bigQueryR")
+```
+
+Once installed, authenticate to BigQuery:
+
+```r
+library(bigQueryR)
+
+## go through Google oAuth2 flow
+## needs email that has access to the BigQuery dataset
+bqr_auth()
+
+## get lists of your project and datasets
+bqr_list_projects()
+bqr_list_datasets("project-id")
+```
+
+If you want to authenticate with Google Analytics and BigQuery in the same session (or others) then its best to authenticate with `googleAuthR::gar_auth()` with the appropriate scopes set.  The below lets you authenticate with Google Analytics, Google Cloud Storage and BigQuery:
+
+```r
+options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
+                                        "https://www.googleapis.com/auth/cloud-platform",
+                                        "https://www.googleapis.com/auth/bigquery"))
+googleAuthR::gar_auth()
+```
+
+You may also want to use a JSON file to authenticate with BigQuery.  Make sure to add the service email to the users of the Google project, and then download the JSON file and authenitcate via:
+
+```r
+googleAuthR::gar_auth_service("gwt-download-XXXX.json")
+```
+
+See [`googleAuthR` help](https://github.com/MarkEdmondson1234/googleAuthR) for more details. 
+
+### Exporting data
+
+For BigQuery Google Analytics 360 exports, the dataset is the same as the GA View ID you are exporting.
+
+You can then export BigQuery data via:
+
+```r
+bq <- google_analytics_bq("project-id", "dataset-id-ga-viewid", 
+                           start = "2016-01-01", end = "2016-02-01", 
+                           metrics = "users", 
+                           dimensions = c("source","medium"))
+head(bq)
+             source   medium  users
+1   mavas|blahbs.ru  display  47837
+2          examp.ae referral   6090
+3   lm.facebook.com referral    335
+4       ghtie_yahoo  display 133900
+5      fjsfs_inmobi  display  19887
+6 tripadvisor.co.dk referral    307                         
+```
+
+At the moment the metrics/dimensions are limited as they need to added manually to a lookup table.  
+Segments/filters are not supported.  The data is unsampled though. 
+
+```r
+bq2 <- google_analytics_bq("project-id", "dataset-id-ga-viewid", 
+                           start = "2016-01-01", end = "2016-02-01", 
+                           metrics = "users", 
+                           dimensions = c("source","medium","landingPagePath"))
+                           
+> Error in google_analytics_bq("project-id", "dataset-id-ga-viewid", start = "2016-01-01",  : 
+  dimension not yet supported. Must be one of referralPath, campaign, source, medium, keyword, adContent, adwordsCampaignID, adwordsAdGroupID, transactionId, date, visitorId, visitId, visitStartTime, visitNumber                           
+```
+
+You can also query the BigQuery table directly using the query parameter.  
+
+This is just as you would in the BigQuery interface, and allows queries you can also do there. 
+
+```r
+q <- "SELECT
+  date,
+  SUM (totals.visits) visits,
+  SUM (totals.pageviews) pageviews,
+  SUM (totals.transactions) transactions,
+  SUM (totals.transactionRevenue)/1000000 revenue
+FROM [87010628.ga_sessions_20160327],[87010628.ga_sessions_20160328],[87010628.ga_sessions_20160329]
+GROUP BY date
+ORDER BY date ASC "
+
+bq3 <- google_analytics_bq("project-id", "dataset-id-ga-viewid", 
+                           query = q)
+
+```
+
+You can also just output the query for use within the interface, if you pass in the parameter `return_query_only`
+
+```r
+just_query <- google_analytics_bq("project-id", "dataset-id-ga-viewid", 
+                                  start = "2016-01-01", end = "2016-02-01", 
+                                  metrics = "users", 
+                                  dimensions = c("source","medium"),
+                                  return_query_only = TRUE)
+just_query
+# [1] "SELECT trafficSource.source as source, trafficSource.medium as medium, COUNT(fullVisitorId) as users 
+# FROM (TABLE_DATE_RANGE([dataset-id-ga-viewid.ga_sessions_], TIMESTAMP('2016-01-01'),
+# TIMESTAMP('2016-02-01'))) GROUP BY source, medium  LIMIT 100"
+```
+
+You could then paste this query into the BigQuery interface, or modify it and send it back in via `google_analytics_q`.
+
+### Implemented metrics and dimensions
+
+The metrics and dimensions implemented so far are in the two lookups below.  
+
+They include the BigQuery exclusive `hitTimestamp`, `fullVisitorId`, `visitId` etc.  
+
+Read the full [Google Analytics 360 BigQuery data schema](https://support.google.com/analytics/answer/3437719?hl=en) for an idea on what can be queried.
+
+```r
+lookup_bq_query_m <- c(visits = "SUM(totals.visits) as sessions",
+                       sessions = "SUM(totals.visits) as sessions",
+                       pageviews = "SUM(totals.pageviews) as pageviews",
+                       timeOnSite = "SUM(totals.timeOnSite) as timeOnSite",
+                       bounces = "SUM(totals.bounces) as bounces",
+                       transactions = "SUM(totals.transactions) as transactions",
+                       transactionRevenue = "SUM(totals.transactionRevenue)/1000000 as transactionRevenue",
+                       newVisits = "SUM(totals.newVisits) as newVisits",
+                       screenviews = "SUM(totals.screenviews) as screenviews",
+                       uniqueScreenviews = "SUM(totals.uniqueScreenviews) as uniqueScreenviews",
+                       timeOnScreen = "SUM(totals.timeOnScreen) as timeOnScreen",
+                       users = "COUNT(fullVisitorId) as users",
+                       exits = "COUNT(hits.isExit) as exits",
+                       entrances = "COUNT(hits.isEntrance) as entrances",
+                       eventValue = "SUM(hits.eventinfo.eventValue) as eventValue",
+                       metricXX = {a function to output hit level custom metrics})
+
+lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPath",
+                       hitTimestamp = "(visitStartTime + (hits.time/1000)) as hitTimestamp",
+                       campaign = "trafficSource.campaign as campaign",
+                       source = "trafficSource.source as source",
+                       medium = "trafficSource.medium as medium",
+                       keyword = "trafficSource.keyword as keyword",
+                       adContent = "trafficSource.adContent as adContent",
+                       adwordsCampaignID = "trafficSource.adwordsClickInfo.campaignId as adwordsCampaignId",
+                       adwordsAdGroupID = "trafficSource.adwordsClickInfo.adGroupId as adwordsAdGroupId",
+                       # adwords...etc...
+                       transactionId = "hits.transaction.transactionId as transactionId",
+                       date = "date",
+                       fullVisitorId = "fullVisitorId",
+                       userId = "userId",
+                       visitorId = "visitorId",
+                       visitId = "visitId",
+                       visitStartTime = "visitStartTime",
+                       visitNumber = "visitNumber",
+                       browser = "device.browser as browser",
+                       browserVersion = "device.browserVersion as browserVersion",
+                       operatingSystem = "device.operatingSystem as operatingSystem",
+                       operatingSystemVersion = "device.operatingSystemVersion as operatingSystemVersion",
+                       mobileDeviceBranding = "device.mobileDeviceBranding as mobileDeviceBranding",
+                       flashVersion = "device.flashVersion as flashVersion",
+                       language = "device.language as language",
+                       screenColors = "device.screenColors as screenColors",
+                       screenResolution = "device.screenResolution as screenResolution",
+                       deviceCategory = "device.deviceCategory as deviceCategory",
+                       continent = "geoNetwork.continent as continent",
+                       subContinent = "geoNetwork.subContinent as subContinent",
+                       country = "geoNetwork.country as country",
+                       region = "geoNetwork.region as region",
+                       metro = "geoNetwork.region as metro",
+                       pagePath = "hits.page.pagePath as pagePath",
+                       eventCategory = "hits.eventInfo.eventCategory as eventCategory",
+                       eventAction = "hits.eventInfo.eventAction as eventAction",
+                       eventLabel = "hits.eventInfo.eventLabel as eventLabel",
+                       dimensionXX = {a function to output hit level custom dimensions})
+```
+
+
+
+

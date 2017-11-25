@@ -1,0 +1,102 @@
+template:
+  bootswatch: "united"
+navbar:
+  title: "googleAnalyticsR"
+  type: inverse
+  left:
+    - text: "Home"
+      href: index.html
+      icon: fa-home
+    - text: "Setup"
+      href: articles/setup.html
+      icon: fa-wrench
+    - text: "Reporting API"
+      menu:
+      - text: "v4"
+        href: articles/v4.html
+        icon: fa-cogs
+      - text: "v3"
+        href: articles/v3.html
+        icon: fa-cog
+    - text: "Big Query"
+      href: articles/big-query.html
+      icon: fa-search
+    - text: "Reporting"
+      menu:
+      - text: "Shiny"
+        href: articles/shiny.html
+        icon: fa-cloud-upload
+      - text: "RMarkdown"
+        href: articles/rmarkdown.html
+        icon: fa-pencil-square
+    - text: "Help"
+      menu:
+      - text: "Reference"
+        href: reference/index.html
+        icon: fa-question-circle
+      - text: "News"
+        href: news/index.html
+        icon: fa-newspaper-o
+articles:
+  - title: "Guides"
+    desc: >
+      Examples exploring the features of googleAnalyticsR.
+    contents:
+    - setup
+    - v3
+    - v4
+    - big-query
+    - shiny
+    - rmarkdown
+reference:
+  - title: "Authentication"
+    desc: >
+      Authentication with Google
+    contents: 
+      - ga_auth
+      - authDropdownUI
+      - authDropdown
+  - title: "Reporting API"
+    desc: "Fetching data from the reporting API."
+    contents:
+      - google_analytics
+      - google_analytics_4
+  - title: "Meta Data"
+    desc: >
+      Useful metadata
+    contents:
+      - google_analytics_account_list
+      - meta
+      - google_analytics_meta
+  - title: "v4 filters"
+    desc: "Using filters in a request"
+    contents:
+      - filter_clause_ga4
+      - met_filter
+      - dim_filter
+  - title: "v4 Segments"
+    desc: "Building segments"
+    contents:
+      - matches("segment")
+  - title: "Cohorts"
+    desc: "Cohort reports"
+    contents:
+      - matches("cohort")
+  - title: "Pivots"
+    desc: "Pivot reports"
+    contents:
+      - matches("pivot")
+  - title: "Shiny"
+    desc: "Shiny functions"
+    contents:
+      - multi_select
+      - multi_selectUI
+  - title: "Management API"
+    desc: "Management API functions"
+    contents:
+      - matches("ga_")
+  - title: "BigQuery"
+    desc: "Connecting to BigQuery"
+    contents:
+      - matches("bq")
+      

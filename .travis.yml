@@ -1,0 +1,16 @@
+language: r
+cache: packages
+r_packages:
+- knitr
+- covr
+- bigQueryR
+- googleCloudStorageR
+r_github_packages:
+- MarkEdmondson1234/googleAuthR
+notifications:
+  slack: googleauthrverse:tGfXjSD58cQSEr1YuzQ5hKPS
+  email:
+    on_success: change
+    on_failure: change
+after_success:
+- Rscript -e 'covr::codecov(line_exclusions = list("R/gadget.R","R/shiny-modules.R","R/shiny-modules-segments.R","R/options.R"))'

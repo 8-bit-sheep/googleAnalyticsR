@@ -1,0 +1,119 @@
+---
+title: "googleAnalyticsR RMarkdown Example"
+author: "Mark Edmondson"
+date: "11/3/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Intro
+
+This is an example of using `googleAnalyticsR` with RMarkdown to generate reports.
+
+## Authentication
+
+### Generating a token
+
+To generate the token first time:
+
+1. Create your Google Cloud project as detailed on the website ([see video guide on website](http://code.markedmondson.me/googleAnalyticsR/setup.html))
+2. Set your environment arguments for your `client_id` and `client_secret` e.g. `GA_CLIENT_ID="XXXXX.apps.googleusercontent.com"
+GA_CLIENT_SECRET="XXXXXX"`
+3. Run `ga_auth()` in an R session.
+4. Move the generated auth file (usually `.httr-oauth` in your working directory) to a secure location - can also rename it to something more specific e.g. `~/auth/mywebsite.httr-oauth`
+5. Specify the auth file location in `GA_AUTH_FILE` in the .Renviron file
+
+By now you should have an `.Renviron` file with these entries:
+
+```
+GA_AUTH_FILE="/Users/mark/dev/auth/googleAnalyticsR.httr-oauth"
+GA_CLIENT_ID="XXXXXX.apps.googleusercontent.com"
+GA_CLIENT_SECRET="XXXXXX"
+```
+
+This file will be used by the RMarkdown (and your other `googleAnalyticsR` calls) when authenticating and calling the API. 
+
+### Using the token
+
+You can then use the following in your RMarkdown to authenticate each time you knit the document:
+
+```{r message=FALSE, warning=FALSE}
+library(googleAnalyticsR)
+accounts <- ga_account_list()
+accounts[1,c("accountName","websiteUrl","webPropertyName")]
+```
+
+### Warnings
+
+If you see something like this:
+
+```R
+## Warning: Token token$app$key != getOption('googleAuthR.client_id') 
+## #>Token: XXXXX.apps.googleusercontent.com 
+## #>Option: YYYYY.apps.googleusercontent.com
+```
+
+It means the auth token key was generated with different settings than what you have live.  
+
+## Getting data
+
+Fetching data can use R's date functions to always be up to date:
+
+```{r}
+# create date range from start of 2017 to yesterday
+my_date_range <- c(as.Date("2017-01-01"), Sys.Date() - 1)
+
+# replace with your GA view Id:
+ga_id <- 81416156
+
+# get your data
+gadata <- google_analytics_4(ga_id, date_range = my_date_range, 
+                             metrics = "sessions", dimensions = c("date", "medium"))
+```
+
+### Caching data
+
+If you only want to fetch data when its not present (useful for big data calls), you can save the data to an `.rds` file so the RMarkdown will only fetch from the API when needed (e.g. when the date changes).  If you want it to fetch a new batch, delete the `.rds` file.
+
+```{r}
+# only get data if the data is not already here for this day
+my_data_file <- paste0(Sys.Date(),"my_data.rds")
+
+if(file.exists(my_data_file)){
+  message("Using existing data file ", my_data_file)
+  gadata <- readRDS(my_data_file)
+} else {
+  message("Calling API")
+  gadata <- google_analytics_4(ga_id, date_range = my_date_range, 
+                               metrics = "sessions", dimensions = c("date", "medium"))
+  saveRDS(gadata, file = my_data_file)
+}
+```
+
+You may want to delete old cache files.
+
+### Multiple GA accounts
+
+If you need to fetch from several different Google analytics accounts, the easiest way to handle authentication is to have the websites all available under one email.
+
+If that is not possible, then you can run through the authentication steps twice, and name your auth tokens different names.
+
+You will need to unset the `GA_AUTH_FILE` in your `.Renviron` if you have one by either commenting it out or removing the line.
+
+You can then authenticate seperatly using `googleAuthR::gar_auth()`
+
+```r
+library(googleAnalyticsR)
+googleAuthR::gar_auth("~/auth/client_one.httr-oauth")
+
+client_one <- google_analytics_4(ga_id_one, date_range = my_date_range, 
+                                 metrics = "sessions", dimensions = c("date", "medium"), )
+
+googleAuthR::gar_auth("~/auth/client_two.httr-oauth")
+
+client_two <- google_analytics_4(ga_id_two, date_range = my_date_range, 
+                                 metrics = "sessions", dimensions = c("date", "medium"))
+```
