@@ -72,6 +72,8 @@ ga_unsampled_list <- function(accountId,
 #' @family managementAPI functions, googleDriveAPI functions
 #' @export
 
+#CURRENTLY ONLY SUPPORTS REPORTS SMALLER THAN 25MB
+
 ga_unsampled_download <- function(accountId,
                                   webPropertyId,
                                   profileId,
@@ -85,7 +87,6 @@ ga_unsampled_download <- function(accountId,
             dplyr::as_data_frame() %>% 
             dplyr::rename(documentId=driveDownloadDetails) %>% 
             dplyr::filter(title==reportTitle)
-  View(report)
   
   if(nrow(report) == 0) {
     cat("Report title not found. Please enter a valid title. Remember it is case-sensitive") 
@@ -113,7 +114,10 @@ ga_unsampled_download <- function(accountId,
   document <- gar_api_generator(url, 
                                 "GET")
   document <- document()
-  
+  if ( (as.numeric(document[["content"]][["fileSize"]])/1048576) > 25 ){ #bytes to MB
+    cat("This function does not currently support reports larger than 25 MB.")
+    stop()
+  }
   if(download == TRUE){ # Currently writing with same filename to current working directory
     r <- httr::GET(document[["content"]][["webContentLink"]],
                    httr::add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]),
