@@ -85,14 +85,16 @@ ga_unsampled_download <- function(accountId,
             dplyr::as_data_frame() %>% 
             dplyr::rename(documentId=driveDownloadDetails) %>% 
             dplyr::filter(title==reportTitle)
+  View(report)
   
   if(nrow(report) == 0) {
     cat("Report title not found. Please enter a valid title. Remember it is case-sensitive") 
     stop()
   }
   
-  if(nrow(report) >= 1) {
-    cat("WARNING: There are multiple reports with the same title. Choosing the most recently created.") 
+  if(nrow(report) > 1) {
+    cat("WARNING: There are multiple reports with the same title.")
+    cat("Choosing the most recently created.")  #need to find way to avoid progress bar overwriting
     report <- report %>% dplyr::filter(created==max(created))
   }
   
@@ -115,8 +117,9 @@ ga_unsampled_download <- function(accountId,
   if(download == TRUE){ # Currently writing with same filename to current working directory
     r <- httr::GET(document[["content"]][["webContentLink"]],
                    httr::add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]),
-                   httr::write_disk(file, overwrite=TRUE, progress()))
-    httr::stop_for_status(r)    
+                   httr::write_disk(file, overwrite=TRUE),
+                   httr::progress())
+    httr::stop_for_status(r)
   } else{ 
     r <- httr::GET(document[["content"]][["webContentLink"]],
                    httr::add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]))
