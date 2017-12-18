@@ -64,7 +64,8 @@ ga_unsampled_list <- function(accountId,
 #' @param webPropertyId Web Property Id
 #' @param profileId Profile Id
 #' @param reportTitle Title of Unsampled Report (case-sensitive)
-#' @param download Default TRUE, whether to download or otherwise return as dataframe
+#' @param file filename and location. Default is {reportTitle}.csv in working directory 
+#' @param download Default TRUE, whether to download, if FALSE returns a dataframe instead
 
 #' @return Unsampled Report Downloaded as CSV
 #' @importFrom httr GET
@@ -72,17 +73,18 @@ ga_unsampled_list <- function(accountId,
 #' @export
 
 ga_unsampled_download <- function(accountId,
-                              webPropertyId,
-                              profileId,
-                              reportTitle,
-                              download=TRUE){
+                                  webPropertyId,
+                                  profileId,
+                                  reportTitle,
+                                  file=sprintf("%s.csv", reportTitle),
+                                  download=TRUE){
   
   report <- ga_unsampled_list(accountId, webPropertyId, profileId) %>% 
             .$items %>% 
-            map(unlist) %>% 
-            as_data_frame() %>% 
-            rename(documentId=driveDownloadDetails) %>% 
-            filter(title==reportTitle)
+            purrr::map(unlist) %>% 
+            dplyr::as_data_frame() %>% 
+            dplyr::rename(documentId=driveDownloadDetails) %>% 
+            dplyr::filter(title==reportTitle)
   
   if(nrow(report) == 0) {
     cat("Report title not found. Please enter a valid title. Remember it is case-sensitive") 
@@ -91,7 +93,7 @@ ga_unsampled_download <- function(accountId,
   
   if(nrow(report) >= 1) {
     cat("WARNING: There are multiple reports with the same title. Choosing the most recently created.") 
-    report <- report %>% filter(created==max(created))
+    report <- report %>% dplyr::filter(created==max(created))
   }
   
   #now there is only 1 report
@@ -105,22 +107,20 @@ ga_unsampled_download <- function(accountId,
   }
   
   #Get document metadata
-  #
   url <- sprintf("https://www.googleapis.com/drive/v2/files/%s", report$documentId)
   document <- gar_api_generator(url, 
                                 "GET")
-  document <- document() 
+  document <- document()
   
-  unsampled <- gar_api_generator(url,
-                                 "GET",
-                                 path_args = list(
-                                   accounts = accountId,
-                                   webproperties = webPropertyId,
-                                   profiles = profileId,
-                                   unsampledReports = ""
-                                 ),
-                                 data_parse_function = function(x) x)
-  
-  unsampled()
-  
+  if(download == TRUE){ # Currently writing with same filename to current working directory
+    r <- httr::GET(document[["content"]][["webContentLink"]],
+                   httr::add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]),
+                   httr::write_disk(file, overwrite=TRUE, progress()))
+    httr::stop_for_status(r)    
+  } else{ 
+    r <- httr::GET(document[["content"]][["webContentLink"]],
+                   httr::add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]))
+    httr::stop_for_status(r) 
+    df <- httr::content(r)
+  }
 }
