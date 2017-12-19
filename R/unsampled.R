@@ -89,24 +89,24 @@ ga_unsampled_download <- function(accountId,
             dplyr::filter(title==reportTitle)
   
   if(nrow(report) == 0) {
-    cat("Report title not found. Please enter a valid title. Remember it is case-sensitive") 
-    stop()
+    stop("Report title not found. Please enter a valid title. Remember it is case-sensitive",
+         call.=FALSE) 
   }
   
   if(nrow(report) > 1) {
-    cat("WARNING: There are multiple reports with the same title.")
-    cat("Choosing the most recently created.")  #need to find way to avoid progress bar overwriting
+    myMessage("WARNING: There are multiple reports with the same title. Choosing the most recently created.",
+              level=3)  #need to find way to avoid progress bar overwriting
     report <- report %>% dplyr::filter(created==max(created))
   }
   
   #now there is only 1 report
   if(report$status != "COMPLETED") {
-    cat(sprintf("The unsampled report has not COMPLETED. It is currently %s. Please try again at a later time.", report$status)) 
-    stop()
+    stop(sprintf("The unsampled report has not COMPLETED. It is currently %s. Please try again at a later time.", report$status),
+         call.=FALSE)
   }
   if(report$downloadType != "GOOGLE_DRIVE") {
-    cat("The downloadType is not a Google Drive link and cannot be downloaded.") #Is there another valid type?
-    stop()
+    stop("The downloadType is not a Google Drive link and cannot be downloaded.",
+         call.=FALSE) 
   }
   
   #Get document metadata
@@ -115,8 +115,8 @@ ga_unsampled_download <- function(accountId,
                                 "GET")
   document <- document()
   if ( (as.numeric(document[["content"]][["fileSize"]])/1048576) > 25 ){ #bytes to MB
-    cat("This function does not currently support reports larger than 25 MB.")
-    stop()
+    stop("This function does not currently support reports larger than 25 MB.",
+         call.=FALSE)
   }
   if(download == TRUE){ # Currently writing with same filename to current working directory
     r <- httr::GET(document[["content"]][["webContentLink"]],
@@ -124,6 +124,8 @@ ga_unsampled_download <- function(accountId,
                    httr::write_disk(file, overwrite=TRUE),
                    httr::progress())
     httr::stop_for_status(r)
+    myMessage(sprintf("%s successfully downloaded!", file),
+              level=3)
   } else{ 
     r <- httr::GET(document[["content"]][["webContentLink"]],
                    httr::add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]))
