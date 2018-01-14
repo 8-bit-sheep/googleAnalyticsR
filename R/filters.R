@@ -364,26 +364,45 @@ ga_delete_filter <- function(accountId, filterId) {
 }
 
 
-#' Create a new filter.
+#' Create a new filter and add it to the view (optional).
 #'
-#' @param Filter The list to be turned to JSON to create a request body
-#' @param accountId Account Id of the account that contains the filter
+#' @param Filter The Filter object to be added to the account or view
+#' @param accountId Account Id of the account to add the Filter to
+#' @param propertyId Property Id of the property to add the Filter to
+#' @param viewId View Id of the view to add the Filter to
+#' @param linkFilter If TRUE will apply the Filter to the view. Needs propetyId and viewId to be set.
 #'
 #' @importFrom googleAuthR gar_api_generator
 #' @family managementAPI functions
 #' @export
-ga_add_filter <- function(Filter, accountId) {
+ga_filter_add <- function(Filter, accountId, propertyId = FALSE, viewId = FALSE, linkFilter = FALSE) {
 
-  url <- "https://www.googleapis.com/analytics/v3/management/"
-  f <- gar_api_generator(url,
+    url <- "https://www.googleapis.com/analytics/v3/management/"
+    f <- gar_api_generator(url,
                                "POST",
                                path_args = list(
                                  accounts = accountId,
                                  filters = ""
                                ),
+                               data_parse_function = function(x) x$id)
+
+    filterId <- f(the_body = Filter)
+
+    if(linkFilter){
+        body <- list(filterRef = list(id = filterId))
+        url <- "https://www.googleapis.com/analytics/v3/management/"
+        f <- gar_api_generator(url,
+                               "POST",
+                               path_args = list(
+                                 accounts = accountId,
+                                 webproperties = propertyId,
+                                 profiles = viewId,
+                                 profileFilterLinks = ""
+                               ),
                                data_parse_function = function(x) x)
 
-  f(the_body = Filter)
+        f(the_body = body)
+    }
 }
 
 
