@@ -1,3 +1,6 @@
+#' @importFrom methods setClass
+NULL
+
 #' Make a date object
 #'
 #' @keywords internal
@@ -144,3 +147,83 @@ order_type <- function(field,
   )
 }
 
+#' `dim_fil_ga4` class.
+#'
+#' Dimension filter.
+#'
+#' @rdname dim_fil_ga4-class
+#' @keywords internal
+#' @export
+setClass("dim_fil_ga4")
+
+#' `met_fil_ga4` class.
+#'
+#' Metric filter.
+#'
+#' @rdname met_fil_ga4-class
+#' @keywords internal
+#' @export
+setClass("met_fil_ga4")
+
+#' `segmentFilterClause_ga4` class.
+#'
+#' Segment filter clause.
+#'
+#' @rdname segmentFilterClause_ga4-class
+#' @keywords internal
+#' @export
+setClass("segmentFilterClause_ga4")
+
+#' `orFiltersForSegment_ga4` class.
+#'
+#' Or-filter for segment.
+#'
+#' @rdname orFiltersForSegment_ga4-class
+#' @keywords internal
+#' @export
+setClass("orFiltersForSegment_ga4")
+
+#' `segmentSequenceStep_ga4` class.
+#'
+#' Segment sequence step.
+#'
+#' @rdname segmentSequenceStep_ga4-class
+#' @keywords internal
+#' @export
+setClass("segmentSequenceStep_ga4")
+
+#' `simpleSegment_ga4` class.
+#'
+#' Simple segment.
+#'
+#' @rdname simpleSegment_ga4-class
+#' @keywords internal
+#' @export
+setClass("simpleSegment_ga4")
+
+#' `sequenceSegment_ga4` class.
+#'
+#' Sequence segment.
+#'
+#' @rdname sequenceSegment_ga4-class
+#' @keywords internal
+#' @export
+setClass("sequenceSegment_ga4")
+
+#' `segmentFilter_ga4` class.
+#'
+#' Segment filter.
+#'
+#' @rdname segmentFilter_ga4-class
+#' @keywords internal
+#' @export
+setClass("segmentFilter_ga4")
+
+#' `segmentDef_ga4` class.
+#'
+#' Segment definition.
+#'
+#' @rdname segmentDef_ga4-class
+#' @keywords internal
+#' @export
+setClass("segmentDef_ga4")
