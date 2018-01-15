@@ -406,52 +406,28 @@ ga_filter_add <- function(Filter, accountId, propertyId = FALSE, viewId = FALSE,
 }
 
 
-#' Updates an existing filter. This method supports patch semantics.
-#'
-#' @param Filter The list to be turned to JSON to create a request body
-#' @param accountId Account Id of the account that contains the filter
-#' @param filterId The id of the filter to be modified
-#'
-#' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
-#' @export
-ga_update_filter_patch <- function(Filter, accountId, filterId) {
-
-  url <- "https://www.googleapis.com/analytics/v3/management/"
-  f <- gar_api_generator(url,
-                               "PATCH",
-                               path_args = list(
-                                 accounts = accountId,
-                                 filters = filterId
-                               ),
-                               data_parse_function = function(x) x)
-
-  f(the_body = Filter)
-}
-
-
 #' Updates an existing filter.
 #'
 #' @param Filter The list to be turned to JSON to create a request body
 #' @param accountId Account Id of the account that contains the filter
 #' @param filterId The id of the filter to be modified
+#' @param method PUT by default. For patch semantics use PATCH
 #'
 #' @importFrom googleAuthR gar_api_generator
 #' @family managementAPI functions
 #' @export
-ga_update_filter <- function(Filter, accountId, filterId) {
+ga_filter_update <- function(Filter, accountId, filterId, method = "PUT") {
 
-    options(googleAuthR.verbose = 2)
-  url <- "https://www.googleapis.com/analytics/v3/management/"
-  f <- gar_api_generator(url,
-                               "PUT",
+    url <- "https://www.googleapis.com/analytics/v3/management/"
+    f <- gar_api_generator(url,
+                               method,
                                path_args = list(
                                  accounts = accountId,
                                  filters = filterId
                                ),
                                data_parse_function = function(x) x)
 
-  f(the_body = Filter)
+    f(the_body = Filter)
 }
 
 
