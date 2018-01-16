@@ -341,26 +341,44 @@ met_filter <- function(metric,
 
 }
 
-#' Delete a filter.
+#' Delete a filter from account or remove from view.
 #'
 #' @param accountId Account Id of the account that contains the filter
+#' @param propertyId Property Id of the property that contains the filter
+#' @param viewId View Id of the view that contains the filter
 #' @param filterId Filter Id of the filter to be deleted
+#' @param removeFromView Default if FALSE. If TRUE, deletes the filter only from the view
 #'
 #' @importFrom googleAuthR gar_api_generator
 #' @family managementAPI functions
 #' @export
-ga_delete_filter <- function(accountId, filterId) {
+ga_filter_delete <- function(accountId, propertyId, viewId, filterId, removeFromView = FALSE) {
 
-  url <- "https://www.googleapis.com/analytics/v3/management/"
-  f <- gar_api_generator(url,
+    url <- "https://www.googleapis.com/analytics/v3/management/"
+    if(removeFromView){
+
+        f <- gar_api_generator(url,
+                               "DELETE",
+                               path_args = list(
+                                 accounts = accountId,
+                                 webproperties = propertyId,
+                                 profiles = viewId,
+                                 profileFilterLinks = paste(viewId,filterId, sep=":")
+                               ),
+                               data_parse_function = function(x) x)
+        f()
+    } else {
+
+        f <- gar_api_generator(url,
                                "DELETE",
                                path_args = list(
                                  accounts = accountId,
                                  filters = filterId
                                ),
                                data_parse_function = function(x) x)
+        f()
+    }
 
-  f()
 }
 
 
@@ -428,33 +446,6 @@ ga_filter_update <- function(Filter, accountId, filterId, method = "PUT") {
                                data_parse_function = function(x) x)
 
     f(the_body = Filter)
-}
-
-
-#' Delete a profile filter.
-#'
-#' @param accountId Account Id of the account that contains the filter
-#' @param webPropertyId Web property Id to which the profile filter link belongs
-#' @param profileId Profile/view Id to which the filter link belongs
-#' @param filterId The id of the filter to be removed
-#'
-#' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
-#' @export
-ga_delete_profile_filter <- function(accountId, webPropertyId, profileId, filterId) {
-
-  url <- "https://www.googleapis.com/analytics/v3/management/"
-  f <- gar_api_generator(url,
-                               "DELETE",
-                               path_args = list(
-                                 accounts = accountId,
-                                 webproperties = webPropertyId,
-                                 profiles = profileId,
-                                 profileFilterLinks = filterId
-                               ),
-                               data_parse_function = function(x) x)
-
-  f()
 }
 
 
