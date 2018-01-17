@@ -26,7 +26,7 @@ df <- ga_unsampled_download(accountId = Sys.getenv("ACCOUNTID"),
                       downloadFile = FALSE)
 
 # Download file larger than 25 mbs
-reportTitle <- "googleanalyticsR_test_download_over_25mb"
+reportTitle <- "googleanalyticsR_test_download_over_25_mb"
 ga_unsampled_download(accountId = Sys.getenv("ACCOUNTID"),
                       webPropertyId = Sys.getenv("WEBPROPERTYID"),
                       profileId = Sys.getenv("PROFILEID"),
