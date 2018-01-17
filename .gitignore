@@ -15,3 +15,5 @@ inst/doc
 tests/testthat/httr-oauth.rds
 #tests/testthat/mock/
 /Users/mark/dev/auth/googleAnalyticsR.httr-oauth
+4sc_ga.httr-oauth
+5sc_ga.httr-oauth
