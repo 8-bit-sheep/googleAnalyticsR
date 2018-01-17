@@ -347,15 +347,15 @@ met_filter <- function(metric,
 #' @param propertyId Property Id of the property that contains the filter
 #' @param viewId View Id of the view that contains the filter
 #' @param filterId Filter Id of the filter to be deleted
-#' @param removeFromView Default if FALSE. If TRUE, deletes the filter only from the view
+#' @param removeFromViewOnly Default if FALSE. If TRUE, deletes the filter only from the view
 #'
 #' @importFrom googleAuthR gar_api_generator
 #' @family managementAPI functions
 #' @export
-ga_filter_delete <- function(accountId, propertyId, viewId, filterId, removeFromView = FALSE) {
+ga_filter_delete <- function(accountId, propertyId, viewId, filterId, removeFromViewOnly = FALSE) {
 
     url <- "https://www.googleapis.com/analytics/v3/management/"
-    if(removeFromView){
+    if(removeFromViewOnly){
 
         f <- gar_api_generator(url,
                                "DELETE",
@@ -460,7 +460,7 @@ ga_filter_update <- function(Filter, accountId, filterId, method = "PUT") {
 #' @family managementAPI functions
 #' @export
 
-ga_add_profile_filter <- function(filterId, accountId, webPropertyId, profileId) {
+ga_filter_apply_to_view <- function(filterId, accountId, webPropertyId, profileId) {
 
   body <- list(filterRef = list(id = filterId))
   url <- "https://www.googleapis.com/analytics/v3/management/"
@@ -478,57 +478,30 @@ ga_add_profile_filter <- function(filterId, accountId, webPropertyId, profileId)
 }
 
 
-#' Update an existing profile filter link. This method supports patch semantics.
+#' Update an existing profile filter link. Patch semantics supported
 #'
 #' @param profileFilterLink The list to be turned to JSON to create a request body
 #' @param accountId Account Id of the account that contains the filter
-#' @param webPropertyId Web property Id to which the profile filter link belongs
-#' @param profileId Profile/view Id to which the profile filter link belongs
+#' @param propertyId Web property Id to which the profile filter link belongs
+#' @param viewId View Id to which the profile filter link belongs
 #' @param linkId The id of the profile filter link to be updated
+#' @param method PUT by default. Supports patch semantics when set to PATCH
 #'
 #' @importFrom googleAuthR gar_api_generator
 #' @family managementAPI functions
 #' @export
-ga_update_profile_filter_patch <- function(profileFilterLink, accountId, webPropertyId, profileId, linkId) {
+ga_filter_update_filter_link <- function(profileFilterLink, accountId, propertyId, viewId, linkId, method = "PUT") {
 
-  url <- "https://www.googleapis.com/analytics/v3/management/"
-  f <- gar_api_generator(url,
-                               "PATCH",
-                               path_args = list(
-                                 accounts = accountId,
-                                 webproperties = webPropertyId,
-                                 profiles = profileId,
-                                 profileFilterLinks = linkId
-                               ),
-                               data_parse_function = function(x) x)
-
-  f(the_body = profileFilterLink)
-}
-
-
-#' Update an existing profile filter link.
-#'
-#' @param profileFilterLink The list to be turned to JSON to create a request body
-#' @param accountId Account Id of the account that contains the filter
-#' @param webPropertyId Web property Id to which the profile filter link belongs
-#' @param profileId Profile/view Id to which the profile filter link belongs
-#' @param linkId The id of the profile filter link to be updated
-#'
-#' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
-#' @export
-ga_update_profile_filter <- function(profileFilterLink, accountId, webPropertyId, profileId, linkId) {
-
-  url <- "https://www.googleapis.com/analytics/v3/management/"
-  f <- gar_api_generator(url,
-                               "PUT",
+    url <- "https://www.googleapis.com/analytics/v3/management/"
+    f <- gar_api_generator(url,
+                               method,
                                path_args = list(
                                 accounts = accountId,
-                                 webproperties = webPropertyId,
-                                 profiles = profileId,
+                                 webproperties = propertyId,
+                                 profiles = viewId,
                                  profileFilterLinks = linkId
                                ),
                                data_parse_function = function(x) x)
 
-  f(the_body = profileFilterLink)
+    f(the_body = profileFilterLink)
 }
