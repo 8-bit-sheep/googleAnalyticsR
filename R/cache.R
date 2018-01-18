@@ -23,6 +23,18 @@ ga_cache_call <- function(cache_location){
     is.writeable(cache_location)
   )
   
-  gar_cache_setup(mcache = memoise::cache_filesystem(cache_location))
+  f <- function(req){
+    
+    stuff <- tryCatch(req$content$reports, error = function(x) NULL)
+    
+    if(!is.null(stuff)){
+      return(TRUE)
+    } else {
+      return(FALSE)
+    }}
+  
+  
+  gar_cache_setup(mcache = memoise::cache_filesystem(cache_location),
+                  invalid_func = f)
   
 }

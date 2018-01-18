@@ -11,12 +11,17 @@
                                     "https://www.googleapis.com/auth/analytics.readonly",
                                     "https://www.googleapis.com/auth/analytics.manage.users.readonly",
                                     "https://www.googleapis.com/auth/analytics.edit",
-                                    "https://www.googleapis.com/auth/analytics.manage.users")
+                                    "https://www.googleapis.com/auth/analytics.manage.users"),
+    googleAuthR.httr_oauth_cache = "ga.oauth"
   )
   
   toset <- !(names(op.googleAnalyticsR) %in% names(op))
-  
+  ## only set those not set already
   if(any(toset)) options(op.googleAnalyticsR[toset])
+  
+  ## override existing options
+  options(
+    googleAuthR.batch_endpoint = "https://www.googleapis.com/batch/analytics/v3")
   
   if(Sys.getenv("GA_CLIENT_ID") != ""){
     options(googleAuthR.client_id = Sys.getenv("GA_CLIENT_ID"))
@@ -37,7 +42,10 @@
   default_project_message()
   
   f <- function(req){
-    if(!is.null(req$content$reports)){
+    
+    stuff <- tryCatch(req$content$reports, error = function(x) NULL)
+    
+    if(!is.null(stuff)){
       return(TRUE)
     } else {
       return(FALSE)

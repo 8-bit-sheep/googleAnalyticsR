@@ -681,7 +681,6 @@ lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPat
                        dimensionXX = {a function to output hit level custom dimensions})
 ```
 
-This will increase as I get time to work on it, but feel free to submit a pull request with more. 
 
 
 

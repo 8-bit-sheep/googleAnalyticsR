@@ -15,7 +15,6 @@
 ^index\.Rmd$
 ^CODE_OF_CONDUCT\.md$
 ^data-raw$
-^tests/testthat/mock/*
 ^\.httr-oauth$
 ^/Users/mark/dev/auth/googleAnalyticsR\.httr-oauth$
 ^4sc_ga\.httr-oauth$

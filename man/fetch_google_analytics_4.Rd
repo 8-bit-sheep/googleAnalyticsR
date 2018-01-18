@@ -4,12 +4,16 @@
 \alias{fetch_google_analytics_4}
 \title{Fetch multiple GAv4 requests}
 \usage{
-fetch_google_analytics_4(request_list, merge = FALSE)
+fetch_google_analytics_4(request_list, merge = FALSE,
+  useResourceQuotas = NULL)
 }
 \arguments{
 \item{request_list}{A list of requests created by \link{make_ga_4_req}}
 
 \item{merge}{If TRUE then will rbind that list of data.frames}
+
+\item{useResourceQuotas}{If using GA360, access increased sampling limits. 
+Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to this feature.}
 }
 \value{
 A dataframe if one request, or a list of data.frames if multiple.
@@ -53,6 +57,6 @@ fetch_google_analytics_4(list(ga_req1, ga_req2))
 }
 \seealso{
 Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4_slow}},
-  \code{\link{google_analytics_4}},
+  \code{\link{google_analytics}},
   \code{\link{make_ga_4_req}}
 }
