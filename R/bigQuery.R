@@ -40,6 +40,69 @@
 #'          \url{https://support.google.com/analytics/answer/3437719?hl=en}
 #' 
 #' @export
+
+lookup_bq_query_m <- c(visits = "SUM(totals.visits) as sessions",
+                       sessions = "SUM(totals.visits) as sessions",
+                       pageviews = "SUM(totals.pageviews) as pageviews",
+                       timeOnSite = "SUM(totals.timeOnSite) as timeOnSite",
+                       bounces = "SUM(totals.bounces) as bounces",
+                       bounceRate = "(SUM(totals.bounces)/SUM(totals.visits))*100 as bounceRate",
+                       transactions = "SUM(totals.transactions) as transactions",
+                       transactionRevenue = "SUM(totals.transactionRevenue)/1000000 as transactionRevenue",
+                       transactionsPerSession = "(SUM(totals.transactions) / SUM(totals.visits)) as transactionsPerSession",
+                       revenuePerTransaction = "(SUM(totals.transactionRevenue)/1000000) / SUM(totals.transactions) as revenuePerTransaction",
+                       newSessions = "SUM(totals.newVisits) as newVisits",
+                       percentNewSessions = "(SUM(totals.newVisits) / SUM(totals.visits))*100 AS percentNewSessions",
+                       screenviews = "SUM(totals.screenviews) as screenviews",
+                       uniqueScreenviews = "SUM(totals.uniqueScreenviews) as uniqueScreenviews",
+                       timeOnScreen = "SUM(totals.timeOnScreen) as timeOnScreen",
+                       users = "COUNT(fullVisitorId) as users",
+                       exits = "COUNT(hits.isExit) as exits",
+                       entrances = "COUNT(hits.isEntrance) as entrances",
+                       eventValue = "SUM(hits.eventinfo.eventValue) as eventValue")
+
+# lookup_bq_dimensions <- meta[meta$type == "DIMENSION","name"]
+
+lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPath",
+                       hitTimestamp = "(visitStartTime + (hits.time/1000)) as hitTimestamp",
+                       campaign = "trafficSource.campaign as campaign",
+                       source = "trafficSource.source as source",
+                       medium = "trafficSource.medium as medium",
+                       keyword = "trafficSource.keyword as keyword",
+                       adContent = "trafficSource.adContent as adContent",
+                       adwordsCampaignID = "trafficSource.adwordsClickInfo.campaignId as adwordsCampaignId",
+                       adwordsAdGroupID = "trafficSource.adwordsClickInfo.adGroupId as adwordsAdGroupId",
+                       # adwords...etc...
+                       transactionId = "hits.transaction.transactionId as transactionId",
+                       date = "date",
+                       fullVisitorId = "fullVisitorId",
+                       userId = "userId",
+                       visitorId = "visitorId",
+                       visitId = "visitId",
+                       visitStartTime = "visitStartTime",
+                       visitNumber = "visitNumber",
+                       browser = "device.browser as browser",
+                       browserVersion = "device.browserVersion as browserVersion",
+                       operatingSystem = "device.operatingSystem as operatingSystem",
+                       operatingSystemVersion = "device.operatingSystemVersion as operatingSystemVersion",
+                       mobileDeviceBranding = "device.mobileDeviceBranding as mobileDeviceBranding",
+                       flashVersion = "device.flashVersion as flashVersion",
+                       language = "device.language as language",
+                       screenColors = "device.screenColors as screenColors",
+                       screenResolution = "device.screenResolution as screenResolution",
+                       deviceCategory = "device.deviceCategory as deviceCategory",
+                       continent = "geoNetwork.continent as continent",
+                       subContinent = "geoNetwork.subContinent as subContinent",
+                       country = "geoNetwork.country as country",
+                       region = "geoNetwork.region as region",
+                       metro = "geoNetwork.region as metro",
+                       pagePath = "hits.page.pagePath as pagePath",
+                       eventCategory = "hits.eventInfo.eventCategory as eventCategory",
+                       eventAction = "hits.eventInfo.eventAction as eventAction",
+                       eventLabel = "hits.eventInfo.eventLabel as eventLabel",
+                       ## from http://www.lunametrics.com/blog/2016/06/23/google-analytics-bigquery-export-schema/
+                       landingPagePath = "FIRST(IF(hits.type = 'PAGE', hits.page.pagePath, NULL)) WITHIN RECORD AS landingPagePath")
+
 google_analytics_bq <- function(projectId,
                                 datasetId,
                                 start=NULL,
@@ -55,12 +118,28 @@ google_analytics_bq <- function(projectId,
                                 bucket = NULL,
                                 download_file = NULL){
   
+  if (is.null(dimensions)) {
+    stop("At least one dimension, such as date, is required to group the metric(s) by.", 
+         call. = FALSE)
+  }
+  
   projectId <- as.character(projectId)
   datasetId <- as.character(datasetId)
   start <- if(!is.null(start)) as.character(as.Date(start))
   end <- if(!is.null(end)) as.character(as.Date(end))
   max_results <- as.integer(max_results)
-
+  
+  if ((sum(metrics %in% names(lookup_bq_query_m)) == 0) & (is.null(metrics)==FALSE)) {
+    stop(sprintf("You have entered an invalid metric name. Here are all the possible metrics currently available: %s", 
+                 toString(names(lookup_bq_query_m))),
+         call. = FALSE)
+  }
+  
+  if ((sum(dimensions %in% names(lookup_bq_query_d)) == 0) & (is.null(dimensions)==FALSE)) {
+    stop(sprintf("You have entered an invalid dimension name. Here are all the possible dimensions currently available: %s", 
+                 toString(names(lookup_bq_query_d))),
+         call. = FALSE)
+  }
   
   if (!requireNamespace("bigQueryR", quietly = TRUE)) {
     stop("bigQueryR needed for this function to work. Please install it via install.packages('bigQueryR')",
@@ -206,69 +285,6 @@ google_analytics_bq_asynch <- function(projectId,
   myMessage("All finished, total job time:", format(difftime(Sys.time(), time0), format = "%H:%M:%S"), level = 3)
   
 }
-
-lookup_bq_query_m <- c(visits = "SUM(totals.visits) as sessions",
-                       sessions = "SUM(totals.visits) as sessions",
-                       pageviews = "SUM(totals.pageviews) as pageviews",
-                       timeOnSite = "SUM(totals.timeOnSite) as timeOnSite",
-                       bounces = "SUM(totals.bounces) as bounces",
-                       bounceRate = "(SUM(totals.bounces)/SUM(totals.visits))*100 as bounceRate",
-                       transactions = "SUM(totals.transactions) as transactions",
-                       transactionRevenue = "SUM(totals.transactionRevenue)/1000000 as transactionRevenue",
-                       transactionsPerSession = "(SUM(totals.transactions) / SUM(totals.visits)) as transactionsPerSession",
-                       revenuePerTransaction = "(SUM(totals.transactionRevenue)/1000000) / SUM(totals.transactions) as revenuePerTransaction",
-                       newSessions = "SUM(totals.newVisits) as newVisits",
-                       percentNewSessions = "(SUM(totals.newVisits) / SUM(totals.visits))*100 AS percentNewSessions",
-                       screenviews = "SUM(totals.screenviews) as screenviews",
-                       uniqueScreenviews = "SUM(totals.uniqueScreenviews) as uniqueScreenviews",
-                       timeOnScreen = "SUM(totals.timeOnScreen) as timeOnScreen",
-                       users = "COUNT(fullVisitorId) as users",
-                       exits = "COUNT(hits.isExit) as exits",
-                       entrances = "COUNT(hits.isEntrance) as entrances",
-                       eventValue = "SUM(hits.eventinfo.eventValue) as eventValue")
-
-# lookup_bq_dimensions <- meta[meta$type == "DIMENSION","name"]
-
-lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPath",
-                       hitTimestamp = "(visitStartTime + (hits.time/1000)) as hitTimestamp",
-                       campaign = "trafficSource.campaign as campaign",
-                       source = "trafficSource.source as source",
-                       medium = "trafficSource.medium as medium",
-                       keyword = "trafficSource.keyword as keyword",
-                       adContent = "trafficSource.adContent as adContent",
-                       adwordsCampaignID = "trafficSource.adwordsClickInfo.campaignId as adwordsCampaignId",
-                       adwordsAdGroupID = "trafficSource.adwordsClickInfo.adGroupId as adwordsAdGroupId",
-                       # adwords...etc...
-                       transactionId = "hits.transaction.transactionId as transactionId",
-                       date = "date",
-                       fullVisitorId = "fullVisitorId",
-                       userId = "userId",
-                       visitorId = "visitorId",
-                       visitId = "visitId",
-                       visitStartTime = "visitStartTime",
-                       visitNumber = "visitNumber",
-                       browser = "device.browser as browser",
-                       browserVersion = "device.browserVersion as browserVersion",
-                       operatingSystem = "device.operatingSystem as operatingSystem",
-                       operatingSystemVersion = "device.operatingSystemVersion as operatingSystemVersion",
-                       mobileDeviceBranding = "device.mobileDeviceBranding as mobileDeviceBranding",
-                       flashVersion = "device.flashVersion as flashVersion",
-                       language = "device.language as language",
-                       screenColors = "device.screenColors as screenColors",
-                       screenResolution = "device.screenResolution as screenResolution",
-                       deviceCategory = "device.deviceCategory as deviceCategory",
-                       continent = "geoNetwork.continent as continent",
-                       subContinent = "geoNetwork.subContinent as subContinent",
-                       country = "geoNetwork.country as country",
-                       region = "geoNetwork.region as region",
-                       metro = "geoNetwork.region as metro",
-                       pagePath = "hits.page.pagePath as pagePath",
-                       eventCategory = "hits.eventInfo.eventCategory as eventCategory",
-                       eventAction = "hits.eventInfo.eventAction as eventAction",
-                       eventLabel = "hits.eventInfo.eventLabel as eventLabel",
-                       ## from http://www.lunametrics.com/blog/2016/06/23/google-analytics-bigquery-export-schema/
-                       landingPagePath = "FIRST(IF(hits.type = 'PAGE', hits.page.pagePath, NULL)) WITHIN RECORD AS landingPagePath")
-
 
 ## this is hit level: add session and product level too.
 

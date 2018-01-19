@@ -17,3 +17,5 @@
 ^data-raw$
 ^\.httr-oauth$
 ^/Users/mark/dev/auth/googleAnalyticsR\.httr-oauth$
+^4sc_ga\.httr-oauth$
+^5sc_ga\.httr-oauth$
