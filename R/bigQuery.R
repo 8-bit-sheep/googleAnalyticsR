@@ -123,7 +123,18 @@ google_analytics_bq <- function(projectId,
   start <- if(!is.null(start)) as.character(as.Date(start))
   end <- if(!is.null(end)) as.character(as.Date(end))
   max_results <- as.integer(max_results)
-
+  
+  if ((sum(metrics %in% names(lookup_bq_query_m)) == 0) & (is.null(metrics)==FALSE)) {
+    stop(sprintf("You have entered an invalid metric name. Here are all the possible metrics currently available: %s", 
+                 toString(names(lookup_bq_query_m))),
+         call. = FALSE)
+  }
+  
+  if ((sum(dimensions %in% names(lookup_bq_query_d)) == 0) & (is.null(dimensions)==FALSE)) {
+    stop(sprintf("You have entered an invalid dimension name. Here are all the possible dimensions currently available: %s", 
+                 toString(names(lookup_bq_query_d))),
+         call. = FALSE)
+  }
   
   if (!requireNamespace("bigQueryR", quietly = TRUE)) {
     stop("bigQueryR needed for this function to work. Please install it via install.packages('bigQueryR')",
