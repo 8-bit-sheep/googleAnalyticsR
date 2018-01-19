@@ -118,6 +118,11 @@ google_analytics_bq <- function(projectId,
                                 bucket = NULL,
                                 download_file = NULL){
   
+  if (is.null(dimensions)) {
+    stop("At least one dimension, such as date, is required to group the metric(s) by.", 
+         call. = FALSE)
+  }
+  
   projectId <- as.character(projectId)
   datasetId <- as.character(datasetId)
   start <- if(!is.null(start)) as.character(as.Date(start))
