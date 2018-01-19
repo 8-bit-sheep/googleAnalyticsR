@@ -22,7 +22,7 @@ test_that("Record requests if online", {
       fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
       fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
       
-      google_analytics_4(ga_id, 
+      google_analytics(ga_id, 
                          date_range = c("2015-07-30","2015-10-01"),
                          dimensions=c('source','medium'), 
                          metrics = c('sessions','bounces'), 
@@ -63,7 +63,7 @@ with_mock_API({
     fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
     fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
     
-    out <- google_analytics_4(ga_id, 
+    out <- google_analytics(ga_id, 
                               date_range = c("2015-07-30","2015-10-01"),
                               dimensions=c('source','medium'), 
                               metrics = c('sessions','bounces'), 
