@@ -1,11 +1,3 @@
-# options(googleAuthR.client_id = Sys.getenv("GA_CLIENT_ID"))
-# options(googleAuthR.client_secret = Sys.getenv("GA_CLIENT_SECRET"))
-# library(googleAuthR)
-# gar_auth(token = ".httr-oauth")
-# 
-# library(devtools)
-# devtools::load_all()
-
 context("BigQuery")
 
 test_that("Can make SQL correctly", {
