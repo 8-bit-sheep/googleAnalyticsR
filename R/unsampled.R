@@ -58,7 +58,7 @@ ga_unsampled_list <- function(accountId,
   
 }
 
-#' Download Unsampled Report
+#' Download Unsampled Report from Google Drive
 #'
 #' @param accountId Account Id
 #' @param webPropertyId Web Property Id
@@ -67,11 +67,14 @@ ga_unsampled_list <- function(accountId,
 #' @param file filename and location. Default is {reportTitle}.csv in working directory 
 #' @param downloadFile Default TRUE, whether to download, if FALSE returns a dataframe instead
 
-#' @return Unsampled Report Downloaded as CSV
-#' @importFrom httr GET
+#' @return file location if \code{downloadFile} is TRUE, else a \code{data.frame} of download
+#' @importFrom httr GET add_headers stop_for_status content write_disk progress
+#' @importFrom purrr map
+#' @importFrom magrittr %>% 
+#' @importFrom dplyr as_data_frame rename filter
+#' @importFrom googleAuthR gar_api_generator
 #' @family managementAPI functions, googleDriveAPI functions
 #' @export
-
 ga_unsampled_download <- function(accountId,
                                   webPropertyId,
                                   profileId,
@@ -81,10 +84,10 @@ ga_unsampled_download <- function(accountId,
   
   report <- ga_unsampled_list(accountId, webPropertyId, profileId) %>% 
     .$items %>% 
-    purrr::map(unlist) %>% 
-    dplyr::as_data_frame() %>% 
-    dplyr::rename(documentId=driveDownloadDetails) %>% 
-    dplyr::filter(title==reportTitle)
+    map(unlist) %>% 
+    as_data_frame() %>% 
+    rename(documentId=driveDownloadDetails) %>% 
+    filter(title==reportTitle)
   
   if(nrow(report) == 0) {
     stop("Report title not found. Please enter a valid title. 
@@ -96,7 +99,7 @@ ga_unsampled_download <- function(accountId,
     myMessage("WARNING: There are multiple reports with the same title. 
               Choosing the most recently created.",
               level=3)  #need to find way to avoid progress bar overwriting
-    report <- report %>% dplyr::filter(created==max(created))
+    report <- report %>% filter(created==max(created))
   }
   
   #now there is only 1 report
@@ -105,6 +108,7 @@ ga_unsampled_download <- function(accountId,
                  Please try again at a later time.", report$status),
          call.=FALSE)
   }
+  
   if(report$downloadType != "GOOGLE_DRIVE") {
     stop("The downloadType is not a Google Drive link and cannot be downloaded.",
          call.=FALSE) 
@@ -113,17 +117,19 @@ ga_unsampled_download <- function(accountId,
   #Get document metadata
   url <- sprintf("https://www.googleapis.com/drive/v2/files/%s", report$documentId)
   document <- gar_api_generator(url, 
-                                "GET")
-  document <- document()
+                                "GET")()
   download_link <- document[["content"]][["webContentLink"]]
   
   # Additional parsing from confirmation page if file is too large
-  if ( (as.numeric(document[["content"]][["fileSize"]])/1048576) >= 25 ){ #bytes to MB
-    html <- httr::GET(document[["content"]][["webContentLink"]],
-                      httr::add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]))
+  too_large <- (as.numeric(document[["content"]][["fileSize"]])/1048576) >= 25 #bytes to MB
+  
+  if(too_large){ 
+    
+    html <- GET(document[["content"]][["webContentLink"]],
+                add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]))
     #Read and parse html for confirmation code
-    httr::stop_for_status(html)
-    too_large_html <- httr::content(html, "text")
+    stop_for_status(html)
+    too_large_html <- content(html, "text")
     pat <- "&amp;confirm=(.*?)&amp;"
     confirm_code <- regmatches(too_large_html, gregexpr(pat, too_large_html))
     pat <- "&amp;"
@@ -137,19 +143,27 @@ ga_unsampled_download <- function(accountId,
                             document[["content"]][["id"]])
   }
   
-  if(downloadFile == TRUE){ # Currently writing with same filename to current working directory
-    r <- httr::GET(download_link ,
-                   httr::add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]),
-                   httr::write_disk(file, overwrite=TRUE),
-                   httr::progress())
-    httr::stop_for_status(r)
+  # Currently writing with same filename to current working directory
+  if(isTRUE(downloadFile)){ 
+    
+    r <- GET(download_link,
+             add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]),
+             write_disk(file, overwrite=TRUE),
+             progress())
+    
+    stop_for_status(r)
+    
     myMessage(sprintf("%s successfully downloaded!", file),
               level=3)
+    out <- file
   } else{ 
-    r <- httr::GET(download_link,
-                   httr::add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]),
-                   httr::progress())
-    httr::stop_for_status(r) 
-    df <- httr::content(r)
+    r <- GET(download_link,
+             add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]),
+             progress())
+    stop_for_status(r) 
+    
+    out <- content(r)
   }
+  
+  out
 }
