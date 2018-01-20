@@ -47,10 +47,10 @@ cohort4 <- make_cohort_group(list("cohort 1" = c("2015-08-01", "2015-08-01"),
                                   
 ## then call cohort report.  No date_range and must include metrics and dimensions
 ##   from the cohort list
-cohort_example <- google_analytics_4(ga_id, 
-                                     dimensions=c('cohort'), 
-                                     cohort = cohort4, 
-                                     metrics = c('cohortTotalUsers'))
+cohort_example <- google_analytics(ga_id, 
+                                   dimensions=c('cohort'), 
+                                   cohort = cohort4, 
+                                   metrics = c('cohortTotalUsers'))
                                      
 }
 

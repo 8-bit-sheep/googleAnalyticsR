@@ -119,10 +119,10 @@ account_list$viewId
 ga_id <- 123456
 
 ## simple query to test connection
-google_analytics_4(ga_id, 
-                   date_range = c("2017-01-01", "2017-03-01"), 
-                   metrics = "sessions", 
-                   dimensions = "date")
+google_analytics(ga_id, 
+                 date_range = c("2017-01-01", "2017-03-01"), 
+                 metrics = "sessions", 
+                 dimensions = "date")
 
 }
 
