@@ -9,34 +9,34 @@ test_that("Record requests if online", {
   ## test reqs
   capture_requests(
     {
-      google_analytics(c(ga_id, ga_id2),
+      google_analytics_3(c(ga_id, ga_id2),
                        start = "2015-07-31", end = "2015-10-01",
                        dimensions=c('medium'),
                        metrics = c('sessions'),
                        sort = "ga:sessions")
       
-      google_analytics(c(ga_id2, ga_id),
+      google_analytics_3(c(ga_id2, ga_id),
                        start = "2015-07-30", end = "2015-10-01",
                        dimensions=c('medium'),
                        metrics = c('sessions'),
                        sort = "ga:sessions",
                        multi_account_batching = TRUE)
       
-      google_analytics(ga_id,
+      google_analytics_3(ga_id,
                        start = "2017-07-30", end = "2017-08-01",
                        dimensions=c('medium'),
                        metrics = c('sessions'),
                        sort = "ga:sessions",
                        samplingLevel = "WALK")
       
-      google_analytics(ga_id,
+      google_analytics_3(ga_id,
                        start = "2015-07-30", end = "2016-10-01",
                        dimensions=c('medium','source','hour','pagePath'),
                        metrics = c('sessions'),
                        sort = "ga:sessions",
                        max_results = 30000)
       
-      google_analytics(ga_id,
+      google_analytics_3(ga_id,
                        start = "2015-07-30", end = "2015-10-01",
                        dimensions=c('medium'),
                        metrics = c('sessions'),
@@ -55,7 +55,7 @@ with_mock_API({
   test_that("v3 multi account batching without flag", {
 
     skip_on_cran()
-    multi <- google_analytics(c(ga_id, ga_id2),
+    multi <- google_analytics_3(c(ga_id, ga_id2),
                               start = "2015-07-31", end = "2015-10-01",
                               dimensions=c('medium'),
                               metrics = c('sessions'),
@@ -71,7 +71,7 @@ with_mock_API({
   test_that("v3 multi account batching with flag", {
     skip_on_cran()
 
-    multi <- google_analytics(c(ga_id2, ga_id),
+    multi <- google_analytics_3(c(ga_id2, ga_id),
                               start = "2015-07-30", end = "2015-10-01",
                               dimensions=c('medium'),
                               metrics = c('sessions'),
@@ -89,7 +89,7 @@ with_mock_API({
     skip_on_cran()
 
     walked <- suppressWarnings(
-      google_analytics(ga_id,
+      google_analytics_v3(ga_id,
                        start = "2017-07-30", end = "2017-08-01",
                        dimensions=c('medium'),
                        metrics = c('sessions'),
@@ -104,7 +104,7 @@ with_mock_API({
   test_that("v3 Batch data", {
     skip_on_cran()
 
-    bb <-       google_analytics(ga_id,
+    bb <-       google_analytics_3(ga_id,
                                  start = "2015-07-30", end = "2016-10-01",
                                  dimensions=c('medium','source','hour','pagePath'),
                                  metrics = c('sessions'),
@@ -117,12 +117,12 @@ with_mock_API({
 
   # test_that("v4 API matches v3 equivalent API call", {
   #   skip_on_cran()
-  #   v3 <- google_analytics(ga_id,
+  #   v3 <- google_analytics_v3(ga_id,
   #                          start = "2015-07-30", end = "2015-10-01",
   #                          dimensions=c('medium'),
   #                          metrics = c('sessions'),
   #                          sort = "ga:sessions")
-  #   v4 <-  google_analytics_4(ga_id,
+  #   v4 <-  google_analytics(ga_id,
   #                             date_range = c("2015-07-30","2015-10-01"),
   #                             dimensions=c('medium'),
   #                             metrics = c('sessions'),

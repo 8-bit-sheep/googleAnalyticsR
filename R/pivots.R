@@ -125,8 +125,8 @@ makePivotNames <- function(pivotHeaders){
 #'                   dim_filter_clause = pivot_dim_clause)
 #'                   
 #'                   
-#' pivtest <- google_analytics_4(ga_id, 
-#'                              c("2016-01-30","2016-10-01"), 
+#' pivtest <- google_analytics(ga_id, 
+#'                             c("2016-01-30","2016-10-01"), 
 #'                             dimensions=c('source'), 
 #'                             metrics = c('sessions'), 
 #'                             pivots = list(pivme))
