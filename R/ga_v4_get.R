@@ -379,7 +379,13 @@ google_analytics <- function(viewId,
     all_rows <- as.integer(attr(out, "rowCount"))
     if(!is.null(out) && nrow(out) < all_rows){
       ## create the remaining requests
-      meta_batch_start_index2 <- seq(from=api_max_rows*5, to=all_rows, by=reqRowLimit)
+      meta_batch_start_index2 <- tryCatch(seq(from=api_max_rows*5, to=all_rows, by=reqRowLimit),
+                                          error = function(ex){
+                                            stop("Sequence batch error: ", 
+                                                 "\n api_max_rows: ",api_max_rows,
+                                                 "\n all_rows:", all_rows,
+                                                 "\n reqRowLimit:", reqRowLimit)
+                                          })
       ## make a list of the requests
       requests2 <- lapply(meta_batch_start_index2, function(start_index){
         

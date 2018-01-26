@@ -108,9 +108,16 @@ anti_sample <- function(anti_sample_batches,
   new_date_ranges <- lapply(splits, function(x) {list(start_date = min(x$date), 
                                                      end_date = max(x$date),
                                                      range_date = nrow(x))})
-  myMessage("Calculated [", length(new_date_ranges), "] batches are needed to download approx. [", rowCount,"] rows unsampled.", 
+  myMessage("Calculated [", 
+            length(new_date_ranges), 
+            "] batches are needed to download approx. [", 
+            rowCount,"] rows unsampled.", 
             level = 3)
-  myMessage("Found [", read_counts, "] sampleReadCounts from a [", space_size, "] samplingSpaceSize.", 
+  
+  myMessage("Found [", 
+            read_counts, 
+            "] sampleReadCounts from a [", 
+            space_size, "] samplingSpaceSize.", 
             level = 2)
   
   ## send to fetch
@@ -129,7 +136,7 @@ anti_sample <- function(anti_sample_batches,
                             segments          = segments,
                             pivots            = pivots,
                             cohorts           = cohorts,
-                            max               = rowCount,
+                            max               = -1,
                             metricFormat      = metricFormat,
                             samplingLevel     = "LARGE",
                             histogramBuckets  = histogramBuckets,
