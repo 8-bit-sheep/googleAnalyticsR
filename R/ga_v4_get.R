@@ -17,7 +17,7 @@
 #' @param pivots Pivots of the data as created by \link{pivot_ga4}
 #' @param cohorts Cohorts created by \link{make_cohort_group}
 #' @param pageToken Where to start the data fetch
-#' @param pageSize How many rows to fetch. Max 10000 each batch.
+#' @param pageSize How many rows to fetch. Max 100000 each batch.
 #' @param samplingLevel Sample level
 #' @param metricFormat If supplying calculated metrics, specify the metric type
 #' @param histogramBuckets For numeric dimensions such as hour, a list of buckets of data.
@@ -201,7 +201,7 @@ make_ga_4_req <- function(viewId,
 #'
 #' Fetch Google Analytics data using the v4 API.  For the v3 API use \link{google_analytics_3}.
 #'  
-#' Will perform automatic batching if over the 10000 row per API call limit.
+#' Will perform automatic batching if over the 100000 row per API call limit.
 #' 
 #' @section Anti-sampling:
 #' 
@@ -291,14 +291,17 @@ google_analytics <- function(viewId,
     assert_that(is.flag(useResourceQuotas))
   }
   
+  # support increase from 10k to 100k
+  api_max_rows <- 100000L
+  
   max         <- as.integer(max)
   allResults  <- FALSE
   if(max < 0){
     ## size of 1 v4 batch 0 indexed
-    max <- as.integer(49999)
+    max <- api_max_rows - 1L
     allResults <- TRUE
   }
-  reqRowLimit <- as.integer(10000)
+  reqRowLimit <- as.integer(api_max_rows)
   
   if(!is.null(cohorts)){
     anti_sample <- FALSE
@@ -335,7 +338,7 @@ google_analytics <- function(viewId,
     start_index <- as.integer(start_index)
     
     if(allResults){
-      remaining <- as.integer(10000)
+      remaining <- as.integer(api_max_rows)
     } else {
       remaining   <- min(as.integer(max - start_index), reqRowLimit)
     }
@@ -361,11 +364,14 @@ google_analytics <- function(viewId,
   
   ## if non-batching, fetch one at a time
   if(slow_fetch){
-    out <- fetch_google_analytics_4_slow(requests, max_rows = max, allRows = allResults, useResourceQuotas = useResourceQuotas)
+    out <- fetch_google_analytics_4_slow(requests, 
+                                         max_rows = max, allRows = allResults, 
+                                         useResourceQuotas = useResourceQuotas)
     allResults <- FALSE
   } else {
     ## only gets up to 50000 first time as we don't know true total row count yet
-    out <- fetch_google_analytics_4(requests, merge = TRUE, useResourceQuotas = useResourceQuotas)
+    out <- fetch_google_analytics_4(requests, 
+                                    merge = TRUE, useResourceQuotas = useResourceQuotas)
   }
 
   ## if batching, get the rest of the results now we now precise rowCount
@@ -373,12 +379,12 @@ google_analytics <- function(viewId,
     all_rows <- as.integer(attr(out, "rowCount"))
     if(!is.null(out) && nrow(out) < all_rows){
       ## create the remaining requests
-      meta_batch_start_index2 <- seq(from=50000, to=all_rows, by=reqRowLimit)
+      meta_batch_start_index2 <- seq(from=api_max_rows*5, to=all_rows, by=reqRowLimit)
       ## make a list of the requests
       requests2 <- lapply(meta_batch_start_index2, function(start_index){
         
         start_index <- as.integer(start_index)
-        remaining <- as.integer(10000)
+        remaining <- as.integer(api_max_rows)
         
         make_ga_4_req(viewId            = viewId,
                       date_range        = date_range,
@@ -398,7 +404,9 @@ google_analytics <- function(viewId,
                       histogramBuckets  = histogramBuckets)
         
       })
-      the_rest <- fetch_google_analytics_4(requests2, merge = TRUE, useResourceQuotas = useResourceQuotas)
+      the_rest <- fetch_google_analytics_4(requests2, 
+                                           merge = TRUE, 
+                                           useResourceQuotas = useResourceQuotas)
       out <- rbind(out, the_rest)
       myMessage("All data downloaded, total of [",all_rows,"]", level = 3)
       
@@ -438,7 +446,9 @@ google_analytics_4 <- function(...){
 #' @return A dataframe of all the requests
 #' @importFrom googleAuthR gar_api_generator
 #' @family GAv4 fetch functions
-fetch_google_analytics_4_slow <- function(request_list, max_rows, allRows = FALSE, useResourceQuotas=NULL){
+fetch_google_analytics_4_slow <- function(request_list, 
+                                          max_rows, 
+                                          allRows = FALSE, useResourceQuotas=NULL){
   
   ## make the fetch function
   myMessage("Calling APIv4 slowly....", level = 2)

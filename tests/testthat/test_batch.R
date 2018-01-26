@@ -89,7 +89,7 @@ with_mock_API({
     skip_on_cran()
 
     walked <- suppressWarnings(
-      google_analytics_v3(ga_id,
+      google_analytics_3(ga_id,
                        start = "2017-07-30", end = "2017-08-01",
                        dimensions=c('medium'),
                        metrics = c('sessions'),
