@@ -76,7 +76,7 @@ ga_unsampled_list <- function(accountId,
 #' @family managementAPI functions, googleDriveAPI functions
 #' @export
 ga_unsampled_download <- function(driveDownloadDetails,
-                                  filename=sprintf("%s.csv", driveDownloadDetails),
+                                  filename=driveDownloadDetails, 
                                   downloadFile=TRUE){
   
   # check if proper scope is present
@@ -88,9 +88,11 @@ ga_unsampled_download <- function(driveDownloadDetails,
       call. = FALSE
     )
   }
+  #cat(driveDownloadDetails)
+  #cat(toString(driveDownloadDetails))
   
   #Get document metadata
-  url <- sprintf("https://www.googleapis.com/drive/v2/files/%s", report$driveDownloadDetails)
+  url <- sprintf("https://www.googleapis.com/drive/v2/files/%s", toString(driveDownloadDetails))
   document <- gar_api_generator(url, 
                                 "GET")()
   download_link <- document[["content"]][["webContentLink"]]
@@ -121,16 +123,18 @@ ga_unsampled_download <- function(driveDownloadDetails,
   # Currently writing with same filename to current working directory
   if(isTRUE(downloadFile)){ 
     
+    filename <- sprintf("%s.csv", toString(filename))
+    
     r <- GET(download_link,
              add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]),
-             write_disk(file, overwrite=TRUE),
+             write_disk(filename, overwrite=TRUE),
              progress())
     
     stop_for_status(r)
     
-    myMessage(sprintf("%s successfully downloaded!", file),
+    myMessage(sprintf("%s successfully downloaded!", filename),
               level=3)
-    out <- file
+    out <- filename
   } else{ 
     r <- GET(download_link,
              add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]),
