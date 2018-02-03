@@ -15,29 +15,28 @@
 # 
 # reportTitle <- "googleanalyticsR_test_download"
 # 
+# reportList <- ga_unsampled_list(
+#   accountId = Sys.getenv("ACCOUNTID"),
+#   webPropertyId = Sys.getenv("WEBPROPERTYID"),
+#   profileId = Sys.getenv("PROFILEID")
+# )
+# 
 # # Download file
-# ga_unsampled_download(accountId = Sys.getenv("ACCOUNTID"),
-#                       webPropertyId = Sys.getenv("WEBPROPERTYID"),
-#                       profileId = Sys.getenv("PROFILEID"),
-#                       reportTitle)
+# ga_unsampled_download(reportList$items$title, reportTitle)
 # 
 # # Save to dataframe option
-# df <- ga_unsampled_download(accountId = Sys.getenv("ACCOUNTID"),
-#                       webPropertyId = Sys.getenv("WEBPROPERTYID"),
-#                       profileId = Sys.getenv("PROFILEID"),
-#                       reportTitle,
-#                       downloadFile = FALSE)
+# df <- ga_unsampled_download(reportList, reportTitle, downloadFile = FALSE)
 # 
 # # Download file larger than 25 mbs
 # reportTitle <- "googleanalyticsR_test_download_over_25_mb"
-# ga_unsampled_download(accountId = Sys.getenv("ACCOUNTID"),
-#                       webPropertyId = Sys.getenv("WEBPROPERTYID"),
-#                       profileId = Sys.getenv("PROFILEID"),
-#                       reportTitle)
+# ga_unsampled_download(reportList, reportTitle)
 # 
 # # Save to dataframe
-# df <- ga_unsampled_download(accountId = Sys.getenv("ACCOUNTID"),
-#                             webPropertyId = Sys.getenv("WEBPROPERTYID"),
-#                             profileId = Sys.getenv("PROFILEID"),
-#                             reportTitle,
-#                             downloadFile = FALSE)
+# df <- ga_unsampled_download(reportList, reportTitle, downloadFile = FALSE)
+# 
+# library(tidyverse)
+# 
+# ## download all unsampled reports
+#   reportList %>%
+#   select(title) %>% #doesn't work because title is a lower level under items
+#   map(ga_unsampled_download, reportList = reportList)
