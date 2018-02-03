@@ -1,5 +1,8 @@
 # options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
 #                                         "https://www.googleapis.com/auth/drive")) #Need drive scope, not sure if this should be default for entire package
+# 
+# getOptions(googleAuthR.scopes.selected)
+# 
 # options(googleAuthR.client_id = Sys.getenv("GA_CLIENT_ID"))
 # options(googleAuthR.client_secret = Sys.getenv("GA_CLIENT_SECRET"))
 # library(googleAuthR)

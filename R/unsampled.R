@@ -82,6 +82,16 @@ ga_unsampled_download <- function(accountId,
                                   file=sprintf("%s.csv", reportTitle),
                                   downloadFile=TRUE){
   
+  # check if proper scope is present
+  drive_scope <- "https://www.googleapis.com/auth/drive"
+  
+  if (!(drive_scope %in% options()$googleAuthR.scopes.selected)) {
+    stop(
+      printf("The %s scope is missing. Please set option and try again.", drive_scope),
+      call. = FALSE
+    )
+  }
+
   report <- ga_unsampled_list(accountId, webPropertyId, profileId) %>% 
     .$items %>% 
     map(unlist) %>% 
