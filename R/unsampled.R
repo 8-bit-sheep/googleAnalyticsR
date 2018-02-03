@@ -60,9 +60,7 @@ ga_unsampled_list <- function(accountId,
 
 #' Download Unsampled Report from Google Drive
 #'
-#' @param accountId Account Id
-#' @param webPropertyId Web Property Id
-#' @param profileId Profile Id
+#' @param reportList The list of reports returned from ga_unsampled_list
 #' @param reportTitle Title of Unsampled Report (case-sensitive)
 #' @param file filename and location. Default is {reportTitle}.csv in working directory 
 #' @param downloadFile Default TRUE, whether to download, if FALSE returns a dataframe instead
@@ -75,9 +73,7 @@ ga_unsampled_list <- function(accountId,
 #' @importFrom googleAuthR gar_api_generator
 #' @family managementAPI functions, googleDriveAPI functions
 #' @export
-ga_unsampled_download <- function(accountId,
-                                  webPropertyId,
-                                  profileId,
+ga_unsampled_download <- function(reportList,
                                   reportTitle,
                                   file=sprintf("%s.csv", reportTitle),
                                   downloadFile=TRUE){
@@ -92,7 +88,7 @@ ga_unsampled_download <- function(accountId,
     )
   }
 
-  report <- ga_unsampled_list(accountId, webPropertyId, profileId) %>% 
+  report <- reportList %>% 
     .$items %>% 
     map(unlist) %>% 
     as_data_frame() %>% 
