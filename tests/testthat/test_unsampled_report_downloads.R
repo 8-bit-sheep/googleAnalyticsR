@@ -48,7 +48,7 @@ small <- ga_unsampled_list(accountId, webPropertyId, profileId) %>%
   filter(title == reportTitle) %>%
   select(driveDownloadDetails) %>% 
   na.omit() %>%
-  map(ga_unsampled_download)
+  walk(ga_unsampled_download)
 
 #doesn't work, but should in case user selects title too
 small <- ga_unsampled_list(accountId, webPropertyId, profileId) %>%
