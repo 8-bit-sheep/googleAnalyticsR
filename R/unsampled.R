@@ -54,15 +54,17 @@ ga_unsampled_list <- function(accountId,
                                  ),
                                  data_parse_function = function(x) x)
   
-  unsampled()
+  unsampled() %>%
+    .$items %>%
+    map(unlist) %>%
+    as_data_frame()
   
 }
 
 #' Download Unsampled Report from Google Drive
 #'
-#' @param reportList The list of reports returned from ga_unsampled_list
-#' @param reportTitle Title of Unsampled Report (case-sensitive)
-#' @param file filename and location. Default is {reportTitle}.csv in working directory 
+#' @param driveDownloadDetails The documentid for completed driveDownloadDetails
+#' @param file filename and location. Default is {driveDownloadDetails}.csv in working directory 
 #' @param downloadFile Default TRUE, whether to download, if FALSE returns a dataframe instead
 
 #' @return file location if \code{downloadFile} is TRUE, else a \code{data.frame} of download
@@ -73,9 +75,8 @@ ga_unsampled_list <- function(accountId,
 #' @importFrom googleAuthR gar_api_generator
 #' @family managementAPI functions, googleDriveAPI functions
 #' @export
-ga_unsampled_download <- function(reportList,
-                                  reportTitle,
-                                  file=sprintf("%s.csv", reportTitle),
+ga_unsampled_download <- function(driveDownloadDetails,
+                                  filename=sprintf("%s.csv", driveDownloadDetails),
                                   downloadFile=TRUE){
   
   # check if proper scope is present
@@ -87,41 +88,9 @@ ga_unsampled_download <- function(reportList,
       call. = FALSE
     )
   }
-
-  report <- reportList %>% 
-    .$items %>% 
-    map(unlist) %>% 
-    as_data_frame() %>% 
-    rename(documentId=driveDownloadDetails) %>% 
-    filter(title==reportTitle)
-  
-  if(nrow(report) == 0) {
-    stop("Report title not found. Please enter a valid title. 
-         Remember it is case-sensitive",
-         call.=FALSE) 
-  }
-  
-  if(nrow(report) > 1) {
-    myMessage("WARNING: There are multiple reports with the same title. 
-              Choosing the most recently created.",
-              level=3)  #need to find way to avoid progress bar overwriting
-    report <- report %>% filter(created==max(created))
-  }
-  
-  #now there is only 1 report
-  if(report$status != "COMPLETED") {
-    stop(sprintf("The unsampled report has not COMPLETED. It is currently %s. 
-                 Please try again at a later time.", report$status),
-         call.=FALSE)
-  }
-  
-  if(report$downloadType != "GOOGLE_DRIVE") {
-    stop("The downloadType is not a Google Drive link and cannot be downloaded.",
-         call.=FALSE) 
-  }
   
   #Get document metadata
-  url <- sprintf("https://www.googleapis.com/drive/v2/files/%s", report$documentId)
+  url <- sprintf("https://www.googleapis.com/drive/v2/files/%s", report$driveDownloadDetails)
   document <- gar_api_generator(url, 
                                 "GET")()
   download_link <- document[["content"]][["webContentLink"]]
