@@ -313,6 +313,7 @@ lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPat
                        region = "geoNetwork.region as region",
                        metro = "geoNetwork.region as metro",
                        pagePath = "hits.page.pagePath as pagePath",
+                       sourcePropertyDisplayName = "hits.sourcePropertyInfo.sourcePropertyDisplayName as sourcePropertyDisplayName",
                        eventCategory = "hits.eventInfo.eventCategory as eventCategory",
                        eventAction = "hits.eventInfo.eventAction as eventAction",
                        eventLabel = "hits.eventInfo.eventLabel as eventLabel",
