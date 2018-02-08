@@ -27,7 +27,7 @@ Make a metric filter object
 \dontrun{
 library(googleAnalyticsR)
 
-## authenticate, 
+## authenticate,
 ## or use the RStudio Addin "Google API Auth" with analytics scopes set
 ga_auth()
 
@@ -51,6 +51,7 @@ fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
 fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
 
 ## make v4 request
+
 ga_data1 <- google_analytics(ga_id, 
                              date_range = c("2015-07-30","2015-10-01"),
                              dimensions=c('source','medium'), 
@@ -60,6 +61,7 @@ ga_data1 <- google_analytics(ga_id,
                              filtersExpression = "ga:source!=(direct)")
                                
 } 
+
 
 }
 \seealso{

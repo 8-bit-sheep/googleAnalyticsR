@@ -11,7 +11,7 @@
 ga_filter_view_list <- function(accountId,
                                 webPropertyId,
                                 profileId){
-  
+
   url <- "https://www.googleapis.com/analytics/v3/management/"
   filters <- gar_api_generator(url,
                                "GET",
@@ -22,9 +22,9 @@ ga_filter_view_list <- function(accountId,
                                  profileFilterLinks = ""
                                ),
                                data_parse_function = function(x) x)
-  
+
   filters()
-  
+
 }
 
 #' Get specific filter for view (profile)
@@ -42,20 +42,20 @@ ga_filter_view <- function(accountId,
                            webPropertyId,
                            profileId,
                            linkId){
-  
+
   url <- "https://www.googleapis.com/analytics/v3/management/"
   filters <- gar_api_generator(url,
                                "GET",
                                path_args = list(
                                  accounts = accountId,
-                                 webproperties = webPropertyId,
+                                webproperties = webPropertyId,
                                  profiles = profileId,
                                  profileFilterLinks = linkId
                                ),
                                data_parse_function = function(x) x)
-  
+
   filters()
-  
+
 }
 
 #' Get specific filter for account
@@ -69,7 +69,7 @@ ga_filter_view <- function(accountId,
 #' @export
 ga_filter <- function(accountId,
                       filterId){
-  
+
   url <- "https://www.googleapis.com/analytics/v3/management/"
   filters <- gar_api_generator(url,
                                "GET",
@@ -78,9 +78,9 @@ ga_filter <- function(accountId,
                                  filters = filterId
                                ),
                                data_parse_function = function(x) x)
-  
+
   filters()
-  
+
 }
 
 #' List filters for account
@@ -92,7 +92,7 @@ ga_filter <- function(accountId,
 #' @family managementAPI functions
 #' @export
 ga_filter_list <- function(accountId){
-  
+
   url <- "https://www.googleapis.com/analytics/v3/management/"
   filters <- gar_api_generator(url,
                                "GET",
@@ -101,9 +101,9 @@ ga_filter_list <- function(accountId){
                                  filters = ""
                                ),
                                data_parse_function = function(x) x)
-  
+
   filters()
-  
+
 }
 
 
@@ -117,63 +117,63 @@ ga_filter_list <- function(accountId){
 #'   make the clauses in two separate calls, then pass the objects to \link{make_ga_4_req}
 #'
 #'
-#' @return An object of class \code{dim_fil_ga4} or \code{met_fil_ga4} 
+#' @return An object of class \code{dim_fil_ga4} or \code{met_fil_ga4}
 #'   for use in \code{\link{make_ga_4_req}}
-#' 
-#' 
-#' @examples 
-#' 
+#'
+#'
+#' @examples
+#'
 #' \dontrun{
 #' library(googleAnalyticsR)
-#' 
-#' ## authenticate, 
+#'
+#' ## authenticate,
 #' ## or use the RStudio Addin "Google API Auth" with analytics scopes set
 #' ga_auth()
-#' 
+#'
 #' ## get your accounts
 #' account_list <- google_analytics_account_list()
-#' 
+#'
 #' ## pick a profile with data to query
-#' 
+#'
 #' ga_id <- account_list[23,'viewId']
-#' 
+#'
 #' ## create filters on metrics
 #' mf <- met_filter("bounces", "GREATER_THAN", 0)
 #' mf2 <- met_filter("sessions", "GREATER", 2)
-#' 
+#'
 #' ## create filters on dimensions
 #' df <- dim_filter("source","BEGINS_WITH","1",not = TRUE)
 #' df2 <- dim_filter("source","BEGINS_WITH","a",not = TRUE)
-#' 
+#'
 #' ## construct filter objects
 #' fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
 #' fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
-#' 
+#'
 #' ## make v4 request
-#' ga_data1 <- google_analytics(ga_id, 
-#'                              date_range = c("2015-07-30","2015-10-01"),
-#'                              dimensions=c('source','medium'), 
-#'                              metrics = c('sessions','bounces'), 
-#'                              met_filters = fc, 
-#'                              dim_filters = fc2, 
-#'                              filtersExpression = "ga:source!=(direct)")
-#'                                
+#' ga_data1 <- google_analytics_4(ga_id,
+#'                                date_range = c("2015-07-30","2015-10-01"),
+#'                                dimensions=c('source','medium'),
+#'                                metrics = c('sessions','bounces'),
+#'                                met_filters = fc,
+#'                                dim_filters = fc2,
+#'                                filtersExpression = "ga:source!=(direct)")
+#'
 #' }
-#' 
-#' 
+#'
+#'
 #' @export
 #' @family filter functions
 filter_clause_ga4 <- function(filters, operator = c("OR", "AND")){
   operator <- match.arg(operator)
-  
+
   stopifnot(inherits(filters, "list"))
-  
+
   ## get class names to seee if all the same
   types <- unlist(lapply(filters, class))
-  
+
   stopifnot(all(types[1] == types), types[1] %in% c("dim_fil_ga4","met_fil_ga4"))
   class_name <- types[1]
-  
+
   structure(
     list(
       operator = operator,
@@ -181,7 +181,7 @@ filter_clause_ga4 <- function(filters, operator = c("OR", "AND")){
     ),
     class = class_name
   )
-  
+
 }
 
 
@@ -194,46 +194,46 @@ filter_clause_ga4 <- function(filters, operator = c("OR", "AND")){
 #' @param not Logical NOT operator. Boolean.
 #'
 #' @return An object of class \code{dim_fil_ga4} for use in \code{\link{filter_clause_ga4}}
-#' 
-#' @examples 
-#' 
+#'
+#' @examples
+#'
 #' \dontrun{
 #' library(googleAnalyticsR)
-#' 
-#' ## authenticate, 
+#'
+#' ## authenticate,
 #' ## or use the RStudio Addin "Google API Auth" with analytics scopes set
 #' ga_auth()
-#' 
+#'
 #' ## get your accounts
 #' account_list <- google_analytics_account_list()
-#' 
+#'
 #' ## pick a profile with data to query
-#' 
+#'
 #' ga_id <- account_list[23,'viewId']
-#' 
+#'
 #' ## create filters on metrics
 #' mf <- met_filter("bounces", "GREATER_THAN", 0)
 #' mf2 <- met_filter("sessions", "GREATER", 2)
-#' 
+#'
 #' ## create filters on dimensions
 #' df <- dim_filter("source","BEGINS_WITH","1",not = TRUE)
 #' df2 <- dim_filter("source","BEGINS_WITH","a",not = TRUE)
-#' 
+#'
 #' ## construct filter objects
 #' fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
 #' fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
-#' 
+#'
 #' ## make v4 request
-#' ga_data1 <- google_analytics(ga_id, 
-#'                              date_range = c("2015-07-30","2015-10-01"),
-#'                              dimensions=c('source','medium'), 
-#'                              metrics = c('sessions','bounces'), 
-#'                              met_filters = fc, 
-#'                              dim_filters = fc2, 
-#'                              filtersExpression = "ga:source!=(direct)")
-#'                                
+#' ga_data1 <- google_analytics_4(ga_id,
+#'                                date_range = c("2015-07-30","2015-10-01"),
+#'                                dimensions=c('source','medium'),
+#'                                metrics = c('sessions','bounces'),
+#'                                met_filters = fc,
+#'                                dim_filters = fc2,
+#'                                filtersExpression = "ga:source!=(direct)")
+#'
 #' }
-#' 
+#'
 #' @export
 #' @family filter functions
 dim_filter <- function(dimension,
@@ -243,19 +243,19 @@ dim_filter <- function(dimension,
                        expressions,
                        caseSensitive = FALSE,
                        not = FALSE){
-  
+
   operator <- match.arg(operator)
-  
+
   stopifnot(inherits(dimension, "character"),
             inherits(expressions, "character"))
-  
+
   dimension <- sapply(dimension, checkPrefix, prefix = "ga")
-  
+
   if(all(operator != "IN_LIST", length(expressions) > 1)) {
     warning("Only first expression used if operator not 'IN_LIST'")
     expressions <- expressions[1]
   }
-  
+
   structure(
     list(
       dimensionName = dimension,
@@ -276,47 +276,47 @@ dim_filter <- function(dimension,
 #' @param not Logical NOT operator. Boolean.
 #'
 #' @return An object of class \code{met_fil_ga4} for use in \code{\link{filter_clause_ga4}}
-#' 
-#' 
-#' @examples 
-#' 
+#'
+#'
+#' @examples
+#'
 #' \dontrun{
 #' library(googleAnalyticsR)
-#' 
-#' ## authenticate, 
+#'
+#' ## authenticate,
 #' ## or use the RStudio Addin "Google API Auth" with analytics scopes set
 #' ga_auth()
-#' 
+#'
 #' ## get your accounts
 #' account_list <- google_analytics_account_list()
-#' 
+#'
 #' ## pick a profile with data to query
-#' 
+#'
 #' ga_id <- account_list[23,'viewId']
-#' 
+#'
 #' ## create filters on metrics
 #' mf <- met_filter("bounces", "GREATER_THAN", 0)
 #' mf2 <- met_filter("sessions", "GREATER", 2)
-#' 
+#'
 #' ## create filters on dimensions
 #' df <- dim_filter("source","BEGINS_WITH","1",not = TRUE)
 #' df2 <- dim_filter("source","BEGINS_WITH","a",not = TRUE)
-#' 
+#'
 #' ## construct filter objects
 #' fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
 #' fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
-#' 
+#'
 #' ## make v4 request
-#' ga_data1 <- google_analytics(ga_id, 
-#'                              date_range = c("2015-07-30","2015-10-01"),
-#'                              dimensions=c('source','medium'), 
-#'                              metrics = c('sessions','bounces'), 
-#'                              met_filters = fc, 
-#'                              dim_filters = fc2, 
-#'                              filtersExpression = "ga:source!=(direct)")
-#'                                
-#' } 
-#' 
+#' ga_data1 <- google_analytics_4(ga_id,
+#'                                date_range = c("2015-07-30","2015-10-01"),
+#'                                dimensions=c('source','medium'),
+#'                                metrics = c('sessions','bounces'),
+#'                                met_filters = fc,
+#'                                dim_filters = fc2,
+#'                                filtersExpression = "ga:source!=(direct)")
+#'
+#' }
+#'
 #' @export
 #' @family filter functions
 met_filter <- function(metric,
@@ -324,11 +324,11 @@ met_filter <- function(metric,
                        comparisonValue,
                        not = FALSE){
   operator <- match.arg(operator)
-  
+
   stopifnot(inherits(metric, "character"))
-  
+
   metric <- sapply(metric, checkPrefix, prefix = "ga")
-  
+
   structure(
     list(
       metricName = metric,
@@ -338,5 +338,228 @@ met_filter <- function(metric,
     ),
     class = "met_fil_ga4"
   )
-  
+
+}
+
+#' Delete a filter from account or remove from view.
+#'
+#' @param accountId Account Id of the account that contains the filter
+#' @param propertyId Property Id of the property that contains the filter
+#' @param viewId View Id of the view that contains the filter
+#' @param filterId Filter Id of the filter to be deleted
+#' @param removeFromViewOnly Default if FALSE. If TRUE, deletes the filter only from the view
+#'
+#' @importFrom googleAuthR gar_api_generator
+#' @family managementAPI functions
+#' @export
+ga_filter_delete <- function(accountId, propertyId, viewId, filterId, removeFromViewOnly = FALSE) {
+
+    url <- "https://www.googleapis.com/analytics/v3/management/"
+    if(removeFromViewOnly){
+
+        f <- gar_api_generator(url,
+                               "DELETE",
+                               path_args = list(
+                                 accounts = accountId,
+                                 webproperties = propertyId,
+                                 profiles = viewId,
+                                 profileFilterLinks = paste(viewId,filterId, sep=":")
+                               ),
+                               data_parse_function = function(x) x)
+        f()
+    } else {
+
+        f <- gar_api_generator(url,
+                               "DELETE",
+                               path_args = list(
+                                 accounts = accountId,
+                                 filters = filterId
+                               ),
+                               data_parse_function = function(x) x)
+        f()
+    }
+
+}
+
+
+#' Create a new filter and add it to the view (optional).
+#'
+#' @param Filter The Filter object to be added to the account or view
+#' Refer to documentation here: https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/#Filters
+#'
+#' ## Create a filter object for adding an IP exclusion:
+#' Filter <- list(
+#'                name = 'Exclude Internal Traffic',
+#'                type = 'EXCLUDE',
+#'                excludeDetails = list(
+#'                    field = 'GEO_IP_ADDRESS',
+#'                    matchType = 'EQUAL',
+#'                    expressionValue = '199.04.123.1',
+#'                    caseSensitive = 'False'
+#'                                     )
+#'               )
+#'
+#' ## Create a filter object for making campaign medium lowercase
+#' Filter <- list(
+#'                name = 'Lowercase Campaign Medium',
+#'                type = 'LOWERCASE',
+#'                lowercaseDetails = list(
+#'                    field = 'CAMPAIGN_MEDIUM'
+#'                                     )
+#'               )
+#'
+#' ## Create a filter object to append hostname to URI
+#' Filter <- list(
+#'                name = 'Append hostname to URI',
+#'                type = 'ADVANCED',
+#'                advancedDetails = list(
+#'                    fieldA = 'PAGE_HOSTNAME',
+#'                    extractA = '(.*)',
+#'                    fieldARequired = 'True',
+#'                    fieldB = 'PAGE_REQUEST_URI',
+#'                    extractB = '(.*)',
+#'                    fieldBRequired = 'False',
+#'                    outputConstructor = '$A1$B1',
+#'                    outputToField = 'PAGE_REQUEST_URI',
+#'                    caseSensitive = 'False',
+#'                    overrideOutputField = 'True'
+#'                                     )
+#'               )
+#'
+#' ## Create a filter object to add www hostname without it
+#' Filter <- list(
+#'                name = 'Search and Replace www',
+#'                type = 'SEARCH_AND_REPLACE',
+#'                searchAndReplaceDetails = list(
+#'                    field = 'PAGE_HOSTNAME',
+#'                    searchString = '^exampleUSA\\.com$',
+#'                    replaceString = 'www.exampleUSA.com',
+#'                    caseSensitive = 'False'
+#'                                     )
+#'               )
+#'
+#' @param accountId Account Id of the account to add the Filter to
+#' @param propertyId Property Id of the property to add the Filter to
+#' @param viewId View Id of the view to add the Filter to
+#' @param linkFilter If TRUE will apply the Filter to the view. Needs propetyId and viewId to be set.
+#'
+#' @importFrom googleAuthR gar_api_generator
+#' @family managementAPI functions
+#' @export
+ga_filter_add <- function(Filter, accountId, propertyId = FALSE, viewId = FALSE, linkFilter = FALSE) {
+
+    url <- "https://www.googleapis.com/analytics/v3/management/"
+    f <- gar_api_generator(url,
+                               "POST",
+                               path_args = list(
+                                 accounts = accountId,
+                                 filters = ""
+                               ),
+                               data_parse_function = function(x) x$id)
+
+    filterId <- f(the_body = Filter)
+
+    if(linkFilter){
+        body <- list(filterRef = list(id = filterId))
+        url <- "https://www.googleapis.com/analytics/v3/management/"
+        f <- gar_api_generator(url,
+                               "POST",
+                               path_args = list(
+                                 accounts = accountId,
+                                 webproperties = propertyId,
+                                 profiles = viewId,
+                                 profileFilterLinks = ""
+                               ),
+                               data_parse_function = function(x) x)
+
+        f(the_body = body)
+    }
+}
+
+
+#' Updates an existing filter.
+#'
+#' @param Filter The Filter object to be updated
+#' See examples from ga_filter_add()
+#' @param accountId Account Id of the account that contains the filter
+#' @param filterId The id of the filter to be modified
+#' @param method PUT by default. For patch semantics use PATCH
+#'
+#' @importFrom googleAuthR gar_api_generator
+#' @family managementAPI functions
+#' @export
+ga_filter_update <- function(Filter, accountId, filterId, method = "PUT") {
+
+    url <- "https://www.googleapis.com/analytics/v3/management/"
+    f <- gar_api_generator(url,
+                               method,
+                               path_args = list(
+                                 accounts = accountId,
+                                 filters = filterId
+                               ),
+                               data_parse_function = function(x) x)
+
+    f(the_body = Filter)
+}
+
+
+#' Apply an existing filter to view.
+#'
+#' @param filterId The id of the filter to be addedd to profile/view
+#' @param accountId Account Id of the account that contains the filter
+#' @param propertyId Web property Id to create profile filter link for
+#' @param viewId Profile/view Id to create profile filter link for
+#'
+#' @importFrom googleAuthR gar_api_generator
+#' @family managementAPI functions
+#' @export
+
+ga_filter_apply_to_view <- function(filterId, accountId, propertyId, viewId) {
+
+  body <- list(filterRef = list(id = filterId))
+  url <- "https://www.googleapis.com/analytics/v3/management/"
+  f <- gar_api_generator(url,
+                               "POST",
+                               path_args = list(
+                                 accounts = accountId,
+                                 webproperties = propertyId,
+                                 profiles = viewId,
+                                 profileFilterLinks = ""
+                               ),
+                               data_parse_function = function(x) x)
+
+  f(the_body = body)
+}
+
+
+#' Update an existing profile filter link. Patch semantics supported
+#'
+#' @param viewFilterLink The viewFilterLink object
+#' ## Example:
+#' ## Changing the rank of the filter in the view:
+#' viewFilterLink <- list(rank = 4)
+#'
+#' @param accountId Account Id of the account that contains the filter
+#' @param propertyId Web property Id to which the profile filter link belongs
+#' @param viewId View Id to which the profile filter link belongs
+#' @param linkId The id of the profile filter link to be updated
+#' @param method PUT by default. Supports patch semantics when set to PATCH
+#'
+#' @importFrom googleAuthR gar_api_generator
+#' @family managementAPI functions
+#' @export
+ga_filter_update_filter_link <- function(viewFilterLink, accountId, propertyId, viewId, linkId, method = "PUT") {
+
+    url <- "https://www.googleapis.com/analytics/v3/management/"
+    f <- gar_api_generator(url,
+                               method,
+                               path_args = list(
+                                accounts = accountId,
+                                 webproperties = propertyId,
+                                 profiles = viewId,
+                                 profileFilterLinks = linkId
+                               ),
+                               data_parse_function = function(x) x)
+
+    f(the_body = viewFilterLink)
 }
