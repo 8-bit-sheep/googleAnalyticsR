@@ -66,7 +66,7 @@ A Google Analytics data.frame, with attributes showing row totals, sampling etc.
 \description{
 Fetch Google Analytics data using the v4 API.  For the v3 API use \link{google_analytics_3}.
  
-Will perform automatic batching if over the 10000 row per API call limit.
+Will perform automatic batching if over the 100000 row per API call limit.
 }
 \section{Anti-sampling}{
 

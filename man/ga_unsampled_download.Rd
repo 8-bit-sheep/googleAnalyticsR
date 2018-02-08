@@ -4,19 +4,17 @@
 \alias{ga_unsampled_download}
 \title{Download Unsampled Report from Google Drive}
 \usage{
-ga_unsampled_download(accountId, webPropertyId, profileId, reportTitle,
-  file = sprintf("\%s.csv", reportTitle), downloadFile = TRUE)
+ga_unsampled_download(reportTitle, accountId, webPropertyId, profileId,
+  downloadFile = TRUE)
 }
 \arguments{
+\item{reportTitle}{Title of Unsampled Report (case-sensitive)}
+
 \item{accountId}{Account Id}
 
 \item{webPropertyId}{Web Property Id}
 
 \item{profileId}{Profile Id}
-
-\item{reportTitle}{Title of Unsampled Report (case-sensitive)}
-
-\item{file}{filename and location. Default is {reportTitle}.csv in working directory}
 
 \item{downloadFile}{Default TRUE, whether to download, if FALSE returns a dataframe instead}
 }
