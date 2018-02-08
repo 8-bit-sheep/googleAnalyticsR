@@ -132,7 +132,6 @@ ga_unsampled_list <- function(accountId,
 #' 
 #' }
 #' @importFrom httr GET add_headers stop_for_status content write_disk progress
-#' @importFrom tibble as_tibble
 #' @importFrom magrittr %>% 
 #' @importFrom dplyr filter
 #' @importFrom googleAuthR gar_api_generator
