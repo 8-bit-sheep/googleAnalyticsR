@@ -157,7 +157,13 @@ anti_sample <- function(anti_sample_batches,
   out <- Reduce(rbind, unsampled_list)
   
   ## get rid of duplicate rows per sample call
-  out <- aggregateGAData(out, agg_names = gsub("ga:","",dimensions))
+  agg_cols <- gsub("ga:","",dimensions) 
+  
+  ## take care of segment column (#149)
+  if(!is.null(segments)){
+    agg_cols <- c("segment", agg_cols)
+  }
+  out <- aggregateGAData(out, agg_names = agg_cols)
   
   ## fill these in later
   if(!is.null(out)){

@@ -12,6 +12,7 @@ If you were using `google_analytics()` before to fetch the v3 API, this is now a
 * Change the rows fetched per page in v4 from 10,000 to 100,000 
 * Add unsampled report downloads (#44 - many thanks to @j450h1 for this work on this) 
 * Add management of View and account filters (#108 - many thanks to @zselinger for the work on this)
+* Fix bug where anti-sampling with no dimensions broke (#149 - thanks @smach)
 
 # googleAnalytics 0.4.2
 
