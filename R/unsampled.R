@@ -171,8 +171,7 @@ ga_unsampled_download <- function(reportTitle,
     out <- filename
   } else{ 
     r <- GET(download_link,
-             add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]),
-             progress())
+             add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]))
     stop_for_status(r) 
     
     out <- content(r) %>% as_tibble()
