@@ -57,7 +57,9 @@ ga_unsampled_list <- function(accountId,
   unsampled() %>%
     .$items %>%
     map(unlist) %>%
-    as_data_frame()
+    as_tibble()%>%
+    na.omit() 
+  #Reports with N/A are reports that have no download link nor type - assuming created by others
   
 }
 
