@@ -69,7 +69,6 @@ ga_unsampled_list <- function(accountId,
 #' @param accountId Account Id
 #' @param webPropertyId Web Property Id
 #' @param profileId Profile Id
-#' @param filename filename and location. Default is {reportTitle}.csv in working directory 
 #' @param downloadFile Default TRUE, whether to download, if FALSE returns a dataframe instead
 
 #' @return file location if \code{downloadFile} is TRUE, else a \code{data.frame} of download
@@ -84,7 +83,6 @@ ga_unsampled_download <- function(reportTitle,
                                   accountId,
                                   webPropertyId,
                                   profileId,
-                                  filename=sprintf("%s.csv", reportTitle),
                                   downloadFile=TRUE){
   
   # check if proper scope is present
@@ -129,7 +127,7 @@ ga_unsampled_download <- function(reportTitle,
     )
   }
   # Get document metadata
-  url <- sprintf("https://www.googleapis.com/drive/v2/files/%s", toString(driveDownloadDetails))
+  url <- sprintf("https://www.googleapis.com/drive/v2/files/%s", toString(report$driveDownloadDetails))
   document <- gar_api_generator(
     url,
     "GET"
