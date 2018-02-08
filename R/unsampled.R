@@ -45,6 +45,12 @@ ga_unsampled_list <- function(accountId,
                               webPropertyId,
                               profileId){
   
+  parse_unsampled <- function(x){
+    o <- x$items
+    o <- o[, setdiff(names(o),c("selfLink","kind"))]
+    as.data.frame(lapply(o, unlist))
+  }
+  
   url <- "https://www.googleapis.com/analytics/v3/management/"
   unsampled <- gar_api_generator(url,
                                  "GET",
@@ -54,11 +60,7 @@ ga_unsampled_list <- function(accountId,
                                    profiles = profileId,
                                    unsampledReports = ""
                                  ),
-                                 data_parse_function = function(x){
-                                   o <- x$items
-                                   o <- o[, setdiff(names(o),c("selfLink","kind"))]
-                                   as.data.frame(lapply(o, unlist))
-                                 })
+                                 data_parse_function = parse_unsampled)
   
   unsampled()
   
@@ -95,9 +97,13 @@ ga_unsampled_download <- function(reportTitle,
       call. = FALSE
     )
   }
+  
+  unsamps <- ga_unsampled_list(accountId = accountId, 
+                               webPropertyId = webPropertyId, 
+                               profileId = profileId)
 
-  report <- ga_unsampled_list(accountId, webPropertyId, profileId) %>%
-    filter(title == reportTitle)
+  report <- unsamps[unsamps$title == reportTitle, ]
+
     
   if(nrow(report) == 0) {
     stop("Report title not found. Please enter a valid title. 
@@ -109,8 +115,8 @@ ga_unsampled_download <- function(reportTitle,
     myMessage(sprintf("WARNING: There are multiple reports with the same title of %s. 
             Choosing the most recently created.", reportTitle),
               level=3)  #need to find way to avoid progress bar overwriting
-    created <- NULL # hack to stop parser complaining
-    report <- report %>% filter(created==max(created))
+
+    report <- report[report$created == max(report$created), ]
   }
   
   # now there is only 1 report
@@ -121,19 +127,20 @@ ga_unsampled_download <- function(reportTitle,
   }
 
   # https://developers.google.com/analytics/devguides/config/mgmt/v3/unsampled-reports
-  # Note: The downloadType field is a read only field. Contact your Analytics 360 account manager if you would like to change the download location of your unsampled reports.
   if (report$downloadType != "GOOGLE_DRIVE") {
     stop(
-      "Only Google Drive download links are currently supported.",
+      "Only Google Drive download links are currently supported. 
+      Contact your Analytics 360 account manager if you would like to change 
+      the download location of your unsampled reports.",
       call. = FALSE
     )
   }
   # Get document metadata
-  url <- sprintf("https://www.googleapis.com/drive/v2/files/%s", toString(report$driveDownloadDetails))
-  document <- gar_api_generator(
-    url,
-    "GET"
-  )()
+  url <- sprintf("https://www.googleapis.com/drive/v2/files/%s", 
+                 toString(report$driveDownloadDetails))
+  
+  document <- gar_api_generator(url, "GET")()
+  
   download_link <- document[["content"]][["webContentLink"]]
 
   # Additional parsing from confirmation page if file is too large
@@ -176,7 +183,7 @@ ga_unsampled_download <- function(reportTitle,
              add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]))
     stop_for_status(r) 
     
-    out <- content(r) %>% as_tibble()
+    out <- content(r) 
   }
   
   out
