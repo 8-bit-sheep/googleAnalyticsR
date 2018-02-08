@@ -1,14 +1,14 @@
-#' #' @export
-#' print.ga_profileFilterLink <- function(x, ...){
-#'   cat("==Google Analytics Profile (View) Filter Link==\n")
-#'   cat0("profileFilterLink ID:  ", x$id)
-#'   cat0("Rank:                  ", x$rank)
-#'   cat0("Web Property Id:       ", x$webPropertyId)
-#'   cat0("Upload ID:             ", x$id)
-#'   cat0("Status:                ", x$status)
-#'   
-#'   
-#' }
+# #' @export
+# print.ga_profileFilterLink <- function(x, ...){
+#   cat("==Google Analytics Profile (View) Filter Link==\n")
+#   cat0("profileFilterLink ID:  ", x$id)
+#   cat0("Rank:                  ", x$rank)
+#   cat0("Web Property Id:       ", x$webPropertyId)
+#   cat0("Upload ID:             ", x$id)
+#   cat0("Status:                ", x$status)
+#   
+#   
+# }
 
 
 

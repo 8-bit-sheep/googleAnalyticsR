@@ -9,6 +9,10 @@ as.profileFilterLink <- function(x){
     class = "ga_profileFilterLink"
   )
 }
+# test if it is this class
+is.profileFilterLink <- function(x){
+  inherits(x, "ga_profileFilterLink")
+}
 
 
 
