@@ -54,14 +54,13 @@ ga_unsampled_list <- function(accountId,
                                    profiles = profileId,
                                    unsampledReports = ""
                                  ),
-                                 data_parse_function = function(x) x)
+                                 data_parse_function = function(x){
+                                   o <- x$items
+                                   o <- o[, setdiff(names(o),c("selfLink","kind"))]
+                                   as.data.frame(lapply(o, unlist))
+                                 })
   
-  unsampled() %>%
-        .$items %>%
-        map(unlist) %>%
-        as_tibble()%>%
-        na.omit() 
-  
+  unsampled()
   
 }
 

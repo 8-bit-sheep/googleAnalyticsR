@@ -118,14 +118,14 @@ with_mock_API({
   })
 
   test_that("Delete Filter from account", {
-      skip_on_cran(),
+      skip_on_cran()
 
       expect_warning(ga_filter_delete(accountId, filterId = filterId), "No JSON content detected")
 
   })
 
   test_that("Delete Filter from view", {
-      skip_on_cran(),
+      skip_on_cran()
 
       expect_warning(ga_filter_delete(accountId, webPropId, viewId, filterId = ga_id, removeFromView = TRUE),
                      "No JSON content detected")
@@ -133,7 +133,7 @@ with_mock_API({
   })
 
   test_that("Add filter to the view", {
-      skip_on_cran(),
+      skip_on_cran()
 
       response <- ga_filter_add(Filter, accountId, webPropId, ga_id, linkFilter = TRUE)
 
@@ -142,7 +142,7 @@ with_mock_API({
   })
 
   test_that("Add filter to the account", {
-      skip_on_cran(),
+      skip_on_cran()
 
       response <- ga_filter_add(Filter, accountId)
 
@@ -151,7 +151,7 @@ with_mock_API({
   })
 
   test_that("Update existing filter", {
-      skip_on_cran(),
+      skip_on_cran()
 
       response <- ga_filter_update(filter_to_update, accountId, filterId)
 
@@ -160,7 +160,7 @@ with_mock_API({
   })
 
   test_that("Update view filter link", {
-      skip_on_cran(),
+      skip_on_cran()
 
       response <- ga_filter_update_filter_link(viewFilterLink, accountId, webPropId, ga_id, linkId)
 
@@ -169,7 +169,7 @@ with_mock_API({
   })
 
   test_that("Apply existing filter to view", {
-      skip_on_cran(),
+      skip_on_cran()
 
       response <- ga_filter_apply_to_view(filterId, accountId, webPropId, ga_id)
 

@@ -13,14 +13,17 @@ test_that("Can list unsampled files", {
 test_that("Can download one file", {
   
   reportTitle <- "googleanalyticsR_test_download"
+
   
   dl <- ga_unsampled_download(reportTitle,
                               accountId = "54019251",
                               webPropertyId = "UA-54019251-4",
                               profileId = "129374148")
+  on.exit(unlink(paste0(reportTitle,".csv")))
   
   expect_equal(dl, paste0(reportTitle,".csv"))
   expect_true(file.exists(paste0(reportTitle,".csv")))
+
   
 })
 
