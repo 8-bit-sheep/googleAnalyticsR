@@ -16,10 +16,47 @@ See examples from ga_filter_add()}
 
 \item{method}{PUT by default. For patch semantics use PATCH}
 }
+\value{
+A filterManagement object
+}
 \description{
 Updates an existing filter.
 }
+\examples{
+
+\dontrun{
+
+# create a filter object
+Filter <- list(
+    name = 'googleAnalyticsR test1: Exclude Internal Traffic',
+    type = 'EXCLUDE',
+    excludeDetails = list(
+                      field = 'GEO_IP_ADDRESS',
+                      matchType = 'EQUAL',
+                      expressionValue = '199.04.123.1',
+                      caseSensitive = 'False'
+                      )
+                 )
+ # add a filter (but don't link to a View)               
+ filterId <- ga_filter_add(Filter, 
+                           accountId = 123456, 
+                           linkFilter = FALSE)
+ 
+ # change the name of the filter                    
+ change_name <- "googleAnalyticsR test2: Changed name via PATCH"
+ 
+ # using PATCH semantics, only need to construct what you want to change
+ filter_to_update <- list(name = test_name)
+ 
+ # update the filter using the filterId 
+ ga_filter_update(filter_to_update, accountId2, filterId, method = "PATCH")
+
+}
+
+}
 \seealso{
+\url{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/#Filters}
+
 Other managementAPI functions: \code{\link{ga_accounts}},
   \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}},
   \code{\link{ga_custom_vars_list}},

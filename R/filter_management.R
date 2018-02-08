@@ -6,7 +6,7 @@ as.profileFilterLink <- function(x){
   
   structure(
     x,
-    class = "ga_profileFilterLink"
+    class = c("ga_profileFilterLink","list")
   )
 }
 # test if it is this class
@@ -14,6 +14,21 @@ is.profileFilterLink <- function(x){
   inherits(x, "ga_profileFilterLink")
 }
 
+# make a filter object
+as.filterManagement <- function(x){
+  assertthat::assert_that(
+    x$kind == "analytics#filter"
+  )
+  
+  structure(
+    x,
+    class = c("ga_filterManagement","list")
+  )
+}
+
+is.filterManagement <- function(x){
+  inherits(x, "ga_filterManagement")
+}
 
 
 #' List filters for view (profile)
@@ -130,19 +145,27 @@ ga_filter_list <- function(accountId){
 #' @param webPropertyId Property Id of the property that contains the filter
 #' @param viewId View Id of the view that contains the filter
 #' @param filterId Filter Id of the filter to be deleted
-#' @param removeFromViewOnly Default if FALSE. If TRUE, deletes the filter only from the view
+#' @param removeFromView Default if FALSE. If TRUE, deletes the filter from the view
+#' 
+#' @return TRUE if successful
 #'
 #' @importFrom googleAuthR gar_api_generator
+#' @import assertthat
 #' @family managementAPI functions
 #' @export
 ga_filter_delete <- function(accountId, 
-                             webPropertyId, 
-                             viewId, 
+                             webPropertyId = NULL, 
+                             viewId = NULL, 
                              filterId, 
-                             removeFromViewOnly = FALSE) {
+                             removeFromView = FALSE) {
   
   url <- "https://www.googleapis.com/analytics/v3/management/"
-  if(removeFromViewOnly){
+  if(removeFromView){
+    
+    assert_that(
+      !is.null(webPropertyId),
+      !is.null(viewId)
+    )
     
     f <- gar_api_generator(url,
                            "DELETE",
@@ -153,7 +176,14 @@ ga_filter_delete <- function(accountId,
                              profileFilterLinks = paste(viewId,filterId, sep=":")
                            ),
                            data_parse_function = function(x) x)
-    out <- f()
+    out <- tryCatch(f(), 
+                    warning = function(ex){
+                      if(grepl("No JSON content detected",ex)){
+                        return(TRUE)
+                      } else {
+                        return(ex)
+                      }
+                    }) 
   } else {
     
     f <- gar_api_generator(url,
@@ -163,7 +193,14 @@ ga_filter_delete <- function(accountId,
                              filters = filterId
                            ),
                            data_parse_function = function(x) x)
-    out <- f()
+    out <- tryCatch(f(), 
+                    warning = function(ex){
+                      if(grepl("No JSON content detected",ex)){
+                        return(TRUE)
+                      } else {
+                        return(ex)
+                      }
+                    }) 
   }
   
   out
@@ -259,13 +296,17 @@ ga_filter_delete <- function(accountId,
 #' }
 #'
 #' @importFrom googleAuthR gar_api_generator
+#' @import assertthat
 #' @family managementAPI functions
 #' @export
 ga_filter_add <- function(Filter, 
                           accountId, 
-                          webPropertyId = FALSE, 
-                          viewId = FALSE, 
+                          webPropertyId = NULL, 
+                          viewId = NULL, 
                           linkFilter = FALSE) {
+  
+  assert_that(is.list(Filter),
+              is.flag(linkFilter))
   
   url <- "https://www.googleapis.com/analytics/v3/management/"
   f <- gar_api_generator(url,
@@ -280,11 +321,19 @@ ga_filter_add <- function(Filter,
   
   if(linkFilter){
     
+    assert_that(
+      !is.null(webPropertyId),
+      !is.null(viewId)
+    )
+    
     out <- ga_filter_apply_to_view(filterId, 
                                    accountId = accountId, 
                                    webPropertyId = webPropertyId,
                                    viewId = viewId)
   } else {
+    myMessage(sprintf("Created Filter '%s (%s)' but not linked to any view yet.", 
+                      Filter$name, filterId), 
+              level = 3)
     out <- filterId
   }
   
@@ -299,6 +348,39 @@ ga_filter_add <- function(Filter,
 #' @param accountId Account Id of the account that contains the filter
 #' @param filterId The id of the filter to be modified
 #' @param method PUT by default. For patch semantics use PATCH
+#' 
+#' @return A filterManagement object
+#' @seealso \url{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/#Filters} 
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' # create a filter object
+#' Filter <- list(
+#'     name = 'googleAnalyticsR test1: Exclude Internal Traffic',
+#'     type = 'EXCLUDE',
+#'     excludeDetails = list(
+#'                       field = 'GEO_IP_ADDRESS',
+#'                       matchType = 'EQUAL',
+#'                       expressionValue = '199.04.123.1',
+#'                       caseSensitive = 'False'
+#'                       )
+#'                  )
+#'  # add a filter (but don't link to a View)               
+#'  filterId <- ga_filter_add(Filter, 
+#'                            accountId = 123456, 
+#'                            linkFilter = FALSE)
+#'  
+#'  # change the name of the filter                    
+#'  change_name <- "googleAnalyticsR test2: Changed name via PATCH"
+#'  
+#'  # using PATCH semantics, only need to construct what you want to change
+#'  filter_to_update <- list(name = test_name)
+#'  
+#'  # update the filter using the filterId 
+#'  ga_filter_update(filter_to_update, accountId2, filterId, method = "PATCH")
+#' 
+#' }
 #'
 #' @importFrom googleAuthR gar_api_generator
 #' @family managementAPI functions
@@ -318,7 +400,13 @@ ga_filter_update <- function(Filter,
                          ),
                          data_parse_function = function(x) x)
   
-  f(the_body = Filter)
+  o <- f(the_body = Filter)
+  
+  myMessage(sprintf("Updated filter %s (%s)",
+                    o$name, o$id),
+            level = 3)
+  
+  as.filterManagement(o)
 }
 
 
@@ -377,15 +465,35 @@ ga_filter_apply_to_view <- function(filterId,
 #' 
 #' \dontrun{
 #' 
-#' ## Changing the rank of the filter in the view:
-#' viewFilterLink <- list(rank = 4)
+#' # create a filter object
+#' Filter <- list(
+#'  name = 'googleAnalyticsR test: Exclude Internal Traffic',
+#'  type = 'EXCLUDE',
+#'  excludeDetails = list(
+#'    field = 'GEO_IP_ADDRESS',
+#'    matchType = 'EQUAL',
+#'    expressionValue = '199.04.123.1',
+#'    caseSensitive = 'False'
+#'    )
+#'  )
+#'  
+#'  # link Filter to a View
+#'  response <- ga_filter_add(Filter, 
+#'                            accountId = 12345, 
+#'                            webPropertyId = "UA-12345-1", 
+#'                            viewId = 654321, 
+#'                            linkFilter = TRUE)
+#'                            
+#' # create Filter patch to move existing filter up to rank 1
+#' viewFilterLink <- list(rank = 1)
 #' 
-#' ga_filter_update_filter_link(viewFilterLink,
-#'                              accountId, 
-#'                              webPropertyId,
-#'                              viewId,
-#'                              linkId, 
-#'                              method = "PATCH")
+#' # use the linkId given in response$id to update to new rank 1
+#' response2 <- ga_filter_update_filter_link(viewFilterLink, 
+#'                                           accountId = 12345, 
+#'                                           webPropertyId = "UA-12345-1", 
+#'                                           viewId = 654321,  
+#'                                           linkId = response$id)
+#'
 #' }
 #'
 #' @importFrom googleAuthR gar_api_generator

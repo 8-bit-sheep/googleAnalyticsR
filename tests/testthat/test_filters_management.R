@@ -67,56 +67,61 @@ test_that("Add filter to the view", {
   
   expect_equal(response$kind, "analytics#profileFilterLink")
   
-})
-
-test_that("Add filter to the account", {
-  skip_on_cran()
+  ## move rank to 1
+  viewFilterLink <- list(rank = 1)
   
-  response <- ga_filter_add(Filter, accountId2)
-  
-  expect_equal(response, NULL)
-  
-})
-
-test_that("Update existing filter", {
-  skip_on_cran()
-  
-  response <- ga_filter_update(filter_to_update, accountId2, filterId2)
-  
-  expect_equal(response$kind, "analytics#filter")
-  
-})
-
-test_that("Update view filter link", {
-  skip_on_cran()
-  
-  response <- ga_filter_update_filter_link(viewFilterLink, accountId2, webPropId2, ga_id2, linkId)
-  
+  response2 <- ga_filter_update_filter_link(viewFilterLink, 
+                                            accountId = accountId2, 
+                                            webPropertyId = webPropId2, 
+                                            viewId = ga_id2, 
+                                            linkId = response$id)
   expect_equal(response$kind, "analytics#profileFilterLink")
+  expect_equal(response2$rank, 1)
+  
+  del <- ga_filter_delete(accountId = accountId2, 
+                          webPropertyId = webPropId2, 
+                          viewId = ga_id2, 
+                          filterId =response2$filterRef$id, 
+                          removeFromView = TRUE)
+  
+  expect_true(del)
+  
   
 })
 
-test_that("Apply existing filter to view", {
+test_that("Add filter to the account, but not link", {
   skip_on_cran()
   
-  response <- ga_filter_apply_to_view(filterId, accountId2, webPropId2, ga_id2)
+  Filter <- list(
+    name = 'googleAnalyticsR test2: Exclude Internal Traffic',
+    type = 'EXCLUDE',
+    excludeDetails = list(
+      field = 'GEO_IP_ADDRESS',
+      matchType = 'EQUAL',
+      expressionValue = '199.04.123.1',
+      caseSensitive = 'False'
+    )
+  )
   
-  expect_equal(response$kind, "analytics#profileFilterLink")
+  filterId <- ga_filter_add(Filter, 
+                            accountId = accountId2, 
+                            linkFilter = FALSE)
   
-})
-
-test_that("Delete Filter from account", {
-  skip_on_cran()
+  expect_type(filterId, "character")
   
-  expect_warning(ga_filter_delete(accountId2, filterId = filterId), 
-                 "No JSON content detected")
+  test_name <- "googleAnalyticsR test3: Changed name via PATCH"
   
-})
-
-test_that("Delete Filter from view", {
-  skip_on_cran()
+  filter_to_update <- list(name = test_name)
   
-  expect_warning(ga_filter_delete(accountId2, webPropId2, viewId2, filterId = ga_id, removeFromView = TRUE),
-                 "No JSON content detected")
+  patched <- ga_filter_update(filter_to_update, accountId2, filterId, method = "PATCH")
+  
+  expect_equal(patched$kind, "analytics#filter")
+  expect_equal(patched$name, test_name)
+  
+  # delete the filter
+  del <- ga_filter_delete(accountId = accountId2, 
+                          filterId = filterId)
+  
+  expect_true(del)
   
 })

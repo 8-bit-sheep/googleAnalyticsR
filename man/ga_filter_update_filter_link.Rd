@@ -27,15 +27,35 @@ Update an existing profile filter link. Patch semantics supported
 
 \dontrun{
 
-## Changing the rank of the filter in the view:
-viewFilterLink <- list(rank = 4)
+# create a filter object
+Filter <- list(
+ name = 'googleAnalyticsR test: Exclude Internal Traffic',
+ type = 'EXCLUDE',
+ excludeDetails = list(
+   field = 'GEO_IP_ADDRESS',
+   matchType = 'EQUAL',
+   expressionValue = '199.04.123.1',
+   caseSensitive = 'False'
+   )
+ )
+ 
+ # link Filter to a View
+ response <- ga_filter_add(Filter, 
+                           accountId = 12345, 
+                           webPropertyId = "UA-12345-1", 
+                           viewId = 654321, 
+                           linkFilter = TRUE)
+                           
+# create Filter patch to move existing filter up to rank 1
+viewFilterLink <- list(rank = 1)
 
-ga_filter_update_filter_link(viewFilterLink,
-                             accountId, 
-                             webPropertyId,
-                             viewId,
-                             linkId, 
-                             method = "PATCH")
+# use the linkId given in response$id to update to new rank 1
+response2 <- ga_filter_update_filter_link(viewFilterLink, 
+                                          accountId = 12345, 
+                                          webPropertyId = "UA-12345-1", 
+                                          viewId = 654321,  
+                                          linkId = response$id)
+
 }
 
 }

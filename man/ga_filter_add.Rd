@@ -4,7 +4,7 @@
 \alias{ga_filter_add}
 \title{Create a new filter and add it to the view (optional).}
 \usage{
-ga_filter_add(Filter, accountId, webPropertyId = FALSE, viewId = FALSE,
+ga_filter_add(Filter, accountId, webPropertyId = NULL, viewId = NULL,
   linkFilter = FALSE)
 }
 \arguments{
