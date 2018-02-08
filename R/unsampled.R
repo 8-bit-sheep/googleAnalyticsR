@@ -56,7 +56,6 @@ ga_unsampled_list <- function(accountId,
                                  ),
                                  data_parse_function = function(x) x)
   
-  
   unsampled() %>%
         .$items %>%
         map(unlist) %>%
