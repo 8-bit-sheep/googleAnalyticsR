@@ -19,6 +19,36 @@ Unsampled Reports List
 \description{
 List Unsampled Reports
 }
+\examples{
+
+\dontrun{
+
+    # get data.frame of unsampled reports you have available
+    unsample_list <- ga_unsampled_list(accountId = "12345", 
+                                       webPropertyId = "UA-12345-4", 
+                                       profileId = "129371234")
+                                       
+    # loop through unsampled reports and download as a list of data.frames
+    dl <- lapply(unsample_list$title, ga_unsampled_download, 
+                 accountId = "12345", 
+                 webPropertyId = "UA-12345-4", 
+                 profileId = "129371234", 
+                 downloadFile = FALSE)
+                 
+    # inspect first data.frame
+    dl[[1]]
+    
+    # download unsampled report to csv file
+    ga_unsampled_download("my_report_title", 
+                          accountId = "12345", 
+                          webPropertyId = "UA-12345-4", 
+                          profileId = "129371234")
+
+}
+
+
+
+}
 \seealso{
 Other managementAPI functions: \code{\link{ga_accounts}},
   \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}},

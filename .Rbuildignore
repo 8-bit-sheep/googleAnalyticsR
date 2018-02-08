@@ -17,3 +17,5 @@
 ^data-raw$
 ^\.httr-oauth$
 ^ga\.oauth$
+^CONTRIBUTING$
+^issue_template\.md$

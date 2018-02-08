@@ -36,6 +36,35 @@ ga_unsampled <- function(accountId,
 #' @param profileId Profile Id
 #'
 #' @return Unsampled Reports List
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#'     # get data.frame of unsampled reports you have available
+#'     unsample_list <- ga_unsampled_list(accountId = "12345", 
+#'                                        webPropertyId = "UA-12345-4", 
+#'                                        profileId = "129371234")
+#'                                        
+#'     # loop through unsampled reports and download as a list of data.frames
+#'     dl <- lapply(unsample_list$title, ga_unsampled_download, 
+#'                  accountId = "12345", 
+#'                  webPropertyId = "UA-12345-4", 
+#'                  profileId = "129371234", 
+#'                  downloadFile = FALSE)
+#'                  
+#'     # inspect first data.frame
+#'     dl[[1]]
+#'     
+#'     # download unsampled report to csv file
+#'     ga_unsampled_download("my_report_title", 
+#'                           accountId = "12345", 
+#'                           webPropertyId = "UA-12345-4", 
+#'                           profileId = "129371234")
+#' 
+#' }
+#' 
+#' 
+#' 
 #' @importFrom googleAuthR gar_api_generator
 #' @importFrom purrr map
 #' @importFrom magrittr %>% 
@@ -75,6 +104,33 @@ ga_unsampled_list <- function(accountId,
 #' @param downloadFile Default TRUE, whether to download, if FALSE returns a dataframe instead
 
 #' @return file location if \code{downloadFile} is TRUE, else a \code{data.frame} of download
+
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#'     # get data.frame of unsampled reports you have available
+#'     unsample_list <- ga_unsampled_list(accountId = "12345", 
+#'                                        webPropertyId = "UA-12345-4", 
+#'                                        profileId = "129371234")
+#'                                        
+#'     # loop through unsampled reports and download as a list of data.frames
+#'     dl <- lapply(unsample_list$title, ga_unsampled_download, 
+#'                  accountId = "12345", 
+#'                  webPropertyId = "UA-12345-4", 
+#'                  profileId = "129371234", 
+#'                  downloadFile = FALSE)
+#'                  
+#'     # inspect first data.frame
+#'     dl[[1]]
+#'     
+#'     # download unsampled report to csv file
+#'     ga_unsampled_download("my_report_title", 
+#'                           accountId = "12345", 
+#'                           webPropertyId = "UA-12345-4", 
+#'                           profileId = "129371234")
+#' 
+#' }
 #' @importFrom httr GET add_headers stop_for_status content write_disk progress
 #' @importFrom tibble as_tibble
 #' @importFrom magrittr %>% 
