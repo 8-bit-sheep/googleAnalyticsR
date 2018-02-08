@@ -3,8 +3,10 @@
 google_analytics_4_parse_batch <- function(response_list){
 
   if(!is.null(response_list$resourceQuotasRemaining)){
-    myMessage("dailyQuotaTokensRemaining: ", response_list$resourceQuotasRemaining$dailyQuotaTokensRemaining, level = 3)
-    myMessage("hourlyQuotaTokensRemaining: ", response_list$resourceQuotasRemaining$hourlyQuotaTokensRemaining, level = 3)
+    myMessage("dailyQuotaTokensRemaining: ", 
+              response_list$resourceQuotasRemaining$dailyQuotaTokensRemaining, level = 3)
+    myMessage("hourlyQuotaTokensRemaining: ", 
+              response_list$resourceQuotasRemaining$hourlyQuotaTokensRemaining, level = 3)
   }
   
   if(!is.null(response_list$reports)){
