@@ -37,6 +37,8 @@ ga_unsampled <- function(accountId,
 #'
 #' @return Unsampled Reports List
 #' @importFrom googleAuthR gar_api_generator
+#' @importFrom purrr map
+#' @importFrom magrittr %>% 
 #' @family managementAPI functions
 #' @export
 ga_unsampled_list <- function(accountId,
@@ -54,12 +56,13 @@ ga_unsampled_list <- function(accountId,
                                  ),
                                  data_parse_function = function(x) x)
   
+  
   unsampled() %>%
-    .$items %>%
-    map(unlist) %>%
-    as_tibble()%>%
-    na.omit() 
-  #Reports with N/A are reports that have no download link nor type - assuming created by others
+        .$items %>%
+        map(unlist) %>%
+        as_tibble()%>%
+        na.omit() 
+  
   
 }
 
@@ -78,7 +81,7 @@ ga_unsampled_list <- function(accountId,
 #' @importFrom dplyr filter
 #' @importFrom googleAuthR gar_api_generator
 #' @family managementAPI functions, googleDriveAPI functions
-
+#' @export
 ga_unsampled_download <- function(reportTitle,
                                   accountId,
                                   webPropertyId,
@@ -90,7 +93,7 @@ ga_unsampled_download <- function(reportTitle,
   
   if (!(drive_scope %in% options()$googleAuthR.scopes.selected)) {
     stop(
-      printf("The %s scope is missing. Please set option and try again.", drive_scope),
+      sprintf("The %s scope is missing. Please set option and try again.", drive_scope),
       call. = FALSE
     )
   }
@@ -108,6 +111,7 @@ ga_unsampled_download <- function(reportTitle,
     myMessage(sprintf("WARNING: There are multiple reports with the same title of %s. 
             Choosing the most recently created.", reportTitle),
               level=3)  #need to find way to avoid progress bar overwriting
+    created <- NULL # hack to stop parser complaining
     report <- report %>% filter(created==max(created))
   }
   
