@@ -157,7 +157,7 @@ ga_unsampled_download <- function(reportTitle,
   # Currently writing with same filename to current working directory
   if(isTRUE(downloadFile)){ 
     
-    filename <- sprintf("%s.csv", toString(filename))
+    filename <- sprintf("%s.csv", toString(report$title))
     
     r <- GET(download_link,
              add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]),
