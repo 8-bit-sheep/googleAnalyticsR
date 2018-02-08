@@ -4,14 +4,14 @@
 \alias{ga_filter_view}
 \title{Get specific filter for view (profile)}
 \usage{
-ga_filter_view(accountId, webPropertyId, profileId, linkId)
+ga_filter_view(accountId, webPropertyId, viewId, linkId)
 }
 \arguments{
 \item{accountId}{Account Id}
 
 \item{webPropertyId}{Web Property Id}
 
-\item{profileId}{Profile Id}
+\item{viewId}{Profile Id}
 
 \item{linkId}{Link Id}
 }

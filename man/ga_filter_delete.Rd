@@ -4,13 +4,13 @@
 \alias{ga_filter_delete}
 \title{Delete a filter from account or remove from view.}
 \usage{
-ga_filter_delete(accountId, propertyId, viewId, filterId,
+ga_filter_delete(accountId, webPropertyId, viewId, filterId,
   removeFromViewOnly = FALSE)
 }
 \arguments{
 \item{accountId}{Account Id of the account that contains the filter}
 
-\item{propertyId}{Property Id of the property that contains the filter}
+\item{webPropertyId}{Property Id of the property that contains the filter}
 
 \item{viewId}{View Id of the view that contains the filter}
 

@@ -4,18 +4,15 @@
 \alias{ga_filter_update_filter_link}
 \title{Update an existing profile filter link. Patch semantics supported}
 \usage{
-ga_filter_update_filter_link(viewFilterLink, accountId, propertyId, viewId,
-  linkId, method = "PUT")
+ga_filter_update_filter_link(viewFilterLink, accountId, webPropertyId, viewId,
+  linkId, method = c("PUT", "PATCH"))
 }
 \arguments{
-\item{viewFilterLink}{The viewFilterLink object
-## Example:
-## Changing the rank of the filter in the view:
-viewFilterLink <- list(rank = 4)}
+\item{viewFilterLink}{The profileFilterLink object}
 
 \item{accountId}{Account Id of the account that contains the filter}
 
-\item{propertyId}{Web property Id to which the profile filter link belongs}
+\item{webPropertyId}{Web property Id to which the profile filter link belongs}
 
 \item{viewId}{View Id to which the profile filter link belongs}
 
@@ -26,7 +23,25 @@ viewFilterLink <- list(rank = 4)}
 \description{
 Update an existing profile filter link. Patch semantics supported
 }
+\examples{
+
+\dontrun{
+
+## Changing the rank of the filter in the view:
+viewFilterLink <- list(rank = 4)
+
+ga_filter_update_filter_link(viewFilterLink,
+                             accountId, 
+                             webPropertyId,
+                             viewId,
+                             linkId, 
+                             method = "PATCH")
+}
+
+}
 \seealso{
+\url{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/profileFilterLinks}
+
 Other managementAPI functions: \code{\link{ga_accounts}},
   \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}},
   \code{\link{ga_custom_vars_list}},

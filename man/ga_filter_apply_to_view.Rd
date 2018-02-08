@@ -4,16 +4,19 @@
 \alias{ga_filter_apply_to_view}
 \title{Apply an existing filter to view.}
 \usage{
-ga_filter_apply_to_view(filterId, accountId, propertyId, viewId)
+ga_filter_apply_to_view(filterId, accountId, webPropertyId, viewId)
 }
 \arguments{
 \item{filterId}{The id of the filter to be addedd to profile/view}
 
 \item{accountId}{Account Id of the account that contains the filter}
 
-\item{propertyId}{Web property Id to create profile filter link for}
+\item{webPropertyId}{Web property Id to create profile filter link for}
 
 \item{viewId}{Profile/view Id to create profile filter link for}
+}
+\value{
+A profileFilterLink object
 }
 \description{
 Apply an existing filter to view.

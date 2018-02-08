@@ -4,7 +4,7 @@
 \alias{ga_filter_update}
 \title{Updates an existing filter.}
 \usage{
-ga_filter_update(Filter, accountId, filterId, method = "PUT")
+ga_filter_update(Filter, accountId, filterId, method = c("PUT", "PATCH"))
 }
 \arguments{
 \item{Filter}{The Filter object to be updated

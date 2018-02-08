@@ -4,7 +4,7 @@
 \alias{ga_filter_add}
 \title{Create a new filter and add it to the view (optional).}
 \usage{
-ga_filter_add(Filter, accountId, propertyId = FALSE, viewId = FALSE,
+ga_filter_add(Filter, accountId, webPropertyId = FALSE, viewId = FALSE,
   linkFilter = FALSE)
 }
 \arguments{
@@ -12,14 +12,21 @@ ga_filter_add(Filter, accountId, propertyId = FALSE, viewId = FALSE,
 
 \item{accountId}{Account Id of the account to add the Filter to}
 
-\item{propertyId}{Property Id of the property to add the Filter to}
+\item{webPropertyId}{Property Id of the property to add the Filter to}
 
 \item{viewId}{View Id of the view to add the Filter to}
 
 \item{linkFilter}{If TRUE will apply the Filter to the view. Needs propetyId and viewId to be set.}
 }
+\value{
+The filterId created if \code{linkFilter=FALSE} or a Filter object if \code{linkFilter=TRUE}
+}
 \description{
-Create a new filter and add it to the view (optional).
+Take a filter object and add and/or apply it so its live.
+}
+\details{
+If you don't set \code{linkFilter=TRUE} then the filter will only be created but not applied.  
+You will find it listed in the admin panel Account > All Filters.  You can then use \link{ga_filter_apply_to_view} to apply later on.
 }
 \examples{
 
@@ -36,6 +43,19 @@ Filter <- list(
                                     )
               )
 
+# create and add the filter to the view specified      
+my_filter <- ga_filter_add(Filter, 
+                           accountId = 12345, 
+                           webPropertyId = "UA-12345-1", 
+                           viewId = 654321,
+                           linkFilter = TRUE)
+
+# only create the filter, don't apply it to any view - returns filterId for use later
+my_filter <- ga_filter_add(Filter, 
+                           accountId = 12345, 
+                           linkFilter = FALSE)                          
+
+## Other examples of filters you can create below:
 ## Create a filter object for making campaign medium lowercase
 Filter <- list(
                name = 'Lowercase Campaign Medium',
