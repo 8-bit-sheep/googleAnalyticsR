@@ -19,7 +19,8 @@ anti_sample <- function(anti_sample_batches,
                         cohorts,
                         metricFormat,
                         histogramBuckets,
-                        slow_fetch){
+                        slow_fetch,
+                        rows_per_call){
   
   if(length(date_range) > 2) stop("Anti-sampling not available for comparison date ranges.")
   
@@ -50,7 +51,8 @@ anti_sample <- function(anti_sample_batches,
                                 metricFormat      = metricFormat,
                                 samplingLevel     = "LARGE",
                                 histogramBuckets  = histogramBuckets,
-                                slow_fetch        = FALSE)
+                                slow_fetch        = FALSE,
+                                rows_per_call     = rows_per_call)
   
 
   ## reduce read counts by 10% to get more calls as returned figure is flakey
@@ -79,7 +81,8 @@ anti_sample <- function(anti_sample_batches,
                                   samplingLevel     = "LARGE",
                                   histogramBuckets  = histogramBuckets,
                                   anti_sample       = FALSE,
-                                  slow_fetch        = slow_fetch)
+                                  slow_fetch        = slow_fetch,
+                                  rows_per_call     = rows_per_call)
     return(unsampled)
   }
   
@@ -124,7 +127,8 @@ anti_sample <- function(anti_sample_batches,
   did_it_work <- TRUE
   unsampled_list <- lapply(new_date_ranges, function(x){
       
-    myMessage("Anti-sample call covering ", x$range_date, " days: ", x$start_date, ", ", x$end_date, level = 3)
+    myMessage("Anti-sample call covering ", x$range_date, " days: ", 
+              x$start_date, ", ", x$end_date, level = 3)
     out <- google_analytics(viewId            = viewId,
                             date_range        = c(x$start_date,x$end_date),
                             metrics           = metrics,
@@ -140,7 +144,8 @@ anti_sample <- function(anti_sample_batches,
                             metricFormat      = metricFormat,
                             samplingLevel     = "LARGE",
                             histogramBuckets  = histogramBuckets,
-                            slow_fetch        = slow_fetch)
+                            slow_fetch        = slow_fetch,
+                            rows_per_call     = rows_per_call)
     
     read_counts2 <- as.integer(attr(out,"samplesReadCounts")[[1]])
     space_size2  <- as.integer(attr(out, "samplingSpaceSizes")[[1]])
@@ -167,9 +172,9 @@ anti_sample <- function(anti_sample_batches,
   
   ## fill these in later
   if(!is.null(out)){
-    attr(out, "totals") <- NULL
-    attr(out, "minimums") <- NULL
-    attr(out, "maximums") <- NULL
+    attr(out, "totals") <- attr(test_call, "totals")
+    attr(out, "minimums") <- attr(test_call, "minimums")
+    attr(out, "maximums") <- attr(test_call, "maximums")
     attr(out, "rowCount") <- as.character(nrow(out))
     attr(out, "nextPageToken") <- NULL
     attr(out, "antiSampleWorked") <- did_it_work

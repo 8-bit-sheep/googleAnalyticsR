@@ -21,7 +21,8 @@
   
   ## override existing options
   options(
-    googleAuthR.batch_endpoint = "https://www.googleapis.com/batch/analytics/v3")
+    googleAuthR.batch_endpoint = "https://www.googleapis.com/batch/analytics/v3",
+    googleAuthR.tryAttempts = 1)
   
   if(Sys.getenv("GA_CLIENT_ID") != ""){
     options(googleAuthR.client_id = Sys.getenv("GA_CLIENT_ID"))

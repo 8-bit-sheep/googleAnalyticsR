@@ -15,7 +15,7 @@ error_check <- function(x){
   if(is.error(x)){
     if(grepl("insufficient tokens for quota",error.message(x))){
       default_project_message()
-      warning("The Google Project ", getOption("googleAuthR.client_id") ," has run out of quota (typically 50,000 API calls per day)")
+      stop("The Google Project ", getOption("googleAuthR.client_id") ," has run out of quota (typically 50,000 API calls per day)", call. = FALSE)
     }
     stop(error.message(x))
   }

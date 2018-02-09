@@ -12,7 +12,7 @@ google_analytics(viewId, date_range = NULL, metrics = NULL,
   samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
   histogramBuckets = NULL, anti_sample = FALSE,
   anti_sample_batches = "auto", slow_fetch = FALSE,
-  useResourceQuotas = NULL)
+  useResourceQuotas = NULL, rows_per_call = 100000L)
 
 google_analytics_4(...)
 }
@@ -53,10 +53,12 @@ See details in \link{make_ga_4_req}}
 
 \item{anti_sample_batches}{"auto" default, or set to number of days per batch. 1 = daily.}
 
-\item{slow_fetch}{For large results this slows down the API requests to avoid 500 errors}
+\item{slow_fetch}{For large, complicated API requests this bypasses some API hacks that may result in 500 errors.  For smaller queries, leave this as \code{FALSE} for quicker data fetching.}
 
 \item{useResourceQuotas}{If using GA360, access increased sampling limits. 
 Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to this feature.}
+
+\item{rows_per_call}{Set how many rows are requested by the API per call, up to a maximum of 100000.}
 
 \item{...}{Arguments passed to \link{google_analytics}}
 }
@@ -68,6 +70,12 @@ Fetch Google Analytics data using the v4 API.  For the v3 API use \link{google_a
  
 Will perform automatic batching if over the 100000 row per API call limit.
 }
+\section{Row requests}{
+
+
+By default the API call will use v4 batching that splits requests into 5 seperate calls of 100k rows each.  This means up to 500k rows can be fetched per API call, however the API servers will fail with a 500 error if the query is too complicated as the processing time at Google's end gets too long.  In this case, you may want to tweak the \code{rows_per_call} argument downwards, or fall back to using \code{slow_fetch = FALSE} which will send an API request of 100k each.  If fetching data via scheduled scripts this is recommended as the default.
+}
+
 \section{Anti-sampling}{
 
 

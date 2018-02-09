@@ -9,10 +9,12 @@ If you were using `google_analytics()` before to fetch the v3 API, this is now a
 * Improve support for using different auth cache files with `ga_auth()`
 * Changed `google_analytics` to be the v4 API, `google_analytics_3` now supports v3
 * change default cache token name from `.httr-oauth` to `ga.oauth` to avoid clashes
-* Change the rows fetched per page in v4 from 10,000 to 100,000 
+* You can now change the rows fetched per API page in v4 up to 100k (new default, up from 10k)
 * Add unsampled report downloads (#44 - many thanks to @j450h1 for this work on this) 
 * Add management of View and account filters (#108 - many thanks to @zselinger for the work on this)
 * Fix bug where anti-sampling with no dimensions broke (#149 - thanks @smach)
+* If an `google_analytics` batch API call fails, it will automatically retry with a slower request rate
+* v4 API requests will report how long it took to help with configurations
 
 # googleAnalytics 0.4.2
 
