@@ -1,4 +1,4 @@
-# googleAnalytics 0.4.2.9000
+# googleAnalytics 0.5.0
 
 ## Breaking changes!
 
