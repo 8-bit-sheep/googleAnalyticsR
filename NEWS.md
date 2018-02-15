@@ -6,7 +6,6 @@ If you were using `google_analytics()` before to fetch the v3 API, this is now a
 
 ## Major changes
 
-* note to self -  CRAN submission, use CRAN branch that ignores tests
 * Add support for [resource based quotas](`https://developers.google.com/analytics/devguides/reporting/core/v4/resource-based-quota`) (#127)
 * Improve support for using different auth cache files with `ga_auth()`
 * Changed `google_analytics` to be the v4 API, `google_analytics_3` now supports v3
@@ -21,7 +20,6 @@ If you were using `google_analytics()` before to fetch the v3 API, this is now a
 
 * Fix bug where anti-sampling with no dimensions broke (#149 - thanks @smach)
 * Let v3 API calls use batching when also using other googleAuthR batching functions
-
 
 # googleAnalytics 0.4.2
 

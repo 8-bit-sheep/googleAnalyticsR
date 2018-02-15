@@ -51,7 +51,7 @@
     } else {
       return(FALSE)
     }}
-  
+
   googleAuthR::gar_cache_setup(invalid_func = f)
   
   invisible()
