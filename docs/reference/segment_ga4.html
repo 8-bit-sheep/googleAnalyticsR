@@ -6,14 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>segment_ga4. googleAnalyticsR</title>
+<title>Make a segment object for use — segment_ga4 • googleAnalyticsR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
-
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -22,22 +21,25 @@
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
-    <div class="container">
+    <div class="container template-reference-topic">
       <header>
-      
-<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -57,7 +59,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/setup.html">
+  <a href="../articles/website/setup.html">
     <span class="fa fa-wrench"></span>
      
     Setup
@@ -65,50 +67,50 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Reporting API
+    Getting Data
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/v4.html">
+      <a href="../articles/website/v4.html">
         <span class="fa fa-cogs"></span>
          
         v4
       </a>
     </li>
     <li>
-      <a href="../articles/v3.html">
+      <a href="../articles/website/v3.html">
         <span class="fa fa-cog"></span>
          
         v3
       </a>
     </li>
+    <li>
+      <a href="../articles/website/big-query.html">
+        <span class="fa fa-search"></span>
+         
+        Big Query
+      </a>
+    </li>
   </ul>
-</li>
-<li>
-  <a href="../articles/big-query.html">
-    <span class="fa fa-search"></span>
-     
-    Big Query
-  </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Reporting
+    Reporting Data
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/shiny.html">
+      <a href="../articles/website/shiny.html">
         <span class="fa fa-cloud-upload"></span>
          
         Shiny
       </a>
     </li>
     <li>
-      <a href="../articles/rmarkdown.html">
+      <a href="../articles/website/rmarkdown.html">
         <span class="fa fa-pencil-square"></span>
          
         RMarkdown
@@ -140,170 +142,194 @@
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+
       
       </header>
 
-      <div class="page-header">
-  <h1>Make a segment object for use</h1>
-</div>
+      <div class="row">
+  <div class="col-md-9 contents">
+    <div class="page-header">
+    <h1>Make a segment object for use</h1>
+    </div>
 
-<div class="row">
-  <div class="col-md-9">
     
     <p>A Segment is a subset of the Analytics data. 
 For example, of the entire set of users, one Segment 
 might be users from a particular country or city.</p>
     
 
-    <pre><span class='fu'>segment_ga4</span>(<span class='no'>name</span>, <span class='kw'>segment_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>user_segment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>segment_ga4</span>(<span class='no'>name</span>, <span class='kw'>segment_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>user_segment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>session_segment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2>Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>name</dt>
-      <dd>The name of the segment for the reports.</dd>
-      <dt>segment_id</dt>
-      <dd>The segment ID of a built in or custom segment e.g. gaid::-3</dd>
-      <dt>user_segment</dt>
-      <dd>A list of <code>segment_define</code>&#39;s that apply to users</dd>
-      <dt>session_segment</dt>
-      <dd>A list of <code>segment_define</code>&#39;s that apply to sessions</dd>
-    </dl>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>name</th>
+      <td><p>The name of the segment for the reports.</p></td>
+    </tr>
+    <tr>
+      <th>segment_id</th>
+      <td><p>The segment ID of a built in or custom segment e.g. gaid::-3</p></td>
+    </tr>
+    <tr>
+      <th>user_segment</th>
+      <td><p>A list of <code>segment_define</code>'s that apply to users</p></td>
+    </tr>
+    <tr>
+      <th>session_segment</th>
+      <td><p>A list of <code>segment_define</code>'s that apply to sessions</p></td>
+    </tr>
+    </table>
     
-    <div class="Value">
-      <h2>Value</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-      <p>a segmentFilter object. You can pass a list of these to the request.</p>
-    </div>
+    <p>a segmentFilter object. You can pass a list of these to the request.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <div class="Details">
-      <h2>Details</h2>
+    <p><code>segment_ga4</code> is the top hierarchy of segment creation, for which you will also need:</p><ul>
+<li><p><a href='segment_define.html'>segment_define</a> : AND combination of segmentFilters</p></li>
+<li><p><a href='segment_vector_simple.html'>segment_vector_simple</a> or <a href='segment_vector_sequence.html'>segment_vector_sequence</a></p></li>
+<li><p><a href='segment_element.html'>segment_element</a> that are combined in OR lists for <code>segment_vectors_*</code></p></li>
+</ul>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-      <p><code>segment_ga4</code> is the top heirarchy of segment creation, for which you will also need:
-<ul>
-<li> <a href='segment_define.html'>segment_define</a> : AND combination of segmentFilters
- </li>
-<li> <a href='segment_vector_simple.html'>segment_vector_simple</a> or <a href='segment_vector_sequence.html'>segment_vector_sequence</a>
- </li>
-<li> <a href='segment_element.html'>segment_element</a> that are combined in OR lists for <code>segment_vectors_*</code>
-</li>
-</ul></p>
-    </div>
-
-    <div class="See also">
-      <h2>See also</h2>
-
-      <p>Other v4 segment functions: <code><a href='segment_define.html'>segment_define</a></code>,
+    <p>Other v4 segment functions: <code><a href='segment_define.html'>segment_define</a></code>,
   <code><a href='segment_element.html'>segment_element</a></code>,
   <code><a href='segment_vector_sequence.html'>segment_vector_sequence</a></code>,
   <code><a href='segment_vector_simple.html'>segment_vector_simple</a></code></p>
-    </div>
     
-    <h2 id="examples">Examples</h2>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># library(googleAnalyticsR)</span>
-<span class='co'># </span>
-<span class='co'># ## authenticate, </span>
-<span class='co'># ## or use the RStudio Addin "Google API Auth" with analytics scopes set</span>
-<span class='co'># ga_auth()</span>
-<span class='co'># </span>
-<span class='co'># ## get your accounts</span>
-<span class='co'># account_list &lt;- google_analytics_account_list()</span>
-<span class='co'># </span>
-<span class='co'># ## pick a profile with data to query</span>
-<span class='co'># </span>
-<span class='co'># ga_id &lt;- account_list[23,'viewId']</span>
-<span class='co'># </span>
-<span class='co'># </span>
-<span class='co'># ## make a segment element</span>
-<span class='co'># se &lt;- segment_element("sessions", </span>
-<span class='co'>#                       operator = "GREATER_THAN", </span>
-<span class='co'>#                       type = ""metric"", </span>
-<span class='co'>#                       comparisonValue = 1, </span>
-<span class='co'>#                       scope = "USER")</span>
-<span class='co'>#                       </span>
-<span class='co'>#                       </span>
-<span class='co'># se2 &lt;- segment_element("medium", </span>
-<span class='co'>#                        operator = "EXACT", </span>
-<span class='co'>#                        type = "dimension", </span>
-<span class='co'>#                        expressions = "organic")</span>
-<span class='co'>#                        </span>
-<span class='co'>#                        </span>
-<span class='co'># ## choose between segment_vector_simple or segment_vector_sequence</span>
-<span class='co'># ## Elements can be combined into clauses, which can then be </span>
-<span class='co'># ##    combined into OR filter clauses</span>
-<span class='co'># sv_simple &lt;- segment_vector_simple(list(list(se)))</span>
-<span class='co'># </span>
-<span class='co'># sv_simple2 &lt;- segment_vector_simple(list(list(se2)))</span>
-<span class='co'># </span>
-<span class='co'># ## Each segment vector can then be combined into a logical AND</span>
-<span class='co'># </span>
-<span class='co'># seg_defined &lt;- segment_define(list(sv_simple, sv_simple2))</span>
-<span class='co'># </span>
-<span class='co'># ## if only one AND definition, you can leave out wrapper list()</span>
-<span class='co'># </span>
-<span class='co'># seg_defined_one &lt;- segment_define(sv_simple)</span>
-<span class='co'># </span>
-<span class='co'># ## Each segement defintion can apply to users, sessions or both.</span>
-<span class='co'># ## You can pass a list of several segments</span>
-<span class='co'># </span>
-<span class='co'># segment4 &lt;- segment_ga4("simple", user_segment = seg_defined)</span>
-<span class='co'># ## Add the segments to the segments param</span>
-<span class='co'># </span>
-<span class='co'># segment_example &lt;- google_analytics_4(ga_id, </span>
-<span class='co'>#                                       c("2015-07-30","2015-10-01"), </span>
-<span class='co'>#                                      dimensions=c('source','medium','segment'), </span>
-<span class='co'>#                                      segments = segment4, </span>
-<span class='co'>#                                      metrics = c('sessions','bounces')</span>
-<span class='co'>#                                      )</span>
-<span class='co'>#                                      </span>
-<span class='co'>#                                      </span>
-<span class='co'># ## Sequence segment</span>
-<span class='co'># </span>
-<span class='co'># se2 &lt;- segment_element("medium", </span>
-<span class='co'>#                        operator = "EXACT", </span>
-<span class='co'>#                        type = "dimension", </span>
-<span class='co'>#                        expressions = "organic")</span>
-<span class='co'>#                        </span>
-<span class='co'># se3 &lt;- segment_element("medium",</span>
-<span class='co'>#                        operator = "EXACT",</span>
-<span class='co'>#                        type = "dimension",</span>
-<span class='co'>#                        not = TRUE,</span>
-<span class='co'>#                       expressions = "organic")</span>
-<span class='co'>#                       </span>
-<span class='co'># ## step sequence</span>
-<span class='co'># ## users who arrived via organic then via referral</span>
-<span class='co'># sv_sequence &lt;- segment_vector_sequence(list(list(se2), </span>
-<span class='co'>#                                             list(se3)))</span>
-<span class='co'>#                                             </span>
-<span class='co'># seq_defined2 &lt;- segment_define(list(sv_sequence))</span>
-<span class='co'># </span>
-<span class='co'># segment4_seq &lt;- segment_ga4("sequence", user_segment = seq_defined2)</span>
-<span class='co'># </span>
-<span class='co'># ## Add the segments to the segments param</span>
-<span class='co'># </span>
-<span class='co'># segment_seq_example &lt;- google_analytics_4(ga_id, </span>
-<span class='co'>#                                          c("2016-04-01","2016-05-01"), </span>
-<span class='co'>#                                          dimensions=c('source','segment'), </span>
-<span class='co'>#                                          segments = segment4_seq,</span>
-<span class='co'>#                                          metrics = c('sessions','bounces')</span>
-<span class='co'>#                                          )</span>
-<span class='co'>#                                      </span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+</div># NOT RUN {
+library(googleAnalyticsR)
+
+## authenticate, 
+## or use the RStudio Addin "Google API Auth" with analytics scopes set
+ga_auth()
+
+## get your accounts
+account_list <- google_analytics_account_list()
+
+## pick a profile with data to query
+
+ga_id <- account_list[23,'viewId']
+
+
+## make a segment element
+se <- segment_element("sessions", 
+                      operator = "GREATER_THAN", 
+                      type = ""metric"", 
+                      comparisonValue = 1, 
+                      scope = "USER")
+                      
+                      
+se2 <- segment_element("medium", 
+                       operator = "EXACT", 
+                       type = "dimension", 
+                       expressions = "organic")
+                       
+                       
+## choose between segment_vector_simple or segment_vector_sequence
+## Elements can be combined into clauses, which can then be 
+##    combined into OR filter clauses
+sv_simple <- segment_vector_simple(list(list(se)))
+
+sv_simple2 <- segment_vector_simple(list(list(se2)))
+
+## Each segment vector can then be combined into a logical AND
+
+seg_defined <- segment_define(list(sv_simple, sv_simple2))
+
+## if only one AND definition, you can leave out wrapper list()
+
+seg_defined_one <- segment_define(sv_simple)
+
+## Each segement defintion can apply to users, sessions or both.
+## You can pass a list of several segments
+
+segment4 <- segment_ga4("simple", user_segment = seg_defined)
+## Add the segments to the segments param
+
+segment_example <- google_analytics(ga_id, 
+                                    c("2015-07-30","2015-10-01"), 
+                                    dimensions=c('source','medium','segment'), 
+                                    segments = segment4, 
+                                    metrics = c('sessions','bounces')
+                                     )
+                                     
+                                     
+## Sequence segment
+
+se2 <- segment_element("medium", 
+                       operator = "EXACT", 
+                       type = "dimension", 
+                       expressions = "organic")
+                       
+se3 <- segment_element("medium",
+                       operator = "EXACT",
+                       type = "dimension",
+                       not = TRUE,
+                      expressions = "organic")
+                      
+## step sequence
+## users who arrived via organic then via referral
+sv_sequence <- segment_vector_sequence(list(list(se2), 
+                                            list(se3)))
+                                            
+seq_defined2 <- segment_define(list(sv_sequence))
+
+segment4_seq <- segment_ga4("sequence", user_segment = seq_defined2)
+
+## Add the segments to the segments param
+
+segment_seq_example <- google_analytics(ga_id, 
+                                        c("2016-04-01","2016-05-01"), 
+                                        dimensions=c('source','segment'), 
+                                        segments = segment4_seq,
+                                        metrics = c('sessions','bounces')
+                                         )
+                                     
+# }
+<div class='input'>
+</div></pre>
   </div>
-  <div class="col-md-3">
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 
       <footer>
-      <p>Built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>. Styled with <a href="http://getbootstrap.com">Bootstrap 3</a>.</p>
+      <div class="copyright">
+  <p>Developed by Mark Edmondson.</p>
+</div>
+
+<div class="pkgdown">
+  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+</div>
+
       </footer>
    </div>
 

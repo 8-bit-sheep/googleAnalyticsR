@@ -8,26 +8,26 @@ navbar:
       href: index.html
       icon: fa-home
     - text: "Setup"
-      href: articles/setup.html
+      href: articles/website/setup.html
       icon: fa-wrench
-    - text: "Reporting API"
+    - text: "Getting Data"
       menu:
       - text: "v4"
-        href: articles/v4.html
+        href: articles/website/v4.html
         icon: fa-cogs
       - text: "v3"
-        href: articles/v3.html
+        href: articles/website/v3.html
         icon: fa-cog
-    - text: "Big Query"
-      href: articles/big-query.html
-      icon: fa-search
-    - text: "Reporting"
+      - text: "Big Query"
+        href: articles/website/big-query.html
+        icon: fa-search
+    - text: "Reporting Data"
       menu:
       - text: "Shiny"
-        href: articles/shiny.html
+        href: articles/website/shiny.html
         icon: fa-cloud-upload
       - text: "RMarkdown"
-        href: articles/rmarkdown.html
+        href: articles/website/rmarkdown.html
         icon: fa-pencil-square
     - text: "Help"
       menu:

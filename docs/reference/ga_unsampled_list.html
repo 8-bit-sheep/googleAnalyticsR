@@ -6,14 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ga_unsampled_list. googleAnalyticsR</title>
+<title>List Unsampled Reports — ga_unsampled_list • googleAnalyticsR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
-
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -22,22 +21,25 @@
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
-    <div class="container">
+    <div class="container template-reference-topic">
       <header>
-      
-<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -57,7 +59,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/setup.html">
+  <a href="../articles/website/setup.html">
     <span class="fa fa-wrench"></span>
      
     Setup
@@ -65,50 +67,50 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Reporting API
+    Getting Data
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/v4.html">
+      <a href="../articles/website/v4.html">
         <span class="fa fa-cogs"></span>
          
         v4
       </a>
     </li>
     <li>
-      <a href="../articles/v3.html">
+      <a href="../articles/website/v3.html">
         <span class="fa fa-cog"></span>
          
         v3
       </a>
     </li>
+    <li>
+      <a href="../articles/website/big-query.html">
+        <span class="fa fa-search"></span>
+         
+        Big Query
+      </a>
+    </li>
   </ul>
-</li>
-<li>
-  <a href="../articles/big-query.html">
-    <span class="fa fa-search"></span>
-     
-    Big Query
-  </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Reporting
+    Reporting Data
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/shiny.html">
+      <a href="../articles/website/shiny.html">
         <span class="fa fa-cloud-upload"></span>
          
         Shiny
       </a>
     </li>
     <li>
-      <a href="../articles/rmarkdown.html">
+      <a href="../articles/website/rmarkdown.html">
         <span class="fa fa-pencil-square"></span>
          
         RMarkdown
@@ -140,69 +142,130 @@
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+
       
       </header>
 
-      <div class="page-header">
-  <h1>List Unsampled Reports</h1>
-</div>
+      <div class="row">
+  <div class="col-md-9 contents">
+    <div class="page-header">
+    <h1>List Unsampled Reports</h1>
+    </div>
 
-<div class="row">
-  <div class="col-md-9">
     
     <p>List Unsampled Reports</p>
     
 
-    <pre><span class='fu'>ga_unsampled_list</span>(<span class='no'>accountId</span>, <span class='no'>webPropertyId</span>, <span class='no'>profileId</span>)</pre>
+    <pre class="usage"><span class='fu'>ga_unsampled_list</span>(<span class='no'>accountId</span>, <span class='no'>webPropertyId</span>, <span class='no'>profileId</span>)</pre>
     
-    <h2>Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>accountId</dt>
-      <dd>Account Id</dd>
-      <dt>webPropertyId</dt>
-      <dd>Web Property Id</dd>
-      <dt>profileId</dt>
-      <dd>Profile Id</dd>
-    </dl>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>accountId</th>
+      <td><p>Account Id</p></td>
+    </tr>
+    <tr>
+      <th>webPropertyId</th>
+      <td><p>Web Property Id</p></td>
+    </tr>
+    <tr>
+      <th>profileId</th>
+      <td><p>Profile Id</p></td>
+    </tr>
+    </table>
     
-    <div class="Value">
-      <h2>Value</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-      <p>Unsampled Reports List</p>
-    </div>
+    <p>Unsampled Reports List</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class="See also">
-      <h2>See also</h2>
-
-      <p>Other managementAPI functions: <code><a href='ga_accounts.html'>ga_accounts</a></code>,
+    <p>Other managementAPI functions: <code><a href='ga_accounts.html'>ga_accounts</a></code>,
   <code><a href='ga_adwords_list.html'>ga_adwords_list</a></code>, <code><a href='ga_adwords.html'>ga_adwords</a></code>,
   <code><a href='ga_custom_vars_list.html'>ga_custom_vars_list</a></code>,
   <code><a href='ga_custom_vars.html'>ga_custom_vars</a></code>,
   <code><a href='ga_experiment_list.html'>ga_experiment_list</a></code>,
-  <code><a href='ga_experiment.html'>ga_experiment</a></code>,
+  <code><a href='ga_experiment.html'>ga_experiment</a></code>, <code><a href='ga_filter_add.html'>ga_filter_add</a></code>,
+  <code><a href='ga_filter_apply_to_view.html'>ga_filter_apply_to_view</a></code>,
+  <code><a href='ga_filter_delete.html'>ga_filter_delete</a></code>,
   <code><a href='ga_filter_list.html'>ga_filter_list</a></code>,
+  <code><a href='ga_filter_update_filter_link.html'>ga_filter_update_filter_link</a></code>,
+  <code><a href='ga_filter_update.html'>ga_filter_update</a></code>,
   <code><a href='ga_filter_view_list.html'>ga_filter_view_list</a></code>,
   <code><a href='ga_filter_view.html'>ga_filter_view</a></code>, <code><a href='ga_filter.html'>ga_filter</a></code>,
   <code><a href='ga_goal_list.html'>ga_goal_list</a></code>, <code><a href='ga_goal.html'>ga_goal</a></code>,
+  <code><a href='ga_remarketing_estimate.html'>ga_remarketing_estimate</a></code>,
+  <code><a href='ga_remarketing_get.html'>ga_remarketing_get</a></code>,
+  <code><a href='ga_remarketing_list.html'>ga_remarketing_list</a></code>,
   <code><a href='ga_segment_list.html'>ga_segment_list</a></code>,
-  <code><a href='ga_unsampled.html'>ga_unsampled</a></code>, <code><a href='ga_view_list.html'>ga_view_list</a></code>,
-  <code><a href='ga_view.html'>ga_view</a></code>, <code><a href='ga_webproperty_list.html'>ga_webproperty_list</a></code>,
+  <code><a href='ga_unsampled.html'>ga_unsampled</a></code>, <code><a href='ga_users_list.html'>ga_users_list</a></code>,
+  <code><a href='ga_view_list.html'>ga_view_list</a></code>, <code><a href='ga_view.html'>ga_view</a></code>,
+  <code><a href='ga_webproperty_list.html'>ga_webproperty_list</a></code>,
   <code><a href='ga_webproperty.html'>ga_webproperty</a></code>,
-  <code><a href='google_analytics_account_list.html'>google_analytics_account_list</a></code></p>
-    </div>
-      </div>
-  <div class="col-md-3">
+  <code><a href='ga_account_list.html'>google_analytics_account_list</a></code></p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+    <span class='co'># get data.frame of unsampled reports you have available</span>
+    <span class='no'>unsample_list</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_unsampled_list</span>(<span class='kw'>accountId</span> <span class='kw'>=</span> <span class='st'>"12345"</span>,
+                                       <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-12345-4"</span>,
+                                       <span class='kw'>profileId</span> <span class='kw'>=</span> <span class='st'>"129371234"</span>)
+
+    <span class='co'># loop through unsampled reports and download as a list of data.frames</span>
+    <span class='no'>dl</span> <span class='kw'>&lt;-</span> <span class='fu'>lapply</span>(<span class='no'>unsample_list</span>$<span class='no'>title</span>, <span class='no'>ga_unsampled_download</span>,
+                 <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='st'>"12345"</span>,
+                 <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-12345-4"</span>,
+                 <span class='kw'>profileId</span> <span class='kw'>=</span> <span class='st'>"129371234"</span>,
+                 <span class='kw'>downloadFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+    <span class='co'># inspect first data.frame</span>
+    <span class='no'>dl</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+
+    <span class='co'># download unsampled report to csv file</span>
+    <span class='fu'><a href='ga_unsampled_download.html'>ga_unsampled_download</a></span>(<span class='st'>"my_report_title"</span>,
+                          <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='st'>"12345"</span>,
+                          <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-12345-4"</span>,
+                          <span class='kw'>profileId</span> <span class='kw'>=</span> <span class='st'>"129371234"</span>)
+
+<span class='co'># }</span><div class='input'>
+
+
+</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 
       <footer>
-      <p>Built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>. Styled with <a href="http://getbootstrap.com">Bootstrap 3</a>.</p>
+      <div class="copyright">
+  <p>Developed by Mark Edmondson.</p>
+</div>
+
+<div class="pkgdown">
+  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+</div>
+
       </footer>
    </div>
 

@@ -6,14 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>All news. googleAnalyticsR</title>
+<title>All news • googleAnalyticsR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
-
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -22,22 +21,25 @@
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
-    <div class="container">
+    <div class="container template-news">
       <header>
-      
-<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -57,7 +59,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/setup.html">
+  <a href="../articles/website/setup.html">
     <span class="fa fa-wrench"></span>
      
     Setup
@@ -65,50 +67,50 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Reporting API
+    Getting Data
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/v4.html">
+      <a href="../articles/website/v4.html">
         <span class="fa fa-cogs"></span>
          
         v4
       </a>
     </li>
     <li>
-      <a href="../articles/v3.html">
+      <a href="../articles/website/v3.html">
         <span class="fa fa-cog"></span>
          
         v3
       </a>
     </li>
+    <li>
+      <a href="../articles/website/big-query.html">
+        <span class="fa fa-search"></span>
+         
+        Big Query
+      </a>
+    </li>
   </ul>
-</li>
-<li>
-  <a href="../articles/big-query.html">
-    <span class="fa fa-search"></span>
-     
-    Big Query
-  </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Reporting
+    Reporting Data
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/shiny.html">
+      <a href="../articles/website/shiny.html">
         <span class="fa fa-cloud-upload"></span>
          
         Shiny
       </a>
     </li>
     <li>
-      <a href="../articles/rmarkdown.html">
+      <a href="../articles/website/rmarkdown.html">
         <span class="fa fa-pencil-square"></span>
          
         RMarkdown
@@ -140,45 +142,169 @@
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+
       
       </header>
 
       <div class="row">
+
   <div class="col-md-9">
-    <div id="googleanalyticsr-0.3.0.9000" class="section level1">
-<h1>googleAnalyticsR 0.3.0.9000</h1>
+    <div class="page-header">
+      <h1>Change log <small>All releases</small></h1>
+    </div>
+
+    <div class="contents">
+    <div id="googleanalytics-0-4-2-9000" class="section level1">
+<h1 class="hasAnchor">
+<a href="#googleanalytics-0-4-2-9000" class="anchor"></a>googleAnalytics 0.4.2.9000</h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking changes!</h2>
+<p>If you were using <code><a href="../reference/google_analytics.html">google_analytics()</a></code> before to fetch the v3 API, this is now available via <code><a href="../reference/google_analytics_3.html">google_analytics_3()</a></code> - replace all instances and it should work as before. However, you are encouraged to migrate to v4, which now runs when you use <code><a href="../reference/google_analytics.html">google_analytics()</a></code>(and for a while still at <code><a href="../reference/google_analytics.html">google_analytics_4()</a></code> too)</p>
+</div>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<ul>
+<li>note to self - CRAN submission, use CRAN branch that ignores tests</li>
+<li>Add support for <a href="%60https://developers.google.com/analytics/devguides/reporting/core/v4/resource-based-quota%60">resource based quotas</a> (#127)</li>
+<li>Improve support for using different auth cache files with <code><a href="../reference/ga_auth.html">ga_auth()</a></code>
+</li>
+<li>Changed <code>google_analytics</code> to be the v4 API, <code>google_analytics_3</code> now supports v3</li>
+<li>change default cache token name from <code>.httr-oauth</code> to <code>ga.oauth</code> to avoid clashes</li>
+<li>You can now change the rows fetched per API page in v4 up to 100k</li>
+<li>Add unsampled report downloads (#44 - many thanks to @j450h1 for this work on this)</li>
+<li>Add management of View and account filters (#108 - many thanks to @zselinger for the work on this)</li>
+<li>If an <code>google_analytics</code> batch API call fails, it will automatically retry with a slower request rate</li>
+<li>v4 API requests will report how long it took to help with configurations</li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Fix bug where anti-sampling with no dimensions broke (#149 - thanks @smach)</li>
+</ul>
+</div>
+</div>
+    <div id="googleanalytics-0-4-2" class="section level1">
+<h1 class="hasAnchor">
+<a href="#googleanalytics-0-4-2" class="anchor"></a>googleAnalytics 0.4.2</h1>
+<div id="bug-fixes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Fix bug of argument match in <code>multi_select</code>(#99 - thanks @sdhaus)</li>
+<li>Fix bug for data dimensions starting with a number (#100 - thanks @kennyengci)</li>
+<li>Remove hourly anti-sampling as it doesn’t work</li>
+<li>Use tidy eval instead of dplyr underscore funcs (thanks @kiendang)</li>
+<li>Fix multi-channel funnels raising error when no data available (thanks @octaviancorlade)</li>
+<li>Fix NULL validaation if no results returns in v4 API (#81 again - thanks @ricardopinto)</li>
+</ul>
+</div>
+<div id="additions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#additions" class="anchor"></a>Additions</h2>
+<ul>
+<li>You can now set your <code>GA_CLIENT_ID</code>, <code>GA_CLIENT_SECRET</code> in environment arguments and they will be added to the project options on startup.</li>
+<li>Authenticate on startup with <code>GA_AUTH_FILE</code> pointing to your cache file.</li>
+<li>Add support for “today” and “yesterday” date values in anti_sample (#112)</li>
+<li>Add that <code>max</code> is ignored during <code>anti_sample=TRUE</code> (#111)</li>
+</ul>
+</div>
+</div>
+    <div id="googleanalyticsr-0-4-1" class="section level1">
+<h1 class="hasAnchor">
+<a href="#googleanalyticsr-0-4-1" class="anchor"></a>googleAnalyticsR 0.4.1</h1>
+<div id="fixed" class="section level2">
+<h2 class="hasAnchor">
+<a href="#fixed" class="anchor"></a>Fixed</h2>
+<ul>
+<li>Fix <code>attempt to set an attribute on NULL</code> error for anti-sample</li>
+<li>Fixed <code>anti_sample="auto"</code> math to actually limit the number of sessions for the auto-batches</li>
+<li>Fixed error when no data present in requested <code>date_range</code> for a view, and <code>max = -1</code>
+</li>
+<li>Fix logic of <code>anti_sample_batches</code> to allow accurate day batches. (#74)</li>
+<li>Fix parsing of <code>ga_account_summary</code> broken by upgrade from <code>dplyr 0.5.0</code> &gt; <code>dplyr 0.7.0</code>
+</li>
+</ul>
+</div>
 <div id="added" class="section level2">
-<h2>Added</h2>
-<ul><li>Add custom data uploads via <code><a href="../reference/ga_custom_upload_file.html">ga_custom_upload_file()</a></code>
+<h2 class="hasAnchor">
+<a href="#added" class="anchor"></a>Added</h2>
+<ul>
+<li>Add warning if using default project, and if API quota is tripped (#79)</li>
+<li>refactor defensive checks from <code>testthat</code> to <code>assertthat</code>
+</li>
+</ul>
+</div>
+</div>
+    <div id="googleanalyticsr-0-4-0" class="section level1">
+<h1 class="hasAnchor">
+<a href="#googleanalyticsr-0-4-0" class="anchor"></a>googleAnalyticsR 0.4.0</h1>
+<div id="added-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#added-1" class="anchor"></a>Added</h2>
+<ul>
+<li>Deprecate <code>google_analytics_account_list</code> for <code>ga_account_list</code> to be in line with other functions</li>
+<li>Add custom data uploads via <code><a href="../reference/ga_custom_upload_file.html">ga_custom_upload_file()</a></code>
 </li>
 <li>Cleaned up documentation a bit</li>
 <li>Added auto-authentication if you specify environment var <code>GA_AUTH_FILE</code>
 </li>
-</ul></div>
-<div id="fixed" class="section level2">
-<h2>Fixed</h2>
-<ul><li>Fix bug with anti-sample when periods included 0-row data (#42)</li>
-</ul></div>
+<li>Add Remarketing Audience functions - <code>ga_remarketing_get</code> and <code>ga_remarketing_list</code>
+</li>
+<li>Add <code>aggregateGAData</code> which will aggregate over GA dimensions</li>
+<li>Add <code>antiSampleWorked</code> TRUE/FALSE attribute to tables when anti-sampling attempted</li>
+<li>Add a <code>slow_fetch</code> flag to <code>google_analytics_4</code> that will avoid batching for big complicated fetches</li>
+<li>Add <code>ga_users_list</code> for listing users on account, webProperty or View level</li>
+<li>Set default Google Project API permissions to:
+<ul>
+<li><code>"https://www.googleapis.com/auth/analytics"</code></li>
+<li><code>"https://www.googleapis.com/auth/analytics.readonly"</code></li>
+<li><code>"https://www.googleapis.com/auth/analytics.manage.users.readonly"</code></li>
+<li><code>"https://www.googleapis.com/auth/analytics.edit"</code></li>
+<li><code>"https://www.googleapis.com/auth/analytics.manage.users"</code></li>
+</ul>
+</li>
+</ul>
 </div>
-    <div id="googleanalyticsr-0.3.0" class="section level1">
-<h1>googleAnalyticsR 0.3.0</h1>
-<div id="added-1" class="section level2">
-<h2>Added</h2>
-<ul><li>Add BigQuery asynch fetch to Google Analytics 360 exports, for over 1,000,000 rows.</li>
+<div id="fixed-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#fixed-1" class="anchor"></a>Fixed</h2>
+<ul>
+<li>Use <code>aggregateGAData</code> to solve issue with anti_sampling repeating rows (#49)</li>
+<li>Fix bug with anti-sample when periods included 0-row data (#42)</li>
+<li>Fix <code><a href="../reference/ga_account_list.html">google_analytics_account_list()</a></code> parsing bug if only one view available (#52, #41)</li>
+<li>Fix segments not being able to be used in Cohort reports (#63)</li>
+<li>Fix bug with anti-sample when querying over 1000 days (#66 - thanks @olivia-icivics)</li>
+</ul>
+</div>
+</div>
+    <div id="googleanalyticsr-0-3-0" class="section level1">
+<h1 class="hasAnchor">
+<a href="#googleanalyticsr-0-3-0" class="anchor"></a>googleAnalyticsR 0.3.0</h1>
+<div id="added-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#added-2" class="anchor"></a>Added</h2>
+<ul>
+<li>Add BigQuery asynch fetch to Google Analytics 360 exports, for over 1,000,000 rows.</li>
 <li>A GA v4 example Shiny app added that runs on <code>https://mark.shinyapps.io/googleAnalyticsRv4Demo/</code>
 </li>
-<li>New argument <code>anti_sample</code> for <code><a href="../reference/google_analytics_4.html">google_analytics_4()</a></code> which will split up the calls into efficient batches to avoid sampling. Includes experimental sub-day hourly batching.</li>
-<li>Set argument <code>max = -1</code> in <code><a href="../reference/google_analytics_4.html">google_analytics_4()</a></code> to fetch all results.</li>
+<li>New argument <code>anti_sample</code> for <code><a href="../reference/google_analytics.html">google_analytics_4()</a></code> which will split up the calls into efficient batches to avoid sampling. Includes experimental sub-day hourly batching.</li>
+<li>Set argument <code>max = -1</code> in <code><a href="../reference/google_analytics.html">google_analytics_4()</a></code> to fetch all results.</li>
 <li>Add fix for <code>google_analytics_account_summary</code> parsing when no views in web properties.</li>
 <li>New argument <code>anti_sample_batches</code> lets you choose batch sizes (daily is equal to <code>anti_sample_batches=1</code>)</li>
 <li>Add several management API functions:
-<ul><li><code>ga_accounts</code></li>
+<ul>
+<li><code>ga_accounts</code></li>
 <li><code>ga_adwords</code></li>
 <li><code>ga_adwords_list</code></li>
 <li><code>ga_custom_datasource</code></li>
@@ -201,65 +327,93 @@
 <li><code>ga_view_list</code></li>
 <li><code>ga_webproperty</code></li>
 <li><code>ga_webproperty_list</code></li>
-</ul></li>
-</ul></div>
-<div id="fixed-1" class="section level2">
-<h2>Fixed</h2>
-<ul><li>Fix bug for calculated metrics if expression not starting with <code>ga:</code> (#28)</li>
-<li>Fix a parse bug if only metrics and no dimensions were used in <code><a href="../reference/google_analytics_4.html">google_analytics_4()</a></code>
+</ul>
+</li>
+</ul>
+</div>
+<div id="fixed-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#fixed-2" class="anchor"></a>Fixed</h2>
+<ul>
+<li>Fix bug for calculated metrics if expression not starting with <code>ga:</code> (#28)</li>
+<li>Fix a parse bug if only metrics and no dimensions were used in <code><a href="../reference/google_analytics.html">google_analytics_4()</a></code>
 </li>
 <li>Refactoring v4 batching</li>
-</ul></div>
+</ul>
 </div>
-    <div id="googleanalyticsr-0.2.1" class="section level1">
-<h1>googleAnalyticsR 0.2.1</h1>
-<div id="fixed-2" class="section level2">
-<h2>Fixed</h2>
-<ul><li>Fix v4 bug where batches over 10000 had extra rows added (#19)</li>
-</ul></div>
 </div>
-    <div id="googleanalyticsr-0.2.0" class="section level1">
-<h1>googleAnalyticsR 0.2.0</h1>
-<div id="added-2" class="section level2">
-<h2>Added</h2>
-<ul><li>segment helper as RStudio Addin or <code>gadget_GASegment()</code>
+    <div id="googleanalyticsr-0-2-1" class="section level1">
+<h1 class="hasAnchor">
+<a href="#googleanalyticsr-0-2-1" class="anchor"></a>googleAnalyticsR 0.2.1</h1>
+<div id="fixed-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#fixed-3" class="anchor"></a>Fixed</h2>
+<ul>
+<li>Fix v4 bug where batches over 10000 had extra rows added (#19)</li>
+</ul>
+</div>
+</div>
+    <div id="googleanalyticsr-0-2-0" class="section level1">
+<h1 class="hasAnchor">
+<a href="#googleanalyticsr-0-2-0" class="anchor"></a>googleAnalyticsR 0.2.0</h1>
+<div id="added-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#added-3" class="anchor"></a>Added</h2>
+<ul>
+<li>segment helper as RStudio Addin or <code>gadget_GASegment()</code>
 </li>
 <li>Local tests added</li>
 <li>Multi-account batching for v3 (#17)</li>
 <li>Add BigQuery fetching for GoogleAnalytics 360 accounts via <code><a href="../reference/google_analytics_bq.html">google_analytics_bq()</a></code>
 </li>
-</ul></div>
-<div id="fixed-3" class="section level2">
-<h2>Fixed</h2>
-<ul><li>Fix order_type() for v4 (#18)</li>
-</ul></div>
+</ul>
 </div>
-    <div id="googleanalyticsr-0.1.1" class="section level1">
-<h1>googleAnalyticsR 0.1.1</h1>
 <div id="fixed-4" class="section level2">
-<h2>Fixed</h2>
-<ul><li>Patch to fix ignoring first row of v4 API results (#16)</li>
-</ul></div>
+<h2 class="hasAnchor">
+<a href="#fixed-4" class="anchor"></a>Fixed</h2>
+<ul>
+<li>Fix order_type() for v4 (#18)</li>
+</ul>
 </div>
-    <div id="googleanalyticsr-0.1.0" class="section level1">
-<h1>googleAnalyticsR 0.1.0</h1>
-<div id="added-3" class="section level2">
-<h2>Added</h2>
-<ul><li>v4 API calls implemented</li>
-</ul></div>
 </div>
+    <div id="googleanalyticsr-0-1-1" class="section level1">
+<h1 class="hasAnchor">
+<a href="#googleanalyticsr-0-1-1" class="anchor"></a>googleAnalyticsR 0.1.1</h1>
+<div id="fixed-5" class="section level2">
+<h2 class="hasAnchor">
+<a href="#fixed-5" class="anchor"></a>Fixed</h2>
+<ul>
+<li>Patch to fix ignoring first row of v4 API results (#16)</li>
+</ul>
+</div>
+</div>
+    <div id="googleanalyticsr-0-1-0" class="section level1">
+<h1 class="hasAnchor">
+<a href="#googleanalyticsr-0-1-0" class="anchor"></a>googleAnalyticsR 0.1.0</h1>
+<div id="added-4" class="section level2">
+<h2 class="hasAnchor">
+<a href="#added-4" class="anchor"></a>Added</h2>
+<ul>
+<li>v4 API calls implemented</li>
+</ul>
+</div>
+</div>
+    </div>
   </div>
 
-  <div class="col-md-3 hidden-xs">
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#googleanalyticsr-0.3.0.9000">0.3.0.9000</a></li>
-        <li><a href="#googleanalyticsr-0.3.0">0.3.0</a></li>
-        <li><a href="#googleanalyticsr-0.2.1">0.2.1</a></li>
-        <li><a href="#googleanalyticsr-0.2.0">0.2.0</a></li>
-        <li><a href="#googleanalyticsr-0.1.1">0.1.1</a></li>
-        <li><a href="#googleanalyticsr-0.1.0">0.1.0</a></li>
+        <li><a href="#googleanalytics-0-4-2-9000">0.4.2.9000</a></li>
+        <li><a href="#googleanalytics-0-4-2">0.4.2</a></li>
+        <li><a href="#googleanalyticsr-0-4-1">0.4.1</a></li>
+        <li><a href="#googleanalyticsr-0-4-0">0.4.0</a></li>
+        <li><a href="#googleanalyticsr-0-3-0">0.3.0</a></li>
+        <li><a href="#googleanalyticsr-0-2-1">0.2.1</a></li>
+        <li><a href="#googleanalyticsr-0-2-0">0.2.0</a></li>
+        <li><a href="#googleanalyticsr-0-1-1">0.1.1</a></li>
+        <li><a href="#googleanalyticsr-0-1-0">0.1.0</a></li>
       </ul>
     </div>
   </div>
@@ -267,7 +421,14 @@
 </div>
 
       <footer>
-      <p>Built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>. Styled with <a href="http://getbootstrap.com">Bootstrap 3</a>.</p>
+      <div class="copyright">
+  <p>Developed by Mark Edmondson.</p>
+</div>
+
+<div class="pkgdown">
+  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+</div>
+
       </footer>
    </div>
 
