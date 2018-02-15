@@ -75,7 +75,7 @@ ga_remarketing_estimate <- function(remarketingAudience){
   defs <- remarketingAudience$audienceDefinition$includeConditions
   
   yesterday <- Sys.Date() - 1
-  users <- google_analytics(
+  google_analytics_3(
     remarketingAudience$linkedViews,
     start = yesterday - defs$daysToLookBack, end = yesterday,
     metrics = "users",
