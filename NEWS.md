@@ -20,6 +20,7 @@ If you were using `google_analytics()` before to fetch the v3 API, this is now a
 ## Bug fixes
 
 * Fix bug where anti-sampling with no dimensions broke (#149 - thanks @smach)
+* Let v3 API calls use batching when also using other googleAuthR batching functions
 
 
 # googleAnalytics 0.4.2
