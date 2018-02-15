@@ -1,4 +1,6 @@
-#' Get Google Analytics v3 data
+#' Get Google Analytics v3 data (formerly google_analytics())
+#' 
+#' Legacy v3 API, for more modern API use \link{google_analytics}.
 #'
 #' @param id A character vector of View Ids to fetch from.
 #' @param start Start date in YYY-MM-DD format.
@@ -94,21 +96,21 @@
 #' @importFrom googleAuthR gar_api_generator
 #' 
 #' @export
-google_analytics <- function(id,
-                             start,
-                             end,
-                             metrics = c('sessions', 'bounceRate'),
-                             dimensions=NULL,
-                             sort=NULL,
-                             filters=NULL,
-                             segment=NULL,
-                             samplingLevel=c("DEFAULT", 
-                                             "FASTER",
-                                             "HIGHER_PRECISION", 
-                                             "WALK"),
-                             max_results=100,
-                             multi_account_batching = FALSE,
-                             type = c("ga", "mcf")) {
+google_analytics_3 <- function(id,
+                               start,
+                               end,
+                               metrics = c('sessions', 'bounceRate'),
+                               dimensions=NULL,
+                               sort=NULL,
+                               filters=NULL,
+                               segment=NULL,
+                               samplingLevel=c("DEFAULT", 
+                                               "FASTER",
+                                               "HIGHER_PRECISION", 
+                                               "WALK"),
+                               max_results=100,
+                               multi_account_batching = FALSE,
+                               type = c("ga", "mcf")) {
   
   samplingLevel <- match.arg(samplingLevel)
   start <- as.character(start)
@@ -166,6 +168,10 @@ google_analytics <- function(id,
   
   if(multi_account_batching){
     myMessage("Fetching all ids at same time (max 10 per API call)", level = 3)
+    
+    # set custom batch endpoint
+    op <- options()
+    options("googleAuthR.batch_endpoint" = "https://www.googleapis.com/batch/analytics/v3")
     all_data <- googleAuthR::gar_batch_walk(ga,
                                             walk_vector = id,
                                             gar_pars = ga_pars,
@@ -173,6 +179,7 @@ google_analytics <- function(id,
                                             data_frame_output = FALSE,
                                             batch_size = 10)
     all_data <- unlist(all_data, recursive = FALSE, use.names = FALSE)
+    options(op) # reset options
     names(all_data) <- id
     
   } else {

@@ -1,3 +1,26 @@
+# googleAnalytics 0.5.0
+
+## Breaking changes!
+
+If you were using `google_analytics()` before to fetch the v3 API, this is now available via `google_analytics_3()` - replace all instances and it should work as before.  However, you are encouraged to migrate to v4, which now runs when you use `google_analytics()`(and for a while still at `google_analytics_4()` too)
+
+## Major changes
+
+* Add support for [resource based quotas](`https://developers.google.com/analytics/devguides/reporting/core/v4/resource-based-quota`) (#127)
+* Improve support for using different auth cache files with `ga_auth()`
+* Changed `google_analytics` to be the v4 API, `google_analytics_3` now supports v3
+* change default cache token name from `.httr-oauth` to `ga.oauth` to avoid clashes
+* You can now change the rows fetched per API page in v4 up to 100k
+* Add unsampled report downloads (#44 - many thanks to @j450h1 for this work on this) 
+* Add management of View and account filters (#108 - many thanks to @zselinger for the work on this)
+* If an `google_analytics` batch API call fails, it will automatically retry with a slower request rate
+* v4 API requests will report how long it took to help with configurations
+
+## Bug fixes
+
+* Fix bug where anti-sampling with no dimensions broke (#149 - thanks @smach)
+* Let v3 API calls use batching when also using other googleAuthR batching functions
+
 # googleAnalytics 0.4.2
 
 ## Bug fixes

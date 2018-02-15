@@ -1,9 +1,11 @@
 Package: googleAnalyticsR
 Type: Package
-Version: 0.4.2
+Version: 0.5.0
 Title: Google Analytics API into R
-Description: R library for interacting with the Google Analytics 
-  Reporting API v3 and v4.
+Description: Interact with the Google Analytics 
+  APIs <https://developers.google.com/analytics/>, including 
+  the Core Reporting API (v3 and v4), Management API, and Multi-Channel
+  Funnel API.
 Authors@R: c(person("Mark", "Edmondson", email = "m@sunholo.com",
                   role = c("aut", "cre")),
              person(given = "Artem", family = "Klevtsov",
@@ -11,7 +13,8 @@ Authors@R: c(person("Mark", "Edmondson", email = "m@sunholo.com",
            person("Johann", "deBoer", email = "johanndeboer@gmail.com", role = "ctb"),
            person("David", "Watkins", email = "wm.david.watkins@gmail.com", role = "ctb"),
            person("Olivia", "Brode-Roger", email = "nibr@mit.edu", role = "ctb"),
-           person("Jas", "Sohi", email = "contact@jassohi.com", role = "ctb"))
+           person("Jas", "Sohi", email = "contact@jassohi.com", role = "ctb"),
+           person("Zoran", "Selinger", email = "zselinger@gmail.com", role = "ctb"))
 URL: http://code.markedmondson.me/googleAnalyticsR/
 BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
 Depends:
@@ -19,14 +22,16 @@ Depends:
 Imports:
     assertthat (>= 0.2.0),
     dplyr (>= 0.7.0),
-    googleAuthR (>= 0.5.1),
+    googleAuthR (>= 0.6.2),
     httr (>= 1.3.1),
     magrittr (>= 1.5),
     memoise,
+    progress,
     purrr (>= 0.2.2),
     rlang (>= 0.1.0),
     tidyr (>= 0.6.3),
-    utils
+    utils,
+    methods
 Suggests:
     bigQueryR (>= 0.3.1),
     covr,

@@ -42,7 +42,7 @@ shinyServer(function(input, output, session){
     dates <- input$date_seg
     segment_built <- segment_built()
     
-    with_shiny(google_analytics_4,
+    with_shiny(google_analytics,
                shiny_access_token = token(),
                viewId = viewId,
                date_range = c(dates[1], dates[2]),
@@ -110,7 +110,7 @@ shinyServer(function(input, output, session){
     dims <- cohort_dims()
     cohort_built <- cohort_built()
     
-    with_shiny(google_analytics_4,
+    with_shiny(google_analytics,
                shiny_access_token = token(),
                viewId = viewId,
                metrics = metrics,
@@ -151,7 +151,7 @@ shinyServer(function(input, output, session){
     dates1 <- input$date1_md
     dates2 <- input$date2_md
     
-    with_shiny(google_analytics_4,
+    with_shiny(google_analytics,
                shiny_access_token = token(),
                viewId = viewId,
                date_range = c(dates1[1], dates1[2], dates2[1], dates2[2]),
@@ -174,7 +174,7 @@ shinyServer(function(input, output, session){
     dates1 <- input$date1_md
     dates2 <- input$date2_md
     
-    out <- make_ga_4_req(google_analytics_4,
+    out <- make_ga_4_req(google_analytics,
                          viewId = viewId,
                          date_range = c(dates1[1], dates1[2], dates2[1], dates2[2]),
                          metrics = metrics,
@@ -231,7 +231,7 @@ shinyServer(function(input, output, session){
     dates <- input$date_pivot
     pivot_object <- pivot_object()
     
-    with_shiny(google_analytics_4,
+    with_shiny(google_analytics,
                shiny_access_token = token(),
                viewId = viewId,
                date_range = c(dates[1], dates[2]),
@@ -278,7 +278,7 @@ shinyServer(function(input, output, session){
     exp_metrics <- setNames(metric_exp, metric_name)
     metrics <- c(exp_metrics, normal_metrics)
     
-    with_shiny(google_analytics_4,
+    with_shiny(google_analytics,
                shiny_access_token = token(),
                viewId = viewId,
                date_range = c(dates[1], dates[2]),

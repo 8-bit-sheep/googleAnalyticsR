@@ -63,12 +63,15 @@ walkData <- function(ga, ga_pars, start, end){
     })
     batch_data
   }
-  
+  op <- options()
+  options("googleAuthR.batch_endpoint" = "https://www.googleapis.com/batch/analytics/v3")
   walked_data <- googleAuthR::gar_batch_walk(ga,
                                              dates,
                                              gar_pars = ga_pars,
                                              pars_walk = c("start-date", "end-date"),
                                              batch_function = bf)
+  
+  options(op)
   
   myMessage("Walked through all dates. Total Results: [", NROW(walked_data), "]", level = 3)
   attr(walked_data, "dateRange") <- list(startDate = start, endDate = end)
