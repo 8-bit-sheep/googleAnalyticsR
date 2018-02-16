@@ -1,3 +1,7 @@
+# googleAnalyticsR 0.5.0.9000
+
+* ...
+
 # googleAnalytics 0.5.0
 
 ## Breaking changes!
