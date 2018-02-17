@@ -248,7 +248,7 @@ $(document).ready(function () {
 </div>
 <div id="google-anaytics-v3-api-examples" class="section level2">
 <h2>Google Anaytics V3 API examples</h2>
-<p>Consult <code>?google_analytics</code> and see examples below:</p>
+<p>Consult <code>?google_analytics_3</code> and see examples below:</p>
 <pre class="r"><code>library(googleAnalyticsR)
 
 ## Authenticate in Google OAuth2
@@ -270,7 +270,7 @@ head(meta)
 
 ## pick the account_list$viewId you want to see data for.
 ## metrics and dimensions can have or have not &quot;ga:&quot; prefix
-gadata &lt;- google_analytics(id = ga_id, 
+gadata &lt;- google_analytics_3(id = ga_id, 
                            start=&quot;2015-08-01&quot;, end=&quot;2015-08-02&quot;, 
                            metrics = c(&quot;sessions&quot;, &quot;bounceRate&quot;), 
                            dimensions = c(&quot;source&quot;, &quot;medium&quot;))
@@ -278,14 +278,14 @@ gadata &lt;- google_analytics(id = ga_id,
 ## multi accounts, pass character vector of viewIds
 ## outputs a list of data.frames, named after the viewId
 ## This fetches 10 accounts per API call. 
-multi_gadata &lt;- google_analytics(id = c(&quot;123456&quot;,&quot;9876545&quot;,&quot;765432&quot;), 
+multi_gadata &lt;- google_analytics_3(id = c(&quot;123456&quot;,&quot;9876545&quot;,&quot;765432&quot;), 
                                  start=&quot;2015-08-01&quot;, end=&quot;2015-08-02&quot;, 
                                  metrics = c(&quot;sessions&quot;, &quot;bounceRate&quot;), 
                                  dimensions = c(&quot;source&quot;, &quot;medium&quot;))
 
 ## if more than 10000 rows in results, auto batching
 ## example is setting lots of dimensions to try and create big sampled data
-batch_gadata &lt;- google_analytics(id = account_list$viewId[1], 
+batch_gadata &lt;- google_analytics_3(id = account_list$viewId[1], 
                                  start=&quot;2014-08-01&quot;, end=&quot;2015-08-02&quot;, 
                                  metrics = c(&quot;sessions&quot;, &quot;bounceRate&quot;), 
                                  dimensions = c(&quot;source&quot;, &quot;medium&quot;, &quot;landingPagePath&quot;,&quot;hour&quot;,&quot;minute&quot;),
@@ -293,14 +293,14 @@ batch_gadata &lt;- google_analytics(id = account_list$viewId[1],
 
 ## mitigate sampling by setting samplingLevel=&quot;WALK&quot;
 ## this will send lots and lots of calls to the Google API limits, beware
-walk_gadata &lt;- google_analytics(id = account_list$viewId[1], 
+walk_gadata &lt;- google_analytics_3(id = account_list$viewId[1], 
                                 start=&quot;2014-08-01&quot;, end=&quot;2015-08-02&quot;, 
                                 metrics = c(&quot;sessions&quot;, &quot;bounceRate&quot;), 
                                 dimensions = c(&quot;source&quot;, &quot;medium&quot;, &quot;landingPagePath&quot;), 
                                 max=99999999, samplingLevel=&quot;WALK&quot;)
 
 ## multi-channel funnels set type=&quot;mcf&quot;
-mcf_gadata &lt;- google_analytics(id = account_list$viewId[1], 
+mcf_gadata &lt;- google_analytics_3(id = account_list$viewId[1], 
                                start=&quot;2015-08-01&quot;, end=&quot;2015-08-02&quot;, 
                                metrics = c(&quot;totalConversions&quot;), 
                                dimensions = c(&quot;sourcePath&quot;), 

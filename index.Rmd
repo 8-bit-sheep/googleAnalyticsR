@@ -20,14 +20,15 @@ Collaboration is welcomed and encouraged, if you are interested get in touch.
 
 * First Google Analytics Reporting v4 API library for R
 * v4 features include: dynamic calculated metrics, pivots, histograms, date comparisons, batching.
-* v4 API explorer
 * API metadata of possible metrics and dimensions
 * Multi-user login in Shiny App
 * Integration with BigQuery Google Analytics Premium/360 exports.
 * Single authentication flow can be used with other [`googleAuthR`](http://code.markedmondson.me/googleAuthR/) apps like [`searchConsoleR`](https://github.com/MarkEdmondson1234/searchConsoleR)
 * Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnnel
-* Support for `googleAuthR` batch.  For big data calls this could be 10x quicker than normal GA fetching.
+* Support for `googleAuthR` batch.  For big data calls this could be 10x quicker than normal GA fetching
 * Meta data in attributes of returned dataframe including date ranges, totals, min and max
+* Automatic caching of API requests
+* Management API features such as unsampled report downloads and filter manipulation
 
 ## Thanks 
 
@@ -59,4 +60,5 @@ If you have used the package and published online then get in touch and I'll lis
 * Creating [Google Analytics non-sampled scheduled reports](https://2steps.pro/google-anslytics-data-without-sampling-scheduler.html) [Russian]
 * Fredrik [forecasts sales from Google Analytics and sends it to your own Slack bot](http://www.insightworks.se/forecast-google-analytics-r-slack/) [Swedish]
 * Omar shows some [heatmaps and ggplot2 using googleAnalyticsR](http://omargonzalesdiaz.com/blog/googleanalytics-ggplot2.html) in Spanish
+* Mararoff.com shows how to [compare your CRM data with Google Analytics](http://makaroff.org/ga-data-upload/) in Russian
 
