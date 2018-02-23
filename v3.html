@@ -261,7 +261,7 @@ ga_auth()
 ## instead put your options here, and run googleAuthR::gar_auth()
 
 ## get account info, including View Ids
-account_list &lt;- google_analytics_account_list()
+account_list &lt;- ga_account_list()
 ga_id &lt;- account_list$viewId[1]
 
 ## get a list of what metrics and dimensions you can use
@@ -361,7 +361,7 @@ attr(gadata, &quot;dateRange&quot;)
 </li>
       </ul>
 
-<p>Copyright (c) 2016 Sunholo Ltd.  Released under <a target="_blank" href="https://opensource.org/licenses/MIT">MIT license.</a></p>
+<p>Copyright (c) 2018 Sunholo Ltd.  Released under <a target="_blank" href="https://opensource.org/licenses/MIT">MIT license.</a></p>
 <!-- Google Tag Manager -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-WFFMBH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

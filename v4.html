@@ -845,6 +845,28 @@ google_analytics(ga_id,
 <p>The defaults are 10,000 rows per call (50,000 per batch) and <code>slow_fetch = FALSE</code> which suit for most cases.</p>
 </div>
 </div>
+<div id="fetching-from-multiple-views" class="section level2">
+<h2>Fetching from multiple views</h2>
+<p>Whilst the v3 batching isn’t available for multi-accounts, by using <a href="https://github.com/HenrikBengtsson/future.apply"><code>future.apply</code></a> you can launch multiple R sessions that will fetch the API in parallel. An example is shown below, that fetches from three View IDs at once.</p>
+<pre class="r"><code>library(googleAnalyticsR)
+library(future.apply)
+
+## setup multisession R for your parallel data fetches 
+plan(multisession)
+
+## the ViewIds to fetch all at once
+gaids &lt;- c(12345634, 9888890,10624323)
+
+my_fetch &lt;- function(x) {
+  google_analytics(x, 
+                   date_range = c(&quot;2017-01-01&quot;,&quot;yesterday&quot;), 
+                   metrics = &quot;sessions&quot;, 
+                   dimensions = c(&quot;date&quot;,&quot;medium&quot;)
+}
+
+## makes 3 API calls at once
+all_data &lt;- future_lapply(gaids, my_fetch)</code></pre>
+</div>
 
 <ul class="nav navbar-nav navbar-right">
         <li>
@@ -874,7 +896,7 @@ google_analytics(ga_id,
 </li>
       </ul>
 
-<p>Copyright (c) 2016 Sunholo Ltd.  Released under <a target="_blank" href="https://opensource.org/licenses/MIT">MIT license.</a></p>
+<p>Copyright (c) 2018 Sunholo Ltd.  Released under <a target="_blank" href="https://opensource.org/licenses/MIT">MIT license.</a></p>
 <!-- Google Tag Manager -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-WFFMBH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
