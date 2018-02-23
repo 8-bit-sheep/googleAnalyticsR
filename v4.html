@@ -848,6 +848,7 @@ google_analytics(ga_id,
 <div id="fetching-from-multiple-views" class="section level2">
 <h2>Fetching from multiple views</h2>
 <p>Whilst the v3 batching isn’t available for multi-accounts, by using <a href="https://github.com/HenrikBengtsson/future.apply"><code>future.apply</code></a> you can launch multiple R sessions that will fetch the API in parallel. An example is shown below, that fetches from three View IDs at once.</p>
+<p>The limiting factor willl then be the v4 <a href="https://developers.google.com/analytics/devguides/config/mgmt/v3/limits-quotas">API limits</a>, which are currently 10 queries per second per IP address, 1000 requests per 100 seconds per user.</p>
 <pre class="r"><code>library(googleAnalyticsR)
 library(future.apply)
 
