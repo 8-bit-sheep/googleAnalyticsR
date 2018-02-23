@@ -2,8 +2,6 @@
 title: "Google Analytics Reporting API v3 R functions"
 ---
 
-## v3 features
-
 New API features will no longer occur for the v3 API, but it still carries a lot of useful capabilties, such as the multi-channel API, and multi-account batching.  
 
 

@@ -11,7 +11,7 @@
 
 
 
-<title>Google Analytics Reporting API v4 R Examples</title>
+<title>Google Analytics Reporting API v4 in R Examples</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,8 +19,11 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-1.1/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
@@ -162,6 +165,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -191,24 +289,10 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="v3.html">
-    <span class="fa fa-cog"></span>
-     
-    v3 API
-  </a>
-</li>
-<li>
   <a href="v4.html">
     <span class="fa fa-cogs"></span>
      
     v4 API
-  </a>
-</li>
-<li>
-  <a href="big-query.html">
-    <span class="fa fa-search"></span>
-     
-    BigQuery
   </a>
 </li>
 <li>
@@ -225,6 +309,20 @@ $(document).ready(function () {
     RMarkdown
   </a>
 </li>
+<li>
+  <a href="v3.html">
+    <span class="fa fa-cog"></span>
+     
+    v3 API
+  </a>
+</li>
+<li>
+  <a href="big-query.html">
+    <span class="fa fa-search"></span>
+     
+    BigQuery
+  </a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -237,13 +335,11 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Google Analytics Reporting API v4 R Examples</h1>
+<h1 class="title toc-ignore">Google Analytics Reporting API v4 in R Examples</h1>
 
 </div>
 
 
-<div id="v4-features" class="section level2">
-<h2>v4 features</h2>
 <p>The v4 API will be where new features will appear in the future.</p>
 <p>It currently has these extras implemented over the v3 API:</p>
 <ul>
@@ -256,9 +352,8 @@ $(document).ready(function () {
 <li>Caching</li>
 </ul>
 <p>Check out more examples on using the API in actual use cases on the <a href="http://www.dartistics.com/googleanalytics/index.html">www.dartistics.com website</a>.</p>
-</div>
-<div id="to-use---v4-api-calls" class="section level2">
-<h2>To use - v4 API calls</h2>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
 <p>To get started refer to th tutorials linked on the homepage, consult <code>?google_analytics</code> when within R to see the documentation, and refer to these example queries:</p>
 <pre class="r"><code>## setup
 library(googleAnalyticsR)
@@ -346,13 +441,14 @@ gadata &lt;- google_analytics(gaid,
                              order = delta_sess,
                              max = 20)</code></pre>
 </div>
-<div id="anti-sampling-v4" class="section level3">
-<h3>Anti-sampling v4</h3>
+</div>
+<div id="anti-sampling" class="section level2">
+<h2>Anti-sampling</h2>
 <p>A new feature from version <code>0.3.0</code> is anti-sampling via batching.</p>
 <p>Sampling is due to your API request being over the session limits <a href="https://support.google.com/analytics/answer/2637192">outlined in this Google article</a>. This limit is higher for Google Analytics 360.</p>
 <p>If you split up your API request so that the number of sessions falls under these limits, sampling will not occur.</p>
-<div id="sampled-data-example" class="section level4">
-<h4>Sampled data example</h4>
+<div id="sampled-data-example" class="section level3">
+<h3>Sampled data example</h3>
 <p>If you have sampling in your data request, <code>googleAnalyticsR</code> reports it back to you in the console when making the request.</p>
 <pre class="r"><code>&gt; library(googleAnalyticsR)
 &gt; ga_auth()
@@ -363,8 +459,8 @@ gadata &lt;- google_analytics(gaid,
 Calling APIv4....
 Data is sampled, based on 39.75% of visits.</code></pre>
 </div>
-<div id="unsampled-data-example" class="section level4">
-<h4>Unsampled data example</h4>
+<div id="unsampled-data-example" class="section level3">
+<h3>Unsampled data example</h3>
 <p>Setting the new argument <code>anti_sample=TRUE</code> in a <code>google_analytics()</code> request now causes the calls to be split up into small enough chunks to avoid sampling. This uses more API calls so the data will reach you slower, but it should hold more detail.</p>
 <pre class="r"><code>&gt; library(googleAnalyticsR)
 &gt; ga_auth()
@@ -400,14 +496,14 @@ Finished unsampled data request, total rows [100814]
 Successfully avoided sampling</code></pre>
 <p>The sequence involves a couple of exploratory API calls to determine the best split. This method will adjust the time periods to have the batch sizes large enough to not take too long, but small enough to have unsampled data.</p>
 </div>
-<div id="auto-anti-sampling-failure" class="section level4">
-<h4>Auto-anti sampling failure</h4>
+<div id="auto-anti-sampling-failure" class="section level3">
+<h3>Auto-anti sampling failure</h3>
 <p>In some cases the anti-sampling won’t work. This will mainly be due to filters for the View you are using meaning that the calculation for the sampling sessions are incorrect - Google Analytics vanilla samples on a property level (whilst GA360 samples on a View level).</p>
 <p>Try using a raw profile if you can, otherwise you can set your own sample period by using the <code>anti_sample_batches</code> flag to indicate the sample size. Pick a number that is a little lower than the smallest period you saw in the auto-sample batches. If in doubt, setting <code>anti_sample_batches</code> to 1 will make a daily fetch.</p>
 </div>
 </div>
-<div id="new-filter-syntax" class="section level3">
-<h3>New Filter Syntax</h3>
+<div id="filter-syntax" class="section level2">
+<h2>Filter Syntax</h2>
 <p>Filters need to be built up from the <code>met_filter</code> and <code>dim_filter</code> R objects.</p>
 <p>These then need to be wrapped in <code>filter_clause_ga4</code> function, which lets you specify the combination rules (<code>AND</code> or <code>OR</code>). The <code>met_filter</code> and <code>dim_filter</code> you pass in should be wrapped in a <code>list()</code> - see examples:</p>
 <pre class="r"><code>
@@ -460,8 +556,8 @@ ga_data1
 # 10                   yahoo  organic       66      43
 # 11              zapmeta.se referral        6       4</code></pre>
 </div>
-<div id="querying-multiple-report-types-at-a-time" class="section level3">
-<h3>Querying multiple report types at a time</h3>
+<div id="multiple-reports" class="section level2">
+<h2>Multiple reports</h2>
 <p>Example with two date ranges and two reports. When querying two date ranges, you can sort the metrics by how much they have changed by using <code>orderType = DELTA</code> e.g. <code>order_type(&quot;sessions&quot;, &quot;DESCENDING&quot;, &quot;DELTA&quot;)</code></p>
 <p>When fetching multiple reports, you need to wrap the <code>make_ga_4_req()</code> created objects in a <code>list()</code></p>
 <pre class="r"><code>## demo of querying two date ranges at a time   
@@ -523,8 +619,8 @@ ga_data3
 
 </code></pre>
 </div>
-<div id="on-the-fly-calculated-metrics" class="section level3">
-<h3>On-the-fly calculated metrics</h3>
+<div id="custom-calculated-metrics" class="section level2">
+<h2>Custom calculated metrics</h2>
 <pre class="r"><code>ga_data4 &lt;- google_analytics(ga_id,
                                date_range = c(&quot;2015-07-30&quot;,
                                               &quot;2015-10-01&quot;),
@@ -538,12 +634,12 @@ ga_data4
 # 2  organic         1.075137     612
 # 3 referral         1.012500      71</code></pre>
 </div>
-<div id="segments-v4" class="section level3">
-<h3>Segments v4</h3>
+<div id="segments-v4" class="section level2">
+<h2>Segments v4</h2>
 <p>Segments are more complex to configure that v3, but more powerful and in line to how you configure them in the UI.</p>
 <p>A lot of feedback for the library is on how to get the sample syntax right, so the examples below try to cover common scenarios.</p>
-<div id="v3-segments" class="section level4">
-<h4>v3 segments</h4>
+<div id="v3-segments" class="section level3">
+<h3>v3 segments</h3>
 <p>You can choose to create segments via the v4 syntax or the v3 syntax for backward compatibility.</p>
 <p>If you want to use v3 segments, then they can be used in the <code>segment_id</code> argument of the <code>segment_ga4()</code> function.</p>
 <p>You can view the segment Ids by using <code>ga_segment_list()</code> and the data.frame in <code>$items</code></p>
@@ -596,8 +692,8 @@ segmented_ga1 &lt;- google_analytics(ga_id,
                                     metrics = c(&#39;sessions&#39;,&#39;bounces&#39;)
                                     )</code></pre>
 </div>
-<div id="v4-segment-syntax" class="section level4">
-<h4>v4 segment syntax</h4>
+<div id="v4-segment-syntax" class="section level3">
+<h3>v4 segment syntax</h3>
 <p>However, its recommended you embrace the new v4 syntax, as its more flexible and powerful in the long run.</p>
 <p>The hierarachy of the segment elements you will need are:</p>
 <ul>
@@ -723,8 +819,8 @@ results &lt;- google_analytics(ga_id,
 
 </code></pre>
 </div>
-<div id="rstudio-addin-segment-helper" class="section level4">
-<h4>RStudio Addin: Segment helper</h4>
+<div id="rstudio-addin-segment-helper" class="section level3">
+<h3>RStudio Addin: Segment helper</h3>
 <p>New in version 0.2.0 is an RStudio Addin to help create segments via a UI rather than the lists above.</p>
 <p>You can call it via <code>googleAnalyticsR:::gadget_GASegment()</code> or within the RStudio interface like displayed below:</p>
 <div class="figure">
@@ -733,8 +829,8 @@ results &lt;- google_analytics(ga_id,
 </div>
 </div>
 </div>
-<div id="cohort-reports" class="section level3">
-<h3>Cohort reports</h3>
+<div id="cohort-reports" class="section level2">
+<h2>Cohort reports</h2>
 <p>Details on <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohorts">cohort reports and LTV can be found here</a>.</p>
 <pre class="r"><code>## first make a cohort group
 cohort4 &lt;- make_cohort_group(list(&quot;Jan2016&quot; = c(&quot;2016-01-01&quot;, &quot;2016-01-31&quot;), 
@@ -753,8 +849,8 @@ cohort_example
 # 2 Jan2016            23378
 </code></pre>
 </div>
-<div id="pivot-requests" class="section level3">
-<h3>Pivot Requests</h3>
+<div id="pivot-requests" class="section level2">
+<h2>Pivot Requests</h2>
 <p>These change the shape of the returned data</p>
 <pre class="r"><code>
 ## filter pivot results to 
@@ -783,9 +879,8 @@ names(pivtest1)
 # [10] &quot;medium.Social.sessions&quot;      &quot;medium.linkedin.sessions&quot;  
 </code></pre>
 </div>
-</div>
-<div id="ga360-resource-based-quota-system" class="section level2">
-<h2>GA360 resource based quota system</h2>
+<div id="ga360-quota-system" class="section level2">
+<h2>GA360 Quota System</h2>
 <p>If you have GA360, you have access to <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/resource-based-quota">resource based quotas</a> that increase the number of sessions before sampling kicks in from 1 to 100 million sessions.</p>
 <p>To access this quota, set <code>useResourceQuotas = TRUE</code> in the command.</p>
 <pre class="r"><code>google_analytics(ga_id, 
@@ -908,6 +1003,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 
 
+</div>
+</div>
 
 </div>
 

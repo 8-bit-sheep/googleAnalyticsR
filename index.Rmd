@@ -1,5 +1,8 @@
 ---
 title: "googleAnalyticsR - Google Analytics API to R"
+output:
+  html_document:
+    toc: false
 ---
 
 ![](gar_logo_1000.png)

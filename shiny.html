@@ -19,8 +19,11 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-1.1/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
@@ -162,6 +165,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -191,24 +289,10 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="v3.html">
-    <span class="fa fa-cog"></span>
-     
-    v3 API
-  </a>
-</li>
-<li>
   <a href="v4.html">
     <span class="fa fa-cogs"></span>
      
     v4 API
-  </a>
-</li>
-<li>
-  <a href="big-query.html">
-    <span class="fa fa-search"></span>
-     
-    BigQuery
   </a>
 </li>
 <li>
@@ -223,6 +307,20 @@ $(document).ready(function () {
     <span class="fa fa-pencil-square"></span>
      
     RMarkdown
+  </a>
+</li>
+<li>
+  <a href="v3.html">
+    <span class="fa fa-cog"></span>
+     
+    v3 API
+  </a>
+</li>
+<li>
+  <a href="big-query.html">
+    <span class="fa fa-search"></span>
+     
+    BigQuery
   </a>
 </li>
       </ul>
@@ -287,11 +385,9 @@ shinyUI(fluidPage(
 
 ))
 </code></pre>
-<div id="shiny-modules" class="section level2">
-<h2>Shiny Modules</h2>
 <p>To aid with creating Shiny apps using this package, some <a href="http://shiny.rstudio.com/articles/modules.html">Shiny modules</a> are available.</p>
-<div id="authentication-modules" class="section level3">
-<h3>Authentication modules</h3>
+<div id="authentication-modules" class="section level2">
+<h2>Authentication modules</h2>
 <p><code>authDropdown</code> and <code>authDropdownUI</code> create a row of selects to help with choosing a GA View.</p>
 <div class="figure">
 <img src="authDropdown.png" />
@@ -321,22 +417,21 @@ selected_id &lt;- callModule(authDropdown, &quot;auth_menu&quot;, ga.table = ga_
 (...)
 </code></pre>
 </div>
-<div id="parameter-selects" class="section level3">
-<h3>Parameter selects</h3>
+<div id="parameter-selects" class="section level2">
+<h2>Parameter selects</h2>
 <p><code>multiSelect</code> and <code>multiSelectUI</code> create select dropdowns with the GA API parameters filled in, taken from the meta API.</p>
 <p><img src="metricDropdown.png" /> <img src="dimDropdown.png" /></p>
 </div>
-<div id="segment-helper" class="section level3">
-<h3>Segment helper</h3>
+<div id="segment-helper" class="section level2">
+<h2>Segment helper</h2>
 <p><code>segmentBuilder</code> and <code>segmentBuilderUI</code> creates a segment builder interface. This is also available as an RStudio gadget to help create segments more easily.</p>
 <div class="figure">
 <img src="segmentBuilder.png" />
 
 </div>
 </div>
-</div>
-<div id="v4-api-shiny-app" class="section level2">
-<h2>V4 API Shiny app</h2>
+<div id="example" class="section level2">
+<h2>Example</h2>
 <p>An example of a Shiny app is shown below, that allows users to login in, select an account using the modules above, and then see their data via Highcharts</p>
 <p>The code for the explorer is included below:</p>
 <div id="ui.r" class="section level3">
@@ -444,6 +539,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 
 
+</div>
+</div>
 
 </div>
 

@@ -2,10 +2,14 @@ name: "googleAnalyticsR - An R Google Analytics Library"
 output_dir: "."
 output:
   html_document:
+    highlight: textmate
+    toc: true
+    toc_depth: 2
+    toc_float: true
     include: 
       after_body: footer.html
 navbar:
-  title: "googleAnalyticsR"
+  title: googleAnalyticsR
   left:
     - text: "Home"
       href: index.html
@@ -13,18 +17,18 @@ navbar:
     - text: "Setup"
       href: setup.html
       icon: fa-wrench
-    - text: "v3 API"
-      href: v3.html
-      icon: fa-cog
     - text: "v4 API"
       href: v4.html
       icon: fa-cogs
-    - text: "BigQuery"
-      icon: fa-search
-      href: big-query.html
     - text: "Shiny"
       icon: fa-cloud-upload
       href: shiny.html
     - text: "RMarkdown"
       icon: fa-pencil-square
       href: rmarkdown.html
+    - text: "v3 API"
+      href: v3.html
+      icon: fa-cog
+    - text: "BigQuery"
+      icon: fa-search
+      href: big-query.html

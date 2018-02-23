@@ -4,7 +4,7 @@ title: "RMarkdown reports with Google Analytics API data"
 
 `googleAnalyticsR` can be used to generate reports in RMarkdown documents.
 
-## Authentication with RMarkdown
+## Offline Authentication
 
 Run your authentication in the setup block, making sure you have run the authentication first outside of RMarkdown, to ensure the necessary `.httr-oauth` file is in the same working directory as the RMarkdown document.
 
@@ -22,8 +22,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(googleAnalyticsR)
 ## Make sure to run this at least once outside of the document to
-##   ensure the .httr-oauth file is present. 
-ga_auth()
+##   ensure the cache file is present. 
+ga_auth("rmd.auth")
 
 ga_data <- google_analytics_4(viewId = 12345, 
                               dateRange = c(Sys.Date()-30, Sys.Date()), 

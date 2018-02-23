@@ -19,8 +19,11 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-1.1/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
@@ -162,6 +165,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -191,24 +289,10 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="v3.html">
-    <span class="fa fa-cog"></span>
-     
-    v3 API
-  </a>
-</li>
-<li>
   <a href="v4.html">
     <span class="fa fa-cogs"></span>
      
     v4 API
-  </a>
-</li>
-<li>
-  <a href="big-query.html">
-    <span class="fa fa-search"></span>
-     
-    BigQuery
   </a>
 </li>
 <li>
@@ -223,6 +307,20 @@ $(document).ready(function () {
     <span class="fa fa-pencil-square"></span>
      
     RMarkdown
+  </a>
+</li>
+<li>
+  <a href="v3.html">
+    <span class="fa fa-cog"></span>
+     
+    v3 API
+  </a>
+</li>
+<li>
+  <a href="big-query.html">
+    <span class="fa fa-search"></span>
+     
+    BigQuery
   </a>
 </li>
       </ul>
@@ -282,8 +380,8 @@ ga_id &lt;- account_list[1,&#39;viewId&#39;]
 <p>…will create your authentication file in the relative folder called <code>auth</code> and name your cache file <code>my.oauth</code>.</p>
 <p>It is recommended to specify your cache file when authenticating in an RMarkdown document.</p>
 </div>
-<div id="service-account-authentication" class="section level2">
-<h2>Service account authentication</h2>
+<div id="service-accounts" class="section level2">
+<h2>Service accounts</h2>
 <p>You can also authenticate by downloading a JSON file atached to a Google Cloud service account. More details are on the <a href="http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#authentication-with-a-json-file-via-service-accounts"><code>googleAuthR</code> website</a>.</p>
 <p>Make sure to add the service account as a user to your Google Analytics account so it has access to your Google Analytics data e.g. your service account email will look something like <code>xxxx@yyyyyy.iam.gserviceaccount.com</code> - add this email to your Google Analytics account in the Web Admin panel to the views you want it to read data from.</p>
 </div>
@@ -295,8 +393,8 @@ ga_id &lt;- account_list[1,&#39;viewId&#39;]
 <ol style="list-style-type: decimal">
 <li>Choose your authentication cache file - either one you have generated via <code>ga_auth()</code> or or your own Google Project’s service account JSON ending with file extension <code>.json</code></li>
 <li>Create a file called <code>.Renviron</code> and place it in your root directory (<code>~</code> on OSX/linux or <code>C:\\</code> on Windows). If using RStudio, you can find your root directory by clicking on the <code>Home</code> breadcrumb link in your File Explorer panel.</li>
-<li>Place this line in the <code>.Renviron</code> file: <code>GA_AUTH_FILE = &quot;/Users/bob/auth/googleAnalyticsR.httr-oauth&quot;</code></li>
-<li>Save and restart your R session.</li>
+<li>Place the absolute location of the file from step 1 into the <code>.Renviron</code> file, e.g. <code>GA_AUTH_FILE = &quot;/Users/mark/dev/auth/ga.oauth&quot;</code>.</li>
+<li>Save the file and restart your R session.</li>
 </ol>
 <p>If all goes well you should see something similar to this when you load <code>googleAnalyticsR</code>:</p>
 <pre class="r"><code>library(googleAnalyticsR)
@@ -318,13 +416,13 @@ meta &lt;- google_analytics_meta()</code></pre>
 <p>If offline, from <code>v0.2.0</code> this data is also available offline by typing <code>meta</code>, although it won’t be quite as up to date.</p>
 <p>The meta data does not include multi-channel as they are not available to download, for those <a href="https://developers.google.com/analytics/devguides/reporting/mcf/dimsmets/">see the online version</a>.</p>
 <p>When using the library, you can call metrics and dimensions with or without the <code>ga:</code> prefix (<code>mcf:</code> for multi-channel metrics/dimensions.)</p>
-<div id="multiple-api-authentication" class="section level3">
-<h3>Multiple API authentication</h3>
+</div>
+<div id="multiple-api-authentication" class="section level2">
+<h2>Multiple API authentication</h2>
 <p>If you are using more than one API for authentication (such as Search Console), then authenticate using <code>googleAuthR::gar_auth()</code> instead, to ensure you are authenticate with the correct scopes.</p>
 </div>
-</div>
-<div id="using-your-own-google-developer-project-api-key" class="section level2">
-<h2>Using your own Google Developer Project API Key</h2>
+<div id="your-own-google-project" class="section level2">
+<h2>Your own Google Project</h2>
 <p>With the amount of API calls possible with this library via batching and walking, its more likely the default shared Google API project will hit the 50,000 calls per day limit.</p>
 <p>To mitigate that, use your own Google Developer Console Project key, so it is not shared across all users of this library.</p>
 <p><a href="http://donalphipps.co.uk/">Donal Phipps</a> has very kindly created a screencast on how to set this up that you can find embedded below and via <a href="https://www.youtube.com/watch?v=4B88dRbwNfc">this link</a>.</p>
@@ -386,6 +484,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 
 
+</div>
+</div>
 
 </div>
 

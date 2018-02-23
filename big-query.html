@@ -19,8 +19,11 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-1.1/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
@@ -162,6 +165,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -191,24 +289,10 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="v3.html">
-    <span class="fa fa-cog"></span>
-     
-    v3 API
-  </a>
-</li>
-<li>
   <a href="v4.html">
     <span class="fa fa-cogs"></span>
      
     v4 API
-  </a>
-</li>
-<li>
-  <a href="big-query.html">
-    <span class="fa fa-search"></span>
-     
-    BigQuery
   </a>
 </li>
 <li>
@@ -223,6 +307,20 @@ $(document).ready(function () {
     <span class="fa fa-pencil-square"></span>
      
     RMarkdown
+  </a>
+</li>
+<li>
+  <a href="v3.html">
+    <span class="fa fa-cog"></span>
+     
+    v3 API
+  </a>
+</li>
+<li>
+  <a href="big-query.html">
+    <span class="fa fa-search"></span>
+     
+    BigQuery
   </a>
 </li>
       </ul>
@@ -242,13 +340,9 @@ $(document).ready(function () {
 </div>
 
 
-<p>Limited support for more user friendly calls to BigQuery Google Analytics 360 exports is implemented from version <code>0.2.0</code>.</p>
+<p>Limited support for more user friendly calls to BigQuery Google Analytics 360 exports.</p>
 <p>This is intended for users who may be familar with Google Analytics but not with SQL necessary to extract equivalent data from a BigQuery export of Google Analytics 360 data.</p>
 <p><code>google_analytics_bq</code> parses your metrics and dimensions into BigQuery queries.</p>
-<div id="to-do" class="section level2">
-<h2>To do</h2>
-<p>This is under active development, and features will expand in the future. Eventually the BigQuery reports can do a lot more than the normal Google Analytics API as it allows for statistics, grouping, timestamps and unique visitor and visit Ids.</p>
-</div>
 <div id="setup" class="section level2">
 <h2>Setup</h2>
 <p>To use, you need to also install the <a href="http://code.markedmondson.me/bigQueryR/"><code>bigQueryR</code></a> library.</p>
@@ -432,6 +526,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 
 
+</div>
+</div>
 
 </div>
 

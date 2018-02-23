@@ -2,15 +2,11 @@
 title: "Big Query Exports from Google Analytics 360 to R"
 ---
 
-Limited support for more user friendly calls to BigQuery Google Analytics 360 exports is implemented from version `0.2.0`.
+Limited support for more user friendly calls to BigQuery Google Analytics 360 exports.
 
 This is intended for users who may be familar with Google Analytics but not with SQL necessary to extract equivalent data from a BigQuery export of Google Analytics 360 data.
 
 `google_analytics_bq` parses your metrics and dimensions into BigQuery queries.  
-
-## To do
-
-This is under active development, and features will expand in the future. Eventually the BigQuery reports can do a lot more than the normal Google Analytics API as it allows for statistics, grouping, timestamps and unique visitor and visit Ids.
 
 ## Setup
 

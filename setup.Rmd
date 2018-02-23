@@ -63,7 +63,7 @@ ga_auth("auth/my.oauth")
 
 It is recommended to specify your cache file when authenticating in an RMarkdown document.
 
-## Service account authentication
+## Service accounts
 
 You can also authenticate by downloading a JSON file atached to a Google Cloud service account.  More details are on the [`googleAuthR` website](http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#authentication-with-a-json-file-via-service-accounts).  
 
@@ -79,9 +79,9 @@ You can set environment variables using a `.Renviron` file or via the function `
 
 1. Choose your authentication cache file - either one you have generated via `ga_auth()` or or your own Google Project's service account JSON ending with file extension `.json`
 2. Create a file called `.Renviron` and place it in your root directory (`~` on OSX/linux or `C:\\` on Windows).  If using RStudio, you can find your root directory by clicking on the `Home` breadcrumb link in your File Explorer panel.
-3. Place this line in the `.Renviron` file:
-`GA_AUTH_FILE = "/Users/bob/auth/googleAnalyticsR.httr-oauth"`
-4. Save and restart your R session. 
+3. Place the absolute location  of the file from step 1 into the `.Renviron` file, e.g.
+`GA_AUTH_FILE = "/Users/mark/dev/auth/ga.oauth"`.
+4. Save the file and restart your R session. 
 
 If all goes well you should see something similar to this when you load `googleAnalyticsR`:
 
@@ -111,11 +111,11 @@ The meta data does not include multi-channel as they are not available to downlo
 
 When using the library, you can call metrics and dimensions with or without the `ga:` prefix (`mcf:` for multi-channel metrics/dimensions.)
 
-### Multiple API authentication
+## Multiple API authentication
 
 If you are using more than one API for authentication (such as Search Console), then authenticate using `googleAuthR::gar_auth()` instead, to ensure you are authenticate with the correct scopes. 
 
-## Using your own Google Developer Project API Key
+## Your own Google Project
 
 With the amount of API calls possible with this library via batching and walking, its more likely the default shared Google API project will hit the 50,000 calls per day limit.
 

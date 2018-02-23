@@ -51,11 +51,9 @@ shinyUI(fluidPage(
 
 ```
 
-## Shiny Modules
-
 To aid with creating Shiny apps using this package, some [Shiny modules](http://shiny.rstudio.com/articles/modules.html) are available.
 
-### Authentication modules
+## Authentication modules
 
 `authDropdown` and `authDropdownUI` create a row of selects to help with choosing a GA View.
 
@@ -91,21 +89,21 @@ selected_id <- callModule(authDropdown, "auth_menu", ga.table = ga_accounts)
 
 ```
 
-### Parameter selects
+## Parameter selects
 
 `multiSelect` and `multiSelectUI` create select dropdowns with the GA API parameters filled in, taken from the meta API.
 
 ![](metricDropdown.png)
 ![](dimDropdown.png)
 
-### Segment helper
+## Segment helper
 
 `segmentBuilder` and `segmentBuilderUI` creates a segment builder interface.  This is also available as an RStudio gadget to help create segments more easily.
 
 ![](segmentBuilder.png)
 
 
-## V4 API Shiny app
+## Example
 
 An example of a Shiny app is shown below, that allows users to login in, select an account using the modules above, and then see their data via Highcharts
 
