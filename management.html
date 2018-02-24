@@ -11,7 +11,7 @@
 
 
 
-<title>googleAnalyticsR - Google Analytics API to R</title>
+<title>Management API</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +19,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-1.1/highlight.js"></script>
@@ -162,6 +165,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -266,68 +364,97 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">googleAnalyticsR - Google Analytics API to R</h1>
+<h1 class="title toc-ignore">Management API</h1>
 
 </div>
 
 
-<div class="figure">
-<img src="gar_logo_1000.png" />
-
-</div>
-<p>Welcome to the website for <strong>googleAnalyticsR</strong>, an R library for working with Google Analytics data.</p>
-<p>Follow development on the project’s <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR">Github development site.</a></p>
-<p>Any bugs or feature requests please <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/issues">file an issue.</a></p>
-<p>Collaboration is welcomed and encouraged, if you are interested get in touch.</p>
-<p><a href="http://www.r-pkg.org/pkg/googleAnalyticsR"><img src="http://cranlogs.r-pkg.org/badges/googleAnalyticsR" alt="Downloads" /></a> <img src="http://www.r-pkg.org/badges/version/googleAnalyticsR" alt="CRAN" /> <a href="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR"><img src="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master" alt="Travis-CI Build Status" /></a></p>
-<div id="features" class="section level2">
-<h2>Features</h2>
+<p>The Management API v3 covers all API calls that are not data reporting related, and are for getting meta information about your Google Analytics account, or to change settings.</p>
+<div id="quick-start" class="section level2">
+<h2>Quick start</h2>
+<p>The most commonly used are below:</p>
 <ul>
-<li>First Google Analytics Reporting v4 API library for R</li>
-<li>v4 features include: dynamic calculated metrics, pivots, histograms, date comparisons, batching.</li>
-<li>API metadata of possible metrics and dimensions</li>
-<li>Multi-user login in Shiny App</li>
-<li>Integration with BigQuery Google Analytics Premium/360 exports.</li>
-<li>Single authentication flow can be used with other <a href="http://code.markedmondson.me/googleAuthR/"><code>googleAuthR</code></a> apps like <a href="https://github.com/MarkEdmondson1234/searchConsoleR"><code>searchConsoleR</code></a></li>
-<li>Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnnel</li>
-<li>Support for <code>googleAuthR</code> batch. For big data calls this could be 10x quicker than normal GA fetching</li>
-<li>Meta data in attributes of returned dataframe including date ranges, totals, min and max</li>
-<li>Automatic caching of API requests</li>
-<li>Management API features such as unsampled report downloads and filter manipulation</li>
+<li><code>ga_account_list()</code> - get a summary data.frame of all your GA accounts, webproperty and view Ids</li>
+<li><code>google_analytics_meta()</code> - get a data.frame of available dimensions and metrics</li>
+<li><code>aggregateGAData()</code> - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed.</li>
 </ul>
 </div>
-<div id="thanks" class="section level2">
-<h2>Thanks</h2>
-<p>These are all great libraries that also work with Google Analytics data in R, that I have taken inspiration from.</p>
+<div id="account-structure" class="section level2">
+<h2>Account structure</h2>
+<p>The <code>_list</code> functions show all the details for that particular level of your account structure (<code>accounts &gt; web-properties &gt; Views (profiles)</code>) including creation time, user permissions etc.</p>
 <ul>
-<li><a href="https://github.com/skardhamar/rga">rga</a></li>
-<li><a href="https://bitbucket.org/unikum/rga">RGA</a></li>
-<li><a href="https://github.com/Tatvic/RGoogleAnalytics">RGoogleAnalytics</a></li>
-<li><a href="https://github.com/jdeboer/ganalytics">ganalytics</a></li>
-<li><a href="https://github.com/andrewgeisler/GAR">GAR</a></li>
+<li><code>ga_accounts()</code> - Get account metadata for your user</li>
+<li><code>ga_account_list()</code> - Get account summary including the ViewId</li>
+<li><code>ga_webproperty()</code> - Get web property</li>
+<li><code>ga_webproperty_list()</code> - List web properties</li>
+<li><code>ga_view()</code> - Get single View (Profile)</li>
+<li><code>ga_view_list()</code> - List Views (Profile)</li>
 </ul>
 </div>
-<div id="tutorials" class="section level2">
-<h2>Tutorials</h2>
-<p>If you have used the package and published online then get in touch and I’ll list it here so others can benefit.</p>
+<div id="adwords" class="section level2">
+<h2>AdWords</h2>
 <ul>
-<li><a href="http://www.dartistics.com/">Dartistics.com</a> is a website dedicated to using R with digital analytics, and has a page on getting up and running with <a href="http://www.dartistics.com/api-google-analytics.html">googleAnalyticsR</a></li>
-<li>Michal Brys has an online book on using <a href="https://michalbrys.gitbooks.io/r-google-analytics/content/">Google Analytics with R</a> that uses googleAnalyticsR</li>
-<li>Ryan Prazki has created a video tutorial on how to get up and running quickly: <a href="http://www.ryanpraski.com/google-analytics-r-tutorial/">Google Analytics R Video Tutorial</a></li>
-<li>Ryan also has a tutorial on using googleAnalyticsR to do <a href="http://www.ryanpraski.com/scroll-depth-tracking-analysis-with-google-analytics-r">scroll tracking analysis in a heatmap</a></li>
-<li>Jules has a nice post on using a <a href="http://stuifbergen.com/2016/11/conversion-attribution-markov-model-r/">Markov model to create an attribution model with googleAnalyticsR data</a></li>
-<li>Tim Wilson has a guide on getting up and running with <a href="http://analyticsdemystified.com/google-analytics/tutorial_pulling_google_analytics_data_with_r/">R for digital analysts</a></li>
-<li>Guide to using <a href="https://www.karada-good.net/analyticsr/r-520">googleAnalyticsR in Japanese</a> and <a href="http://abrahamcow.hatenablog.com/entry/2016/05/22/121721">here</a></li>
-<li><a href="http://alenlytics.com/connecting-r-with-google-analytics/">Alenlytics</a> has a guide that also includes using the RStudio Addin for authentication</li>
-<li>Mario Martinez has a guide on using <a href="http://www.doctormetrics.com/2017/01/03/nueva-version-de-la-api-de-google-analytics-r-statistics/#.WLVOWhAvpBI">googleAnalyticsR in Spanish</a></li>
-<li>Vincent has a tutorial on using <a href="https://data-seo.fr/2016/05/02/detecter-vos-marronniers-avec-r/">Twitters AnomalyDetection package with googleAnalyticsR</a> in French</li>
-<li>Tom Alby uses <code>googleAnalyticsR</code> to do some <a href="https://tom.alby.de/clustering-mit-google-analytics-und-r/">clustering market basket analysis</a> in German.</li>
-<li>Bert uses <code>googleAnalyticsR</code> to <a href="http://node1.com/examine-real-website-visitor-data/">detect bot traffic</a></li>
-<li>Anita makes some <a href="https://rpubs.com/anitaowens/googleapi">pie and bar charts</a> from channel data</li>
-<li>Creating <a href="https://2steps.pro/google-anslytics-data-without-sampling-scheduler.html">Google Analytics non-sampled scheduled reports</a> [Russian]</li>
-<li>Fredrik <a href="http://www.insightworks.se/forecast-google-analytics-r-slack/">forecasts sales from Google Analytics and sends it to your own Slack bot</a> [Swedish]</li>
-<li>Omar shows some <a href="http://omargonzalesdiaz.com/blog/googleanalytics-ggplot2.html">heatmaps and ggplot2 using googleAnalyticsR</a> in Spanish</li>
-<li>Mararoff.com shows how to <a href="http://makaroff.org/ga-data-upload/">compare your CRM data with Google Analytics</a> in Russian</li>
+<li><code>ga_adwords()</code> Get AdWords Link meta data</li>
+<li><code>ga_adwords_list()</code> List AdWords</li>
+</ul>
+</div>
+<div id="custom-data-sources" class="section level2">
+<h2>Custom Data Sources</h2>
+<ul>
+<li><code>ga_custom_datasource()</code> - List Custom Data Sources</li>
+<li><code>ga_custom_upload()</code> - Custom Data Source Upload Status</li>
+</ul>
+</div>
+<div id="experiments" class="section level2">
+<h2>Experiments</h2>
+<ul>
+<li><code>ga_experiment()</code> - Experiments Meta data</li>
+<li><code>ga_experiment_list()</code> - List Experiments</li>
+</ul>
+</div>
+<div id="view-filters" class="section level2">
+<h2>View Filters</h2>
+<p>The filter edit functions are contributed by <span class="citation">@zselinger</span> which allow you to update filters for your Google Analytics views at scale.</p>
+<ul>
+<li><code>ga_filter()</code> - Get specific filter for account</li>
+<li><code>ga_filter_add()</code> - Create a new filter and add it to the view (optional).</li>
+<li><code>ga_filter_apply_to_view()</code> - Apply an existing filter to view.</li>
+<li><code>ga_filter_delete()</code> - Delete a filter from account or remove from view.</li>
+<li><code>ga_filter_list()</code> - List filters for account</li>
+<li><code>ga_filter_update()</code> - Updates an existing filter.</li>
+<li><code>ga_filter_update_filter_link()</code> - Update an existing profile filter link. Patch semantics supported</li>
+<li><code>ga_filter_view()</code> - Get specific filter for view (profile)</li>
+<li><code>ga_filter_view_list()</code> - List filters for view (profile)</li>
+</ul>
+</div>
+<div id="goals" class="section level2">
+<h2>Goals</h2>
+<ul>
+<li><code>ga_goal()</code> - Get goal</li>
+<li><code>ga_goal_list()</code> - List goals</li>
+</ul>
+</div>
+<div id="remarketing-segments" class="section level2">
+<h2>Remarketing segments</h2>
+<ul>
+<li><code>ga_remarketing_estimate()</code> - Estimate number of users added to the segment yesterday</li>
+<li><code>ga_remarketing_get()</code> - Get a remarketing audience</li>
+<li><code>ga_remarketing_list()</code> - List remarketing audiences</li>
+</ul>
+</div>
+<div id="unsampled-reports" class="section level2">
+<h2>Unsampled reports</h2>
+<p>Available only for GA360 accounts, you will need to authenticate with the Google drive scope to get download access. The download functions are contributed by <span class="citation">@j450h1</span></p>
+<ul>
+<li><code>ga_unsampled()</code> - Get Unsampled Report Meta Data</li>
+<li><code>ga_unsampled_download()</code> - Download Unsampled Report from Google Drive</li>
+<li><code>ga_unsampled_list()</code> - List Unsampled Reports</li>
+</ul>
+</div>
+<div id="users" class="section level2">
+<h2>Users</h2>
+<ul>
+<li><code>ga_users_list()</code> - List Users for the level you specify</li>
 </ul>
 </div>
 
@@ -370,6 +497,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 
 
+</div>
+</div>
 
 </div>
 

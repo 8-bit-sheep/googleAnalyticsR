@@ -1,0 +1,84 @@
+---
+title: "Management API"
+---
+
+The Management API v3 covers all API calls that are not data reporting related, and are for getting meta information about your Google Analytics account, or to change settings.
+
+## Quick start
+
+The most commonly used are below:
+
+* `ga_account_list()` - get a summary data.frame of all your GA accounts, webproperty and view Ids
+* `google_analytics_meta()` - get a data.frame of available dimensions and metrics
+* `aggregateGAData()` - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed. 
+
+
+## Account structure
+
+The `_list` functions show all the details for that particular level of your account structure (`accounts > web-properties > Views (profiles)`) including creation time, user permissions etc.
+
+* `ga_accounts()`	- Get account metadata for your user
+* `ga_account_list()`	- Get account summary including the ViewId
+* `ga_webproperty()` -	Get web property
+* `ga_webproperty_list()` -	List web properties
+* `ga_view()` - Get single View (Profile)
+* `ga_view_list()` -	List Views (Profile)
+
+## AdWords
+
+* `ga_adwords()`	Get AdWords Link meta data
+* `ga_adwords_list()`	List AdWords
+
+## Custom Data Sources
+
+* `ga_custom_datasource()`	- List Custom Data Sources
+* `ga_custom_upload()`	- Custom Data Source Upload Status
+
+## Experiments
+
+* `ga_experiment()`	- Experiments Meta data
+* `ga_experiment_list()`	- List Experiments
+
+## View Filters
+
+The filter edit functions are contributed by @zselinger which allow you to update filters for your Google Analytics views at scale. 
+
+* `ga_filter()`	- Get specific filter for account
+* `ga_filter_add()`	- Create a new filter and add it to the view (optional).
+* `ga_filter_apply_to_view()`	- Apply an existing filter to view.
+* `ga_filter_delete()`	- Delete a filter from account or remove from view.
+* `ga_filter_list()`	- List filters for account
+* `ga_filter_update()`	- Updates an existing filter.
+* `ga_filter_update_filter_link()`	- Update an existing profile filter link. Patch semantics supported
+* `ga_filter_view()`	- Get specific filter for view (profile)
+* `ga_filter_view_list()`	- List filters for view (profile)
+
+
+## Goals
+
+* `ga_goal()` -	Get goal
+* `ga_goal_list()` -	List goals
+
+## Remarketing segments
+
+* `ga_remarketing_estimate()` -	Estimate number of users added to the segment yesterday
+* `ga_remarketing_get()` -	Get a remarketing audience
+* `ga_remarketing_list()` -	List remarketing audiences
+
+## Unsampled reports
+
+Available only for GA360 accounts, you will need to authenticate with the Google drive scope to get download access. The download functions are contributed by @j450h1
+
+* `ga_unsampled()` -	Get Unsampled Report Meta Data
+* `ga_unsampled_download()` -	Download Unsampled Report from Google Drive
+* `ga_unsampled_list()` -	List Unsampled Reports
+
+## Users
+
+* `ga_users_list()` -	List Users for the level you specify
+
+
+
+
+
+

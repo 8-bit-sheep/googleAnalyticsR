@@ -17,18 +17,27 @@ navbar:
     - text: "Setup"
       href: setup.html
       icon: fa-wrench
-    - text: "v4 API"
-      href: v4.html
-      icon: fa-cogs
-    - text: "Shiny"
-      icon: fa-cloud-upload
-      href: shiny.html
-    - text: "RMarkdown"
-      icon: fa-pencil-square
-      href: rmarkdown.html
-    - text: "v3 API"
-      href: v3.html
-      icon: fa-cog
-    - text: "BigQuery"
-      icon: fa-search
-      href: big-query.html
+    - text: "Reporting APIs"
+      icon: fa-table
+      menu:
+        - text: "v4 API"
+          href: v4.html
+          icon: fa-cogs
+        - text: "v3 API"
+          href: v3.html
+          icon: fa-cog
+        - text: "BigQuery"
+          icon: fa-search
+          href: big-query.html
+    - text: "Management API"
+      href: management.html
+      icon: fa-briefcase
+    - text: Publishing
+      icon: fa-file
+      menu:
+      - text: "Shiny"
+        icon: fa-cloud-upload
+        href: shiny.html
+      - text: "RMarkdown"
+        icon: fa-pencil-square
+        href: rmarkdown.html

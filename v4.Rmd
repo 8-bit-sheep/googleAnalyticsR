@@ -18,7 +18,7 @@ Check out more examples on using the API in actual use cases on the [www.dartist
 
 ## Getting started
 
-To get started refer to th tutorials linked on the homepage, consult `?google_analytics` when within R to see the documentation, and refer to these example queries:
+To get started refer to the tutorials linked on the homepage, consult `?google_analytics` when within R to see the documentation, and refer to these example queries:
 
 ```r
 ## setup

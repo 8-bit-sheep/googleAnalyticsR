@@ -288,40 +288,69 @@ div.tocify {
     Setup
   </a>
 </li>
-<li>
-  <a href="v4.html">
-    <span class="fa fa-cogs"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-table"></span>
      
-    v4 API
+    Reporting APIs
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="v4.html">
+        <span class="fa fa-cogs"></span>
+         
+        v4 API
+      </a>
+    </li>
+    <li>
+      <a href="v3.html">
+        <span class="fa fa-cog"></span>
+         
+        v3 API
+      </a>
+    </li>
+    <li>
+      <a href="big-query.html">
+        <span class="fa fa-search"></span>
+         
+        BigQuery
+      </a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="shiny.html">
-    <span class="fa fa-cloud-upload"></span>
+  <a href="management.html">
+    <span class="fa fa-briefcase"></span>
      
-    Shiny
+    Management API
   </a>
 </li>
-<li>
-  <a href="rmarkdown.html">
-    <span class="fa fa-pencil-square"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-file"></span>
      
-    RMarkdown
-  </a>
-</li>
-<li>
-  <a href="v3.html">
-    <span class="fa fa-cog"></span>
+    Publishing
      
-    v3 API
+    <span class="caret"></span>
   </a>
-</li>
-<li>
-  <a href="big-query.html">
-    <span class="fa fa-search"></span>
-     
-    BigQuery
-  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="shiny.html">
+        <span class="fa fa-cloud-upload"></span>
+         
+        Shiny
+      </a>
+    </li>
+    <li>
+      <a href="rmarkdown.html">
+        <span class="fa fa-pencil-square"></span>
+         
+        RMarkdown
+      </a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -354,7 +383,7 @@ div.tocify {
 <p>Check out more examples on using the API in actual use cases on the <a href="http://www.dartistics.com/googleanalytics/index.html">www.dartistics.com website</a>.</p>
 <div id="getting-started" class="section level2">
 <h2>Getting started</h2>
-<p>To get started refer to th tutorials linked on the homepage, consult <code>?google_analytics</code> when within R to see the documentation, and refer to these example queries:</p>
+<p>To get started refer to the tutorials linked on the homepage, consult <code>?google_analytics</code> when within R to see the documentation, and refer to these example queries:</p>
 <pre class="r"><code>## setup
 library(googleAnalyticsR)
 
