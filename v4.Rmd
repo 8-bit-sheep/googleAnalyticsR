@@ -43,6 +43,10 @@ google_analytics(ga_id,
                  dimensions = "date")
 ```
 
+[Jeff Swanson](http://jeffgswanson.com/) has made a video guide that goes into more detail about the above examples ([Digital Marketing in R: How to Connect to Google Analytics API](https://www.youtube.com/watch?v=S9mSh5kcRgc&feature=share)) and embedded below, many thanks to Jeff.
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/S9mSh5kcRgc?rel=0" frameborder="0" allowfullscreen></iframe>
+
 ## Number of results
 
 By default the function will return 1000 results.  If you want to fetch all rows, set `max = -1`
