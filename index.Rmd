@@ -22,7 +22,7 @@ Collaboration is welcomed and encouraged, if you are interested get in touch.
 ## Features
 
 * First Google Analytics Reporting v4 API library for R
-* v4 features include: dynamic calculated metrics, pivots, histograms, date comparisons, batching.
+* v4 features include: metric expressions, pivots, date comparisons, batching.
 * API metadata of possible metrics and dimensions
 * Multi-user login in Shiny App
 * Integration with BigQuery Google Analytics Premium/360 exports.

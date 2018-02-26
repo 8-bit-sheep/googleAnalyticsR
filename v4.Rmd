@@ -169,9 +169,9 @@ Data is sampled, based on 39.75% of visits.
 Setting the new argument `anti_sample=TRUE` in a `google_analytics()` request now causes the calls to be split up into small enough chunks to avoid sampling.  This uses more API calls so the data will reach you slower, but it should hold more detail.
 
 ```r
-> library(googleAnalyticsR)
-> ga_auth()
-> unsampled_data_fetch <- google_analytics(id, 
+library(googleAnalyticsR)
+ga_auth()
+unsampled_data_fetch <- google_analytics(id, 
                                              date_range = c("2015-01-01","2015-06-21"), 
                                              metrics = c("users","sessions","bounceRate"), 
                                              dimensions = c("date","landingPagePath","source"),
@@ -210,6 +210,17 @@ The sequence involves a couple of exploratory API calls to determine the best sp
 In some cases the anti-sampling won't work.  This will mainly be due to filters for the View you are using meaning that the calculation for the sampling sessions are incorrect - Google Analytics vanilla samples on a property level (whilst GA360 samples on a View level).  
 
 Try using a raw profile if you can, otherwise you can set your own sample period by using the `anti_sample_batches` flag to indicate the sample size.  Pick a number that is a little lower than the smallest period you saw in the auto-sample batches.  If in doubt, setting `anti_sample_batches` to 1 will make a daily fetch.
+
+```r
+## example setting your own anti_sample_batch to 5 days per batch
+unsampled_data_fetch <- google_analytics(id, 
+                                             date_range = c("2015-01-01","2015-06-21"), 
+                                             metrics = c("users","sessions","bounceRate"), 
+                                             dimensions = c("date","landingPagePath","source"),
+                                             anti_sample = TRUE,
+                                             anti_sample_batch = 5)
+
+```
 
 ## Filter Syntax
 
@@ -342,15 +353,34 @@ ga_data3
 
 ```
 
-## Custom calculated metrics
+## Metric expressions (Custom calculated metrics)
 
+Metric expressions can be calculated on the fly by supply a named vector with the name of your created custom metric, and the calculation you are performing.  You need to supply the `ga:` prefix when creating custom metrics. 
+
+Note these a distinct from the calculated metrics you can create in the web UI. 
 
 ```r
+my_custom_metric <- c(visitPerVisitor = "ga:visits/ga:visitors")
+```
+
+You can then use then within the `metrics` argument, but you also need to supply a `metricFormat` (see [docs](https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/reports/batchGet#MetricType)) vector the same length which specifies the type of the metric you have calculated.  These can be:
+
+* `METRIC_TYPE_UNSPECIFIED`
+* `INTEGER` 
+* `FLOAT` 
+* `CURRENCY` 	
+* `PERCENT` 
+* `TIME` 	
+
+An example is shown below, where a calculated metric is combined with a normal metric, `bounces`.
+
+```r
+my_custom_metric <- c(visitPerVisitor = "ga:visits/ga:visitors")
 ga_data4 <- google_analytics(ga_id,
                                date_range = c("2015-07-30",
                                               "2015-10-01"),
                               dimensions=c('medium'), 
-                              metrics = c(visitsPerVisitor = "ga:visits/ga:visitors",
+                              metrics = c(my_custom_metric,
                                           'bounces'), 
                               metricFormat = c("FLOAT","INTEGER"))
 ga_data4
