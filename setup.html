@@ -429,7 +429,7 @@ ga_id &lt;- account_list[1,&#39;viewId&#39;]
 </div>
 <div id="service-accounts" class="section level2">
 <h2>Service accounts</h2>
-<p>You can also authenticate by downloading a JSON file atached to a Google Cloud service account. More details on how to do that are on the <a href="http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#authentication-with-a-json-file-via-service-accounts"><code>googleAuthR</code> website</a>.</p>
+<p>You can alternatively authenticate by downloading a JSON file atached to a Google Cloud service account. More details on how to do that are on the <a href="http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#authentication-with-a-json-file-via-service-accounts"><code>googleAuthR</code> website</a>.</p>
 <p>Make sure to add the service account as a user to your Google Analytics account so it has access to your Google Analytics data e.g. your service account email will look something like <code>xxxx@yyyyyy.iam.gserviceaccount.com</code> - add this email to your Google Analytics account in the Web Admin panel to the views you want it to read data from.</p>
 </div>
 <div id="auto-authentication" class="section level2">
@@ -466,7 +466,7 @@ meta &lt;- google_analytics_meta()</code></pre>
 </div>
 <div id="multiple-api-authentication" class="section level2">
 <h2>Multiple API authentication</h2>
-<p>If you are using more than one API for authentication (such as Search Console), then authenticate using <code>googleAuthR::gar_auth()</code> instead, to ensure you are authenticate with the correct scopes. See the <a href="http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#multiple-authentication-tokens">multiple authentication tokens</a> section on the <code>googleAuthR</code> website.</p>
+<p>If you are using more than one API for authentication (such as Search Console), then authenticate using <code>googleAuthR::gar_auth()</code> instead, to ensure you authenticate with the correct scopes. See the <a href="http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#multiple-authentication-tokens">multiple authentication</a> section on the <code>googleAuthR</code> website for details.</p>
 </div>
 <div id="your-own-google-project" class="section level2">
 <h2>Your own Google Project</h2>
@@ -512,7 +512,7 @@ options(googleAnalyticsR.webapp.client_secret = &quot;zcofxxxxxxElemXN5sf&quot;)
   </a>
 </li>
 <li>
-  <a href="http://code.markedmondson.me">
+  <a href="http://code.markedmondson.me?utm_source=googleAnalyticsR&utm_medium=referrer&utm_campaign=footer">
     <span class="fa fa-rss"></span>
      
     Blog

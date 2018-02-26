@@ -23,17 +23,19 @@ Collaboration is welcomed and encouraged, if you are interested get in touch.
 
 ## Features
 
-* First Google Analytics Reporting v4 API library for R
+* First [Google Analytics Reporting v4 API](http://code.markedmondson.me/googleAnalyticsR/v4.html) library for R
+* Automatic [anti-sampling techniques](http://code.markedmondson.me/googleAnalyticsR/v4.html#anti-sampling) to return more detailed data
 * v4 features include: metric expressions, pivots, date comparisons, batching.
+* Auto-paging, [auto-authentication](http://code.markedmondson.me/googleAnalyticsR/setup.html) options
 * API metadata of possible metrics and dimensions
-* Multi-user login in Shiny App
-* Integration with BigQuery Google Analytics Premium/360 exports.
+* Multi-user login to enable [Google Analytics powered Shiny Apps](http://code.markedmondson.me/googleAnalyticsR/shiny.html)
+* Integration with [BigQuery Google Analytics Premium/360 exports](http://code.markedmondson.me/googleAnalyticsR/big-query.html).
 * Single authentication flow can be used with other [`googleAuthR`](http://code.markedmondson.me/googleAuthR/) apps like [`searchConsoleR`](https://github.com/MarkEdmondson1234/searchConsoleR)
-* Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnnel
+* Automatic batching, multi-account fetching, multi-channel funnnels
 * Support for `googleAuthR` batch.  For big data calls this could be 10x quicker than normal GA fetching
 * Meta data in attributes of returned dataframe including date ranges, totals, min and max
 * Automatic caching of API requests
-* Management API features such as unsampled report downloads and filter manipulation
+* [Management API features such as [unsampled report downloads](http://code.markedmondson.me/googleAnalyticsR/management.html#unsampled_reports) and [view filter setup](http://code.markedmondson.me/googleAnalyticsR/management.html#view_filters)
 
 ## Thanks 
 

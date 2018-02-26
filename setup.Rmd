@@ -67,7 +67,7 @@ It is recommended to specify your cache file when authenticating in an RMarkdown
 
 ## Service accounts
 
-You can also authenticate by downloading a JSON file atached to a Google Cloud service account.  More details on how to do that are on the [`googleAuthR` website](http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#authentication-with-a-json-file-via-service-accounts).  
+You can alternatively authenticate by downloading a JSON file atached to a Google Cloud service account.  More details on how to do that are on the [`googleAuthR` website](http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#authentication-with-a-json-file-via-service-accounts).  
 
 Make sure to add the service account as a user to your Google Analytics account so it has access to your Google Analytics data e.g. your service account email will look something like `xxxx@yyyyyy.iam.gserviceaccount.com` - add this email to your Google Analytics account in the Web Admin panel to the views you want it to read data from. 
 
@@ -116,7 +116,7 @@ When using the library, you can call metrics and dimensions with or without the 
 
 ## Multiple API authentication
 
-If you are using more than one API for authentication (such as Search Console), then authenticate using `googleAuthR::gar_auth()` instead, to ensure you are authenticate with the correct scopes. See the [multiple authentication tokens](http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#multiple-authentication-tokens) section on the `googleAuthR` website.
+If you are using more than one API for authentication (such as Search Console), then authenticate using `googleAuthR::gar_auth()` instead, to ensure you authenticate with the correct scopes. See the [multiple authentication](http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#multiple-authentication-tokens) section on the `googleAuthR` website for details.
 
 ## Your own Google Project
 
