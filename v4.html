@@ -659,9 +659,9 @@ ga_data3
 
 </code></pre>
 </div>
-<div id="metric-expressions-custom-calculated-metrics" class="section level2">
-<h2>Metric expressions (Custom calculated metrics)</h2>
-<p>Metric expressions can be calculated on the fly by supply a named vector with the name of your created custom metric, and the calculation you are performing. You need to supply the <code>ga:</code> prefix when creating custom metrics.</p>
+<div id="metric-expressions" class="section level2">
+<h2>Metric expressions</h2>
+<p>Metric expressions are custom calculated metrics can be calculated on the fly when you supply a named vector with the name of your created custom metric, and the calculation expression you are performing. You need to supply the <code>ga:</code> prefix when creating custom metrics.</p>
 <p>Note these a distinct from the calculated metrics you can create in the web UI.</p>
 <pre class="r"><code>my_custom_metric &lt;- c(visitPerVisitor = &quot;ga:visits/ga:visitors&quot;)</code></pre>
 <p>You can then use then within the <code>metrics</code> argument, but you also need to supply a <code>metricFormat</code> (see <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/reports/batchGet#MetricType">docs</a>) vector the same length which specifies the type of the metric you have calculated. These can be:</p>
@@ -674,7 +674,7 @@ ga_data3
 <li><code>PERCENT</code></li>
 <li><code>TIME</code></li>
 </ul>
-<p>An example is shown below, where a calculated metric is combined with a normal metric, <code>bounces</code>.</p>
+<p>An example is shown below, where a calculated metric is combined with a normal metric, <code>bounces</code>, which is type integer. You can lookup what the default metrics types are in the <code>meta</code> lookup table.</p>
 <pre class="r"><code>my_custom_metric &lt;- c(visitPerVisitor = &quot;ga:visits/ga:visitors&quot;)
 ga_data4 &lt;- google_analytics(ga_id,
                                date_range = c(&quot;2015-07-30&quot;,

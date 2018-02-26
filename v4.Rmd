@@ -353,9 +353,9 @@ ga_data3
 
 ```
 
-## Metric expressions (Custom calculated metrics)
+## Metric expressions
 
-Metric expressions can be calculated on the fly by supply a named vector with the name of your created custom metric, and the calculation you are performing.  You need to supply the `ga:` prefix when creating custom metrics. 
+Metric expressions are custom calculated metrics can be calculated on the fly when you supply a named vector with the name of your created custom metric, and the calculation expression you are performing.  You need to supply the `ga:` prefix when creating custom metrics. 
 
 Note these a distinct from the calculated metrics you can create in the web UI. 
 
@@ -372,7 +372,7 @@ You can then use then within the `metrics` argument, but you also need to supply
 * `PERCENT` 
 * `TIME` 	
 
-An example is shown below, where a calculated metric is combined with a normal metric, `bounces`.
+An example is shown below, where a calculated metric is combined with a normal metric, `bounces`, which is type integer.  You can lookup what the default metrics types are in the `meta` lookup table.
 
 ```r
 my_custom_metric <- c(visitPerVisitor = "ga:visits/ga:visitors")
