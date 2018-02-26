@@ -1,7 +1,10 @@
 name: "googleAnalyticsR - An R Google Analytics Library"
 output_dir: "."
+home:
+  strip_header: true
 output:
   html_document:
+    theme: paper
     highlight: textmate
     toc: true
     toc_depth: 2
@@ -10,6 +13,13 @@ output:
       after_body: footer.html
 navbar:
   title: googleAnalyticsR
+  right:
+    - icon: fa-google fa-lg
+      href: https://developers.google.com/analytics/
+    - icon: fa-github fa-lg
+      href: https://github.com/MarkEdmondson1234/googleAnalyticsR
+    - icon: fa-slack fa-lg
+      href: https://docs.google.com/forms/d/e/1FAIpQLSerjirmMpB3b7LmBs_Vx_XPIE9IrhpCpPg1jUcpfBcivA3uBw/viewform
   left:
     - text: "Home"
       href: index.html
