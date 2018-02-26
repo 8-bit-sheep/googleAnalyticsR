@@ -893,6 +893,7 @@ results &lt;- google_analytics(ga_id,
                              dimensions = c(&#39;ga:segment&#39;))
 
 </code></pre>
+<p>If you are still struggling with segment syntax, you may want to try the <a href="https://github.com/jdeboer/ganalytics/issues/56"><code>ganalytics</code> package</a> by Johann de Boer which has developed a domain specific language for making segments and may be easier to parse.</p>
 </div>
 <div id="rstudio-addin-segment-helper" class="section level3">
 <h3>RStudio Addin: Segment helper</h3>
@@ -970,7 +971,7 @@ names(pivtest1)
 <p><code>googleAnalyticsR</code> has some techniques implemented to get the data as quickly as possible. This includes:</p>
 <div id="batching-large-results" class="section level3">
 <h3>Batching large results</h3>
-<p>The v4 API allows you to send 5 calls at once in one request, meaning by default 50,000 rows can be requested at once. However, since this puts additional strain on the Google servers for complicated queries this may fail with a 500 error. If so, the library will fall back to the slower fetching of 10,000 rows per API call.</p>
+<p>The v4 API allows you to send 5 batched calls at once in one API request, meaning by default 50,000 rows will be requested per API call. However, since this puts additional strain on the Google servers, for complicated queries (i.e. lots of segments or dimensions) this may fail with a 500 error. If that happens, the library will fall back to the slower fetching of 10,000 rows per API call.</p>
 <p>If you want to default to the slower fetching, set <code>slow_fetch=TRUE</code> in your request e.g.</p>
 <pre class="r"><code>google_analytics(ga_id, 
                  date_range = c(&quot;2017-01-01&quot;, &quot;2017-03-01&quot;), 
@@ -998,11 +999,11 @@ google_analytics(ga_id,
                  metrics = &quot;sessions&quot;, 
                  dimensions = &quot;date&quot;,
                  max = -1)</code></pre>
-<p>This means that repeated long fetches will be quicker as older requests will read from disk. If you are running long repeated calls over time, this is a good strategy to only fetch the latest data from the API, and rely on the cache for historic data.</p>
+<p>This means that repeated long fetches can be much quicker as older requests will read from disk. If you are running long repeated calls over time, this is a good strategy to only fetch the latest data from the API, relying on the cache for historic data.</p>
 </div>
 <div id="rows-per-call" class="section level3">
 <h3>Rows Per call</h3>
-<p>The API lets you call up to 100,000 rows per API call, which coupled with the batching above means potentially 500,000 rows can be called. In reality though, this many rows will be too heavy for the Google servers, so you may want to experiment using increased row per calls but with <code>slow_fetch=TRUE</code> to find the optimum.</p>
+<p>The API lets you call up to 100,000 rows, which coupled with the batching above means potentially 500,000 rows can be called per API call. In reality, this many rows will probably be too heavy for the Google servers, so you may want to experiment using increased row per calls but with <code>slow_fetch=TRUE</code> to find the optimum.</p>
 <p>e.g.</p>
 <pre class="r"><code>## making the same exact call again will read from disk, and be much quicker
 google_analytics(ga_id, 
@@ -1017,7 +1018,7 @@ google_analytics(ga_id,
 </div>
 <div id="fetching-from-multiple-views" class="section level2">
 <h2>Fetching from multiple views</h2>
-<p>Whilst the v3 batching isn’t available for multi-accounts, by using <a href="https://github.com/HenrikBengtsson/future.apply"><code>future.apply</code></a> you can launch multiple R sessions that will fetch the API in parallel. An example is shown below, that fetches from three View IDs at once.</p>
+<p>Whilst the <a href="http://code.markedmondson.me/googleAnalyticsR/v3.html">v3 multi account batching feature</a> isn’t available for multi-accounts in v4, by using <a href="https://github.com/HenrikBengtsson/future.apply"><code>future.apply</code></a> you can launch multiple R sessions that will fetch the API in parallel. An example is shown below, that fetches from three View IDs at once.</p>
 <p>The limiting factor willl then be the v4 <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/limits-quotas">API limits</a>, which are currently 1000 requests per 100 seconds per user, per Google API project (e.g. you will probably want to setup your own Google project if making a lot of requests)</p>
 <pre class="r"><code>library(googleAnalyticsR)
 library(future.apply)

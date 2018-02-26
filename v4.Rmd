@@ -600,6 +600,8 @@ results <- google_analytics(ga_id,
 
 ```
 
+If you are still struggling with segment syntax, you may want to try the [`ganalytics` package](https://github.com/jdeboer/ganalytics/issues/56) by Johann de Boer which has developed a domain specific language for making segments and may be easier to parse.
+
 ### RStudio Addin: Segment helper
 
 New in version 0.2.0 is an RStudio Addin to help create segments via a UI rather than the lists above.
@@ -686,7 +688,7 @@ google_analytics(ga_id,
 
 ### Batching large results
 
-The v4 API allows you to send 5 calls at once in one request, meaning by default 50,000 rows can be requested at once.  However, since this puts additional strain on the Google servers for complicated queries this may fail with a 500 error.  If so, the library will fall back to the slower fetching of 10,000 rows per API call.
+The v4 API allows you to send 5 batched calls at once in one API request, meaning by default 50,000 rows will be requested per API call.  However, since this puts additional strain on the Google servers, for complicated queries (i.e. lots of segments or dimensions) this may fail with a 500 error.  If that happens, the library will fall back to the slower fetching of 10,000 rows per API call.
 
 If you want to default to the slower fetching, set `slow_fetch=TRUE` in your request e.g.
 
@@ -723,11 +725,11 @@ google_analytics(ga_id,
                  max = -1)
 ```
 
-This means that repeated long fetches will be quicker as older requests will read from disk.  If you are running long repeated calls over time, this is a good strategy to only fetch the latest data from the API, and rely on the cache for historic data. 
+This means that repeated long fetches can be much quicker as older requests will read from disk.  If you are running long repeated calls over time, this is a good strategy to only fetch the latest data from the API, relying on the cache for historic data. 
 
 ### Rows Per call
 
-The API lets you call up to 100,000 rows per API call, which coupled with the batching above means potentially 500,000 rows can be called.  In reality though, this many rows will be too heavy for the Google servers, so you may want to experiment using increased row per calls but with `slow_fetch=TRUE` to find the optimum.  
+The API lets you call up to 100,000 rows, which coupled with the batching above means potentially 500,000 rows can be called per API call.  In reality, this many rows will probably be too heavy for the Google servers, so you may want to experiment using increased row per calls but with `slow_fetch=TRUE` to find the optimum.  
 
 e.g.
 
@@ -746,7 +748,7 @@ The defaults are 10,000 rows per call (50,000 per batch) and `slow_fetch = FALSE
 
 ## Fetching from multiple views
 
-Whilst the v3 batching isn't available for multi-accounts, by using [`future.apply`](https://github.com/HenrikBengtsson/future.apply) you can launch multiple R sessions that will fetch the API in parallel.  An example is shown below, that fetches from three View IDs at once.
+Whilst the [v3 multi account batching feature](http://code.markedmondson.me/googleAnalyticsR/v3.html) isn't available for multi-accounts in v4, by using [`future.apply`](https://github.com/HenrikBengtsson/future.apply) you can launch multiple R sessions that will fetch the API in parallel.  An example is shown below, that fetches from three View IDs at once.
 
 The limiting factor willl then be the v4 [API limits](https://developers.google.com/analytics/devguides/reporting/core/v4/limits-quotas), which are currently 1000 requests per 100 seconds per user, per Google API project (e.g. you will probably want to setup your own Google project if making a lot of requests)
 
