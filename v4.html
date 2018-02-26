@@ -542,8 +542,11 @@ unsampled_data_fetch &lt;- google_analytics(id,
 </code></pre>
 </div>
 </div>
-<div id="filter-syntax" class="section level2">
-<h2>Filter Syntax</h2>
+<div id="filters" class="section level2">
+<h2>Filters</h2>
+<blockquote>
+<p>Note these are different from account filters, which you can manipulate using the management API using the <code>ga_filter</code> family of functions.</p>
+</blockquote>
 <p>Filters need to be built up from the <code>met_filter</code> and <code>dim_filter</code> R objects.</p>
 <p>These then need to be wrapped in <code>filter_clause_ga4</code> function, which lets you specify the combination rules (<code>AND</code> or <code>OR</code>). The <code>met_filter</code> and <code>dim_filter</code> you pass in should be wrapped in a <code>list()</code> - see examples:</p>
 <pre class="r"><code>

@@ -222,7 +222,9 @@ unsampled_data_fetch <- google_analytics(id,
 
 ```
 
-## Filter Syntax
+## Filters
+
+> Note these are different from account filters, which you can manipulate using the management API using the `ga_filter` family of functions.
 
 Filters need to be built up from the `met_filter` and `dim_filter` R objects.
 
