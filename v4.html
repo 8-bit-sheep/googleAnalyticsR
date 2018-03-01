@@ -386,7 +386,7 @@ div.tocify {
 </div>
 
 
-<p>The v4 API will be where new features will appear in the future.</p>
+<p>The v4 API are where new features will appear in the future.</p>
 <p>It currently has these extras implemented over the v3 API:</p>
 <ul>
 <li>Cohorts</li>
@@ -400,7 +400,7 @@ div.tocify {
 <p>Check out more examples on using the API in actual use cases on the <a href="http://www.dartistics.com/googleanalytics/index.html">www.dartistics.com website</a>.</p>
 <div id="getting-started" class="section level2">
 <h2>Getting started</h2>
-<p>To get started refer to the tutorials linked on the homepage, consult <code>?google_analytics</code> when within R to see the documentation, and refer to these example queries:</p>
+<p>To get started refer to the tutorials linked on the homepage, consult <code>?google_analytics</code> when within R to see the documentation, and see these example queries:</p>
 <pre class="r"><code>## setup
 library(googleAnalyticsR)
 
@@ -421,14 +421,14 @@ google_analytics(ga_id,
                  date_range = c(&quot;2017-01-01&quot;, &quot;2017-03-01&quot;), 
                  metrics = &quot;sessions&quot;, 
                  dimensions = &quot;date&quot;)</code></pre>
-<p><a href="http://jeffgswanson.com/">Jeff Swanson</a> has made a video guide that goes into more detail about the above examples (<a href="https://www.youtube.com/watch?v=S9mSh5kcRgc&amp;feature=share">Digital Marketing in R: How to Connect to Google Analytics API</a>) and embedded below, many thanks to Jeff.</p>
+<p><a href="http://jeffgswanson.com/">Jeff Swanson</a> has made a video guide that goes into more detail about the above examples (<a href="https://www.youtube.com/watch?v=S9mSh5kcRgc&amp;feature=share">Digital Marketing in R: How to Connect to Google Analytics API</a>) and is embedded below, many thanks to Jeff.</p>
 <iframe width="560" height="315" src="http://www.youtube.com/embed/S9mSh5kcRgc?rel=0" frameborder="0" allowfullscreen>
 </iframe>
 </div>
 <div id="number-of-results" class="section level2">
 <h2>Number of results</h2>
 <p>By default the function will return 1000 results. If you want to fetch all rows, set <code>max = -1</code></p>
-<p>You don’t have to worry about dealing with paging through the API yourself, the library deals with that for you.</p>
+<p>You don’t have to worry about paging through the API results, the library deals with that for you.</p>
 <pre class="r"><code># 1000 rows only
 thousand &lt;- google_analytics(ga_id, 
                              date_range = c(&quot;2017-01-01&quot;, &quot;2017-03-01&quot;), 
@@ -465,7 +465,7 @@ top_25 &lt;- head(gadata[order(gadata$pageviews, decreasing = TRUE), ] , 25)</co
 <h2>Date Ranges</h2>
 <p>You can send in dates in <code>YYYY-MM-DD</code> format:</p>
 <pre class="r"><code>google_analytics(868768, date_range = c(&quot;2016-12-31&quot;, &quot;2017-02-01&quot;), metrics = &quot;sessions&quot;)</code></pre>
-<p>Character dates are converted into <code>Date</code> objects, so you can supply those directly, and use R’s Date handling to specify rolling dates:</p>
+<p>Character strings are converted into <code>Date</code> class objects, so you can also use R’s native <code>Date</code> object handling to specify rolling dates:</p>
 <pre class="r"><code>yesterday &lt;- Sys.Date() - 1
 3daysAgo &lt;- Sys.Date() - 3
 
@@ -474,7 +474,7 @@ google_analytics(868768, date_range = c(3daysAgo, yesterday), metrics = &quot;se
 <pre class="r"><code>google_analytics(868768, date_range = c(&quot;5daysAgo&quot;, &quot;yesterday&quot;), metrics = &quot;sessions&quot;)</code></pre>
 <div id="compare-date-ranges" class="section level3">
 <h3>Compare date ranges</h3>
-<p>New to v4 you can compare date ranges and return the two data sets in one call. Simply send in a 4-length vector of dates in the form <code>(range1_start, range1_end, range2_start, range2_end)</code></p>
+<p>In v4 you can compare date ranges and return the two data sets in one call. Send in a 4-length vector of dates in the form <code>(range1_start, range1_end, range2_start, range2_end)</code></p>
 <pre class="r"><code>google_analytics(868768, 
                    date_range = c(&quot;16daysAgo&quot;, &quot;9daysAgo&quot;, &quot;8daysAgo&quot;, &quot;yesterday&quot;), 
                    metrics = &quot;sessions&quot;)</code></pre>
@@ -493,56 +493,47 @@ gadata &lt;- google_analytics(gaid,
 </div>
 <div id="anti-sampling" class="section level2">
 <h2>Anti-sampling</h2>
-<p>A new feature from version <code>0.3.0</code> is anti-sampling via batching.</p>
+<p>Anti-sampling is a common use case for using the API.</p>
 <p>Sampling is due to your API request being over the session limits <a href="https://support.google.com/analytics/answer/2637192">outlined in this Google article</a>. This limit is higher for Google Analytics 360.</p>
 <p>If you split up your API request so that the number of sessions falls under these limits, sampling will not occur.</p>
 <div id="sampled-data-example" class="section level3">
 <h3>Sampled data example</h3>
 <p>If you have sampling in your data request, <code>googleAnalyticsR</code> reports it back to you in the console when making the request.</p>
-<pre class="r"><code>&gt; library(googleAnalyticsR)
-&gt; ga_auth()
-&gt; sampled_data_fetch &lt;- google_analytics(id, 
-                                           date_range = c(&quot;2015-01-01&quot;,&quot;2015-06-21&quot;), 
-                                           metrics = c(&quot;users&quot;,&quot;sessions&quot;,&quot;bounceRate&quot;), 
-                                           dimensions = c(&quot;date&quot;,&quot;landingPagePath&quot;,&quot;source&quot;))
-Calling APIv4....
-Data is sampled, based on 39.75% of visits.</code></pre>
+<pre class="r"><code>library(googleAnalyticsR)
+ga_auth()
+sampled_data_fetch &lt;- google_analytics(id, 
+                                         date_range = c(&quot;2015-01-01&quot;,&quot;2015-06-21&quot;), 
+                                         metrics = c(&quot;users&quot;,&quot;sessions&quot;,&quot;bounceRate&quot;), 
+                                         dimensions = c(&quot;date&quot;,&quot;landingPagePath&quot;,&quot;source&quot;))
+#Calling APIv4....
+#Data is sampled, based on 39.75% of visits.</code></pre>
 </div>
 <div id="unsampled-data-example" class="section level3">
 <h3>Unsampled data example</h3>
-<p>Setting the new argument <code>anti_sample=TRUE</code> in a <code>google_analytics()</code> request now causes the calls to be split up into small enough chunks to avoid sampling. This uses more API calls so the data will reach you slower, but it should hold more detail.</p>
+<p>Setting the argument <code>anti_sample=TRUE</code> in a <code>google_analytics()</code> request causes the calls to be split up into small enough chunks to avoid sampling. This uses more API calls so the data will reach you slower, but it should hold more detail.</p>
 <pre class="r"><code>library(googleAnalyticsR)
 ga_auth()
 unsampled_data_fetch &lt;- google_analytics(id, 
-                                             date_range = c(&quot;2015-01-01&quot;,&quot;2015-06-21&quot;), 
-                                             metrics = c(&quot;users&quot;,&quot;sessions&quot;,&quot;bounceRate&quot;), 
-                                             dimensions = c(&quot;date&quot;,&quot;landingPagePath&quot;,&quot;source&quot;),
-                                             anti_sample = TRUE)
+                                         date_range = c(&quot;2015-01-01&quot;,&quot;2015-06-21&quot;), 
+                                         metrics = c(&quot;users&quot;,&quot;sessions&quot;,&quot;bounceRate&quot;), 
+                                         dimensions = c(&quot;date&quot;,&quot;landingPagePath&quot;,&quot;source&quot;),
+                                         anti_sample = TRUE)
 
-anti_sample set to TRUE. Mitigating sampling via multiple API calls.
-Finding how much sampling in data request...
-Data is sampled, based on 39.75% of visits.
-Downloaded [10] rows from a total of [59235].
-Finding number of sessions for anti-sample calculations...
-Downloaded [172] rows from a total of [172].
-Calculated [3] batches are needed to download [59235] rows unsampled.
-Anti-sample call covering 128 days: 2015-01-01, 2015-05-08
-Looping over [2] batches.
-Fetching data...
-Fetching data...
-Downloaded [59235] rows from a total of [59235].
-Anti-sample call covering 23 days: 2015-05-09, 2015-05-31
-Looping over [2] batches.
-Fetching data...
-Fetching data...
-Downloaded [20239] rows from a total of [20239].
-Anti-sample call covering 21 days: 2015-06-01, 2015-06-21
-Looping over [2] batches.
-Fetching data...
-Fetching data...
-Downloaded [21340] rows from a total of [21340].
-Finished unsampled data request, total rows [100814]
-Successfully avoided sampling</code></pre>
+#anti_sample set to TRUE. Mitigating sampling via multiple API calls.
+#Finding how much sampling in data request...
+#Data is sampled, based on 39.75% of visits.
+#Downloaded [10] rows from a total of [59235].
+#Finding number of sessions for anti-sample calculations...
+#Downloaded [172] rows from a total of [172].
+#Calculated [3] batches are needed to download [59235] rows unsampled.
+#Anti-sample call covering 128 days: 2015-01-01, 2015-05-08
+#Downloaded [59235] rows from a total of [59235].
+#Anti-sample call covering 23 days: 2015-05-09, 2015-05-31
+#Downloaded [20239] rows from a total of [20239].
+#Anti-sample call covering 21 days: 2015-06-01, 2015-06-21
+#Downloaded [21340] rows from a total of [21340].
+#Finished unsampled data request, total rows [100814]
+#Successfully avoided sampling</code></pre>
 <p>The sequence involves a couple of exploratory API calls to determine the best split. This method will adjust the time periods to have the batch sizes large enough to not take too long, but small enough to have unsampled data.</p>
 </div>
 <div id="auto-anti-sampling-failure" class="section level3">
@@ -562,13 +553,13 @@ unsampled_data_fetch &lt;- google_analytics(id,
 <div id="filters" class="section level2">
 <h2>Filters</h2>
 <blockquote>
-<p>Note these are different from account filters, which you can manipulate using the management API using the <code>ga_filter</code> family of functions.</p>
+<p>Note these are different from account filters, which you can manipulate using the management API using the <code>ga_filter</code> family of functions. See the <a href="http://code.markedmondson.me/googleAnalyticsR/management.html">Management API</a></p>
 </blockquote>
 <p>Filters need to be built up from the <code>met_filter</code> and <code>dim_filter</code> R objects.</p>
 <p>These then need to be wrapped in <code>filter_clause_ga4</code> function, which lets you specify the combination rules (<code>AND</code> or <code>OR</code>). The <code>met_filter</code> and <code>dim_filter</code> you pass in should be wrapped in a <code>list()</code> - see examples:</p>
-<pre class="r"><code>
-## one filter
-campaign_filter &lt;- dim_filter(dimension=&quot;campaign&quot;,operator=&quot;REGEXP&quot;,expressions=&quot;welcome&quot;)
+<div id="one-filter" class="section level3">
+<h3>One filter</h3>
+<pre class="r"><code>campaign_filter &lt;- dim_filter(dimension=&quot;campaign&quot;,operator=&quot;REGEXP&quot;,expressions=&quot;welcome&quot;)
 
 my_filter_clause &lt;- filter_clause_ga4(list(campaign_filter))
 
@@ -577,9 +568,10 @@ data_fetch &lt;- google_analytics(ga_id,date_range = c(&quot;2016-01-01&quot;,&q
                                  dimensions = c(&quot;campaign&quot;,&quot;transactionId&quot;,&quot;dateHour&quot;),
                                  dim_filters = my_filter_clause,
                                  anti_sample = TRUE)</code></pre>
-<p>Example with multiple filters:</p>
-<pre class="r"><code>
-## create filters on metrics
+</div>
+<div id="multiple-filters" class="section level3">
+<h3>Multiple filters</h3>
+<pre class="r"><code>## create filters on metrics
 mf &lt;- met_filter(&quot;bounces&quot;, &quot;GREATER_THAN&quot;, 0)
 mf2 &lt;- met_filter(&quot;sessions&quot;, &quot;GREATER&quot;, 2)
 
@@ -592,7 +584,6 @@ fc2 &lt;- filter_clause_ga4(list(df, df2), operator = &quot;AND&quot;)
 fc &lt;- filter_clause_ga4(list(mf, mf2), operator = &quot;AND&quot;)
 
 ## make v4 request
-## demo showing how the new filters work
 ga_data1 &lt;- google_analytics(ga_id, 
                               date_range = c(&quot;2015-07-30&quot;,&quot;2015-10-01&quot;),
                               dimensions=c(&#39;source&#39;,&#39;medium&#39;), 
@@ -616,12 +607,16 @@ ga_data1
 # 10                   yahoo  organic       66      43
 # 11              zapmeta.se referral        6       4</code></pre>
 </div>
+</div>
 <div id="multiple-reports" class="section level2">
 <h2>Multiple reports</h2>
-<p>Example with two date ranges and two reports. When querying two date ranges, you can sort the metrics by how much they have changed by using <code>orderType = DELTA</code> e.g. <code>order_type(&quot;sessions&quot;, &quot;DESCENDING&quot;, &quot;DELTA&quot;)</code></p>
+<p>Using v4’s batching ability, you can send in multiple types of API requests at the same time (up to 5). The reports need to be for the same ViewID and date range.</p>
+<p>To use, you need to create your API requests first using <code>make_ga_4_req()</code>, then make the actual call using <code>fetch_google_analytics()</code>. For the common use case of only requesting one type of request, this is what <code>google_analytics()</code> is doing behind the scenes.</p>
+<div id="demo-of-querying-two-api-requests" class="section level3">
+<h3>Demo of querying two API requests</h3>
+<p>The below example requests with two date ranges and two reports.</p>
 <p>When fetching multiple reports, you need to wrap the <code>make_ga_4_req()</code> created objects in a <code>list()</code></p>
-<pre class="r"><code>## demo of querying two date ranges at a time   
-## we make the request via make_ga_4_req() to use in next demo
+<pre class="r"><code>## First request we make via make_ga_4_req()
 multidate_test &lt;- make_ga_4_req(ga_id, 
                                 date_range = c(&quot;2015-07-30&quot;,
                                                &quot;2015-10-01&quot;,
@@ -631,21 +626,7 @@ multidate_test &lt;- make_ga_4_req(ga_id,
                                 metrics = c(&#39;sessions&#39;,&#39;bounces&#39;),
                                 order = order_type(&quot;sessions&quot;, &quot;DESCENDING&quot;, &quot;DELTA&quot;))
 
-## wrap the request in a list - makes more sense when more than one.                                
-ga_data2 &lt;- fetch_google_analytics(list(multidate_test))
-ga_data2
-#                                     source      medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
-# 1                                 (direct)      (none)        5923       3328           0          0
-# 2                        example_mem.co.uk    referral        5846       1100           0          0
-# 3                                   google         cpc        5476       2669           0          0
-# 4                           examp-link.net    referral        2241        653           0          0
-# 5                    moneysavingexampl.com    referral        1869        549           0          0
-# 6                            emailCampaign       email        1268        772           0          0
-
-
-## Demo querying two reports at the same time
-## Use make_ga_4_req() to make multiple requests and then send 
-##   them as a list to fetch_google_analytics()
+## Second request - same date ranges and ID required, but different dimensions/metrics/order.
 multi_test2 &lt;- make_ga_4_req(ga_id,
                                 date_range = c(&quot;2015-07-30&quot;,
                                                &quot;2015-10-01&quot;,
@@ -654,7 +635,7 @@ multi_test2 &lt;- make_ga_4_req(ga_id,
                              dimensions=c(&#39;hour&#39;,&#39;medium&#39;), 
                              metrics = c(&#39;visitors&#39;,&#39;bounces&#39;))
 
-## all requests must have same viewID and dateRange
+## Request the two calls by wrapping them in a list() and passing to fetch_google_analytics()
 ga_data3 &lt;- fetch_google_analytics(list(multidate_test, multi_test2)) 
 ga_data3
 # [[1]]
@@ -679,12 +660,15 @@ ga_data3
 
 </code></pre>
 </div>
+</div>
 <div id="metric-expressions" class="section level2">
 <h2>Metric expressions</h2>
-<p>Metric expressions are custom calculated metrics can be calculated on the fly when you supply a named vector with the name of your created custom metric, and the calculation expression you are performing. You need to supply the <code>ga:</code> prefix when creating custom metrics.</p>
-<p>Note these a distinct from the calculated metrics you can create in the web UI.</p>
+<p>Metric expressions are custom calculated metrics that can be calculated on the fly when you supply a named vector with the name of your created custom metric, and the calculation expression you are performing. These are different from the calculated metrics you can create in the web UI.</p>
+<blockquote>
+<p>You need to use the <code>ga:</code> prefix when creating custom metrics, unlike normal API requests</p>
+</blockquote>
 <pre class="r"><code>my_custom_metric &lt;- c(visitPerVisitor = &quot;ga:visits/ga:visitors&quot;)</code></pre>
-<p>You can then use then within the <code>metrics</code> argument, but you also need to supply a <code>metricFormat</code> (see <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/reports/batchGet#MetricType">docs</a>) vector the same length which specifies the type of the metric you have calculated. These can be:</p>
+<p>Use metric expressions as you would other metrics within the <code>metrics</code> argument, but you also need to supply a <code>metricFormat</code> (see <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/reports/batchGet#MetricType">docs</a>) vector the same length which specifies the type of the metric you have calculated. These can be:</p>
 <ul>
 <li><code>METRIC_TYPE_UNSPECIFIED</code></li>
 <li><code>INTEGER</code></li>
@@ -712,12 +696,12 @@ ga_data4
 <div id="segments-v4" class="section level2">
 <h2>Segments v4</h2>
 <p>Segments are more complex to configure that v3, but more powerful and in line to how you configure them in the UI.</p>
-<p>A lot of feedback for the library is on how to get the sample syntax right, so the examples below try to cover common scenarios.</p>
+<p>A lot of feedback is about how to get the sample syntax right, so the examples below try to cover common scenarios.</p>
 <div id="v3-segments" class="section level3">
 <h3>v3 segments</h3>
 <p>You can choose to create segments via the v4 syntax or the v3 syntax for backward compatibility.</p>
 <p>If you want to use v3 segments, then they can be used in the <code>segment_id</code> argument of the <code>segment_ga4()</code> function.</p>
-<p>You can view the segment Ids by using <code>ga_segment_list()</code> and the data.frame in <code>$items</code></p>
+<p>You can view the segment Ids by using <code>ga_segment_list()$items</code></p>
 <pre class="r"><code>## get list of segments
 my_segments &lt;- ga_segment_list()
 
@@ -769,7 +753,7 @@ segmented_ga1 &lt;- google_analytics(ga_id,
 </div>
 <div id="v4-segment-syntax" class="section level3">
 <h3>v4 segment syntax</h3>
-<p>However, its recommended you embrace the new v4 syntax, as its more flexible and powerful in the long run.</p>
+<p>Its recommended you embrace the new v4 syntax, as its more flexible and powerful in the long run.</p>
 <p>The hierarachy of the segment elements you will need are:</p>
 <ul>
 <li><em><code>segment_ga4()</code></em> - this is the top of the segment tree. You can pass one or a list of these into a <code>google_analytics()</code> segment argument. Here you name the segment as it will appear in the <code>segment</code> dimension, and pass in segment definitions either via an existing segmentID or v3 definition; via a user scoped level; or via a session scoped level. The user and session scopes can have one or a list of <code>segment_define()</code> functions.</li>
@@ -778,8 +762,10 @@ segmented_ga1 &lt;- google_analytics(ga_id,
 </li>
 <li><em><code>segment_element</code></em> - this is the lowest atom of segments, and lets you define on which metric or dimension you are segmenting on. You pass one or a list of these to <em><code>segment_vector_simple()</code></em> or <em><code>segment_vector_sequence()</code></em></li>
 </ul>
-<pre class="r"><code>## make two segment elements
-se &lt;- segment_element(&quot;sessions&quot;, 
+</div>
+<div id="demo-simple-segment" class="section level3">
+<h3>Demo: simple segment</h3>
+<pre class="r"><code>se &lt;- segment_element(&quot;sessions&quot;, 
                       operator = &quot;GREATER_THAN&quot;, 
                       type = &quot;METRIC&quot;, 
                       comparisonValue = 1, 
@@ -816,38 +802,37 @@ segment_example
 # 1                        24.co.uk referral  simple        1       1
 # 2                     aidsmap.com referral  simple        1       0
 # 3                             aol  organic  simple       30      19
-# 4                             ask  organic  simple       32      17
-
-
-## Sequence segment
+# 4                             ask  organic  simple       32      17</code></pre>
+</div>
+<div id="demo-sequence-segment" class="section level3">
+<h3>Demo: Sequence segment</h3>
+<pre><code>se2 &lt;- segment_element(&quot;medium&quot;, 
+                       operator = &quot;EXACT&quot;, 
+                       type = &quot;DIMENSION&quot;, 
+                       expressions = &quot;organic&quot;)
   
-  se2 &lt;- segment_element(&quot;medium&quot;, 
-                         operator = &quot;EXACT&quot;, 
-                         type = &quot;DIMENSION&quot;, 
-                         expressions = &quot;organic&quot;)
+se3 &lt;- segment_element(&quot;medium&quot;,
+                       operator = &quot;EXACT&quot;,
+                       type = &quot;DIMENSION&quot;,
+                       not = TRUE,
+                       expressions = &quot;organic&quot;)
   
-  se3 &lt;- segment_element(&quot;medium&quot;,
-                         operator = &quot;EXACT&quot;,
-                         type = &quot;DIMENSION&quot;,
-                         not = TRUE,
-                         expressions = &quot;organic&quot;)
-  
-  ## step sequence
-  ## users who arrived via organic then via referral
-  sv_sequence &lt;- segment_vector_sequence(list(list(se2), 
+## step sequence
+## users who arrived via organic then via referral
+sv_sequence &lt;- segment_vector_sequence(list(list(se2), 
                                               list(se3)))
   
-  seq_defined2 &lt;- segment_define(list(sv_sequence))
+seq_defined2 &lt;- segment_define(list(sv_sequence))
   
-  segment4_seq &lt;- segment_ga4(&quot;sequence&quot;, user_segment = seq_defined2)
+segment4_seq &lt;- segment_ga4(&quot;sequence&quot;, user_segment = seq_defined2)
   
-  ## Add the segments to the segments param
-  segment_seq_example &lt;- google_analytics(ga_id, 
-                                            c(&quot;2016-01-01&quot;,&quot;2016-03-01&quot;), 
-                                            dimensions=c(&#39;source&#39;,&#39;segment&#39;), 
-                                            segments = segment4_seq,
-                                            metrics = c(&#39;sessions&#39;,&#39;bounces&#39;)
-  )
+## Add the segments to the segments param
+segment_seq_example &lt;- google_analytics(ga_id, 
+                                        c(&quot;2016-01-01&quot;,&quot;2016-03-01&quot;), 
+                                        dimensions=c(&#39;source&#39;,&#39;segment&#39;), 
+                                        segments = segment4_seq,
+                                        metrics = c(&#39;sessions&#39;,&#39;bounces&#39;)
+                                        )
   
 segment_seq_example
 #                                source  segment sessions bounces
@@ -855,7 +840,7 @@ segment_seq_example
 # 2                                 ask sequence        5       1
 # 3      bestbackpackersinsurance.co.uk sequence        9       6
 # 4                                bing sequence       22       2</code></pre>
-<p>Some more examples, using some of the match types, contributed by Pawel Kapuscinski:</p>
+<p>Some more examples, using different match types, contributed by Pawel Kapuscinski:</p>
 <pre class="r"><code>con1 &lt;-segment_vector_simple(list(list(segment_element(&quot;ga:dimension1&quot;, 
                       operator = &quot;REGEXP&quot;, 
                       type = &quot;DIMENSION&quot;, 
@@ -897,7 +882,7 @@ results &lt;- google_analytics(ga_id,
 </div>
 <div id="rstudio-addin-segment-helper" class="section level3">
 <h3>RStudio Addin: Segment helper</h3>
-<p>New in version 0.2.0 is an RStudio Addin to help create segments via a UI rather than the lists above.</p>
+<p>There is an RStudio Addin to help create segments via a UI rather than the lists above.</p>
 <p>You can call it via <code>googleAnalyticsR:::gadget_GASegment()</code> or within the RStudio interface like displayed below:</p>
 <div class="figure">
 <img src="googleAnalyticsRsegmentCreator.gif" alt="Google Analytics v4 segment RStudio Addin" />
@@ -907,7 +892,7 @@ results &lt;- google_analytics(ga_id,
 </div>
 <div id="cohort-reports" class="section level2">
 <h2>Cohort reports</h2>
-<p>Details on <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohorts">cohort reports and LTV can be found here</a>.</p>
+<p>Details on <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohorts">cohort reports and LTV can be found here</a> and via the examples below.</p>
 <pre class="r"><code>## first make a cohort group
 cohort4 &lt;- make_cohort_group(list(&quot;Jan2016&quot; = c(&quot;2016-01-01&quot;, &quot;2016-01-31&quot;), 
                                 &quot;Feb2016&quot; = c(&quot;2016-02-01&quot;,&quot;2016-02-28&quot;)))
@@ -927,7 +912,7 @@ cohort_example
 </div>
 <div id="pivot-requests" class="section level2">
 <h2>Pivot Requests</h2>
-<p>These change the shape of the returned data</p>
+<p>These change the shape of the returned data, which you could probably do in R anyway but it gives you another option when you make the request.</p>
 <pre class="r"><code>
 ## filter pivot results to 
 pivot_dim_filter1 &lt;- dim_filter(&quot;medium&quot;,
@@ -982,7 +967,7 @@ names(pivtest1)
 </div>
 <div id="caching" class="section level3">
 <h3>Caching</h3>
-<p>Local caching is enabled that will mean if you make the exact same API request with all arguments the same, the result will come from memory rather than the API. By default this is within the RAM of the same R session, but if you want you can set this to save the cache to disk using the <code>ga_cache_call()</code> function. Use this to point to a folder to store the cache files.</p>
+<p>Local caching is enabled that will mean if you make the exact same API request with all arguments the same, the result will come from memory rather than the API. By default this is within the RAM of the same R session so will reset when you restart R, but if you want you can set this to save the cache to disk using the <code>ga_cache_call()</code> function. Use this to point to a folder to store the cache files, and the cache will then be available inbetween R sessions.</p>
 <p>e.g.</p>
 <pre class="r"><code>ga_cache_call(&quot;my_cache_folder&quot;)
 
@@ -999,7 +984,8 @@ google_analytics(ga_id,
                  metrics = &quot;sessions&quot;, 
                  dimensions = &quot;date&quot;,
                  max = -1)</code></pre>
-<p>This means that repeated long fetches can be much quicker as older requests will read from disk. If you are running long repeated calls over time, this is a good strategy to only fetch the latest data from the API, relying on the cache for historic data.</p>
+<p>This means that repeated long fetches can be much quicker as older requests will read from disk.</p>
+<p>If you are running long repeated calls over time, this is a good strategy to only fetch the latest data from the API, relying on the cache for historic data - for instance, set a loop that requests each month’s worth of data - for the month’s you already have the requests will come from disk, but for the most recent month it will fetch from the API.</p>
 </div>
 <div id="rows-per-call" class="section level3">
 <h3>Rows Per call</h3>
