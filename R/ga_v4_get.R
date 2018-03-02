@@ -198,10 +198,10 @@ make_ga_4_req <- function(viewId,
 
 
 #' Get Google Analytics v4 data
-#'
-#' Fetch Google Analytics data using the v4 API.  For the v3 API use \link{google_analytics_3}.
-#'  
-#' Will perform automatic batching if over the 100000 row per API call limit.
+#' 
+#' @description
+#' Fetch Google Analytics data using the v4 API.  For the v3 API use \link{google_analytics_3}.  See website help for lots of examples: \href{http://code.markedmondson.me/googleAnalyticsR/v4.html}{Google Analytics Reporting API v4 in R}
+#' 
 #' 
 #' @section Row requests:
 #' 

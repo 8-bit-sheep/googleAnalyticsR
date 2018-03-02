@@ -66,9 +66,7 @@ Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to th
 A Google Analytics data.frame, with attributes showing row totals, sampling etc.
 }
 \description{
-Fetch Google Analytics data using the v4 API.  For the v3 API use \link{google_analytics_3}.
- 
-Will perform automatic batching if over the 100000 row per API call limit.
+Fetch Google Analytics data using the v4 API.  For the v3 API use \link{google_analytics_3}.  See website help for lots of examples: \href{http://code.markedmondson.me/googleAnalyticsR/v4.html}{Google Analytics Reporting API v4 in R}
 }
 \section{Row requests}{
 
