@@ -120,16 +120,16 @@ make_ga_4_req <- function(viewId,
 
   samplingLevel <- match.arg(samplingLevel)
   
-  if(!is.null(dim_filters)){
-    assert_that(is.dim_filter(dim_filters))
+  if(all(!is.null(dim_filters), !is.dim_filter(dim_filters))){
+    stop("Invalid dim_filter object", call. = FALSE)
   }
   
-  if(!is.null(met_filters)){
-    assert_that(is.met_filter(met_filters))
+  if(all(!is.null(met_filters), !is.met_filter(met_filters))){
+    stop("Invalid met_filter object", call. = FALSE)
   }
   
-  if(!is.null(filtersExpression)){
-    assert_that(is.string(filtersExpression))
+  if(all(!is.null(filtersExpression), !is.string(filtersExpression))){
+    stop("filtersExpression is not a string", call. = FALSE)
   }
   
   if(all(is.null(date_range), is.null(cohorts))){
@@ -140,9 +140,8 @@ make_ga_4_req <- function(viewId,
     assert_that(cohort_metric_check(metrics),
                             cohort_dimension_check(dimensions))
     if(!is.null(date_range)){
-      warning("Don't supply date_range when using cohorts, setting date_range to NULL", 
+      stop("Don't supply date_range when using cohorts", 
               call. = FALSE)
-      date_range <- NULL
     }
   }
   
