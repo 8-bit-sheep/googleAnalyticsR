@@ -120,6 +120,18 @@ make_ga_4_req <- function(viewId,
 
   samplingLevel <- match.arg(samplingLevel)
   
+  if(!is.null(dim_filters)){
+    assert_that(is.dim_filter(dim_filters))
+  }
+  
+  if(!is.null(met_filters)){
+    assert_that(is.met_filter(met_filters))
+  }
+  
+  if(!is.null(filtersExpression)){
+    assert_that(is.string(filtersExpression))
+  }
+  
   if(all(is.null(date_range), is.null(cohorts))){
     stop("Must supply one of date_range or cohorts", call. = FALSE)
   }

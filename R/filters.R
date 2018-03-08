@@ -74,6 +74,13 @@ filter_clause_ga4 <- function(filters, operator = c("OR", "AND")){
 
 }
 
+is.dim_filter <- function(x){
+  inherits(x, "dim_fil_ga4")
+}
+
+is.met_filter <- function(x){
+  inherits(x, "met_fil_ga4")
+}
 
 #' Make a dimension filter object
 #'
