@@ -435,6 +435,9 @@ ga_id &lt;- account_list[1,&#39;viewId&#39;]
 <div id="auto-authentication" class="section level2">
 <h2>Auto-authentication</h2>
 <p>If you often use the library to access the same accounts from one machine, then it is helpful to setup auto-authentication. This is also the most reliable way for scheduled scripts. It means you do not need to use <code>ga_auth()</code>.</p>
+<p>A short video on how to do this is available here: <a href="https://www.youtube.com/watch?v=zgwDQu-mCOc">googleAnalyticsR - how to do auto-authentication</a></p>
+<iframe width="560" height="315" src="http://www.youtube.com/embed/zgwDQu-mCOc?rel=0" frameborder="0" allowfullscreen>
+</iframe>
 <p>You choose to auto-authenticate by moving your authentication cache file to a global location on your computer, that all future R sessions will use, then telling <code>googleAnalyticsR</code> where that file is when it is loaded into your R session.</p>
 <p>This is done by creating an environment variable called <code>GA_AUTH_FILE</code> that points at your valid cache file.</p>
 <p>You can set environment variables using a <code>.Renviron</code> file or via the function <code>Sys.setenv()</code> - see <code>?Startup</code> for details. The first method is described below:</p>
