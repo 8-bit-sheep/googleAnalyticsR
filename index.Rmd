@@ -71,3 +71,4 @@ If you have used the package and published online then get in touch and I'll lis
 * Fredrik [analyses time between bookings and events](https://medium.com/@fredrikcederlof/analyzing-time-between-bookings-and-events-with-r-google-analytics-293f6c334d73) with lots of detail on interpreting the data.
 * Becky West at Lunametrics shows how to use some of the management API functions to [audit your GA configurations](https://www.lunametrics.com/blog/2018/03/08/google-analytics-check-r-management-api/)
 * Pierre has a [guide in French](https://www.anakeyn.com/2018/03/01/googleanalyticsr-import-google-analytics-r/) on how to setup googleAnalyticsR and start pulling out data.
+* Nico has a guide on how to insert [Google Analytics data into a map](https://www.ridgeway.com/blog/performance-optimisation/how-to-insert-ga-data-into-a-map-using-r-and-build)
