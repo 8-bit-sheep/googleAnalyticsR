@@ -968,6 +968,9 @@ names(pivtest1)
 <div id="caching" class="section level3">
 <h3>Caching</h3>
 <p>Local caching is enabled that will mean if you make the exact same API request with all arguments the same, the result will come from memory rather than the API. By default this is within the RAM of the same R session so will reset when you restart R, but if you want you can set this to save the cache to disk using the <code>ga_cache_call()</code> function. Use this to point to a folder to store the cache files, and the cache will then be available inbetween R sessions.</p>
+<p>A demo on using caching is in the video here: <a href="https://www.youtube.com/watch?v=2-f0aTwWiNw&amp;feature=share">googleAnalyticsR - caching</a> and is embedded below:.</p>
+<iframe width="560" height="315" src="http://www.youtube.com/embed/2-f0aTwWiNw?rel=0" frameborder="0" allowfullscreen>
+</iframe>
 <p>e.g.</p>
 <pre class="r"><code>ga_cache_call(&quot;my_cache_folder&quot;)
 

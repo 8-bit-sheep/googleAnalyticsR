@@ -684,6 +684,10 @@ google_analytics(ga_id,
 
 Local caching is enabled that will mean if you make the exact same API request with all arguments the same, the result will come from memory rather than the API.  By default this is within the RAM of the same R session so will reset when you restart R, but if you want you can set this to save the cache to disk using the `ga_cache_call()` function.  Use this to point to a folder to store the cache files, and the cache will then be available inbetween R sessions.
 
+A demo on using caching is in the video here: [googleAnalyticsR - caching](https://www.youtube.com/watch?v=2-f0aTwWiNw&feature=share) and is embedded below:.
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/2-f0aTwWiNw?rel=0" frameborder="0" allowfullscreen></iframe>
+
 e.g.
 
 ```r
