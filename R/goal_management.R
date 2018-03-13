@@ -12,29 +12,50 @@
 #' @examples
 #'
 #' \dontrun{
-#' ## Create a Goal object for adding an IP exclusion:
+#' ## Create a Goal object based on destination:
+#'Goal <- list(
+#'  resource = list(
+#'    id = '2',
+#'    active = TRUE,
+#'    name = 'Checkout',
+#'    type = 'URL_DESTINATION',
+#'    urlDestinationDetails = list(
+#'      url = '\\/checkout\\/thank_you',
+#'      matchType = 'Checkout Complete',
+#'      caseSensitive = FALSE,
+#'      firstStepRequired = FALSE,
+#'      steps = list(
+#'        number = c(1,2,3,4,5,6),
+#'        name = c('Product','Cart','Contact','Shipping','Payment','Processing'),
+#'        url = c('.*\\/products\\/.*','\\/cart','\\/checkout\\/contact_information',
+#'                '\\/checkout\\/shipping','\\/checkout\\/payment','\\/checkout\\/processing')
+#'        )
+#'      )
+#'    )
+#'  )
+#'
+#' ## Create a Goal object based on an event:
 #' Goal <- list(
-#'                resource = list(
-#'                    id = '2',
-#'                    active = TRUE,
-#'                    name = 'Checkout',
-#'                    type = 'URL_DESTINATION',
-#'                    urlDestinationDetails = list(
-#'                         url = '\\/checkout\\/thank_you',
-#'                         matchType = 'Checkout Complete',
-#'                         caseSensitive = FALSE,
-#'                         firstStepRequired = FALSE,
-#'                         steps = list(
-#'                            number = c(1,2,3,4,5,6),
-#'                            name = c('Product','Cart','Contact','Shipping','Payment','Processing'),
-#'                            url = c('.*\\/products\\/.*','\\/cart','\\/checkout\\/contact_information','\\/checkout\\/shipping',
-#'                                    '\\/checkout\\/payment','\\/checkout\\/processing'),
-#' )
-#' )
-#'                                     )
-#'               )
-#'
-#'
+#'   id = '9',
+#'   active = TRUE,
+#'   name = 'PDF Download',
+#'   type = 'EVENT',
+#'   eventDetails = list(
+#'     useEventValue = TRUE,
+#'     eventConditions = list(
+#'       list(
+#'         type = 'CATEGORY',
+#'         matchType = 'EXACT',
+#'         expression = 'PDF Download'
+#'         ),
+#'       list(
+#'         type = 'LABEL',
+#'         matchType = 'EXACT',
+#'         expression = 'January brochure'
+#'         )
+#'       )
+#'     )
+#'   )
 #' @importFrom googleAuthR gar_api_generator
 #' @import assertthat
 #' @family managementAPI functions
