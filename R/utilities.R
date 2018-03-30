@@ -1,3 +1,12 @@
+# assert_that_null
+# do an assert_that test only if x is not null
+assert_that_ifnn <- function(x, assert_f){
+  if(!is.null(x)){
+    assert_that(assert_f(x))
+  }
+}
+
+
 # from https://github.com/hadley/assertthat/blob/master/R/assertions.r
 is.named <- function(x) {
   nm <- names(x)
