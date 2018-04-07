@@ -56,6 +56,31 @@
 #'       )
 #'     )
 #'   )
+#'   
+#' ## Create a Goal object based on a number of pages visitied in a session:  
+#' Goal <- list(
+#'   id = '10',
+#'   active = TRUE,
+#'   name = 'Visited more than 3 pages',
+#'   type = 'VISIT_NUM_PAGES',
+#'   visitNumPagesDetails = list(
+#'     comparisonType = 'GREATER_THAN',
+#'     comparisonValue = 3
+#'   )
+#' )
+#'   
+#' ## Create a Goal object based on the number of seconds spent on the site  
+#' Goal <- list(
+#'   id = '11',
+#'   active = TRUE,
+#'   name = 'Stayed for more than 2 minutes',
+#'   type = 'VISIT_TIME_ON_SITE',
+#'   visitTimeOnSiteDetails = list(
+#'     comparisonType = 'GREATER_THAN',
+#'     comparisonValue = 60
+#'   )
+#' )
+#'   
 #' @importFrom googleAuthR gar_api_generator
 #' @import assertthat
 #' @family managementAPI functions
