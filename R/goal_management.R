@@ -12,26 +12,51 @@
 #' @examples
 #'
 #' \dontrun{
+#' 
 #' ## Create a Goal object based on destination:
-#'Goal <- list(
-#'  resource = list(
-#'    id = '2',
-#'    active = TRUE,
-#'    name = 'Checkout',
-#'    type = 'URL_DESTINATION',
-#'    urlDestinationDetails = list(
-#'      url = '\\/checkout\\/thank_you',
-#'      matchType = 'Checkout Complete',
-#'      caseSensitive = FALSE,
-#'      firstStepRequired = FALSE,
-#'      steps = list(
-#'        number = c(1,2,3,4,5,6),
-#'        name = c('Product','Cart','Contact','Shipping','Payment','Processing'),
-#'        url = c('.*\\/products\\/.*','\\/cart','\\/checkout\\/contact_information',
-#'                '\\/checkout\\/shipping','\\/checkout\\/payment','\\/checkout\\/processing')
-#'        )
-#'      )
-#'    )
+#' Goal <- list(
+#'   id = '17',
+#'   active = TRUE,
+#'   name = 'Checkout',
+#'   type = 'URL_DESTINATION',
+#'   urlDestinationDetails = list(
+#'     url = '\\/checkout\\/thank_you',
+#'     matchType = 'REGEX',
+#'     caseSensitive = FALSE,
+#'     firstStepRequired = FALSE,
+#'     steps = list(
+#'       list(
+#'         number = 1,
+#'         name = 'Product',
+#'         url = '\\/products\\/'
+#'       ),
+#'       list(
+#'         number = 2,
+#'         name = 'Cart',
+#'         url = '\\/cart'
+#'       ),
+#'       list(
+#'         number = 3,
+#'         name = 'Contact',
+#'         url = '\\/checkout\\/contact_information'
+#'       ),
+#'       list(
+#'         number = 4,
+#'         name = 'Shipping',
+#'         url = '\\/checkout\\/shipping'
+#'       ),
+#'       list(
+#'         number = 5,
+#'         name = 'Payment',
+#'         url = '\\/checkout\\/payment'
+#'       ),
+#'       list(
+#'         number = 6,
+#'         name = 'Processing',
+#'         url = '\\/checkout\\/processing'
+#'       )
+#'     )
+#'   )
 #'  )
 #'
 #' ## Create a Goal object based on an event:
@@ -77,7 +102,7 @@
 #'   type = 'VISIT_TIME_ON_SITE',
 #'   visitTimeOnSiteDetails = list(
 #'     comparisonType = 'GREATER_THAN',
-#'     comparisonValue = 60
+#'     comparisonValue = 120
 #'   )
 #' )
 #'   
