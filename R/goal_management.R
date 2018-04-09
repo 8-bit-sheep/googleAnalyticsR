@@ -125,9 +125,10 @@ ga_goal_add <- function(Goal,
                            webproperties = webPropertyId,
                            profiles = viewId,
                            goals = ""
-                         ))
+                         ),
+                         data_parse_function = function(x) x)
   
-  out <- f(the_body = Goal)
+  f(the_body = Goal)
   
 }
 
@@ -193,5 +194,5 @@ ga_goal_update <- function(Goal,
                          ),
                          data_parse_function = function(x) x)
   
-  o <- f(the_body = Goal)
+  f(the_body = Goal)
 }
