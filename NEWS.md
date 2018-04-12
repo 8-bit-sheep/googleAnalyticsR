@@ -1,6 +1,6 @@
 # googleAnalyticsR 0.5.0.9000
 
-* ...
+* Add goal management
 
 # googleAnalytics 0.5.0
 
