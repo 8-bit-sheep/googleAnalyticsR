@@ -72,3 +72,4 @@ If you have used the package and published online then get in touch and I'll lis
 * Becky West at Lunametrics shows how to use some of the management API functions to [audit your GA configurations](https://www.lunametrics.com/blog/2018/03/08/google-analytics-check-r-management-api/)
 * Pierre has a [guide in French](https://www.anakeyn.com/2018/03/01/googleanalyticsr-import-google-analytics-r/) on how to setup googleAnalyticsR and start pulling out data.
 * Nico has a guide on how to insert [Google Analytics data into a map](https://www.ridgeway.com/blog/performance-optimisation/how-to-insert-ga-data-into-a-map-using-r-and-build)
+* Dusan goes into how to setup and use [googleAnalyticsR in Serbian](https://dusanmilosevic.com/google-analytics-api-v4-i-r-programski-jezik/)
