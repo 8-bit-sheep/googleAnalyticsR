@@ -153,6 +153,11 @@ dim_filter <- function(dimension,
          call. = FALSE
     )
   }
+  if (!(tolower(dimension) %in% tolower(allowed_metric_dim("DIMENSION", callAPI = FALSE)))) {
+    stop("Oops...looks like you've entered an invalid metric filter name!",
+         call. = FALSE
+    )
+  }
   
   if(all(operator != "IN_LIST", length(expressions) > 1)) {
     warning("Only first expression used if operator not 'IN_LIST'")
@@ -237,7 +242,11 @@ met_filter <- function(metric,
          call. = FALSE
     )
   }
-  
+  if (!(tolower(metric) %in% tolower(allowed_metric_dim("METRIC", callAPI = FALSE)))) {
+    stop("Oops...looks like you've entered an invalid metric filter name!",
+         call. = FALSE
+    )
+  }
   structure(
     list(
       metricName = metric,
