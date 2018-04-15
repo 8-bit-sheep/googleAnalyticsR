@@ -148,9 +148,7 @@ dim_filter <- function(dimension,
   
   dimension <- sapply(dimension, checkPrefix, prefix = "ga")
 
-  source("data-raw/list_of_all_metrics_and_dimensions.R") #not actually a list, but 2 tibbles
-  
-  if (tolower(dimension) %in% tolower(all.metrics$value)) {
+  if (tolower(dimension) %in% tolower(allowed_metric_dim("METRIC", callAPI = FALSE))) {
     stop("Oops..looks like you've used a metric in a dimension filter!",
          call. = FALSE
     )
@@ -234,9 +232,7 @@ met_filter <- function(metric,
 
   metric <- sapply(metric, checkPrefix, prefix = "ga")
   
-  source("data-raw/list_of_all_metrics_and_dimensions.R") #not actually a list, but 2 tibbles
-  
-  if (tolower(metric) %in% tolower(all.dimensions$value)) {
+  if (tolower(metric) %in% tolower(allowed_metric_dim("DIMENSION", callAPI = FALSE))) {
     stop("Oops...looks like you've used a dimension in a metric filter!",
          call. = FALSE
     )
