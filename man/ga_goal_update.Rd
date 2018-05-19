@@ -27,6 +27,35 @@ A goalManagement object
 \description{
 Updates an existing goal.
 }
+\examples{
+
+\dontrun{
+
+# Change the goal 11 to visits over 3 minutes
+Goal <- list(
+  active = TRUE,
+  name = 'Stayed for more than 3 minutes',
+  type = 'VISIT_TIME_ON_SITE',
+  visitTimeOnSiteDetails = list(
+    comparisonType = 'GREATER_THAN',
+    comparisonValue = 180
+  )
+)
+ga_goal_update(Goal, accountId, propertyId, viewId, 11)
+
+# Change destination url for goal 17
+Goal <- list(
+    urlDestinationDetails = list(
+      url = '\\\\/checkout\\\\/success'
+    )
+  )
+
+# Only the fields we're changing required because we're using PATCH method  
+ga_goal_update(Goal, accountId, propertyId, viewId, 17, method = "PATCH")
+  
+}
+  
+}
 \seealso{
 \url{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/#Goals}
 

@@ -105,6 +105,7 @@
 #'     comparisonValue = 120
 #'   )
 #' )
+#' }
 #'   
 #' @importFrom googleAuthR gar_api_generator
 #' @import assertthat
@@ -170,6 +171,8 @@ ga_goal_add <- function(Goal,
 #' 
 #' # Only the fields we're changing required because we're using PATCH method  
 #' ga_goal_update(Goal, accountId, propertyId, viewId, 17, method = "PATCH")
+#'   
+#' }
 #'   
 #' @importFrom googleAuthR gar_api_generator
 #' @family managementAPI functions

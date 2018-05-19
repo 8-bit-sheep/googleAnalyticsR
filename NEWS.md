@@ -1,6 +1,7 @@
 # googleAnalyticsR 0.5.0.9000
 
 * Add goal management
+* Add `ga_user_deletion()` function (#168)
 
 # googleAnalytics 0.5.0
 

@@ -11,7 +11,8 @@
                                     "https://www.googleapis.com/auth/analytics.readonly",
                                     "https://www.googleapis.com/auth/analytics.manage.users.readonly",
                                     "https://www.googleapis.com/auth/analytics.edit",
-                                    "https://www.googleapis.com/auth/analytics.manage.users"),
+                                    "https://www.googleapis.com/auth/analytics.manage.users",
+                                    "https://www.googleapis.com/auth/analytics.user.deletion"),
     googleAuthR.httr_oauth_cache = "ga.oauth"
   )
   

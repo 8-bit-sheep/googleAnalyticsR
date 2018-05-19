@@ -21,6 +21,105 @@ The Goal object
 \description{
 Create a new goal.
 }
+\examples{
+
+\dontrun{
+
+## Create a Goal object based on destination:
+Goal <- list(
+  id = '17',
+  active = TRUE,
+  name = 'Checkout',
+  type = 'URL_DESTINATION',
+  urlDestinationDetails = list(
+    url = '\\\\/checkout\\\\/thank_you',
+    matchType = 'REGEX',
+    caseSensitive = FALSE,
+    firstStepRequired = FALSE,
+    steps = list(
+      list(
+        number = 1,
+        name = 'Product',
+        url = '\\\\/products\\\\/'
+      ),
+      list(
+        number = 2,
+        name = 'Cart',
+        url = '\\\\/cart'
+      ),
+      list(
+        number = 3,
+        name = 'Contact',
+        url = '\\\\/checkout\\\\/contact_information'
+      ),
+      list(
+        number = 4,
+        name = 'Shipping',
+        url = '\\\\/checkout\\\\/shipping'
+      ),
+      list(
+        number = 5,
+        name = 'Payment',
+        url = '\\\\/checkout\\\\/payment'
+      ),
+      list(
+        number = 6,
+        name = 'Processing',
+        url = '\\\\/checkout\\\\/processing'
+      )
+    )
+  )
+)
+
+## Create a Goal object based on an event:
+Goal <- list(
+  id = '9',
+  active = TRUE,
+  name = 'PDF Download',
+  type = 'EVENT',
+  eventDetails = list(
+    useEventValue = TRUE,
+    eventConditions = list(
+      list(
+        type = 'CATEGORY',
+        matchType = 'EXACT',
+        expression = 'PDF Download'
+        ),
+      list(
+        type = 'LABEL',
+        matchType = 'EXACT',
+        expression = 'January brochure'
+        )
+      )
+    )
+  )
+  
+## Create a Goal object based on a number of pages visitied in a session:  
+Goal <- list(
+  id = '10',
+  active = TRUE,
+  name = 'Visited more than 3 pages',
+  type = 'VISIT_NUM_PAGES',
+  visitNumPagesDetails = list(
+    comparisonType = 'GREATER_THAN',
+    comparisonValue = 3
+  )
+)
+  
+## Create a Goal object based on the number of seconds spent on the site  
+Goal <- list(
+  id = '11',
+  active = TRUE,
+  name = 'Stayed for more than 2 minutes',
+  type = 'VISIT_TIME_ON_SITE',
+  visitTimeOnSiteDetails = list(
+    comparisonType = 'GREATER_THAN',
+    comparisonValue = 120
+  )
+)
+}
+  
+}
 \seealso{
 \url{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/#Goals}
 
