@@ -2,7 +2,7 @@
 #' 
 #' The Google Analytics User Deletion API allows customers to process deletions of data associated with a given user identifier. 
 #' 
-#' @param userId User ID
+#' @param userId A character vector of user ID's
 #' @param idType Type of user. One of \code{APP_INSTANCE_ID, CLIENT_ID or USER_ID}.
 #' @param propertyId The Google Analytics Web property or Firebase ProjectId you are deleting the user from.
 #' @param propertyType Firebase or Google Analytics
@@ -13,7 +13,11 @@
 #' 
 #' A data deletion request can be applied to either a Google Analytics web property (specified by \code{propertyType="ga"}) or Firebase application \code{propertyType="firebase"}. A user whose data will be deleted can be specified by setting one of the identifiers the \code{userId} field. The type of the identifier must be specified inside \code{idType} field.
 #' 
-#' @return The upsert method returns a User Deletion Request Resource with \code{deletionRequestTime} field set. This field is the point in time up to which all user data will be deleted. This means that all user data for the specified user identifier and Google Analytics property or Firebase project will be deleted up to this date and time - if the user with the same identifier returns after this date/time, they will reappear in reporting. 
+#' There is a quota of 500 queries per day per cloud project.
+#' 
+#' The API returns a User Deletion Request Resource with \code{deletionRequestTime} field set. This field is the point in time up to which all user data will be deleted. This means that all user data for the specified user identifier and Google Analytics property or Firebase project will be deleted up to this date and time - if the user with the same identifier returns after this date/time, they will reappear in reporting. 
+#' 
+#' @return a data.frame with a row for each userID you sent in, plus a column with its \code{deletionRequestTime}
 #' 
 #' @seealso \url{https://developers.google.com/analytics/devguides/config/userdeletion/v3/}
 #' 
@@ -25,23 +29,14 @@
 #' options(googleAuthR.scopes.selected = "https://www.googleapis.com/auth/analytics.user.deletion")
 #' ga_auth(new_user = TRUE)
 #' 
-#' # the user
-#' ga_user_deletion("12345.1521059208", "UA-12345-2")
+#' # a vector of ids
+#' ids <- c("1489547420.1526330722", "1138076389.1526568883")
 #' 
-#' #$kind
-#' #[1] "analytics#userDeletionRequest"
-#' 
-#' #$id
-#' #$id$type
-#' #[1] "CLIENT_ID"
-#' #
-#' #$id$userId
-#' #[1] "12345.1521059208"
-#' #$webPropertyId
-#' #[1] "UA-12345-2"
-#' 
-#' #$deletionRequestTime
-#' #[1] "2018-05-19T21:23:46.855Z"
+#' # do the deletions
+#' ga_user_deletion(ids, "UA-1234-2")
+#' #                 userId   id_type  property      deletionRequestTime
+#' #1 1489547420.1526330722 CLIENT_ID UA-1234-2 2018-05-20T19:43:33.540Z
+#' #2 1138076389.1526568883 CLIENT_ID UA-1234-2 2018-05-20T19:43:36.218Z
 #' 
 #' }
 #' 
@@ -52,6 +47,30 @@ ga_user_deletion <- function(userId,
                              propertyId,
                              idType = c("CLIENT_ID", "USER_ID", "APP_INSTANCE_ID"),
                              propertyType= c("ga", "firebase")){
+  idType       <- match.arg(idType)
+  propertyType <- match.arg(propertyType)
+  
+  assert_that(
+    is.character(userId),
+    is.string(propertyId)
+  )
+  
+  # a list of one row data.frames
+  deletions <- lapply(userId, 
+                      ga_user_deletion_one, 
+                      propertyId = propertyId,
+                      idType = idType,
+                      propertyType = propertyType)
+  
+  # bind to one data.frame
+  Reduce(rbind, deletions)
+  
+}
+
+ga_user_deletion_one <- function(userId,
+                                 propertyId,
+                                 idType = c("CLIENT_ID", "USER_ID", "APP_INSTANCE_ID"),
+                                 propertyType= c("ga", "firebase")){
   
   idType       <- match.arg(idType)
   propertyType <- match.arg(propertyType)
@@ -75,10 +94,43 @@ ga_user_deletion <- function(userId,
     body <- c(body, list(firebaseProjectId = propertyId))    
   } 
   
-  call_api <- gar_api_generator("https://www.googleapis.com/analytics/v3/userDeletion/userDeletionRequests:upsert",
+  the_url <- "https://www.googleapis.com/analytics/v3/userDeletion/userDeletionRequests:upsert"
+  
+  call_api <- gar_api_generator(the_url,
                                 "POST",
-                                data_parse_function = function(x) x)
+                                data_parse_function = parse_user_deletion)
+  
+  # rate limit to 1.5 queries per second, or 1 query per 0.66 seconds
+  Sys.sleep(0.70)
   
   call_api(the_body = body)
   
+}
+
+parse_user_deletion <- function(x){
+  
+  if(is.null(x$kind)){
+    warning("No response object analytics#userDeletionRequest")
+    return(NULL)
+  }
+  
+  if(x$kind != "analytics#userDeletionRequest"){
+    warning("Response object not analytics#userDeletionRequest")
+    return(NULL)
+  }
+  
+  if(!is.null(x$webPropertyId)){
+    property <- x$webPropertyId
+  } else {
+    # firebase
+    property <- x$firebaseProjectId
+  }
+  
+  data.frame(
+    stringsAsFactors = FALSE,
+    userId  = x$id$userId,
+    id_type = x$id$type,
+    property = property,
+    deletionRequestTime = x$deletionRequestTime
+  )
 }
