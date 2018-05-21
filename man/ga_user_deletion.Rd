@@ -25,7 +25,7 @@ The Google Analytics User Deletion API allows customers to process deletions of 
 \details{
 The user explorer report in Google Analytics can give you the client.id you need to test. 
 
-A data deletion request can be applied to either a Google Analytics web property (specified by \code{propertyType="ga"}) or Firebase application \code{propertyType="firebase"}. A user whose data will be deleted can be specified by setting one of the identifiers the \code{userId} field. The type of the identifier must be specified inside \code{idType} field.
+A data deletion request can be applied to either a Google Analytics web property (specified by \code{propertyType="ga"}) or Firebase application (\code{propertyType="firebase"}). A user whose data will be deleted can be specified by setting one of the identifiers the \code{userId} field. The type of the identifier must be specified inside \code{idType} field.
 
 There is a quota of 500 queries per day per cloud project.
 

@@ -2,6 +2,7 @@
 
 * Add goal management
 * Add `ga_user_deletion()` function (#168)
+* Let `authDropdown` return more than just the viewId (#172)
 
 # googleAnalytics 0.5.0
 
