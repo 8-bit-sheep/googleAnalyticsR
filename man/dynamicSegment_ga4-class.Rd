@@ -5,6 +5,6 @@
 \alias{dynamicSegment_ga4-class}
 \title{`dynamicSegment_ga4` class.}
 \description{
-Metric filter.
+Dynamic Segment.
 }
 \keyword{internal}

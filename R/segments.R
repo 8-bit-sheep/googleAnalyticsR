@@ -60,14 +60,14 @@ ga_segment_list <- function(){
 #' ## make a segment element
 #' se <- segment_element("sessions", 
 #'                       operator = "GREATER_THAN", 
-#'                       type = ""metric"", 
+#'                       type = "METRIC", 
 #'                       comparisonValue = 1, 
 #'                       scope = "USER")
 #'                       
 #'                       
 #' se2 <- segment_element("medium", 
 #'                        operator = "EXACT", 
-#'                        type = "dimension", 
+#'                        type = "DIMENSION", 
 #'                        expressions = "organic")
 #'                        
 #'                        

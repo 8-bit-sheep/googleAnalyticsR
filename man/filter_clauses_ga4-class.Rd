@@ -5,6 +5,6 @@
 \alias{.filter_clauses_ga4-class}
 \title{`.filter_clauses_ga4` class.}
 \description{
-Metric filter.
+Filter clauses class union.
 }
 \keyword{internal}

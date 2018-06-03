@@ -5,6 +5,6 @@
 \alias{segment_ga4-class}
 \title{`segment_ga4` class.}
 \description{
-Metric filter.
+Segments list.
 }
 \keyword{internal}
