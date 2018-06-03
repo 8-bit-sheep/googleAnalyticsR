@@ -165,6 +165,15 @@ setClass("dim_fil_ga4")
 #' @export
 setClass("met_fil_ga4")
 
+#' `.filter_clauses_ga4` class.
+#'
+#' Metric filter.
+#'
+#' @rdname filter_clauses_ga4-class
+#' @keywords internal
+#' @export
+setClass(".filter_clauses_ga4")
+
 #' `segmentFilterClause_ga4` class.
 #'
 #' Segment filter clause.
@@ -227,3 +236,21 @@ setClass("segmentFilter_ga4")
 #' @keywords internal
 #' @export
 setClass("segmentDef_ga4")
+
+#' `segment_ga4` class.
+#'
+#' Metric filter.
+#'
+#' @rdname segment_ga4-class
+#' @keywords internal
+#' @export
+setClass("segment_ga4")
+
+#' `dynamicSegment_ga4` class.
+#'
+#' Metric filter.
+#'
+#' @rdname dynamicSegment_ga4-class
+#' @keywords internal
+#' @export
+setClass("dynamicSegment_ga4")
