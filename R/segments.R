@@ -104,12 +104,12 @@ ga_segment_list <- function(){
 #' 
 #' se2 <- segment_element("medium", 
 #'                        operator = "EXACT", 
-#'                        type = "dimension", 
+#'                        type = "DIMENSION", 
 #'                        expressions = "organic")
 #'                        
 #' se3 <- segment_element("medium",
 #'                        operator = "EXACT",
-#'                        type = "dimension",
+#'                        type = "DIMENSION",
 #'                        not = TRUE,
 #'                       expressions = "organic")
 #'                       

@@ -96,12 +96,12 @@ segment_example <- google_analytics(ga_id,
 
 se2 <- segment_element("medium", 
                        operator = "EXACT", 
-                       type = "dimension", 
+                       type = "DIMENSION", 
                        expressions = "organic")
                        
 se3 <- segment_element("medium",
                        operator = "EXACT",
-                       type = "dimension",
+                       type = "DIMENSION",
                        not = TRUE,
                       expressions = "organic")
                       
