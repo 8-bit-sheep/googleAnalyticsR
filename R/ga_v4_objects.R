@@ -167,12 +167,12 @@ setClass("met_fil_ga4")
 
 #' `.filter_clauses_ga4` class.
 #'
-#' Metric filter.
+#' Filter clauses class union.
 #'
 #' @rdname filter_clauses_ga4-class
 #' @keywords internal
 #' @export
-setClass(".filter_clauses_ga4")
+setClassUnion(".filter_clauses_ga4", members = c("dim_fil_ga4", "met_fil_ga4"))
 
 #' `segmentFilterClause_ga4` class.
 #'
@@ -239,7 +239,7 @@ setClass("segmentDef_ga4")
 
 #' `segment_ga4` class.
 #'
-#' Metric filter.
+#' Segments list.
 #'
 #' @rdname segment_ga4-class
 #' @keywords internal
@@ -248,7 +248,7 @@ setClass("segment_ga4")
 
 #' `dynamicSegment_ga4` class.
 #'
-#' Metric filter.
+#' Dynamic Segment.
 #'
 #' @rdname dynamicSegment_ga4-class
 #' @keywords internal
