@@ -37,7 +37,7 @@ for two date ranges: \code{c(start1,end1,start2,end2)}}
 
 \item{pageToken}{Where to start the data fetch}
 
-\item{pageSize}{How many rows to fetch. Max 10000 each batch.}
+\item{pageSize}{How many rows to fetch. Max 100000 each batch.}
 
 \item{samplingLevel}{Sample level}
 

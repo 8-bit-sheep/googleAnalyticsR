@@ -11,7 +11,8 @@
                                     "https://www.googleapis.com/auth/analytics.readonly",
                                     "https://www.googleapis.com/auth/analytics.manage.users.readonly",
                                     "https://www.googleapis.com/auth/analytics.edit",
-                                    "https://www.googleapis.com/auth/analytics.manage.users"),
+                                    "https://www.googleapis.com/auth/analytics.manage.users",
+                                    "https://www.googleapis.com/auth/analytics.user.deletion"),
     googleAuthR.httr_oauth_cache = "ga.oauth"
   )
   
@@ -21,7 +22,8 @@
   
   ## override existing options
   options(
-    googleAuthR.batch_endpoint = "https://www.googleapis.com/batch/analytics/v3")
+    googleAuthR.batch_endpoint = "https://www.googleapis.com/batch/analytics/v3",
+    googleAuthR.tryAttempts = 1)
   
   if(Sys.getenv("GA_CLIENT_ID") != ""){
     options(googleAuthR.client_id = Sys.getenv("GA_CLIENT_ID"))
@@ -50,7 +52,7 @@
     } else {
       return(FALSE)
     }}
-  
+
   googleAuthR::gar_cache_setup(invalid_func = f)
   
   invisible()

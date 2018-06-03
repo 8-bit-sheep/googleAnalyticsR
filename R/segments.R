@@ -92,11 +92,11 @@ ga_segment_list <- function(){
 #' segment4 <- segment_ga4("simple", user_segment = seg_defined)
 #' ## Add the segments to the segments param
 #' 
-#' segment_example <- google_analytics_4(ga_id, 
-#'                                       c("2015-07-30","2015-10-01"), 
-#'                                      dimensions=c('source','medium','segment'), 
-#'                                      segments = segment4, 
-#'                                      metrics = c('sessions','bounces')
+#' segment_example <- google_analytics(ga_id, 
+#'                                     c("2015-07-30","2015-10-01"), 
+#'                                     dimensions=c('source','medium','segment'), 
+#'                                     segments = segment4, 
+#'                                     metrics = c('sessions','bounces')
 #'                                      )
 #'                                      
 #'                                      
@@ -124,11 +124,11 @@ ga_segment_list <- function(){
 #' 
 #' ## Add the segments to the segments param
 #' 
-#' segment_seq_example <- google_analytics_4(ga_id, 
-#'                                          c("2016-04-01","2016-05-01"), 
-#'                                          dimensions=c('source','segment'), 
-#'                                          segments = segment4_seq,
-#'                                          metrics = c('sessions','bounces')
+#' segment_seq_example <- google_analytics(ga_id, 
+#'                                         c("2016-04-01","2016-05-01"), 
+#'                                         dimensions=c('source','segment'), 
+#'                                         segments = segment4_seq,
+#'                                         metrics = c('sessions','bounces')
 #'                                          )
 #'                                      
 #' }

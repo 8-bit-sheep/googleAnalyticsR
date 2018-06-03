@@ -12,7 +12,7 @@ filter_clause_ga4(filters, operator = c("OR", "AND"))
 \item{operator}{combination of filter.}
 }
 \value{
-An object of class \code{dim_fil_ga4} or \code{met_fil_ga4} 
+An object of class \code{dim_fil_ga4} or \code{met_fil_ga4}
   for use in \code{\link{make_ga_4_req}}
 }
 \description{
@@ -27,7 +27,7 @@ If you have dimension and metric filters,
 \dontrun{
 library(googleAnalyticsR)
 
-## authenticate, 
+## authenticate,
 ## or use the RStudio Addin "Google API Auth" with analytics scopes set
 ga_auth()
 
@@ -51,14 +51,14 @@ fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
 fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
 
 ## make v4 request
-ga_data1 <- google_analytics_4(ga_id, 
+ga_data1 <- google_analytics_4(ga_id,
                                date_range = c("2015-07-30","2015-10-01"),
-                               dimensions=c('source','medium'), 
-                               metrics = c('sessions','bounces'), 
-                               met_filters = fc, 
-                               dim_filters = fc2, 
+                               dimensions=c('source','medium'),
+                               metrics = c('sessions','bounces'),
+                               met_filters = fc,
+                               dim_filters = fc2,
                                filtersExpression = "ga:source!=(direct)")
-                               
+
 }
 
 

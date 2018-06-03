@@ -55,12 +55,28 @@ google_analytics_bq <- function(projectId,
                                 bucket = NULL,
                                 download_file = NULL){
   
+  if (is.null(dimensions)) {
+    stop("At least one dimension, such as date, is required to group the metric(s) by.", 
+         call. = FALSE)
+  }
+  
   projectId <- as.character(projectId)
   datasetId <- as.character(datasetId)
   start <- if(!is.null(start)) as.character(as.Date(start))
   end <- if(!is.null(end)) as.character(as.Date(end))
   max_results <- as.integer(max_results)
-
+  
+  if ((sum(metrics %in% names(lookup_bq_query_m)) == 0) & (is.null(metrics)==FALSE)) {
+    stop(sprintf("You have entered an invalid metric name. Here are all the possible metrics currently available: %s", 
+                 toString(names(lookup_bq_query_m))),
+         call. = FALSE)
+  }
+  
+  if ((sum(dimensions %in% names(lookup_bq_query_d)) == 0) & (is.null(dimensions)==FALSE)) {
+    stop(sprintf("You have entered an invalid dimension name. Here are all the possible dimensions currently available: %s", 
+                 toString(names(lookup_bq_query_d))),
+         call. = FALSE)
+  }
   
   if (!requireNamespace("bigQueryR", quietly = TRUE)) {
     stop("bigQueryR needed for this function to work. Please install it via install.packages('bigQueryR')",
@@ -207,6 +223,40 @@ google_analytics_bq_asynch <- function(projectId,
   
 }
 
+## this is hit level: add session and product level too.
+
+customDimensionMaker <- function(customDimensionIndex=paste0("dimension",1:200)){
+  
+  assertthat::assert_that(is.character(customDimensionIndex))
+  indexes <- grep("^dimension(.+)", customDimensionIndex)
+  
+  if(length(indexes) < 1) stop("Custom dimension specified but no custom dimensions found")
+  
+  dimensionXX = "MAX(IF (hits.customDimensions.index = XX, hits.customDimensions.value, NULL)) WITHIN RECORD AS dimensionXX"
+                     
+  out <- vapply(indexes, function(i) gsub("XX", i, dimensionXX), character(1))
+  names(out) <- customDimensionIndex
+  
+  out
+  
+}
+          
+customMetricMaker <- function(customMetricIndex=paste0("metric",1:200)){
+  
+  assertthat::assert_that(is.character(customMetricIndex))
+  indexes <- grep("^metric(.+)", customMetricIndex)
+  
+  if(length(indexes) < 1) stop("No custom metrics found")
+  
+  metricXX <- "MAX(IF (hits.customMetrics.index = XX, hits.customMetrics.value, NULL)) WITHIN RECORD AS metricXX"
+
+  out <- vapply(indexes, function(i) gsub("XX", i, metricXX), character(1))
+  names(out) <- customMetricIndex
+  
+  out
+  
+}
+
 lookup_bq_query_m <- c(visits = "SUM(totals.visits) as sessions",
                        sessions = "SUM(totals.visits) as sessions",
                        pageviews = "SUM(totals.pageviews) as pageviews",
@@ -263,46 +313,12 @@ lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPat
                        region = "geoNetwork.region as region",
                        metro = "geoNetwork.region as metro",
                        pagePath = "hits.page.pagePath as pagePath",
+                       sourcePropertyDisplayName = "hits.sourcePropertyInfo.sourcePropertyDisplayName as sourcePropertyDisplayName",
                        eventCategory = "hits.eventInfo.eventCategory as eventCategory",
                        eventAction = "hits.eventInfo.eventAction as eventAction",
                        eventLabel = "hits.eventInfo.eventLabel as eventLabel",
                        ## from http://www.lunametrics.com/blog/2016/06/23/google-analytics-bigquery-export-schema/
                        landingPagePath = "FIRST(IF(hits.type = 'PAGE', hits.page.pagePath, NULL)) WITHIN RECORD AS landingPagePath")
-
-
-## this is hit level: add session and product level too.
-
-customDimensionMaker <- function(customDimensionIndex=paste0("dimension",1:200)){
-  
-  assertthat::assert_that(is.character(customDimensionIndex))
-  indexes <- grep("^dimension(.+)", customDimensionIndex)
-  
-  if(length(indexes) < 1) stop("Custom dimension specified but no custom dimensions found")
-  
-  dimensionXX = "MAX(IF (hits.customDimensions.index = XX, hits.customDimensions.value, NULL)) WITHIN RECORD AS dimensionXX"
-                     
-  out <- vapply(indexes, function(i) gsub("XX", i, dimensionXX), character(1))
-  names(out) <- customDimensionIndex
-  
-  out
-  
-}
-          
-customMetricMaker <- function(customMetricIndex=paste0("metric",1:200)){
-  
-  assertthat::assert_that(is.character(customMetricIndex))
-  indexes <- grep("^metric(.+)", customMetricIndex)
-  
-  if(length(indexes) < 1) stop("No custom metrics found")
-  
-  metricXX <- "MAX(IF (hits.customMetrics.index = XX, hits.customMetrics.value, NULL)) WITHIN RECORD AS metricXX"
-
-  out <- vapply(indexes, function(i) gsub("XX", i, metricXX), character(1))
-  names(out) <- customMetricIndex
-  
-  out
-  
-}
 
 
 #' Example queries to add

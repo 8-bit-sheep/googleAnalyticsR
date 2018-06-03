@@ -12,7 +12,7 @@ google_analytics(viewId, date_range = NULL, metrics = NULL,
   samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
   histogramBuckets = NULL, anti_sample = FALSE,
   anti_sample_batches = "auto", slow_fetch = FALSE,
-  useResourceQuotas = NULL)
+  useResourceQuotas = NULL, rows_per_call = 10000L)
 
 google_analytics_4(...)
 }
@@ -53,10 +53,12 @@ See details in \link{make_ga_4_req}}
 
 \item{anti_sample_batches}{"auto" default, or set to number of days per batch. 1 = daily.}
 
-\item{slow_fetch}{For large results this slows down the API requests to avoid 500 errors}
+\item{slow_fetch}{For large, complicated API requests this bypasses some API hacks that may result in 500 errors.  For smaller queries, leave this as \code{FALSE} for quicker data fetching.}
 
 \item{useResourceQuotas}{If using GA360, access increased sampling limits. 
 Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to this feature.}
+
+\item{rows_per_call}{Set how many rows are requested by the API per call, up to a maximum of 100000.}
 
 \item{...}{Arguments passed to \link{google_analytics}}
 }
@@ -64,10 +66,14 @@ Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to th
 A Google Analytics data.frame, with attributes showing row totals, sampling etc.
 }
 \description{
-Fetch Google Analytics data using the v4 API.  For the v3 API use \link{google_analytics_3}.
- 
-Will perform automatic batching if over the 10000 row per API call limit.
+Fetch Google Analytics data using the v4 API.  For the v3 API use \link{google_analytics_3}.  See website help for lots of examples: \href{http://code.markedmondson.me/googleAnalyticsR/v4.html}{Google Analytics Reporting API v4 in R}
 }
+\section{Row requests}{
+
+
+By default the API call will use v4 batching that splits requests into 5 seperate calls of 10k rows each.  This can go up to 100k, so this means up to 500k rows can be fetched per API call, however the API servers will fail with a 500 error if the query is too complicated as the processing time at Google's end gets too long.  In this case, you may want to tweak the \code{rows_per_call} argument downwards, or fall back to using \code{slow_fetch = FALSE} which will send an API request one at a time.  If fetching data via scheduled scripts this is recommended as the default.
+}
+
 \section{Anti-sampling}{
 
 
@@ -119,10 +125,10 @@ account_list$viewId
 ga_id <- 123456
 
 ## simple query to test connection
-google_analytics_4(ga_id, 
-                   date_range = c("2017-01-01", "2017-03-01"), 
-                   metrics = "sessions", 
-                   dimensions = "date")
+google_analytics(ga_id, 
+                 date_range = c("2017-01-01", "2017-03-01"), 
+                 metrics = "sessions", 
+                 dimensions = "date")
 
 }
 

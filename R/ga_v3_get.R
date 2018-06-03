@@ -168,6 +168,10 @@ google_analytics_3 <- function(id,
   
   if(multi_account_batching){
     myMessage("Fetching all ids at same time (max 10 per API call)", level = 3)
+    
+    # set custom batch endpoint
+    op <- options()
+    options("googleAuthR.batch_endpoint" = "https://www.googleapis.com/batch/analytics/v3")
     all_data <- googleAuthR::gar_batch_walk(ga,
                                             walk_vector = id,
                                             gar_pars = ga_pars,
@@ -175,6 +179,7 @@ google_analytics_3 <- function(id,
                                             data_frame_output = FALSE,
                                             batch_size = 10)
     all_data <- unlist(all_data, recursive = FALSE, use.names = FALSE)
+    options(op) # reset options
     names(all_data) <- id
     
   } else {

@@ -9,20 +9,20 @@ test_that("Record requests if online", {
   ## test reqs
   capture_requests(
     {
-      google_analytics_4(ga_id, 
+      google_analytics(ga_id, 
                          date_range = c("2015-07-30","2015-10-01"),
                          dimensions=c('medium'), 
                          metrics = c('sessions'),
                          order = order_type("sessions"))
       
-      google_analytics_4(ga_id, 
+      google_analytics(ga_id, 
                          date_range = c("2015-07-30","2015-12-31"),
                          dimensions=c('medium','source','hour',
                                       'minute','campaign','pagePath'), 
                          metrics = c('sessions'),
                          max = -1)  
       
-      google_analytics_4(ga_id, 
+      google_analytics(ga_id, 
                          date_range = c("2015-07-30","2015-09-01"),
                          dimensions=c('medium','source','hour',
                                       'minute','campaign','pagePath'), 
@@ -30,19 +30,19 @@ test_that("Record requests if online", {
                          max = -1,
                          slow_fetch = TRUE)  
       
-      google_analytics_4(ga_id, 
+      google_analytics(ga_id, 
                          date_range = c("2015-07-30","2015-10-01"),
                          dimensions=c('medium'), 
                          metrics = c('sessions'),
                          order = order_type("sessions")) 
       
-      google_analytics(ga_id, 
+      google_analytics_3(ga_id, 
                        start = "2015-07-30", end = "2015-10-01",
                        dimensions=c('sourcePath'), 
                        metrics = c('totalConversions'),
                        type = "mcf")
       
-      as <-   google_analytics_4(ga_id, 
+      as <-   google_analytics(ga_id, 
                                  date_range = c("2015-07-30","2016-10-01"),
                                  dimensions=c('minute','hour','landingPagePath',
                                               'medium','eventLabel','campaign'), 
@@ -56,7 +56,7 @@ test_that("Record requests if online", {
       
       ## then call cohort report.  No date_range and must include metrics and dimensions
       ##   from the cohort list
-      cohort_example <- google_analytics_4(ga_id, 
+      cohort_example <- google_analytics(ga_id, 
                                            dimensions=c('cohort'), 
                                            cohorts = cohort4, 
                                            metrics = c('cohortTotalUsers'))
@@ -90,7 +90,7 @@ test_that("Record requests if online", {
       segment4 <- segment_ga4("simple", user_segment = seg_defined)
       ## then call cohort report.  No date_range and must include metrics and dimensions
       ##   from the cohort list
-      cohort_example <- google_analytics_4(ga_id, 
+      cohort_example <- google_analytics(ga_id, 
                                            dimensions=c('cohort'), 
                                            cohorts = cohort4, 
                                            segments = segment4,
@@ -109,7 +109,7 @@ test_that("Record requests if online", {
                          maxGroupCount = 4, 
                          dim_filter_clause = pivot_dim_clause)
       
-      pivtest1 <- google_analytics_4(ga_id, 
+      pivtest1 <- google_analytics(ga_id, 
                                      c("2016-01-30","2016-10-01"), 
                                      dimensions=c('source'), 
                                      metrics = c('sessions'), 
@@ -126,7 +126,7 @@ test_that("Record requests if online", {
       seg_obj <- segment_ga4("PaidTraffic", segment_id = segment_for_call)
       
       ## make the segment call
-      segmented_ga1 <- google_analytics_4(ga_id, 
+      segmented_ga1 <- google_analytics(ga_id, 
                                           c("2015-07-30","2015-10-01"), 
                                           dimensions=c('source','medium'), 
                                           segments = seg_obj, 
@@ -141,7 +141,7 @@ test_that("Record requests if online", {
       seg_obj <- segment_ga4("PaidTraffic", segment_id = segment_def_for_call)
       
       ## make the segment call
-      segmented_ga1 <- google_analytics_4(ga_id, 
+      segmented_ga1 <- google_analytics(ga_id, 
                                           c("2015-07-30","2015-10-01"), 
                                           dimensions=c('source','medium','segment'), 
                                           segments = seg_obj, 
@@ -172,7 +172,7 @@ test_that("Record requests if online", {
       segment4 <- segment_ga4("simple", user_segment = seg_defined)
       
       ## Add the segments to the segments param
-      segment_example <- google_analytics_4(ga_id, 
+      segment_example <- google_analytics(ga_id, 
                                             c("2015-07-30","2015-10-01"), 
                                             dimensions=c('source','medium','segment'), 
                                             segments = segment4, 
@@ -199,7 +199,7 @@ test_that("Record requests if online", {
       segment4_seq <- segment_ga4("sequence", user_segment = seq_defined2)
       
       ## Add the segments to the segments param
-      segment_seq_example <- google_analytics_4(ga_id, 
+      segment_seq_example <- google_analytics(ga_id, 
                                                 c("2016-01-01","2016-03-01"), 
                                                 dimensions=c('source','segment'), 
                                                 segments = segment4_seq,
@@ -220,7 +220,7 @@ with_mock_API({
   
   test_that("Vanilla test data fetch", {
     skip_on_cran()
-    t11 <-   google_analytics_4(ga_id, 
+    t11 <-   google_analytics(ga_id, 
                                 date_range = c("2015-07-30","2015-10-01"),
                                 dimensions=c('medium'), 
                                 metrics = c('sessions'),
@@ -231,7 +231,7 @@ with_mock_API({
   
   test_that("Big v4 batch", {
     skip_on_cran()
-    big <-   google_analytics_4(ga_id, 
+    big <-   google_analytics(ga_id, 
                                 date_range = c("2015-07-30","2015-12-31"),
                                 dimensions=c('medium','source','hour',
                                              'minute','campaign','pagePath'), 
@@ -243,7 +243,7 @@ with_mock_API({
   
   test_that("Slow big v4 batch", {
     skip_on_cran()
-    big <-   google_analytics_4(ga_id, 
+    big <-   google_analytics(ga_id, 
                                 date_range = c("2015-07-30","2015-09-01"),
                                 dimensions=c('medium','source','hour',
                                              'minute','campaign','pagePath'), 
@@ -256,7 +256,7 @@ with_mock_API({
   
   test_that("v3 Multi-channel funnels", {
     skip_on_cran()
-    v3 <- google_analytics(ga_id, 
+    v3 <- google_analytics_3(ga_id, 
                            start = "2015-07-30", end = "2015-10-01",
                            dimensions=c('sourcePath'), 
                            metrics = c('totalConversions'),
@@ -273,7 +273,7 @@ with_mock_API({
   # 
   # test_that("Anti-sample when no sampling there", {
   #   skip_on_cran()
-  #   as <-   google_analytics_4(ga_id, 
+  #   as <-   google_analytics(ga_id, 
   #                             date_range = c("2015-07-30","2016-10-01"),
   #                             dimensions=c('minute','hour','landingPagePath','medium','eventLabel','campaign'), 
   #                             metrics = c('sessions'),
@@ -285,7 +285,7 @@ with_mock_API({
   
   test_that("Aggregation works", {
     skip_on_cran()
-    as <-   google_analytics_4(ga_id, 
+    as <-   google_analytics(ga_id, 
                                date_range = c("2015-07-30","2016-10-01"),
                                dimensions=c('minute','hour','landingPagePath',
                                             'medium','eventLabel','campaign'), 
@@ -310,7 +310,7 @@ with_mock_API({
     
     ## then call cohort report.  No date_range and must include metrics and dimensions
     ##   from the cohort list
-    cohort_example <- google_analytics_4(ga_id, 
+    cohort_example <- google_analytics(ga_id, 
                                          dimensions=c('cohort'), 
                                          cohorts = cohort4, 
                                          metrics = c('cohortTotalUsers'))
@@ -351,7 +351,7 @@ with_mock_API({
     segment4 <- segment_ga4("simple", user_segment = seg_defined)
     ## then call cohort report.  No date_range and must include metrics and dimensions
     ##   from the cohort list
-    cohort_example <- google_analytics_4(ga_id, 
+    cohort_example <- google_analytics(ga_id, 
                                          dimensions=c('cohort'), 
                                          cohorts = cohort4, 
                                          segments = segment4,
@@ -379,7 +379,7 @@ with_mock_API({
                        maxGroupCount = 4, 
                        dim_filter_clause = pivot_dim_clause)
     
-    pivtest1 <- google_analytics_4(ga_id, 
+    pivtest1 <- google_analytics(ga_id, 
                                    c("2016-01-30","2016-10-01"), 
                                    dimensions=c('source'), 
                                    metrics = c('sessions'), 
@@ -411,7 +411,7 @@ with_mock_API({
     seg_obj <- segment_ga4("PaidTraffic", segment_id = segment_for_call)
     
     ## make the segment call
-    segmented_ga1 <- google_analytics_4(ga_id, 
+    segmented_ga1 <- google_analytics(ga_id, 
                                         c("2015-07-30","2015-10-01"), 
                                         dimensions=c('source','medium'), 
                                         segments = seg_obj, 
@@ -429,7 +429,7 @@ with_mock_API({
     seg_obj <- segment_ga4("PaidTraffic", segment_id = segment_def_for_call)
     
     ## make the segment call
-    segmented_ga1 <- google_analytics_4(ga_id, 
+    segmented_ga1 <- google_analytics(ga_id, 
                                         c("2015-07-30","2015-10-01"), 
                                         dimensions=c('source','medium','segment'), 
                                         segments = seg_obj, 
@@ -470,7 +470,7 @@ with_mock_API({
     segment4 <- segment_ga4("simple", user_segment = seg_defined)
     
     ## Add the segments to the segments param
-    segment_example <- google_analytics_4(ga_id, 
+    segment_example <- google_analytics(ga_id, 
                                           c("2015-07-30","2015-10-01"), 
                                           dimensions=c('source','medium','segment'), 
                                           segments = segment4, 
@@ -508,7 +508,7 @@ with_mock_API({
     segment4_seq <- segment_ga4("sequence", user_segment = seq_defined2)
     
     ## Add the segments to the segments param
-    segment_seq_example <- google_analytics_4(ga_id, 
+    segment_seq_example <- google_analytics(ga_id, 
                                               c("2016-01-01","2016-03-01"), 
                                               dimensions=c('source','segment'), 
                                               segments = segment4_seq,

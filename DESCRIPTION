@@ -1,6 +1,6 @@
 Package: googleAnalyticsR
 Type: Package
-Version: 0.4.2.9000
+Version: 0.5.0.9000
 Title: Google Analytics API into R
 Description: Interact with the Google Analytics 
   APIs <https://developers.google.com/analytics/>, including 
@@ -13,7 +13,8 @@ Authors@R: c(person("Mark", "Edmondson", email = "m@sunholo.com",
            person("Johann", "deBoer", email = "johanndeboer@gmail.com", role = "ctb"),
            person("David", "Watkins", email = "wm.david.watkins@gmail.com", role = "ctb"),
            person("Olivia", "Brode-Roger", email = "nibr@mit.edu", role = "ctb"),
-           person("Jas", "Sohi", email = "contact@jassohi.com", role = "ctb"))
+           person("Jas", "Sohi", email = "contact@jassohi.com", role = "ctb"),
+           person("Zoran", "Selinger", email = "zselinger@gmail.com", role = "ctb"))
 URL: http://code.markedmondson.me/googleAnalyticsR/
 BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
 Depends:
@@ -43,4 +44,3 @@ License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
-Remotes: MarkEdmondson1234/googleAuthR

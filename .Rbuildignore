@@ -16,4 +16,7 @@
 ^CODE_OF_CONDUCT\.md$
 ^data-raw$
 ^\.httr-oauth$
+^ga\.oauth$
+^CONTRIBUTING$
+^issue_template\.md$
 ^/Users/mark/dev/auth/googleAnalyticsR\.httr-oauth$
