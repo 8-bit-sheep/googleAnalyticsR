@@ -5,7 +5,8 @@ library(googleAnalyticsR)
 options(googleAuthR.scopes.selected = 
           c("https://www.googleapis.com/auth/analytics",
             "https://www.googleapis.com/auth/analytics.edit",
-            "https://www.googleapis.com/auth/analytics.manage.users.readonly",
+            "https://www.googleapis.com/auth/analytics.manage.users",
+            "https://www.googleapis.com/auth/analytics.user.deletion",
             "https://www.googleapis.com/auth/drive"),
         googleAuthR.client_id = 
           "289759286325-da3fr5kq4nl4nkhmhs2uft776kdsggbo.apps.googleusercontent.com",

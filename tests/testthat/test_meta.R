@@ -23,7 +23,7 @@ test_that("Record requests if online", {
       ga_custom_datasource(accountId2, webPropId2)      
       ga_custom_upload_list(accountId2, 
                             webPropertyId = webPropId2, 
-                            customDataSourceId = "_jDsJHSFSU-uw038Bh8fUg")      
+                            customDataSourceId = "kvks-PO8SfG-yRcKjI00-g")      
       google_analytics_meta()
       gacl <- ga_custom_vars_list(accountId, webPropId, type = "customMetrics")
       gacl2 <- ga_custom_vars_list(accountId, webPropId, type = "customDimensions") 

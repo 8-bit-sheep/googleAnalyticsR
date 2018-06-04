@@ -1,5 +1,12 @@
 context("Unsampled Download tests")
 
+test_that("Scope set correctly for Google Drive tests", {
+  scopes <- getOption("googleAuthR.scopes.selected")
+  
+  expect_true("https://www.googleapis.com/auth/drive" %in% scopes)
+  
+})
+
 test_that("Can list unsampled files", {
   
   dl <- ga_unsampled_list(accountId = "54019251",
