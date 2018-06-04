@@ -1,4 +1,4 @@
-#' @importFrom methods setClass
+#' @importFrom methods setClass setClassUnion
 NULL
 
 #' Make a date object
