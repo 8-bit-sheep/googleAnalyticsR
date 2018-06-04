@@ -150,7 +150,7 @@ test_that("Custom data source upload list",{
   skip_on_cran()
   ds <- ga_custom_upload_list(accountId2, 
                               webPropertyId = webPropId2, 
-                              customDataSourceId = "_jDsJHSFSU-uw038Bh8fUg")
+                              customDataSourceId = "kvks-PO8SfG-yRcKjI00-g")
   
   expect_s3_class(ds, "data.frame")
 })
