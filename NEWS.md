@@ -3,6 +3,7 @@
 * Add goal management
 * Add `ga_user_deletion()` function (#168)
 * Let `authDropdown` return more than just the viewId (#172)
+* Export segment related classes and implicitly coerce table filters and segments to their appropriate classes in order to improve integration with the ganalytics package.
 
 # googleAnalytics 0.5.0
 

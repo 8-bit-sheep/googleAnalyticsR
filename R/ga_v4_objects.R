@@ -1,4 +1,4 @@
-#' @importFrom methods setClass
+#' @importFrom methods setClass setClassUnion
 NULL
 
 #' Make a date object
@@ -165,6 +165,15 @@ setClass("dim_fil_ga4")
 #' @export
 setClass("met_fil_ga4")
 
+#' `.filter_clauses_ga4` class.
+#'
+#' Filter clauses class union.
+#'
+#' @rdname filter_clauses_ga4-class
+#' @keywords internal
+#' @export
+setClassUnion(".filter_clauses_ga4", members = c("dim_fil_ga4", "met_fil_ga4"))
+
 #' `segmentFilterClause_ga4` class.
 #'
 #' Segment filter clause.
@@ -227,3 +236,21 @@ setClass("segmentFilter_ga4")
 #' @keywords internal
 #' @export
 setClass("segmentDef_ga4")
+
+#' `segment_ga4` class.
+#'
+#' Segments list.
+#'
+#' @rdname segment_ga4-class
+#' @keywords internal
+#' @export
+setClass("segment_ga4")
+
+#' `dynamicSegment_ga4` class.
+#'
+#' Dynamic Segment.
+#'
+#' @rdname dynamicSegment_ga4-class
+#' @keywords internal
+#' @export
+setClass("dynamicSegment_ga4")
