@@ -77,7 +77,7 @@ ga_unsampled_list <- function(accountId,
   parse_unsampled <- function(x){
     o <- x$items
     o <- o[, setdiff(names(o),c("selfLink","kind"))]
-    as.data.frame(lapply(o, unlist))
+    as.data.frame(lapply(o, unlist), stringsAsFactors = FALSE)
   }
   
   url <- "https://www.googleapis.com/analytics/v3/management/"
@@ -182,7 +182,7 @@ ga_unsampled_download <- function(reportTitle,
   }
 
   # https://developers.google.com/analytics/devguides/config/mgmt/v3/unsampled-reports
-  if (report$downloadType != "GOOGLE_DRIVE") {
+  if(any(is.null(report$downloadType), report$downloadType != "GOOGLE_DRIVE")) {
     stop(
       "Only Google Drive download links are currently supported. 
       Contact your Analytics 360 account manager if you would like to change 
