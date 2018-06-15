@@ -5,7 +5,8 @@ output:
     toc: false
 ---
 
-![](gar_logo_1000.png)
+![](https://raw.githubusercontent.com/MarkEdmondson1234/googleAnalyticsR/master/inst/hexlogo/hex.png){width=200px}
+
 
 Welcome to the website for **googleAnalyticsR**, an R library for working with Google Analytics data.
 
