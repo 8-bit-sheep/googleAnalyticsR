@@ -53,6 +53,7 @@ These are all great libraries that also work with Google Analytics data in R, th
 If you have used the package and published online then get in touch and I'll list it here so others can benefit.
 
 * [Dartistics.com](http://www.dartistics.com/) is a website dedicated to using R with digital analytics, and has a page on getting up and running with [googleAnalyticsR](http://www.dartistics.com/api-google-analytics.html)
+* [Video tutorials for googleAnalyticsR](https://www.youtube.com/playlist?list=PLAMHKI_J4xv0esgbTYCnNuwQO0z3zrc6K) are on YouTube. 
 * Michal Brys has an online book on using [Google Analytics with R](https://michalbrys.gitbooks.io/r-google-analytics/content/) that uses googleAnalyticsR
 * Ryan Prazki has created a video tutorial on how to get up and running quickly: [Google Analytics R Video Tutorial](http://www.ryanpraski.com/google-analytics-r-tutorial/)
 * Ryan also has a tutorial on using googleAnalyticsR to do [scroll tracking analysis in a heatmap](http://www.ryanpraski.com/scroll-depth-tracking-analysis-with-google-analytics-r)

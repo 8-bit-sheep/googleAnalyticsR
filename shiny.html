@@ -389,6 +389,9 @@ div.tocify {
 
 
 <p>To use in Shiny with a multi-user login, use googleAuth’s <code>with_shiny</code>. See the <a href="http://code.markedmondson.me/googleAuthR/"><code>googleAuthR</code> readme</a> for details on general Google authentication with Shiny.</p>
+<p>A video tutorial on how to create a <a href="https://www.youtube.com/watch?v=4Ht_vEXJ4wo">Shiny app with googleAnalyticsR</a> is available below. The first 20 mins creates a basic Shiny app fetching data, the last 20 mins go into combining with other libraries and using custom HTML templates:</p>
+<iframe width="560" height="315" src="http://www.youtube.com/embed/4Ht_vEXJ4wo?rel=0" frameborder="0" allowfullscreen>
+</iframe>
 <pre class="r"><code>## in server.R
 library(googleAuthR)
 library(googleAnalyticsR)
@@ -401,7 +404,7 @@ shinyServer(function(input, output, session){
 
   gadata &lt;- reactive({
 
-    with_shiny(google_analytics,
+    with_shiny(google_analytics_3,
                id = &quot;222222&quot;, ## replace with your View ID
                start=&quot;2015-08-01&quot;, end=&quot;2015-08-02&quot;, 
                metrics = c(&quot;sessions&quot;, &quot;bounceRate&quot;), 
@@ -456,7 +459,7 @@ ga_accounts &lt;- reactive({
     need(token(), &quot;Authenticate&quot;)
   )
 
-  with_shiny(google_analytics_account_list, shiny_access_token = token())
+  with_shiny(ga_account_list, shiny_access_token = token())
   
   })
 
@@ -524,7 +527,7 @@ function(input, output, session){
     
     req(selected_id())
     gaid &lt;- selected_id()
-    with_shiny(google_analytics,
+    with_shiny(google_analytics_3,
                id = gaid,
                start=&quot;2015-08-01&quot;, end=&quot;2017-08-02&quot;, 
                metrics = c(&quot;sessions&quot;), 
