@@ -41,6 +41,12 @@ google_analytics_4_parse <- function(x){
     warning("Some data has been filtered for privacy reasons.")
   }
   
+  if(!is.null(x$data$dataLastRefreshed)){
+    # convert timezone to locale
+    timelr <- format(as.POSIXct(x$data$dataLastRefreshed, tz="UTC", format = "%Y-%m-%dT%H:%M:%S"), tz = Sys.timezone())
+    myMessage("API data last refreshed: ",timelr, level = 3)
+  }
+  
   dim_names <- unlist(columnHeader$dimensions)
   met_names <- unlist(lapply(columnHeader$metricHeader$metricHeaderEntries, function(x) x$name))
   met_names1 <- gsub("ga:","",met_names)
