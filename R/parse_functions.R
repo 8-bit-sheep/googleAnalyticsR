@@ -41,6 +41,7 @@ google_analytics_4_parse <- function(x){
     warning("Some data has been filtered for privacy reasons.")
   }
   
+  timelr <- NULL
   if(!is.null(x$data$dataLastRefreshed)){
     # convert timezone to locale
     timelr <- format(as.POSIXct(x$data$dataLastRefreshed, tz="UTC", format = "%Y-%m-%dT%H:%M:%S"), tz = Sys.timezone())
@@ -109,6 +110,10 @@ google_analytics_4_parse <- function(x){
   attr(out, "samplesReadCounts") <- x$data$samplesReadCounts
   attr(out, "samplingSpaceSizes") <- x$data$samplingSpaceSizes
   attr(out, "nextPageToken") <- x$nextPageToken
+  
+  if(!is.null(timelr)){
+    attr(out, "dataLastRefreshed") <- timelr
+  }
   
   assertthat::assert_that(is.data.frame(out))
   
