@@ -4,6 +4,7 @@
 * Add `ga_user_deletion()` function (#168)
 * Let `authDropdown` return more than just the viewId (#172)
 * Export segment related classes and implicitly coerce table filters and segments to their appropriate classes in order to improve integration with the ganalytics package.
+* Add support for `dataLastRefreshed` and stop caching if its present (e.g. query includes today) (#183)
 
 # googleAnalytics 0.5.0
 
