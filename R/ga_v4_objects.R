@@ -147,6 +147,33 @@ order_type <- function(field,
   )
 }
 
+#' `dim_ga4` class.
+#'
+#' Dimension.
+#'
+#' @rdname dim_ga4-class
+#' @keywords internal
+#' @export
+setClass("dim_ga4")
+
+#' `met_ga4` class.
+#'
+#' Metric.
+#'
+#' @rdname met_ga4-class
+#' @keywords internal
+#' @export
+setClass("met_ga4")
+
+#' `order_type_ga4` class.
+#'
+#' Order type.
+#'
+#' @rdname order_type_ga4-class
+#' @keywords internal
+#' @export
+setClass("order_type_ga4")
+
 #' `dim_fil_ga4` class.
 #'
 #' Dimension filter.
