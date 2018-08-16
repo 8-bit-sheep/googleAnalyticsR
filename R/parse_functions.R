@@ -10,6 +10,12 @@ google_analytics_4_parse_batch <- function(response_list){
   }
   
   if(!is.null(response_list$reports)){
+    
+    if(!is.null(response_list$queryCost)){
+      myMessage("queryCost: ", 
+                response_list$queryCost, level = 3)
+    }
+    
     parsed <- lapply(response_list$reports, google_analytics_4_parse)
   } else {
     warning("No $reports found.")
