@@ -283,7 +283,7 @@ segment_vector_sequence <- function(segment_elements,
   } else {
     stepMatchList <- as.list(rep("PRECEDES", length(segment_elements)))
   }
-  browser()
+
   steps <- mapply(function(sfc, sml){
     
     orFilters <- makeOrFilters(sfc)
