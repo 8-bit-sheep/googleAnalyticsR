@@ -276,13 +276,14 @@ makeOrFilters <- function(segment_element_list){
 segment_vector_sequence <- function(segment_elements,
                                     firstStepMatch=FALSE){
   
-  stepMatchList <- lapply(segment_elements, function(x) attr(x, "matchType"))
+  # fix #180
+  stepMatchList <- lapply(segment_elements, function(x) attr(x[[1]], "matchType"))
   if(!is.null(stepMatchList)){
     assertthat::assert_that(length(segment_elements) == length(stepMatchList))
   } else {
     stepMatchList <- as.list(rep("PRECEDES", length(segment_elements)))
   }
-  
+  browser()
   steps <- mapply(function(sfc, sml){
     
     orFilters <- makeOrFilters(sfc)
