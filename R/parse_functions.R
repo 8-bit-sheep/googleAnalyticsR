@@ -86,7 +86,7 @@ google_analytics_4_parse <- function(x){
   out <- data.frame(cbind(dims, mets),
                     stringsAsFactors = FALSE, row.names = 1:nrow(mets))
   
-  if(nrow(out) > 1000000L){
+  if(nrow(out) >= 1000000L){
     warning("1 million rows are in API response which is the API limit. Split up your API calls into smaller chunks to ensure all data is returned.")
   }
   
