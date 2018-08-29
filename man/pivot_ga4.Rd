@@ -4,7 +4,7 @@
 \alias{pivot_ga4}
 \title{Make a pivot object}
 \usage{
-pivot_ga4(pivot_dim, metrics, dim_filter_clause = NULL, startGroup = 1,
+pivot_ga4(pivot_dim, metrics, dim_filter_clause = NULL, startGroup = 0,
   maxGroupCount = 5)
 }
 \arguments{
@@ -14,7 +14,7 @@ pivot_ga4(pivot_dim, metrics, dim_filter_clause = NULL, startGroup = 1,
 
 \item{dim_filter_clause}{Only data included in filter included.}
 
-\item{startGroup}{which groups of k columns are included in response.}
+\item{startGroup}{which groups of k columns are included in response (0 indexed).}
 
 \item{maxGroupCount}{Maximum number of groups to return.}
 }
