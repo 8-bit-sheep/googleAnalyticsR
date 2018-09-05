@@ -8,7 +8,7 @@ The latest stable version of `googleAnalyticsR` is available on CRAN.
 ![CRAN](http://www.r-pkg.org/badges/version/googleAnalyticsR)
 
 ```r
-install.package("googleAnalyticsR", dependencies = TRUE)
+install.packages("googleAnalyticsR", dependencies = TRUE)
 ```
 
 ### Development version off GitHub
