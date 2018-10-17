@@ -11,13 +11,16 @@ hashed_client_id <- function(webPropertyId,
                          clientId){
   
   url <- "https://www.googleapis.com/analytics/v3/management/clientId:hashClientId"
-  hashed <- gar_api_generator(url,
-                                 "POST",
-                                 path_args = list(
-                                   webPropertyId = webPropertyId,
-                                   clientId = clientId
-                                 ),
-                                 data_parse_function = function(x) x)
   
-  hashed()
+  body <- list(
+    webPropertyId = webPropertyId,
+    clientId = clientId
+  )
+  
+  hashed <- gar_api_generator(url,
+    "POST",
+    data_parse_function = function(x) x
+  )
+  
+  hashed(the_body = body)
 }
