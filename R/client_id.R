@@ -7,7 +7,7 @@
 #' @importFrom googleAuthR gar_api_generator
 #' @family managementAPI functions
 #' @export
-hashed_client_id <- function(webPropertyId,
+ga_clientid_hash <- function(webPropertyId,
                          clientId){
   
   url <- "https://www.googleapis.com/analytics/v3/management/clientId:hashClientId"
