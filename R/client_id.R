@@ -3,12 +3,11 @@
 #' @param webPropertyId Web Property Id
 #' @param clientId Client Id
 #'
-#' @return hashedClientId string
+#' @return hashedClientId object list
 #' @importFrom googleAuthR gar_api_generator
 #' @family managementAPI functions
 #' @export
-ga_clientid_hash <- function(webPropertyId,
-                         clientId){
+ga_clientid_hash <- function(webPropertyId, clientId){
   
   url <- "https://www.googleapis.com/analytics/v3/management/clientId:hashClientId"
   
