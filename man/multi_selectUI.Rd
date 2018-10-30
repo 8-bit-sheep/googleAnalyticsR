@@ -28,3 +28,4 @@ Create a Google Analytics variable selector
 Other Shiny modules: \code{\link{authDropdownUI}},
   \code{\link{authDropdown}}, \code{\link{multi_select}}
 }
+\concept{Shiny modules}

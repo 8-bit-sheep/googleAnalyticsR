@@ -142,6 +142,8 @@ sampling_message <- function(samplesReadCounts, samplingSpaceSizes, hasDateCompa
       myMessage("Data Comparison is sampled, based on ", samplePercent, "% of sessions.", level = 3 )
     }
   }
+  
+  samplePercent
 }
 
 get_samplePercent <- function(sampleReadCounts, samplingSpaceSizes){

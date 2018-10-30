@@ -5,8 +5,9 @@
 \title{Get a GA request with anti-sampling}
 \usage{
 anti_sample(anti_sample_batches, viewId, date_range, metrics, dimensions,
-  dim_filters, met_filters, filtersExpression, order, segments, pivots, cohorts,
-  metricFormat, histogramBuckets, slow_fetch, rows_per_call)
+  dim_filters, met_filters, filtersExpression, order, segments, pivots,
+  cohorts, metricFormat, histogramBuckets, sample_percentage, slow_fetch,
+  rows_per_call)
 }
 \arguments{
 \item{anti_sample_batches}{"auto" default, or set to number of days per batch. 1 = daily.}
@@ -38,6 +39,8 @@ for two date ranges: \code{c(start1,end1,start2,end2)}}
 
 \item{histogramBuckets}{For numeric dimensions such as hour, a list of buckets of data.
 See details in \link{make_ga_4_req}}
+
+\item{sample_percentage}{if TRUE will return the field sampling percentage}
 
 \item{slow_fetch}{For large, complicated API requests this bypasses some API hacks that may result in 500 errors.  For smaller queries, leave this as \code{FALSE} for quicker data fetching.}
 

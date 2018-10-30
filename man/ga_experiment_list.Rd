@@ -22,6 +22,7 @@ List Experiments
 \seealso{
 Other managementAPI functions: \code{\link{ga_accounts}},
   \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}},
+  \code{\link{ga_clientid_hash}},
   \code{\link{ga_custom_vars_list}},
   \code{\link{ga_custom_vars}},
   \code{\link{ga_experiment}}, \code{\link{ga_filter_add}},
@@ -45,3 +46,4 @@ Other managementAPI functions: \code{\link{ga_accounts}},
   \code{\link{ga_webproperty}},
   \code{\link{google_analytics_account_list}}
 }
+\concept{managementAPI functions}

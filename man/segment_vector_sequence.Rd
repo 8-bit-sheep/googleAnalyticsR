@@ -24,3 +24,4 @@ Other v4 segment functions: \code{\link{segment_define}},
   \code{\link{segment_element}}, \code{\link{segment_ga4}},
   \code{\link{segment_vector_simple}}
 }
+\concept{v4 segment functions}

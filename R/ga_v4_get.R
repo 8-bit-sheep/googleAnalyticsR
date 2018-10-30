@@ -249,6 +249,7 @@ make_ga_4_req <- function(viewId,
 #' @param anti_sample If TRUE will split up the call to avoid sampling.
 #' @param anti_sample_batches "auto" default, or set to number of days per batch. 1 = daily.
 #' @param slow_fetch For large, complicated API requests this bypasses some API hacks that may result in 500 errors.  For smaller queries, leave this as \code{FALSE} for quicker data fetching. 
+#' @param sample_percentage if TRUE will return the field sampling percentage
 #' @param useResourceQuotas If using GA360, access increased sampling limits. 
 #'   Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to this feature. 
 #' @param rows_per_call Set how many rows are requested by the API per call, up to a maximum of 100000.
@@ -304,6 +305,7 @@ google_analytics <- function(viewId,
                              anti_sample = FALSE,
                              anti_sample_batches = "auto",
                              slow_fetch = FALSE,
+                             sample_percentage = FALSE,
                              useResourceQuotas= NULL,
                              rows_per_call = 10000L){
   
@@ -364,6 +366,7 @@ google_analytics <- function(viewId,
                        metricFormat      = metricFormat,
                        histogramBuckets  = histogramBuckets,
                        anti_sample_batches = anti_sample_batches,
+                       sample_percentage = sample_percentage,
                        slow_fetch          = slow_fetch,
                        rows_per_call     = rows_per_call))
   }
@@ -483,9 +486,18 @@ google_analytics <- function(viewId,
     
   }
   
-  sampling_message(attr(out, "samplesReadCounts"), 
-                   attr(out, "samplingSpaceSizes"), 
-                   hasDateComparison = any(grepl("\\.d1|\\.d2", names(out))))
+  
+  if (sample_percentage) {
+    samplePercent <- sampling_message(attr(out, "samplesReadCounts"), 
+                                      attr(out, "samplingSpaceSizes"), 
+                                      hasDateComparison = any(grepl("\\.d1|\\.d2", names(out))))
+    
+    out$samplePercent <- samplePercent
+  } else {
+    sampling_message(attr(out, "samplesReadCounts"), 
+                     attr(out, "samplingSpaceSizes"), 
+                     hasDateComparison = any(grepl("\\.d1|\\.d2", names(out))))
+  }
   
   out
 

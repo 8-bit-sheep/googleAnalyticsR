@@ -19,6 +19,7 @@ anti_sample <- function(anti_sample_batches,
                         cohorts,
                         metricFormat,
                         histogramBuckets,
+                        sample_percentage,
                         slow_fetch,
                         rows_per_call){
   

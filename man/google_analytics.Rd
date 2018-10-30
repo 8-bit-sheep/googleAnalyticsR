@@ -12,7 +12,8 @@ google_analytics(viewId, date_range = NULL, metrics = NULL,
   samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
   histogramBuckets = NULL, anti_sample = FALSE,
   anti_sample_batches = "auto", slow_fetch = FALSE,
-  useResourceQuotas = NULL, rows_per_call = 10000L)
+  sample_percentage = FALSE, useResourceQuotas = NULL,
+  rows_per_call = 10000L)
 
 google_analytics_4(...)
 }
@@ -54,6 +55,8 @@ See details in \link{make_ga_4_req}}
 \item{anti_sample_batches}{"auto" default, or set to number of days per batch. 1 = daily.}
 
 \item{slow_fetch}{For large, complicated API requests this bypasses some API hacks that may result in 500 errors.  For smaller queries, leave this as \code{FALSE} for quicker data fetching.}
+
+\item{sample_percentage}{if TRUE will return the field sampling percentage}
 
 \item{useResourceQuotas}{If using GA360, access increased sampling limits. 
 Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to this feature.}
@@ -138,3 +141,4 @@ Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4_slow}},
   \code{\link{fetch_google_analytics_4}},
   \code{\link{make_ga_4_req}}
 }
+\concept{GAv4 fetch functions}
