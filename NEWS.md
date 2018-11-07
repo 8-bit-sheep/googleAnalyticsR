@@ -1,6 +1,13 @@
 # googleAnalyticsR 0.5.0.9000
 
-* ...
+* Add goal management
+* Add `ga_user_deletion()` function (#168)
+* Let `authDropdown` return more than just the viewId (#172)
+* Export segment related classes and implicitly coerce table filters and segments to their appropriate classes in order to improve integration with the ganalytics package.
+* Add support for `dataLastRefreshed` and stop caching if its present (e.g. query includes today) (#183)
+* Export dim_ga4, met_ga4 and order_type_ga4 classes in order to support the complete conversion of ganalytics query objects into googleAnalyticsR API requests.
+* Fix segments that were not respecting "IMMEDIATELY_PRECEDES" vs "PRECEDES" (thanks @digitos) (#180)
+* Fix default of pivot groups so they include first column (thanks @gilliganondata) (#107)
 
 # googleAnalytics 0.5.0
 

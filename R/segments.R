@@ -60,14 +60,14 @@ ga_segment_list <- function(){
 #' ## make a segment element
 #' se <- segment_element("sessions", 
 #'                       operator = "GREATER_THAN", 
-#'                       type = ""metric"", 
+#'                       type = "METRIC", 
 #'                       comparisonValue = 1, 
 #'                       scope = "USER")
 #'                       
 #'                       
 #' se2 <- segment_element("medium", 
 #'                        operator = "EXACT", 
-#'                        type = "dimension", 
+#'                        type = "DIMENSION", 
 #'                        expressions = "organic")
 #'                        
 #'                        
@@ -104,12 +104,12 @@ ga_segment_list <- function(){
 #' 
 #' se2 <- segment_element("medium", 
 #'                        operator = "EXACT", 
-#'                        type = "dimension", 
+#'                        type = "DIMENSION", 
 #'                        expressions = "organic")
 #'                        
 #' se3 <- segment_element("medium",
 #'                        operator = "EXACT",
-#'                        type = "dimension",
+#'                        type = "DIMENSION",
 #'                        not = TRUE,
 #'                       expressions = "organic")
 #'                       
@@ -273,13 +273,14 @@ makeOrFilters <- function(segment_element_list){
 segment_vector_sequence <- function(segment_elements,
                                     firstStepMatch=FALSE){
   
-  stepMatchList <- lapply(segment_elements, function(x) attr(x, "matchType"))
+  # fix #180
+  stepMatchList <- lapply(segment_elements, function(x) attr(x[[1]], "matchType"))
   if(!is.null(stepMatchList)){
     assertthat::assert_that(length(segment_elements) == length(stepMatchList))
   } else {
     stepMatchList <- as.list(rep("PRECEDES", length(segment_elements)))
   }
-  
+
   steps <- mapply(function(sfc, sml){
     
     orFilters <- makeOrFilters(sfc)

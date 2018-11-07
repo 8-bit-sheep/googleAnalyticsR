@@ -11,7 +11,8 @@
                                     "https://www.googleapis.com/auth/analytics.readonly",
                                     "https://www.googleapis.com/auth/analytics.manage.users.readonly",
                                     "https://www.googleapis.com/auth/analytics.edit",
-                                    "https://www.googleapis.com/auth/analytics.manage.users"),
+                                    "https://www.googleapis.com/auth/analytics.manage.users",
+                                    "https://www.googleapis.com/auth/analytics.user.deletion"),
     googleAuthR.httr_oauth_cache = "ga.oauth"
   )
   
@@ -46,6 +47,16 @@
     
     stuff <- tryCatch(req$content$reports, error = function(x) NULL)
     
+    # data is not golden
+    if(!is.null(stuff[[1]]$data$isDataGolden) && !stuff[[1]]$data$isDataGolden){
+      return(FALSE)
+    }
+    
+    # present only if including today's data? e.g. not golden?
+    if(!is.null(stuff[[1]]$data$dataLastRefreshed)){
+      return(FALSE)
+    }
+
     if(!is.null(stuff)){
       return(TRUE)
     } else {

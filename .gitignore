@@ -12,4 +12,4 @@ vignettes/*.pdf
 .Rproj.user
 inst/doc
 #tests/testthat/mock/
-/Users/mark/dev/auth/googleAnalyticsR.httr-oauth
+.httr-oauth

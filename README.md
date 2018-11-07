@@ -3,6 +3,7 @@
 ![CRAN](http://www.r-pkg.org/badges/version/googleAnalyticsR)
 [![codecov](https://codecov.io/gh/MarkEdmondson1234/googleAnalyticsR/branch/master/graph/badge.svg)](https://codecov.io/gh/MarkEdmondson1234/googleAnalyticsR)
 
+![](https://raw.githubusercontent.com/MarkEdmondson1234/googleAnalyticsR/master/inst/hexlogo/hex.png)
 
 Get more examples and tutorials at the [googleAnalyticsR website](http://code.markedmondson.me/googleAnalyticsR)
 

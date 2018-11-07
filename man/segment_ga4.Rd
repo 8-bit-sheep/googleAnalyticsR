@@ -52,14 +52,14 @@ ga_id <- account_list[23,'viewId']
 ## make a segment element
 se <- segment_element("sessions", 
                       operator = "GREATER_THAN", 
-                      type = ""metric"", 
+                      type = "METRIC", 
                       comparisonValue = 1, 
                       scope = "USER")
                       
                       
 se2 <- segment_element("medium", 
                        operator = "EXACT", 
-                       type = "dimension", 
+                       type = "DIMENSION", 
                        expressions = "organic")
                        
                        
@@ -96,12 +96,12 @@ segment_example <- google_analytics(ga_id,
 
 se2 <- segment_element("medium", 
                        operator = "EXACT", 
-                       type = "dimension", 
+                       type = "DIMENSION", 
                        expressions = "organic")
                        
 se3 <- segment_element("medium",
                        operator = "EXACT",
-                       type = "dimension",
+                       type = "DIMENSION",
                        not = TRUE,
                       expressions = "organic")
                       

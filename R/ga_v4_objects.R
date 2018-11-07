@@ -1,4 +1,4 @@
-#' @importFrom methods setClass
+#' @importFrom methods setClass setClassUnion
 NULL
 
 #' Make a date object
@@ -147,6 +147,33 @@ order_type <- function(field,
   )
 }
 
+#' `dim_ga4` class.
+#'
+#' Dimension.
+#'
+#' @rdname dim_ga4-class
+#' @keywords internal
+#' @export
+setClass("dim_ga4")
+
+#' `met_ga4` class.
+#'
+#' Metric.
+#'
+#' @rdname met_ga4-class
+#' @keywords internal
+#' @export
+setClass("met_ga4")
+
+#' `order_type_ga4` class.
+#'
+#' Order type.
+#'
+#' @rdname order_type_ga4-class
+#' @keywords internal
+#' @export
+setClass("order_type_ga4")
+
 #' `dim_fil_ga4` class.
 #'
 #' Dimension filter.
@@ -164,6 +191,15 @@ setClass("dim_fil_ga4")
 #' @keywords internal
 #' @export
 setClass("met_fil_ga4")
+
+#' `.filter_clauses_ga4` class.
+#'
+#' Filter clauses class union.
+#'
+#' @rdname filter_clauses_ga4-class
+#' @keywords internal
+#' @export
+setClassUnion(".filter_clauses_ga4", members = c("dim_fil_ga4", "met_fil_ga4"))
 
 #' `segmentFilterClause_ga4` class.
 #'
@@ -227,3 +263,21 @@ setClass("segmentFilter_ga4")
 #' @keywords internal
 #' @export
 setClass("segmentDef_ga4")
+
+#' `segment_ga4` class.
+#'
+#' Segments list.
+#'
+#' @rdname segment_ga4-class
+#' @keywords internal
+#' @export
+setClass("segment_ga4")
+
+#' `dynamicSegment_ga4` class.
+#'
+#' Dynamic Segment.
+#'
+#' @rdname dynamicSegment_ga4-class
+#' @keywords internal
+#' @export
+setClass("dynamicSegment_ga4")

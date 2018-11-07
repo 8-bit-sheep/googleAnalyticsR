@@ -4,7 +4,7 @@
 \alias{authDropdown}
 \title{authDropdown [Shiny Module]}
 \usage{
-authDropdown(input, output, session, ga.table)
+authDropdown(input, output, session, ga.table, viewIdOnly = TRUE)
 }
 \arguments{
 \item{input}{shiny input}
@@ -14,6 +14,8 @@ authDropdown(input, output, session, ga.table)
 \item{session}{shiny session}
 
 \item{ga.table}{A table of GA tables}
+
+\item{viewIdOnly}{Default only returns the viewId, set to FALSE to return the row of ga.table satisfying the selections}
 }
 \value{
 GA View Id selected

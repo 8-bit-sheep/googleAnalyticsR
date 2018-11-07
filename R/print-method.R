@@ -31,13 +31,14 @@ print.ga_custom_datasource <- function(x, ...){
                     id = x$id,
                     accountId = x$accountId,
                     webPropertyId = x$webPropertyId,
-                    importBehavior = x$importBehavior,
+                    importBehavior = if(!is.null(x$importBehavior)) x$importBehavior else NULL,
                     created = x$created,
                     updated = x$updated,
                     stringsAsFactors = FALSE)
   
-  out$created <- timestamp_to_r(out$created)
-  out$updated <- timestamp_to_r(out$updated)
+  if(!is.null(out$created)) out$created <- timestamp_to_r(out$created)
+  if(!is.null(out$updated)) out$updated <- timestamp_to_r(out$updated)
+  
   cat("==Google Analytics Custom Data Sources==\n")
   cat0("Username:            ", y$username)
   cat0("Total Results:       ", y$totalResults)

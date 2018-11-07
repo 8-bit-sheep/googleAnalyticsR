@@ -284,6 +284,7 @@ make_ga_4_req <- function(viewId,
 #' 
 #' @family GAv4 fetch functions
 #' @import assertthat
+#' @importFrom methods as
 #' @export
 google_analytics <- function(viewId,
                              date_range=NULL,
@@ -308,7 +309,28 @@ google_analytics <- function(viewId,
   
   timer_start <- Sys.time()
   
+
   assert_that_ifnn(useResourceQuotas, is.flag)
+
+  if(!is.null(segments)){
+    segments <- as(segments, "segment_ga4")
+  }
+  
+  if(!is.null(dim_filters)){
+    dim_filters <- as(dim_filters, ".filter_clauses_ga4")
+  }
+  
+  if(!is.null(met_filters)){
+    met_filters <- as(met_filters, ".filter_clauses_ga4")
+  }
+  
+  if(!is.null(filtersExpression)){
+    filtersExpression <- as(filtersExpression, "character")
+  }
+  
+  if(!is.null(useResourceQuotas)){
+    assert_that(is.flag(useResourceQuotas))
+  }
   
   assert_that(is.count(rows_per_call),
               rows_per_call <= 100000L)

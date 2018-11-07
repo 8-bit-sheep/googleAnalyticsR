@@ -71,12 +71,13 @@ authDropdownUI <- function(id,
 #' @param output shiny output
 #' @param session shiny session
 #' @param ga.table A table of GA tables
+#' @param viewIdOnly Default only returns the viewId, set to FALSE to return the row of ga.table satisfying the selections
 #'
 #' @return GA View Id selected
 #' 
 #' @family Shiny modules
 #' @export
-authDropdown <- function(input, output, session, ga.table){
+authDropdown <- function(input, output, session, ga.table, viewIdOnly = TRUE){
   
   pList <- shiny::reactive({
     ga.table <- ga.table()
@@ -139,7 +140,12 @@ authDropdown <- function(input, output, session, ga.table){
     
     out <- pList[input$view == pList$viewId,]
 
-    out$viewId
+    if(viewIdOnly){
+      return(out$viewId)
+    } else {
+      out
+    }
+    
   })
   
   return(chosen_view)

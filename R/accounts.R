@@ -4,12 +4,7 @@ google_analytics_account_list <- function(){
   
   .Deprecated("ga_account_list", package = "googleAnalyticsR")
   
-  url <- "https://www.googleapis.com/analytics/v3/management/accountSummaries"
-  acc_sum <- gar_api_generator(url,
-                               "GET",
-                               data_parse_function = parse_ga_account_summary)
-  
-  acc_sum()
+  ga_account_list()
 }
 
 #' Get account summary including the ViewId

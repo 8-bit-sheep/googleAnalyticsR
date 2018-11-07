@@ -10,6 +10,12 @@ google_analytics_4_parse_batch <- function(response_list){
   }
   
   if(!is.null(response_list$reports)){
+    
+    if(!is.null(response_list$queryCost)){
+      myMessage("queryCost: ", 
+                response_list$queryCost, level = 3)
+    }
+    
     parsed <- lapply(response_list$reports, google_analytics_4_parse)
   } else {
     warning("No $reports found.")
@@ -39,6 +45,13 @@ google_analytics_4_parse <- function(x){
   
   if(!is.null(x$data$filteredForPrivacyReasons)){
     warning("Some data has been filtered for privacy reasons.")
+  }
+  
+  timelr <- NULL
+  if(!is.null(x$data$dataLastRefreshed)){
+    # convert timezone to locale
+    timelr <- format(as.POSIXct(x$data$dataLastRefreshed, tz="UTC", format = "%Y-%m-%dT%H:%M:%S"), tz = Sys.timezone())
+    myMessage("API data last refreshed: ",timelr, level = 3)
   }
   
   dim_names <- unlist(columnHeader$dimensions)
@@ -73,6 +86,10 @@ google_analytics_4_parse <- function(x){
   out <- data.frame(cbind(dims, mets),
                     stringsAsFactors = FALSE, row.names = 1:nrow(mets))
   
+  if(nrow(out) >= 1000000L){
+    warning("1 million rows are in API response which is the API limit. Split up your API calls into smaller chunks to ensure all data is returned.")
+  }
+  
   out_names <- c(dim_names, met_names)
   out_names <- gsub("ga:","",out_names)
   names(out) <- out_names
@@ -103,6 +120,10 @@ google_analytics_4_parse <- function(x){
   attr(out, "samplesReadCounts") <- x$data$samplesReadCounts
   attr(out, "samplingSpaceSizes") <- x$data$samplingSpaceSizes
   attr(out, "nextPageToken") <- x$nextPageToken
+  
+  if(!is.null(timelr)){
+    attr(out, "dataLastRefreshed") <- timelr
+  }
   
   assertthat::assert_that(is.data.frame(out))
   

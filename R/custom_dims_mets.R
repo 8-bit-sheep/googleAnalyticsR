@@ -36,11 +36,15 @@ allowed_metric_dim <- function(type = c("METRIC", "DIMENSION"),
   ## replace XX with 1 to 20
   meta_ex <- filtered_md[grepl("XX",filtered_md$name),]
   
-  f <- function(y) vapply(1:20, function(x) gsub("XX", x, meta_ex$name[y]), character(1))
+  f <- function(y) vapply(1:200, 
+                          function(x) gsub("XX", x, meta_ex$name[y]), character(1))
+  
   meta_expanded <- unlist(lapply(seq_along(meta_ex$name), f))
   
   ## repeat with names
-  f2 <- function(y) vapply(1:20, function(x) gsub("XX", x, meta_ex$uiName[y]), character(1))
+  f2 <- function(y) vapply(1:200, 
+                           function(x) gsub("XX", x, meta_ex$uiName[y]), character(1))
+  
   meta_expanded_names <- unlist(lapply(seq_along(meta_ex$uiName), f2))
   
   

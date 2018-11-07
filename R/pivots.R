@@ -87,7 +87,7 @@ makePivotNames <- function(pivotHeaders){
 #' @param pivot_dim A character vector of dimensions
 #' @param metrics Metrics to aggregate and return.
 #' @param dim_filter_clause Only data included in filter included.
-#' @param startGroup which groups of k columns are included in response.
+#' @param startGroup which groups of k columns are included in response (0 indexed).
 #' @param maxGroupCount Maximum number of groups to return.
 #'
 #' @details If maxGroupCount is set to -1 returns all groups.
@@ -136,7 +136,7 @@ makePivotNames <- function(pivotHeaders){
 #'
 #' @export
 pivot_ga4 <- function(pivot_dim, metrics, dim_filter_clause=NULL,
-                      startGroup = 1, maxGroupCount = 5){
+                      startGroup = 0, maxGroupCount = 5){
   
   assertthat::assert_that(is.character(pivot_dim),
                           is.character(metrics))

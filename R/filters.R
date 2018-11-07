@@ -145,9 +145,20 @@ dim_filter <- function(dimension,
 
   stopifnot(inherits(dimension, "character"),
             inherits(expressions, "character"))
-
+  
   dimension <- sapply(dimension, checkPrefix, prefix = "ga")
 
+  if (tolower(dimension) %in% tolower(allowed_metric_dim("METRIC", callAPI = FALSE))) {
+    stop("Oops..looks like you've used a metric in a dimension filter!",
+         call. = FALSE
+    )
+  }
+  if (!(tolower(dimension) %in% tolower(allowed_metric_dim("DIMENSION", callAPI = FALSE)))) {
+    stop("Oops...looks like you've entered an invalid dimension filter name!",
+         call. = FALSE
+    )
+  }
+  
   if(all(operator != "IN_LIST", length(expressions) > 1)) {
     warning("Only first expression used if operator not 'IN_LIST'")
     expressions <- expressions[1]
@@ -225,7 +236,17 @@ met_filter <- function(metric,
   stopifnot(inherits(metric, "character"))
 
   metric <- sapply(metric, checkPrefix, prefix = "ga")
-
+  
+  if (tolower(metric) %in% tolower(allowed_metric_dim("DIMENSION", callAPI = FALSE))) {
+    stop("Oops...looks like you've used a dimension in a metric filter!",
+         call. = FALSE
+    )
+  }
+  if (!(tolower(metric) %in% tolower(allowed_metric_dim("METRIC", callAPI = FALSE)))) {
+    stop("Oops...looks like you've entered an invalid metric filter name!",
+         call. = FALSE
+    )
+  }
   structure(
     list(
       metricName = metric,

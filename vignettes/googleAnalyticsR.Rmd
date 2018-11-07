@@ -29,7 +29,7 @@ These are all great libraries, that I have taken inspiration from.
 * v4 features include: dynamic calculated metrics, pivots, histograms, date comparisons, batching.
 * Shiny App compatible
 * The same authentication flow can be used with other `googleAuthR` apps like [`searchConsoleR`](https://github.com/MarkEdmondson1234/searchConsoleR)
-* Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnnel
+* Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnel
 * Support for `googleAuthR` batch, meaning 10 calls at once to GA - great for big fetches.  For big data calls this is implemented automatically so could be 10x quicker than normal GA fetching
 * Meta data included in attributes of returned dataframe including date ranges, totals, min and max
 
@@ -490,7 +490,7 @@ shinyServer(function(input, output, session){
 
 Limited support for more user friendly calls to BigQuery Google Analytics 360 exports is implemented from version `0.2.0`.
 
-This is intended for users who may be familar with Google Analytics but not with SQL necessary to extract equivalent data from a BigQuery export of Google Analytics 360 data.
+This is intended for users who may be familiar with Google Analytics but not with SQL necessary to extract equivalent data from a BigQuery export of Google Analytics 360 data.
 
 `google_analytics_bq` parses your metrics and dimensions into BigQuery queries.  
 
@@ -537,7 +537,7 @@ options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analyti
 googleAuthR::gar_auth()
 ```
 
-You may also want to use a JSON file to authenticate with BigQuery.  Make sure to add the service email to the users of the Google project, and then download the JSON file and authenitcate via:
+You may also want to use a JSON file to authenticate with BigQuery.  Make sure to add the service email to the users of the Google project, and then download the JSON file and authenticate via:
 
 ```r
 googleAuthR::gar_auth_service("gwt-download-XXXX.json")
@@ -680,7 +680,3 @@ lookup_bq_query_d <- c(referralPath = "trafficSource.referralPath as referralPat
                        eventLabel = "hits.eventInfo.eventLabel as eventLabel",
                        dimensionXX = {a function to output hit level custom dimensions})
 ```
-
-
-
-
