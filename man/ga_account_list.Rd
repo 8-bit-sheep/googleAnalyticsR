@@ -20,6 +20,7 @@ https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/m
 
 Other managementAPI functions: \code{\link{ga_accounts}},
   \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}},
+  \code{\link{ga_clientid_hash}},
   \code{\link{ga_custom_vars_list}},
   \code{\link{ga_custom_vars}},
   \code{\link{ga_experiment_list}},
