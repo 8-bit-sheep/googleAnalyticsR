@@ -8,6 +8,7 @@
 * Export dim_ga4, met_ga4 and order_type_ga4 classes in order to support the complete conversion of ganalytics query objects into googleAnalyticsR API requests.
 * Fix segments that were not respecting "IMMEDIATELY_PRECEDES" vs "PRECEDES" (thanks @digitos) (#180)
 * Fix default of pivot groups so they include first column (thanks @gilliganondata) (#107)
+* Support for creating remarketing audiences (#161)
 
 # googleAnalytics 0.5.0
 
