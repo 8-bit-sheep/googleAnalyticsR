@@ -154,7 +154,7 @@ dim_filter <- function(dimension,
     )
   }
   if (!(tolower(dimension) %in% tolower(allowed_metric_dim("DIMENSION", callAPI = FALSE)))) {
-    stop("Oops...looks like you've entered an invalid metric filter name!",
+    stop("Oops...looks like you've entered an invalid dimension filter name!",
          call. = FALSE
     )
   }
