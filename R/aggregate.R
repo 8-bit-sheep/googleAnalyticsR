@@ -27,13 +27,13 @@ getColNameOfClass <- function(df, class_name){
 #' @importFrom magrittr %>%
 #' @importFrom rlang !!!
 #' @export
+#' @import assertthat
 aggregateGAData <- function(ga_data, 
                             agg_names=NULL,
                             mean_regex="^avg|^percent|Rate$|^CPC$|^CTR$|^CPM$|^RPC$|^ROI$|^ROAS$|Per"){
   
-  assertthat::assert_that(is.data.frame(ga_data))
-  
-  if(!is.null(agg_names)) assertthat::assert_that(inherits(agg_names, "character"))
+  assert_that(is.data.frame(ga_data))
+  assert_that_ifnn(agg_names, is.character)
   
   metrics <- getColNameOfClass(ga_data, "numeric")
   mean_metrics <- metrics[grepl(mean_regex, metrics)]

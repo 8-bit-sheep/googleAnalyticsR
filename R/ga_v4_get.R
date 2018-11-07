@@ -309,6 +309,9 @@ google_analytics <- function(viewId,
   
   timer_start <- Sys.time()
   
+
+  assert_that_ifnn(useResourceQuotas, is.flag)
+
   if(!is.null(segments)){
     segments <- as(segments, "segment_ga4")
   }

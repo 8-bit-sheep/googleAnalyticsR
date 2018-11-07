@@ -134,18 +134,15 @@ ga_segment_list <- function(){
 #' }
 #' 
 #' @export
+#' @import assertthat
 segment_ga4 <- function(name,
                         segment_id=NULL,
                         user_segment=NULL,
                         session_segment=NULL){
 
-  assertthat::assert_that(is.character(name))
+  assert_that(is.string(name))
+  assert_that_ifnn(segment_id, is.string)
   
-  if(!is.null(segment_id)){
-    assertthat::assert_that(is.character(segment_id),
-                            length(segment_id) == 1)
-  }
-
   
   if(!is.null(segment_id)){
     
@@ -320,6 +317,7 @@ segment_vector_sequence <- function(segment_elements,
 #' 
 #' @family v4 segment functions
 #' @export
+#' @import assertthat
 segment_element <- function(name,
                             operator = c("REGEXP",
                                          "BEGINS_WITH",
@@ -344,10 +342,10 @@ segment_element <- function(name,
                             comparisonValue=NULL,
                             matchType = c("PRECEDES", "IMMEDIATELY_PRECEDES")){
 
-  assertthat::assert_that(is.character(name))
+  assert_that(is.character(name))
   operator <- match.arg(operator)
   type <- match.arg(type)
-  assertthat::assert_that(is.logical(not))
+  assert_that(is.logical(not))
   expect_null_or_type(expressions, "character")
   expect_null_or_type(caseSensitive, "logical")  
   expect_null_or_type(minComparisonValue, "numeric")  
