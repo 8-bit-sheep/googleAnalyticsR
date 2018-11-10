@@ -347,6 +347,10 @@ google_analytics <- function(viewId,
   }
   
   if(anti_sample){
+    if(isTRUE(useResourceQuotas)){
+      stop("Can't use anti_sample=TRUE and useResourceQuoteas=TRUE in same API call (and you shouldn't need to)", 
+           call. = FALSE)
+    }
     myMessage("anti_sample set to TRUE. Mitigating sampling via multiple API calls.", level = 3)
     return(anti_sample(viewId            = viewId,
                        date_range        = date_range,
