@@ -70,12 +70,19 @@ ga_unsampled <- function(accountId,
 #' @importFrom magrittr %>% 
 #' @family managementAPI functions
 #' @export
+#' @import assertthat
 ga_unsampled_list <- function(accountId,
                               webPropertyId,
                               profileId){
   
   parse_unsampled <- function(x){
     o <- x$items
+    
+    if(any(is.null(o), nrow(o) == 0)){
+      stop(sprintf("No unsampled reports found for accountId:%s webPropertyId: %s profileId: %s", accountId, webPropertyId, profileId), call. = FALSE)
+    }
+    assert_that(is.data.frame(o))
+    
     o <- o[, setdiff(names(o),c("selfLink","kind"))]
     as.data.frame(lapply(o, unlist), stringsAsFactors = FALSE)
   }
