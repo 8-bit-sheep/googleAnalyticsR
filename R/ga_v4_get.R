@@ -308,7 +308,6 @@ google_analytics <- function(viewId,
                              rows_per_call = 10000L){
   
   timer_start <- Sys.time()
-  
 
   assert_that_ifnn(useResourceQuotas, is.flag)
 
@@ -326,10 +325,6 @@ google_analytics <- function(viewId,
   
   if(!is.null(filtersExpression)){
     filtersExpression <- as(filtersExpression, "character")
-  }
-  
-  if(!is.null(useResourceQuotas)){
-    assert_that(is.flag(useResourceQuotas))
   }
   
   assert_that(is.count(rows_per_call),

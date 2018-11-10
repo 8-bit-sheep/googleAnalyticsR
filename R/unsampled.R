@@ -79,7 +79,8 @@ ga_unsampled_list <- function(accountId,
     o <- x$items
     
     if(any(is.null(o), nrow(o) == 0)){
-      stop(sprintf("No unsampled reports found for accountId:%s webPropertyId: %s profileId: %s", accountId, webPropertyId, profileId), call. = FALSE)
+      stop(sprintf("No unsampled reports found for accountId:%s webPropertyId: %s profileId: %s", 
+                   accountId, webPropertyId, profileId), call. = FALSE)
     }
     assert_that(is.data.frame(o))
     

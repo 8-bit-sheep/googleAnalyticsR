@@ -9,6 +9,7 @@
 * Fix segments that were not respecting "IMMEDIATELY_PRECEDES" vs "PRECEDES" (thanks @digitos) (#180)
 * Fix default of pivot groups so they include first column (thanks @gilliganondata) (#107)
 * Support for creating remarketing audiences (#161)
+* Support "NdaysAgo" in antisample calls (#209)
 
 # googleAnalytics 0.5.0
 
