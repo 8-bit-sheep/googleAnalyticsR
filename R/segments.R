@@ -1,7 +1,7 @@
 #' Get segments user has access to
 #'
 #' @return Segment list
-#' @importFrom googleAuthR gar_api_generator
+#' @importFrom googleAuthR gar_api_generator gar_api_page
 #' @family managementAPI functions
 #' @export
 ga_segment_list <- function(){
@@ -9,9 +9,23 @@ ga_segment_list <- function(){
   url <- "https://www.googleapis.com/analytics/v3/management/segments"
   segs <- gar_api_generator(url,
                             "GET",
+                            pars_args = list("start-index"=1),
                             data_parse_function = function(x) x)
   
-  segs()
+  paging_function <- function(x){
+    next_entry <- x$startIndex + x$itemsPerPage
+    if(next_entry < x$totalResults){
+      return(next_entry)
+    } else {
+      return(NULL)
+    }
+  }
+  
+  pages <- gar_api_page(segs, 
+                        next_f = paging_function,
+                        page_arg = "start-index")
+  
+  pages
   
 }
 
