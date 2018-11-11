@@ -57,12 +57,9 @@ ga_custom_upload_list <- function(accountId,
                              customDataSources = customDataSourceId,
                              uploads = ""
                            ),
-                           pars_args = list("start-index"=1),
                            data_parse_function = function(x) x)
   
-  pages <- gar_api_page(cds, 
-                        next_f = paging_function,
-                        page_arg = "start-index")
+  pages <- gar_api_page(cds)
   
   out <- lapply(pages, function(x) x$items[,c("id","accountId","customDataSourceId","status")])
   

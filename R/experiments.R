@@ -52,12 +52,9 @@ ga_experiment_list <- function(accountId,
                                      profiles = profileId,
                                      experiments = ""
                                    ),
-                                   pars_args = list("start-index"=1),
                                    data_parse_function = function(x) x)
   
-  pages <- gar_api_page(experiments, 
-                        next_f = paging_function,
-                        page_arg = "start-index")
+  pages <- gar_api_page(experiments)
   
   pages
   

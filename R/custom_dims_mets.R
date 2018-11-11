@@ -132,12 +132,9 @@ ga_custom_vars_list <- function(accountId,
   cus_var <- gar_api_generator(url,
                                "GET",
                                path_args = pa,
-                               pars_args = list("start-index"=1),
                                data_parse_function = function(x) x)
   
-  pages <- gar_api_page(cus_var, 
-                        next_f = paging_function,
-                        page_arg = "start-index")
+  pages <- gar_api_page(cus_var)
   
   pages
   

@@ -20,12 +20,9 @@ ga_account_list <- function(){
   url <- "https://www.googleapis.com/analytics/v3/management/accountSummaries"
   acc_sum <- gar_api_generator(url,
                                "GET",
-                               pars_args = list("start-index"=1),
                                data_parse_function = parse_ga_account_summary)
   
-  pages <- gar_api_page(acc_sum, 
-                        next_f = paging_function,
-                        page_arg = "start-index")
+  pages <- gar_api_page(acc_sum)
   
   pages
   
@@ -43,12 +40,9 @@ ga_accounts <- function(){
   url <- "https://www.googleapis.com/analytics/v3/management/accounts"
   acc_sum <- gar_api_generator(url,
                                "GET",
-                               pars_args = list("start-index"=1),
                                data_parse_function = function(x) x)
   
-  pages <- gar_api_page(acc_sum, 
-                        next_f = paging_function,
-                        page_arg = "start-index")
+  pages <- gar_api_page(acc_sum)
   
   pages
 }

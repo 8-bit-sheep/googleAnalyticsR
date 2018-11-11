@@ -46,12 +46,9 @@ ga_adwords_list <- function(accountId,
                                  webproperties = webPropertyId,
                                  entityAdWordsLinks = ""
                                ),
-                               pars_args = list("start-index"=1),
                                data_parse_function = function(x) x)
   
-  pages <- gar_api_page(adwords, 
-                        next_f = paging_function,
-                        page_arg = "start-index")
+  pages <- gar_api_page(adwords)
   
   pages
   
