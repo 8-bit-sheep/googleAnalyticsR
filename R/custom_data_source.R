@@ -48,6 +48,7 @@ ga_custom_upload_list <- function(accountId,
                                   customDataSourceId){
   
   url <- "https://www.googleapis.com/analytics/v3/management/"
+  
   cds <- gar_api_generator(url,
                            "GET",
                            path_args = list(
@@ -56,11 +57,16 @@ ga_custom_upload_list <- function(accountId,
                              customDataSources = customDataSourceId,
                              uploads = ""
                            ),
+                           pars_args = list("start-index"=1),
                            data_parse_function = function(x) x)
   
-  out <- cds()
+  pages <- gar_api_page(cds, 
+                        next_f = paging_function,
+                        page_arg = "start-index")
   
-  out$items[,c("id","accountId","customDataSourceId","status")]
+  out <- lapply(pages, function(x) x$items[,c("id","accountId","customDataSourceId","status")])
+  
+  Reduce(dplyr::bind_rows, out)
   
 }
 

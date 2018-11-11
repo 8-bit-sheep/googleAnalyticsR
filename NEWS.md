@@ -10,6 +10,7 @@
 * Fix default of pivot groups so they include first column (thanks @gilliganondata) (#107)
 * Support for creating remarketing audiences (#161)
 * Support "NdaysAgo" in antisample calls (#209)
+* Support more than 1000 entries in various management list functions (#174)
 
 # googleAnalytics 0.5.0
 

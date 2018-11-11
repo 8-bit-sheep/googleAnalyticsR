@@ -12,15 +12,6 @@ ga_segment_list <- function(){
                             pars_args = list("start-index"=1),
                             data_parse_function = function(x) x)
   
-  paging_function <- function(x){
-    next_entry <- x$startIndex + x$itemsPerPage
-    if(next_entry < x$totalResults){
-      return(next_entry)
-    } else {
-      return(NULL)
-    }
-  }
-  
   pages <- gar_api_page(segs, 
                         next_f = paging_function,
                         page_arg = "start-index")

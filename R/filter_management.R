@@ -54,7 +54,12 @@ ga_filter_view_list <- function(accountId,
                                  profiles = viewId,
                                  profileFilterLinks = ""
                                ),
+                               pars_args = list("start-index"=1),
                                data_parse_function = function(x) x)
+  
+  pages <- gar_api_page(filters, 
+                        next_f = paging_function,
+                        page_arg = "start-index")
   
   filters()
   
@@ -133,9 +138,14 @@ ga_filter_list <- function(accountId){
                                  accounts = accountId,
                                  filters = ""
                                ),
+                               pars_args = list("start-index"=1),
                                data_parse_function = function(x) x)
   
-  filters()
+  pages <- gar_api_page(filters, 
+                        next_f = paging_function,
+                        page_arg = "start-index")
+  
+  pages
   
 }
 
