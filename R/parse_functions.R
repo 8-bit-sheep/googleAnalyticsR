@@ -167,7 +167,7 @@ parse_ga_account_summary <- function(x){
 
   ## hack to get rid of global variables warning
   id <- name <- webProperties <- kind <- profiles <- NULL
-  x$items %>%
+  o <- x$items %>%
     transmute(accountId = id,
               accountName = name,
               ## fix bug if webProperties is NULL
@@ -182,6 +182,10 @@ parse_ga_account_summary <- function(x){
     mutate(viewId = id,
            viewName = name) %>% 
     select(-kind, -id, -name)
+  
+  attr(o, "nextLink") <- x$nextLink
+  
+  o
   
 }
 

@@ -1,3 +1,28 @@
+#' iso8601 timestamp to R
+#' @noRd
+iso8601_to_r <- function(x){
+  as.POSIXct(gsub("\\....Z$","",x), format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
+}
+
+
+#' data.frames within data.frames to flatten, take residual lists and concat them
+#' @noRd
+#' @importFrom jsonlite flatten
+#' @importFrom dplyr mutate_if
+#' @importFrom purrr map_chr
+super_flatten <- function(x){
+  x %>% 
+    flatten(recursive = TRUE) %>% 
+    mutate_if(is.list, ~purrr::map_chr(., paste, collapse = ","))
+}
+
+
+# common paging function
+get_attr_nextLink <- function(x){
+  attr(x, "nextLink")
+}
+
+
 # assert_that_null
 # do an assert_that test only if x is not null
 assert_that_ifnn <- function(x, assert_f){
