@@ -30,7 +30,7 @@ ga_users_list <- function(accountId,
                              "GET",
                              data_parse_function = parse_ga_users_list)
   
-  pages <- gar_api_page(users)
+  pages <- gar_api_page(users, page_f = get_attr_nextLink)
   
   Reduce(bind_rows, pages)
   
