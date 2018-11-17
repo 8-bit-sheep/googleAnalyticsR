@@ -9,11 +9,28 @@ ga_segment_list <- function(){
   url <- "https://www.googleapis.com/analytics/v3/management/segments"
   segs <- gar_api_generator(url,
                             "GET",
-                            data_parse_function = function(x) x)
+                            data_parse_function = parse_ga_segment_list)
   
-  pages <- gar_api_page(segs)
+  pages <- gar_api_page(segs, page_f = get_attr_nextLink)
   
-  pages
+  Reduce(bind_rows, pages)
+  
+}
+
+#' @noRd
+#' @import assertthat
+parse_ga_segment_list <- function(x){
+  assert_that(x$kind == "analytics#segments")
+  
+  o <- x$items %>% 
+    super_flatten() %>% 
+    select(-kind, -selfLink) %>% 
+    mutate(created = iso8601_to_r(created),
+           updated = iso8601_to_r(updated))
+  
+  attr(o, "nextLink") <- x$nextLink
+  
+  o
   
 }
 

@@ -4,8 +4,8 @@
 \alias{ga_custom_vars_list}
 \title{List Custom Dimensions or Metrics}
 \usage{
-ga_custom_vars_list(accountId, webPropertyId, type = c("customMetrics",
-  "customDimensions"))
+ga_custom_vars_list(accountId, webPropertyId, type = c("customDimensions",
+  "customMetrics"))
 }
 \arguments{
 \item{accountId}{Account Id}

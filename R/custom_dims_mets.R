@@ -111,7 +111,7 @@ ga_custom_vars <- function(accountId,
 #' @export
 ga_custom_vars_list <- function(accountId,
                                 webPropertyId,
-                                type = c("customMetrics", "customDimensions")){
+                                type = c("customDimensions","customMetrics")){
   
   type <- match.arg(type)
   
@@ -132,10 +132,27 @@ ga_custom_vars_list <- function(accountId,
   cus_var <- gar_api_generator(url,
                                "GET",
                                path_args = pa,
-                               data_parse_function = function(x) x)
+                               data_parse_function = parse_ga_custom_vars_list)
   
-  pages <- gar_api_page(cus_var)
+  pages <- gar_api_page(cus_var, page_f = get_attr_nextLink)
   
-  pages
+  Reduce(bind_rows, pages)
+  
+}
+
+#' @noRd
+#' @import assertthat
+parse_ga_custom_vars_list <- function(x){
+  assert_that(x$kind %in% c("analytics#customDimensions", "analytics#customMetrics"))
+  
+  o <- x$items %>%
+    super_flatten() %>% 
+    select(-kind, -selfLink) %>% 
+    mutate(created = iso8601_to_r(created),
+           updated = iso8601_to_r(updated))
+  
+  attr(o, "nextLink") <- x$nextLink
+  
+  o
   
 }

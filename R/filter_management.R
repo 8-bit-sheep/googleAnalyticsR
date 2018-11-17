@@ -54,12 +54,26 @@ ga_filter_view_list <- function(accountId,
                                  profiles = viewId,
                                  profileFilterLinks = ""
                                ),
-                               data_parse_function = function(x) x)
+                               data_parse_function = parse_ga_filter_view_list)
   
-  pages <- gar_api_page(filters)
+  pages <- gar_api_page(filters, page_f = get_attr_nextLink)
   
-  pages
+  Reduce(bind_rows, pages)
   
+}
+
+#' @noRd
+#' @import assertthat
+parse_ga_filter_view_list <- function(x){
+  assert_that(x$kind == "analytics#profileFilterLinks")
+  
+  o <- x$items %>% 
+    super_flatten() %>% 
+    select(-kind, -selfLink)
+  
+  attr(o, "nextLink") <- x$nextLink
+  
+  o
 }
 
 #' Get specific filter for view (profile)

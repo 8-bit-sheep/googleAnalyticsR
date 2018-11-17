@@ -52,10 +52,29 @@ ga_experiment_list <- function(accountId,
                                      profiles = profileId,
                                      experiments = ""
                                    ),
-                                   data_parse_function = function(x) x)
+                                   data_parse_function = parse_ga_experiments_list)
   
-  pages <- gar_api_page(experiments)
+  pages <- gar_api_page(experiments, page_f = get_attr_nextLink)
   
-  pages
+  Reduce(bind_rows, pages)
+  
+}
+
+#' @noRd
+#' @import assertthat
+parse_ga_experiments_list <- function(x){
+  assert_that(x$kind == "analytics#experiments")
+  
+  o <- x$items %>% 
+    super_flatten() %>% 
+    select(-kind, -selfLink) %>% 
+    mutate(created = iso8601_to_r(created),
+           updated = iso8601_to_r(updated),
+           startTime = iso8601_to_r(startTime),
+           endTime = iso8601_to_r(endTime))
+    
+  attr(o, "nextLink") <- x$nextLink
+  
+  o
   
 }

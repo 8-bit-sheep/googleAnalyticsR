@@ -28,10 +28,24 @@ ga_users_list <- function(accountId,
   
   users <- gar_api_generator(url,
                              "GET",
-                             data_parse_function = function(x) x)
+                             data_parse_function = parse_ga_users_list)
   
   pages <- gar_api_page(users)
   
-  pages
+  Reduce(bind_rows, pages)
+  
+}
+
+#' @noRd
+#' @import assertthat
+parse_ga_users_list <- function(x){
+  assert_that(x$kind == "analytics#entityUserLinks")
+  
+  o <- x$items %>% 
+    super_flatten() %>% 
+    select(-kind, -selfLink)
+  
+  attr(o, "nextLink") <- x$nextLink
+  o
   
 }

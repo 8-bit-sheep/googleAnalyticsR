@@ -46,10 +46,25 @@ ga_adwords_list <- function(accountId,
                                  webproperties = webPropertyId,
                                  entityAdWordsLinks = ""
                                ),
-                               data_parse_function = function(x) x)
+                               data_parse_function = parse_ga_adwords_list)
   
-  pages <- gar_api_page(adwords)
+  pages <- gar_api_page(adwords, page_f = get_attr_nextLink)
   
-  pages
+  Reduce(bind_rows, pages)
+  
+}
+
+#' @noRd
+#' @import assertthat
+parse_ga_adwords_list <- function(x){
+  assert_that(x$kind == "analytics#entityAdWordsLinks")
+  
+  o <- x$items %>% 
+    super_flatten() %>% 
+    select(-kind, -selfLink)
+  
+  attr(o, "nextLink") <- x$nextLink
+  
+  o
   
 }
