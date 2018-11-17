@@ -67,7 +67,7 @@ test_that("Get the account list", {
   skip_on_cran()
   al <- ga_accounts()
   
-  expect_equal(al$kind, "analytics#accounts")
+  expect_s3_class(al, "data.frame")
   
 })
 
@@ -123,7 +123,7 @@ test_that("Get Adwords list", {
   skip_on_cran()
   al <- ga_adwords_list(accountId, webPropertyId = webPropId)
   
-  expect_equal(al$kind, "analytics#entityAdWordsLinks")
+  expect_s3_class(al, "data.frame")
   
 })
 
@@ -164,8 +164,9 @@ test_that("Can get list of custom metrics and dimensions", {
   gacl <- ga_custom_vars_list(accountId, webPropId, type = "customMetrics")
   gacl2 <- ga_custom_vars_list(accountId, webPropId, type = "customDimensions") 
   
-  expect_equal(gacl$kind, "analytics#customMetrics")
-  expect_equal(gacl2$kind, "analytics#customDimensions")
+  expect_s3_class(gacl, "data.frame")
+  expect_s3_class(gacl2, "data.frame")
+  
 })
 
 test_that("Can get specific custom dimension", {
@@ -205,7 +206,8 @@ test_that("Can fetch experiment list", {
   skip_on_cran()
   exper <- ga_experiment_list(accountId, webPropId, ga_id)
   
-  expect_equal(exper$kind, "analytics#experiments")
+  expect_s3_class(exper, "data.frame")
+
 })
 
 context("Users")
@@ -221,9 +223,9 @@ test_that("Can fetch users list", {
   web <- ga_users_list(accountId, webPropertyId = webPropId)
   view <- ga_users_list(accountId, webPropertyId = webPropId, viewId = ga_id)
   
-  expect_equal(acc$kind, "analytics#entityUserLinks")
-  expect_equal(web$kind, "analytics#entityUserLinks")
-  expect_equal(view$kind, "analytics#entityUserLinks")
+  expect_s3_class(acc, "data.frame")
+  expect_s3_class(web, "data.frame")
+  expect_s3_class(view, "data.frame")
   
 })
 

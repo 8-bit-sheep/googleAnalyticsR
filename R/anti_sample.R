@@ -31,13 +31,16 @@ anti_sample <- function(anti_sample_batches,
     ## to lower - we want to allow Today and Yesterday or TODAY and YESTERDAY
     date_range <- gsub("^today$", Sys.Date(), tolower(date_range))
     date_range <- gsub("^yesterday$", Sys.Date() - 1, tolower(date_range))  
+
     # turn NDaysAgo into R Dates
     r_nd <- "^(.)DaysAgo$"
-    date_range <- Sys.Date() - 
-      as.numeric(gsub(r_nd,
-                      "\\1", 
-                      date_range)[grepl(r_nd, 
-                                        date_range)])
+    ndays_indexe <- grepl(r_nd, date_range)
+    if(any(ndays_indexe)){
+      date_range <- Sys.Date() - 
+        as.numeric(gsub(r_nd,
+                        "\\1", 
+                        date_range)[ndays_indexe])
+    }
     
     date_range <- as.Date(date_range)
   }

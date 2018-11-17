@@ -65,6 +65,10 @@ ga_experiment_list <- function(accountId,
 parse_ga_experiments_list <- function(x){
   assert_that(x$kind == "analytics#experiments")
   
+  if(is.null(check_empty(x$items))){
+    return(NULL)
+  }
+  
   o <- x$items %>% 
     super_flatten() %>% 
     select(-kind, -selfLink) %>% 

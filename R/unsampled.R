@@ -98,6 +98,10 @@ parse_unsampled <- function(x){
   
   assert_that(x$kind == "analytics#unsampledReports")
   
+  if(is.null(check_empty(x$items))){
+    return(NULL)
+  }
+  
   o <- x$items %>% 
     super_flatten() %>% 
     select(-kind, -selfLink)

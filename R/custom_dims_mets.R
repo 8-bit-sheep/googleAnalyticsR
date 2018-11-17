@@ -145,6 +145,10 @@ ga_custom_vars_list <- function(accountId,
 parse_ga_custom_vars_list <- function(x){
   assert_that(x$kind %in% c("analytics#customDimensions", "analytics#customMetrics"))
   
+  if(is.null(check_empty(x$items))){
+    return(NULL)
+  }
+
   o <- x$items %>%
     super_flatten() %>% 
     select(-kind, -selfLink) %>% 

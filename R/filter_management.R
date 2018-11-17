@@ -66,6 +66,10 @@ ga_filter_view_list <- function(accountId,
 #' @import assertthat
 parse_ga_filter_view_list <- function(x){
   assert_that(x$kind == "analytics#profileFilterLinks")
+
+  if(is.null(check_empty(x$items))){
+    return(NULL)
+  }
   
   o <- x$items %>% 
     super_flatten() %>% 

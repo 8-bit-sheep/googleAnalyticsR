@@ -59,6 +59,10 @@ ga_adwords_list <- function(accountId,
 parse_ga_adwords_list <- function(x){
   assert_that(x$kind == "analytics#entityAdWordsLinks")
   
+  if(is.null(check_empty(x$items))){
+    return(NULL)
+  }
+  
   o <- x$items %>% 
     super_flatten() %>% 
     select(-kind, -selfLink)

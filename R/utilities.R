@@ -1,3 +1,12 @@
+check_empty <- function(x){
+  if(any(is.null(x), length(x) == 0)){
+    myMessage("No items found")
+    return(NULL)
+  } else {
+    TRUE
+  }
+}
+
 #' iso8601 timestamp to R
 #' @noRd
 iso8601_to_r <- function(x){

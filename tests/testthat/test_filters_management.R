@@ -9,7 +9,7 @@ test_that("Get Filter View list", {
                               webPropertyId = webPropId, 
                               viewId = ga_id)
   
-  expect_equal(fits$kind, "analytics#profileFilterLinks")
+  expect_s3_class(fits, "data.frame")
   
 })
 
@@ -18,7 +18,7 @@ test_that("Get Filter list for account", {
   
   fits <- ga_filter_list(accountId)
   
-  expect_equal(fits$kind, "analytics#filters")
+  expect_s3_class(fits, "data.frame")
   
 })
 
