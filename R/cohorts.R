@@ -153,14 +153,15 @@ cohortGroup <- function(cohorts,
 #'
 #' @family v4 cohort functions
 #' @keywords internal
+#' @import assertthat
 cohort <- function(name,
                    type = c("FIRST_VISIT_DATE"),
                    dateRange){
   
   type <- match.arg(type)
   
-  assertthat::assert_that(is.character(name),
-                          inherits(dateRange, "date_ga4"))
+  assert_that(is.character(name),
+              inherits(dateRange, "date_ga4"))
   
   structure(
     list(

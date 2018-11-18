@@ -54,10 +54,30 @@ ga_filter_view_list <- function(accountId,
                                  profiles = viewId,
                                  profileFilterLinks = ""
                                ),
-                               data_parse_function = function(x) x)
+                               data_parse_function = parse_ga_filter_view_list)
   
-  filters()
+  pages <- gar_api_page(filters, page_f = get_attr_nextLink)
   
+  Reduce(bind_rows, pages)
+  
+}
+
+#' @noRd
+#' @import assertthat
+parse_ga_filter_view_list <- function(x){
+  assert_that(x$kind == "analytics#profileFilterLinks")
+
+  if(is.null(check_empty(x$items))){
+    return(NULL)
+  }
+  
+  o <- x$items %>% 
+    super_flatten() %>% 
+    select(-kind, -selfLink)
+  
+  attr(o, "nextLink") <- x$nextLink
+  
+  o
 }
 
 #' Get specific filter for view (profile)
@@ -133,10 +153,33 @@ ga_filter_list <- function(accountId){
                                  accounts = accountId,
                                  filters = ""
                                ),
-                               data_parse_function = function(x) x)
+                               data_parse_function = ga_filter_list_parse)
   
-  filters()
+  pages <- gar_api_page(filters, page_f = get_attr_nextLink)
   
+  Reduce(bind_rows, pages)
+  
+}
+
+#' @noRd
+#' @import assertthat
+ga_filter_list_parse <- function(x){
+  o <- x %>% 
+    management_api_parsing("analytics#filters") 
+  
+  if(is.null(o)){
+    return(data.frame())
+  }
+  
+  o <- o %>% 
+    select(-parentLink.href, -parentLink.type) %>% 
+    mutate(
+      created = iso8601_to_r(created),
+      updated = iso8601_to_r(updated)
+    )
+
+  attr(o, "nextLink") <- x$nextLink
+  o
 }
 
 #' Delete a filter from account or remove from view.

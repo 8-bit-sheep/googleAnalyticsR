@@ -15,7 +15,7 @@ ga_webproperty_list <- function(accountId){
                                   accounts = accountId,
                                   webproperties = ""
                                 ),
-                                data_parse_function = function(x) x)
+                                data_parse_function = function(x) x %>% management_api_parsing("analytics#webproperties"))
   
   web_prop()
   

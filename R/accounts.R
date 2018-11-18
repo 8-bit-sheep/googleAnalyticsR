@@ -13,6 +13,7 @@ google_analytics_account_list <- function(){
 #'
 #' @return a dataframe of all account, webproperty and view data
 #' @importFrom googleAuthR gar_api_generator
+#' @importFrom dplyr bind_rows
 #' @family managementAPI functions
 #' @export
 ga_account_list <- function(){
@@ -22,7 +23,9 @@ ga_account_list <- function(){
                                "GET",
                                data_parse_function = parse_ga_account_summary)
   
-  acc_sum()
+  pages <- gar_api_page(acc_sum, page_f = get_attr_nextLink)
+  
+  Reduce(bind_rows, pages)
   
 }
 
@@ -36,9 +39,27 @@ ga_account_list <- function(){
 ga_accounts <- function(){
   
   url <- "https://www.googleapis.com/analytics/v3/management/accounts"
-  acc_sum <- gar_api_generator(url,
+  accs <- gar_api_generator(url,
                                "GET",
-                               data_parse_function = function(x) x)
+                               data_parse_function = parse_ga_accounts)
   
-  acc_sum()
+  pages <- gar_api_page(accs, page_f = get_attr_nextLink)
+  
+  Reduce(bind_rows, pages)
+
+}
+
+#' @noRd
+#' @import assertthat
+#' @importFrom dplyr select
+parse_ga_accounts <- function(x){
+  
+  o <- x %>% 
+    management_api_parsing("analytics#accounts") %>% 
+    select(-childLink.type, -childLink.href) %>% 
+    mutate(created = iso8601_to_r(created),
+           updated = iso8601_to_r(updated))
+  
+  attr(o, "nextLink") <- x$nextLink
+  o
 }

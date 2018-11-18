@@ -1,5 +1,32 @@
+#' A common pattern for management API parsing
+#' @param x The response
+#' @param kind The kind of response
+#' @keywords internal
+#' @noRd
+management_api_parsing <- function(x, kind){
+  assert_that(x$kind %in% kind)
+  
+  if(is.null(check_empty(x$items))){
+    myMessage("No ", kind, " found ", level = 3)
+    return(NULL)
+  }
+  
+  o <- x$items %>%
+    super_flatten() %>%
+    select(-kind)
+  
+  if(!is.null(o$selfLink)){
+    o <- o %>% select(-selfLink)
+  }
+  
+  # attr only stays if no other dplyr stuff happens after this function
+  attr(o, "nextLink") <- x$nextLink
+  o
+}
+
 #' ga v4 parse batching
 #' @keywords internal
+#' @noRd
 google_analytics_4_parse_batch <- function(response_list){
 
   if(!is.null(response_list$resourceQuotasRemaining)){
@@ -165,23 +192,28 @@ get_samplePercent <- function(sampleReadCounts, samplingSpaceSizes){
 #' @importFrom purrr map_if
 parse_ga_account_summary <- function(x){
 
-  ## hack to get rid of global variables warning
+  assert_that(x$kind == "analytics#accountSummaries")
+  # ## hack to get rid of global variables warning
   id <- name <- webProperties <- kind <- profiles <- NULL
-  x$items %>%
+  o <- x$items %>%
     transmute(accountId = id,
               accountName = name,
               ## fix bug if webProperties is NULL
-              webProperties = purrr::map_if(webProperties, is.null, ~ data.frame())) %>% 
+              webProperties = purrr::map_if(webProperties, is.null, ~ data.frame())) %>%
     unnest() %>% ##unnest webprops
     mutate(webPropertyId = id,
            webPropertyName = name,
            ## fix bug if profiles is NULL
-           profiles = purrr::map_if(profiles, is.null, ~ data.frame())) %>% 
-    select(-kind, -id, -name) %>% 
+           profiles = purrr::map_if(profiles, is.null, ~ data.frame())) %>%
+    select(-kind, -id, -name) %>%
     unnest() %>% ## unnest profiles
     mutate(viewId = id,
-           viewName = name) %>% 
+           viewName = name) %>%
     select(-kind, -id, -name)
+  
+  attr(o, "nextLink") <- x$nextLink
+  
+  o
   
 }
 

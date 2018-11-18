@@ -9,25 +9,24 @@ test_that("Scope set correctly for Google Drive tests", {
 
 test_that("Can list and download unsampled files", {
   skip_on_cran()
-  dl <- ga_unsampled_list(accountId = "54019251",
-                          webPropertyId = "UA-54019251-4",
-                          profileId = "106249469")
+  dl <- ga_unsampled_list(accountId = accountId,
+                          webPropertyId = webPropId,
+                          profileId = ga_id)
   
   expect_s3_class(dl, "data.frame")
   
   reportTitle <- dl$title
 
   
-  expect_error(ga_unsampled_download(reportTitle,
-                              accountId = "54019251",
-                              webPropertyId = "UA-54019251-4",
-                              profileId = "106249469"),
-               "Only Google Drive download links are currently supported")
+  dl <- ga_unsampled_download(reportTitle,
+                              accountId = accountId,
+                              webPropertyId = webPropId,
+                              profileId = ga_id)
   
-  # on.exit(unlink(paste0(reportTitle,".csv")))
+  on.exit(unlink(paste0(reportTitle,".csv")))
   # 
-  # expect_equal(dl, paste0(reportTitle,".csv"))
-  # expect_true(file.exists(paste0(reportTitle,".csv")))
+  expect_equal(dl, paste0(reportTitle,".csv"))
+  expect_true(file.exists(paste0(reportTitle,".csv")))
 
   
 })

@@ -28,8 +28,20 @@ ga_users_list <- function(accountId,
   
   users <- gar_api_generator(url,
                              "GET",
-                             data_parse_function = function(x) x)
+                             data_parse_function = parse_ga_users_list)
   
-  users()
+  pages <- gar_api_page(users, page_f = get_attr_nextLink)
+  
+  Reduce(bind_rows, pages)
+  
+}
+
+#' @noRd
+#' @import assertthat
+parse_ga_users_list <- function(x){
+  
+  
+  x %>% 
+    management_api_parsing("analytics#entityUserLinks")
   
 }

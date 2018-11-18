@@ -52,8 +52,22 @@ ga_goal_list <- function(accountId,
                                   profiles = profileId,
                                   goals = ""
                                 ),
-                             data_parse_function = function(x) x)
+                             data_parse_function = parse_goal_list)
   
   goals()
   
+}
+
+parse_goal_list <- function(x){
+  o <- x %>% 
+    management_api_parsing("analytics#goals") 
+  
+  if(is.null(o)){
+    return(data.frame())
+  }
+  
+  o <- o %>% 
+    mutate(created = iso8601_to_r(created),
+           updated = iso8601_to_r(updated)) %>% 
+    select(-parentLink.href, -parentLink.type)
 }

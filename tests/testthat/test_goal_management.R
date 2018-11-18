@@ -7,7 +7,7 @@ test_that("Get Goal list for view", {
   
   goals <- ga_goal_list(accountId, webPropId, ga_id)
   
-  expect_equal(goals$kind, "analytics#goals")
+  expect_s3_class(goals, "data.frame")
   
 })
 

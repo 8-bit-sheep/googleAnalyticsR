@@ -75,19 +75,6 @@ ga_unsampled_list <- function(accountId,
                               webPropertyId,
                               profileId){
   
-  parse_unsampled <- function(x){
-    o <- x$items
-    
-    if(any(is.null(o), nrow(o) == 0)){
-      stop(sprintf("No unsampled reports found for accountId:%s webPropertyId: %s profileId: %s", 
-                   accountId, webPropertyId, profileId), call. = FALSE)
-    }
-    assert_that(is.data.frame(o))
-    
-    o <- o[, setdiff(names(o),c("selfLink","kind"))]
-    as.data.frame(lapply(o, unlist), stringsAsFactors = FALSE)
-  }
-  
   url <- "https://www.googleapis.com/analytics/v3/management/"
   unsampled <- gar_api_generator(url,
                                  "GET",
@@ -97,10 +84,27 @@ ga_unsampled_list <- function(accountId,
                                    profiles = profileId,
                                    unsampledReports = ""
                                  ),
-                                 data_parse_function = parse_unsampled)
+                                 data_parse_function = parse_unsampled_list)
   
-  unsampled()
+  pages <- gar_api_page(unsampled, page_f = get_attr_nextLink)
   
+  Reduce(bind_rows, pages)
+  
+}
+
+#' @noRd
+#' @import assertthat
+parse_unsampled_list <- function(x){
+  
+  o <- x %>% 
+    management_api_parsing("analytics#unsampledReports") 
+  
+  if(is.null(o)){
+    return(data.frame())
+  }
+  
+  o
+
 }
 
 #' Download Unsampled Report from Google Drive
