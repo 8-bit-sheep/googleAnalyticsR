@@ -24,13 +24,14 @@ Imports:
     dplyr (>= 0.7.0),
     googleAuthR (>= 0.6.2),
     httr (>= 1.3.1),
+    jsonlite (>= 1.5),
     magrittr (>= 1.5),
     memoise,
+    methods,
     purrr (>= 0.2.2),
     rlang (>= 0.1.0),
     tidyr (>= 0.6.3),
-    utils,
-    methods
+    utils
 Suggests:
     bigQueryR (>= 0.3.1),
     covr,
