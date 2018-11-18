@@ -63,22 +63,21 @@ ga_experiment_list <- function(accountId,
 #' @noRd
 #' @import assertthat
 parse_ga_experiments_list <- function(x){
-  assert_that(x$kind == "analytics#experiments")
   
-  if(is.null(check_empty(x$items))){
-    return(NULL)
+  o <- x %>% 
+    management_api_parsing("analytics#experiments") 
+  
+  if(is.null(o)){
+    return(data.frame())
   }
   
-  o <- x$items %>% 
-    super_flatten() %>% 
-    select(-kind, -selfLink) %>% 
+  o <- o %>% 
     mutate(created = iso8601_to_r(created),
            updated = iso8601_to_r(updated),
            startTime = iso8601_to_r(startTime),
            endTime = iso8601_to_r(endTime))
     
   attr(o, "nextLink") <- x$nextLink
-  
   o
   
 }

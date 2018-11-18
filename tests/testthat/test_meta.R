@@ -87,7 +87,7 @@ test_that("Get the webproperty list", {
   skip_on_cran()
   wb <- ga_webproperty_list(accountId)
   
-  expect_equal(wb$kind, "analytics#webproperties")
+  expect_s3_class(wb, "data.frame")
   
 })
 
@@ -103,9 +103,9 @@ context("Views")
 
 test_that("Get the view list", {
   skip_on_cran()
-  wb <- ga_view_list(accountId, webPropId)
+  views <- ga_view_list(accountId, webPropId)
   
-  expect_equal(wb$kind, "analytics#profiles")
+  expect_s3_class(views, "data.frame")
   
 })
 
@@ -185,7 +185,7 @@ test_that("Can get a goal list", {
   skip_on_cran()
   goals <- ga_goal_list(accountId, webPropId, ga_id)
   
-  expect_equal(goals$kind, "analytics#goals")
+  expect_s3_class(goals, "data.frame")
   
   
 })

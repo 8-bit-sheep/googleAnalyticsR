@@ -36,7 +36,7 @@ ga_view <- function(accountId,
 #' @family managementAPI functions
 #' @export
 ga_view_list <- function(accountId,
-                           webPropertyId){
+                         webPropertyId){
   
   url <- "https://www.googleapis.com/analytics/v3/management/"
   views <- gar_api_generator(url,
@@ -46,7 +46,7 @@ ga_view_list <- function(accountId,
                                webproperties = webPropertyId,
                                profiles = ""
                              ),
-                             data_parse_function = function(x) x)
+                             data_parse_function = function(x) x %>% management_api_parsing("analytics#profiles"))
   
   views()
   

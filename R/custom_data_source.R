@@ -41,6 +41,7 @@ ga_custom_datasource <- function(accountId,
 #'
 #' @return Custom Data Source Uploads List
 #' @importFrom googleAuthR gar_api_generator
+#' @importFrom dplyr bind_rows
 #' @family custom datasource functions
 #' @export
 ga_custom_upload_list <- function(accountId,
@@ -57,13 +58,28 @@ ga_custom_upload_list <- function(accountId,
                              customDataSources = customDataSourceId,
                              uploads = ""
                            ),
-                           data_parse_function = function(x) x)
+                           data_parse_function = parse_custom_upload_list)
   
-  pages <- gar_api_page(cds)
+  pages <- gar_api_page(cds, page_f = get_attr_nextLink)
   
-  out <- lapply(pages, function(x) x$items[,c("id","accountId","customDataSourceId","status")])
+  Reduce(bind_rows, pages)
   
-  Reduce(dplyr::bind_rows, out)
+}
+
+parse_custom_upload_list <- function(x){
+  
+  o <- x %>% 
+    management_api_parsing("analytics#uploads")
+
+  if(is.null(o)){
+    return(data.frame())
+  }
+  
+  o <- o %>% 
+    mutate(uploadTime = iso8601_to_r(uploadTime))
+  
+  attr(o, "nextLink") <- x$nextLink
+  o
   
 }
 
@@ -259,19 +275,6 @@ ga_custom_upload_file <- function(accountId,
                            pars_args = list(
                              uploadType = "media"
                            ))
-  
-  ## from https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/40#issuecomment-258287829
-  ## to get name of file in data uploads
-  # metadata <- tempfile()
-
-  # metadata_content <- jsonlite::toJSON(list(title = jsonlite::unbox(upload_name)))
-  
-  # writeLines(metadata_content, metadata)
-
-  # upload_me <- list(
-  #   metadata = httr::upload_file(metadata, type = "application/json; charset=UTF-8"),
-  #   media = httr::upload_file(temp, "application/octet-stream")
-  # )
   
   upload_me <- httr::upload_file(temp, "application/octet-stream")
   

@@ -1,5 +1,32 @@
+#' A common pattern for management API parsing
+#' @param x The response
+#' @param kind The kind of response
+#' @keywords internal
+#' @noRd
+management_api_parsing <- function(x, kind){
+  assert_that(x$kind %in% kind)
+  
+  if(is.null(check_empty(x$items))){
+    myMessage("No ", kind, " found ", level = 3)
+    return(NULL)
+  }
+  
+  o <- x$items %>%
+    super_flatten() %>%
+    select(-kind)
+  
+  if(!is.null(o$selfLink)){
+    o <- o %>% select(-selfLink)
+  }
+  
+  # attr only stays if no other dplyr stuff happens after this function
+  attr(o, "nextLink") <- x$nextLink
+  o
+}
+
 #' ga v4 parse batching
 #' @keywords internal
+#' @noRd
 google_analytics_4_parse_batch <- function(response_list){
 
   if(!is.null(response_list$resourceQuotasRemaining)){

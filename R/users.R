@@ -39,13 +39,9 @@ ga_users_list <- function(accountId,
 #' @noRd
 #' @import assertthat
 parse_ga_users_list <- function(x){
-  assert_that(x$kind == "analytics#entityUserLinks")
   
-  o <- x$items %>% 
-    super_flatten() %>% 
-    select(-kind, -selfLink)
   
-  attr(o, "nextLink") <- x$nextLink
-  o
+  x %>% 
+    management_api_parsing("analytics#entityUserLinks")
   
 }

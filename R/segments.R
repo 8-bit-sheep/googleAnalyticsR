@@ -20,11 +20,15 @@ ga_segment_list <- function(){
 #' @noRd
 #' @import assertthat
 parse_ga_segment_list <- function(x){
-  assert_that(x$kind == "analytics#segments")
   
-  o <- x$items %>% 
-    super_flatten() %>% 
-    select(-kind, -selfLink) %>% 
+  o <- x %>% 
+    management_api_parsing("analytics#segments") 
+  
+  if(is.null(o)){
+    return(data.frame())
+  }
+  
+  o <- o %>% 
     mutate(created = iso8601_to_r(created),
            updated = iso8601_to_r(updated))
   

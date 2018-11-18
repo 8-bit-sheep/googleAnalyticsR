@@ -84,7 +84,7 @@ ga_unsampled_list <- function(accountId,
                                    profiles = profileId,
                                    unsampledReports = ""
                                  ),
-                                 data_parse_function = parse_unsampled)
+                                 data_parse_function = parse_unsampled_list)
   
   pages <- gar_api_page(unsampled, page_f = get_attr_nextLink)
   
@@ -94,23 +94,14 @@ ga_unsampled_list <- function(accountId,
 
 #' @noRd
 #' @import assertthat
-parse_unsampled <- function(x){
+parse_unsampled_list <- function(x){
   
-  assert_that(x$kind == "analytics#unsampledReports")
+  o <- x %>% 
+    management_api_parsing("analytics#unsampledReports") 
   
-  if(is.null(check_empty(x$items))){
-    return(NULL)
+  if(is.null(o)){
+    return(data.frame())
   }
-  
-  o <- x$items %>% 
-    super_flatten() %>% 
-    select(-kind, -selfLink)
-  
-  if(any(is.null(o), nrow(o) == 0)){
-    stop(sprintf("No unsampled reports found"), call. = FALSE)
-  }
-  
-  attr(o, "nextLink") <- x$nextLink
   
   o
 

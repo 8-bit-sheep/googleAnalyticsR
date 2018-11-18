@@ -41,7 +41,6 @@ ga_accounts <- function(){
   url <- "https://www.googleapis.com/analytics/v3/management/accounts"
   accs <- gar_api_generator(url,
                                "GET",
-                               pars_args = list("max-results"=2),
                                data_parse_function = parse_ga_accounts)
   
   pages <- gar_api_page(accs, page_f = get_attr_nextLink)
@@ -55,16 +54,12 @@ ga_accounts <- function(){
 #' @importFrom dplyr select
 parse_ga_accounts <- function(x){
   
-  assert_that(x$kind == "analytics#accounts")
-  o <- x$items %>%
-    super_flatten() %>%
-    select(-kind, -selfLink, -childLink.type, -childLink.href) %>% 
+  o <- x %>% 
+    management_api_parsing("analytics#accounts") %>% 
+    select(-childLink.type, -childLink.href) %>% 
     mutate(created = iso8601_to_r(created),
            updated = iso8601_to_r(updated))
   
-  
   attr(o, "nextLink") <- x$nextLink
   o
-
-  
 }
