@@ -29,6 +29,12 @@ test_that("Record requests if online", {
                        order = order_type("sessions"))  
       
       google_analytics(ga_id, 
+                       date_range = c("15DaysAgo","today"),
+                       dimensions=c('medium'), 
+                       metrics = c('sessions'),
+                       order = order_type("sessions"))  
+      
+      google_analytics(ga_id, 
                          date_range = c("2015-07-30","2015-09-01"),
                          dimensions=c('medium','source','hour',
                                       'minute','campaign','pagePath'), 
@@ -243,6 +249,13 @@ with_mock_API({
                               order = order_type("sessions"))  
     expect_s3_class(t11, "data.frame")
     
+    t12 <- google_analytics(ga_id, 
+                     date_range = c("15DaysAgo","today"),
+                     dimensions=c('medium'), 
+                     metrics = c('sessions'),
+                     order = order_type("sessions"))  
+    
+    expect_s3_class(t11, "data.frame")
     
   })
   
