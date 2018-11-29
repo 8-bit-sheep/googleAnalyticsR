@@ -432,7 +432,23 @@ ga_id &lt;- account_list[1,&#39;viewId&#39;]
 <div id="service-accounts" class="section level2">
 <h2>Service accounts</h2>
 <p>You can alternatively authenticate by downloading a JSON file atached to a Google Cloud service account. More details on how to do that are on the <a href="http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#authentication-with-a-json-file-via-service-accounts"><code>googleAuthR</code> website</a>.</p>
-<p>Make sure to add the service account as a user to your Google Analytics account so it has access to your Google Analytics data e.g. your service account email will look something like <code>xxxx@yyyyyy.iam.gserviceaccount.com</code> - add this email to your Google Analytics account in the Web Admin panel to the views you want it to read data from.</p>
+<p>A service authentication file then needs to be created that has edit access to the GA account. It is recommended to make a dedicated service account if you don’t need it for anything else.</p>
+<ol style="list-style-type: decimal">
+<li>Create your own Google Cloud Project or use an existing one.</li>
+<li>Set your own client.id/secret via <code>googleAuthR::gar_set_client()</code></li>
+<li>Service accounts for your project can be created at this link: <code>https://console.cloud.google.com/iam-admin/serviceaccounts/create</code></li>
+<li>The service account does not need any GCP account permissions (we do that in next step when we add to GA)</li>
+<li>After you can see your service account in the list, create a JSON key for that service account and download it somewhere safe</li>
+<li>Copy the service email e.g. <code>ga-access@your-project.iam.gserviceaccount.com</code></li>
+<li>Login to Google Analytics and add the email to your account at the level of permissions you want. If you want to upload data or update filters etc. then it needs at least edit permissions, if it just needs to read data then Viewer access is fine.</li>
+<li>Make sure the GCP project the service key is for has both the Analytics API and the Analytics Reporting API access enabled. You can reach this via the Google API &amp; Services dashboard URL: <code>https://console.developers.google.com/apis/dashboard</code></li>
+</ol>
+<p>You should now be able to use the JSON auth file to authenticate with Google Analytics API via:</p>
+<pre class="r"><code>library(googleAnalyticsR)
+googleAuthR::gar_auth_service(&quot;your_auth_file.json&quot;)
+
+# test authentication
+al &lt;- ga_account_list()</code></pre>
 </div>
 <div id="auto-authentication" class="section level2">
 <h2>Auto-authentication</h2>
@@ -444,7 +460,7 @@ ga_id &lt;- account_list[1,&#39;viewId&#39;]
 <p>This is done by creating an environment variable called <code>GA_AUTH_FILE</code> that points at your valid cache file.</p>
 <p>You can set environment variables using a <code>.Renviron</code> file or via the function <code>Sys.setenv()</code> - see <code>?Startup</code> for details. The first method is described below:</p>
 <ol style="list-style-type: decimal">
-<li>Choose your authentication cache file - either one you have generated via <code>ga_auth()</code> or or your own Google Project’s service account JSON ending with file extension <code>.json</code></li>
+<li>Choose your authentication cache file - either one you have generated via <code>ga_auth()</code> or your own Google Project’s service account JSON ending with file extension <code>.json</code></li>
 <li>Create a file called <code>.Renviron</code> and place it in your user’s home directory (<code>~</code> on OSX/linux or <code>C:\\</code> on Windows). If using RStudio, you can find your the correct location directory by clicking on the <code>Home</code> breadcrumb link in your File Explorer panel.</li>
 <li>Place the absolute location of the file from step 1 into the <code>.Renviron</code> file, e.g. <code>GA_AUTH_FILE = &quot;/Users/mark/dev/auth/ga.oauth&quot;</code>.</li>
 <li>Save the file and restart your R session.</li>

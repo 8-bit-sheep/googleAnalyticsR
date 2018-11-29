@@ -29,6 +29,7 @@ Collaboration is welcomed and encouraged, if you are interested get in touch.
 * v4 features include: metric expressions, pivots, date comparisons, batching.
 * Auto-paging, [auto-authentication](http://code.markedmondson.me/googleAnalyticsR/setup.html) options
 * API metadata of possible metrics and dimensions
+* GA360 support for features such as [resource quotas](http://code.markedmondson.me/googleAnalyticsR/v4.html#ga360_quota_system).
 * Multi-user login to enable [Google Analytics powered Shiny Apps](http://code.markedmondson.me/googleAnalyticsR/shiny.html)
 * Integration with [BigQuery Google Analytics Premium/360 exports](http://code.markedmondson.me/googleAnalyticsR/big-query.html).
 * Single authentication flow can be used with other [`googleAuthR`](http://code.markedmondson.me/googleAuthR/) apps like [`searchConsoleR`](https://github.com/MarkEdmondson1234/searchConsoleR)
@@ -36,7 +37,7 @@ Collaboration is welcomed and encouraged, if you are interested get in touch.
 * Support for `googleAuthR` batch.  For big data calls this could be 10x quicker than normal GA fetching
 * Meta data in attributes of returned dataframe including date ranges, totals, min and max
 * Automatic caching of API requests
-* [Management API features such as [unsampled report downloads](http://code.markedmondson.me/googleAnalyticsR/management.html#unsampled_reports) and [view filter setup](http://code.markedmondson.me/googleAnalyticsR/management.html#view_filters)
+* Management API features such as [unsampled report downloads](http://code.markedmondson.me/googleAnalyticsR/management.html#unsampled_reports) and [view filter setup](http://code.markedmondson.me/googleAnalyticsR/management.html#view_filters)
 
 ## Thanks 
 
@@ -75,3 +76,5 @@ If you have used the package and published online then get in touch and I'll lis
 * Pierre has a [guide in French](https://www.anakeyn.com/2018/03/01/googleanalyticsr-import-google-analytics-r/) on how to setup googleAnalyticsR and start pulling out data.
 * Nico has a guide on how to insert [Google Analytics data into a map](https://www.ridgeway.com/blog/performance-optimisation/how-to-insert-ga-data-into-a-map-using-r-and-build)
 * Dusan goes into how to setup and use [googleAnalyticsR in Serbian](https://dusanmilosevic.com/google-analytics-api-v4-i-r-programski-jezik/)
+* Pavel talks about how to [automate website analytics with R and googleAnalyticsR](https://fathomfuel.com/automating-website-analytics-with-r-part-1/)
+

@@ -69,7 +69,26 @@ It is recommended to specify your cache file when authenticating in an RMarkdown
 
 You can alternatively authenticate by downloading a JSON file atached to a Google Cloud service account.  More details on how to do that are on the [`googleAuthR` website](http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#authentication-with-a-json-file-via-service-accounts).  
 
-Make sure to add the service account as a user to your Google Analytics account so it has access to your Google Analytics data e.g. your service account email will look something like `xxxx@yyyyyy.iam.gserviceaccount.com` - add this email to your Google Analytics account in the Web Admin panel to the views you want it to read data from. 
+A service authentication file then needs to be created that has edit access to the GA account.  It is recommended to make a dedicated service account if you don't need it for anything else. 
+
+1. Create your own Google Cloud Project or use an existing one.
+2. Set your own client.id/secret via `googleAuthR::gar_set_client()`
+3. Service accounts for your project can be created at this link: `https://console.cloud.google.com/iam-admin/serviceaccounts/create`
+4. The service account does not need any GCP account permissions (we do that in next step when we add to GA)
+5. After you can see your service account in the list, create a JSON key for that service account and download it somewhere safe
+6. Copy the service email e.g. `ga-access@your-project.iam.gserviceaccount.com`
+7. Login to Google Analytics and add the email to your account at the level of permissions you want.  If you want to upload data or update filters etc. then it needs at least edit permissions, if it just needs to read data then Viewer access is fine. 
+8. Make sure the GCP project the service key is for has both the Analytics API and the Analytics Reporting API access enabled.  You can reach this via the Google API & Services dashboard URL: `https://console.developers.google.com/apis/dashboard`
+
+You should now be able to use the JSON auth file to authenticate with Google Analytics API via:
+
+```r
+library(googleAnalyticsR)
+googleAuthR::gar_auth_service("your_auth_file.json")
+
+# test authentication
+al <- ga_account_list()
+```
 
 ## Auto-authentication
 
@@ -85,7 +104,7 @@ This is done by creating an environment variable called `GA_AUTH_FILE` that poin
 
 You can set environment variables using a `.Renviron` file or via the function `Sys.setenv()` - see `?Startup` for details. The first method is described below:
 
-1. Choose your authentication cache file - either one you have generated via `ga_auth()` or or your own Google Project's service account JSON ending with file extension `.json`
+1. Choose your authentication cache file - either one you have generated via `ga_auth()` or your own Google Project's service account JSON ending with file extension `.json`
 2. Create a file called `.Renviron` and place it in your user's home directory (`~` on OSX/linux or `C:\\` on Windows).  If using RStudio, you can find your the correct location directory by clicking on the `Home` breadcrumb link in your File Explorer panel.
 3. Place the absolute location of the file from step 1 into the `.Renviron` file, e.g.
 `GA_AUTH_FILE = "/Users/mark/dev/auth/ga.oauth"`.
