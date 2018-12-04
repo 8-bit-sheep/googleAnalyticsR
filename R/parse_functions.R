@@ -6,6 +6,11 @@
 management_api_parsing <- function(x, kind){
   assert_that(x$kind %in% kind)
   
+  if(x$totalResults == 0){
+    myMessage("No results found for username:", x$username, level = 3)
+    return(NULL)
+  }
+  
   if(is.null(check_empty(x$items))){
     myMessage("No ", kind, " found ", level = 3)
     return(NULL)
@@ -193,6 +198,12 @@ get_samplePercent <- function(sampleReadCounts, samplingSpaceSizes){
 parse_ga_account_summary <- function(x){
 
   assert_that(x$kind == "analytics#accountSummaries")
+  
+  if(x$totalResults == 0){
+    myMessage("No results found for username:", x$username, level = 3)
+    return(NULL)
+  }
+  
   # ## hack to get rid of global variables warning
   id <- name <- webProperties <- kind <- profiles <- NULL
   o <- x$items %>%
