@@ -12,6 +12,7 @@ The most commonly used are below:
 * `google_analytics_meta()` - get a data.frame of available dimensions and metrics
 * `aggregateGAData()` - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed. 
 
+Use `?function_name` to get more details of the functions below
 
 ## Account structure
 
@@ -31,8 +32,20 @@ The `_list` functions show all the details for that particular level of your acc
 
 ## Custom Data Sources
 
+See and upload custom data sources to Google Analytics
+
 * `ga_custom_datasource()`	- List Custom Data Sources
 * `ga_custom_upload()`	- Custom Data Source Upload Status
+* `ga_custom_upload_file()`- Upload a file to GA custom uploads
+* `ga_custom_upload_list()` - List the files in a GA custom upload
+
+## Custom variables
+
+Custom variables for a Google Analytics property.
+
+* `ga_custom_vars()` - get meta data for a specific custom variable
+* `ga_custom_vars_list()` - list all custom variables.
+
 
 ## Experiments
 
@@ -58,12 +71,16 @@ The filter edit functions are contributed by @zselinger which allow you to updat
 
 * `ga_goal()` -	Get goal
 * `ga_goal_list()` -	List goals
+* `ga_goal_add()` - Create and add Goals to a web property
+* `ga_goal_update()` - Modify an existing goal
 
 ## Remarketing segments
 
 * `ga_remarketing_estimate()` -	Estimate number of users added to the segment yesterday
 * `ga_remarketing_get()` -	Get a remarketing audience
 * `ga_remarketing_list()` -	List remarketing audiences
+* `ga_remarketing_build()` - Create definitions to be used within `ga_remarketing_create()`
+* `ga_remarketing_create()` - Create a remarketing audience
 
 ## Unsampled reports
 
@@ -76,6 +93,8 @@ Available only for GA360 accounts, you will need to authenticate with the Google
 ## Users
 
 * `ga_users_list()` -	List Users for the level you specify
+* `ga_clientid_hash()` - Creates the clientID hash that is used in BigQuery GA360 exports
+* `ga_user_deletion()` - Delete a website visitor from Google Analytics
 
 
 

@@ -397,6 +397,7 @@ div.tocify {
 <li><code>google_analytics_meta()</code> - get a data.frame of available dimensions and metrics</li>
 <li><code>aggregateGAData()</code> - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed.</li>
 </ul>
+<p>Use <code>?function_name</code> to get more details of the functions below</p>
 </div>
 <div id="account-structure" class="section level2">
 <h2>Account structure</h2>
@@ -419,9 +420,20 @@ div.tocify {
 </div>
 <div id="custom-data-sources" class="section level2">
 <h2>Custom Data Sources</h2>
+<p>See and upload custom data sources to Google Analytics</p>
 <ul>
 <li><code>ga_custom_datasource()</code> - List Custom Data Sources</li>
 <li><code>ga_custom_upload()</code> - Custom Data Source Upload Status</li>
+<li><code>ga_custom_upload_file()</code>- Upload a file to GA custom uploads</li>
+<li><code>ga_custom_upload_list()</code> - List the files in a GA custom upload</li>
+</ul>
+</div>
+<div id="custom-variables" class="section level2">
+<h2>Custom variables</h2>
+<p>Custom variables for a Google Analytics property.</p>
+<ul>
+<li><code>ga_custom_vars()</code> - get meta data for a specific custom variable</li>
+<li><code>ga_custom_vars_list()</code> - list all custom variables.</li>
 </ul>
 </div>
 <div id="experiments" class="section level2">
@@ -451,6 +463,8 @@ div.tocify {
 <ul>
 <li><code>ga_goal()</code> - Get goal</li>
 <li><code>ga_goal_list()</code> - List goals</li>
+<li><code>ga_goal_add()</code> - Create and add Goals to a web property</li>
+<li><code>ga_goal_update()</code> - Modify an existing goal</li>
 </ul>
 </div>
 <div id="remarketing-segments" class="section level2">
@@ -459,6 +473,8 @@ div.tocify {
 <li><code>ga_remarketing_estimate()</code> - Estimate number of users added to the segment yesterday</li>
 <li><code>ga_remarketing_get()</code> - Get a remarketing audience</li>
 <li><code>ga_remarketing_list()</code> - List remarketing audiences</li>
+<li><code>ga_remarketing_build()</code> - Create definitions to be used within <code>ga_remarketing_create()</code></li>
+<li><code>ga_remarketing_create()</code> - Create a remarketing audience</li>
 </ul>
 </div>
 <div id="unsampled-reports" class="section level2">
@@ -474,6 +490,8 @@ div.tocify {
 <h2>Users</h2>
 <ul>
 <li><code>ga_users_list()</code> - List Users for the level you specify</li>
+<li><code>ga_clientid_hash()</code> - Creates the clientID hash that is used in BigQuery GA360 exports</li>
+<li><code>ga_user_deletion()</code> - Delete a website visitor from Google Analytics</li>
 </ul>
 </div>
 
