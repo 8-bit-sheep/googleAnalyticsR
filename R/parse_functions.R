@@ -7,7 +7,7 @@ management_api_parsing <- function(x, kind){
   assert_that(x$kind %in% kind)
   
   if(x$totalResults == 0){
-    myMessage("No results found for username:", x$username, level = 3)
+    myMessage("No results found for username: ", x$username, level = 3)
     return(NULL)
   }
   
@@ -26,6 +26,10 @@ management_api_parsing <- function(x, kind){
   
   # attr only stays if no other dplyr stuff happens after this function
   attr(o, "nextLink") <- x$nextLink
+  attr(o, "kind") <- x$kind
+  attr(o, "username") <- x$username
+  attr(o, "totalResults") <- x$totalResults
+  
   o
 }
 
@@ -342,6 +346,6 @@ parse_google_analytics_meta <- function(x){
 
   dim_mets_attr <- x$items$attributes
 
-  data.frame(name=dim_mets, dim_mets_attr, stringsAsFactors = F)
+  data.frame(name=dim_mets, dim_mets_attr, stringsAsFactors = FALSE)
 
 }
