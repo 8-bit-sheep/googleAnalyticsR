@@ -1,0 +1,58 @@
+title: "googleAnalyticsR"
+output_dir: "."
+url: https://code.markedmondson.me/googleAnalyticsR/
+development:
+  mode: release
+home:
+  strip_header: true
+template:
+  params:
+    bootswatch: paper
+    ganalytics: UA-47480439-2
+navbar:
+  title: googleAnalyticsR
+  inverse: true
+  right:
+    - icon: fa-google fa-lg
+      href: https://developers.google.com/analytics/
+    - icon: fa-github fa-lg
+      href: https://github.com/MarkEdmondson1234/googleAnalyticsR
+    - icon: fa-slack fa-lg
+      href: https://docs.google.com/forms/d/e/1FAIpQLSerjirmMpB3b7LmBs_Vx_XPIE9IrhpCpPg1jUcpfBcivA3uBw/viewform
+  left:
+    - href: index.html
+      icon: fa-home
+    - text: "Setup"
+      href: articles/setup.html
+      icon: fa-wrench
+    - text: "Reporting APIs"
+      icon: fa-table
+      menu:
+        - text: "v4 API"
+          href: articles/v4.html
+          icon: fa-cogs
+        - text: "v3 API"
+          href: articles/v3.html
+          icon: fa-cog
+        - text: "BigQuery"
+          icon: fa-search
+          href: articles/big-query.html
+    - text: "Management API"
+      href: articles/management.html
+      icon: fa-briefcase
+    - text: Publishing
+      icon: fa-file
+      menu:
+      - text: "Shiny"
+        icon: fa-cloud-upload
+        href: articles/shiny.html
+      - text: "RMarkdown"
+        icon: fa-pencil-square
+        href: articles/rmarkdown.html
+    - text: "Help"
+      menu:
+      - text: "Function Reference"
+        href: reference/index.html
+      - text: "News"
+        href: news/index.html
+
