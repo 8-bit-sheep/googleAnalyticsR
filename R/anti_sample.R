@@ -5,6 +5,7 @@
 #' @inheritParams make_ga_4_req
 #' @inheritParams google_analytics
 #' @keywords internal
+#' @noRd
 anti_sample <- function(anti_sample_batches,
                         viewId,
                         date_range,
@@ -192,6 +193,7 @@ anti_sample <- function(anti_sample_batches,
 #' @return A vector with the batch number of each date. This allows for usage in
 #'   a mutate.
 #' @keywords internal
+#' @noRd
 chunkify <- function(sessions_vec, limit = 250e3) {
   #Accumulators
   batch_size    <- 0

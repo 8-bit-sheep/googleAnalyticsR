@@ -24,3 +24,31 @@ Create a remarketing audiences built via \link{ga_remarketing_build}
 \details{
 This builds and calls the API to create the remarketing audience based on the segments you have defined.
 }
+\examples{
+
+\dontrun{
+adword_list <- ga_adwords_list(123456, "UA-123456-1")
+
+adword_link <- ga_adword(adword_list$id[[1]])
+
+segment_list <- ga_segment_list()$items$definition
+
+my_remarketing1 <- ga_remarketing_build(segment_list[[1]], 
+                    state_duration = "TEMPORARY",
+                    membershipDurationDays = 90, 
+                    daysToLookBack = 14)
+                    
+my_remarketing2 <- ga_remarketing_build(segment_list[[2]], 
+                     state_duration = "PERMANENT",
+                     membershipDurationDays = 7, 
+                     daysToLookBack = 31)
+                     
+# state based only can include exclusions
+ga_remarketing_create(adwords_link = adword_link,
+                     include = my_remarketing1, 
+                     exclude = my_remarketing2,
+                     audienceType = "STATE_BASED", 
+                     name = "my_remarketing_seg1")
+
+}
+}
