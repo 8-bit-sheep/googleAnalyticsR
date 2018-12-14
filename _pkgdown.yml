@@ -12,13 +12,6 @@ template:
 navbar:
   title: googleAnalyticsR
   inverse: true
-  right:
-    - icon: fa-google fa-lg
-      href: https://developers.google.com/analytics/
-    - icon: fa-github fa-lg
-      href: https://github.com/MarkEdmondson1234/googleAnalyticsR
-    - icon: fa-slack fa-lg
-      href: https://docs.google.com/forms/d/e/1FAIpQLSerjirmMpB3b7LmBs_Vx_XPIE9IrhpCpPg1jUcpfBcivA3uBw/viewform
   left:
     - href: index.html
       icon: fa-home
@@ -61,6 +54,7 @@ reference:
       Setting up your environment so you can connect to the API
     contents:
       - ga_auth
+      - ga_cache_call
   - title: "Reporting API"
     desc: >
       Getting data from your Google Analytics account
@@ -96,7 +90,6 @@ reference:
       - google_analytics_meta
       - meta
       - getColNameOfClass
-      - ga_cache_call
   - title: "Shiny modules"
     desc: >
       Using Google Analytics with Shiny

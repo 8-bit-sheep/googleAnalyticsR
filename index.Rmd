@@ -9,18 +9,15 @@ output:
 [![CRAN](http://www.r-pkg.org/badges/version/googleAnalyticsR)](https://cran.r-project.org/package=googleAnalyticsR)
 [![Travis-CI Build Status](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master)](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR)
 
-
 ## googleAnalyticsR
 
-Welcome to the website for **googleAnalyticsR**, an R library for working with Google Analytics data.
+Welcome to the website for **googleAnalyticsR**, an R library for working with [Google Analytics](https://developers.google.com/analytics/) data.
 
 ![](https://raw.githubusercontent.com/MarkEdmondson1234/googleAnalyticsR/master/inst/hexlogo/hex.png){width=200px}
 
 Follow development on the project's [Github development site.](https://github.com/MarkEdmondson1234/googleAnalyticsR)
 
-Any bugs or feature requests please [file an issue.](https://github.com/MarkEdmondson1234/googleAnalyticsR/issues)
-
-There is a Slack group for `googleAuthR` related packages which includes `googleAnalyticsR`, for news, chat and support join via this [request form](https://docs.google.com/forms/d/e/1FAIpQLSerjirmMpB3b7LmBs_Vx_XPIE9IrhpCpPg1jUcpfBcivA3uBw/viewform). 
+The Slack group `googleAuthRverse` includes a `#googleAnalyticsR` channel. For news, chat and support join via this [request form](https://docs.google.com/forms/d/e/1FAIpQLSerjirmMpB3b7LmBs_Vx_XPIE9IrhpCpPg1jUcpfBcivA3uBw/viewform). 
 
 Collaboration is welcomed and encouraged, if you are interested get in touch.
 
