@@ -61,18 +61,21 @@ head(meta[,1:5])
 head(google_analytics_meta())[,1:5]
 ```
 
-* `aggregateGAData()` - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed. This is used internally when using anti-sampling, and is also useful to respond to dimension selections in Shiny dashboards, where you don't wnat to perform a new API call each time you need aggregated data.  Download all data first in a more unaggregated form, then use this function.
+* `aggregateGAData()` - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed. This is used internally when using anti-sampling, and is also useful to respond to dimension selections in Shiny dashboards, where you don't want to perform a new API call each time you need aggregated data.  Download all data first in a more unaggregated form, then use this function.
 
 ```{r}
 # use `aggregateGAData` so you can on the fly create summary data
 ga_data <- google_analytics(81416156, 
                             date_range = c("10daysAgo", "yesterday"),
-                            metrics = "sessions", dimensions = c("hour","date"))
+                            metrics = c("sessions","bounceRate"), dimensions = c("hour","date"))
 
 head(ga_data)
 
 # if we want totals per hour over the dates:
-aggregateGAData(ga_data, agg_names = "hour")
+aggregateGAData(ga_data[,c("hour","sessions")], agg_names = "hour")
+
+# it knows not to sum metrics that are rates:
+aggregateGAData(ga_data[,c("hour","bounceRate")], agg_names = "hour")
 ```
 
 

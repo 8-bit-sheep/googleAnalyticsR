@@ -430,31 +430,47 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use `aggregateGAData` so you can on the fly create summary data</span>
 ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, 
                             <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
-                            <span class="dt">metrics =</span> <span class="st">"sessions"</span>, <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
-<pre><code>## 2018-12-14 15:11:11&gt; Downloaded [240] rows from a total of [240].</code></pre>
+                            <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
+<pre><code>## 2018-12-14 15:17:55&gt; Downloaded [240] rows from a total of [240].</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</code></pre></div>
-<pre><code>##   hour       date sessions
-## 1   00 2018-12-04        6
-## 2   00 2018-12-05       10
-## 3   00 2018-12-06        9
-## 4   00 2018-12-07        5
-## 5   00 2018-12-08       18
-## 6   00 2018-12-09        6</code></pre>
+<pre><code>##   hour       date sessions bounceRate
+## 1   00 2018-12-04        6   66.66667
+## 2   00 2018-12-05       10   80.00000
+## 3   00 2018-12-06        9   88.88889
+## 4   00 2018-12-07        5   60.00000
+## 5   00 2018-12-08       18   88.88889
+## 6   00 2018-12-09        6   66.66667</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if we want totals per hour over the dates:</span>
-<span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data, <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
-<pre><code>## # A tibble: 24 x 3
-##    hour  sessions date      
-##    &lt;chr&gt;    &lt;dbl&gt; &lt;date&gt;    
-##  1 00         104 2018-12-04
-##  2 01          73 2018-12-04
-##  3 02          70 2018-12-04
-##  4 03          69 2018-12-04
-##  5 04          71 2018-12-04
-##  6 05          61 2018-12-04
-##  7 06          78 2018-12-04
-##  8 07          67 2018-12-04
-##  9 08         102 2018-12-04
-## 10 09         143 2018-12-04
+<span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"sessions"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
+<pre><code>## # A tibble: 24 x 2
+##    hour  sessions
+##    &lt;chr&gt;    &lt;dbl&gt;
+##  1 00         104
+##  2 01          73
+##  3 02          70
+##  4 03          69
+##  5 04          71
+##  6 05          61
+##  7 06          78
+##  8 07          67
+##  9 08         102
+## 10 09         143
+## # ... with 14 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># it knows not to sum metrics that are rates:</span>
+<span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"bounceRate"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
+<pre><code>## # A tibble: 24 x 2
+##    hour  bounceRate
+##    &lt;chr&gt;      &lt;dbl&gt;
+##  1 00          69.6
+##  2 01          77.3
+##  3 02          74.4
+##  4 03          79.5
+##  5 04          75.4
+##  6 05          78.7
+##  7 06          77.3
+##  8 07          82.9
+##  9 08          72.5
+## 10 09          66.3
 ## # ... with 14 more rows</code></pre>
 <ul>
 <li>
