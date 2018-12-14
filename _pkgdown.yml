@@ -114,7 +114,7 @@ reference:
       - make_ga_4_req
       - fetch_google_analytics_4
       - fetch_google_analytics_4_slow
-  - title: "Management API - Account structure"
+  - title: "Account structure"
     desc: >
       Viewing the account > webproperty > view structure
     contents:
@@ -124,7 +124,7 @@ reference:
       - ga_webproperty
       - ga_view_list
       - ga_view
-  - title: "Management API - AdWords and remarketing segments"
+  - title: "AdWords and remarketing segments"
     desc: >
       Tools to work with the AdWords integrations of Google Analytics
     contents:
@@ -136,7 +136,7 @@ reference:
       - ga_remarketing_create
       - ga_remarketing_estimate
       - ga_remarketing_get
-  - title: "Managment API - Custom Datasource uploads"
+  - title: "Custom Datasource uploads"
     desc: > 
       Uploading data to your Google Analytics web property
     contents:
@@ -144,7 +144,7 @@ reference:
       - ga_custom_upload_list
       - ga_custom_upload
       - ga_custom_upload_file
-  - title: "Management API - Setting up View filters"
+  - title: "Setting up View filters"
     desc: >
       Manipulate the filters that are applied to your Google Analytics Views
     contents:
@@ -157,7 +157,7 @@ reference:
       - ga_filter_update_filter_link
       - ga_filter_view_list
       - ga_filter_view
-  - title: "Management API - Setting up Goals"
+  - title: "Setting up Goals"
     desc: >
       Manipulate the goals defined for your Google Analytics Views
     contents:
@@ -165,31 +165,31 @@ reference:
       - ga_goal
       - ga_goal_add
       - ga_goal_update
-  - title: "Management API - Unsampled Reports [GA360]"
+  - title: "Unsampled Reports [GA360]"
     desc: >
       Get your GA360 unsampled reports
     contents:
       - ga_unsampled_list
       - ga_unsampled
       - ga_unsampled_download
-  - title: "Management API - user management"
+  - title: "User management"
     desc: >
       Work with users of your Google Analytics account
     contents:
       - ga_users_list
-  - title: "Management API - visitorID management"
+  - title: "VisitorID management"
     desc: >
       Work with individual website visitor IDs
     contents:
       - ga_clientid_deletion
       - ga_clientid_hash
-  - title: "Management API - Custom variables"
+  - title: "Custom variables"
     desc: >
       Work with custom dimensions and metrics for your Google Analytics account
     contents: 
       - ga_custom_vars_list
       - ga_custom_vars
-  - title: "Management API - Experiments"
+  - title: "Experiments"
     desc: >
       Work with experiment objects 
     contents:
