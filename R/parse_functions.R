@@ -5,9 +5,10 @@
 #' @noRd
 management_api_parsing <- function(x, kind){
   assert_that(x$kind %in% kind)
+  myMessage("Fetching ", x$kind, " for username: ", x$username, level = 3)
   
   if(x$totalResults == 0){
-    myMessage("No results found for username: ", x$username, level = 3)
+    myMessage("No results found")
     return(NULL)
   }
   

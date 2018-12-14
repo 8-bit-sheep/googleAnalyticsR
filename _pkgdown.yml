@@ -43,10 +43,13 @@ navbar:
         icon: fa-pencil-square
         href: articles/rmarkdown.html
     - text: "Help"
+      icon: fa-question-circle
       menu:
       - text: "Function Reference"
         href: reference/index.html
+        icon: fa-book-reader
       - text: "News"
+        icon: fa-newspaper
         href: news/index.html
 reference:
   - title: "Authentication and Setup"

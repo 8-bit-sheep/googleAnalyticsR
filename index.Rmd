@@ -48,6 +48,8 @@ These are all great libraries that also work with Google Analytics data in R, th
 * [ganalytics](https://github.com/jdeboer/ganalytics)
 * [GAR](https://github.com/andrewgeisler/GAR)
 
+Thanks also to the many contributors to the package that have been creating features, finding and fixing bugs and giving feedback.  They have all helped create the package as it is today.  In particular Jas Sohi (@j450h1) and Zoran Selinger (@zselinger) for their work on new management API features.
+
 ## Tutorials
 
 If you have used the package and published online then get in touch and I'll list it here so others can benefit.
@@ -76,4 +78,10 @@ If you have used the package and published online then get in touch and I'll lis
 * Nico has a guide on how to insert [Google Analytics data into a map](https://www.ridgeway.com/blog/performance-optimisation/how-to-insert-ga-data-into-a-map-using-r-and-build)
 * Dusan goes into how to setup and use [googleAnalyticsR in Serbian](https://dusanmilosevic.com/google-analytics-api-v4-i-r-programski-jezik/)
 * Pavel talks about how to [automate website analytics with R and googleAnalyticsR](https://fathomfuel.com/automating-website-analytics-with-r-part-1/)
+
+## My website
+
+There are some blog posts on using googleAnalyticsR and various other data science code for digital marketing on my blog: [Mark Edmondson's Blog](https://code.markedmondson.me).  
+
+There you can also see other [R packages working with digital marketing applications](http://code.markedmondson.me/r-packages/) such as `searchConsoleR`, `bigQueryR` and `googleMeasureR`.
 

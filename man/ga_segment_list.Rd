@@ -13,9 +13,8 @@ Segment list
 Get segments user has access to
 }
 \seealso{
-Other managementAPI functions: \code{\link{ga_accounts}},
-  \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}},
-  \code{\link{ga_clientid_hash}},
+Other managementAPI functions: \code{\link{ga_adwords_list}},
+  \code{\link{ga_adwords}}, \code{\link{ga_clientid_hash}},
   \code{\link{ga_custom_vars_list}},
   \code{\link{ga_custom_vars}},
   \code{\link{ga_experiment_list}},
@@ -33,9 +32,5 @@ Other managementAPI functions: \code{\link{ga_accounts}},
   \code{\link{ga_remarketing_get}},
   \code{\link{ga_remarketing_list}},
   \code{\link{ga_unsampled_list}},
-  \code{\link{ga_unsampled}}, \code{\link{ga_users_list}},
-  \code{\link{ga_view_list}}, \code{\link{ga_view}},
-  \code{\link{ga_webproperty_list}},
-  \code{\link{ga_webproperty}},
-  \code{\link{google_analytics_account_list}}
+  \code{\link{ga_unsampled}}, \code{\link{ga_users_list}}
 }
