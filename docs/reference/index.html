@@ -218,8 +218,130 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-authentication-and-setup" class="hasAnchor"><a href="#section-authentication-and-setup" class="anchor"></a>Authentication and Setup</h2>
+          <p class="section-desc"><p>Setting up your environment so you can connect to the API</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="ga_auth.html">ga_auth()</a></code> </p>
+        </td>
+        <td><p>Authenticate with Google Analytics OAuth2</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-reporting-api" class="hasAnchor"><a href="#section-reporting-api" class="anchor"></a>Reporting API</h2>
+          <p class="section-desc"><p>Getting data from your Google Analytics account</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="google_analytics.html">google_analytics()</a></code> <code><a href="google_analytics.html">google_analytics_4()</a></code> </p>
+        </td>
+        <td><p>Get Google Analytics v4 data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="google_analytics_3.html">google_analytics_3()</a></code> </p>
+        </td>
+        <td><p>Get Google Analytics v3 data (formerly google_analytics())</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="google_analytics_bq.html">google_analytics_bq()</a></code> </p>
+        </td>
+        <td><p>Get Google Analytics 360 BigQuery data</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-reporting-api-v-objects" class="hasAnchor"><a href="#section-reporting-api-v-objects" class="anchor"></a>Reporting API v4 objects</h2>
+          <p class="section-desc"><p>Creating objects for more advanced v4 Reporting API fetches</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="filter_clause_ga4.html">filter_clause_ga4()</a></code> </p>
+        </td>
+        <td><p>Make a dimension or metric filter clause object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="dim_filter.html">dim_filter()</a></code> </p>
+        </td>
+        <td><p>Make a dimension filter object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="met_filter.html">met_filter()</a></code> </p>
+        </td>
+        <td><p>Make a metric filter object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="order_type.html">order_type()</a></code> </p>
+        </td>
+        <td><p>Make an OrderType object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pivot_ga4.html">pivot_ga4()</a></code> </p>
+        </td>
+        <td><p>Make a pivot object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="make_cohort_group.html">make_cohort_group()</a></code> </p>
+        </td>
+        <td><p>Create a cohort group</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-segment-api-v-objects" class="hasAnchor"><a href="#section-segment-api-v-objects" class="anchor"></a>Segment API v4 objects</h2>
+          <p class="section-desc"><p>Creating segments for v4 reporting API fetches</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="segment_ga4.html">segment_ga4()</a></code> </p>
+        </td>
+        <td><p>Make a segment object for use</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="segment_define.html">segment_define()</a></code> </p>
+        </td>
+        <td><p>Make a segment definition</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="segment_element.html">segment_element()</a></code> </p>
+        </td>
+        <td><p>Make a segment element</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="segment_vector_sequence.html">segment_vector_sequence()</a></code> </p>
+        </td>
+        <td><p>Make sequenceSegment</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="segment_vector_simple.html">segment_vector_simple()</a></code> </p>
+        </td>
+        <td><p>Make a simple segment vector</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-helpers" class="hasAnchor"><a href="#section-helpers" class="anchor"></a>Helpers</h2>
+          <p class="section-desc"><p>Useful functions for working with the Google Analytics data</p></p>
         </th>
       </tr>
       <tr>
@@ -237,6 +359,38 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="google_analytics_meta.html">google_analytics_meta()</a></code> </p>
+        </td>
+        <td><p>Get current dimensions and metrics available in GA API.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="meta.html">meta</a></code> </p>
+        </td>
+        <td><p>Google Analytics API metadata</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="getColNameOfClass.html">getColNameOfClass()</a></code> </p>
+        </td>
+        <td><p>Gets the names of a dataframe's columns of a certain class</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ga_cache_call.html">ga_cache_call()</a></code> </p>
+        </td>
+        <td><p>Setup caching of API calls</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-shiny-modules" class="hasAnchor"><a href="#section-shiny-modules" class="anchor"></a>Shiny modules</h2>
+          <p class="section-desc"><p>Using Google Analytics with Shiny</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
           <p><code><a href="authDropdown.html">authDropdown()</a></code> </p>
         </td>
         <td><p>authDropdown [Shiny Module]</p></td>
@@ -249,9 +403,41 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="dim_filter.html">dim_filter()</a></code> </p>
+          <p><code><a href="multi_select.html">multi_select()</a></code> </p>
         </td>
-        <td><p>Make a dimension filter object</p></td>
+        <td><p>multi_select [Shiny Module]</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="multi_selectUI.html">multi_selectUI()</a></code> </p>
+        </td>
+        <td><p>multi_select UI [Shiny Module]</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="segmentBuilder.html">segmentBuilder()</a></code> </p>
+        </td>
+        <td><p>Create a GAv4 Segment Builder</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="segmentBuilderUI.html">segmentBuilderUI()</a></code> </p>
+        </td>
+        <td><p>Create a GAv4 Segment Builder</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-advanced-fetching-options" class="hasAnchor"><a href="#section-advanced-fetching-options" class="anchor"></a>Advanced fetching options</h2>
+          <p class="section-desc"><p>Building your own Google Analytics API requests</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="make_ga_4_req.html">make_ga_4_req()</a></code> </p>
+        </td>
+        <td><p>Make a Google Analytics v4 API fetch</p></td>
       </tr><tr>
         
         <td>
@@ -264,13 +450,15 @@
           <p><code><a href="fetch_google_analytics_4_slow.html">fetch_google_analytics_4_slow()</a></code> </p>
         </td>
         <td><p>Fetch GAv4 requests one at a time</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="filter_clause_ga4.html">filter_clause_ga4()</a></code> </p>
-        </td>
-        <td><p>Make a dimension or metric filter clause object</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-management-api-account-structure" class="hasAnchor"><a href="#section-management-api-account-structure" class="anchor"></a>Management API - Account structure</h2>
+          <p class="section-desc"><p>Viewing the account &gt; webproperty &gt; view structure</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="ga_account_list.html">google_analytics_account_list()</a></code> <code><a href="ga_account_list.html">ga_account_list()</a></code> </p>
@@ -285,9 +473,41 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="ga_adwords.html">ga_adwords()</a></code> </p>
+          <p><code><a href="ga_webproperty_list.html">ga_webproperty_list()</a></code> </p>
         </td>
-        <td><p>Get AdWords Link meta data</p></td>
+        <td><p>List web properties</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ga_webproperty.html">ga_webproperty()</a></code> </p>
+        </td>
+        <td><p>Get web property</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ga_view_list.html">ga_view_list()</a></code> </p>
+        </td>
+        <td><p>List View (Profile)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ga_view.html">ga_view()</a></code> </p>
+        </td>
+        <td><p>Get single View (Profile)</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-management-api-adwords-and-remarketing-segments" class="hasAnchor"><a href="#section-management-api-adwords-and-remarketing-segments" class="anchor"></a>Management API - AdWords and remarketing segments</h2>
+          <p class="section-desc"><p>Tools to work with the AdWords integrations of Google Analytics</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="ga_segment_list.html">ga_segment_list()</a></code> </p>
+        </td>
+        <td><p>Get segments user has access to</p></td>
       </tr><tr>
         
         <td>
@@ -297,33 +517,59 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="ga_auth.html">ga_auth()</a></code> </p>
+          <p><code><a href="ga_adwords.html">ga_adwords()</a></code> </p>
         </td>
-        <td><p>Authenticate with Google Analytics OAuth2</p></td>
+        <td><p>Get AdWords Link meta data</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="ga_cache_call.html">ga_cache_call()</a></code> </p>
+          <p><code><a href="ga_remarketing_list.html">ga_remarketing_list()</a></code> </p>
         </td>
-        <td><p>Setup caching of API calls</p></td>
+        <td><p>List remarketing audiences</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="ga_clientid_deletion.html">ga_clientid_deletion()</a></code> </p>
+          <p><code><a href="ga_remarketing_build.html">ga_remarketing_build()</a></code> </p>
         </td>
-        <td><p>Create or update a user deletion request</p></td>
+        <td><p>Create a remarketing audience for creation</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="ga_clientid_hash.html">ga_clientid_hash()</a></code> </p>
+          <p><code><a href="ga_remarketing_create.html">ga_remarketing_create()</a></code> </p>
         </td>
-        <td><p>Get hashed version of client id (also known as hashClientId, hashedClientId, or BigQuery's fullVisitorId)</p></td>
+        <td><p>Create a new remarketing audience</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="ga_remarketing_estimate.html">ga_remarketing_estimate()</a></code> </p>
+        </td>
+        <td><p>Estimate number of users added to the segment yesterday</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ga_remarketing_get.html">ga_remarketing_get()</a></code> </p>
+        </td>
+        <td><p>Get a remarketing audience</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-managment-api-custom-datasource-uploads" class="hasAnchor"><a href="#section-managment-api-custom-datasource-uploads" class="anchor"></a>Managment API - Custom Datasource uploads</h2>
+          <p class="section-desc"><p>Uploading data to your Google Analytics web property</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="ga_custom_datasource.html">ga_custom_datasource()</a></code> </p>
         </td>
         <td><p>List Custom Data Sources</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ga_custom_upload_list.html">ga_custom_upload_list()</a></code> </p>
+        </td>
+        <td><p>List Custom Data Source Uploads</p></td>
       </tr><tr>
         
         <td>
@@ -336,36 +582,20 @@
           <p><code><a href="ga_custom_upload_file.html">ga_custom_upload_file()</a></code> </p>
         </td>
         <td><p>Upload data to Google Analytics</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-management-api-setting-up-view-filters" class="hasAnchor"><a href="#section-management-api-setting-up-view-filters" class="anchor"></a>Management API - Setting up View filters</h2>
+          <p class="section-desc"><p>Manipulate the filters that are applied to your Google Analytics Views</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
-          <p><code><a href="ga_custom_upload_list.html">ga_custom_upload_list()</a></code> </p>
+          <p><code><a href="ga_filter_list.html">ga_filter_list()</a></code> </p>
         </td>
-        <td><p>List Custom Data Source Uploads</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ga_custom_vars.html">ga_custom_vars()</a></code> </p>
-        </td>
-        <td><p>Get Custom Dimensions or Metrics</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ga_custom_vars_list.html">ga_custom_vars_list()</a></code> </p>
-        </td>
-        <td><p>List Custom Dimensions or Metrics</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ga_experiment.html">ga_experiment()</a></code> </p>
-        </td>
-        <td><p>Experiments Meta data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ga_experiment_list.html">ga_experiment_list()</a></code> </p>
-        </td>
-        <td><p>List Experiments</p></td>
+        <td><p>List filters for account</p></td>
       </tr><tr>
         
         <td>
@@ -393,12 +623,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="ga_filter_list.html">ga_filter_list()</a></code> </p>
-        </td>
-        <td><p>List filters for account</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="ga_filter_update.html">ga_filter_update()</a></code> </p>
         </td>
         <td><p>Updates an existing filter.</p></td>
@@ -411,15 +635,29 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="ga_filter_view.html">ga_filter_view()</a></code> </p>
-        </td>
-        <td><p>Get specific filter for view (profile)</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="ga_filter_view_list.html">ga_filter_view_list()</a></code> </p>
         </td>
         <td><p>List filters for view (profile)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ga_filter_view.html">ga_filter_view()</a></code> </p>
+        </td>
+        <td><p>Get specific filter for view (profile)</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-management-api-setting-up-goals" class="hasAnchor"><a href="#section-management-api-setting-up-goals" class="anchor"></a>Management API - Setting up Goals</h2>
+          <p class="section-desc"><p>Manipulate the goals defined for your Google Analytics Views</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="ga_goal_list.html">ga_goal_list()</a></code> </p>
+        </td>
+        <td><p>List goals</p></td>
       </tr><tr>
         
         <td>
@@ -435,51 +673,23 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="ga_goal_list.html">ga_goal_list()</a></code> </p>
-        </td>
-        <td><p>List goals</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="ga_goal_update.html">ga_goal_update()</a></code> </p>
         </td>
         <td><p>Updates an existing goal.</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-management-api-unsampled-reports-ga-" class="hasAnchor"><a href="#section-management-api-unsampled-reports-ga-" class="anchor"></a>Management API - Unsampled Reports [GA360]</h2>
+          <p class="section-desc"><p>Get your GA360 unsampled reports</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
-          <p><code><a href="ga_remarketing_build.html">ga_remarketing_build()</a></code> </p>
+          <p><code><a href="ga_unsampled_list.html">ga_unsampled_list()</a></code> </p>
         </td>
-        <td><p>Create a remarketing audience for creation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ga_remarketing_create.html">ga_remarketing_create()</a></code> </p>
-        </td>
-        <td><p>Create a new remarketing audience</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ga_remarketing_estimate.html">ga_remarketing_estimate()</a></code> </p>
-        </td>
-        <td><p>Estimate number of users added to the segment yesterday</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ga_remarketing_get.html">ga_remarketing_get()</a></code> </p>
-        </td>
-        <td><p>Get a remarketing audience</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ga_remarketing_list.html">ga_remarketing_list()</a></code> </p>
-        </td>
-        <td><p>List remarketing audiences</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ga_segment_list.html">ga_segment_list()</a></code> </p>
-        </td>
-        <td><p>Get segments user has access to</p></td>
+        <td><p>List Unsampled Reports</p></td>
       </tr><tr>
         
         <td>
@@ -492,168 +702,80 @@
           <p><code><a href="ga_unsampled_download.html">ga_unsampled_download()</a></code> </p>
         </td>
         <td><p>Download Unsampled Report from Google Drive</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ga_unsampled_list.html">ga_unsampled_list()</a></code> </p>
-        </td>
-        <td><p>List Unsampled Reports</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-management-api-user-management" class="hasAnchor"><a href="#section-management-api-user-management" class="anchor"></a>Management API - user management</h2>
+          <p class="section-desc"><p>Work with users of your Google Analytics account</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="ga_users_list.html">ga_users_list()</a></code> </p>
         </td>
         <td><p>List Users</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-management-api-visitorid-management" class="hasAnchor"><a href="#section-management-api-visitorid-management" class="anchor"></a>Management API - visitorID management</h2>
+          <p class="section-desc"><p>Work with individual website visitor IDs</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="ga_clientid_deletion.html">ga_clientid_deletion()</a></code> </p>
+        </td>
+        <td><p>Create or update a user deletion request</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="ga_view.html">ga_view()</a></code> </p>
+          <p><code><a href="ga_clientid_hash.html">ga_clientid_hash()</a></code> </p>
         </td>
-        <td><p>Get single View (Profile)</p></td>
+        <td><p>Get hashed version of client id (also known as hashClientId, hashedClientId, or BigQuery's fullVisitorId)</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-management-api-custom-variables" class="hasAnchor"><a href="#section-management-api-custom-variables" class="anchor"></a>Management API - Custom variables</h2>
+          <p class="section-desc"><p>Work with custom dimensions and metrics for your Google Analytics account</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="ga_custom_vars_list.html">ga_custom_vars_list()</a></code> </p>
+        </td>
+        <td><p>List Custom Dimensions or Metrics</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="ga_view_list.html">ga_view_list()</a></code> </p>
+          <p><code><a href="ga_custom_vars.html">ga_custom_vars()</a></code> </p>
         </td>
-        <td><p>List View (Profile)</p></td>
+        <td><p>Get Custom Dimensions or Metrics</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-management-api-experiments" class="hasAnchor"><a href="#section-management-api-experiments" class="anchor"></a>Management API - Experiments</h2>
+          <p class="section-desc"><p>Work with experiment objects</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="ga_experiment_list.html">ga_experiment_list()</a></code> </p>
+        </td>
+        <td><p>List Experiments</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="ga_webproperty.html">ga_webproperty()</a></code> </p>
+          <p><code><a href="ga_experiment.html">ga_experiment()</a></code> </p>
         </td>
-        <td><p>Get web property</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ga_webproperty_list.html">ga_webproperty_list()</a></code> </p>
-        </td>
-        <td><p>List web properties</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="getColNameOfClass.html">getColNameOfClass()</a></code> </p>
-        </td>
-        <td><p>Gets the names of a dataframe's columns of a certain class</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="googleAnalyticsR.html">googleAnalyticsR</a></code> </p>
-        </td>
-        <td><p>Library for getting Google Analytics data into R</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="google_analytics.html">google_analytics()</a></code> <code><a href="google_analytics.html">google_analytics_4()</a></code> </p>
-        </td>
-        <td><p>Get Google Analytics v4 data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="google_analytics_3.html">google_analytics_3()</a></code> </p>
-        </td>
-        <td><p>Get Google Analytics v3 data (formerly google_analytics())</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="google_analytics_bq.html">google_analytics_bq()</a></code> </p>
-        </td>
-        <td><p>Get Google Analytics 360 BigQuery data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="google_analytics_meta.html">google_analytics_meta()</a></code> </p>
-        </td>
-        <td><p>Get current dimensions and metrics available in GA API.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make_cohort_group.html">make_cohort_group()</a></code> </p>
-        </td>
-        <td><p>Create a cohort group</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make_ga_4_req.html">make_ga_4_req()</a></code> </p>
-        </td>
-        <td><p>Make a Google Analytics v4 API fetch</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="met_filter.html">met_filter()</a></code> </p>
-        </td>
-        <td><p>Make a metric filter object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="meta.html">meta</a></code> </p>
-        </td>
-        <td><p>Google Analytics API metadata</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="multi_select.html">multi_select()</a></code> </p>
-        </td>
-        <td><p>multi_select [Shiny Module]</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="multi_selectUI.html">multi_selectUI()</a></code> </p>
-        </td>
-        <td><p>multi_select UI [Shiny Module]</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="order_type.html">order_type()</a></code> </p>
-        </td>
-        <td><p>Make an OrderType object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pivot_ga4.html">pivot_ga4()</a></code> </p>
-        </td>
-        <td><p>Make a pivot object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="segmentBuilder.html">segmentBuilder()</a></code> </p>
-        </td>
-        <td><p>Create a GAv4 Segment Builder</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="segmentBuilderUI.html">segmentBuilderUI()</a></code> </p>
-        </td>
-        <td><p>Create a GAv4 Segment Builder</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="segment_define.html">segment_define()</a></code> </p>
-        </td>
-        <td><p>Make a segment definition</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="segment_element.html">segment_element()</a></code> </p>
-        </td>
-        <td><p>Make a segment element</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="segment_ga4.html">segment_ga4()</a></code> </p>
-        </td>
-        <td><p>Make a segment object for use</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="segment_vector_sequence.html">segment_vector_sequence()</a></code> </p>
-        </td>
-        <td><p>Make sequenceSegment</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="segment_vector_simple.html">segment_vector_simple()</a></code> </p>
-        </td>
-        <td><p>Make a simple segment vector</p></td>
+        <td><p>Experiments Meta data</p></td>
       </tr>
     </tbody>
     </table>
@@ -662,7 +784,23 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-authentication-and-setup">Authentication and Setup</a></li>
+      <li><a href="#section-reporting-api">Reporting API</a></li>
+      <li><a href="#section-reporting-api-v-objects">Reporting API v4 objects</a></li>
+      <li><a href="#section-segment-api-v-objects">Segment API v4 objects</a></li>
+      <li><a href="#section-helpers">Helpers</a></li>
+      <li><a href="#section-shiny-modules">Shiny modules</a></li>
+      <li><a href="#section-advanced-fetching-options">Advanced fetching options</a></li>
+      <li><a href="#section-management-api-account-structure">Management API - Account structure</a></li>
+      <li><a href="#section-management-api-adwords-and-remarketing-segments">Management API - AdWords and remarketing segments</a></li>
+      <li><a href="#section-managment-api-custom-datasource-uploads">Managment API - Custom Datasource uploads</a></li>
+      <li><a href="#section-management-api-setting-up-view-filters">Management API - Setting up View filters</a></li>
+      <li><a href="#section-management-api-setting-up-goals">Management API - Setting up Goals</a></li>
+      <li><a href="#section-management-api-unsampled-reports-ga-">Management API - Unsampled Reports [GA360]</a></li>
+      <li><a href="#section-management-api-user-management">Management API - user management</a></li>
+      <li><a href="#section-management-api-visitorid-management">Management API - visitorID management</a></li>
+      <li><a href="#section-management-api-custom-variables">Management API - Custom variables</a></li>
+      <li><a href="#section-management-api-experiments">Management API - Experiments</a></li>
     </ul>
   </div>
 </div>
