@@ -168,39 +168,305 @@
 
     
     
-<p>The Management API v3 covers all API calls that are not data reporting related, and are for getting meta information about your Google Analytics account, or to change settings.</p>
-<div id="quick-start" class="section level2">
-<h2 class="hasAnchor">
-<a href="#quick-start" class="anchor"></a>Quick start</h2>
-<p>The most commonly used are below:</p>
-<ul>
-<li>
-<code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> - get a summary data.frame of all your GA accounts, webproperty and view Ids</li>
-<li>
-<code><a href="../reference/google_analytics_meta.html">google_analytics_meta()</a></code> - get a data.frame of available dimensions and metrics</li>
-<li>
-<code><a href="../reference/aggregateGAData.html">aggregateGAData()</a></code> - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed.</li>
-</ul>
-<p>Use <code>?function_name</code> to get more details of the functions below</p>
-</div>
+<p>The Management API v3 covers all API calls that are not data reporting related and are for getting meta information about your Google Analytics account or to change account settings.</p>
 <div id="account-structure" class="section level2">
 <h2 class="hasAnchor">
 <a href="#account-structure" class="anchor"></a>Account structure</h2>
-<p>The <code>_list</code> functions show all the details for that particular level of your account structure (<code>accounts &gt; web-properties &gt; Views (profiles)</code>) including creation time, user permissions etc.</p>
+<p>Shows the details for your account structure (<code>Accounts &gt; Web-properties &gt; Views (profiles)</code>) including creation time, user permissions etc.</p>
+<p>The most day-today useful function below is <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> which summarises all account web properties and views avaialble to your user.</p>
 <ul>
-<li>
-<code><a href="../reference/ga_accounts.html">ga_accounts()</a></code> - Get account metadata for your user</li>
 <li>
 <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> - Get account summary including the ViewId</li>
 <li>
+<code><a href="../reference/ga_accounts.html">ga_accounts()</a></code> - Get account metadata for your user</li>
+<li>
 <code><a href="../reference/ga_webproperty.html">ga_webproperty()</a></code> - Get web property</li>
 <li>
-<code><a href="../reference/ga_webproperty_list.html">ga_webproperty_list()</a></code> - List web properties</li>
+<code><a href="../reference/ga_webproperty_list.html">ga_webproperty_list()</a></code> - List web properties for a particular accountId</li>
 <li>
 <code><a href="../reference/ga_view.html">ga_view()</a></code> - Get single View (Profile)</li>
 <li>
-<code><a href="../reference/ga_view_list.html">ga_view_list()</a></code> - List Views (Profile)</li>
+<code><a href="../reference/ga_view_list.html">ga_view_list()</a></code> - List Views (Profile) for a particular accountId/webPropertyId</li>
 </ul>
+<p>You can then also get the meta-data for that particular entity via <code><a href="../reference/ga_webproperty.html">ga_webproperty()</a></code> or <code><a href="../reference/ga_view.html">ga_view()</a></code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you will usually want this one that summarises all accounts, webproperties and views available to your user</span>
+<span class="co"># (restricted to top 10 with the head() function)</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="../reference/ga_account_list.html">ga_account_list</a></span>(), <span class="dt">n =</span> <span class="dv">10</span>)</code></pre></div>
+<pre><code>##    accountId      accountName internalWebPropertyId    level
+## 1   79301104          cloudyr             118427305 STANDARD
+## 2   54516992     Demo Account              87479473 STANDARD
+## 3   54516992     Demo Account              87479473 STANDARD
+## 4   54516992     Demo Account              87479473 STANDARD
+## 5   73050356     GDE Tracking             110873793 STANDARD
+## 6   73050356     GDE Tracking             110873793 STANDARD
+## 7   47480439    MarkEdmondson              78737968 STANDARD
+## 8   47480439    MarkEdmondson              78742336 STANDARD
+## 9   47584925   RaspberryPi UA              78875592 STANDARD
+## 10  54019251 Sunholo Websites              86845257 STANDARD
+##                                 websiteUrl webPropertyId
+## 1                 http://cloudyr.github.io UA-79301104-1
+## 2  https://shop.googlemerchandisestore.com UA-54516992-1
+## 3  https://shop.googlemerchandisestore.com UA-54516992-1
+## 4  https://shop.googlemerchandisestore.com UA-54516992-1
+## 5                  http://gde-websites.com UA-73050356-1
+## 6                  http://gde-websites.com UA-73050356-1
+## 7                  http://markedmondson.me UA-47480439-2
+## 8                  http://markedmondson.me UA-47480439-1
+## 9                           http://erm.com UA-47584925-1
+## 10        https://gwt-download.appspot.com UA-54019251-1
+##             webPropertyName type starred    viewId          viewName
+## 1       the cloudyr project  WEB      NA 123875646 All Web Site Data
+## 2  Google Merchandise Store  WEB      NA  92320289     1 Master View
+## 3  Google Merchandise Store  WEB      NA  92324711       2 Test View
+## 4  Google Merchandise Store  WEB      NA  90822334   3 Raw Data View
+## 5              GDE Tracking  WEB      NA 115760903      Bot excluded
+## 6              GDE Tracking  WEB      NA 115751114          RAW DATA
+## 7       MarkEdmondson oldGA  WEB    TRUE  81416156         Live Blog
+## 8          markedmondson.me  WEB      NA  81416941 All Web Site Data
+## 9               raspberryPi  WEB      NA  81569059 All Web Site Data
+## 10             GWT Download  WEB      NA  90130533 All Web Site Data</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this only lists account meta-data</span>
+<span class="kw"><a href="../reference/ga_accounts.html">ga_accounts</a></span>()</code></pre></div>
+<pre><code>##         id             name             created             updated
+## 1 47480439    MarkEdmondson 2014-01-25 12:17:05 2015-08-10 18:47:15
+## 2 47584925   RaspberryPi UA 2014-01-29 17:01:47 2015-08-10 21:40:04
+## 3 54019251 Sunholo Websites 2014-08-20 19:17:05 2015-08-10 19:50:44
+## 4 54516992     Demo Account 2014-09-06 17:53:33 2018-02-11 23:40:54
+## 5 73050356     GDE Tracking 2016-01-29 20:40:44 2016-01-29 20:40:44
+## 6 79301104          cloudyr 2016-06-14 14:29:50 2016-06-14 14:29:50
+##                            permissions.effective
+## 1 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
+## 2 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
+## 3 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
+## 4                               READ_AND_ANALYZE
+## 5 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
+## 6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this gives meta-data for all web-properties for this accountId</span>
+<span class="kw"><a href="../reference/ga_webproperty_list.html">ga_webproperty_list</a></span>(<span class="dv">47480439</span>)</code></pre></div>
+<pre><code>##              id accountId internalWebPropertyId                name
+## 1 UA-47480439-1  47480439              78742336    markedmondson.me
+## 2 UA-47480439-2  47480439              78737968 MarkEdmondson oldGA
+##                websiteUrl    level profileCount    industryVertical
+## 1 http://markedmondson.me STANDARD            1 HOBBIES_AND_LEISURE
+## 2 http://markedmondson.me STANDARD            1 HOBBIES_AND_LEISURE
+##   dataRetentionTtl dataRetentionResetOnNewActivity             created
+## 1        MONTHS_26                            TRUE 2014-01-25 12:17:05
+## 2       INDEFINITE                            TRUE 2014-01-25 12:19:20
+##               updated defaultProfileId
+## 1 2014-01-25 12:17:06             &lt;NA&gt;
+## 2 2018-04-12 11:37:38         81416156
+##                            permissions.effective
+## 1 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
+## 2 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is meta-data for one particular web-property</span>
+<span class="kw"><a href="../reference/ga_webproperty.html">ga_webproperty</a></span>(<span class="dt">accountId =</span> <span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-1"</span>)</code></pre></div>
+<pre><code>## $id
+## [1] "UA-47480439-1"
+## 
+## $kind
+## [1] "analytics#webproperty"
+## 
+## $selfLink
+## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1"
+## 
+## $accountId
+## [1] "47480439"
+## 
+## $internalWebPropertyId
+## [1] "78742336"
+## 
+## $name
+## [1] "markedmondson.me"
+## 
+## $websiteUrl
+## [1] "http://markedmondson.me"
+## 
+## $level
+## [1] "STANDARD"
+## 
+## $profileCount
+## [1] 1
+## 
+## $industryVertical
+## [1] "HOBBIES_AND_LEISURE"
+## 
+## $dataRetentionTtl
+## [1] "MONTHS_26"
+## 
+## $dataRetentionResetOnNewActivity
+## [1] TRUE
+## 
+## $permissions
+## $permissions$effective
+## [1] "COLLABORATE"      "EDIT"             "MANAGE_USERS"    
+## [4] "READ_AND_ANALYZE"
+## 
+## 
+## $created
+## [1] "2014-01-25T12:17:05.492Z"
+## 
+## $updated
+## [1] "2014-01-25T12:17:06.625Z"
+## 
+## $parentLink
+## $parentLink$type
+## [1] "analytics#account"
+## 
+## $parentLink$href
+## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439"
+## 
+## 
+## $childLink
+## $childLink$type
+## [1] "analytics#profiles"
+## 
+## $childLink$href
+## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1/profiles"</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is meta-data for the views under this accountId/webPropertyId</span>
+<span class="kw"><a href="../reference/ga_view_list.html">ga_view_list</a></span>(<span class="dt">accountId =</span> <span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-1"</span>)</code></pre></div>
+<pre><code>##         id accountId webPropertyId internalWebPropertyId              name
+## 1 81416941  47480439 UA-47480439-1              78742336 All Web Site Data
+##   currency          timezone              websiteUrl type
+## 1      USD Europe/Copenhagen http://markedmondson.me  WEB
+##               created             updated eCommerceTracking
+## 1 2014-01-25 12:17:05 2015-06-14 13:18:53             FALSE
+##                            permissions.effective
+## 1 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is meta-data for this particular viewId (profileId)</span>
+<span class="kw"><a href="../reference/ga_view.html">ga_view</a></span>(<span class="dt">accountId =</span> <span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-1"</span>, <span class="dt">profileId =</span> <span class="dv">81416941</span>)</code></pre></div>
+<pre><code>## $id
+## [1] "81416941"
+## 
+## $kind
+## [1] "analytics#profile"
+## 
+## $selfLink
+## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1/profiles/81416941"
+## 
+## $accountId
+## [1] "47480439"
+## 
+## $webPropertyId
+## [1] "UA-47480439-1"
+## 
+## $internalWebPropertyId
+## [1] "78742336"
+## 
+## $name
+## [1] "All Web Site Data"
+## 
+## $currency
+## [1] "USD"
+## 
+## $timezone
+## [1] "Europe/Copenhagen"
+## 
+## $websiteUrl
+## [1] "http://markedmondson.me"
+## 
+## $type
+## [1] "WEB"
+## 
+## $permissions
+## $permissions$effective
+## [1] "COLLABORATE"      "EDIT"             "MANAGE_USERS"    
+## [4] "READ_AND_ANALYZE"
+## 
+## 
+## $created
+## [1] "2014-01-25T12:17:05.492Z"
+## 
+## $updated
+## [1] "2015-06-14T13:18:53.638Z"
+## 
+## $eCommerceTracking
+## [1] FALSE
+## 
+## $parentLink
+## $parentLink$type
+## [1] "analytics#webproperty"
+## 
+## $parentLink$href
+## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1"
+## 
+## 
+## $childLink
+## $childLink$type
+## [1] "analytics#goals"
+## 
+## $childLink$href
+## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1/profiles/81416941/goals"</code></pre>
+</div>
+<div id="helper-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#helper-functions" class="anchor"></a>Helper functions</h2>
+<p>These are helper utility functions to work with Google Analytics reporting API data.</p>
+<ul>
+<li>
+<code><a href="../reference/google_analytics_meta.html">google_analytics_meta()</a></code> - get a data.frame of available dimensions and metrics, or just use <code>meta</code> directly to get the version that comes with the library.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you can just use `meta` as is to get the available metrics, or ensure an up to date version by calling the metadata API.</span>
+<span class="co"># here we just return the first 5 columsn and rows for brevity</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(meta[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</code></pre></div>
+<pre><code>##                      name      type dataType group     status
+## 1             ga:userType DIMENSION   STRING  User     PUBLIC
+## 2          ga:visitorType DIMENSION   STRING  User DEPRECATED
+## 3         ga:sessionCount DIMENSION   STRING  User     PUBLIC
+## 4           ga:visitCount DIMENSION   STRING  User DEPRECATED
+## 5 ga:daysSinceLastSession DIMENSION   STRING  User     PUBLIC
+## 6     ga:userDefinedValue DIMENSION   STRING  User     PUBLIC</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="../reference/google_analytics_meta.html">google_analytics_meta</a></span>())[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>##                      name      type dataType group     status
+## 1             ga:userType DIMENSION   STRING  User     PUBLIC
+## 2          ga:visitorType DIMENSION   STRING  User DEPRECATED
+## 3         ga:sessionCount DIMENSION   STRING  User     PUBLIC
+## 4           ga:visitCount DIMENSION   STRING  User DEPRECATED
+## 5 ga:daysSinceLastSession DIMENSION   STRING  User     PUBLIC
+## 6     ga:userDefinedValue DIMENSION   STRING  User     PUBLIC</code></pre>
+<ul>
+<li>
+<code><a href="../reference/aggregateGAData.html">aggregateGAData()</a></code> - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed. This is used internally when using anti-sampling, and is also useful to respond to dimension selections in Shiny dashboards, where you don’t wnat to perform a new API call each time you need aggregated data. Download all data first in a more unaggregated form, then use this function.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use `aggregateGAData` so you can on the fly create summary data</span>
+ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, 
+                            <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
+                            <span class="dt">metrics =</span> <span class="st">"sessions"</span>, <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
+<pre><code>## 2018-12-14 15:11:11&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</code></pre></div>
+<pre><code>##   hour       date sessions
+## 1   00 2018-12-04        6
+## 2   00 2018-12-05       10
+## 3   00 2018-12-06        9
+## 4   00 2018-12-07        5
+## 5   00 2018-12-08       18
+## 6   00 2018-12-09        6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if we want totals per hour over the dates:</span>
+<span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data, <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
+<pre><code>## # A tibble: 24 x 3
+##    hour  sessions date      
+##    &lt;chr&gt;    &lt;dbl&gt; &lt;date&gt;    
+##  1 00         104 2018-12-04
+##  2 01          73 2018-12-04
+##  3 02          70 2018-12-04
+##  4 03          69 2018-12-04
+##  5 04          71 2018-12-04
+##  6 05          61 2018-12-04
+##  7 06          78 2018-12-04
+##  8 07          67 2018-12-04
+##  9 08         102 2018-12-04
+## 10 09         143 2018-12-04
+## # ... with 14 more rows</code></pre>
+<ul>
+<li>
+<code><a href="../reference/allowed_metric_dim.html">allowed_metric_dim()</a></code> - Create named list of allowed GA metrics/dimensions. This is useful to have nice looking labels for dimension and metric selection pickers, or to create lookup tables.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
+amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed_metric_dim.html">allowed_metric_dim</a></span>()
+<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(amd)</code></pre></div>
+<pre><code>##                   Users               New Users          % New Sessions 
+##              "ga:users"           "ga:newUsers" "ga:percentNewSessions" 
+##      1 Day Active Users      7 Day Active Users     14 Day Active Users 
+##          "ga:1dayUsers"          "ga:7dayUsers"         "ga:14dayUsers"</code></pre>
 </div>
 <div id="adwords" class="section level2">
 <h2 class="hasAnchor">
@@ -336,8 +602,8 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#quick-start">Quick start</a></li>
-      <li><a href="#account-structure">Account structure</a></li>
+<li><a href="#account-structure">Account structure</a></li>
+      <li><a href="#helper-functions">Helper functions</a></li>
       <li><a href="#adwords">AdWords</a></li>
       <li><a href="#custom-data-sources">Custom Data Sources</a></li>
       <li><a href="#custom-variables">Custom variables</a></li>

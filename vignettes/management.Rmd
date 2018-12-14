@@ -2,28 +2,87 @@
 title: "Management API"
 ---
 
-The Management API v3 covers all API calls that are not data reporting related, and are for getting meta information about your Google Analytics account, or to change settings.
+```{r setup, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+# auto-auth when done locally
+library(googleAnalyticsR)
+```
 
-## Quick start
-
-The most commonly used are below:
-
-* `ga_account_list()` - get a summary data.frame of all your GA accounts, webproperty and view Ids
-* `google_analytics_meta()` - get a data.frame of available dimensions and metrics
-* `aggregateGAData()` - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed. 
-
-Use `?function_name` to get more details of the functions below
+The Management API v3 covers all API calls that are not data reporting related and are for getting meta information about your Google Analytics account or to change account settings.
 
 ## Account structure
 
-The `_list` functions show all the details for that particular level of your account structure (`accounts > web-properties > Views (profiles)`) including creation time, user permissions etc.
+Shows the details for your account structure (`Accounts > Web-properties > Views (profiles)`) including creation time, user permissions etc.
 
-* `ga_accounts()`	- Get account metadata for your user
+The most day-today useful function below is `ga_account_list()` which summarises all account web properties and views avaialble to your user. 
+
 * `ga_account_list()`	- Get account summary including the ViewId
-* `ga_webproperty()` -	Get web property
-* `ga_webproperty_list()` -	List web properties
+* `ga_accounts()`	- Get account metadata for your user
+* `ga_webproperty()` -	Get web property 
+* `ga_webproperty_list()` -	List web properties for a particular accountId
 * `ga_view()` - Get single View (Profile)
-* `ga_view_list()` -	List Views (Profile)
+* `ga_view_list()` -	List Views (Profile) for a particular accountId/webPropertyId
+
+You can then also get the meta-data for that particular entity via `ga_webproperty()` or `ga_view()`
+
+```{r account structure, message=FALSE, warning=FALSE}
+# you will usually want this one that summarises all accounts, webproperties and views available to your user
+# (restricted to top 10 with the head() function)
+head(ga_account_list(), n = 10)
+
+# this only lists account meta-data
+ga_accounts()
+
+# this gives meta-data for all web-properties for this accountId
+ga_webproperty_list(47480439)
+
+# this is meta-data for one particular web-property
+ga_webproperty(accountId = 47480439, webPropertyId = "UA-47480439-1")
+
+# this is meta-data for the views under this accountId/webPropertyId
+ga_view_list(accountId = 47480439, webPropertyId = "UA-47480439-1")
+
+# this is meta-data for this particular viewId (profileId)
+ga_view(accountId = 47480439, webPropertyId = "UA-47480439-1", profileId = 81416941)
+```
+
+
+## Helper functions
+
+These are helper utility functions to work with Google Analytics reporting API data.
+
+* `google_analytics_meta()` - get a data.frame of available dimensions and metrics, or just use `meta` directly to get the version that comes with the library.
+
+
+```{r}
+# you can just use `meta` as is to get the available metrics, or ensure an up to date version by calling the metadata API.
+# here we just return the first 5 columsn and rows for brevity
+head(meta[,1:5])
+
+head(google_analytics_meta())[,1:5]
+```
+
+* `aggregateGAData()` - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed. This is used internally when using anti-sampling, and is also useful to respond to dimension selections in Shiny dashboards, where you don't wnat to perform a new API call each time you need aggregated data.  Download all data first in a more unaggregated form, then use this function.
+
+```{r}
+# use `aggregateGAData` so you can on the fly create summary data
+ga_data <- google_analytics(81416156, 
+                            date_range = c("10daysAgo", "yesterday"),
+                            metrics = "sessions", dimensions = c("hour","date"))
+
+head(ga_data)
+
+# if we want totals per hour over the dates:
+aggregateGAData(ga_data, agg_names = "hour")
+```
+
+
+* `allowed_metric_dim()` - Create named list of allowed GA metrics/dimensions.  This is useful to have nice looking labels for dimension and metric selection pickers, or to create lookup tables.
+
+```{r}
+#
+amd <- allowed_metric_dim()
+head(amd)
+```
 
 ## AdWords
 

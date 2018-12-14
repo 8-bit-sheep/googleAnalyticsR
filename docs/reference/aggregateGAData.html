@@ -237,6 +237,19 @@
   If agg_names is NULL will aggregate over all</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+<span class='co'># use `aggregateGAData` so you can on the fly create summary data</span>
+<span class='no'>ga_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='fl'>81416156</span>,
+                            <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"10daysAgo"</span>, <span class='st'>"yesterday"</span>),
+                            <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='st'>"sessions"</span>, <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"hour"</span>,<span class='st'>"date"</span>))
+
+<span class='co'># if we want totals per hour over the dates:</span>
+<span class='fu'>aggregateGAData</span>(<span class='no'>ga_data</span>, <span class='kw'>agg_names</span> <span class='kw'>=</span> <span class='st'>"hour"</span>)
+
+
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -244,7 +257,9 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

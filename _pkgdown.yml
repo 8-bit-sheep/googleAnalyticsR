@@ -92,7 +92,6 @@ reference:
       - allowed_metric_dim
       - google_analytics_meta
       - meta
-      - getColNameOfClass
   - title: "Shiny modules"
     desc: >
       Using Google Analytics with Shiny
