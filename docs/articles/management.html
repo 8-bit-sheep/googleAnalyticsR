@@ -431,7 +431,7 @@
 ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, 
                             <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
                             <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
-<pre><code>## 2018-12-15 20:15:36&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<pre><code>## 2018-12-15 20:39:36&gt; Downloaded [240] rows from a total of [240].</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</code></pre></div>
 <pre><code>##   hour       date sessions bounceRate
 ## 1   00 2018-12-05       10   80.00000
@@ -572,6 +572,7 @@ amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed
 <div id="remarketing-segments" class="section level2">
 <h2 class="hasAnchor">
 <a href="#remarketing-segments" class="anchor"></a>Remarketing segments</h2>
+<p>Remarketing segments lets you target users in Google Ads from Google Analytics segments.</p>
 <ul>
 <li>
 <code><a href="../reference/ga_remarketing_estimate.html">ga_remarketing_estimate()</a></code> - Estimate number of users added to the segment yesterday</li>
@@ -585,7 +586,16 @@ amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed
 <li>
 <code><a href="../reference/ga_remarketing_create.html">ga_remarketing_create()</a></code> - Create a remarketing audience</li>
 </ul>
+<p>A demo of how you could use this based on your existing GA segments is:</p>
+<p>```r adword_list &lt;- ga_adwords_list(123456, “UA-123456-1”)</p>
+<p>adword_link &lt;- ga_adword(adword_list$id[[1]])</p>
+<p>segment_list &lt;- ga_segment_list()<span class="math inline">\(items\)</span>definition</p>
+<p>my_remarketing1 &lt;- ga_remarketing_build(segment_list[[1]], state_duration = “TEMPORARY”, membershipDurationDays = 90, daysToLookBack = 14) my_remarketing2 &lt;- ga_remarketing_build(segment_list[[2]], state_duration = “PERMANENT”, membershipDurationDays = 7, daysToLookBack = 31)</p>
 </div>
+<div id="state-based-only-can-include-exclusions" class="section level1">
+<h1 class="hasAnchor">
+<a href="#state-based-only-can-include-exclusions" class="anchor"></a>state based only can include exclusions</h1>
+<p>ga_remarketing_create(adwords_link = adword_link, include = my_remarketing1, exclude = my_remarketing2, audienceType = “STATE_BASED”, name = “my_remarketing_seg1”) ``</p>
 <div id="unsampled-reports" class="section level2">
 <h2 class="hasAnchor">
 <a href="#unsampled-reports" class="anchor"></a>Unsampled reports</h2>
@@ -611,6 +621,7 @@ amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed
 <code>ga_user_deletion()</code> - Delete a website visitor from Google Analytics</li>
 </ul>
 </div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -627,8 +638,12 @@ amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed
       <li><a href="#view-filters">View Filters</a></li>
       <li><a href="#goals">Goals</a></li>
       <li><a href="#remarketing-segments">Remarketing segments</a></li>
-      <li><a href="#unsampled-reports">Unsampled reports</a></li>
+      <li>
+<a href="#state-based-only-can-include-exclusions">state based only can include exclusions</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#unsampled-reports">Unsampled reports</a></li>
       <li><a href="#users">Users</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>

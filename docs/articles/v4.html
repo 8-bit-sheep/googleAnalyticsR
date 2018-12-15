@@ -251,9 +251,9 @@ top_<span class="dv">25</span> &lt;-<span class="st"> </span><span class="kw"><a
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">868768</span>, <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"2016-12-31"</span>, <span class="st">"2017-02-01"</span>), <span class="dt">metrics =</span> <span class="st">"sessions"</span>)</code></pre></div>
 <p>Character strings are converted into <code>Date</code> class objects, so you can also use R’s native <code>Date</code> object handling to specify rolling dates:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">yesterday &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>() <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
-3daysAgo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>() <span class="op">-</span><span class="st"> </span><span class="dv">3</span>
+ThreedaysAgo &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>() <span class="op">-</span><span class="st"> </span><span class="dv">3</span>
 
-<span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">868768</span>, <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(3daysAgo, yesterday), <span class="dt">metrics =</span> <span class="st">"sessions"</span>)</code></pre></div>
+<span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">868768</span>, <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(ThreedaysAgo, yesterday), <span class="dt">metrics =</span> <span class="st">"sessions"</span>)</code></pre></div>
 <p>Or use the v4 API shortcuts directly such as <code>"yesterday"</code>, <code>"today"</code> or <code>"XDaysAgo"</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">868768</span>, <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"5daysAgo"</span>, <span class="st">"yesterday"</span>), <span class="dt">metrics =</span> <span class="st">"sessions"</span>)</code></pre></div>
 <div id="compare-date-ranges" class="section level3">
@@ -505,7 +505,7 @@ my_segments &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 segs &lt;-<span class="st"> </span>my_segments<span class="op">$</span>items
 
 ## segment Ids and name:
-segs[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"name"</span>,<span class="st">"id"</span>,<span class="st">"defintion"</span>)]
+segs[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"name"</span>,<span class="st">"id"</span>,<span class="st">"definition"</span>)]
 
 ## example output
   id            name                                                          definition
@@ -679,7 +679,26 @@ results &lt;-<span class="st"> </span><span class="kw"><a href="../reference/goo
                                                     ),
                              <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'ga:users'</span>),
                              <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'ga:segment'</span>))
-</code></pre></div>
+
+<span class="co"># Users whose first session to website was social:</span>
+seg_social &lt;-<span class="st"> </span><span class="kw"><a href="../reference/segment_element.html">segment_element</a></span>(<span class="st">"channelGrouping"</span>,
+                              <span class="dt">operator =</span> <span class="st">"EXACT"</span>,
+                              <span class="dt">type =</span> <span class="st">"DIMENSION"</span>,
+                              <span class="dt">expressions =</span> <span class="st">"Social"</span>)
+seg_first_visit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/segment_element.html">segment_element</a></span>(<span class="st">"sessionCount"</span>,
+                                   <span class="dt">operator =</span> <span class="st">"EXACT"</span>,
+                                   <span class="dt">type =</span> <span class="st">"DIMENSION"</span>,
+                                   <span class="dt">expressions =</span> <span class="st">"1"</span>)
+<span class="co"># social referrral followed by first sessionCount</span>
+segment_social_first &lt;-<span class="st"> </span><span class="kw"><a href="../reference/segment_vector_sequence.html">segment_vector_sequence</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(seg_social), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(seg_first_visit)))
+sd_segment &lt;-<span class="st"> </span><span class="kw"><a href="../reference/segment_define.html">segment_define</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(segment_social_first))
+segment_social &lt;-<span class="st"> </span><span class="kw"><a href="../reference/segment_ga4.html">segment_ga4</a></span>(<span class="st">"social_first"</span>, <span class="dt">user_segment =</span> sd_segment)
+segment_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics_4</a></span>(my_viewId,
+                                   <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"8daysAgo"</span>, <span class="st">"yesterday"</span>),
+                                   <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>, <span class="st">"users"</span>, <span class="dt">sessions_per_user =</span> <span class="st">"ga:sessions/ga:users"</span>),
+                                   <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"date"</span>, <span class="st">"country"</span>, <span class="st">"channelGrouping"</span>, <span class="st">"sessionCount"</span>),
+                                   <span class="dt">segments =</span> segment_social,
+                                   <span class="dt">metricFormat =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"FLOAT"</span>, <span class="st">"INTEGER"</span>, <span class="st">"INTEGER"</span>))</code></pre></div>
 <p>If you are still struggling with segment syntax, you may want to try the <a href="https://github.com/jdeboer/ganalytics/issues/56"><code>ganalytics</code> package</a> by Johann de Boer which has developed a domain specific language for making segments and may be easier to parse.</p>
 </div>
 <div id="rstudio-addin-segment-helper" class="section level3">

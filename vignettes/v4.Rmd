@@ -104,9 +104,9 @@ Character strings are converted into `Date` class objects, so you can also use R
 
 ```r
 yesterday <- Sys.Date() - 1
-3daysAgo <- Sys.Date() - 3
+ThreedaysAgo <- Sys.Date() - 3
 
-google_analytics(868768, date_range = c(3daysAgo, yesterday), metrics = "sessions")
+google_analytics(868768, date_range = c(ThreedaysAgo, yesterday), metrics = "sessions")
 ```
 
 Or use the v4 API shortcuts directly such as `"yesterday"`, `"today"` or `"XDaysAgo"`:
@@ -393,7 +393,7 @@ my_segments <- ga_segment_list()
 segs <- my_segments$items
 
 ## segment Ids and name:
-segs[,c("name","id","defintion")]
+segs[,c("name","id","definition")]
 
 ## example output
   id            name                                                          definition
@@ -576,7 +576,25 @@ results <- google_analytics(ga_id,
                              metrics = c('ga:users'),
                              dimensions = c('ga:segment'))
 
-
+# Users whose first session to website was social:
+seg_social <- segment_element("channelGrouping",
+                              operator = "EXACT",
+                              type = "DIMENSION",
+                              expressions = "Social")
+seg_first_visit <- segment_element("sessionCount",
+                                   operator = "EXACT",
+                                   type = "DIMENSION",
+                                   expressions = "1")
+# social referrral followed by first sessionCount
+segment_social_first <- segment_vector_sequence(list(list(seg_social), list(seg_first_visit)))
+sd_segment <- segment_define(list(segment_social_first))
+segment_social <- segment_ga4("social_first", user_segment = sd_segment)
+segment_data <- google_analytics_4(my_viewId,
+                                   date_range = c("8daysAgo", "yesterday"),
+                                   metrics = c("sessions", "users", sessions_per_user = "ga:sessions/ga:users"),
+                                   dimensions = c("date", "country", "channelGrouping", "sessionCount"),
+                                   segments = segment_social,
+                                   metricFormat = c("FLOAT", "INTEGER", "INTEGER"))
 ```
 
 If you are still struggling with segment syntax, you may want to try the [`ganalytics` package](https://github.com/jdeboer/ganalytics/issues/56) by Johann de Boer which has developed a domain specific language for making segments and may be easier to parse.
