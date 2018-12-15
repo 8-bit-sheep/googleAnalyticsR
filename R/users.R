@@ -23,7 +23,7 @@
 #' ga_auth()
 #' ga_users_list(47480439)
 #' ga_users_list(47480439, webPropertyId = "UA-47480439-2")
-#' ga_users_list(47480439, webPropertyId = "UA-47480439-1", viewId = 81416156)
+#' ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
 #' }
 ga_users_list <- function(accountId,
                           webPropertyId = NULL,
