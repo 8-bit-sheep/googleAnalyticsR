@@ -1,6 +1,12 @@
 # How to contribute to googleAnalyticsR
 
-Contributions of any sort are encouraged and very welcome.
+Contributions of any sort are encouraged and very welcome.  Anything helps, from typo fixes in documentation to pull requests with new features.
+
+## Documentation
+
+Function examples can be corrected or added to within the ROxygen comments above the function defintions within the R code folder.  They will then also appear on the website in the function reference system.
+
+Further website documentation is found within the /docs folder, which writes the website at https://code.markedmondson.me/googleAnalyticsR/ - to make changes to that content, look at the Rmd files in the /vignettes folder, which also update the website upon package build. 
 
 ## Bugs
 

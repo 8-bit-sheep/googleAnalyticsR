@@ -173,7 +173,7 @@
 <h2 class="hasAnchor">
 <a href="#account-structure" class="anchor"></a>Account structure</h2>
 <p>Shows the details for your account structure (<code>Accounts &gt; Web-properties &gt; Views (profiles)</code>) including creation time, user permissions etc.</p>
-<p>The most day-today useful function below is <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> which summarises all account web properties and views avaialble to your user.</p>
+<p>The most day-to-day useful function is <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> which summarises all account web properties and views available to your user.</p>
 <ul>
 <li>
 <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> - Get account summary including the ViewId</li>
@@ -189,7 +189,7 @@
 <code><a href="../reference/ga_view_list.html">ga_view_list()</a></code> - List Views (Profile) for a particular accountId/webPropertyId</li>
 </ul>
 <p>You can then also get the meta-data for that particular entity via <code><a href="../reference/ga_webproperty.html">ga_webproperty()</a></code> or <code><a href="../reference/ga_view.html">ga_view()</a></code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you will usually want this one that summarises all accounts, webproperties and views available to your user</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ga_account_list is most commonly used</span>
 <span class="co"># (restricted to top 10 with the head() function)</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="../reference/ga_account_list.html">ga_account_list</a></span>(), <span class="dt">n =</span> <span class="dv">10</span>)</code></pre></div>
 <pre><code>##    accountId      accountName internalWebPropertyId    level
@@ -400,13 +400,13 @@
 <div id="helper-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#helper-functions" class="anchor"></a>Helper functions</h2>
-<p>These are helper utility functions to work with Google Analytics reporting API data.</p>
+<p>These are helper utility functions to work with Google Analytics data.</p>
 <ul>
 <li>
 <code><a href="../reference/google_analytics_meta.html">google_analytics_meta()</a></code> - get a data.frame of available dimensions and metrics, or just use <code>meta</code> directly to get the version that comes with the library.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you can just use `meta` as is to get the available metrics, or ensure an up to date version by calling the metadata API.</span>
-<span class="co"># here we just return the first 5 columsn and rows for brevity</span>
+<span class="co"># here we just return the first 5 columns and rows for brevity</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(meta[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</code></pre></div>
 <pre><code>##                      name      type dataType group     status
 ## 1             ga:userType DIMENSION   STRING  User     PUBLIC
@@ -425,52 +425,52 @@
 ## 6     ga:userDefinedValue DIMENSION   STRING  User     PUBLIC</code></pre>
 <ul>
 <li>
-<code><a href="../reference/aggregateGAData.html">aggregateGAData()</a></code> - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed. This is used internally when using anti-sampling, and is also useful to respond to dimension selections in Shiny dashboards, where you don’t wnat to perform a new API call each time you need aggregated data. Download all data first in a more unaggregated form, then use this function.</li>
+<code><a href="../reference/aggregateGAData.html">aggregateGAData()</a></code> - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed. This is used internally when using anti-sampling, and is also useful to respond to dimension selections in Shiny dashboards, where you don’t want to perform a new API call each time you need aggregated data. Download all data first in a more unaggregated form, then use this function.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use `aggregateGAData` so you can on the fly create summary data</span>
 ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, 
                             <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
                             <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
-<pre><code>## 2018-12-14 15:17:55&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<pre><code>## 2018-12-15 20:15:36&gt; Downloaded [240] rows from a total of [240].</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</code></pre></div>
 <pre><code>##   hour       date sessions bounceRate
-## 1   00 2018-12-04        6   66.66667
-## 2   00 2018-12-05       10   80.00000
-## 3   00 2018-12-06        9   88.88889
-## 4   00 2018-12-07        5   60.00000
-## 5   00 2018-12-08       18   88.88889
-## 6   00 2018-12-09        6   66.66667</code></pre>
+## 1   00 2018-12-05       10   80.00000
+## 2   00 2018-12-06        9   88.88889
+## 3   00 2018-12-07        5   60.00000
+## 4   00 2018-12-08       18   88.88889
+## 5   00 2018-12-09        6   66.66667
+## 6   00 2018-12-10        5   60.00000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if we want totals per hour over the dates:</span>
 <span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"sessions"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  sessions
 ##    &lt;chr&gt;    &lt;dbl&gt;
-##  1 00         104
-##  2 01          73
-##  3 02          70
-##  4 03          69
-##  5 04          71
-##  6 05          61
-##  7 06          78
-##  8 07          67
+##  1 00         111
+##  2 01          75
+##  3 02          71
+##  4 03          59
+##  5 04          63
+##  6 05          54
+##  7 06          73
+##  8 07          63
 ##  9 08         102
-## 10 09         143
+## 10 09         144
 ## # ... with 14 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># it knows not to sum metrics that are rates:</span>
 <span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"bounceRate"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  bounceRate
 ##    &lt;chr&gt;      &lt;dbl&gt;
-##  1 00          69.6
-##  2 01          77.3
-##  3 02          74.4
-##  4 03          79.5
-##  5 04          75.4
-##  6 05          78.7
-##  7 06          77.3
-##  8 07          82.9
-##  9 08          72.5
-## 10 09          66.3
+##  1 00          69.1
+##  2 01          78.1
+##  3 02          72.3
+##  4 03          79.8
+##  5 04          74.5
+##  6 05          82.0
+##  7 06          80.1
+##  8 07          87.9
+##  9 08          76.0
+## 10 09          66.0
 ## # ... with 14 more rows</code></pre>
 <ul>
 <li>
