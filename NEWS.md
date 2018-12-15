@@ -12,6 +12,7 @@
 * Support "NdaysAgo" in antisample calls (#209)
 * Support more than 1000 entries in various management list functions (#174)
 * Parse management API list responses into data.frames (#194)
+* Add `ga_users_delete`
 
 # googleAnalytics 0.5.0
 

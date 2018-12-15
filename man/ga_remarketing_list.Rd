@@ -39,5 +39,5 @@ Other managementAPI functions: \code{\link{ga_adwords_list}},
   \code{\link{ga_remarketing_get}},
   \code{\link{ga_segment_list}},
   \code{\link{ga_unsampled_list}},
-  \code{\link{ga_unsampled}}, \code{\link{ga_users_list}}
+  \code{\link{ga_unsampled}}
 }

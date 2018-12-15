@@ -431,7 +431,7 @@
 ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, 
                             <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
                             <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
-<pre><code>## 2018-12-15 20:39:36&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<pre><code>## 2018-12-15 22:16:04&gt; Downloaded [240] rows from a total of [240].</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</code></pre></div>
 <pre><code>##   hour       date sessions bounceRate
 ## 1   00 2018-12-05       10   80.00000
@@ -483,6 +483,31 @@ amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed
 ##              "ga:users"           "ga:newUsers" "ga:percentNewSessions" 
 ##      1 Day Active Users      7 Day Active Users     14 Day Active Users 
 ##          "ga:1dayUsers"          "ga:7dayUsers"         "ga:14dayUsers"</code></pre>
+</div>
+<div id="user-management" class="section level2">
+<h2 class="hasAnchor">
+<a href="#user-management" class="anchor"></a>User management</h2>
+<ul>
+<li>ga_users_list() - list user access to your Google Analytics accounts, web properties or views</li>
+<li>ga_users_delete() - delete user access</li>
+</ul>
+<p>The below examples shows a workflow to list and delete user access for one user at View level.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsR)
+<span class="kw"><a href="../reference/ga_auth.html">ga_auth</a></span>()
+
+<span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>)
+<span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>)
+<span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>, <span class="dt">viewId =</span> <span class="dv">81416156</span>)
+
+<span class="co"># get the linkId for the user you want to delete</span>
+<span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>, <span class="dt">viewId =</span> <span class="dv">81416156</span>)
+<span class="kw"><a href="../reference/ga_users_delete.html">ga_users_delete</a></span>(<span class="st">"81416156:114834495587136933146"</span>, <span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>, <span class="dt">viewId =</span> <span class="dv">81416156</span>)
+ 
+<span class="co"># check its gone</span>
+<span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>, <span class="dt">viewId =</span> <span class="dv">81416156</span>)
+
+<span class="co"># can only delete at level user has access, the above deletion woud have failed if via:</span>
+<span class="kw"><a href="../reference/ga_users_delete.html">ga_users_delete</a></span>(<span class="st">"47480439:114834495587136933146"</span>, <span class="dv">47480439</span>)</code></pre></div>
 </div>
 <div id="adwords" class="section level2">
 <h2 class="hasAnchor">
@@ -587,15 +612,26 @@ amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed
 <code><a href="../reference/ga_remarketing_create.html">ga_remarketing_create()</a></code> - Create a remarketing audience</li>
 </ul>
 <p>A demo of how you could use this based on your existing GA segments is:</p>
-<p>```r adword_list &lt;- ga_adwords_list(123456, “UA-123456-1”)</p>
-<p>adword_link &lt;- ga_adword(adword_list$id[[1]])</p>
-<p>segment_list &lt;- ga_segment_list()<span class="math inline">\(items\)</span>definition</p>
-<p>my_remarketing1 &lt;- ga_remarketing_build(segment_list[[1]], state_duration = “TEMPORARY”, membershipDurationDays = 90, daysToLookBack = 14) my_remarketing2 &lt;- ga_remarketing_build(segment_list[[2]], state_duration = “PERMANENT”, membershipDurationDays = 7, daysToLookBack = 31)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">adword_list &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_adwords_list.html">ga_adwords_list</a></span>(<span class="dv">123456</span>, <span class="st">"UA-123456-1"</span>)
+
+adword_link &lt;-<span class="st"> </span><span class="kw">ga_adword</span>(adword_list<span class="op">$</span>id[[<span class="dv">1</span>]])
+
+segment_list &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_segment_list.html">ga_segment_list</a></span>()<span class="op">$</span>items<span class="op">$</span>definition
+
+my_remarketing1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_remarketing_build.html">ga_remarketing_build</a></span>(segment_list[[<span class="dv">1</span>]], 
+                      <span class="dt">state_duration =</span> <span class="st">"TEMPORARY"</span>,
+                      <span class="dt">membershipDurationDays =</span> <span class="dv">90</span>, 
+                      <span class="dt">daysToLookBack =</span> <span class="dv">14</span>)
+my_remarketing2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_remarketing_build.html">ga_remarketing_build</a></span>(segment_list[[<span class="dv">2</span>]], 
+                      <span class="dt">state_duration =</span> <span class="st">"PERMANENT"</span>,
+                      <span class="dt">membershipDurationDays =</span> <span class="dv">7</span>, 
+                      <span class="dt">daysToLookBack =</span> <span class="dv">31</span>)
+
+<span class="co"># state based only can include exclusions</span>
+<span class="kw"><a href="../reference/ga_remarketing_create.html">ga_remarketing_create</a></span>(<span class="dt">adwords_link =</span> adword_link,
+                     <span class="dt">include =</span> my_remarketing1, <span class="dt">exclude =</span> my_remarketing2,
+                     <span class="dt">audienceType =</span> <span class="st">"STATE_BASED"</span>, <span class="dt">name =</span> <span class="st">"my_remarketing_seg1"</span>)</code></pre></div>
 </div>
-<div id="state-based-only-can-include-exclusions" class="section level1">
-<h1 class="hasAnchor">
-<a href="#state-based-only-can-include-exclusions" class="anchor"></a>state based only can include exclusions</h1>
-<p>ga_remarketing_create(adwords_link = adword_link, include = my_remarketing1, exclude = my_remarketing2, audienceType = “STATE_BASED”, name = “my_remarketing_seg1”) ``</p>
 <div id="unsampled-reports" class="section level2">
 <h2 class="hasAnchor">
 <a href="#unsampled-reports" class="anchor"></a>Unsampled reports</h2>
@@ -614,13 +650,10 @@ amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed
 <a href="#users" class="anchor"></a>Users</h2>
 <ul>
 <li>
-<code><a href="../reference/ga_users_list.html">ga_users_list()</a></code> - List Users for the level you specify</li>
-<li>
 <code><a href="../reference/ga_clientid_hash.html">ga_clientid_hash()</a></code> - Creates the clientID hash that is used in BigQuery GA360 exports</li>
 <li>
 <code>ga_user_deletion()</code> - Delete a website visitor from Google Analytics</li>
 </ul>
-</div>
 </div>
   </div>
 
@@ -631,6 +664,7 @@ amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#account-structure">Account structure</a></li>
       <li><a href="#helper-functions">Helper functions</a></li>
+      <li><a href="#user-management">User management</a></li>
       <li><a href="#adwords">AdWords</a></li>
       <li><a href="#custom-data-sources">Custom Data Sources</a></li>
       <li><a href="#custom-variables">Custom variables</a></li>
@@ -638,12 +672,8 @@ amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed
       <li><a href="#view-filters">View Filters</a></li>
       <li><a href="#goals">Goals</a></li>
       <li><a href="#remarketing-segments">Remarketing segments</a></li>
-      <li>
-<a href="#state-based-only-can-include-exclusions">state based only can include exclusions</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#unsampled-reports">Unsampled reports</a></li>
+      <li><a href="#unsampled-reports">Unsampled reports</a></li>
       <li><a href="#users">Users</a></li>
-      </ul>
-</li>
       </ul>
 </div>
       </div>

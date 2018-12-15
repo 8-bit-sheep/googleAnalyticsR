@@ -87,6 +87,34 @@ amd <- allowed_metric_dim()
 head(amd)
 ```
 
+## User management
+
+* ga_users_list() - list user access to your Google Analytics accounts, web properties or views
+* ga_users_delete() - delete user access
+
+The below examples shows a workflow to list and delete user access for one user at View level.
+
+```r
+library(googleAnalyticsR)
+ga_auth()
+
+ga_users_list(47480439)
+ga_users_list(47480439, webPropertyId = "UA-47480439-2")
+ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
+
+# get the linkId for the user you want to delete
+ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
+ga_users_delete("81416156:114834495587136933146", 47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
+ 
+# check its gone
+ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
+
+# can only delete at level user has access, the above deletion woud have failed if via:
+ga_users_delete("47480439:114834495587136933146", 47480439)
+
+```
+
+
 ## AdWords
 
 * `ga_adwords()`	Get AdWords Link meta data
@@ -168,7 +196,7 @@ my_remarketing2 <- ga_remarketing_build(segment_list[[2]],
 ga_remarketing_create(adwords_link = adword_link,
                      include = my_remarketing1, exclude = my_remarketing2,
                      audienceType = "STATE_BASED", name = "my_remarketing_seg1")
-``
+```
 
 ## Unsampled reports
 
@@ -180,7 +208,6 @@ Available only for GA360 accounts, you will need to authenticate with the Google
 
 ## Users
 
-* `ga_users_list()` -	List Users for the level you specify
 * `ga_clientid_hash()` - Creates the clientID hash that is used in BigQuery GA360 exports
 * `ga_user_deletion()` - Delete a website visitor from Google Analytics
 

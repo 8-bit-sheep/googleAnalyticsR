@@ -18,3 +18,4 @@
 ^\.httr-oauth$
 ^ga\.oauth$
 ^CONTRIBUTING$
+^gar_parse_error\.rds$

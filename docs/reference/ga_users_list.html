@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="List Users — ga_users_list" />
 
-<meta property="og:description" content="Will list users on an account, webproperty or view level" />
+<meta property="og:description" content="Get a list of Account level user links, or if you supply the webPropertyId or viewId it will show user links at that level" />
 
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -206,7 +206,7 @@
 
     <div class="ref-description">
     
-    <p>Will list users on an account, webproperty or view level</p>
+    <p>Get a list of Account level user links, or if you supply the webPropertyId or viewId it will show user links at that level</p>
     
     </div>
 
@@ -221,47 +221,51 @@
     </tr>
     <tr>
       <th>webPropertyId</th>
-      <td><p>Web Property Id - leave NULL to fetch account level only</p></td>
+      <td><p>Web Property Id - leave NULL to operate on account level only</p></td>
     </tr>
     <tr>
       <th>viewId</th>
-      <td><p>viewId - leave NULL to fetch webProperty level only</p></td>
+      <td><p>viewId - leave NULL to operate on webProperty level only</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A <code>data.frame</code> of user entity links including the linkId, email and permissions</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Will list users on an account, webproperty or view level</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other managementAPI functions: <code><a href='ga_adwords_list.html'>ga_adwords_list</a></code>,
-  <code><a href='ga_adwords.html'>ga_adwords</a></code>, <code><a href='ga_clientid_hash.html'>ga_clientid_hash</a></code>,
-  <code><a href='ga_custom_vars_list.html'>ga_custom_vars_list</a></code>,
-  <code><a href='ga_custom_vars.html'>ga_custom_vars</a></code>,
-  <code><a href='ga_experiment_list.html'>ga_experiment_list</a></code>,
-  <code><a href='ga_experiment.html'>ga_experiment</a></code>, <code><a href='ga_filter_add.html'>ga_filter_add</a></code>,
-  <code><a href='ga_filter_apply_to_view.html'>ga_filter_apply_to_view</a></code>,
-  <code><a href='ga_filter_delete.html'>ga_filter_delete</a></code>,
-  <code><a href='ga_filter_list.html'>ga_filter_list</a></code>,
-  <code><a href='ga_filter_update_filter_link.html'>ga_filter_update_filter_link</a></code>,
-  <code><a href='ga_filter_update.html'>ga_filter_update</a></code>,
-  <code><a href='ga_filter_view_list.html'>ga_filter_view_list</a></code>,
-  <code><a href='ga_filter_view.html'>ga_filter_view</a></code>, <code><a href='ga_filter.html'>ga_filter</a></code>,
-  <code><a href='ga_goal_add.html'>ga_goal_add</a></code>, <code><a href='ga_goal_list.html'>ga_goal_list</a></code>,
-  <code><a href='ga_goal_update.html'>ga_goal_update</a></code>, <code><a href='ga_goal.html'>ga_goal</a></code>,
-  <code><a href='ga_remarketing_estimate.html'>ga_remarketing_estimate</a></code>,
-  <code><a href='ga_remarketing_get.html'>ga_remarketing_get</a></code>,
-  <code><a href='ga_remarketing_list.html'>ga_remarketing_list</a></code>,
-  <code><a href='ga_segment_list.html'>ga_segment_list</a></code>,
-  <code><a href='ga_unsampled_list.html'>ga_unsampled_list</a></code>,
-  <code><a href='ga_unsampled.html'>ga_unsampled</a></code></p></div>
+    <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks'>Account User Links Google Documentation</a></p>
+<p>Other User management functions: <code><a href='ga_users_delete.html'>ga_users_delete</a></code></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>googleAnalyticsR</span>)
+<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
+<span class='fu'>ga_users_list</span>(<span class='fl'>47480439</span>)
+<span class='fu'>ga_users_list</span>(<span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-47480439-2"</span>)
+<span class='fu'>ga_users_list</span>(<span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-47480439-1"</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>81416156</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
