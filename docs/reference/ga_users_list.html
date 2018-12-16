@@ -210,7 +210,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>ga_users_list</span>(<span class='no'>accountId</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>ga_users_list</span>(<span class='no'>accountId</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"~all"</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='st'>"~all"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -221,11 +221,11 @@
     </tr>
     <tr>
       <th>webPropertyId</th>
-      <td><p>Web Property Id - leave NULL to operate on account level only</p></td>
+      <td><p>Web Property Id - set to NULL to operate on account level only</p></td>
     </tr>
     <tr>
       <th>viewId</th>
-      <td><p>viewId - leave NULL to operate on webProperty level only</p></td>
+      <td><p>viewId - set to NULL to operate on webProperty level only</p></td>
     </tr>
     </table>
     
@@ -240,7 +240,8 @@
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks'>Account User Links Google Documentation</a></p>
-<p>Other User management functions: <code><a href='ga_users_delete.html'>ga_users_delete</a></code></p></div>
+<p>Other User management functions: <code><a href='ga_users_add.html'>ga_users_add</a></code>,
+  <code><a href='ga_users_delete.html'>ga_users_delete</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -250,7 +251,10 @@
 <span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
 <span class='fu'>ga_users_list</span>(<span class='fl'>47480439</span>)
 <span class='fu'>ga_users_list</span>(<span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-47480439-2"</span>)
-<span class='fu'>ga_users_list</span>(<span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-47480439-1"</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>81416156</span>)
+<span class='fu'>ga_users_list</span>(<span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-47480439-2"</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>81416156</span>)
+
+<span class='co'># use ~all to list all web-properties for that account, or view</span>
+<span class='fu'>ga_users_list</span>(<span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"~all"</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='st'>"~all"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

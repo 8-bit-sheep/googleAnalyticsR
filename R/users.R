@@ -3,8 +3,8 @@
 #' Will list users on an account, webproperty or view level
 #'
 #' @param accountId Account Id
-#' @param webPropertyId Web Property Id - leave NULL to operate on account level only
-#' @param viewId viewId - leave NULL to operate on webProperty level only
+#' @param webPropertyId Web Property Id - set to NULL to operate on account level only
+#' @param viewId viewId - set to NULL to operate on webProperty level only
 #' 
 #' @description Get a list of Account level user links, or if you supply the webPropertyId or viewId it will show user links at that level
 #' 
@@ -24,10 +24,13 @@
 #' ga_users_list(47480439)
 #' ga_users_list(47480439, webPropertyId = "UA-47480439-2")
 #' ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
+#' 
+#' # use ~all to list all web-properties for that account, or view
+#' ga_users_list(47480439, webPropertyId = "~all", viewId = "~all")
 #' }
 ga_users_list <- function(accountId,
-                          webPropertyId = NULL,
-                          viewId = NULL){
+                          webPropertyId = "~all",
+                          viewId = "~all"){
   accountId <- as.character(accountId)
   
   users <- gar_api_generator(make_user_url(accountId, webPropertyId, viewId),
@@ -37,6 +40,18 @@ ga_users_list <- function(accountId,
   pages <- gar_api_page(users, page_f = get_attr_nextLink)
   
   Reduce(bind_rows, pages)
+  
+}
+
+#' @noRd
+#' @import assertthat
+#' @importFrom dplyr rename select ends_with
+parse_ga_users_list <- function(x){
+  
+  x %>% 
+    management_api_parsing("analytics#entityUserLinks") %>% 
+    select(-userRef.kind, -ends_with("kind"), -ends_with("href")) %>% 
+    rename(linkId = id)
   
 }
 
@@ -114,6 +129,59 @@ ga_users_delete <- function(linkId,
   
 }
 
+#' Create or update user access to Google Analytics
+#' 
+#' @param email The email of the user to add.  Has to have a Google account. 
+#' @param permissions Which permissions to add as a vector - \code{"MANAGE_USERS"},\code{"EDIT"},\code{"COLLABORATE"},\code{"READ_AND_ANALYZE"}
+#' @inheritParams ga_users_list
+#' @return \code{TRUE} if successful
+#' @family User management functions
+#' @import assertthat
+#' @export
+#' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management}{Google help article on user permissions}
+ga_users_add <- function(email, 
+                         permissions,
+                         accountId,
+                         webPropertyId=NULL,
+                         viewId=NULL){
+  accountId <- as.character(accountId)
+  
+  assert_that(
+    is.string(email),
+    is.character(permissions),
+    is.string(accountId)
+  )
+  
+  the_url <- make_user_url(accountId, webPropertyId, viewId)
+  
+  the_body <- list(
+    permissions = list(
+      local = list(permissions)
+    ),
+    userRef = list(
+      email = email
+    )
+  )
+  
+  users <- gar_api_generator(the_url, "POST", data_parse_function = function(x) x)
+  
+  res <- tryCatch(users(the_body = the_body),
+                  error = function(err){
+                    stop("Make sure email has a Google account - ", err, call. = FALSE)
+                  })
+  
+  if(res$kind != "analytics#entityUserLink"){
+    stop("Didn't add user email: ", email)
+  }
+  
+  myMessage(sprintf("Successfully added %s to %s with linkId: %s", 
+                      email, paste(accountId, webPropertyId, viewId, collapse = " "),  res$id), 
+              level = 3)
+  TRUE
+  
+  
+}
+
 
 make_user_url <- function(accountId, webPropertyId, viewId){
   
@@ -134,14 +202,3 @@ make_user_url <- function(accountId, webPropertyId, viewId){
   aurl
 }
 
-#' @noRd
-#' @import assertthat
-#' @importFrom dplyr rename select ends_with
-parse_ga_users_list <- function(x){
-  
-  x %>% 
-    management_api_parsing("analytics#entityUserLinks") %>% 
-    select(-userRef.kind, -ends_with("kind"), -ends_with("href")) %>% 
-    rename(linkId = id)
-  
-}

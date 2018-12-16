@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Delete users access from account, webproperty or view level — ga_users_delete • googleAnalyticsR</title>
+<title>Create or update user access to Google Analytics — ga_users_add • googleAnalyticsR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Delete users access from account, webproperty or view level — ga_users_delete" />
+<meta property="og:title" content="Create or update user access to Google Analytics — ga_users_add" />
 
-<meta property="og:description" content="The linkId is in the form of the accountId/webPropertyId/viewId colon seperated from a link unique Id.
-Delete user access by supplying the linkId for that user at the level they have been given access.  It won't work to delete user links at account level if they have been assigned at web property or view level - you will need to get the linkId for that level instead. e.g. a user needs permissions.local to be non-NULL to be deleted at that level.  The parameter check will do this check before deletion and throw an error if they can not be deleted.   Set this to check=FALSE to suppress this behaviour." />
+<meta property="og:description" content="Create or update user access to Google Analytics" />
 
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -200,27 +199,30 @@ Delete user access by supplying the linkId for that user at the level they have 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Delete users access from account, webproperty or view level</h1>
+    <h1>Create or update user access to Google Analytics</h1>
     
-    <div class="hidden name"><code>ga_users_delete.Rd</code></div>
+    <div class="hidden name"><code>ga_users_add.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The <code>linkId</code> is in the form of the accountId/webPropertyId/viewId colon seperated from a link unique Id.</p>
-<p>Delete user access by supplying the linkId for that user at the level they have been given access.  It won't work to delete user links at account level if they have been assigned at web property or view level - you will need to get the linkId for that level instead. e.g. a user needs <code>permissions.local</code> to be non-NULL to be deleted at that level.  The parameter <code>check</code> will do this check before deletion and throw an error if they can not be deleted.   Set this to <code>check=FALSE</code> to suppress this behaviour.</p>
+    <p>Create or update user access to Google Analytics</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>ga_users_delete</span>(<span class='no'>linkId</span>, <span class='no'>accountId</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>check</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>ga_users_add</span>(<span class='no'>email</span>, <span class='no'>permissions</span>, <span class='no'>accountId</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>linkId</th>
-      <td><p>The linkId that is available using <a href='ga_users_list.html'>ga_users_list</a> e.g. <code>47480439:104185380183364788718</code></p></td>
+      <th>email</th>
+      <td><p>The email of the user to add.  Has to have a Google account.</p></td>
+    </tr>
+    <tr>
+      <th>permissions</th>
+      <td><p>Which permissions to add as a vector - <code>"MANAGE_USERS"</code>,<code>"EDIT"</code>,<code>"COLLABORATE"</code>,<code>"READ_AND_ANALYZE"</code></p></td>
     </tr>
     <tr>
       <th>accountId</th>
@@ -234,40 +236,19 @@ Delete user access by supplying the linkId for that user at the level they have 
       <th>viewId</th>
       <td><p>viewId - set to NULL to operate on webProperty level only</p></td>
     </tr>
-    <tr>
-      <th>check</th>
-      <td><p>If the default <code>TRUE</code> will check that the user has user access at the level you are trying to delete them from - if not will throw an error.</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>TRUE if the deletion is successful, an error if not.</p>
+    <p><code>TRUE</code> if successful</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete'>Google Docuemntation</a></p>
-<p>Other User management functions: <code><a href='ga_users_add.html'>ga_users_add</a></code>,
+    <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management'>Google help article on user permissions</a></p>
+<p>Other User management functions: <code><a href='ga_users_delete.html'>ga_users_delete</a></code>,
   <code><a href='ga_users_list.html'>ga_users_list</a></code></p></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-</div><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>googleAnalyticsR</span>)
-<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
-
-<span class='co'># get the linkId for the user you want to delete</span>
-<span class='fu'><a href='ga_users_list.html'>ga_users_list</a></span>(<span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-47480439-2"</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>81416156</span>)
-<span class='fu'>ga_users_delete</span>(<span class='st'>"81416156:114834495587136933146"</span>, <span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-47480439-2"</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>81416156</span>)
-
-<span class='co'># check its gone</span>
-<span class='fu'><a href='ga_users_list.html'>ga_users_list</a></span>(<span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-47480439-2"</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>81416156</span>)
-
-<span class='co'># can only delete at level user has access, the above deletion woud have failed if via:</span>
-<span class='fu'>ga_users_delete</span>(<span class='st'>"47480439:114834495587136933146"</span>, <span class='fl'>47480439</span>)
-
-<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -277,9 +258,7 @@ Delete user access by supplying the linkId for that user at the level they have 
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>

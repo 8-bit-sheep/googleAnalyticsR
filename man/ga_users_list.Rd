@@ -4,14 +4,14 @@
 \alias{ga_users_list}
 \title{List Users}
 \usage{
-ga_users_list(accountId, webPropertyId = NULL, viewId = NULL)
+ga_users_list(accountId, webPropertyId = "~all", viewId = "~all")
 }
 \arguments{
 \item{accountId}{Account Id}
 
-\item{webPropertyId}{Web Property Id - leave NULL to operate on account level only}
+\item{webPropertyId}{Web Property Id - set to NULL to operate on account level only}
 
-\item{viewId}{viewId - leave NULL to operate on webProperty level only}
+\item{viewId}{viewId - set to NULL to operate on webProperty level only}
 }
 \value{
 A \code{data.frame} of user entity links including the linkId, email and permissions
@@ -30,11 +30,15 @@ library(googleAnalyticsR)
 ga_auth()
 ga_users_list(47480439)
 ga_users_list(47480439, webPropertyId = "UA-47480439-2")
-ga_users_list(47480439, webPropertyId = "UA-47480439-1", viewId = 81416156)
+ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
+
+# use ~all to list all web-properties for that account, or view
+ga_users_list(47480439, webPropertyId = "~all", viewId = "~all")
 }
 }
 \seealso{
 \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks}{Account User Links Google Documentation}
 
-Other User management functions: \code{\link{ga_users_delete}}
+Other User management functions: \code{\link{ga_users_add}},
+  \code{\link{ga_users_delete}}
 }

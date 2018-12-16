@@ -12,9 +12,9 @@ ga_users_delete(linkId, accountId, webPropertyId = NULL, viewId = NULL,
 
 \item{accountId}{Account Id}
 
-\item{webPropertyId}{Web Property Id - leave NULL to operate on account level only}
+\item{webPropertyId}{Web Property Id - set to NULL to operate on account level only}
 
-\item{viewId}{viewId - leave NULL to operate on webProperty level only}
+\item{viewId}{viewId - set to NULL to operate on webProperty level only}
 
 \item{check}{If the default \code{TRUE} will check that the user has user access at the level you are trying to delete them from - if not will throw an error.}
 }
@@ -48,5 +48,6 @@ ga_users_delete("47480439:114834495587136933146", 47480439)
 \seealso{
 \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete}{Google Docuemntation}
 
-Other User management functions: \code{\link{ga_users_list}}
+Other User management functions: \code{\link{ga_users_add}},
+  \code{\link{ga_users_list}}
 }
