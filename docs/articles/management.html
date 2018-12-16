@@ -431,7 +431,7 @@
 ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, 
                             <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
                             <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
-<pre><code>## 2018-12-16 22:56:39&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<pre><code>## 2018-12-16 23:01:10&gt; Downloaded [240] rows from a total of [240].</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</code></pre></div>
 <pre><code>##   hour       date sessions bounceRate
 ## 1   00 2018-12-06        9   88.88889
@@ -495,25 +495,18 @@ amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed
 </ul>
 <p>User management follows the recommended workflows outlined in this <a href="https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management">Google reference article</a>.</p>
 <p>Users can be attached at account, web-property and view level.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsR)
-<span class="kw"><a href="../reference/ga_auth.html">ga_auth</a></span>()
-
-<span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>)
 <span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>)
 <span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>, <span class="dt">viewId =</span> <span class="dv">81416156</span>)</code></pre></div>
 <p>To delete a user from all accounts, web-properties and views takes a few API calls to find all the possible links, this is done behind the scenes of <code><a href="../reference/ga_users_delete.html">ga_users_delete()</a></code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>)
 
 <span class="kw"><a href="../reference/ga_users_delete.html">ga_users_delete</a></span>(<span class="st">"the_email@company.com"</span>, <span class="dv">47480439</span>)</code></pre></div>
 <p>User management benefits from increased quota limits if you batch requests, at the rate of 30 calls for 1 hit. This is incorporated for adding users, so you can pass in a vector of emails to add.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ga_users_add.html">ga_users_add</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"the_email@company.com"</span>, <span class="st">"another_email@company.com"</span>), 
              <span class="dt">permissions =</span> <span class="st">"EDIT"</span>, <span class="dt">accountId =</span> <span class="dv">47480439</span>)</code></pre></div>
 <p>The below examples shows a workflow to list and delete user access for one user at View level if you wish to do it via fine-grained control in the linkId.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsR)
-<span class="kw"><a href="../reference/ga_auth.html">ga_auth</a></span>()
-
-<span class="co"># get the linkId for the user you want to delete</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get the linkId for the user you want to delete</span>
 <span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>, <span class="dt">viewId =</span> <span class="dv">81416156</span>)
 <span class="kw"><a href="../reference/ga_users_delete_linkid.html">ga_users_delete_linkid</a></span>(<span class="st">"81416156:114834495587136933146"</span>, <span class="dv">47480439</span>, 
                 <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>, <span class="dt">viewId =</span> <span class="dv">81416156</span>)

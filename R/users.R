@@ -215,6 +215,16 @@ ga_users_delete_linkid <- function(linkId,
 #' @importFrom googleAuthR gar_api_generator gar_batch_walk
 #' @export
 #' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management}{Google help article on user permissions}
+#' @examples 
+#' 
+#' \dontrun{
+#' library(googleAnalyticsR)
+#' ga_auth()
+#' 
+#' ga_users_add(c("the_email@company.com", "another_email@company.com"), 
+#'              permissions = "EDIT", accountId = 47480439)
+#' 
+#' }
 ga_users_add <- function(email, 
                          permissions,
                          accountId,

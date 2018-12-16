@@ -99,9 +99,6 @@ User management follows the recommended workflows outlined in this [Google refer
 Users can be attached at account, web-property and view level.
 
 ```r
-library(googleAnalyticsR)
-ga_auth()
-
 ga_users_list(47480439)
 ga_users_list(47480439, webPropertyId = "UA-47480439-2")
 ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
@@ -110,7 +107,6 @@ ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
 To delete a user from all accounts, web-properties and views takes a few API calls to find all the possible links, this is done behind the scenes of `ga_users_delete()`:
 
 ```r
-
 ga_users_list(47480439)
 
 ga_users_delete("the_email@company.com", 47480439)
@@ -126,9 +122,6 @@ ga_users_add(c("the_email@company.com", "another_email@company.com"),
 The below examples shows a workflow to list and delete user access for one user at View level if you wish to do it via fine-grained control in the linkId.
 
 ```r
-library(googleAnalyticsR)
-ga_auth()
-
 # get the linkId for the user you want to delete
 ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
 ga_users_delete_linkid("81416156:114834495587136933146", 47480439, 
