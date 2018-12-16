@@ -2,29 +2,22 @@
 % Please edit documentation in R/users.R
 \name{ga_users_delete}
 \alias{ga_users_delete}
-\title{Delete users access from account, webproperty or view level}
+\title{Delete all user access for an email}
 \usage{
-ga_users_delete(linkId, accountId, webPropertyId = NULL, viewId = NULL,
-  check = TRUE)
+ga_users_delete(email, accountId)
 }
 \arguments{
-\item{linkId}{The linkId that is available using \link{ga_users_list} e.g. \code{47480439:104185380183364788718}}
+\item{email}{The email of the user to delete}
 
-\item{accountId}{Account Id}
-
-\item{webPropertyId}{Web Property Id - set to NULL to operate on account level only}
-
-\item{viewId}{viewId - set to NULL to operate on webProperty level only}
-
-\item{check}{If the default \code{TRUE} will check that the user has user access at the level you are trying to delete them from - if not will throw an error.}
-}
-\value{
-TRUE if the deletion is successful, an error if not.
+\item{accountId}{The accountId that the user will be deleted from including all web properties and Views underneath.}
 }
 \description{
-The \code{linkId} is in the form of the accountId/webPropertyId/viewId colon seperated from a link unique Id.
+This is a wrapper around calls to \link{ga_users_list} and \link{ga_users_delete_linkid}.  If you want more fine-grained control look at those functions.
 
-Delete user access by supplying the linkId for that user at the level they have been given access.  It won't work to delete user links at account level if they have been assigned at web property or view level - you will need to get the linkId for that level instead. e.g. a user needs \code{permissions.local} to be non-NULL to be deleted at that level.  The parameter \code{check} will do this check before deletion and throw an error if they can not be deleted.   Set this to \code{check=FALSE} to suppress this behaviour.
+The user email is deleted from all web properties and views underneath the accountId you provide.
+}
+\details{
+This deletes a user via their email reference for all webproperties and views for the account given.
 }
 \examples{
 
@@ -32,22 +25,14 @@ Delete user access by supplying the linkId for that user at the level they have 
 
 library(googleAnalyticsR)
 ga_auth()
-
-# get the linkId for the user you want to delete
-ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
-ga_users_delete("81416156:114834495587136933146", 47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
-
-# check its gone
-ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
-
-# can only delete at level user has access, the above deletion woud have failed if via:
-ga_users_delete("47480439:114834495587136933146", 47480439)
+ga_users_delete("brian@agency.com", 12345678)
 
 }
 }
 \seealso{
-\href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete}{Google Docuemntation}
+\href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete}{Google Documentation}
 
 Other User management functions: \code{\link{ga_users_add}},
+  \code{\link{ga_users_delete_linkid}},
   \code{\link{ga_users_list}}
 }

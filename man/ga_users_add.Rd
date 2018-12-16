@@ -27,6 +27,7 @@ Create or update user access to Google Analytics
 \seealso{
 \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management}{Google help article on user permissions}
 
-Other User management functions: \code{\link{ga_users_delete}},
+Other User management functions: \code{\link{ga_users_delete_linkid}},
+  \code{\link{ga_users_delete}},
   \code{\link{ga_users_list}}
 }

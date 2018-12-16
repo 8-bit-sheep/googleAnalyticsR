@@ -55,6 +55,77 @@ parse_ga_users_list <- function(x){
   
 }
 
+
+#' Delete all user access for an email
+#' 
+#' This deletes a user via their email reference for all webproperties and views for the account given.
+#' 
+#' @param email The email of the user to delete
+#' @param accountId The accountId that the user will be deleted from including all web properties and Views underneath.
+#' 
+#' @description 
+#' This is a wrapper around calls to \link{ga_users_list} and \link{ga_users_delete_linkid}.  If you want more fine-grained control look at those functions.
+#' 
+#' The user email is deleted from all web properties and views underneath the accountId you provide. 
+#' @import assertthat purrr
+#' @importFrom dplyr filter select
+#' @importFrom purrr map map2 pmap
+#' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete}{Google Documentation}
+#' @family User management functions
+#' @export
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' library(googleAnalyticsR)
+#' ga_auth()
+#' ga_users_delete("brian@agency.com", 12345678)
+#' 
+#' }
+ga_users_delete <- function(email, accountId){
+  accountId <- as.character(accountId)
+  
+  a_lnks <- ga_users_list(accountId, webPropertyId = NULL, viewId = NULL)
+  wb_lnks <- ga_users_list(accountId, viewId = NULL)
+  view_lnks <- ga_users_list(accountId)
+  
+  a_li <- a_lnks %>% 
+    filter(userRef.email == email, permissions.local != "") %>% 
+    select(linkId, entity.accountRef.id)
+  
+  wb_li <- wb_lnks %>% 
+    filter(userRef.email == email, permissions.local != "") %>% 
+    select(linkId, entity.webPropertyRef.id)
+  
+  view_li <- view_lnks %>% 
+    filter(userRef.email == email, permissions.local != "") %>% 
+    select(linkId, entity.profileRef.webPropertyId, entity.profileRef.id)
+  
+  if(nrow(a_li) > 0){
+    map(a_li$linkId, ga_users_delete_linkid, accountId = accountId, check = FALSE)
+  }
+  
+  if(nrow(wb_li) > 0){
+    map2(wb_li$linkId, wb_li$entity.webPropertyRef.id, 
+         ~ga_users_delete_linkid(.x, accountId = accountId, 
+                                 webPropertyId = .y, check = FALSE))
+  }
+  
+  if(nrow(view_li) > 0){
+    pmap(list(id = view_li$linkId, 
+              wb = view_li$entity.profileRef.webPropertyId, 
+              v = view_li$entity.profileRef.id),
+         function(id, wb, v) ga_users_delete_linkid(id, accountId = accountId, 
+                                                    webPropertyId = wb, viewId = v, 
+                                                    check = FALSE))
+  }
+  
+  myMessage("All references to email deleted")
+  TRUE
+  
+  
+}
+
 #' Delete users access from account, webproperty or view level
 #' 
 #' @param linkId The linkId that is available using \link{ga_users_list} e.g. \code{47480439:104185380183364788718}
@@ -71,7 +142,7 @@ parse_ga_users_list <- function(x){
 #' @importFrom googleAuthR gar_api_generator
 #' 
 #' @import assertthat
-#' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete}{Google Docuemntation}
+#' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete}{Google Documentation}
 #' @family User management functions
 #' @export
 #' @examples 
@@ -83,16 +154,19 @@ parse_ga_users_list <- function(x){
 #' 
 #' # get the linkId for the user you want to delete
 #' ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
-#' ga_users_delete("81416156:114834495587136933146", 47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
+#' ga_users_delete_linkid("81416156:114834495587136933146", 
+#'                        accountId = 47480439, 
+#'                        webPropertyId = "UA-47480439-2", 
+#'                        viewId = 81416156)
 #' 
 #' # check its gone
 #' ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
 #' 
 #' # can only delete at level user has access, the above deletion woud have failed if via:
-#' ga_users_delete("47480439:114834495587136933146", 47480439)
+#' ga_users_delete_linkid("47480439:114834495587136933146", 47480439)
 #' 
 #' }
-ga_users_delete <- function(linkId,
+ga_users_delete_linkid <- function(linkId,
                             accountId,
                             webPropertyId = NULL,
                             viewId = NULL,

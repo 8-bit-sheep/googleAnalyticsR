@@ -40,5 +40,6 @@ ga_users_list(47480439, webPropertyId = "~all", viewId = "~all")
 \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks}{Account User Links Google Documentation}
 
 Other User management functions: \code{\link{ga_users_add}},
+  \code{\link{ga_users_delete_linkid}},
   \code{\link{ga_users_delete}}
 }
