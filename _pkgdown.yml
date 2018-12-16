@@ -172,7 +172,10 @@ reference:
       Work with users of your Google Analytics account
     contents:
       - ga_users_list
+      - ga_users_add
       - ga_users_delete
+      - ga_users_delete_linkid
+      - ga_users_update
   - title: "VisitorID management"
     desc: >
       Work with individual website visitor IDs

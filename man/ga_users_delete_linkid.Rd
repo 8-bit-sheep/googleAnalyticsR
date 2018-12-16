@@ -53,5 +53,6 @@ ga_users_delete_linkid("47480439:114834495587136933146", 47480439)
 
 Other User management functions: \code{\link{ga_users_add}},
   \code{\link{ga_users_delete}},
-  \code{\link{ga_users_list}}
+  \code{\link{ga_users_list}},
+  \code{\link{ga_users_update}}
 }

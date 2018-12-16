@@ -41,5 +41,6 @@ ga_users_list(47480439, webPropertyId = "~all", viewId = "~all")
 
 Other User management functions: \code{\link{ga_users_add}},
   \code{\link{ga_users_delete_linkid}},
-  \code{\link{ga_users_delete}}
+  \code{\link{ga_users_delete}},
+  \code{\link{ga_users_update}}
 }

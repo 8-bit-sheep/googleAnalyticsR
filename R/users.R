@@ -67,7 +67,7 @@ parse_ga_users_list <- function(x){
 #' This is a wrapper around calls to \link{ga_users_list} and \link{ga_users_delete_linkid}.  If you want more fine-grained control look at those functions.
 #' 
 #' The user email is deleted from all web properties and views underneath the accountId you provide. 
-#' @import assertthat purrr
+#' @import assertthat
 #' @importFrom dplyr filter select
 #' @importFrom purrr map map2 pmap
 #' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete}{Google Documentation}
@@ -191,8 +191,8 @@ ga_users_delete_linkid <- function(linkId,
                      make_user_url(accountId, webPropertyId, viewId),
                      linkId)
   
-  users <- gar_api_generator(the_url,
-                             "DELETE")
+  users <- gar_api_generator(the_url, "DELETE")
+  
   res <- suppressWarnings(users())
   if(res$status_code == 204){
     myMessage("Successfully deleted linkId: ", linkId, level = 3)
@@ -211,6 +211,8 @@ ga_users_delete_linkid <- function(linkId,
 #' @return \code{TRUE} if successful
 #' @family User management functions
 #' @import assertthat
+#' 
+#' @importFrom googleAuthR gar_api_generator gar_batch_walk
 #' @export
 #' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management}{Google help article on user permissions}
 ga_users_add <- function(email, 
@@ -221,39 +223,114 @@ ga_users_add <- function(email,
   accountId <- as.character(accountId)
   
   assert_that(
-    is.string(email),
+    is.character(email),
     is.character(permissions),
     is.string(accountId)
   )
   
   the_url <- make_user_url(accountId, webPropertyId, viewId)
   
-  the_body <- list(
-    permissions = list(
-      local = list(permissions)
-    ),
-    userRef = list(
-      email = email
-    )
-  )
+
   
   users <- gar_api_generator(the_url, "POST", data_parse_function = function(x) x)
   
-  res <- tryCatch(users(the_body = the_body),
-                  error = function(err){
-                    stop("Make sure email has a Google account - ", err, call. = FALSE)
-                  })
-  
-  if(res$kind != "analytics#entityUserLink"){
-    stop("Didn't add user email: ", email)
-  }
-  
-  myMessage(sprintf("Successfully added %s to %s with linkId: %s", 
+  if(length(email) == 1){
+
+    the_body <- list(
+      permissions = list(
+        local = list(permissions)
+      ),
+      userRef = list(
+        email = email
+      )
+    )
+
+    res <- tryCatch(users(the_body = the_body),
+                    error = function(err){
+                      stop("Make sure email has a Google account - ", err, call. = FALSE)
+                    })
+    
+    if(res$kind != "analytics#entityUserLink"){
+      stop("Didn't add user email: ", email)
+    }
+    
+    myMessage(sprintf("Successfully added %s to %s with linkId: %s", 
                       email, paste(accountId, webPropertyId, viewId, collapse = " "),  res$id), 
               level = 3)
+  } else {
+    myMessage("Batching adding users - every 30 batched counts as one in quota.")
+    
+    changed_emails <- lapply(email, function(x){userRef = list(email = x)})
+    
+    batched <- gar_batch_walk(users, 
+                              walk_vector = changed_emails, 
+                              the_body = list(
+                                permissions = list(
+                                  local = list(permissions)
+                                ),
+                                userRef = list(
+                                  email = email[[1]]
+                                )
+                              ),
+                              body_walk = "userRef",
+                              batch_size = 300,
+                              data_frame_output = FALSE)
+    
+  }
+
   TRUE
   
   
+}
+
+#' Update a user access in Google Analytics
+#' 
+#' This is for altering existing user access.  
+#' 
+#' @param linkId The linkId to update
+#' @inheritParams ga_users_list
+#' @param update_object A list that will be turned into JSON via \link[jsonlite]{toJSON} that represents the new configuration for this linkId
+#' 
+#' @return The new user object that has been altered.
+#' @family User management functions
+#' @import assertthat
+#' @importFrom googleAuthR gar_api_generator
+#' @export
+#' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management}{Google help article on user permissions}
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' library(googleAnalyticsR)
+#' ga_auth()
+#' 
+#' # the update to perform
+#' o <- list(permissions = list(local = list("EDIT")))
+#' 
+#' ga_users_update("UA-123456-1:1111222233334444",
+#'                 update_object = o,
+#'                 accountId = 123456,
+#'                 webPropertyId = "UA-123456-1")
+#' 
+#' }
+ga_users_update <- function(linkId,
+                            update_object,
+                            accountId,
+                            webPropertyId = NULL,
+                            viewId = NULL){
+  
+  accountId <- as.character(accountId)
+  
+  assert_that(
+    is.string(linkId),
+    is.list(update_object)
+  )
+  
+  the_url <- make_user_url(accountId, webPropertyId, viewId)
+  
+  update <- gar_api_generator(the_url, "PUT", data_parse_function = function(x) x)
+  
+  update(the_body = update_object)
 }
 
 

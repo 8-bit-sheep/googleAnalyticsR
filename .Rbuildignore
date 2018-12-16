@@ -19,3 +19,5 @@
 ^ga\.oauth$
 ^CONTRIBUTING$
 ^gar_parse_error\.rds$
+^build\.sh$
+^.github*

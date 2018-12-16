@@ -1,5 +1,9 @@
 ---
 title: "Management API"
+vignette: >
+  %\VignetteIndexEntry{googleAnalyticsR - Management API}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
@@ -90,9 +94,13 @@ head(amd)
 ## User management
 
 * ga_users_list() - list user access to your Google Analytics accounts, web properties or views
-* ga_users_delete() - delete user access
+* ga_users_delete() - delete user access via email
+* ga_users_delete_linkid() - delete user access via the linkId
+* ga_users_add() - add users to accounts
 
-The below examples shows a workflow to list and delete user access for one user at View level.
+User management follows the recommended workflows outlined in this [Google reference article](https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management). 
+
+Users can be attached at account, web-property and view level.
 
 ```r
 library(googleAnalyticsR)
@@ -101,10 +109,34 @@ ga_auth()
 ga_users_list(47480439)
 ga_users_list(47480439, webPropertyId = "UA-47480439-2")
 ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
+```
+
+To delete a user from all accounts, web-properties and views takes a few API calls to find all the possible links, this is done behind the scenes of `ga_users_delete()`:
+
+```r
+
+ga_users_list(47480439)
+
+ga_users_delete("the_email@company.com", 47480439)
+```
+
+User management benefits from increased quota limits if you batch requests, at the rate of 30 calls for 1 hit.  This is incorporated for adding users, so you can pass in a vector of emails to add.
+
+```r
+ga_users_add(c("the_email@company.com", "another_email@company.com"), 
+             permissions = "EDIT", accountId = 47480439)
+```
+
+The below examples shows a workflow to list and delete user access for one user at View level if you wish to do it via fine-grained control in the linkId.
+
+```r
+library(googleAnalyticsR)
+ga_auth()
 
 # get the linkId for the user you want to delete
 ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
-ga_users_delete("81416156:114834495587136933146", 47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
+ga_users_delete("81416156:114834495587136933146", 47480439, 
+                webPropertyId = "UA-47480439-2", viewId = 81416156)
  
 # check its gone
 ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
@@ -114,6 +146,17 @@ ga_users_delete("47480439:114834495587136933146", 47480439)
 
 ```
 
+You can also modify existing users via `ga_users_update()`
+
+```r
+# the update to perform
+o <- list(permissions = list(local = list("EDIT")))
+
+ga_users_update("UA-123456-1:1111222233334444",
+                update_object = o,
+                accountId = 123456,
+                webPropertyId = "UA-123456-1")
+```
 
 ## AdWords
 

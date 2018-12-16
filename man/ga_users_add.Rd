@@ -29,5 +29,6 @@ Create or update user access to Google Analytics
 
 Other User management functions: \code{\link{ga_users_delete_linkid}},
   \code{\link{ga_users_delete}},
-  \code{\link{ga_users_list}}
+  \code{\link{ga_users_list}},
+  \code{\link{ga_users_update}}
 }

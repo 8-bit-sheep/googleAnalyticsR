@@ -1,5 +1,9 @@
 ---
 title: "Big Query Exports from Google Analytics 360 to R"
+vignette: >
+  %\VignetteIndexEntry{BigQuery GA360 exports}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 Limited support for more user friendly calls to BigQuery Google Analytics 360 exports.

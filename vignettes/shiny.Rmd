@@ -1,5 +1,9 @@
 ---
 title: "Shiny Apps that call Google Analytics API data"
+vignette: >
+  %\VignetteIndexEntry{Using Shiny with googleAnalyticsR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 To use in Shiny with a multi-user login, use googleAuth's `with_shiny`.  See the [`googleAuthR` readme](http://code.markedmondson.me/googleAuthR/) for details on general Google authentication with Shiny. 

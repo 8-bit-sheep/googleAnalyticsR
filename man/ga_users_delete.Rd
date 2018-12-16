@@ -34,5 +34,6 @@ ga_users_delete("brian@agency.com", 12345678)
 
 Other User management functions: \code{\link{ga_users_add}},
   \code{\link{ga_users_delete_linkid}},
-  \code{\link{ga_users_list}}
+  \code{\link{ga_users_list}},
+  \code{\link{ga_users_update}}
 }
