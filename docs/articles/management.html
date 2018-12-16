@@ -431,7 +431,7 @@
 ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, 
                             <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
                             <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
-<pre><code>## 2018-12-16 22:40:09&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<pre><code>## 2018-12-16 22:56:39&gt; Downloaded [240] rows from a total of [240].</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</code></pre></div>
 <pre><code>##   hour       date sessions bounceRate
 ## 1   00 2018-12-06        9   88.88889
@@ -515,14 +515,14 @@ amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed
 
 <span class="co"># get the linkId for the user you want to delete</span>
 <span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>, <span class="dt">viewId =</span> <span class="dv">81416156</span>)
-<span class="kw"><a href="../reference/ga_users_delete.html">ga_users_delete</a></span>(<span class="st">"81416156:114834495587136933146"</span>, <span class="dv">47480439</span>, 
+<span class="kw"><a href="../reference/ga_users_delete_linkid.html">ga_users_delete_linkid</a></span>(<span class="st">"81416156:114834495587136933146"</span>, <span class="dv">47480439</span>, 
                 <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>, <span class="dt">viewId =</span> <span class="dv">81416156</span>)
  
 <span class="co"># check its gone</span>
 <span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>, <span class="dt">viewId =</span> <span class="dv">81416156</span>)
 
 <span class="co"># can only delete at level user has access, the above deletion woud have failed if via:</span>
-<span class="kw"><a href="../reference/ga_users_delete.html">ga_users_delete</a></span>(<span class="st">"47480439:114834495587136933146"</span>, <span class="dv">47480439</span>)</code></pre></div>
+<span class="kw"><a href="../reference/ga_users_delete_linkid.html">ga_users_delete_linkid</a></span>(<span class="st">"47480439:114834495587136933146"</span>, <span class="dv">47480439</span>)</code></pre></div>
 <p>You can also modify existing users via <code><a href="../reference/ga_users_update.html">ga_users_update()</a></code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the update to perform</span>
 o &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">permissions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">local =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"EDIT"</span>)))

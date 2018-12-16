@@ -1,9 +1,5 @@
 ---
 title: "Management API"
-vignette: >
-  %\VignetteIndexEntry{googleAnalyticsR - Management API}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
@@ -135,14 +131,14 @@ ga_auth()
 
 # get the linkId for the user you want to delete
 ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
-ga_users_delete("81416156:114834495587136933146", 47480439, 
+ga_users_delete_linkid("81416156:114834495587136933146", 47480439, 
                 webPropertyId = "UA-47480439-2", viewId = 81416156)
  
 # check its gone
 ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
 
 # can only delete at level user has access, the above deletion woud have failed if via:
-ga_users_delete("47480439:114834495587136933146", 47480439)
+ga_users_delete_linkid("47480439:114834495587136933146", 47480439)
 
 ```
 
