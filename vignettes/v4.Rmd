@@ -387,14 +387,11 @@ You can choose to create segments via the v4 syntax or the v3 syntax for backwar
 
 If you want to use v3 segments, then they can be used in the `segment_id` argument of the `segment_ga4()` function.
 
-You can view the segment Ids by using `ga_segment_list()$items`
+You can view the segment Ids by using `ga_segment_list()`
 
 ```r
 ## get list of segments
-my_segments <- ga_segment_list()
-
-## just the segment items
-segs <- my_segments$items
+segs <- ga_segment_list()
 
 ## segment Ids and name:
 segs[,c("name","id","definition")]

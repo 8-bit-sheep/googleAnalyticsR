@@ -405,7 +405,7 @@
 <li>
 <code><a href="../reference/google_analytics_meta.html">google_analytics_meta()</a></code> - get a data.frame of available dimensions and metrics, or just use <code>meta</code> directly to get the version that comes with the library.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you can just use `meta` as is to get the available metrics, or ensure an up to date version by calling the metadata API.</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you can just use `meta` as is to get the available metrics,</span>
 <span class="co"># here we just return the first 5 columns and rows for brevity</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(meta[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</code></pre></div>
 <pre><code>##                      name      type dataType group     status
@@ -415,7 +415,8 @@
 ## 4           ga:visitCount DIMENSION   STRING  User DEPRECATED
 ## 5 ga:daysSinceLastSession DIMENSION   STRING  User     PUBLIC
 ## 6     ga:userDefinedValue DIMENSION   STRING  User     PUBLIC</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="../reference/google_analytics_meta.html">google_analytics_meta</a></span>())[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># or ensure an up to date version by calling the metadata API.</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="../reference/google_analytics_meta.html">google_analytics_meta</a></span>())[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
 <pre><code>##                      name      type dataType group     status
 ## 1             ga:userType DIMENSION   STRING  User     PUBLIC
 ## 2          ga:visitorType DIMENSION   STRING  User DEPRECATED
@@ -431,7 +432,7 @@
 ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, 
                             <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
                             <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
-<pre><code>## 2018-12-17 22:37:38&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<pre><code>## 2018-12-17 22:53:33&gt; Downloaded [240] rows from a total of [240].</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</code></pre></div>
 <pre><code>##   hour       date sessions bounceRate
 ## 1   00 2018-12-07        5   60.00000
@@ -680,7 +681,7 @@ my_remarketing2 &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 <li>
 <code><a href="../reference/ga_clientid_hash.html">ga_clientid_hash()</a></code> - Creates the clientID hash that is used in BigQuery GA360 exports</li>
 <li>
-<code>ga_user_deletion()</code> - Delete a website visitor from Google Analytics</li>
+<code><a href="../reference/ga_clientid_deletion.html">ga_clientid_deletion()</a></code> - Delete a website visitor from Google Analytics</li>
 </ul>
 </div>
   </div>
