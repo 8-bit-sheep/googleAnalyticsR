@@ -93,8 +93,9 @@ head(amd)
 * ga_users_delete() - delete user access via email
 * ga_users_delete_linkid() - delete user access via the linkId
 * ga_users_add() - add users to accounts
+* ga_users_update() - update a user
 
-User management follows the recommended workflows outlined in this [Google reference article](https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management). 
+User management follows the recommended workflows outlined in this [Google reference article](https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management). It follows the batching endpoint, to take advantage of the increased quota limits and performance you get if you send in multiple calls at once. For every 30 API calls that are batched, you are only increment 1 API call against your management API quota.  You can have 300 API calls in one batch, but the `googleAnalyticsR` will split it into multiple batches if you have more than 300, so send in the entire vector if you have more than 300. 
 
 Users can be attached at account, web-property and view level.
 
@@ -104,22 +105,26 @@ ga_users_list(47480439, webPropertyId = "UA-47480439-2")
 ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
 ```
 
-To delete a user from all accounts, web-properties and views takes a few API calls to find all the possible links, this is done behind the scenes of `ga_users_delete()`:
-
-```r
-ga_users_list(47480439)
-
-ga_users_delete("the_email@company.com", 47480439)
-```
-
-User management benefits from increased quota limits if you batch requests, at the rate of 30 calls for 1 hit.  This is incorporated for adding users, so you can pass in a vector of emails to add.
+Batching is incorporated for adding users, so you can pass in a vector of emails to add.
 
 ```r
 ga_users_add(c("the_email@company.com", "another_email@company.com"), 
              permissions = "EDIT", accountId = 47480439)
 ```
 
-The below examples shows a workflow to list and delete user access for one user at View level if you wish to do it via fine-grained control in the linkId.
+
+To delete a user from all accounts, web-properties and views takes a few API calls to find all the possible links, which is done behind the scenes of `ga_users_delete()`.  You can pass it multiple emails to delete many at once via batching:
+
+```r
+ga_users_list(47480439)
+
+ga_users_delete("the_email@company.com", 47480439)
+
+# delete many emails at once
+ga_users_delete(c("the_email@company.com", "another_email@company.com"), accountId = 47480439)
+```
+
+For more fine grained control, the below examples shows a workflow to list and delete user access for one user at View level using the linkId.
 
 ```r
 # get the linkId for the user you want to delete
@@ -135,7 +140,7 @@ ga_users_delete_linkid("47480439:114834495587136933146", 47480439)
 
 ```
 
-You can also modify existing users via `ga_users_update()`
+You can also modify existing users via `ga_users_update()` - the below modifies on the web property level:
 
 ```r
 # the update to perform
@@ -146,6 +151,8 @@ ga_users_update("UA-123456-1:1111222233334444",
                 accountId = 123456,
                 webPropertyId = "UA-123456-1")
 ```
+
+When using linkIds, make sure to use the correct `linkId` for the level of account, web-property or view you are operating on - the `linkId` starts with the accountId, UA code of web property, or ViewId number to distinguish between the various types.
 
 ## AdWords
 

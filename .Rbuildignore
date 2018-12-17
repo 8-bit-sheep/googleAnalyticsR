@@ -9,6 +9,7 @@
 ^codecov\.yml$
 ^httr-oauth\.rds\.enc$
 ^docs$
+^doc*
 ^_pkgdown\.yml$
 ^vignettes/website/*
 ^index\.md$

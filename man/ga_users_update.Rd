@@ -8,7 +8,7 @@ ga_users_update(linkId, update_object, accountId, webPropertyId = NULL,
   viewId = NULL)
 }
 \arguments{
-\item{linkId}{The linkId(s) to update}
+\item{linkId}{The linkId to update}
 
 \item{update_object}{A list that will be turned into JSON via \link[jsonlite]{toJSON} that represents the new configuration for this linkId}
 
