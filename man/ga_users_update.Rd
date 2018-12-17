@@ -8,7 +8,7 @@ ga_users_update(linkId, update_object, accountId, webPropertyId = NULL,
   viewId = NULL)
 }
 \arguments{
-\item{linkId}{The linkId to update}
+\item{linkId}{The linkId(s) to update}
 
 \item{update_object}{A list that will be turned into JSON via \link[jsonlite]{toJSON} that represents the new configuration for this linkId}
 
@@ -36,9 +36,9 @@ o <- list(permissions = list(local = list("EDIT")))
 
 ga_users_update("UA-123456-1:1111222233334444",
                 update_object = o,
-                accountId = 123456,
+                accountId = 47480439,
                 webPropertyId = "UA-123456-1")
-
+                
 }
 }
 \seealso{

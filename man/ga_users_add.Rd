@@ -8,7 +8,7 @@ ga_users_add(email, permissions, accountId, webPropertyId = NULL,
   viewId = NULL)
 }
 \arguments{
-\item{email}{The email of the user to add.  Has to have a Google account.}
+\item{email}{The email(s) of the user(s) to add.  Has to have a Google account.}
 
 \item{permissions}{Which permissions to add as a vector - \code{"MANAGE_USERS"},\code{"EDIT"},\code{"COLLABORATE"},\code{"READ_AND_ANALYZE"}}
 
@@ -22,7 +22,7 @@ ga_users_add(email, permissions, accountId, webPropertyId = NULL,
 \code{TRUE} if successful
 }
 \description{
-Create or update user access to Google Analytics
+#' If you supply more than one \code{email}, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a \code{TRUE} result on successful batch, but individual entries may have failed.  Check via \link{ga_users_list} afterwards and try to add individual linkIds to get more descriptive error messages.
 }
 \examples{
 

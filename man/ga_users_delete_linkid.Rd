@@ -8,7 +8,7 @@ ga_users_delete_linkid(linkId, accountId, webPropertyId = NULL,
   viewId = NULL, check = TRUE)
 }
 \arguments{
-\item{linkId}{The linkId that is available using \link{ga_users_list} e.g. \code{47480439:104185380183364788718}}
+\item{linkId}{The linkId(s) that is available using \link{ga_users_list} e.g. \code{47480439:104185380183364788718}}
 
 \item{accountId}{Account Id}
 
@@ -25,6 +25,8 @@ TRUE if the deletion is successful, an error if not.
 The \code{linkId} is in the form of the accountId/webPropertyId/viewId colon seperated from a link unique Id.
 
 Delete user access by supplying the linkId for that user at the level they have been given access.  It won't work to delete user links at account level if they have been assigned at web property or view level - you will need to get the linkId for that level instead. e.g. a user needs \code{permissions.local} to be non-NULL to be deleted at that level.  The parameter \code{check} will do this check before deletion and throw an error if they can not be deleted.   Set this to \code{check=FALSE} to suppress this behaviour.
+
+If you supply more than one \code{linkId}, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a \code{TRUE} result on successful batch, but individual \code{linkId}s may have failed.  Check via \link{ga_users_list} afterwards and try to delete individual linkIds to get more descriptive error messages.
 }
 \examples{
 

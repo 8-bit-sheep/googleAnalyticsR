@@ -27,6 +27,9 @@ library(googleAnalyticsR)
 ga_auth()
 ga_users_delete("brian@agency.com", 12345678)
 
+# multiple emails
+ga_users_delete(c("brian@agency.com", "bill@benland.com"), 1234567)
+
 }
 }
 \seealso{

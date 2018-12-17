@@ -81,6 +81,9 @@ parse_ga_users_list <- function(x){
 #' ga_auth()
 #' ga_users_delete("brian@agency.com", 12345678)
 #' 
+#' # multiple emails
+#' ga_users_delete(c("brian@agency.com", "bill@benland.com"), 1234567)
+#' 
 #' }
 ga_users_delete <- function(email, accountId){
   accountId <- as.character(accountId)
@@ -90,34 +93,54 @@ ga_users_delete <- function(email, accountId){
   view_lnks <- ga_users_list(accountId)
   
   a_li <- a_lnks %>% 
-    filter(userRef.email == email, permissions.local != "") %>% 
+    filter(userRef.email %in% email, permissions.local != "") %>% 
     select(linkId, entity.accountRef.id)
   
   wb_li <- wb_lnks %>% 
-    filter(userRef.email == email, permissions.local != "") %>% 
+    filter(userRef.email %in% email, permissions.local != "") %>% 
     select(linkId, entity.webPropertyRef.id)
   
   view_li <- view_lnks %>% 
-    filter(userRef.email == email, permissions.local != "") %>% 
+    filter(userRef.email %in% email, permissions.local != "") %>% 
     select(linkId, entity.profileRef.webPropertyId, entity.profileRef.id)
   
   if(nrow(a_li) > 0){
-    map(a_li$linkId, ga_users_delete_linkid, accountId = accountId, check = FALSE)
+    ga_users_delete_linkid(a_li$linkId, accountId = accountId, check = FALSE)
   }
   
   if(nrow(wb_li) > 0){
-    map2(wb_li$linkId, wb_li$entity.webPropertyRef.id, 
-         ~ga_users_delete_linkid(.x, accountId = accountId, 
-                                 webPropertyId = .y, check = FALSE))
+    web_props <- unique(wb_li$entity.webPropertyRef.id)
+    
+    lapply(web_props, function(x){
+      ids <- wb_li %>% 
+        filter(entity.webPropertyRef.id == x) %>% 
+        select(linkId)
+      
+      ga_users_delete_linkid(ids$linkId, 
+                             accountId = accountId,
+                             webPropertyId = x, 
+                             check = FALSE)
+    })
+    
   }
   
   if(nrow(view_li) > 0){
-    pmap(list(id = view_li$linkId, 
-              wb = view_li$entity.profileRef.webPropertyId, 
-              v = view_li$entity.profileRef.id),
-         function(id, wb, v) ga_users_delete_linkid(id, accountId = accountId, 
-                                                    webPropertyId = wb, viewId = v, 
-                                                    check = FALSE))
+    views <- unique(view_li$entity.profileRef.id)
+    
+    lapply(views, function(x){
+      ids <- view_li %>% 
+        filter(entity.profileRef.id == x) %>% 
+        select(linkId, entity.profileRef.webPropertyId)
+      
+    # as only one view per loop, the webProperty should be the same for each
+    wp <- ids$entity.profileRef.webPropertyId[[1]]
+      
+    ga_users_delete_linkid(ids$linkId, 
+                           accountId = accountId, 
+                           webPropertyId = wp, 
+                           check = FALSE)
+    })
+    
   }
   
   myMessage("All references to email deleted")
@@ -128,7 +151,7 @@ ga_users_delete <- function(email, accountId){
 
 #' Delete users access from account, webproperty or view level
 #' 
-#' @param linkId The linkId that is available using \link{ga_users_list} e.g. \code{47480439:104185380183364788718}
+#' @param linkId The linkId(s) that is available using \link{ga_users_list} e.g. \code{47480439:104185380183364788718}
 #' @inheritParams ga_users_list
 #' @param check If the default \code{TRUE} will check that the user has user access at the level you are trying to delete them from - if not will throw an error.
 #' 
@@ -137,6 +160,8 @@ ga_users_delete <- function(email, accountId){
 #' The \code{linkId} is in the form of the accountId/webPropertyId/viewId colon seperated from a link unique Id.
 #' 
 #' Delete user access by supplying the linkId for that user at the level they have been given access.  It won't work to delete user links at account level if they have been assigned at web property or view level - you will need to get the linkId for that level instead. e.g. a user needs \code{permissions.local} to be non-NULL to be deleted at that level.  The parameter \code{check} will do this check before deletion and throw an error if they can not be deleted.   Set this to \code{check=FALSE} to suppress this behaviour.
+#' 
+#' If you supply more than one \code{linkId}, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a \code{TRUE} result on successful batch, but individual \code{linkId}s may have failed.  Check via \link{ga_users_list} afterwards and try to delete individual linkIds to get more descriptive error messages. 
 #' 
 #' @return TRUE if the deletion is successful, an error if not. 
 #' @importFrom googleAuthR gar_api_generator
@@ -171,12 +196,13 @@ ga_users_delete_linkid <- function(linkId,
                             webPropertyId = NULL,
                             viewId = NULL,
                             check = TRUE){
-  assert_that(is.string(linkId), is.flag(check))
+  
+  assert_that(is.character(linkId), is.flag(check))
   accountId <- as.character(accountId)
   
   if(check){
     check_me <- ga_users_list(accountId, webPropertyId, viewId)
-    if(!linkId %in% check_me$linkId){
+    if(!any(linkId %in% check_me$linkId)){
       stop(sprintf("linkId %s not found at this level", linkId), call. = FALSE)
     }
     the_check <- check_me[check_me$linkId == linkId, "permissions.local"] != ""
@@ -186,28 +212,58 @@ ga_users_delete_linkid <- function(linkId,
                    call. = FALSE)
     }
   }
-
-  the_url <- sprintf("%s/%s",
-                     make_user_url(accountId, webPropertyId, viewId),
-                     linkId)
   
-  users <- gar_api_generator(the_url, "DELETE")
-  
-  res <- suppressWarnings(users())
-  if(res$status_code == 204){
-    myMessage("Successfully deleted linkId: ", linkId, level = 3)
-    return(TRUE)
+  if(length(linkId) == 1){
+    the_url <- sprintf("%s/%s",
+                       make_user_url(accountId, webPropertyId, viewId),
+                       linkId)
+    
+    users <- gar_api_generator(the_url, "DELETE")
+    
+    res <- suppressWarnings(users())
+    if(res$status_code == 204){
+      myMessage("Successfully deleted linkId: ", linkId, level = 3)
+    } else {
+      stop("Problem deleting linkId: ", linkId, call. = FALSE)
+    }
   } else {
-    stop("Problem deleting linkId: ", linkId, call. = FALSE)
+    # batched deletion
+    myMessage("Batching delete users - every 30 batched counts as one in quota.", level = 3)
+    base_url <- "https://www.googleapis.com/analytics/v3/management"
+    path_args <- list(
+      accounts = accountId,
+      webproperties = webPropertyId,
+      profiles = viewId,
+      entityUserLinks = linkId[[1]]
+    )
+
+    users <- gar_api_generator(base_url, "DELETE", 
+                               path_args = path_args,
+                               data_parse_function = function(x) x)
+    
+    batched <- gar_batch_walk(users,
+                              walk_vector = linkId, 
+                              gar_paths = path_args,
+                              path_walk = "entityUserLinks",
+                              batch_size = 300,
+                              data_frame_output = FALSE)
+    myMessage("Batched deletion of users successful", level = 3)
+
   }
   
+  TRUE
 }
 
 #' Create or update user access to Google Analytics
 #' 
-#' @param email The email of the user to add.  Has to have a Google account. 
+#' @param email The email(s) of the user(s) to add.  Has to have a Google account. 
 #' @param permissions Which permissions to add as a vector - \code{"MANAGE_USERS"},\code{"EDIT"},\code{"COLLABORATE"},\code{"READ_AND_ANALYZE"}
 #' @inheritParams ga_users_list
+#' 
+#' @description 
+#' 
+#' #' If you supply more than one \code{email}, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a \code{TRUE} result on successful batch, but individual entries may have failed.  Check via \link{ga_users_list} afterwards and try to add individual linkIds to get more descriptive error messages. 
+#' 
 #' @return \code{TRUE} if successful
 #' @family User management functions
 #' @import assertthat
@@ -240,8 +296,6 @@ ga_users_add <- function(email,
   
   the_url <- make_user_url(accountId, webPropertyId, viewId)
   
-
-  
   users <- gar_api_generator(the_url, "POST", data_parse_function = function(x) x)
   
   if(length(email) == 1){
@@ -268,7 +322,7 @@ ga_users_add <- function(email,
                       email, paste(accountId, webPropertyId, viewId, collapse = " "),  res$id), 
               level = 3)
   } else {
-    myMessage("Batching adding users - every 30 batched counts as one in quota.")
+    myMessage("Batching adding users - every 30 batched counts as one in quota.", level = 3)
     
     changed_emails <- lapply(email, function(x){userRef = list(email = x)})
     
@@ -290,7 +344,6 @@ ga_users_add <- function(email,
 
   TRUE
   
-  
 }
 
 #' Update a user access in Google Analytics
@@ -300,6 +353,7 @@ ga_users_add <- function(email,
 #' @param linkId The linkId to update
 #' @inheritParams ga_users_list
 #' @param update_object A list that will be turned into JSON via \link[jsonlite]{toJSON} that represents the new configuration for this linkId
+#' 
 #' 
 #' @return The new user object that has been altered.
 #' @family User management functions
@@ -319,9 +373,9 @@ ga_users_add <- function(email,
 #' 
 #' ga_users_update("UA-123456-1:1111222233334444",
 #'                 update_object = o,
-#'                 accountId = 123456,
+#'                 accountId = 47480439,
 #'                 webPropertyId = "UA-123456-1")
-#' 
+#'                 
 #' }
 ga_users_update <- function(linkId,
                             update_object,
@@ -332,15 +386,33 @@ ga_users_update <- function(linkId,
   accountId <- as.character(accountId)
   
   assert_that(
-    is.string(linkId),
+    is.character(linkId),
     is.list(update_object)
   )
   
-  the_url <- make_user_url(accountId, webPropertyId, viewId)
-  
-  update <- gar_api_generator(the_url, "PUT", data_parse_function = function(x) x)
-  
-  update(the_body = update_object)
+  # batched deletion
+  base_url <- "https://www.googleapis.com/analytics/v3/management/"
+  path_args <- list(
+    accounts = accountId,
+    webproperties = webPropertyId,
+    profiles = viewId,
+    entityUserLinks = linkId
+  )
+  users <- gar_api_generator(base_url, "PUT",
+                             path_args = path_args,
+                             checkTrailingSlash = FALSE,
+                             data_parse_function = function(x) x)
+  myMessage("Batching update users - every 30 batched counts as one in quota.", level = 3)
+  batched <- gar_batch_walk(users,
+                            walk_vector = linkId,
+                            gar_paths = path_args,
+                            the_body = update_object,
+                            path_walk = "entityUserLinks",
+                            batch_size = 300,
+                            data_frame_output = FALSE)
+  myMessage("Batched update of users successful", level = 3)
+
+  TRUE
 }
 
 
