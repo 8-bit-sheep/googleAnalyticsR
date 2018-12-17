@@ -262,7 +262,7 @@ ga_users_delete_linkid <- function(linkId,
 #' 
 #' @description 
 #' 
-#' #' If you supply more than one \code{email}, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a \code{TRUE} result on successful batch, but individual entries may have failed.  Check via \link{ga_users_list} afterwards and try to add individual linkIds to get more descriptive error messages. 
+#' If you supply more than one \code{email}, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a \code{TRUE} result on successful batch, but individual entries may have failed.  Check via \link{ga_users_list} afterwards and try to add individual linkIds to get more descriptive error messages. 
 #' 
 #' @return \code{TRUE} if successful
 #' @family User management functions

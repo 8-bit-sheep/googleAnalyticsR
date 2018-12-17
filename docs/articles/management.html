@@ -431,7 +431,7 @@
 ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, 
                             <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
                             <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
-<pre><code>## 2018-12-17 22:16:17&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<pre><code>## 2018-12-17 22:37:38&gt; Downloaded [240] rows from a total of [240].</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</code></pre></div>
 <pre><code>##   hour       date sessions bounceRate
 ## 1   00 2018-12-07        5   60.00000
@@ -494,11 +494,18 @@ amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed
 <li>ga_users_add() - add users to accounts</li>
 <li>ga_users_update() - update a user</li>
 </ul>
-<p>User management follows the recommended workflows outlined in this <a href="https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management">Google reference article</a>. It follows the batching endpoint, to take advantage of the increased quota limits and performance you get if you send in multiple calls at once. For every 30 API calls that are batched, you are only increment 1 API call against your management API quota. You can have 300 API calls in one batch, but the <code>googleAnalyticsR</code> will split it into multiple batches if you have more than 300, so send in the entire vector if you have more than 300.</p>
-<p>Users can be attached at account, web-property and view level.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>)
+<p>User management follows the recommended workflows outlined in this <a href="https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management">Google reference article</a>. It follows the batching endpoint, to take advantage of the increased quota limits and performance you get if you send in multiple calls at once. For every 30 API calls that are batched, you only increment one API call against your management API quota. You can have 300 API calls in one batch, but the <code>googleAnalyticsR</code> will split it into multiple batches if you have more than 300, so send in the entire vector even if you have more than 300.</p>
+<p>You first would want to list the users you have attached already to Google Analytics. Users can be attached at various levels in the hierarchy so you can call the function at various viewing angles.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># default will list all users that match the id you supply</span>
+<span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>)
 <span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>)
-<span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>, <span class="dt">viewId =</span> <span class="dv">81416156</span>)</code></pre></div>
+<span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>, <span class="dt">viewId =</span> <span class="dv">81416156</span>)
+
+<span class="co"># only list users who have account level access</span>
+<span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="ot">NULL</span>, <span class="dt">viewId =</span> <span class="ot">NULL</span>)
+<span class="co"># only list users who have webProperty and above access</span>
+<span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>, <span class="dt">viewId =</span> <span class="ot">NULL</span>)</code></pre></div>
+<p>Users can be attached at account, web-property and view level.</p>
 <p>Batching is incorporated for adding users, so you can pass in a vector of emails to add.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ga_users_add.html">ga_users_add</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"the_email@company.com"</span>, <span class="st">"another_email@company.com"</span>), 
              <span class="dt">permissions =</span> <span class="st">"EDIT"</span>, <span class="dt">accountId =</span> <span class="dv">47480439</span>)</code></pre></div>

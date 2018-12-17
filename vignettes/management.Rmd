@@ -95,15 +95,23 @@ head(amd)
 * ga_users_add() - add users to accounts
 * ga_users_update() - update a user
 
-User management follows the recommended workflows outlined in this [Google reference article](https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management). It follows the batching endpoint, to take advantage of the increased quota limits and performance you get if you send in multiple calls at once. For every 30 API calls that are batched, you are only increment 1 API call against your management API quota.  You can have 300 API calls in one batch, but the `googleAnalyticsR` will split it into multiple batches if you have more than 300, so send in the entire vector if you have more than 300. 
+User management follows the recommended workflows outlined in this [Google reference article](https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management). It follows the batching endpoint, to take advantage of the increased quota limits and performance you get if you send in multiple calls at once. For every 30 API calls that are batched, you only increment one API call against your management API quota.  You can have 300 API calls in one batch, but the `googleAnalyticsR` will split it into multiple batches if you have more than 300, so send in the entire vector even if you have more than 300. 
 
-Users can be attached at account, web-property and view level.
+You first would want to list the users you have attached already to Google Analytics.  Users can be attached at various levels in the hierarchy so you can call the function at various viewing angles.
 
 ```r
+# default will list all users that match the id you supply
 ga_users_list(47480439)
 ga_users_list(47480439, webPropertyId = "UA-47480439-2")
 ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
+
+# only list users who have account level access
+ga_users_list(47480439, webPropertyId = NULL, viewId = NULL)
+# only list users who have webProperty and above access
+ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = NULL)
 ```
+
+Users can be attached at account, web-property and view level.
 
 Batching is incorporated for adding users, so you can pass in a vector of emails to add.
 
