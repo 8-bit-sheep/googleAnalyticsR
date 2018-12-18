@@ -25,8 +25,8 @@
 #' ga_users_list(47480439, webPropertyId = "UA-47480439-2")
 #' ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
 #' 
-#' # use ~all to list all web-properties for that account, or view
-#' ga_users_list(47480439, webPropertyId = "~all", viewId = "~all")
+#' # use NULL to only list linkids for that level
+#' ga_users_list(47480439, webPropertyId = NULL, viewId = NULL)
 #' }
 ga_users_list <- function(accountId,
                           webPropertyId = "~all",
@@ -86,6 +86,7 @@ parse_ga_users_list <- function(x){
 #' 
 #' }
 ga_users_delete <- function(email, accountId){
+  default_project_message()
   accountId <- as.character(accountId)
   
   a_lnks <- ga_users_list(accountId, webPropertyId = NULL, viewId = NULL)
@@ -138,6 +139,7 @@ ga_users_delete <- function(email, accountId){
     ga_users_delete_linkid(ids$linkId, 
                            accountId = accountId, 
                            webPropertyId = wp, 
+                           viewId = x,
                            check = FALSE)
     })
     
@@ -164,7 +166,7 @@ ga_users_delete <- function(email, accountId){
 #' If you supply more than one \code{linkId}, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a \code{TRUE} result on successful batch, but individual \code{linkId}s may have failed.  Check via \link{ga_users_list} afterwards and try to delete individual linkIds to get more descriptive error messages. 
 #' 
 #' @return TRUE if the deletion is successful, an error if not. 
-#' @importFrom googleAuthR gar_api_generator
+#' @importFrom googleAuthR gar_api_generator gar_batch_walk
 #' 
 #' @import assertthat
 #' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete}{Google Documentation}
@@ -196,7 +198,7 @@ ga_users_delete_linkid <- function(linkId,
                             webPropertyId = NULL,
                             viewId = NULL,
                             check = TRUE){
-  
+  default_project_message()
   assert_that(is.character(linkId), is.flag(check))
   accountId <- as.character(accountId)
   
@@ -228,7 +230,8 @@ ga_users_delete_linkid <- function(linkId,
     }
   } else {
     # batched deletion
-    myMessage("Batching delete users - every 30 batched counts as one in quota.", level = 3)
+    myMessage("Batching delete users - every 30 batched counts as one in quota.", 
+              level = 3)
     base_url <- "https://www.googleapis.com/analytics/v3/management"
     path_args <- list(
       accounts = accountId,
@@ -286,6 +289,7 @@ ga_users_add <- function(email,
                          accountId,
                          webPropertyId=NULL,
                          viewId=NULL){
+  default_project_message()
   accountId <- as.character(accountId)
   
   assert_that(
@@ -319,7 +323,8 @@ ga_users_add <- function(email,
     }
     
     myMessage(sprintf("Successfully added %s to %s with linkId: %s", 
-                      email, paste(accountId, webPropertyId, viewId, collapse = " "),  res$id), 
+                      email, paste(accountId, webPropertyId, viewId, collapse = " "),  
+                      res$id), 
               level = 3)
   } else {
     myMessage("Batching adding users - every 30 batched counts as one in quota.", level = 3)
@@ -358,7 +363,7 @@ ga_users_add <- function(email,
 #' @return The new user object that has been altered.
 #' @family User management functions
 #' @import assertthat
-#' @importFrom googleAuthR gar_api_generator
+#' @importFrom googleAuthR gar_api_generator gar_batch_walk
 #' @export
 #' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management}{Google help article on user permissions}
 #' @examples 
@@ -382,7 +387,7 @@ ga_users_update <- function(linkId,
                             accountId,
                             webPropertyId = NULL,
                             viewId = NULL){
-  
+  default_project_message()
   accountId <- as.character(accountId)
   
   assert_that(

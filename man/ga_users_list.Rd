@@ -32,8 +32,8 @@ ga_users_list(47480439)
 ga_users_list(47480439, webPropertyId = "UA-47480439-2")
 ga_users_list(47480439, webPropertyId = "UA-47480439-2", viewId = 81416156)
 
-# use ~all to list all web-properties for that account, or view
-ga_users_list(47480439, webPropertyId = "~all", viewId = "~all")
+# use NULL to only list linkids for that level
+ga_users_list(47480439, webPropertyId = NULL, viewId = NULL)
 }
 }
 \seealso{

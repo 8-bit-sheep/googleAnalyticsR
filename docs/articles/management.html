@@ -432,46 +432,46 @@
 ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, 
                             <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
                             <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
-<pre><code>## 2018-12-17 22:53:33&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<pre><code>## 2018-12-18 20:57:36&gt; Downloaded [240] rows from a total of [240].</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</code></pre></div>
 <pre><code>##   hour       date sessions bounceRate
-## 1   00 2018-12-07        5   60.00000
-## 2   00 2018-12-08       18   88.88889
-## 3   00 2018-12-09        6   66.66667
-## 4   00 2018-12-10        5   60.00000
-## 5   00 2018-12-11       18   33.33333
-## 6   00 2018-12-12       19   89.47368</code></pre>
+## 1   00 2018-12-08       18   88.88889
+## 2   00 2018-12-09        6   66.66667
+## 3   00 2018-12-10        5   60.00000
+## 4   00 2018-12-11       18   33.33333
+## 5   00 2018-12-12       19   89.47368
+## 6   00 2018-12-13        8   62.50000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if we want totals per hour over the dates:</span>
 <span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"sessions"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  sessions
 ##    &lt;chr&gt;    &lt;dbl&gt;
 ##  1 00         103
-##  2 01          61
-##  3 02          65
-##  4 03          52
-##  5 04          60
-##  6 05          43
-##  7 06          67
-##  8 07          58
-##  9 08          81
-## 10 09         119
+##  2 01          58
+##  3 02          68
+##  4 03          47
+##  5 04          53
+##  6 05          45
+##  7 06          71
+##  8 07          55
+##  9 08          86
+## 10 09         107
 ## # ... with 14 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># it knows not to sum metrics that are rates:</span>
 <span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"bounceRate"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  bounceRate
 ##    &lt;chr&gt;      &lt;dbl&gt;
-##  1 00          71.0
-##  2 01          78.1
-##  3 02          72.8
-##  4 03          80.3
-##  5 04          77.3
-##  6 05          85.2
-##  7 06          79.9
-##  8 07          86.6
-##  9 08          71.2
-## 10 09          66.2
+##  1 00          69.0
+##  2 01          73.1
+##  3 02          76.1
+##  4 03          82.3
+##  5 04          78.0
+##  6 05          86.5
+##  7 06          81.8
+##  8 07          83.6
+##  9 08          68.5
+## 10 09          65.8
 ## # ... with 14 more rows</code></pre>
 <ul>
 <li>
@@ -495,8 +495,14 @@ amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed
 <li>ga_users_add() - add users to accounts</li>
 <li>ga_users_update() - update a user</li>
 </ul>
-<p>User management follows the recommended workflows outlined in this <a href="https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management">Google reference article</a>. It follows the batching endpoint, to take advantage of the increased quota limits and performance you get if you send in multiple calls at once. For every 30 API calls that are batched, you only increment one API call against your management API quota. You can have 300 API calls in one batch, but the <code>googleAnalyticsR</code> will split it into multiple batches if you have more than 300, so send in the entire vector even if you have more than 300.</p>
-<p>You first would want to list the users you have attached already to Google Analytics. Users can be attached at various levels in the hierarchy so you can call the function at various viewing angles.</p>
+<p>User management follows the recommended workflows outlined in this <a href="https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management">Google reference article</a>.</p>
+<p>The <code>ga_users_*</code> functions use the management APIs batching endpoint, to take advantage of the special increased quota limits when dealing with User management that API offers. For example, every 30 API calls that are batched that deal with user management only increments one API call against your management API quota. You can have 300 API calls in one batch (e.g. that costs 10 API calls against the quota), and <code>googleAnalyticsR</code> will split any list of emails into 300 emails per batch for you, so you can send in all emails you have.</p>
+<p>By default, each Google Cloud Project gets 50 write requests per project per day, which if using batching means 1500 write/delete/update user operations per day.</p>
+<blockquote>
+<p>You will need to use your own Google Cloud Platform project if using any write API operations seriously, otherwise you will be at the mercy of the shared googleAnalyticsR’s quota limits. See the section in the Setup page on how to <a href="http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#your-own-google-project">setup using your own Google Project</a></p>
+</blockquote>
+<p>To see which users are attached, use <code><a href="../reference/ga_users_list.html">ga_users_list()</a></code>. Each user email is referenced under the <code>userRef.email</code> column, whereas the unique IDs used to see which user is linked to where is the <code>linkId</code> which is unique to each user and link to your account, web property or view/profile.</p>
+<p>Users can be attached at various levels in the hierarchy so you can call the function at various viewing angles.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># default will list all users that match the id you supply</span>
 <span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>)
 <span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-2"</span>)
@@ -510,7 +516,7 @@ amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed
 <p>Batching is incorporated for adding users, so you can pass in a vector of emails to add.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ga_users_add.html">ga_users_add</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"the_email@company.com"</span>, <span class="st">"another_email@company.com"</span>), 
              <span class="dt">permissions =</span> <span class="st">"EDIT"</span>, <span class="dt">accountId =</span> <span class="dv">47480439</span>)</code></pre></div>
-<p>To delete a user from all accounts, web-properties and views takes a few API calls to find all the possible links, which is done behind the scenes of <code><a href="../reference/ga_users_delete.html">ga_users_delete()</a></code>. You can pass it multiple emails to delete many at once via batching:</p>
+<p>To delete a user from all accounts, web-properties and views takes a few API calls to <code><a href="../reference/ga_users_list.html">ga_users_list()</a></code> to find all the possible links, which is done behind the scenes of <code><a href="../reference/ga_users_delete.html">ga_users_delete()</a></code>. You can pass the function multiple emails to delete many at once, which is done via batching:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="dv">47480439</span>)
 
 <span class="kw"><a href="../reference/ga_users_delete.html">ga_users_delete</a></span>(<span class="st">"the_email@company.com"</span>, <span class="dv">47480439</span>)

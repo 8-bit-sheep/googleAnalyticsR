@@ -96,9 +96,17 @@ head(amd)
 * ga_users_add() - add users to accounts
 * ga_users_update() - update a user
 
-User management follows the recommended workflows outlined in this [Google reference article](https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management). It follows the batching endpoint, to take advantage of the increased quota limits and performance you get if you send in multiple calls at once. For every 30 API calls that are batched, you only increment one API call against your management API quota.  You can have 300 API calls in one batch, but the `googleAnalyticsR` will split it into multiple batches if you have more than 300, so send in the entire vector even if you have more than 300. 
+User management follows the recommended workflows outlined in this [Google reference article](https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management). 
 
-You first would want to list the users you have attached already to Google Analytics.  Users can be attached at various levels in the hierarchy so you can call the function at various viewing angles.
+The `ga_users_*` functions use the management APIs batching endpoint, to take advantage of the special increased quota limits when dealing with User management that API offers.  For example, every 30 API calls that are batched that deal with user management only increments one API call against your management API quota.  You can have 300 API calls in one batch (e.g. that costs 10 API calls against the quota), and `googleAnalyticsR` will split any list of emails into 300 emails per batch for you, so you can send in all emails you have.
+
+By default, each Google Cloud Project gets 50 write requests per project per day, which if using batching means 1500 write/delete/update user operations per day.
+
+> You will need to use your own Google Cloud Platform project if using any write API operations seriously, otherwise you will be at the mercy of the shared googleAnalyticsR's quota limits. See the section in the Setup page on how to [setup using your own Google Project](http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#your-own-google-project)
+
+To see which users are attached, use `ga_users_list()`.  Each user email is referenced under the `userRef.email` column, whereas the unique IDs used to see which user is linked to where is the `linkId` which is unique to each user and link to your account, web property or view/profile.
+
+Users can be attached at various levels in the hierarchy so you can call the function at various viewing angles.
 
 ```r
 # default will list all users that match the id you supply
@@ -121,8 +129,7 @@ ga_users_add(c("the_email@company.com", "another_email@company.com"),
              permissions = "EDIT", accountId = 47480439)
 ```
 
-
-To delete a user from all accounts, web-properties and views takes a few API calls to find all the possible links, which is done behind the scenes of `ga_users_delete()`.  You can pass it multiple emails to delete many at once via batching:
+To delete a user from all accounts, web-properties and views takes a few API calls to `ga_users_list()` to find all the possible links, which is done behind the scenes of `ga_users_delete()`.  You can pass the function multiple emails to delete many at once, which is done via batching:
 
 ```r
 ga_users_list(47480439)
