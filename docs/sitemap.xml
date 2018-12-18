@@ -361,27 +361,27 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/simpleSegment_ga4-class.html</loc>
   </url>
   <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/big-query.html</loc>
-  </url>
-  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//articles/googleAnalyticsR.html</loc>
   </url>
   <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/management.html</loc>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/website/big-query.html</loc>
   </url>
   <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/rmarkdown.html</loc>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/website/management.html</loc>
   </url>
   <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/setup.html</loc>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/website/rmarkdown.html</loc>
   </url>
   <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/shiny.html</loc>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/website/setup.html</loc>
   </url>
   <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/v3.html</loc>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/website/shiny.html</loc>
   </url>
   <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/v4.html</loc>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/website/v3.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/website/v4.html</loc>
   </url>
 </urlset>

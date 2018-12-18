@@ -2,14 +2,14 @@ pandoc: 1.19.2.1
 pkgdown: 1.3.0
 pkgdown_sha: ~
 articles:
-  big-query: big-query.html
   googleAnalyticsR: googleAnalyticsR.html
-  management: management.html
-  rmarkdown: rmarkdown.html
-  setup: setup.html
-  shiny: shiny.html
-  v3: v3.html
-  v4: v4.html
+  big-query: website/big-query.html
+  management: website/management.html
+  rmarkdown: website/rmarkdown.html
+  setup: website/setup.html
+  shiny: website/shiny.html
+  v3: website/v3.html
+  v4: website/v4.html
 urls:
   reference: https://code.markedmondson.me/googleAnalyticsR//reference
   article: https://code.markedmondson.me/googleAnalyticsR//articles

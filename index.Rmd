@@ -9,6 +9,8 @@ output:
 [![CRAN](http://www.r-pkg.org/badges/version/googleAnalyticsR)](https://cran.r-project.org/package=googleAnalyticsR)
 [![Travis-CI Build Status](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master)](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR)
 
+# pkgdown <img src="man/figures/logo.png" align="right" alt="" width="120" />
+
 ## googleAnalyticsR
 
 Welcome to the website for **googleAnalyticsR**, an R library for working with [Google Analytics](https://developers.google.com/analytics/) data.

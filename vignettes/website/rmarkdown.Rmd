@@ -1,9 +1,5 @@
 ---
 title: "RMarkdown reports with Google Analytics API data"
-vignette: >
-  %\VignetteIndexEntry{RMarkdown reports with googleAnalyticsR}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 `googleAnalyticsR` can be used to generate reports in RMarkdown documents.

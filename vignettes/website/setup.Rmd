@@ -1,9 +1,5 @@
 ---
 title: "Setting up Google Analytics API downloads to R"
-vignette: >
-  %\VignetteIndexEntry{Setup for googleAnalyticsR}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ## Install

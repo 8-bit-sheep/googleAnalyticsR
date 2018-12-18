@@ -1,9 +1,5 @@
 ---
 title: "Google Analytics Reporting API v4 in R Examples"
-vignette: >
-  %\VignetteIndexEntry{Reporting API v4}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 The v4 API are where new features will appear in the future.  
