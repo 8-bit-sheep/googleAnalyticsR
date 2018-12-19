@@ -13,6 +13,7 @@
 * Support more than 1000 entries in various management list functions (#174)
 * Parse management API list responses into data.frames (#194)
 * Add user management functions such as `ga_users_delete`, `ga_users_update` and `ga_users_add`
+* Add custom dimension functions `ga_custom_vars_create` and `ga_custom_vars_patch`
 
 # googleAnalytics 0.5.0
 

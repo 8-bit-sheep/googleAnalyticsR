@@ -188,6 +188,8 @@ reference:
     contents: 
       - ga_custom_vars_list
       - ga_custom_vars
+      - ga_custom_vars_create
+      - ga_custom_vars_patch
   - title: "Experiments"
     desc: >
       Work with experiment objects 

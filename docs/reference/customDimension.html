@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get hashed version of client id (also known as hashClientId, hashedClientId, or BigQuery's fullVisitorId) — ga_clientid_hash • googleAnalyticsR</title>
+<title>A customDimension object — customDimension • googleAnalyticsR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Get hashed version of client id (also known as hashClientId, hashedClientId, or BigQuery's fullVisitorId) — ga_clientid_hash" />
+<meta property="og:title" content="A customDimension object — customDimension" />
 
-<meta property="og:description" content="Get hashed version of client id (also known as hashClientId, hashedClientId, or BigQuery's fullVisitorId)" />
+<meta property="og:description" content="Pass this into ga_custom_vars_create or ga_custom_var_update" />
 
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -199,57 +199,64 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get hashed version of client id (also known as hashClientId, hashedClientId, or BigQuery's fullVisitorId)</h1>
+    <h1>A customDimension object</h1>
     
-    <div class="hidden name"><code>ga_clientid_hash.Rd</code></div>
+    <div class="hidden name"><code>customDimension.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Get hashed version of client id (also known as hashClientId, hashedClientId, or BigQuery's fullVisitorId)</p>
+    <p>Pass this into <a href='ga_custom_vars_create.html'>ga_custom_vars_create</a> or ga_custom_var_update</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>ga_clientid_hash</span>(<span class='no'>webPropertyId</span>, <span class='no'>clientId</span>)</pre>
+    <pre class="usage"><span class='fu'>customDimension</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>active</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>webPropertyId</th>
-      <td><p>Web Property Id</p></td>
+      <th>name</th>
+      <td><p>Name of custom dimension</p></td>
     </tr>
     <tr>
-      <th>clientId</th>
-      <td><p>Client Id</p></td>
+      <th>index</th>
+      <td><p>Index of custom dimension - integer between 1 and 20 (200 for GA360)</p></td>
+    </tr>
+    <tr>
+      <th>scope</th>
+      <td><p>Scope of custom dimension - one of <code>"HIT","SESSION","USER","PRODUCT"</code></p></td>
+    </tr>
+    <tr>
+      <th>active</th>
+      <td><p><code>TRUE</code> or <code>FALSE</code> if custom dimension is active or not</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>The id of the custom dimension</p></td>
+    </tr>
+    <tr>
+      <th>accountId</th>
+      <td><p>AccountId of the custom dimension</p></td>
+    </tr>
+    <tr>
+      <th>webPropertyId</th>
+      <td><p>WebPropertyId of the custom dimension</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>hashedClientId object list</p>
+    <p>When creating a new custom dimension, supply all the arguments except id.</p> 
+<p>If you are updating an existing custom dimension, only supply the arguments you wish to change</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other managementAPI functions: <code><a href='ga_adwords_list.html'>ga_adwords_list</a></code>,
-  <code><a href='ga_adwords.html'>ga_adwords</a></code>,
-  <code><a href='ga_experiment_list.html'>ga_experiment_list</a></code>,
-  <code><a href='ga_experiment.html'>ga_experiment</a></code>, <code><a href='ga_filter_add.html'>ga_filter_add</a></code>,
-  <code><a href='ga_filter_apply_to_view.html'>ga_filter_apply_to_view</a></code>,
-  <code><a href='ga_filter_delete.html'>ga_filter_delete</a></code>,
-  <code><a href='ga_filter_list.html'>ga_filter_list</a></code>,
-  <code><a href='ga_filter_update_filter_link.html'>ga_filter_update_filter_link</a></code>,
-  <code><a href='ga_filter_update.html'>ga_filter_update</a></code>,
-  <code><a href='ga_filter_view_list.html'>ga_filter_view_list</a></code>,
-  <code><a href='ga_filter_view.html'>ga_filter_view</a></code>, <code><a href='ga_filter.html'>ga_filter</a></code>,
-  <code><a href='ga_goal_add.html'>ga_goal_add</a></code>, <code><a href='ga_goal_list.html'>ga_goal_list</a></code>,
-  <code><a href='ga_goal_update.html'>ga_goal_update</a></code>, <code><a href='ga_goal.html'>ga_goal</a></code>,
-  <code><a href='ga_remarketing_estimate.html'>ga_remarketing_estimate</a></code>,
-  <code><a href='ga_remarketing_get.html'>ga_remarketing_get</a></code>,
-  <code><a href='ga_remarketing_list.html'>ga_remarketing_list</a></code>,
-  <code><a href='ga_segment_list.html'>ga_segment_list</a></code>,
-  <code><a href='ga_unsampled_list.html'>ga_unsampled_list</a></code>,
-  <code><a href='ga_unsampled.html'>ga_unsampled</a></code></p></div>
+    <div class='dont-index'><p>Other custom variable functions: <code><a href='ga_custom_vars_create.html'>ga_custom_vars_create</a></code>,
+  <code><a href='ga_custom_vars_list.html'>ga_custom_vars_list</a></code>,
+  <code><a href='ga_custom_vars_patch.html'>ga_custom_vars_patch</a></code>,
+  <code><a href='ga_custom_vars.html'>ga_custom_vars</a></code></p></div>
     
 
   </div>
@@ -258,7 +265,7 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
           </ul>

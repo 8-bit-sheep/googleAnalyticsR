@@ -28,6 +28,9 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/cohort_metric_check.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/customDimension.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/date_ga4.html</loc>
   </url>
   <url>
@@ -100,7 +103,13 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_custom_vars.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_custom_vars_create.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_custom_vars_list.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_custom_vars_patch.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_experiment.html</loc>
