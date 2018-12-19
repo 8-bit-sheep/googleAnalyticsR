@@ -432,46 +432,46 @@
 ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, 
                             <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
                             <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
-<pre><code>## 2018-12-18 21:49:20&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<pre><code>## 2018-12-19 22:38:02&gt; Downloaded [240] rows from a total of [240].</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</code></pre></div>
 <pre><code>##   hour       date sessions bounceRate
-## 1   00 2018-12-08       18   88.88889
-## 2   00 2018-12-09        6   66.66667
-## 3   00 2018-12-10        5   60.00000
-## 4   00 2018-12-11       18   33.33333
-## 5   00 2018-12-12       19   89.47368
-## 6   00 2018-12-13        8   62.50000</code></pre>
+## 1   00 2018-12-09        6   66.66667
+## 2   00 2018-12-10        5   60.00000
+## 3   00 2018-12-11       18   33.33333
+## 4   00 2018-12-12       19   89.47368
+## 5   00 2018-12-13        8   62.50000
+## 6   00 2018-12-14       13   61.53846</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if we want totals per hour over the dates:</span>
 <span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"sessions"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  sessions
 ##    &lt;chr&gt;    &lt;dbl&gt;
-##  1 00         103
-##  2 01          58
-##  3 02          68
-##  4 03          47
-##  5 04          53
-##  6 05          45
-##  7 06          71
-##  8 07          55
-##  9 08          86
-## 10 09         107
+##  1 00          97
+##  2 01          62
+##  3 02          70
+##  4 03          46
+##  5 04          54
+##  6 05          51
+##  7 06          77
+##  8 07          60
+##  9 08          92
+## 10 09         118
 ## # ... with 14 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># it knows not to sum metrics that are rates:</span>
 <span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"bounceRate"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  bounceRate
 ##    &lt;chr&gt;      &lt;dbl&gt;
-##  1 00          69.0
-##  2 01          73.1
+##  1 00          66.8
+##  2 01          70.3
 ##  3 02          76.1
-##  4 03          82.3
-##  5 04          78.0
-##  6 05          86.5
-##  7 06          81.8
-##  8 07          83.6
-##  9 08          68.5
-## 10 09          65.8
+##  4 03          81.8
+##  5 04          82.0
+##  6 05          87.6
+##  7 06          77.6
+##  8 07          77.9
+##  9 08          64.5
+## 10 09          66.3
 ## # ... with 14 more rows</code></pre>
 <ul>
 <li>
@@ -544,6 +544,45 @@ o &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumenta
                 <span class="dt">webPropertyId =</span> <span class="st">"UA-123456-1"</span>)</code></pre></div>
 <p>When using linkIds, make sure to use the correct <code>linkId</code> for the level of account, web-property or view you are operating on - the <code>linkId</code> starts with the accountId, UA code of web property, or ViewId number to distinguish between the various types.</p>
 </div>
+<div id="custom-variables" class="section level2">
+<h2 class="hasAnchor">
+<a href="#custom-variables" class="anchor"></a>Custom variables</h2>
+<p>Custom variable management for a Google Analytics property.</p>
+<ul>
+<li>
+<code><a href="../reference/ga_custom_vars.html">ga_custom_vars()</a></code> - get meta data for a specific custom variable</li>
+<li>
+<code><a href="../reference/ga_custom_vars_list.html">ga_custom_vars_list()</a></code> - list all custom dimensions or metrics</li>
+<li>
+<code><a href="../reference/ga_custom_vars_create.html">ga_custom_vars_create()</a></code> - create a new custom variable</li>
+<li>
+<code><a href="../reference/ga_custom_vars_patch.html">ga_custom_vars_patch()</a></code> - update an existing custom variable</li>
+</ul>
+<p>Using these you can scale setting up custom dimensions across your Google Analytics web properties. Custom dimension updates are governed by the same rules as when you create them in the web interface, as this <a href="https://support.google.com/analytics/answer/2709828">Google article on custom dimensions and metrics explains</a>.</p>
+<p>You can’t delete custom dimensions, you can only de-activate them for reuse later on.</p>
+<p>A workflow is shown below that creates, then updates a custom variable to a new name.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create custom var</span>
+<span class="kw"><a href="../reference/ga_custom_vars_create.html">ga_custom_vars_create</a></span>(<span class="st">"my_custom_dim"</span>,
+                      <span class="dt">index =</span> <span class="dv">15</span>,
+                      <span class="dt">accountId =</span> <span class="dv">54019251</span>,
+                      <span class="dt">webPropertyId =</span> <span class="st">"UA-54019251-4"</span>,
+                      <span class="dt">scope =</span> <span class="st">"HIT"</span>,
+                      <span class="dt">active =</span> <span class="ot">FALSE</span>)
+
+<span class="co"># view custom dimension in list</span>
+<span class="kw"><a href="../reference/ga_custom_vars_list.html">ga_custom_vars_list</a></span>(<span class="dv">54019251</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-54019251-4"</span>, <span class="dt">type =</span> <span class="st">"customDimensions"</span>)
+
+<span class="co"># change a custom dimension</span>
+<span class="kw"><a href="../reference/ga_custom_vars_patch.html">ga_custom_vars_patch</a></span>(<span class="st">"ga:dimension7"</span>,
+                     <span class="dt">accountId =</span> <span class="dv">54019251</span>,
+                     <span class="dt">webPropertyId =</span> <span class="st">"UA-54019251-4"</span>,
+                     <span class="dt">name =</span> <span class="st">"my_custom_dim2"</span>,
+                     <span class="dt">scope =</span> <span class="st">"SESSION"</span>,
+                     <span class="dt">active =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># view custom dimensions again to see change</span>
+<span class="kw"><a href="../reference/ga_custom_vars_list.html">ga_custom_vars_list</a></span>(<span class="dv">54019251</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-54019251-4"</span>, <span class="dt">type =</span> <span class="st">"customDimensions"</span>)</code></pre></div>
+</div>
 <div id="adwords" class="section level2">
 <h2 class="hasAnchor">
 <a href="#adwords" class="anchor"></a>AdWords</h2>
@@ -567,17 +606,6 @@ o &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumenta
 <code><a href="../reference/ga_custom_upload_file.html">ga_custom_upload_file()</a></code>- Upload a file to GA custom uploads</li>
 <li>
 <code><a href="../reference/ga_custom_upload_list.html">ga_custom_upload_list()</a></code> - List the files in a GA custom upload</li>
-</ul>
-</div>
-<div id="custom-variables" class="section level2">
-<h2 class="hasAnchor">
-<a href="#custom-variables" class="anchor"></a>Custom variables</h2>
-<p>Custom variables for a Google Analytics property.</p>
-<ul>
-<li>
-<code><a href="../reference/ga_custom_vars.html">ga_custom_vars()</a></code> - get meta data for a specific custom variable</li>
-<li>
-<code><a href="../reference/ga_custom_vars_list.html">ga_custom_vars_list()</a></code> - list all custom variables.</li>
 </ul>
 </div>
 <div id="experiments" class="section level2">
@@ -700,9 +728,9 @@ my_remarketing2 &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 <li><a href="#account-structure">Account structure</a></li>
       <li><a href="#helper-functions">Helper functions</a></li>
       <li><a href="#user-management">User management</a></li>
+      <li><a href="#custom-variables">Custom variables</a></li>
       <li><a href="#adwords">AdWords</a></li>
       <li><a href="#custom-data-sources">Custom Data Sources</a></li>
-      <li><a href="#custom-variables">Custom variables</a></li>
       <li><a href="#experiments">Experiments</a></li>
       <li><a href="#view-filters">View Filters</a></li>
       <li><a href="#goals">Goals</a></li>
