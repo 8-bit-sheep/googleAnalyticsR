@@ -1,4 +1,4 @@
-# googleAnalyticsR 0.5.0.9000
+# googleAnalyticsR 0.6.0
 
 * Add goal management
 * Add `ga_clientid_deletion()` function (#168) (renamed from `ga_user_deletion()`)
