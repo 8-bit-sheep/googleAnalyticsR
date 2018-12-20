@@ -181,9 +181,14 @@ parse_ga_custom_vars_list <- function(x){
 
 #' Create a custom dimension
 #' 
-#' Create a dimension using \link{customDimension} then pass it into this function to create it in your web property.
+#' Create a dimension by specifying its attributes.
 #' 
-#' @inheritParams customDimension
+#' @param active \code{TRUE} or \code{FALSE} if custom dimension is active or not
+#' @param index Index of custom dimension - integer between 1 and 20 (200 for GA360)
+#' @param name Name of custom dimension
+#' @param scope Scope of custom dimension - one of \code{"HIT","SESSION","USER","PRODUCT"}
+#' @param accountId AccountId of the custom dimension
+#' @param webPropertyId WebPropertyId of the custom dimension
 #' 
 #' @seealso \href{https://support.google.com/analytics/answer/2709828}{Custom dimensions support article}
 #' @export
@@ -242,7 +247,12 @@ ga_custom_vars_create <- function(name,
 #' 
 #' Modify existing custom dimensions
 #' 
-#' @inheritParams customDimension
+#' @param active \code{TRUE} or \code{FALSE} if custom dimension is active or not
+#' @param name Name of custom dimension
+#' @param scope Scope of custom dimension - one of \code{"HIT","SESSION","USER","PRODUCT"}
+#' @param accountId AccountId of the custom dimension
+#' @param webPropertyId WebPropertyId of the custom dimension
+#' @param id The id of the custom dimension
 #' @param ignoreCustomDataSourceLinks Force the update and ignore any warnings related to the custom dimension being linked to a custom data source / data set.
 #' 
 #' @seealso \href{https://support.google.com/analytics/answer/2709828}{Custom dimensions support article}
@@ -321,7 +331,7 @@ ga_custom_vars_patch <- function(id,
 
 #' A customDimension object
 #' 
-#' Pass this into \link{ga_custom_vars_create} or \link{ga_custom_var_patch}
+#' Used within \link{ga_custom_vars_create} and \link{ga_custom_var_patch}
 #' 
 #' @param active \code{TRUE} or \code{FALSE} if custom dimension is active or not
 #' @param index Index of custom dimension - integer between 1 and 20 (200 for GA360)

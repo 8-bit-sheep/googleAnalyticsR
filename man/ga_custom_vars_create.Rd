@@ -7,8 +7,21 @@
 ga_custom_vars_create(name, index, accountId, webPropertyId, active,
   scope = c("HIT", "SESSION", "USER", "PRODUCT"))
 }
+\arguments{
+\item{name}{Name of custom dimension}
+
+\item{index}{Index of custom dimension - integer between 1 and 20 (200 for GA360)}
+
+\item{accountId}{AccountId of the custom dimension}
+
+\item{webPropertyId}{WebPropertyId of the custom dimension}
+
+\item{active}{\code{TRUE} or \code{FALSE} if custom dimension is active or not}
+
+\item{scope}{Scope of custom dimension - one of \code{"HIT","SESSION","USER","PRODUCT"}}
+}
 \description{
-Create a dimension using \link{customDimension} then pass it into this function to create it in your web property.
+Create a dimension by specifying its attributes.
 }
 \examples{
 

@@ -217,6 +217,30 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>id</th>
+      <td><p>The id of the custom dimension</p></td>
+    </tr>
+    <tr>
+      <th>accountId</th>
+      <td><p>AccountId of the custom dimension</p></td>
+    </tr>
+    <tr>
+      <th>webPropertyId</th>
+      <td><p>WebPropertyId of the custom dimension</p></td>
+    </tr>
+    <tr>
+      <th>name</th>
+      <td><p>Name of custom dimension</p></td>
+    </tr>
+    <tr>
+      <th>active</th>
+      <td><p><code>TRUE</code> or <code>FALSE</code> if custom dimension is active or not</p></td>
+    </tr>
+    <tr>
+      <th>scope</th>
+      <td><p>Scope of custom dimension - one of <code>"HIT","SESSION","USER","PRODUCT"</code></p></td>
+    </tr>
+    <tr>
       <th>ignoreCustomDataSourceLinks</th>
       <td><p>Force the update and ignore any warnings related to the custom dimension being linked to a custom data source / data set.</p></td>
     </tr>
@@ -238,7 +262,7 @@
 
 <span class='co'># create custom var</span>
 <span class='fu'><a href='ga_custom_vars_create.html'>ga_custom_vars_create</a></span>(<span class='st'>"my_custom_dim"</span>,
-                      <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>15</span>,
+                      <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>7</span>,
                       <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='fl'>54019251</span>,
                       <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-54019251-4"</span>,
                       <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"HIT"</span>,
@@ -252,7 +276,6 @@
                      <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='fl'>54019251</span>,
                      <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-54019251-4"</span>,
                      <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"my_custom_dim2"</span>,
-                     <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"SESSION"</span>,
                      <span class='kw'>active</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># view custom dimensions again to see change</span>
