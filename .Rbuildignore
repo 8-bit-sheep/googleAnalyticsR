@@ -22,3 +22,10 @@
 ^gar_parse_error\.rds$
 ^build\.sh$
 ^.github*
+^vignettes/big-query\.Rmd$
+^vignettes/management\.Rmd$
+^vignettes/rmarkdown\.Rmd$
+^vignettes/setup\.Rmd$
+^vignettes/shiny\.Rmd$
+^vignettes/v3\.Rmd$
+^vignettes/v4\.Rmd$
