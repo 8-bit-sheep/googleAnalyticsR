@@ -8,18 +8,6 @@ ga_custom_vars_patch(id, accountId, webPropertyId, name = NULL,
   active = NULL, scope = NULL, ignoreCustomDataSourceLinks = FALSE)
 }
 \arguments{
-\item{id}{The id of the custom dimension}
-
-\item{accountId}{AccountId of the custom dimension}
-
-\item{webPropertyId}{WebPropertyId of the custom dimension}
-
-\item{name}{Name of custom dimension}
-
-\item{active}{\code{TRUE} or \code{FALSE} if custom dimension is active or not}
-
-\item{scope}{Scope of custom dimension - one of \code{"HIT","SESSION","USER","PRODUCT"}}
-
 \item{ignoreCustomDataSourceLinks}{Force the update and ignore any warnings related to the custom dimension being linked to a custom data source / data set.}
 }
 \description{
@@ -58,8 +46,7 @@ ga_custom_vars_list(54019251, webPropertyId = "UA-54019251-4", type = "customDim
 \seealso{
 \href{https://support.google.com/analytics/answer/2709828}{Custom dimensions support article}
 
-Other custom variable functions: \code{\link{customDimension}},
-  \code{\link{ga_custom_vars_create}},
+Other custom variable functions: \code{\link{ga_custom_vars_create}},
   \code{\link{ga_custom_vars_list}},
   \code{\link{ga_custom_vars}}
 }

@@ -260,7 +260,7 @@ ga_custom_vars_create <- function(name,
 #' 
 #' # create custom var
 #' ga_custom_vars_create("my_custom_dim",
-#'                       index = 15,
+#'                       index = 7,
 #'                       accountId = 54019251,
 #'                       webPropertyId = "UA-54019251-4",
 #'                       scope = "HIT",
@@ -274,7 +274,6 @@ ga_custom_vars_create <- function(name,
 #'                      accountId = 54019251,
 #'                      webPropertyId = "UA-54019251-4",
 #'                      name = "my_custom_dim2",
-#'                      scope = "SESSION",
 #'                      active = TRUE)
 #'                      
 #' # view custom dimensions again to see change

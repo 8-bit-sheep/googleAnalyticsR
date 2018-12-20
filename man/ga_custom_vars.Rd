@@ -23,8 +23,7 @@ Custom Metric or Dimension meta data
 Get Custom Dimensions or Metrics
 }
 \seealso{
-Other custom variable functions: \code{\link{customDimension}},
-  \code{\link{ga_custom_vars_create}},
+Other custom variable functions: \code{\link{ga_custom_vars_create}},
   \code{\link{ga_custom_vars_list}},
   \code{\link{ga_custom_vars_patch}}
 }
