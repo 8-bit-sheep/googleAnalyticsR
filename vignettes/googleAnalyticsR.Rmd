@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-[googleAnalyticsR guide online](http://code.markedmondson.me/googleAnalyticsR)
+[googleAnalyticsR guide online](https://.markedmondson.me/googleAnalyticsR)
 
 A new Google Analytics R library using the new v4 of the Google Analytics Reporting API.  Built using [`googleAuthR`](https://github.com/MarkEdmondson1234/googleAuthR). The successor to [`shinyga`](https://github.com/MarkEdmondson1234/shinyga) it allows online OAuth2 authentication within Shiny apps, along with new features such as batching and compatibility with other Google APIs.
 
@@ -500,7 +500,7 @@ This is under active development, and features will expand in the future. Eventu
 
 ### Setup
 
-To use, you need to also install the [`bigQueryR`](http://code.markedmondson.me/bigQueryR/) library.
+To use, you need to also install the [`bigQueryR`](https://.markedmondson.me/bigQueryR/) library.
 
 Stable version is on CRAN:
 

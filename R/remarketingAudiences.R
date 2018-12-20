@@ -87,7 +87,7 @@ ga_remarketing_estimate <- function(remarketingAudience){
 #' 
 #' Create definitions to be used within \link{ga_remarketing_create}
 #' 
-#' @param segment The defintion of the segment (v3 syntax)
+#' @param segment The definition of the segment (v3 syntax)
 #' @param membershipDurationDays Number of days (in the range 1 to 540) a user remains in the audience.
 #' @param daysToLookBack The look-back window lets you specify a time frame for evaluating the behavior that qualifies users for your audience.
 #' @param state_duration If to be used in a state based audience, whether to make the segment temporary or permanent.

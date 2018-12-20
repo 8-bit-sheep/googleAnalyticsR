@@ -455,7 +455,7 @@ ga_filter_update <- function(Filter,
 
 #' Apply an existing filter to view.
 #'
-#' @param filterId The id of the filter to be addedd to profile/view
+#' @param filterId The id of the filter to be added to profile/view
 #' @param accountId Account Id of the account that contains the filter
 #' @param webPropertyId Web property Id to create profile filter link for
 #' @param viewId Profile/view Id to create profile filter link for

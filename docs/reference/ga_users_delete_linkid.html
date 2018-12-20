@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="Delete users access from account, webproperty or view level — ga_users_delete_linkid" />
 
-<meta property="og:description" content="The linkId is in the form of the accountId/webPropertyId/viewId colon seperated from a link unique Id.
+<meta property="og:description" content="The linkId is in the form of the accountId/webPropertyId/viewId colon separated from a link unique Id.
 Delete user access by supplying the linkId for that user at the level they have been given access.  It won't work to delete user links at account level if they have been assigned at web property or view level - you will need to get the linkId for that level instead. e.g. a user needs permissions.local to be non-NULL to be deleted at that level.  The parameter check will do this check before deletion and throw an error if they can not be deleted.   Set this to check=FALSE to suppress this behaviour.
 If you supply more than one linkId, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a TRUE result on successful batch, but individual linkIds may have failed.  Check via ga_users_list afterwards and try to delete individual linkIds to get more descriptive error messages." />
 
@@ -208,7 +208,7 @@ If you supply more than one linkId, then batch processing will be applied.  Batc
 
     <div class="ref-description">
     
-    <p>The <code>linkId</code> is in the form of the accountId/webPropertyId/viewId colon seperated from a link unique Id.</p>
+    <p>The <code>linkId</code> is in the form of the accountId/webPropertyId/viewId colon separated from a link unique Id.</p>
 <p>Delete user access by supplying the linkId for that user at the level they have been given access.  It won't work to delete user links at account level if they have been assigned at web property or view level - you will need to get the linkId for that level instead. e.g. a user needs <code>permissions.local</code> to be non-NULL to be deleted at that level.  The parameter <code>check</code> will do this check before deletion and throw an error if they can not be deleted.   Set this to <code>check=FALSE</code> to suppress this behaviour.</p>
 <p>If you supply more than one <code>linkId</code>, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a <code>TRUE</code> result on successful batch, but individual <code>linkId</code>s may have failed.  Check via <a href='ga_users_list.html'>ga_users_list</a> afterwards and try to delete individual linkIds to get more descriptive error messages.</p>
     

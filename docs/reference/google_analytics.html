@@ -320,7 +320,7 @@ Default <code>NULL</code>, set to <code>TRUE</code> or <code>FALSE</code> if you
     <h2 class="hasAnchor" id="row-requests"><a class="anchor" href="#row-requests"></a>Row requests</h2>
 
     
-    <p>By default the API call will use v4 batching that splits requests into 5 seperate calls of 10k rows each.  This can go up to 100k, so this means up to 500k rows can be fetched per API call, however the API servers will fail with a 500 error if the query is too complicated as the processing time at Google's end gets too long.  In this case, you may want to tweak the <code>rows_per_call</code> argument downwards, or fall back to using <code>slow_fetch = FALSE</code> which will send an API request one at a time.  If fetching data via scheduled scripts this is recommended as the default.</p>
+    <p>By default the API call will use v4 batching that splits requests into 5 separate calls of 10k rows each.  This can go up to 100k, so this means up to 500k rows can be fetched per API call, however the API servers will fail with a 500 error if the query is too complicated as the processing time at Google's end gets too long.  In this case, you may want to tweak the <code>rows_per_call</code> argument downwards, or fall back to using <code>slow_fetch = FALSE</code> which will send an API request one at a time.  If fetching data via scheduled scripts this is recommended as the default.</p>
     
     <h2 class="hasAnchor" id="anti-sampling"><a class="anchor" href="#anti-sampling"></a>Anti-sampling</h2>
 

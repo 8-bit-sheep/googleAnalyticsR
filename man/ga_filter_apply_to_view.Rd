@@ -7,7 +7,7 @@
 ga_filter_apply_to_view(filterId, accountId, webPropertyId, viewId)
 }
 \arguments{
-\item{filterId}{The id of the filter to be addedd to profile/view}
+\item{filterId}{The id of the filter to be added to profile/view}
 
 \item{accountId}{Account Id of the account that contains the filter}
 

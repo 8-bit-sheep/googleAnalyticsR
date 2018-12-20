@@ -8,7 +8,7 @@ ga_remarketing_build(segment, membershipDurationDays = NULL,
   daysToLookBack = NULL, state_duration = c("TEMPORARY", "PERMANENT"))
 }
 \arguments{
-\item{segment}{The defintion of the segment (v3 syntax)}
+\item{segment}{The definition of the segment (v3 syntax)}
 
 \item{membershipDurationDays}{Number of days (in the range 1 to 540) a user remains in the audience.}
 

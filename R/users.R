@@ -159,7 +159,7 @@ ga_users_delete <- function(email, accountId){
 #' 
 #' @description 
 #' 
-#' The \code{linkId} is in the form of the accountId/webPropertyId/viewId colon seperated from a link unique Id.
+#' The \code{linkId} is in the form of the accountId/webPropertyId/viewId colon separated from a link unique Id.
 #' 
 #' Delete user access by supplying the linkId for that user at the level they have been given access.  It won't work to delete user links at account level if they have been assigned at web property or view level - you will need to get the linkId for that level instead. e.g. a user needs \code{permissions.local} to be non-NULL to be deleted at that level.  The parameter \code{check} will do this check before deletion and throw an error if they can not be deleted.   Set this to \code{check=FALSE} to suppress this behaviour.
 #' 
