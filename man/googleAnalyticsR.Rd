@@ -13,22 +13,6 @@
 Follow the online documentation here: \url{https://code.markedmondson.me/googleAnalyticsR/}
 }
 \details{
-\itemize{
-  \item First \href{https://code.markedmondson.me/googleAnalyticsR/v4.html}{Google Analytics Reporting v4} API library for R
-  \item v4 features include: dynamic calculated metrics, pivots, 
-    histograms, date comparisons, batching
-  \item Multi-user login in Shiny App to enable \href{https://code.markedmondson.me/googleAnalyticsR/shiny.html}{Google Analytics powered Shiny Apps}
-  \item Integration with \href{https://code.markedmondson.me/googleAnalyticsR/big-query.html}{BigQuery Google Analytics Premium/360 exports}
-  \item Single authentication flow with other \link{googleAuthR} apps
-  \item Automatic batching
-  \item Multi-channel funnnels
-  \item Support for batch. For big data calls this could 
-    be 10x quicker than normal GA fetching
-  \item Meta data included in attributes of returned dataframe
-  \item Automatic caching of API requests
-  \item Management API features such as \href{https://code.markedmondson.me/googleAnalyticsR/management.html#unsampled_reports}{unsampled report downloads} and view filter setup
- }
- 
 You may wish to set the below environment arguments for easier authentication
 
 \code{
