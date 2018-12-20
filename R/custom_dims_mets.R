@@ -322,7 +322,7 @@ ga_custom_vars_patch <- function(id,
 
 #' A customDimension object
 #' 
-#' Pass this into \link{ga_custom_vars_create} or \link{ga_custom_var_update}
+#' Pass this into \link{ga_custom_vars_create} or \link{ga_custom_var_patch}
 #' 
 #' @param active \code{TRUE} or \code{FALSE} if custom dimension is active or not
 #' @param index Index of custom dimension - integer between 1 and 20 (200 for GA360)
@@ -339,6 +339,7 @@ ga_custom_vars_patch <- function(id,
 #' 
 #' @family custom variable functions
 #' @import assertthat
+#' @noRd
 customDimension <- function(name = NULL, 
                             index = NULL,
                             scope = NULL, 

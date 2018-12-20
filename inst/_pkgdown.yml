@@ -3,6 +3,9 @@ output_dir: "."
 url: https://code.markedmondson.me/googleAnalyticsR/
 development:
   mode: release
+authors:
+  name: Mark Edmondson
+  href: https://code.markedmondson.me
 home:
   strip_header: true
 template:
