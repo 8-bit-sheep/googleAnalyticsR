@@ -29,3 +29,4 @@
 ^vignettes/shiny\.Rmd$
 ^vignettes/v3\.Rmd$
 ^vignettes/v4\.Rmd$
+^revdep*
