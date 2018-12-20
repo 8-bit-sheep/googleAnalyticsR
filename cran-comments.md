@@ -2,7 +2,7 @@
 
 * local OS X install, R 3.5.0
 * ubuntu 12.04 (on travis-ci), R 3.5.1
-* Windows Server 2008 R2 SP1, R-release, 32/64 bit (on r-hub), R 3.4.3
+* win-builder, R Under development (unstable) (2018-12-19 r75867)
 
 
 ## R CMD check results
