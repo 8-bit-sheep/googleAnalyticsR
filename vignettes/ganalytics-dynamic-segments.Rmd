@@ -1,0 +1,119 @@
+---
+title: "Advanced dynamic segment examples"
+author: "Johann de Boer"
+date: "2018-09-09"
+output:
+  html_vignette:
+    keep_md: true
+  md_document:
+    variant: markdown_github
+vignette: >
+  %\VignetteIndexEntry{DYNAMIC SEGMENTS}
+  %\VignetteEngine{knitr::knitr_notangle}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+# source: https://stackoverflow.com/a/46482580/1007029
+is_check <- ("CheckExEnv" %in% search()) || any(c("_R_CHECK_TIMINGS_",
+             "_R_CHECK_LICENSE_", "TRAVIS") %in% names(Sys.getenv()))
+knitr::opts_chunk$set(eval = !is_check, purl = !is_check)
+```
+
+`ganalytics` provides functions that makes it easy to define filters and segments using natural R language comparison and logical operators. This example demonstrates how to define dynamic segments using functions from the `ganalytics` package and using those segments with the `googleAnalyticsR` package. The current development version of `googleAnalyticsR` supports segments and filters defined with `ganalytics`.
+
+## Setup/Config
+
+Once installed, load these packages. Please refer to the `googleAnalyticsR` package documentation on configuration steps you may need to complete in order to use the Google Analytics APIs.
+
+```{r setup}
+library(googleAnalyticsR)
+library(ganalytics)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(purrr)
+library(knitr)
+
+ga_auth(file.path("~", "ga.oauth"))
+
+view_id <- "117987738"
+start_date <- "2018-05-01"
+end_date <- "2018-06-30"
+```
+
+## Pull the Data
+
+In this example, we'll define a list of six segments:
+* Bounced sessions: Sessions where the bounces metric is not zero.
+* Mobile or tablet sessions: Sessions by mobile and tablet users.
+* Converters: Users who performed any type of conversion during the defined date range.
+* Multi-session users: Users who have visited more than once during the defined date range.
+* New desktop users: Sessions by new visitors using a desktop device.
+* Bounced before converting = Users who bounced in one session before converting later.
+
+The above list of dynamic segments is defined using `ganalytics` expressions as follows:
+
+```{r define-segments}
+bounces <- Expr(~bounces != 0)
+conversions <- Expr(~goalCompletionsAll > 0) | Expr(~transactions > 0)
+mobile_or_tablet <- Expr(~deviceCategory %in% c("mobile", "tablet"))
+multi_session_users <- Include(PerUser(Expr(~sessions > 1)), scope = "users")
+new_desktop_users <- Expr(~deviceCategory == "desktop") & Expr(~userType == "new")
+
+my_segment_list <- list(
+  bounced_sessions = PerSession(bounces),
+  mobile_or_tablet = mobile_or_tablet,
+  converters = PerUser(conversions),
+  multi_session_users = multi_session_users,
+  new_desktop_users = new_desktop_users,
+  bounced_before_converting = Sequence(bounces, conversions, scope = "users")
+)
+```
+
+Because the Google Analytics Reporting API can only be used to query 4 segments at a time, we need to break our list segments into chunks.
+
+```{r split-segment-list}
+segment_chunks <- split(my_segment_list, (seq_along(my_segment_list) - 1L) %/% 4L)
+```
+
+We can now use `googleAnalyticsR` to query each chunk of segments and bind the results into a single `data.frame`. For each segment, we will request a count of users and sessions.
+
+```{r pull-data, message=FALSE}
+results <- map_df(segment_chunks, function(chunk) {
+  google_analytics(
+    viewId = view_id,
+    date_range = c(start_date, end_date),
+    metrics = c("users", "sessions"),
+    dimensions = c("segment"),
+    segments = Segments(chunk)
+  )
+})
+```
+
+```{r display-pulled-data}
+kable(results)
+```
+
+## Data Munging and Visualization
+
+We will compare users and sessions for each segment using a horizontal column chart. To do this we need to transform the results table into long format in which the count of users and sessions for each segment are on separate rows.
+
+```{r long-results}
+results_long <- results %>%
+  gather(metric, count, users, sessions)
+```
+
+```{r show-long-results}
+kable(results_long)
+```
+
+```{r visualize-results, fig.height=5, fig.width=10}
+ggplot(results_long) +
+  aes(segment, count, fill = metric) +
+  geom_col(position = "dodge") +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  coord_flip() +
+  theme(axis.text.y.left = element_text(hjust = 0))
+```
+
