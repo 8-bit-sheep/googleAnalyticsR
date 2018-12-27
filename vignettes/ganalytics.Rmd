@@ -3,26 +3,26 @@ title: "ganalytics - Advanced dynamic segment and Filter examples"
 author: "Johann de Boer"
 ---
 
-[`ganalytics`](https://CRAN.R-project.org/package=ganalytics) provides functions that makes it easy to define filters and segments using natural R language comparison and logical operators. This example demonstrates how to define dynamic segments using functions from the `ganalytics` package and using those segments with the `googleAnalyticsR` package. You need `googleAnalyticsR>=0.6.0`.
-
-## Setup/Config
-
-Once installed, load these packages. Please refer to the `googleAnalyticsR` package documentation on configuration steps you may need to complete in order to use the Google Analytics APIs.
-
-```{r setup}
+```{r setup, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+# auto-auth when done locally
 library(googleAnalyticsR)
 library(ganalytics)
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(purrr)
-library(knitr)
+```
 
-ga_auth(file.path("~", "ga.oauth"))
+[`ganalytics`](https://CRAN.R-project.org/package=ganalytics) provides functions that makes it easy to define filters and segments using natural R language comparison and logical operators. This example demonstrates how to define dynamic segments using functions from the `ganalytics` package and using those segments with the `googleAnalyticsR` package. You need `googleAnalyticsR>=0.6.0`.
 
-view_id <- "117987738"
-start_date <- "2018-05-01"
-end_date <- "2018-06-30"
+More examples are available at the ganalytics README and vignettes.
+
+## Setup
+
+Load the `ganalytics` library as well as `googleAnalyticsR` to make use of the below new syntax.
+
+```r
+library(googleAnalyticsR)
+library(ganalytics)
+
+# authenticate
+ga_auth()
 ```
 
 ## Advanced Filter syntax
@@ -49,8 +49,8 @@ We can now use `googleAnalyticsR` to
 
 ```{r pull-data, message=FALSE}
 results <- google_analytics(
-  viewId = view_id,
-  date_range = c(start_date, end_date),
+  viewId = 81416941,
+  date_range = c("30daysAgo", "yesterday"),
   metrics = c("users", "sessions", "goalCompletionsAll", "transactions"),
   dimensions = c("deviceCategory", "userType"),
   dim_filters = new_desktop_and_mobile_visitors,
@@ -100,6 +100,9 @@ segment_chunks <- split(my_segment_list, (seq_along(my_segment_list) - 1L) %/% 4
 We can now use `googleAnalyticsR` to query each chunk of segments and bind the results into a single `data.frame`. For each segment, we will request a count of users and sessions.
 
 ```{r pull-data, message=FALSE}
+library(purrr)
+library(dplyr)
+
 results <- map_df(segment_chunks, function(chunk) {
   google_analytics(
     viewId = view_id,
@@ -114,26 +117,3 @@ results <- map_df(segment_chunks, function(chunk) {
 ```{r display-pulled-data}
 kable(results)
 ```
-
-## Data Munging and Visualization
-
-We will compare users and sessions for each segment using a horizontal column chart. To do this we need to transform the results table into long format in which the count of users and sessions for each segment are on separate rows.
-
-```{r long-results}
-results_long <- results %>%
-  gather(metric, count, users, sessions)
-```
-
-```{r show-long-results}
-kable(results_long)
-```
-
-```{r visualize-results, fig.height=5, fig.width=10}
-ggplot(results_long) +
-  aes(segment, count, fill = metric) +
-  geom_col(position = "dodge") +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  coord_flip() +
-  theme(axis.text.y.left = element_text(hjust = 0))
-```
-
