@@ -10,7 +10,7 @@ test_that("ganalytics filters", {
   at_least_one_conversion <- Expr(~goalCompletionsAll > 0) | Expr(~transactions > 0)
   
   results <- google_analytics(
-    viewId = ga_id,
+    viewId = ga_id2,
     date_range = c("30daysAgo", "yesterday"),
     metrics = c("users", "sessions", "goalCompletionsAll", "transactions"),
     dimensions = c("deviceCategory", "userType"),
