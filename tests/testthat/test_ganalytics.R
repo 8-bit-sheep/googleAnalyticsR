@@ -1,3 +1,5 @@
+context("ganalytics integration")
+
 test_that("ganalytics filters", {
   library(ganalytics)
   # Device category is desktop or tablet - a dimension filter using an OR condition.
