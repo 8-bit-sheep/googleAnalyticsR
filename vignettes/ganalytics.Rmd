@@ -23,6 +23,9 @@ library(ganalytics)
 
 # authenticate
 ga_auth()
+
+# set to your view Id
+view_id <- 81416156
 ```
 
 ## Advanced Filter syntax
@@ -49,7 +52,7 @@ We can now use `googleAnalyticsR` to
 
 ```{r pull-data, message=FALSE}
 results <- google_analytics(
-  viewId = 81416156,
+  viewId = view_id,
   date_range = c("30daysAgo", "yesterday"),
   metrics = c("users", "sessions", "goalCompletionsAll", "transactions"),
   dimensions = c("deviceCategory", "userType"),
@@ -67,31 +70,32 @@ kable(results)
 In this example, we'll define a list of six segments:
 * Bounced sessions: Sessions where the bounces metric is not zero.
 * Mobile or tablet sessions: Sessions by mobile and tablet users.
-* Converters: Users who performed any type of conversion during the defined date range.
 * Multi-session users: Users who have visited more than once during the defined date range.
-* New desktop users: Sessions by new visitors using a desktop device.
-* Bounced before converting = Users who bounced in one session before converting later.
 
 The above list of dynamic segments is defined using `ganalytics` expressions as follows:
 
 ```{r define-segments}
 bounces <- Expr(~bounces != 0)
-conversions <- Expr(~goalCompletionsAll > 0) | Expr(~transactions > 0)
 mobile_or_tablet <- Expr(~deviceCategory %in% c("mobile", "tablet"))
 multi_session_users <- Include(PerUser(Expr(~sessions > 1)), scope = "users")
-new_desktop_users <- Expr(~deviceCategory == "desktop") & Expr(~userType == "new")
 
 my_segment_list <- list(
-  bounced_sessions = PerSession(bounces),
-  mobile_or_tablet = mobile_or_tablet,
-  converters = PerUser(conversions),
-  multi_session_users = multi_session_users,
-  new_desktop_users = new_desktop_users,
-  bounced_before_converting = Sequence(bounces, conversions, scope = "users")
-)
+    bounced_sessions = PerSession(bounces),
+    mobile_or_tablet = mobile_or_tablet,
+    multi_session_users = multi_session_users)
+
+results <- google_analytics(
+    viewId = view_id,
+    date_range = c(start_date, end_date),
+    metrics = c("users", "sessions"),
+    dimensions = c("segment"),
+    segments = Segments(my_segment_list)
+  )
 ```
 
-Because the Google Analytics Reporting API can only be used to query 4 segments at a time, we need to break our list segments into chunks.
+### More than 4 segments
+
+The Google Analytics Reporting API can only be used to query 4 segments at a time, so if you have more than 4 you need to break the list segments into chunks:
 
 ```{r split-segment-list}
 segment_chunks <- split(my_segment_list, (seq_along(my_segment_list) - 1L) %/% 4L)
@@ -114,6 +118,3 @@ results <- map_df(segment_chunks, function(chunk) {
 })
 ```
 
-```{r display-pulled-data}
-kable(results)
-```

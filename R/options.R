@@ -33,6 +33,15 @@
     options(googleAuthR.client_secret = Sys.getenv("GA_CLIENT_SECRET"))
   }
   
+  if(Sys.getenv("GAR_WEB_CLIENTID") != ""){
+    Sys.setenv("GA_WEB_CLIENT_ID") = Sys.getenv("GAR_WEB_CLIENTID")
+  } 
+  
+  if(Sys.getenv("GAR_WEB_CLIENT_SECRET") != ""){
+    Sys.setenv("GA_WEB_CLIENT_SECRET") = Sys.getenv("GAR_WEB_CLIENT_SECRET")
+  }
+
+  
   if(Sys.getenv("GA_WEB_CLIENT_ID") != ""){
     options(googleAuthR.webapp.client_id = Sys.getenv("GA_WEB_CLIENT_ID"))
   }
