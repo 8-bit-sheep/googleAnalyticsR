@@ -1,17 +1,16 @@
 library(shiny)
 library(googleAuthR)
+library(googleAnalyticsR) 
 
 gar_set_client(web_json = "ga-web-client.json",
-               scopes = c("https://www.googleapis.com/auth/analytics.readonly"))
+               scopes = "https://www.googleapis.com/auth/analytics.readonly")
 
-library(googleAnalyticsR) 
-library(tidyverse)
+options(googleAuthR.redirect = "https://mark.shinyapps.io/googleAnalyticsR_test_deployment/")
 
 ## ui.R
 ui <- fluidPage(title = "googleAnalyticsR Test Deployment",
                 
       authDropdownUI("auth_menu"),
-      
       textOutput("viewid"),
       textOutput("client_id")
       
@@ -19,7 +18,7 @@ ui <- fluidPage(title = "googleAnalyticsR Test Deployment",
 
 ## server.R
 server <- function(input, output, session){
-  
+
   gar_shiny_auth(session)
   
   al <- reactive(ga_account_list())
@@ -31,4 +30,4 @@ server <- function(input, output, session){
 
 }
 
-shinyApp(gar_shiny_ui(ui, login_ui = gar_shiny_login_ui), server)
+shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)
