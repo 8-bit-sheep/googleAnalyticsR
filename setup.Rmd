@@ -25,7 +25,7 @@ Check out the [NEWS](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/
 
 ## Dependencies
 
-`googleAnalyticsR` requires the packages described in the [`Imports` field of the `DESCRIPTION` file](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/DESCRIPTION) to be installed first, which it will do via `install.package("googleAnalyticsR", dependencies = TRUE)`
+`googleAnalyticsR` requires the packages described in the [`Imports` field of the `DESCRIPTION` file](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/DESCRIPTION) to be installed first, which it will do via `install.packages("googleAnalyticsR", dependencies = TRUE)`
 
 Note that on linux systems, due to its reliance on [`httr`]( https://CRAN.R-project.org/package=httr ) and in turn [`curl`]( https://CRAN.R-project.org/package=curl), it may require installation of these dependencies via `apt-get` or similar: `libssl-dev` and `libcurl4-openssl-dev`.
 
