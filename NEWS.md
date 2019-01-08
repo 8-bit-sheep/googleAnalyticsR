@@ -1,6 +1,6 @@
 # 0.6.0.9000
 
-* ...
+* Clean up error messages
 
 # googleAnalyticsR 0.6.0
 
