@@ -552,9 +552,10 @@ fetch_google_analytics_4_slow <- function(request_list,
               the_req$pageToken, "] from estimated actual Rows [", actualRows, "]", 
               level = 3)
 
-    out <- try(f(the_body = body))
-    
-    error_check(out)
+    out <- tryCatch(f(the_body = body),
+                    error = function(err){
+                      custom_error(err)
+                    })
     
     actualRows <- attr(out[[1]], "rowCount")
     npt <- attr(out[[1]], "nextPageToken")
@@ -627,23 +628,23 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE, useResourceQuo
   ga_batch_limit <- 5
   
   if(length(unique((lapply(request_list, function(x) x$viewId)))) != 1){
-    stop("request_list must all have the same viewId")
+    stop("request_list must all have the same viewId", call. = FALSE)
   }
   
   if(length(unique((lapply(request_list, function(x) x$dateRanges)))) != 1){
-    stop("request_list must all have the same dateRanges")
+    stop("request_list must all have the same dateRanges", call. = FALSE)
   }
   
   if(length(unique((lapply(request_list, function(x) x$segments)))) != 1){
-    stop("request_list must all have the same segments")
+    stop("request_list must all have the same segments", call. = FALSE)
   }
   
   if(length(unique((lapply(request_list, function(x) x$samplingLevel)))) != 1){
-    stop("request_list must all have the same samplingLevel")
+    stop("request_list must all have the same samplingLevel", call. = FALSE)
   }
   
   if(length(unique((lapply(request_list, function(x) x$cohortGroup)))) != 1){
-    stop("request_list must all have the same cohortGroup")
+    stop("request_list must all have the same cohortGroup", call. = FALSE)
   }
   
   myMessage("Calling APIv4....", level = 2)
@@ -665,9 +666,10 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE, useResourceQuo
     
     body <- rmNullObs(body)
 
-    out <- try(f(the_body = body))
-    
-    out <- error_check(out)
+    out <- tryCatch(f(the_body = body),
+                    error = function(err){
+                      custom_error(err)
+                    })
     
   } else {
 
@@ -693,9 +695,10 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE, useResourceQuo
 
       myMessage("Fetching v4 data batch...", level = 3)
       
-      out <- try(f(the_body = b))
-      
-      error_check(out)
+      out <- tryCatch(f(the_body = body),
+                      error = function(err){
+                        custom_error(err)
+                      })
       
     })
     
