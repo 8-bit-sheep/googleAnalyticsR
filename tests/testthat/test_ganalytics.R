@@ -41,7 +41,7 @@ test_that("ganalytics segments", {
     date_range = c("30daysAgo", "yesterday"),
     metrics = c("users", "sessions"),
     dimensions = c("segment"),
-    segments = my_segment_list
+    segments = Segments(my_segment_list)
   )
   
   expect_s3_class(results, "data.frame")

@@ -33,6 +33,9 @@ navbar:
         - text: "BigQuery"
           icon: fa-search
           href: articles/big-query.html
+        - text: "ganalytics"
+          icon: fa-bullseye
+          href: articles/ganalytics.html
     - text: "Management API"
       href: articles/management.html
       icon: fa-briefcase

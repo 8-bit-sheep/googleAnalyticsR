@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
       </span>
     </div>
 
@@ -84,6 +84,13 @@
         <span class="fa fa-search"></span>
          
         BigQuery
+      </a>
+    </li>
+    <li>
+      <a href="../articles/ganalytics.html">
+        <span class="fa fa-bullseye"></span>
+         
+        ganalytics
       </a>
     </li>
   </ul>
@@ -185,7 +192,7 @@
 <div id="dependencies" class="section level2">
 <h2 class="hasAnchor">
 <a href="#dependencies" class="anchor"></a>Dependencies</h2>
-<p><code>googleAnalyticsR</code> requires the packages described in the <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/DESCRIPTION"><code>Imports</code> field of the <code>DESCRIPTION</code> file</a> to be installed first, which it will do via <code>install.package("googleAnalyticsR", dependencies = TRUE)</code></p>
+<p><code>googleAnalyticsR</code> requires the packages described in the <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/DESCRIPTION"><code>Imports</code> field of the <code>DESCRIPTION</code> file</a> to be installed first, which it will do via <code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("googleAnalyticsR", dependencies = TRUE)</a></code></p>
 <p>Note that on linux systems, due to its reliance on <a href="https://CRAN.R-project.org/package=httr"><code>httr</code></a> and in turn <a href="https://CRAN.R-project.org/package=curl"><code>curl</code></a>, it may require installation of these dependencies via <code>apt-get</code> or similar: <code>libssl-dev</code> and <code>libcurl4-openssl-dev</code>.</p>
 </div>
 <div id="authentication" class="section level2">
