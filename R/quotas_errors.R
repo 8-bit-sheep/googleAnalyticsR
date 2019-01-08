@@ -17,7 +17,8 @@ error_check <- function(x){
       default_project_message()
       stop("The Google Project ", getOption("googleAuthR.client_id") ," has run out of quota (typically 50,000 API calls per day)", call. = FALSE)
     }
-    stop(error.message(x))
+    # no need as googleAuthR will surface this error
+    #stop(error.message(x))
   }
   
   x
