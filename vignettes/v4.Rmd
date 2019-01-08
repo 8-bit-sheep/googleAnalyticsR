@@ -1,0 +1,774 @@
+---
+title: "Google Analytics Reporting API v4 in R Examples"
+---
+
+The v4 API are where new features will appear in the future.  
+
+It currently has these extras implemented over the v3 API:
+
+* Cohorts
+* Multiple date ranges
+* Pivot tables
+* Calculated metrics on the fly
+* Much more powerful segments
+* Quota system for GA360
+* Caching
+
+Check out more examples on using the API in actual use cases on the [www.dartistics.com website](http://www.dartistics.com/googleanalytics/index.html).
+
+## Getting started
+
+To get started refer to the tutorials linked on the homepage, consult `?google_analytics` when within R to see the documentation, and see these example queries:
+
+```r
+## setup
+library(googleAnalyticsR)
+
+## authenticate
+ga_auth()
+
+## get your accounts
+account_list <- ga_account_list()
+
+## account_list will have a column called "viewId"
+account_list$viewId
+
+## View account_list and pick the viewId you want to extract data from
+ga_id <- 123456
+
+## simple query to test connection
+google_analytics(ga_id, 
+                 date_range = c("2017-01-01", "2017-03-01"), 
+                 metrics = "sessions", 
+                 dimensions = "date")
+```
+
+[Jeff Swanson](http://jeffgswanson.com/) has made a video guide that goes into more detail about the above examples ([Digital Marketing in R: How to Connect to Google Analytics API](https://www.youtube.com/watch?v=S9mSh5kcRgc&feature=share)) and is embedded below, many thanks to Jeff.
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/S9mSh5kcRgc?rel=0" frameborder="0" allowfullscreen></iframe>
+
+## Number of results
+
+By default the function will return 1000 results.  If you want to fetch all rows, set `max = -1`
+
+You don't have to worry about paging through the API results, the library deals with that for you. 
+
+```r
+# 1000 rows only
+thousand <- google_analytics(ga_id, 
+                             date_range = c("2017-01-01", "2017-03-01"), 
+                             metrics = "sessions", 
+                             dimensions = "date")
+
+# 2000 rows
+twothousand <- google_analytics(ga_id, 
+                             date_range = c("2017-01-01", "2017-03-01"), 
+                             metrics = "sessions", 
+                             dimensions = "date",
+                             max = 2000)  
+
+# All rows
+alldata <- google_analytics(ga_id, 
+                             date_range = c("2017-01-01", "2017-03-01"), 
+                             metrics = "sessions", 
+                             dimensions = "date",
+                             max = -1)   
+
+```
+
+If you are using anti-sampling, it will always fetch all rows.  This is because it won't make sense to fetch only the top results as the API splits up the calls over all days.  If you want to limit it afterwards, use R by doing something like:
+
+```r
+## anti_sample gets all results (max = -1)
+gadata <- google_analytics(myID,
+                      date_range = c(start_date, end_date),
+                      metrics = "pageviews",
+                      dimensions = "pageTitle",
+                      segments = myseg,
+                      anti_sample = TRUE)
+
+## limit to top 25
+top_25 <- head(gadata[order(gadata$pageviews, decreasing = TRUE), ] , 25)
+```
+
+
+## Date Ranges
+
+You can send in dates in `YYYY-MM-DD` format:
+
+```r
+google_analytics(868768, date_range = c("2016-12-31", "2017-02-01"), metrics = "sessions")
+```
+
+Character strings are converted into `Date` class objects, so you can also use R's native `Date` object handling to specify rolling dates:
+
+```r
+yesterday <- Sys.Date() - 1
+ThreedaysAgo <- Sys.Date() - 3
+
+google_analytics(868768, date_range = c(ThreedaysAgo, yesterday), metrics = "sessions")
+```
+
+Or use the v4 API shortcuts directly such as `"yesterday"`, `"today"` or `"XDaysAgo"`:
+
+```r
+google_analytics(868768, date_range = c("5daysAgo", "yesterday"), metrics = "sessions")
+```
+
+### Compare date ranges
+
+In v4 you can compare date ranges and return the two data sets in one call.  Send in a 4-length vector of dates in the form `(range1_start, range1_end, range2_start, range2_end)`
+
+```r
+google_analytics(868768, 
+                   date_range = c("16daysAgo", "9daysAgo", "8daysAgo", "yesterday"), 
+                   metrics = "sessions")
+```
+
+When requesting multiple date ranges, you can use a new ordering feature of v4 to find the 10 most changed dimensions, rather than just say the top 10.  [An article about using this feature can be found here](http://code.markedmondson.me/quicker-insight-sort-metric-delta/).
+
+An example is shown below, using the `order_type` function to sort by the change (`DELTA`) between dates:
+
+```r
+delta_sess <- order_type("sessions","DESCENDING", "DELTA")
+
+## find top 20 landing pages that changed most in sessions comparing this week and last week
+gadata <- google_analytics(gaid,
+                             date_range = c("16daysAgo", "9daysAgo", "8daysAgo", "yesterday"),
+                             metrics = c("sessions"),
+                             dimensions = c("landingPagePath"),
+                             order = delta_sess,
+                             max = 20)
+```
+
+## Anti-sampling
+
+Anti-sampling is a common use case for using the API.
+
+Sampling is due to your API request being over the session limits [outlined in this Google article](https://support.google.com/analytics/answer/2637192).  This limit is higher for Google Analytics 360.  
+
+If you split up your API request so that the number of sessions falls under these limits, sampling will not occur.
+
+### Sampled data example
+
+If you have sampling in your data request, `googleAnalyticsR` reports it back to you in the console when making the request. 
+
+```r
+library(googleAnalyticsR)
+ga_auth()
+sampled_data_fetch <- google_analytics(id, 
+                                         date_range = c("2015-01-01","2015-06-21"), 
+                                         metrics = c("users","sessions","bounceRate"), 
+                                         dimensions = c("date","landingPagePath","source"))
+#Calling APIv4....
+#Data is sampled, based on 39.75% of visits.
+```
+
+### Unsampled data example
+
+Setting the argument `anti_sample=TRUE` in a `google_analytics()` request causes the calls to be split up into small enough chunks to avoid sampling.  This uses more API calls so the data will reach you slower, but it should hold more detail.
+
+```r
+library(googleAnalyticsR)
+ga_auth()
+unsampled_data_fetch <- google_analytics(id, 
+                                         date_range = c("2015-01-01","2015-06-21"), 
+                                         metrics = c("users","sessions","bounceRate"), 
+                                         dimensions = c("date","landingPagePath","source"),
+                                         anti_sample = TRUE)
+
+#anti_sample set to TRUE. Mitigating sampling via multiple API calls.
+#Finding how much sampling in data request...
+#Data is sampled, based on 39.75% of visits.
+#Downloaded [10] rows from a total of [59235].
+#Finding number of sessions for anti-sample calculations...
+#Downloaded [172] rows from a total of [172].
+#Calculated [3] batches are needed to download [59235] rows unsampled.
+#Anti-sample call covering 128 days: 2015-01-01, 2015-05-08
+#Downloaded [59235] rows from a total of [59235].
+#Anti-sample call covering 23 days: 2015-05-09, 2015-05-31
+#Downloaded [20239] rows from a total of [20239].
+#Anti-sample call covering 21 days: 2015-06-01, 2015-06-21
+#Downloaded [21340] rows from a total of [21340].
+#Finished unsampled data request, total rows [100814]
+#Successfully avoided sampling
+```
+
+The sequence involves a couple of exploratory API calls to determine the best split.  This method will adjust the time periods to have the batch sizes large enough to not take too long, but small enough to have unsampled data.
+
+### Auto-anti sampling failure
+
+In some cases the anti-sampling won't work.  This will mainly be due to filters for the View you are using meaning that the calculation for the sampling sessions are incorrect - Google Analytics vanilla samples on a property level (whilst GA360 samples on a View level).  
+
+Try using a raw profile if you can, otherwise you can set your own sample period by using the `anti_sample_batches` flag to indicate the sample size.  Pick a number that is a little lower than the smallest period you saw in the auto-sample batches.  If in doubt, setting `anti_sample_batches` to 1 will make a daily fetch.
+
+```r
+## example setting your own anti_sample_batch to 5 days per batch
+unsampled_data_fetch <- google_analytics(id, 
+                                             date_range = c("2015-01-01","2015-06-21"), 
+                                             metrics = c("users","sessions","bounceRate"), 
+                                             dimensions = c("date","landingPagePath","source"),
+                                             anti_sample = TRUE,
+                                             anti_sample_batch = 5)
+
+```
+
+## Filters
+
+> Note these are different from account filters, which you can manipulate using the management API using the `ga_filter` family of functions.  See the [Management API](http://code.markedmondson.me/googleAnalyticsR/management.html)
+
+Filters need to be built up from the `met_filter` and `dim_filter` R objects.
+
+These then need to be wrapped in `filter_clause_ga4` function, which lets you specify the combination rules (`AND` or `OR`).  The `met_filter` and `dim_filter` you pass in should be wrapped in a `list()` - see examples:
+
+
+### One filter
+```r
+campaign_filter <- dim_filter(dimension="campaign",operator="REGEXP",expressions="welcome")
+
+my_filter_clause <- filter_clause_ga4(list(campaign_filter))
+
+data_fetch <- google_analytics(ga_id,date_range = c("2016-01-01","2016-12-31"),
+                                 metrics = c("itemRevenue","itemQuantity"),
+                                 dimensions = c("campaign","transactionId","dateHour"),
+                                 dim_filters = my_filter_clause,
+                                 anti_sample = TRUE)
+```
+
+### Multiple filters
+
+```r
+## create filters on metrics
+mf <- met_filter("bounces", "GREATER_THAN", 0)
+mf2 <- met_filter("sessions", "GREATER", 2)
+
+## create filters on dimensions
+df <- dim_filter("source","BEGINS_WITH","1",not = TRUE)
+df2 <- dim_filter("source","BEGINS_WITH","a",not = TRUE)
+
+## construct filter objects
+fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
+fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
+
+## make v4 request
+ga_data1 <- google_analytics(ga_id, 
+                              date_range = c("2015-07-30","2015-10-01"),
+                              dimensions=c('source','medium'), 
+                              metrics = c('sessions','bounces'), 
+                              met_filters = fc, 
+                              dim_filters = fc2, 
+                              filtersExpression = "ga:source!=(direct)")
+
+ga_data1
+
+#                     source   medium sessions bounces
+# 1                  baby.dk referral        3       2
+# 2                     bing  organic       71      42
+# 3  buttons-for-website.com referral        7       7
+# 4           duckduckgo.com referral        5       3
+# 5                   google  organic      642     520
+# 6                google.se referral        3       2
+# 7                 izito.se referral        3       1
+# 8          success-seo.com referral       35      35
+# 9    video--production.com referral       11      11
+# 10                   yahoo  organic       66      43
+# 11              zapmeta.se referral        6       4
+``` 
+
+
+## Multiple reports
+
+Using v4's batching ability, you can send in multiple types of API requests at the same time (up to 5).  The reports need to be for the same ViewID and date range.
+
+To use, you need to create your API requests first using `make_ga_4_req()`, then make the actual call using `fetch_google_analytics()`.  For the common use case of only requesting one type of request, this is what `google_analytics()` is doing behind the scenes.
+
+### Demo of querying two API requests  
+
+The below example requests with two date ranges and two reports.
+
+When fetching multiple reports, you need to wrap the `make_ga_4_req()` created objects in a `list()`
+
+```r
+## First request we make via make_ga_4_req()
+multidate_test <- make_ga_4_req(ga_id, 
+                                date_range = c("2015-07-30",
+                                               "2015-10-01",
+                                               "2014-07-30",
+                                               "2014-10-01"),
+                                dimensions = c('source','medium'), 
+                                metrics = c('sessions','bounces'),
+                                order = order_type("sessions", "DESCENDING", "DELTA"))
+
+## Second request - same date ranges and ID required, but different dimensions/metrics/order.
+multi_test2 <- make_ga_4_req(ga_id,
+                                date_range = c("2015-07-30",
+                                               "2015-10-01",
+                                               "2014-07-30",
+                                               "2014-10-01"),
+                             dimensions=c('hour','medium'), 
+                             metrics = c('visitors','bounces'))
+
+## Request the two calls by wrapping them in a list() and passing to fetch_google_analytics()
+ga_data3 <- fetch_google_analytics(list(multidate_test, multi_test2)) 
+ga_data3
+# [[1]]
+#                     source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2
+# 1                  baby.dk referral           3          2           6          3
+# 2                     bing  organic          71         42         217        126
+# 3  buttons-for-website.com referral           7          7           0          0
+# 4           duckduckgo.com referral           5          3           0          0
+# 5                   google  organic         642        520        1286        920
+# 6                google.se referral           3          2          12          9
+# 7                 izito.se referral           3          1           0          0
+# 8          success-seo.com referral          35         35           0          0
+# 9    video--production.com referral          11         11           0          0
+# 10                   yahoo  organic          66         43         236        178
+# 11              zapmeta.se referral           6          4           9          4
+# 
+# [[2]]
+#    hour   medium visitors.d1 bounces.d1 visitors.d2 bounces.d2
+# 1    00  organic          28         16          85         59
+# 2    00 referral           3          2           1          1
+# 3    01  organic          43         28          93         66
+
+
+```
+
+## Metric expressions
+
+Metric expressions are custom calculated metrics that can be calculated on the fly when you supply a named vector with the name of your created custom metric, and the calculation expression you are performing.  These are different from the calculated metrics you can create in the web UI. 
+
+> You need to use the `ga:` prefix when creating custom metrics, unlike normal API requests
+
+```r
+my_custom_metric <- c(visitPerVisitor = "ga:visits/ga:visitors")
+```
+
+Use metric expressions as you would other metrics within the `metrics` argument, but you also need to supply a `metricFormat` (see [docs](https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/reports/batchGet#MetricType)) vector the same length which specifies the type of the metric you have calculated.  These can be:
+
+* `METRIC_TYPE_UNSPECIFIED`
+* `INTEGER` 
+* `FLOAT` 
+* `CURRENCY` 	
+* `PERCENT` 
+* `TIME` 	
+
+An example is shown below, where a calculated metric is combined with a normal metric, `bounces`, which is type integer.  You can lookup what the default metrics types are in the `meta` lookup table.
+
+```r
+my_custom_metric <- c(visitPerVisitor = "ga:visits/ga:visitors")
+ga_data4 <- google_analytics(ga_id,
+                               date_range = c("2015-07-30",
+                                              "2015-10-01"),
+                              dimensions=c('medium'), 
+                              metrics = c(my_custom_metric,
+                                          'bounces'), 
+                              metricFormat = c("FLOAT","INTEGER"))
+ga_data4
+#     medium visitsPerVisitor bounces
+# 1   (none)         1.000000     117
+# 2  organic         1.075137     612
+# 3 referral         1.012500      71
+```
+
+## Segments v4
+
+Segments are more complex to configure that v3, but more powerful and in line to how you configure them in the UI.
+
+A lot of feedback is about how to get the sample syntax right, so the examples below try to cover common scenarios.
+
+### v3 segments
+
+You can choose to create segments via the v4 syntax or the v3 syntax for backward compatibility.
+
+If you want to use v3 segments, then they can be used in the `segment_id` argument of the `segment_ga4()` function.
+
+You can view the segment Ids by using `ga_segment_list()`
+
+```r
+## get list of segments
+segs <- ga_segment_list()
+
+## segment Ids and name:
+segs[,c("name","id","definition")]
+
+## example output
+  id            name                                                          definition
+1 -1       All Users                                                                    
+2 -2       New Users                       sessions::condition::ga:userType==New Visitor
+3 -3 Returning Users                 sessions::condition::ga:userType==Returning Visitor
+4 -4    Paid Traffic         sessions::condition::ga:medium=~^(cpc|ppc|cpa|cpm|cpv|cpp)$
+5 -5 Organic Traffic                             sessions::condition::ga:medium==organic
+6 -6  Search Traffic sessions::condition::ga:medium=~^(cpc|ppc|cpa|cpm|cpv|cpp|organic)$
+....
+
+```
+
+The ID you require is in the `$id` column which you need to prefix with "gaid::"
+
+```r
+## choose the v3 segment
+segment_for_call <- "gaid::-4"
+
+## make the v3 segment object in the v4 segment object:
+seg_obj <- segment_ga4("PaidTraffic", segment_id = segment_for_call)
+
+## make the segment call
+segmented_ga1 <- google_analytics(ga_id, 
+                                    c("2015-07-30","2015-10-01"), 
+                                    dimensions=c('source','medium','segment'), 
+                                    segments = seg_obj, 
+                                    metrics = c('sessions','bounces')
+                                    )
+  
+``` 
+
+...or you can pass the v3 syntax for dynamic segments found from the `$definition` column:
+
+```r
+## or pass the segment v3 defintion in directly:
+segment_def_for_call <- "sessions::condition::ga:medium=~^(cpc|ppc|cpa|cpm|cpv|cpp)$"
+
+## make the v3 segment object in the v4 segment object:
+seg_obj <- segment_ga4("PaidTraffic", segment_id = segment_def_for_call)
+
+## make the segment call
+segmented_ga1 <- google_analytics(ga_id, 
+                                    c("2015-07-30","2015-10-01"), 
+                                    dimensions=c('source','medium','segment'), 
+                                    segments = seg_obj, 
+                                    metrics = c('sessions','bounces')
+                                    )
+```
+
+
+### v4 segment syntax
+
+Its recommended you embrace the new v4 syntax, as its more flexible and powerful in the long run.
+
+The hierarachy of the segment elements you will need are:
+
+* *`segment_ga4()`* - this is the top of the segment tree.  You can pass one or a list of these into a `google_analytics()` segment argument.  Here you name the segment as it will appear in the `segment` dimension, and pass in segment definitions either via an existing segmentID or v3 definition; via a user scoped level; or via a session scoped level.  The user and session scopes can have one or a list of `segment_define()` functions.
+* *`segment_define()`* - this is where you define the types of segment filters that you are passing in - they are combined in a logical AND.  The segment filters can be of a `segment_vector_simple` type (where order doesn't matter) or a `segment_vector_sequence` type (where order does matter.)  You can also pass in a `not_vector` of the same length as the list of segment filters, which dictates if the segments you pass in are included (the default) or excluded.
+* *`segment_vector_simple()`* and *`segment_vector_sequence()`* - these are vectors of `segment_element`, and determine if the conditions are included in a logical OR fashion, or if the sequence of steps is important (for instance users who saw this page, then that page.)  
+* *`segment_element`* - this is the lowest atom of segments, and lets you define on which metric or dimension you are segmenting on. You pass one or a list of these to *`segment_vector_simple()`* or *`segment_vector_sequence()`*
+
+### Demo: simple segment
+
+```r
+se <- segment_element("sessions", 
+                      operator = "GREATER_THAN", 
+                      type = "METRIC", 
+                      comparisonValue = 1, 
+                      scope = "USER")
+                      
+se2 <- segment_element("medium", 
+                      operator = "EXACT", 
+                      type = "DIMENSION", 
+                      expressions = "organic")
+
+## choose between segment_vector_simple or segment_vector_sequence
+## Elements can be combined into clauses, which can then be combined into OR filter clauses
+sv_simple <- segment_vector_simple(list(list(se)))
+
+sv_simple2 <- segment_vector_simple(list(list(se2)))
+
+## Each segment vector can then be combined into a logical AND
+seg_defined <- segment_define(list(sv_simple, sv_simple2))
+
+## Each segement defintion can apply to users, sessions or both.
+## You can pass a list of several segments
+segment4 <- segment_ga4("simple", user_segment = seg_defined)
+
+## Add the segments to the segments param
+segment_example <- google_analytics(ga_id, 
+                                      c("2015-07-30","2015-10-01"), 
+                                      dimensions=c('source','medium','segment'), 
+                                      segments = segment4, 
+                                      metrics = c('sessions','bounces')
+                                      )
+
+segment_example
+#                            source   medium segment sessions bounces
+# 1                        24.co.uk referral  simple        1       1
+# 2                     aidsmap.com referral  simple        1       0
+# 3                             aol  organic  simple       30      19
+# 4                             ask  organic  simple       32      17
+```
+
+### Demo: Sequence segment
+```
+se2 <- segment_element("medium", 
+                       operator = "EXACT", 
+                       type = "DIMENSION", 
+                       expressions = "organic")
+  
+se3 <- segment_element("medium",
+                       operator = "EXACT",
+                       type = "DIMENSION",
+                       not = TRUE,
+                       expressions = "organic")
+  
+## step sequence
+## users who arrived via organic then via referral
+sv_sequence <- segment_vector_sequence(list(list(se2), 
+                                              list(se3)))
+  
+seq_defined2 <- segment_define(list(sv_sequence))
+  
+segment4_seq <- segment_ga4("sequence", user_segment = seq_defined2)
+  
+## Add the segments to the segments param
+segment_seq_example <- google_analytics(ga_id, 
+                                        c("2016-01-01","2016-03-01"), 
+                                        dimensions=c('source','segment'), 
+                                        segments = segment4_seq,
+                                        metrics = c('sessions','bounces')
+                                        )
+  
+segment_seq_example
+#                                source  segment sessions bounces
+# 1                                 aol sequence        1       0
+# 2                                 ask sequence        5       1
+# 3      bestbackpackersinsurance.co.uk sequence        9       6
+# 4                                bing sequence       22       2
+```
+
+Some more examples, using different match types, contributed by Pawel Kapuscinski:
+
+```r
+con1 <-segment_vector_simple(list(list(segment_element("ga:dimension1", 
+                      operator = "REGEXP", 
+                      type = "DIMENSION", 
+                      expressions = ".*", 
+                      scope = "SESSION"))))
+
+con2 <-segment_vector_simple(list(list(segment_element("ga:deviceCategory", 
+                      operator = "EXACT", 
+                      type = "DIMENSION", 
+                      expressions = "Desktop", 
+                      scope = "SESSION"))))
+
+seq1 <- segment_element("ga:pagePath", 
+                         operator = "EXACT", 
+                         type = "DIMENSION", 
+                         expressions = "yourdomain.com/page-path", 
+                         scope = "SESSION")
+
+
+seq2 <- segment_element("ga:eventAction", 
+                         operator = "REGEXP", 
+                         type = "DIMENSION", 
+                         expressions = "english", 
+                         scope = "SESSION",
+                         matchType = "IMMEDIATELY_PRECEDES")
+
+allSEQ <- segment_vector_sequence(list(list(seq1), list(seq2)))
+
+results <- google_analytics(ga_id, 
+                             date_range = c("2016-08-08","2016-09-08"),
+                             segments = segment_ga4("sequence+condition",
+                                                    user_segment = segment_define(list(con1,con2,allSEQ))
+                                                    ),
+                             metrics = c('ga:users'),
+                             dimensions = c('ga:segment'))
+
+# Users whose first session to website was social:
+seg_social <- segment_element("channelGrouping",
+                              operator = "EXACT",
+                              type = "DIMENSION",
+                              expressions = "Social")
+seg_first_visit <- segment_element("sessionCount",
+                                   operator = "EXACT",
+                                   type = "DIMENSION",
+                                   expressions = "1")
+# social referrral followed by first sessionCount
+segment_social_first <- segment_vector_sequence(list(list(seg_social), list(seg_first_visit)))
+sd_segment <- segment_define(list(segment_social_first))
+segment_social <- segment_ga4("social_first", user_segment = sd_segment)
+segment_data <- google_analytics_4(my_viewId,
+                                   date_range = c("8daysAgo", "yesterday"),
+                                   metrics = c("sessions", "users", sessions_per_user = "ga:sessions/ga:users"),
+                                   dimensions = c("date", "country", "channelGrouping", "sessionCount"),
+                                   segments = segment_social,
+                                   metricFormat = c("FLOAT", "INTEGER", "INTEGER"))
+```
+
+If you are still struggling with segment syntax, you may want to try the [`ganalytics` package](https://github.com/jdeboer/ganalytics/issues/56) by Johann de Boer which has developed a domain specific language for making segments and may be easier to parse.
+
+### RStudio Addin: Segment helper
+
+There is an RStudio Addin to help create segments via a UI rather than the lists above.
+
+You can call it via `googleAnalyticsR:::gadget_GASegment()` or within the RStudio interface like displayed below:
+
+![Google Analytics v4 segment RStudio Addin](googleAnalyticsRsegmentCreator.gif)
+
+## Cohort reports
+
+Details on [cohort reports and LTV can be found here](https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohorts) and via the examples below.
+
+```r
+## first make a cohort group
+cohort4 <- make_cohort_group(list("Jan2016" = c("2016-01-01", "2016-01-31"), 
+                                "Feb2016" = c("2016-02-01","2016-02-28")))
+
+## then call cohort report.  No date_range and must include metrics and dimensions
+##   from the cohort list
+cohort_example <- google_analytics(ga_id, 
+                                     dimensions=c('cohort'), 
+                                     cohort = cohort4, 
+                                     metrics = c('cohortTotalUsers'))
+
+cohort_example
+#    cohort cohortTotalUsers
+# 1 Feb2016            19040
+# 2 Jan2016            23378
+
+```
+
+## Pivot Requests
+
+These change the shape of the returned data, which you could probably do in R anyway but it gives you another option when you make the request.
+
+```r
+
+## filter pivot results to 
+pivot_dim_filter1 <- dim_filter("medium",
+                                "REGEXP",
+                                "organic|social|email|cpc")
+                                
+pivot_dim_clause <- filter_clause_ga4(list(pivot_dim_filter1))
+
+pivme <- pivot_ga4("medium",
+                   metrics = c("sessions"), 
+                   maxGroupCount = 4, 
+                   dim_filter_clause = pivot_dim_clause)
+
+pivtest1 <- google_analytics(ga_id, 
+                               c("2016-01-30","2016-10-01"), 
+                               dimensions=c('source'), 
+                               metrics = c('sessions'), 
+                               pivots = list(pivme))
+
+
+names(pivtest1)
+#  [1] "source"                      "sessions"                    "medium.referral.sessions"   
+#  [4] "medium..none..sessions"      "medium.cpc.sessions"         "medium.email.sessions"      
+#  [7] "medium.social.sessions"      "medium.twitter.sessions"     "medium.socialMedia.sessions"
+# [10] "medium.Social.sessions"      "medium.linkedin.sessions"  
+
+```
+
+## GA360 Quota System
+
+If you have GA360, you have access to [resource based quotas](https://developers.google.com/analytics/devguides/reporting/core/v4/resource-based-quota) that increase the number of sessions before sampling kicks in from 1 to 100 million sessions. 
+
+To access this quota, set `useResourceQuotas = TRUE` in the command.
+
+
+```r
+google_analytics(ga_id, 
+                 date_range = c("2017-01-01", "2017-03-01"), 
+                 metrics = "sessions", 
+                 dimensions = "date",
+                 max = -1,
+                 useResourceQuotas = TRUE)
+```
+
+## Customising API fetches
+
+`googleAnalyticsR` has some techniques implemented to get the data as quickly as possible.  This includes:
+
+### Batching large results
+
+The v4 API allows you to send 5 batched calls at once in one API request, meaning by default 50,000 rows will be requested per API call.  However, since this puts additional strain on the Google servers, for complicated queries (i.e. lots of segments or dimensions) this may fail with a 500 error.  If that happens, the library will fall back to the slower fetching of 10,000 rows per API call.
+
+If you want to default to the slower fetching, set `slow_fetch=TRUE` in your request e.g.
+
+```r
+google_analytics(ga_id, 
+                 date_range = c("2017-01-01", "2017-03-01"), 
+                 metrics = "sessions", 
+                 dimensions = "date",
+                 max = -1,
+                 slow_fetch = TRUE)
+```
+
+### Caching
+
+Local caching is enabled that will mean if you make the exact same API request with all arguments the same, the result will come from memory rather than the API.  By default this is within the RAM of the same R session so will reset when you restart R, but if you want you can set this to save the cache to disk using the `ga_cache_call()` function.  Use this to point to a folder to store the cache files, and the cache will then be available inbetween R sessions.
+
+A demo on using caching is in the video here: [googleAnalyticsR - caching](https://www.youtube.com/watch?v=2-f0aTwWiNw&feature=share) and is embedded below:.
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/2-f0aTwWiNw?rel=0" frameborder="0" allowfullscreen></iframe>
+
+e.g.
+
+```r
+ga_cache_call("my_cache_folder")
+
+## will make the call and save files to my_cache_folder
+google_analytics(ga_id, 
+                 date_range = c("2017-01-01", "2017-03-01"), 
+                 metrics = "sessions", 
+                 dimensions = "date",
+                 max = -1)
+                 
+## making the same exact call again will read from disk, and be much quicker
+google_analytics(ga_id, 
+                 date_range = c("2017-01-01", "2017-03-01"), 
+                 metrics = "sessions", 
+                 dimensions = "date",
+                 max = -1)
+```
+
+This means that repeated long fetches can be much quicker as older requests will read from disk.  
+
+If you are running long repeated calls over time, this is a good strategy to only fetch the latest data from the API, relying on the cache for historic data - for instance, set a loop that requests each month's worth of data - for the month's you already have the requests will come from disk, but for the most recent month it will fetch from the API. 
+
+### Rows Per call
+
+The API lets you call up to 100,000 rows, which coupled with the batching above means potentially 500,000 rows can be called per API call.  In reality, this many rows will probably be too heavy for the Google servers, so you may want to experiment using increased row per calls but with `slow_fetch=TRUE` to find the optimum.  
+
+e.g.
+
+```r
+## making the same exact call again will read from disk, and be much quicker
+google_analytics(ga_id, 
+                 date_range = c("2017-01-01", "2017-03-01"), 
+                 metrics = "sessions", 
+                 dimensions = "date",
+                 rows_per_call = 40000,
+                 slow_fetch = TRUE,
+                 max = -1)
+```
+
+The defaults are 10,000 rows per call (50,000 per batch) and `slow_fetch = FALSE` which suit for most cases. 
+
+## Fetching from multiple views
+
+Whilst the [v3 multi account batching feature](http://code.markedmondson.me/googleAnalyticsR/v3.html) isn't available for multi-accounts in v4, by using [`future.apply`](https://github.com/HenrikBengtsson/future.apply) you can launch multiple R sessions that will fetch the API in parallel.  An example is shown below, that fetches from three View IDs at once.
+
+The limiting factor willl then be the v4 [API limits](https://developers.google.com/analytics/devguides/reporting/core/v4/limits-quotas), which are currently 1000 requests per 100 seconds per user, per Google API project (e.g. you will probably want to setup your own Google project if making a lot of requests)
+
+```r
+library(googleAnalyticsR)
+library(future.apply)
+
+## setup multisession R for your parallel data fetches 
+plan(multisession)
+
+## the ViewIds to fetch all at once
+gaids <- c(12345634, 9888890,10624323)
+
+my_fetch <- function(x) {
+  google_analytics(x, 
+                   date_range = c("2017-01-01","yesterday"), 
+                   metrics = "sessions", 
+                   dimensions = c("date","medium")
+}
+
+## makes 3 API calls at once
+all_data <- future_lapply(gaids, my_fetch)
+```

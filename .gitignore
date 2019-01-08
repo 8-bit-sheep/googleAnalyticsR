@@ -13,3 +13,5 @@ vignettes/*.pdf
 inst/doc
 #tests/testthat/mock/
 .httr-oauth
+gar_parse_error.rds
+*.dcf

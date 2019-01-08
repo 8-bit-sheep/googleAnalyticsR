@@ -22,3 +22,21 @@ Will auto select metrics if they are numeric class columns.
   Will auto perform mean aggregation it metric names match \code{mean_regex} argument
   If agg_names is NULL will aggregate over all
 }
+\examples{
+
+\dontrun{
+
+# use `aggregateGAData` so you can on the fly create summary data
+ga_data <- google_analytics(81416156, 
+                            date_range = c("10daysAgo", "yesterday"),
+                            metrics = "sessions", dimensions = c("hour","date"))
+                            
+# if we want totals per hour over the dates:
+aggregateGAData(ga_data[,c("hour","sessions")], agg_names = "hour")
+
+# it knows not to sum metrics that are rates:
+aggregateGAData(ga_data[,c("hour","bounceRate")], agg_names = "hour")
+
+
+}
+}

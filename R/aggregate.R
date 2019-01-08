@@ -3,6 +3,7 @@
 #' @param df dataframe
 #' @param class_name the R class to return columns of
 #' @return names of columns of class 
+#' @noRd
 getColNameOfClass <- function(df, class_name){
   stopifnot(inherits(df, "data.frame"),
             inherits(class_name, "character"))
@@ -28,6 +29,23 @@ getColNameOfClass <- function(df, class_name){
 #' @importFrom rlang !!!
 #' @export
 #' @import assertthat
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' # use `aggregateGAData` so you can on the fly create summary data
+#' ga_data <- google_analytics(81416156, 
+#'                             date_range = c("10daysAgo", "yesterday"),
+#'                             metrics = "sessions", dimensions = c("hour","date"))
+#'                             
+#' # if we want totals per hour over the dates:
+#' aggregateGAData(ga_data[,c("hour","sessions")], agg_names = "hour")
+#' 
+#' # it knows not to sum metrics that are rates:
+#' aggregateGAData(ga_data[,c("hour","bounceRate")], agg_names = "hour")
+#' 
+#' 
+#' }
 aggregateGAData <- function(ga_data, 
                             agg_names=NULL,
                             mean_regex="^avg|^percent|Rate$|^CPC$|^CTR$|^CPM$|^RPC$|^ROI$|^ROAS$|Per"){

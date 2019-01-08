@@ -1,0 +1,120 @@
+---
+title: "ganalytics - Advanced dynamic segment and Filter examples"
+author: "Johann de Boer"
+---
+
+```{r setup, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+# auto-auth when done locally
+library(googleAnalyticsR)
+library(ganalytics)
+```
+
+[`ganalytics`](https://CRAN.R-project.org/package=ganalytics) provides functions that makes it easy to define filters and segments using natural R language comparison and logical operators. This example demonstrates how to define dynamic segments using functions from the `ganalytics` package and using those segments with the `googleAnalyticsR` package. You need `googleAnalyticsR>=0.6.0` and `ganalytics>=0.10.5`.
+
+More examples are available at the ganalytics README and vignettes.
+
+## Setup
+
+Load the `ganalytics` library as well as `googleAnalyticsR` to make use of the below new syntax.
+
+```r
+library(googleAnalyticsR)
+library(ganalytics)
+
+# authenticate
+ga_auth()
+
+# set to your view Id
+view_id <- 81416156
+```
+
+## Advanced Filter syntax
+
+In this example, we'll define the following filters:
+* Device category is desktop or tablet - a dimension filter using an OR condition.
+* New visitors using either a desktop or tablet device - a dimension filter involving both an AND and an OR condition.
+* At least one goal completion or transaction - a metric filter using an OR condition.
+
+The above list of filters will be defined using `ganalytics` expressions as follows:
+
+```{r define-filters}
+# Device category is desktop or tablet - a dimension filter using an OR condition.
+desktop_or_mobile <- Expr(~deviceCategory == "desktop") | Expr(~deviceCategory == "tablet")
+
+# New visitors using either a desktop or tablet device - a dimension filter involving both an AND and an OR condition.
+new_desktop_and_mobile_visitors <- Expr(~userType == "new") & desktop_or_mobile
+
+# At least one goal completion or transaction - a metric filter using an OR condition.
+at_least_one_conversion <- Expr(~goalCompletionsAll > 0) | Expr(~transactions > 0)
+```
+
+We can now use `googleAnalyticsR` to 
+
+```{r pull-data, message=FALSE}
+results <- google_analytics(
+  viewId = view_id,
+  date_range = c("30daysAgo", "yesterday"),
+  metrics = c("users", "sessions", "goalCompletionsAll", "transactions"),
+  dimensions = c("deviceCategory", "userType"),
+  dim_filters = new_desktop_and_mobile_visitors,
+  met_filters = at_least_one_conversion
+)
+```
+
+```{r display-pulled-data}
+kable(results)
+```
+
+## Advanced Segment Syntax
+
+In this example, we'll define a list of six segments:
+* Bounced sessions: Sessions where the bounces metric is not zero.
+* Mobile or tablet sessions: Sessions by mobile and tablet users.
+* Multi-session users: Users who have visited more than once during the defined date range.
+
+The above list of dynamic segments is defined using `ganalytics` expressions as follows:
+
+```{r define-segments}
+bounces <- Expr(~bounces != 0)
+mobile_or_tablet <- Expr(~deviceCategory %in% c("mobile", "tablet"))
+multi_session_users <- Include(PerUser(Expr(~sessions > 1)), scope = "users")
+
+my_segment_list <- list(
+    bounced_sessions = PerSession(bounces),
+    mobile_or_tablet = mobile_or_tablet,
+    multi_session_users = multi_session_users)
+
+results <- google_analytics(
+    viewId = view_id,
+    date_range = c(start_date, end_date),
+    metrics = c("users", "sessions"),
+    dimensions = c("segment"),
+    segments = Segments(my_segment_list)
+  )
+```
+
+### More than 4 segments
+
+The Google Analytics Reporting API can only be used to query 4 segments at a time, so if you have more than 4 you need to break the list segments into chunks:
+
+```{r split-segment-list}
+segment_chunks <- split(my_segment_list, (seq_along(my_segment_list) - 1L) %/% 4L)
+```
+
+We can now use `googleAnalyticsR` to query each chunk of segments and bind the results into a single `data.frame`. For each segment, we will request a count of users and sessions.
+
+```{r pull-data, message=FALSE}
+library(purrr)
+library(dplyr)
+
+results <- map_df(segment_chunks, function(chunk) {
+  google_analytics(
+    viewId = view_id,
+    date_range = c(start_date, end_date),
+    metrics = c("users", "sessions"),
+    dimensions = c("segment"),
+    segments = Segments(chunk)
+  )
+})
+```
+

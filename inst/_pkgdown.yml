@@ -1,0 +1,203 @@
+title: "googleAnalyticsR"
+output_dir: "."
+url: https://code.markedmondson.me/googleAnalyticsR/
+development:
+  mode: release
+authors:
+  name: Mark Edmondson
+  href: https://code.markedmondson.me
+home:
+  strip_header: true
+template:
+  params:
+    bootswatch: paper
+    ganalytics: UA-47480439-2
+navbar:
+  title: googleAnalyticsR
+  inverse: true
+  left:
+    - href: index.html
+      icon: fa-home
+    - text: "Setup"
+      href: articles/setup.html
+      icon: fa-wrench
+    - text: "Reporting APIs"
+      icon: fa-table
+      menu:
+        - text: "v4 API"
+          href: articles/v4.html
+          icon: fa-cogs
+        - text: "v3 API"
+          href: articles/v3.html
+          icon: fa-cog
+        - text: "BigQuery"
+          icon: fa-search
+          href: articles/big-query.html
+    - text: "Management API"
+      href: articles/management.html
+      icon: fa-briefcase
+    - text: Publishing
+      icon: fa-file
+      menu:
+      - text: "Shiny"
+        icon: fa-cloud-upload
+        href: articles/shiny.html
+      - text: "RMarkdown"
+        icon: fa-pencil-square
+        href: articles/rmarkdown.html
+    - text: "Help"
+      icon: fa-question-circle
+      menu:
+      - text: "Function Reference"
+        href: reference/index.html
+        icon: fa-book-reader
+      - text: "News"
+        icon: fa-newspaper
+        href: news/index.html
+reference:
+  - title: "Authentication and Setup"
+    desc: >
+      Setting up your environment so you can connect to the API
+    contents:
+      - ga_auth
+      - ga_cache_call
+  - title: "Reporting API"
+    desc: >
+      Getting data from your Google Analytics account
+    contents:
+      - google_analytics
+      - google_analytics_3
+      - google_analytics_bq
+  - title: "Reporting API v4 objects"
+    desc: >
+      Creating objects for more advanced v4 Reporting API fetches
+    contents:
+      - filter_clause_ga4
+      - dim_filter
+      - met_filter
+      - order_type
+      - pivot_ga4
+      - make_cohort_group
+  - title: "Segment API v4 objects"
+    desc: >
+      Creating segments for v4 reporting API fetches
+    contents:
+      - segment_ga4
+      - segment_define
+      - segment_element
+      - segment_vector_sequence
+      - segment_vector_simple
+  - title: "Helpers"
+    desc: >
+      Useful functions for working with the Google Analytics data
+    contents:
+      - aggregateGAData
+      - allowed_metric_dim
+      - google_analytics_meta
+      - meta
+  - title: "Shiny modules"
+    desc: >
+      Using Google Analytics with Shiny
+    contents:
+      - authDropdown
+      - authDropdownUI
+      - multi_select
+      - multi_selectUI
+      - segmentBuilder
+      - segmentBuilderUI
+  - title: "Advanced fetching options"
+    desc: >
+      Building your own Google Analytics API requests
+    contents:
+      - make_ga_4_req
+      - fetch_google_analytics_4
+      - fetch_google_analytics_4_slow
+  - title: "Account structure"
+    desc: >
+      Viewing the account > webproperty > view structure
+    contents:
+      - ga_account_list
+      - ga_accounts
+      - ga_webproperty_list
+      - ga_webproperty
+      - ga_view_list
+      - ga_view
+  - title: "AdWords and remarketing segments"
+    desc: >
+      Tools to work with the AdWords integrations of Google Analytics
+    contents:
+      - ga_segment_list
+      - ga_adwords_list
+      - ga_adwords
+      - ga_remarketing_list
+      - ga_remarketing_build
+      - ga_remarketing_create
+      - ga_remarketing_estimate
+      - ga_remarketing_get
+  - title: "Custom Datasource uploads"
+    desc: > 
+      Uploading data to your Google Analytics web property
+    contents:
+      - ga_custom_datasource
+      - ga_custom_upload_list
+      - ga_custom_upload
+      - ga_custom_upload_file
+  - title: "Setting up View filters"
+    desc: >
+      Manipulate the filters that are applied to your Google Analytics Views
+    contents:
+      - ga_filter_list
+      - ga_filter
+      - ga_filter_add
+      - ga_filter_apply_to_view
+      - ga_filter_delete
+      - ga_filter_update
+      - ga_filter_update_filter_link
+      - ga_filter_view_list
+      - ga_filter_view
+  - title: "Setting up Goals"
+    desc: >
+      Manipulate the goals defined for your Google Analytics Views
+    contents:
+      - ga_goal_list
+      - ga_goal
+      - ga_goal_add
+      - ga_goal_update
+  - title: "Unsampled Reports [GA360]"
+    desc: >
+      Get your GA360 unsampled reports
+    contents:
+      - ga_unsampled_list
+      - ga_unsampled
+      - ga_unsampled_download
+  - title: "User management"
+    desc: >
+      Work with users of your Google Analytics account
+    contents:
+      - ga_users_list
+      - ga_users_add
+      - ga_users_delete
+      - ga_users_delete_linkid
+      - ga_users_update
+  - title: "VisitorID management"
+    desc: >
+      Work with individual website visitor IDs
+    contents:
+      - ga_clientid_deletion
+      - ga_clientid_hash
+  - title: "Custom variables"
+    desc: >
+      Work with custom dimensions and metrics for your Google Analytics account
+    contents: 
+      - ga_custom_vars_list
+      - ga_custom_vars
+      - ga_custom_vars_create
+      - ga_custom_vars_patch
+  - title: "Experiments"
+    desc: >
+      Work with experiment objects 
+    contents:
+      - ga_experiment_list
+      - ga_experiment
+      
+      

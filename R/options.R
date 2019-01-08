@@ -25,6 +25,26 @@
     googleAuthR.batch_endpoint = "https://www.googleapis.com/batch/analytics/v3",
     googleAuthR.tryAttempts = 1)
   
+  if(Sys.getenv("GAR_CLIENTID") != ""){
+    Sys.setenv("GA_CLIENT_ID" = Sys.getenv("GAR_CLIENTID"))
+  } 
+  
+  if(Sys.getenv("GAR_CLIENT_SECRET") != ""){
+    Sys.setenv("GA_CLIENT_SECRET" = Sys.getenv("GAR_CLIENT_SECRET"))
+  }
+  
+  if(Sys.getenv("GAR_WEB_CLIENTID") != ""){
+    Sys.setenv("GA_WEB_CLIENT_ID" = Sys.getenv("GAR_WEB_CLIENTID"))
+  } 
+  
+  if(Sys.getenv("GAR_WEB_CLIENT_SECRET") != ""){
+    Sys.setenv("GA_WEB_CLIENT_SECRET" = Sys.getenv("GAR_WEB_CLIENT_SECRET"))
+  }
+  
+  if(Sys.getenv("GAR_SCOPES") != ""){
+    options(googleAuthR.scopes.selected = Sys.getenv("GAR_SCOPES"))
+  }
+  
   if(Sys.getenv("GA_CLIENT_ID") != ""){
     options(googleAuthR.client_id = Sys.getenv("GA_CLIENT_ID"))
   }
@@ -32,6 +52,7 @@
   if(Sys.getenv("GA_CLIENT_SECRET") != ""){
     options(googleAuthR.client_secret = Sys.getenv("GA_CLIENT_SECRET"))
   }
+  
   
   if(Sys.getenv("GA_WEB_CLIENT_ID") != ""){
     options(googleAuthR.webapp.client_id = Sys.getenv("GA_WEB_CLIENT_ID"))

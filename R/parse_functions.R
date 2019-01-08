@@ -5,6 +5,12 @@
 #' @noRd
 management_api_parsing <- function(x, kind){
   assert_that(x$kind %in% kind)
+  myMessage("Fetching ", x$kind, level = 3)
+  
+  if(x$totalResults == 0){
+    myMessage("No results found")
+    return(NULL)
+  }
   
   if(is.null(check_empty(x$items))){
     myMessage("No ", kind, " found ", level = 3)
@@ -21,6 +27,10 @@ management_api_parsing <- function(x, kind){
   
   # attr only stays if no other dplyr stuff happens after this function
   attr(o, "nextLink") <- x$nextLink
+  attr(o, "kind") <- x$kind
+  attr(o, "username") <- x$username
+  attr(o, "totalResults") <- x$totalResults
+  
   o
 }
 
@@ -193,6 +203,12 @@ get_samplePercent <- function(sampleReadCounts, samplingSpaceSizes){
 parse_ga_account_summary <- function(x){
 
   assert_that(x$kind == "analytics#accountSummaries")
+  
+  if(x$totalResults == 0){
+    myMessage("No results found for username:", x$username, level = 3)
+    return(NULL)
+  }
+  
   # ## hack to get rid of global variables warning
   id <- name <- webProperties <- kind <- profiles <- NULL
   o <- x$items %>%
@@ -331,6 +347,6 @@ parse_google_analytics_meta <- function(x){
 
   dim_mets_attr <- x$items$attributes
 
-  data.frame(name=dim_mets, dim_mets_attr, stringsAsFactors = F)
+  data.frame(name=dim_mets, dim_mets_attr, stringsAsFactors = FALSE)
 
 }

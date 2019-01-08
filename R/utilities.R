@@ -1,3 +1,43 @@
+#' convert 'yesterday', 'today', 'Ndaysago etc. into R dates
+#' @noRd
+#' @import assertthat
+#' @return a date object
+process_date <- function(x){
+  if(is.date(x)){
+    return(x)
+  }
+  
+  assert_that(is.character(x))
+  
+  convert_date <- as.Date(x)
+  if(!is.na(convert_date)){
+    return(convert_date)
+  }
+  
+  x <- tolower(x)
+  
+  # turn NDaysAgo into R Dates
+  r_nd <- "^(.+)daysago$"
+  
+  if(grepl(r_nd, x)){
+    new_date <- Sys.Date() - as.numeric(gsub(r_nd,"\\1", x))
+  } else if(x == "today"){
+    new_date <- Sys.Date()
+  } else if(x == "yesterday"){
+    new_date <- Sys.Date() - 1
+  } else {
+    # try to convert to date
+    new_date <- as.Date(as.numeric(x), origin = "1970-01-01")
+    if(is.na(new_date)){
+      stop("Unrecognised date - must be 'today', 'yesterday' or 'NdaysAgo' - got: ", x, call. = FALSE)
+    }
+
+  }
+
+  new_date
+}
+
+
 check_empty <- function(x){
   if(any(is.null(x), length(x) == 0)){
     myMessage("No items found")
@@ -49,6 +89,7 @@ is.named <- function(x) {
 
 #' Timestamp to R date
 #' @keywords internal
+#' @noRd
 timestamp_to_r <- function(t){
   as.POSIXct(t, format = "%Y-%m-%dT%H:%M:%S")
 }
@@ -56,6 +97,7 @@ timestamp_to_r <- function(t){
 #' if argument is NULL, no line output
 #'
 #' @keywords internal
+#' @noRd
 cat0 <- function(prefix = "", x){
   if(!is.null(x)){
     cat(prefix, x, "\n")
@@ -74,6 +116,7 @@ cat0 <- function(prefix = "", x){
 #' 
 #' @return A list
 #' @keywords internal
+#' @noRd
 unitToList <- function(perhaps_list){
   
   if(is.null(perhaps_list)){
@@ -98,6 +141,7 @@ unitToList <- function(perhaps_list){
 #' 
 #' wraps assertthat::assert_that to run if not NULL
 #' @keywords internal
+#' @noRd
 expect_null_or_type <- function(thing, type){
   if(!is.null(thing)){
     assertthat::assert_that(inherits(thing, type))
@@ -110,6 +154,7 @@ expect_null_or_type <- function(thing, type){
 #' 
 #' wraps assertthat::assert_that(inherits(thing, s3class))() to run if not NULL
 #' @keywords internal
+#' @noRd
 expect_null_or_s3_class <- function(thing, s3class){
   if(!is.null(thing)){
     assertthat::assert_that(inherits(thing, s3class))
@@ -128,11 +173,13 @@ magrittr::`%>%`
 #' a list of NULLs
 #'
 #' @keywords internal
+#' @noRd
 is.NullOb <- function(x) is.null(x) | all(sapply(x, is.null))
 
 #' Recursively step down into list, removing all such objects
 #'
 #' @keywords internal
+#' @noRd
 rmNullObs <- function(x) {
   x <- Filter(Negate(is.NullOb), x)
   lapply(x, function(x) if (is.list(x)) rmNullObs(x) else x)
@@ -141,6 +188,7 @@ rmNullObs <- function(x) {
 #' check it starts with ga: and if not puts it on
 #'
 #' @keywords internal
+#' @noRd
 checkPrefix <- function(x, prefix=c("ga", "mcf")){
   prefix <- match.arg(prefix)
   
@@ -152,6 +200,7 @@ checkPrefix <- function(x, prefix=c("ga", "mcf")){
 #' Add name of list entry of dataframe to dataframe column
 #'
 #' @keywords internal
+#' @noRd
 listNameToDFCol <- function(named_list, colName = "listName"){
   lapply(names(named_list),
          function(x) {named_list[[x]][colName] <- x
@@ -168,6 +217,7 @@ listNameToDFCol <- function(named_list, colName = "listName"){
 #' @return Boolean
 #'
 #' @keywords internal
+#' @noRd
 is.error <- function(test_me){
   inherits(test_me, "try-error")
 }
@@ -179,6 +229,7 @@ is.error <- function(test_me){
 #' @return The error message
 #'
 #' @keywords internal
+#' @noRd
 error.message <- function(test_me){
   if(is.error(test_me)) attr(test_me, "condition")$message
 }
@@ -189,6 +240,7 @@ error.message <- function(test_me){
 #'
 #' @return A random 15 digit hash
 #' @keywords internal
+#' @noRd
 idempotency <- function(){
   paste(sample(c(LETTERS, letters, 0:9), 15, TRUE),collapse="")
 }
@@ -201,6 +253,7 @@ idempotency <- function(){
 #' 
 #' @details 0 = everything, 1 = debug, 2=normal, 3=important
 #' @keywords internal
+#' @noRd
 myMessage <- function(..., level = 2){
   
   compare_level <- getOption("googleAuthR.verbose")

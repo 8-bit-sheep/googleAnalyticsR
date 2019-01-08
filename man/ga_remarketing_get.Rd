@@ -22,11 +22,8 @@ Get a remarketing audience
 \seealso{
 \href{https://support.google.com/analytics/answer/2611268?hl=en}{About remarketing audiences}
 
-Other managementAPI functions: \code{\link{ga_accounts}},
-  \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}},
-  \code{\link{ga_clientid_hash}},
-  \code{\link{ga_custom_vars_list}},
-  \code{\link{ga_custom_vars}},
+Other managementAPI functions: \code{\link{ga_adwords_list}},
+  \code{\link{ga_adwords}}, \code{\link{ga_clientid_hash}},
   \code{\link{ga_experiment_list}},
   \code{\link{ga_experiment}}, \code{\link{ga_filter_add}},
   \code{\link{ga_filter_apply_to_view}},
@@ -42,9 +39,5 @@ Other managementAPI functions: \code{\link{ga_accounts}},
   \code{\link{ga_remarketing_list}},
   \code{\link{ga_segment_list}},
   \code{\link{ga_unsampled_list}},
-  \code{\link{ga_unsampled}}, \code{\link{ga_users_list}},
-  \code{\link{ga_view_list}}, \code{\link{ga_view}},
-  \code{\link{ga_webproperty_list}},
-  \code{\link{ga_webproperty}},
-  \code{\link{google_analytics_account_list}}
+  \code{\link{ga_unsampled}}
 }

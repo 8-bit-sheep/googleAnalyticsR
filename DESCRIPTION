@@ -1,13 +1,14 @@
 Package: googleAnalyticsR
 Type: Package
-Version: 0.5.0.9000
+Version: 0.6.0.9000
 Title: Google Analytics API into R
 Description: Interact with the Google Analytics 
   APIs <https://developers.google.com/analytics/>, including 
   the Core Reporting API (v3 and v4), Management API, and Multi-Channel
   Funnel API.
 Authors@R: c(person("Mark", "Edmondson", email = "m@sunholo.com",
-                  role = c("aut", "cre")),
+                  role = c("aut", "cre"),
+                  comment = c(ORCID = "0000-0002-8434-3881")),
              person(given = "Artem", family = "Klevtsov",
                     email = "a.a.klevtsov@gmail.com", role = "ctb"),
            person("Johann", "deBoer", email = "johanndeboer@gmail.com", role = "ctb"),
@@ -35,8 +36,9 @@ Imports:
 Suggests:
     bigQueryR (>= 0.3.1),
     covr,
+    ganalytics,
     googleCloudStorageR (>= 0.2.0),
-    httptest,
+    httptest (>= 3.2.2),
     knitr,
     miniUI (>= 0.1.1),
     rmarkdown,
@@ -45,3 +47,5 @@ License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
+Remotes: jdeboer/ganalytics
+

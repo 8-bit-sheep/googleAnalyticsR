@@ -1,0 +1,179 @@
+---
+title: "Setting up Google Analytics API downloads to R"
+---
+
+## Install
+
+The latest stable version of `googleAnalyticsR` is available on CRAN.
+![CRAN](http://www.r-pkg.org/badges/version/googleAnalyticsR)
+
+```r
+install.packages("googleAnalyticsR", dependencies = TRUE)
+```
+
+### Development version off GitHub
+
+You may prefer to use the latest development version is on GitHub which you can install via the below.
+
+Github check status: [![Travis-CI Build Status](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master)](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR)
+
+```r
+remotes::install_github("MarkEdmondson1234/googleAnalyticsR")
+```
+
+Check out the [NEWS](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md) to see whats currently available in each version.
+
+## Dependencies
+
+`googleAnalyticsR` requires the packages described in the [`Imports` field of the `DESCRIPTION` file](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/DESCRIPTION) to be installed first, which it will do via `install.packages("googleAnalyticsR", dependencies = TRUE)`
+
+Note that on linux systems, due to its reliance on [`httr`]( https://CRAN.R-project.org/package=httr ) and in turn [`curl`]( https://CRAN.R-project.org/package=curl), it may require installation of these dependencies via `apt-get` or similar: `libssl-dev` and `libcurl4-openssl-dev`.
+
+## Authentication
+
+Authentication is done via the [`googleAuthR`](http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html) package, see there for advanced use cases. 
+
+For most typical day to day use, the below suits most needs:
+
+```r
+## setup
+library(googleAnalyticsR)
+
+## This should send you to your browser to authenticate your email.
+## Authenticate with an email that has access to the Google Analytics View you want to use.
+ga_auth()
+
+## get your accounts
+account_list <- ga_account_list()
+
+## pick a profile ID with data to query
+ga_id <- account_list[1,'viewId']
+
+```
+
+Should you need to authenticate under a new user, use `ga_auth(new_user=TRUE)`
+
+When you authenticate a `ga.oauth` file will be created in your working directory.  If that file is present, then you will not need to go via Google login when you next use `ga_auth()`
+
+You can specify the name and location of your cache file if you pass that to the `ga_auth()` function e.g.
+
+```r
+ga_auth("auth/my.oauth")
+```
+
+...which will create your authentication file at the location you specify, relative to your working directory. 
+
+It is recommended to specify your cache file when authenticating in an RMarkdown document, since that can change the working directory during knitting. 
+
+## Service accounts
+
+You can alternatively authenticate by downloading a JSON file atached to a Google Cloud service account.  More details on how to do that are on the [`googleAuthR` website](http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#authentication-with-a-json-file-via-service-accounts).  
+
+A service authentication file then needs to be created that has edit access to the GA account.  It is recommended to make a dedicated service account if you don't need it for anything else. 
+
+1. Create your own Google Cloud Project or use an existing one.
+2. Set your own client.id/secret via `googleAuthR::gar_set_client()`
+3. Service accounts for your project can be created at this link: `https://console.cloud.google.com/iam-admin/serviceaccounts/create`
+4. The service account does not need any GCP account permissions (we do that in next step when we add to GA)
+5. After you can see your service account in the list, create a JSON key for that service account and download it somewhere safe
+6. Copy the service email e.g. `ga-access@your-project.iam.gserviceaccount.com`
+7. Login to Google Analytics and add the email to your account at the level of permissions you want.  If you want to upload data or update filters etc. then it needs at least edit permissions, if it just needs to read data then Viewer access is fine. 
+8. Make sure the GCP project the service key is for has both the Analytics API and the Analytics Reporting API access enabled.  You can reach this via the Google API & Services dashboard URL: `https://console.developers.google.com/apis/dashboard`
+
+You should now be able to use the JSON auth file to authenticate with Google Analytics API via:
+
+```r
+library(googleAnalyticsR)
+googleAuthR::gar_auth_service("your_auth_file.json")
+
+# test authentication
+al <- ga_account_list()
+```
+
+## Auto-authentication
+
+If you often use the library to access the same accounts from one machine, then it is helpful to setup auto-authentication.  This is also the most reliable way for scheduled scripts. It means you do not need to use `ga_auth()`.
+
+A short video on how to do this is available here: [googleAnalyticsR - how to do auto-authentication](https://www.youtube.com/watch?v=zgwDQu-mCOc)
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/zgwDQu-mCOc?rel=0" frameborder="0" allowfullscreen></iframe>
+
+You choose to auto-authenticate by moving your authentication cache file to a global location on your computer, that all future R sessions will use, then telling `googleAnalyticsR` where that file is when it is loaded into your R session. 
+
+This is done by creating an environment variable called `GA_AUTH_FILE` that points at your valid cache file.
+
+You can set environment variables using a `.Renviron` file or via the function `Sys.setenv()` - see `?Startup` for details. The first method is described below:
+
+1. Choose your authentication cache file - either one you have generated via `ga_auth()` or your own Google Project's service account JSON ending with file extension `.json`
+2. Create a file called `.Renviron` and place it in your user's home directory (`~` on OSX/linux or `C:\\` on Windows).  If using RStudio, you can find your the correct location directory by clicking on the `Home` breadcrumb link in your File Explorer panel.
+3. Place the absolute location of the file from step 1 into the `.Renviron` file, e.g.
+`GA_AUTH_FILE = "/Users/mark/dev/auth/ga.oauth"`.
+4. Save the file and restart your R session. 
+
+If all goes well you should see something similar to this when you load `googleAnalyticsR`:
+
+```r
+library(googleAnalyticsR)
+#>Successfully authenticated via /Users/mark/dev/auth/ga.oauth
+
+## can do authenticated calls straight away
+al <- ga_account_list()
+```
+
+## Meta data
+
+To see what dimensions and metrics are available via the API, you can use this command:
+
+```r
+## get a list of what metrics and dimensions you can use
+meta <- google_analytics_meta()
+```
+
+![](meta_data_screenshot.png)
+
+If offline, this data is also available by typing `meta`, although it won't be quite as up to date.  
+
+The meta data does not include multi-channel as they are not available, for those [see the online version](https://developers.google.com/analytics/devguides/reporting/mcf/dimsmets/).
+
+When using the library, you can call metrics and dimensions with or without the `ga:` prefix (`mcf:` for multi-channel metrics/dimensions.)
+
+## Multiple API authentication
+
+If you are using more than one API for authentication (such as Search Console), then authenticate using `googleAuthR::gar_auth()` instead, to ensure you authenticate with the correct scopes. See the [multiple authentication](http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#multiple-authentication-tokens) section on the `googleAuthR` website for details.
+
+## Your own Google Project
+
+With the amount of API calls possible with this library via batching and walking, its more likely the default shared Google API project will hit the 50,000 calls per day limit.
+
+To mitigate that, use your own Google Developer Console Project key, so it is not shared across all users of this library.
+
+[Donal Phipps](http://donalphipps.co.uk/) has very kindly created a screencast on how to set this up that you can find embedded below and via [this link](https://www.youtube.com/watch?v=4B88dRbwNfc).
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/4B88dRbwNfc?rel=0" frameborder="0" allowfullscreen></iframe>
+
+### Example adding your own Google Developer Console keys
+
+Set these options before any call to `ga_auth()` or other data fetching calls.
+
+```r
+options(googleAuthR.client_id = "uxxxxxxx2fd4kesu6.apps.googleusercontent.com")
+options(googleAuthR.client_secret = "3JhLa_GxxxxxCQYLe31c64")
+options(googleAuthR.scopes.selected = "https://www.googleapis.com/auth/analytics")
+```
+
+In the next example, the scopes are also set so a user can authenticate with [`searchConsoleR`](http://code.markedmondson.me/searchConsoleR/) at the same time, which is possible as they both use [`googleAuthR`](http://code.markedmondson.me/googleAuthR/) as a backend.
+
+```r
+options(googleAuthR.client_id = "tuxxxxxxx2fd4kesu6.apps.googleusercontent.com")
+options(googleAuthR.client_secret = "3JhLa_GxxxxxCQYLe31c64")
+options(googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
+                                        "https://www.googleapis.com/auth/webmasters"))
+```
+
+If you want to use with Shiny, then set the webapp clientId/secrets.
+
+```r
+options(googleAnalyticsR.webapp.client_id = "xxxxx9pcab1u005cv.apps.googleusercontent.com")
+options(googleAnalyticsR.webapp.client_secret = "zcofxxxxxxElemXN5sf")
+```
+

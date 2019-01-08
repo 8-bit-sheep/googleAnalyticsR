@@ -9,37 +9,25 @@ ga_view_list(accountId, webPropertyId)
 \arguments{
 \item{accountId}{Account Id}
 
-\item{webPropertyId}{Web Property Id}
+\item{webPropertyId}{Web Property Id e.g. \code{UA-12345-1}}
 }
 \value{
-webproperty
+A \code{data.frame} of meta-data for the views
 }
 \description{
-List View (Profile)
+This gets the meta data associated with the Google Analytics Views for a particular accountId and webPropertyId.  
+If you want all viewId information for all accounts you have access to, use \link{ga_account_list} instead.
+}
+\examples{
+
+\dontrun{
+library(googleAnalyticsR)
+ga_auth()
+views <- ga_view_list(1058095, "UA-1058095-1")
+}
 }
 \seealso{
-Other managementAPI functions: \code{\link{ga_accounts}},
-  \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}},
-  \code{\link{ga_clientid_hash}},
-  \code{\link{ga_custom_vars_list}},
-  \code{\link{ga_custom_vars}},
-  \code{\link{ga_experiment_list}},
-  \code{\link{ga_experiment}}, \code{\link{ga_filter_add}},
-  \code{\link{ga_filter_apply_to_view}},
-  \code{\link{ga_filter_delete}},
-  \code{\link{ga_filter_list}},
-  \code{\link{ga_filter_update_filter_link}},
-  \code{\link{ga_filter_update}},
-  \code{\link{ga_filter_view_list}},
-  \code{\link{ga_filter_view}}, \code{\link{ga_filter}},
-  \code{\link{ga_goal_add}}, \code{\link{ga_goal_list}},
-  \code{\link{ga_goal_update}}, \code{\link{ga_goal}},
-  \code{\link{ga_remarketing_estimate}},
-  \code{\link{ga_remarketing_get}},
-  \code{\link{ga_remarketing_list}},
-  \code{\link{ga_segment_list}},
-  \code{\link{ga_unsampled_list}},
-  \code{\link{ga_unsampled}}, \code{\link{ga_users_list}},
+Other account structure functions: \code{\link{ga_accounts}},
   \code{\link{ga_view}}, \code{\link{ga_webproperty_list}},
   \code{\link{ga_webproperty}},
   \code{\link{google_analytics_account_list}}

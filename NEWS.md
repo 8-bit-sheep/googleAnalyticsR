@@ -1,17 +1,23 @@
-# googleAnalyticsR 0.5.0.9000
+# 0.6.0.9000
+
+* ...
+
+# googleAnalyticsR 0.6.0
 
 * Add goal management
-* Add `ga_user_deletion()` function (#168)
+* Add `ga_clientid_deletion()` function (#168) (renamed from `ga_user_deletion()`)
 * Let `authDropdown` return more than just the viewId (#172)
 * Export segment related classes and implicitly coerce table filters and segments to their appropriate classes in order to improve integration with the ganalytics package.
 * Add support for `dataLastRefreshed` and stop caching if its present (e.g. query includes today) (#183)
-* Export dim_ga4, met_ga4 and order_type_ga4 classes in order to support the complete conversion of `ganalytics query objects into googleAnalyticsR API requests.
+* Export dim_ga4, met_ga4 and order_type_ga4 classes in order to support the complete conversion of `ganalytics` query objects into googleAnalyticsR API requests.
 * Fix segments that were not respecting "IMMEDIATELY_PRECEDES" vs "PRECEDES" (thanks @digitos) (#180)
 * Fix default of pivot groups so they include first column (thanks @gilliganondata) (#107)
 * Support for creating remarketing audiences (#161)
 * Support "NdaysAgo" in antisample calls (#209)
 * Support more than 1000 entries in various management list functions (#174)
 * Parse management API list responses into data.frames (#194)
+* Add user management functions such as `ga_users_delete`, `ga_users_update` and `ga_users_add`
+* Add custom dimension functions `ga_custom_vars_create` and `ga_custom_vars_patch`
 
 # googleAnalytics 0.5.0
 

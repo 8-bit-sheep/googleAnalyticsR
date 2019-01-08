@@ -5,6 +5,7 @@
 #' @inheritParams make_ga_4_req
 #' @inheritParams google_analytics
 #' @keywords internal
+#' @noRd
 anti_sample <- function(anti_sample_batches,
                         viewId,
                         date_range,
@@ -28,21 +29,9 @@ anti_sample <- function(anti_sample_batches,
   if(!is.null(date_range)){
     
     ## issue 112 - support "today" and "yesterday"
-    ## to lower - we want to allow Today and Yesterday or TODAY and YESTERDAY
-    date_range <- gsub("^today$", Sys.Date(), tolower(date_range))
-    date_range <- gsub("^yesterday$", Sys.Date() - 1, tolower(date_range))  
-
-    # turn NDaysAgo into R Dates
-    r_nd <- "^(.)DaysAgo$"
-    ndays_indexe <- grepl(r_nd, date_range)
-    if(any(ndays_indexe)){
-      date_range <- Sys.Date() - 
-        as.numeric(gsub(r_nd,
-                        "\\1", 
-                        date_range)[ndays_indexe])
-    }
+    # issue 209 - turn NDaysAgo into R Dates
+    date_range <- Reduce(c, lapply(date_range, process_date))
     
-    date_range <- as.Date(date_range)
   }
   
   myMessage("Finding how much sampling in data request...", level = 3)
@@ -204,6 +193,7 @@ anti_sample <- function(anti_sample_batches,
 #' @return A vector with the batch number of each date. This allows for usage in
 #'   a mutate.
 #' @keywords internal
+#' @noRd
 chunkify <- function(sessions_vec, limit = 250e3) {
   #Accumulators
   batch_size    <- 0
