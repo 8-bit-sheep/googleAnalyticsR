@@ -428,7 +428,7 @@ google_analytics <- function(viewId,
                                             stop("Sequence batch error: ", 
                                                  "\n api_max_rows: ",api_max_rows,
                                                  "\n all_rows:", all_rows,
-                                                 "\n reqRowLimit:", reqRowLimit)
+                                                 "\n reqRowLimit:", reqRowLimit, call. = FALSE)
                                           })
       ## make a list of the requests
       requests2 <- lapply(meta_batch_start_index2, function(start_index){
@@ -694,8 +694,7 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE, useResourceQuo
     response_list <- lapply(body_list, function(b){
 
       myMessage("Fetching v4 data batch...", level = 3)
-      
-      out <- tryCatch(f(the_body = body),
+      out <- tryCatch(f(the_body = b),
                       error = function(err){
                         custom_error(err)
                       })
