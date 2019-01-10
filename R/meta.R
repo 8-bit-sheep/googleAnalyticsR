@@ -7,7 +7,8 @@
 #' @importFrom googleAuthR gar_api_generator
 #' 
 #' @export
-google_analytics_meta <- function(){
+#' 
+ga_meta <- function(){
   
   meta <- gar_api_generator("https://www.googleapis.com/analytics/v3",
                             "GET",
@@ -17,4 +18,11 @@ google_analytics_meta <- function(){
   
   meta()
   
+}
+
+#' @rdname ga_meta
+#' @export
+google_analytics_meta <- function(){
+  .Deprecated("ga_meta", package = "googleAnalyticsR")
+  ga_meta()
 }

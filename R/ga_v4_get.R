@@ -7,8 +7,10 @@
 #' @param viewId viewId of data to get.
 #' @param date_range character or date vector of format \code{c(start, end)} or 
 #'   for two date ranges: \code{c(start1,end1,start2,end2)}
-#' @param metrics Metric to fetch. Supports calculated metrics.
-#' @param dimensions Dimensions to fetch.
+#' @param metrics Metric(s) to fetch.  See \link{meta} for a list of dimensons 
+#'   and metrics the API supports. Also supports your own calculated metrics.
+#' @param dimensions Dimensions to fetch. See \link{meta} for a list of dimensons 
+#'   and metrics the API supports.
 #' @param dim_filters A \link{filter_clause_ga4} wrapping \link{dim_filter}
 #' @param met_filters A \link{filter_clause_ga4} wrapping \link{met_filter}
 #' @param filtersExpression A v3 API style simple filter string. Not used with other filters. 

@@ -4,7 +4,8 @@
 \name{meta}
 \alias{meta}
 \title{Google Analytics API metadata}
-\format{A data frame with 476 rows and 15 variables}
+\format{A data frame containing metric and dimensions that 
+  you can query the Reporting API with.}
 \source{
 \url{https://developers.google.com/analytics/devguides/reporting/core/dimsmets}
 }
@@ -12,7 +13,7 @@
 meta
 }
 \description{
-This is a local copy of the data provided by \link{google_analytics_meta}
+This is a local copy of the data provided by \link{ga_meta}
 }
 \details{
 Running your own call will be more up to date, but this is here in case.

@@ -22,9 +22,11 @@ google_analytics_4(...)
 \item{date_range}{character or date vector of format \code{c(start, end)} or 
 for two date ranges: \code{c(start1,end1,start2,end2)}}
 
-\item{metrics}{Metric to fetch. Supports calculated metrics.}
+\item{metrics}{Metric(s) to fetch.  See \link{meta} for a list of dimensons 
+and metrics the API supports. Also supports your own calculated metrics.}
 
-\item{dimensions}{Dimensions to fetch.}
+\item{dimensions}{Dimensions to fetch. See \link{meta} for a list of dimensons 
+and metrics the API supports.}
 
 \item{dim_filters}{A \link{filter_clause_ga4} wrapping \link{dim_filter}}
 
