@@ -242,11 +242,15 @@ for two date ranges: <code><a href='https://www.rdocumentation.org/packages/base
     </tr>
     <tr>
       <th>metrics</th>
-      <td><p>Metric to fetch. Supports calculated metrics.</p></td>
+      <td><p>Metric(s) to fetch as a character vector.  You do not need to 
+supply the <code>"ga:"</code> prefix.  See <a href='meta.html'>meta</a> for a list of dimensons 
+and metrics the API supports. Also supports your own calculated metrics.</p></td>
     </tr>
     <tr>
       <th>dimensions</th>
-      <td><p>Dimensions to fetch.</p></td>
+      <td><p>Dimension(s) to fetch as a character vector. You do not need to 
+supply the <code>"ga:"</code> prefix. See <a href='meta.html'>meta</a> for a list of dimensons 
+and metrics the API supports.</p></td>
     </tr>
     <tr>
       <th>dim_filters</th>
@@ -374,13 +378,16 @@ Default <code>NULL</code>, set to <code>TRUE</code> or <code>FALSE</code> if you
 
 <span class='co'>## get your accounts</span>
 
-<span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_account_list.html'>google_analytics_account_list</a></span>()
+<span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_account_list.html'>ga_account_list</a></span>()
 
 <span class='co'>## account_list will have a column called "viewId"</span>
 <span class='no'>account_list</span>$<span class='no'>viewId</span>
 
 <span class='co'>## View account_list and pick the viewId you want to extract data from</span>
 <span class='no'>ga_id</span> <span class='kw'>&lt;-</span> <span class='fl'>123456</span>
+
+<span class='co'># examine the meta table to see metrics and dimensions you can query</span>
+<span class='no'>meta</span>
 
 <span class='co'>## simple query to test connection</span>
 <span class='fu'>google_analytics</span>(<span class='no'>ga_id</span>,

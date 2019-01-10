@@ -7,9 +7,11 @@
 #' @param viewId viewId of data to get.
 #' @param date_range character or date vector of format \code{c(start, end)} or 
 #'   for two date ranges: \code{c(start1,end1,start2,end2)}
-#' @param metrics Metric(s) to fetch.  See \link{meta} for a list of dimensons 
+#' @param metrics Metric(s) to fetch as a character vector.  You do not need to 
+#'   supply the \code{"ga:"} prefix.  See \link{meta} for a list of dimensons 
 #'   and metrics the API supports. Also supports your own calculated metrics.
-#' @param dimensions Dimensions to fetch. See \link{meta} for a list of dimensons 
+#' @param dimensions Dimension(s) to fetch as a character vector. You do not need to 
+#'   supply the \code{"ga:"} prefix. See \link{meta} for a list of dimensons 
 #'   and metrics the API supports.
 #' @param dim_filters A \link{filter_clause_ga4} wrapping \link{dim_filter}
 #' @param met_filters A \link{filter_clause_ga4} wrapping \link{met_filter}
@@ -268,13 +270,16 @@ make_ga_4_req <- function(viewId,
 #' 
 #' ## get your accounts
 #' 
-#' account_list <- google_analytics_account_list()
+#' account_list <- ga_account_list()
 #' 
 #' ## account_list will have a column called "viewId"
 #' account_list$viewId
 #' 
 #' ## View account_list and pick the viewId you want to extract data from
 #' ga_id <- 123456
+#' 
+#' # examine the meta table to see metrics and dimensions you can query
+#' meta
 #' 
 #' ## simple query to test connection
 #' google_analytics(ga_id, 

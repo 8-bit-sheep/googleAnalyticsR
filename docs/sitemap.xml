@@ -154,6 +154,9 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_goal_update.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_meta.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_remarketing_build.html</loc>
   </url>
   <url>
@@ -224,9 +227,6 @@
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics_bq_asynch.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics_meta.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/makeOrFilters.html</loc>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Google Analytics API metadata — meta • googleAnalyticsR</title>
+<title>Get current dimensions and metrics available in GA API. — ga_meta • googleAnalyticsR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Google Analytics API metadata — meta" />
+<meta property="og:title" content="Get current dimensions and metrics available in GA API. — ga_meta" />
 
-<meta property="og:description" content="This is a local copy of the data provided by ga_meta" />
+<meta property="og:description" content="Get current dimensions and metrics available in GA API." />
 
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -206,32 +206,28 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Google Analytics API metadata</h1>
+    <h1>Get current dimensions and metrics available in GA API.</h1>
     
-    <div class="hidden name"><code>meta.Rd</code></div>
+    <div class="hidden name"><code>ga_meta.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This is a local copy of the data provided by <a href='ga_meta.html'>ga_meta</a></p>
+    <p>Get current dimensions and metrics available in GA API.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>meta</span></pre>
+    <pre class="usage"><span class='fu'>ga_meta</span>()
+
+<span class='fu'>google_analytics_meta</span>()</pre>
         
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame containing metric and dimensions that 
-  you can query the Reporting API with.</p>
+    <p>dataframe of dimensions and metrics available to use</p>
     
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><a href='https://developers.google.com/analytics/devguides/reporting/core/dimsmets'>https://developers.google.com/analytics/devguides/reporting/core/dimsmets</a></p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Running your own call will be more up to date, but this is here in case.</p>
-<p>It does not include the multi-channel or cohort variables.</p>
+    <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list'>https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list</a></p></div>
     
 
   </div>
@@ -239,11 +235,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
-      <li><a href="#format">Format</a></li>
+      <li><a href="#value">Value</a></li>
 
-      <li><a href="#source">Source</a></li>
-
-      <li><a href="#details">Details</a></li>
+      <li><a href="#see-also">See also</a></li>
           </ul>
 
   </div>
