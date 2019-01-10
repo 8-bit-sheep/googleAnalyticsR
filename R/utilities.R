@@ -9,16 +9,18 @@ process_date <- function(x){
   
   assert_that(is.character(x))
   
-  convert_date <- as.Date(x)
-  if(!is.na(convert_date)){
-    return(convert_date)
-  }
+  tryCatch(
+    return(as.Date(x)),
+    error = function(err){
+      NULL
+    }
+  )
   
   x <- tolower(x)
   
   # turn NDaysAgo into R Dates
   r_nd <- "^(.+)daysago$"
-  
+
   if(grepl(r_nd, x)){
     new_date <- Sys.Date() - as.numeric(gsub(r_nd,"\\1", x))
   } else if(x == "today"){

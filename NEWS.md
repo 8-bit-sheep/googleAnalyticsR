@@ -1,6 +1,7 @@
 # 0.6.0.9000
 
 * Clean up error messages
+* Fix anti_sampling breaking if using date formats "4daysAgo" etc.
 
 # googleAnalyticsR 0.6.0
 
