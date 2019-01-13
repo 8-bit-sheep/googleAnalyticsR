@@ -56,10 +56,14 @@ ga_adwords_list <- function(accountId,
 
 #' @noRd
 #' @import assertthat
+#' @importFrom dplyr bind_rows select
 parse_ga_adwords_list <- function(x){
   
+  aaa <- Reduce(bind_rows, x$items$adWordsAccounts)
   o <- x %>% 
-    management_api_parsing("analytics#entityAdWordsLinks") 
+    management_api_parsing("analytics#entityAdWordsLinks") %>% 
+    cbind(aaa) %>% 
+    select(-adWordsAccounts, -entity.webPropertyRef.kind, -entity.webPropertyRef.href, -kind)
   
   if(is.null(o)){
     return(data.frame())
