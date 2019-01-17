@@ -18,7 +18,7 @@
 #' ga_clientid_activity("1106980347.1461227730", viewId = 81416156)
 #' 
 #' }
-#' 
+#' @seealso https://developers.google.com/analytics/trusted-testing/user-reporting/
 ga_clientid_activity <- function(id, 
                                  viewId, 
                                  id_type = c("CLIENT_ID","USER_ID"), 

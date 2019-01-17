@@ -4,13 +4,13 @@
 \alias{ga_clientid_activity}
 \title{User Activity Request}
 \usage{
-ga_clientid_activity(viewId, id, id_type = c("CLIENT_ID", "USER_ID"),
+ga_clientid_activity(id, viewId, id_type = c("CLIENT_ID", "USER_ID"),
   date_range = NULL)
 }
 \arguments{
-\item{viewId}{The viewId}
-
 \item{id}{The user or clientId}
+
+\item{viewId}{The viewId}
 
 \item{id_type}{Whether its userId or clientId}
 
@@ -18,4 +18,17 @@ ga_clientid_activity(viewId, id, id_type = c("CLIENT_ID", "USER_ID"),
 }
 \description{
 User Activity Request
+}
+\examples{
+
+\dontrun{
+
+googleAuthR::gar_set_client(scopes = "https://www.googleapis.com/auth/analytics")
+ga_auth("test.oauth")
+ga_clientid_activity("1106980347.1461227730", viewId = 81416156)
+
+}
+}
+\seealso{
+https://developers.google.com/analytics/trusted-testing/user-reporting/
 }
