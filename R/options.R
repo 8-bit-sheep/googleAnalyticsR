@@ -62,7 +62,7 @@
     options(googleAuthR.webapp.client_id = Sys.getenv("GA_WEB_CLIENT_SECRET"))
   }
   
-  default_project_message()
+
   
   f <- function(req){
     
