@@ -44,27 +44,34 @@ ga_clientid_activity <- function(id,
       type = id_type,
       userId = id
     ),
-    dateRange = the_dates
+    dateRange = the_dates,
+    pageToken = ""
   )
   
   body <- rmNullObs(body)
   
   u <- gar_api_generator("https://analyticsreporting.googleapis.com/v4/userActivity:search",
                          "POST",
-                         data_parse_function = function(x) x)
+                         data_parse_function = parse_user_activity)
   
-  u(the_body = body)
+  o <- gar_api_page(u,
+                    page_f = page_user_activity,
+                    page_method = "body",
+                    page_arg = "pageToken",
+                    body_list = body)
+  
+  o
   
 }
 
 page_user_activity <- function(x){
-  attr(x, "nextPageToken")
+  attr(x, "pageToken")
 }
 
 parse_user_activity <- function(x){
   
   o <- x
-  attr(o, "nextPageToken") <- x$nextPageToken
+  attr(o, "pageToken") <- x$nextPageToken
   
   o
   
