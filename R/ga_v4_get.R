@@ -533,7 +533,6 @@ fetch_google_analytics_4_slow <- function(request_list,
   f <- gar_api_generator("https://analyticsreporting.googleapis.com/v4/reports:batchGet",
                          "POST",
                          data_parse_function = google_analytics_4_parse_batch,
-                         # data_parse_function = function(x) x,
                          simplifyVector = FALSE)
   
   

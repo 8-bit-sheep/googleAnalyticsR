@@ -15,7 +15,9 @@
 #' 
 #' googleAuthR::gar_set_client(scopes = "https://www.googleapis.com/auth/analytics")
 #' ga_auth("test.oauth")
-#' ga_clientid_activity("1106980347.1461227730", viewId = 81416156)
+#' ga_clientid_activity("1106980347.1461227730", 
+#'                      viewId = 81416156, 
+#'                      date_range = c("2019-01-01","2019-02-01"))
 #' 
 #' }
 #' @seealso https://developers.google.com/analytics/trusted-testing/user-reporting/
@@ -52,7 +54,8 @@ ga_clientid_activity <- function(id,
   
   u <- gar_api_generator("https://analyticsreporting.googleapis.com/v4/userActivity:search",
                          "POST",
-                         data_parse_function = parse_user_activity)
+                         data_parse_function = parse_user_activity,
+                         simplifyVector = FALSE)
   
   o <- gar_api_page(u,
                     page_f = page_user_activity,
@@ -65,15 +68,87 @@ ga_clientid_activity <- function(id,
 }
 
 page_user_activity <- function(x){
-  attr(x, "pageToken")
+  
+
+  attr(x, "nextPageToken")
 }
 
 parse_user_activity <- function(x){
   
   o <- x
-  attr(o, "pageToken") <- x$nextPageToken
+  o_summ <- as.data.frame(x$summary, stringsAsFactors = FALSE)
+  o_dates <- map(x$dateGroups, "sessions")
+  o_dates <- setNames(o_dates, map_chr(x$dateGroups, "activityDate"))
+  o_sess <- map(o_dates, ~setNames(.x, map_chr(.x, "sessionId")))
+  
+  o_acts <- map(o_sess, 
+                function(date){
+                  map(date, 
+                      function(sid){ 
+                        setNames(sid$activities, 
+                                 map_chr(sid$activities, 
+                                         ~format(timestamp_to_r(.x[["activityTime"]]))))
+                        }
+                      )
+                  })
+  
+  session_level <- setNames(map(x$dateGroups, function(x){
+    setNames(map(x$sessions, function(y){
+      data.frame(sessionId = y$sessionId, 
+                 deviceCategory = y$deviceCategory, 
+                 platform = y$platform, 
+                 dataSource = y$dataSource,
+                 stringsAsFactors = FALSE)   
+    }), map_chr(x$sessions, "sessionId"))
+  }), map_chr(x$dateGroups, "activityDate"))
+
+  o <- list(summary = o_summ,
+            session = session_level,
+            hits = o_acts
+            )
+  attr(o, "nextPageToken") <- x$nextPageToken
+  attr(o, "totalRows") <- x$totalRows
   
   o
+  
+}
+
+parse_activity_row <- function(x){
+  activity_type <- x$activityType
+  stopifnot(activity_type %in% c("PAGEVIEW",
+                                 "SCREENVIEW",
+                                 "GOAL",
+                                 "ECOMMERCE",
+                                 "EVENT"))
+  o <- x
+  if(!is.null(o$customDimension)){
+    o$customDimensionIndex <- o$customDimension$index
+    o$customDimensionValue <- o$customDimension$value
+  } else {
+    o$customDimensionIndex <- NA_integer_
+    o$customDimensionValue <- NA_character_
+  }
+  
+  # init all possible values
+  o$pagePath <- NA_character_
+  o$pageTitle <- NA_character_
+  
+  o$screenName <- NA_character_
+  o$mobileDeviceBranding <- NA_character_
+  o$mobileDeviceModel <- NA_character_
+  o$appName <- NA_character_
+  
+  # ecommerce TBD
+  
+  o$goalIndex <- 
+  
+  if(!is.null(x$pageview)){
+    o$pagePath <- x$pageview$pagePath
+    o$pageTitle <- x$pageview$pageTitle
+  }  
+
+  
+ o
   
 }
 

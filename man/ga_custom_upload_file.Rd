@@ -78,3 +78,4 @@ Other custom datasource functions: \code{\link{ga_custom_datasource}},
   \code{\link{ga_custom_upload_list}},
   \code{\link{ga_custom_upload}}
 }
+\concept{custom datasource functions}

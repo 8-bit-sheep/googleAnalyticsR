@@ -25,7 +25,9 @@ User Activity Request
 
 googleAuthR::gar_set_client(scopes = "https://www.googleapis.com/auth/analytics")
 ga_auth("test.oauth")
-ga_clientid_activity("1106980347.1461227730", viewId = 81416156)
+ga_clientid_activity("1106980347.1461227730", 
+                     viewId = 81416156, 
+                     date_range = c("2019-01-01","2019-02-01"))
 
 }
 }
