@@ -24,11 +24,13 @@
 ga_clientid_activity <- function(id, 
                                  viewId, 
                                  id_type = c("CLIENT_ID","USER_ID"), 
+                                 activity_type = NULL,
                                  date_range = NULL){
   viewId <- as.character(viewId)
   id <- as.character(id)
   id_type <- match.arg(id_type)
   
+  the_dates <- NULL
   if(!is.null(date_range)){
     date_range <- as.character(date_range)
     assert_that(length(date_range) == 2)
@@ -36,8 +38,14 @@ ga_clientid_activity <- function(id,
       startDate = date_range[[1]],
       endDate = date_range[[2]]
     )
-  } else {
-    the_dates <- NULL
+  }
+  
+  at <- NULL
+  if(!is.null(activity_type)){
+    assert_that(
+      all(activity_type %in% c("PAGEVIEW","SCREENVIEW","GOAL","ECOMMERCE","EVENT"))
+    )
+    at <- activity_type
   }
   
   body <- list(
@@ -46,6 +54,7 @@ ga_clientid_activity <- function(id,
       type = id_type,
       userId = id
     ),
+    activityTypes = activity_type,
     dateRange = the_dates,
     pageToken = ""
   )
