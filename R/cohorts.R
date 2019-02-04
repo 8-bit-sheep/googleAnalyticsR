@@ -15,7 +15,13 @@ cohort_metric_check <- function(metrics){
                        "ga:cohortRetentionRate",
                        "ga:cohortRevenuePerUser",
                        "ga:cohortVisitDurationPerUser",
-                       "ga:cohortSessionsPerUser")
+                       "ga:cohortSessionsPerUser",
+                       "ga:cohortTotalUsersWithLifetimeCriteria",
+                       "ga:cohortAppviewsPerUserWithLifetimeCriteria",
+                       "ga:cohortGoalCompletionsPerUserWithLifetimeCriteria",
+                       "ga:cohortPageviewsPerUserWithLifetimeCriteria",
+                       "ga:cohortRevenuePerUserWithLifetimeCriteria",
+                       "ga:cohortSessionsPerUserWithLifetimeCriteria")
   
   if(all(metrics %in% allowed_metrics)){
     out <- TRUE
