@@ -5,7 +5,7 @@
 \title{User Activity Request}
 \usage{
 ga_clientid_activity(id, viewId, id_type = c("CLIENT_ID", "USER_ID"),
-  date_range = NULL)
+  activity_type = NULL, date_range = NULL)
 }
 \arguments{
 \item{id}{The user or clientId}

@@ -43,6 +43,7 @@ ga_clientid_activity <- function(id,
   at <- NULL
   if(!is.null(activity_type)){
     assert_that(
+      is.character(activity_type),
       all(activity_type %in% c("PAGEVIEW","SCREENVIEW","GOAL","ECOMMERCE","EVENT"))
     )
     at <- activity_type
@@ -77,10 +78,10 @@ ga_clientid_activity <- function(id,
 }
 
 page_user_activity <- function(x){
-  
-
   attr(x, "nextPageToken")
 }
+
+
 
 parse_user_activity <- function(x){
   
@@ -110,10 +111,44 @@ parse_user_activity <- function(x){
                  stringsAsFactors = FALSE)   
     }), map_chr(x$sessions, "sessionId"))
   }), map_chr(x$dateGroups, "activityDate"))
+  
+  session_df <- session_level %>% 
+    map(bind_rows) %>% 
+    bind_rows(.id = "date")
+  
+  activity <- NULL
+  nested_hits <- o_acts %>% 
+    map(tibble::enframe, name = "sessionId", value = "activity") %>% 
+    bind_rows(.id = "date") %>% 
+    tidyr::unnest() %>% 
+    mutate(activityTime = iso8601_to_r(map_chr(activity, "activityTime")),
+           source = map_chr(activity, "source"),
+           medium = map_chr(activity, "medium"),
+           channelGrouping = map_chr(activity, "channelGrouping"),
+           campaign = map_chr(activity, "campaign"),
+           keyword = map_chr(activity, "keyword"),
+           hostname = map_chr(activity, "hostname"),
+           landingPagePath = map_chr(activity, "landingPagePath"),
+           deviceCategory = map_chr(activity, "deviceCategory"),
+           devicePlatform = map_chr(activity, "devicePlatform"),
+           operatingSystem = map_chr(activity, "operatingSystem"),
+           activityType = map_chr(activity, "activityType"),
+           pagePath = map_chr(activity, ~safe_extract(.x$pageview$pagePath)),
+           pageTitle = map_chr(activity, ~safe_extract(.x$pageview$pageTitle)),
+           screenName = map_chr(activity, ~safe_extract(.x$appview$screenName)),
+           mobileDeviceBranding = map_chr(activity, ~safe_extract(.x$appview$mobileDeviceBranding)),           
+           mobileDeviceModel = map_chr(activity, ~safe_extract(.x$appview$mobileDeviceModel)),
+           appName = map_chr(activity, ~safe_extract(.x$appview$appName)),   
+           eventCategory = map_chr(activity, ~safe_extract(.x$event$eventCategory)),
+           eventAction = map_chr(activity, ~safe_extract(.x$event$eventAction)),
+           eventLabel = map_chr(activity, ~safe_extract(.x$event$eventLabel)),
+           eventValue = map_chr(activity, ~safe_extract(.x$event$eventValue)),
+           eventCount = map_chr(activity, ~safe_extract(.x$event$eventCount))
+           )
 
-  o <- list(summary = o_summ,
-            session = session_level,
-            hits = o_acts
+  o <- list(user = o_summ,
+            session = session_df,
+            hits = nested_hits
             )
   attr(o, "nextPageToken") <- x$nextPageToken
   attr(o, "totalRows") <- x$totalRows
