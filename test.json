@@ -1,0 +1,57 @@
+{
+  "user": [
+    {
+      "clientId": "1106980347.1461227730",
+      "bigqueryClientId": "4754444389140959442",
+      "acquisitionTrafficChannel": "Organic Search",
+      "acquisitionSourceMedium": "google/organic",
+      "firstSessionDate": "2016-04-21",
+      "lastSessionDate": "2019-01-24",
+      "acquisitionDeviceCategory": "desktop",
+      "acquisitionOperatingSystem": "web",
+      "lifetimeValues.lifetimeSessions": "962",
+      "lifetimeValues.lifetimeSessionDuration": "310690s",
+      "lifetimeValues.lifetimeGoalCompletions": "410",
+      "acquisitionCampaign": "(organic)"
+    }
+  ],
+  "session": [
+    {
+      "date": "20190124",
+      "hasGoal": false,
+      "sessionId": "1548361067",
+      "deviceCategory": "desktop",
+      "platform": "web",
+      "dataSource": "Macintosh",
+      // below extracted from hit level as they are session level dimensions
+      "source": "t.co",
+      "medium": "referral",
+      "channelGrouping": "Social",
+      "campaign": "(not set)",
+      "keyword": "(not set)",
+      "hostname": "code.markedmondson.me",
+      "landingPagePath": "/googleLanguageR/",
+      "deviceCategory": "desktop",
+      "devicePlatform": "web",
+      "operatingSystem": "Macintosh"      
+    },
+    ... snip ...
+  ],
+  "hits": [
+    {
+      "sessionId": "1548361067",  // key to look up session level date
+      "activityTime": "2019-01-24 21:17:47",
+      "activityType": "PAGEVIEW",
+      "pagePath": "/googleLanguageR/",
+      "pageTitle": "Call Google's 'Natural Language' API, 'Cloud Translation' API, 'Cloud Speech' API and 'Cloud Text-to-Speech' API • googleLanguageR"
+    },
+    {
+      "sessionId": "1548261976", // key to look up session level date
+      "activityTime": "2019-01-23 17:46:16",
+      "activityType": "PAGEVIEW",
+      "pagePath": "/r-on-kubernetes-serverless-shiny-r-apis-and-scheduled-scripts/",
+      "pageTitle": "R on Kubernetes - serverless Shiny, R APIs and scheduled scripts · Mark Edmondson"
+    },
+  ... snip ...
+  ]
+}
