@@ -4,17 +4,17 @@
 \alias{ga_clientid_activity}
 \title{User Activity Request}
 \usage{
-ga_clientid_activity(id, viewId, id_type = c("CLIENT_ID", "USER_ID"),
+ga_clientid_activity(ids, viewId, id_type = c("CLIENT_ID", "USER_ID"),
   activity_type = NULL, date_range = NULL)
 }
 \arguments{
-\item{id}{The user or clientId}
-
 \item{viewId}{The viewId}
 
 \item{id_type}{Whether its userId or clientId}
 
 \item{date_range}{A vector of start and end dates.  If not used will default to a week.}
+
+\item{id}{The user or clientId.  You can send in a vector of them}
 }
 \description{
 User Activity Request
@@ -25,7 +25,7 @@ User Activity Request
 
 googleAuthR::gar_set_client(scopes = "https://www.googleapis.com/auth/analytics")
 ga_auth("test.oauth")
-ga_clientid_activity("1106980347.1461227730", 
+ga_clientid_activity(c("1106980347.1461227730", "476443645.1541099566"),
                      viewId = 81416156, 
                      date_range = c("2019-01-01","2019-02-01"))
 

@@ -1,7 +1,7 @@
 #' User Activity Request
 #' 
 #' @param viewId The viewId
-#' @param id The user or clientId
+#' @param id The user or clientId.  You can send in a vector of them
 #' @param id_type Whether its userId or clientId
 #' @param date_range A vector of start and end dates.  If not used will default to a week.
 #' 
@@ -15,20 +15,46 @@
 #' 
 #' googleAuthR::gar_set_client(scopes = "https://www.googleapis.com/auth/analytics")
 #' ga_auth("test.oauth")
-#' ga_clientid_activity("1106980347.1461227730", 
+#' ga_clientid_activity(c("1106980347.1461227730", "476443645.1541099566"),
 #'                      viewId = 81416156, 
 #'                      date_range = c("2019-01-01","2019-02-01"))
 #' 
 #' }
 #' @seealso https://developers.google.com/analytics/trusted-testing/user-reporting/
-ga_clientid_activity <- function(id, 
+#' @importFrom purrr map
+ga_clientid_activity <- function(ids, 
                                  viewId, 
                                  id_type = c("CLIENT_ID","USER_ID"), 
                                  activity_type = NULL,
                                  date_range = NULL){
+  ids <- as.character(ids)
   viewId <- as.character(viewId)
-  id <- as.character(id)
   id_type <- match.arg(id_type)
+  
+  results <- map(ids, 
+                 ga_clientid_activity_one,
+                 viewId = viewId,
+                 id_type = id_type,
+                 activity_type = activity_type,
+                 date_range = date_range)
+  
+  list(
+    users = map_dfr(results, "user"),
+    sessions = map_dfr(results, "session"),
+    hits = map_dfr(results, "hits")
+  )
+}
+
+
+
+
+#' @noRd
+#' @importFrom purrr map_dfr
+ga_clientid_activity_one <- function(id, 
+                                     viewId, 
+                                     id_type, 
+                                     activity_type,
+                                     date_range){
   
   the_dates <- NULL
   if(!is.null(date_range)){
@@ -73,7 +99,10 @@ ga_clientid_activity <- function(id,
                     page_arg = "pageToken",
                     body_list = body)
   
-  o
+
+  list(user = map_dfr(o, "user"),
+       session = map_dfr(o, "session"),
+       hits = map_dfr(o, "hits"))
   
 }
 
@@ -83,6 +112,11 @@ page_user_activity <- function(x){
 
 
 
+#' @noRd
+#' @importFrom purrr map map_chr 
+#' @importFrom dplyr bind_rows mutate
+#' @importFrom tibble enframe as_tibble
+#' @importFrom tidyr unnest
 parse_user_activity <- function(x){
   
   o <- x
@@ -114,14 +148,16 @@ parse_user_activity <- function(x){
   
   session_df <- session_level %>% 
     map(bind_rows) %>% 
-    bind_rows(.id = "date")
+    bind_rows(.id = "date") %>% 
+    mutate(clientId = o_summ$clientId[[1]])
   
   activity <- NULL
   nested_hits <- o_acts %>% 
     map(tibble::enframe, name = "sessionId", value = "activity") %>% 
     bind_rows(.id = "date") %>% 
     tidyr::unnest() %>% 
-    mutate(activityTime = iso8601_to_r(map_chr(activity, "activityTime")),
+    mutate(clientId = o_summ$clientId[[1]],
+           activityTime = iso8601_to_r(map_chr(activity, "activityTime")),
            source = map_chr(activity, "source"),
            medium = map_chr(activity, "medium"),
            channelGrouping = map_chr(activity, "channelGrouping"),
@@ -146,8 +182,8 @@ parse_user_activity <- function(x){
            eventCount = map_chr(activity, ~safe_extract(.x$event$eventCount))
            )
 
-  o <- list(user = o_summ,
-            session = session_df,
+  o <- list(user = as_tibble(o_summ),
+            session = as_tibble(session_df),
             hits = nested_hits
             )
   attr(o, "nextPageToken") <- x$nextPageToken
