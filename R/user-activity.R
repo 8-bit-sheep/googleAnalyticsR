@@ -113,14 +113,14 @@ page_user_activity <- function(x){
 
 
 #' @noRd
-#' @importFrom purrr map map_chr 
-#' @importFrom dplyr bind_rows mutate
+#' @importFrom purrr map map_chr map_lgl
+#' @importFrom dplyr bind_rows mutate left_join
 #' @importFrom tibble enframe as_tibble
 #' @importFrom tidyr unnest
 parse_user_activity <- function(x){
   
   o <- x
-  o_summ <- as.data.frame(x$summary, stringsAsFactors = FALSE)
+  o_summ <- as_tibble(as.data.frame(x$summary, stringsAsFactors = FALSE))
   o_dates <- map(x$dateGroups, "sessions")
   o_dates <- setNames(o_dates, map_chr(x$dateGroups, "activityDate"))
   o_sess <- map(o_dates, ~setNames(.x, map_chr(.x, "sessionId")))
@@ -169,66 +169,44 @@ parse_user_activity <- function(x){
            devicePlatform = map_chr(activity, "devicePlatform"),
            operatingSystem = map_chr(activity, "operatingSystem"),
            activityType = map_chr(activity, "activityType"),
+           customDimension = map(activity, "customDimension"),
            pagePath = map_chr(activity, ~safe_extract(.x$pageview$pagePath)),
            pageTitle = map_chr(activity, ~safe_extract(.x$pageview$pageTitle)),
            screenName = map_chr(activity, ~safe_extract(.x$appview$screenName)),
-           mobileDeviceBranding = map_chr(activity, ~safe_extract(.x$appview$mobileDeviceBranding)),           
+           mobileDeviceBranding = map_chr(activity, ~safe_extract(.x$appview$mobileDeviceBranding)),       
            mobileDeviceModel = map_chr(activity, ~safe_extract(.x$appview$mobileDeviceModel)),
            appName = map_chr(activity, ~safe_extract(.x$appview$appName)),   
+           ecommerce = map(activity, "ecommerce"),
+           goals = map(activity, "goals"),
+           has_goal = map_lgl(goals, ~!is.null(.)),
            eventCategory = map_chr(activity, ~safe_extract(.x$event$eventCategory)),
            eventAction = map_chr(activity, ~safe_extract(.x$event$eventAction)),
            eventLabel = map_chr(activity, ~safe_extract(.x$event$eventLabel)),
            eventValue = map_chr(activity, ~safe_extract(.x$event$eventValue)),
            eventCount = map_chr(activity, ~safe_extract(.x$event$eventCount))
            )
+  
+  # move hit level data to session where it makes sense?
+  # out_session <- nested_hits %>% 
+  #   select(sessionId, has_goal, source, medium, channelGrouping, campaign, keyword, landingPagePath) %>% 
+  #   distinct() %>% 
+  #   right_join(session_df, by = c("sessionId")) %>%
+    
+  out_session <- session_df %>% 
+    select(date, sessionId, clientId, everything())
+  
+  # out_hits <- nested_hits %>% 
+  #   select(-source, -medium, -channelGrouping, -campaign, -keyword, -landingPagePath, -activity)
+  out_hits <- nested_hits %>% select(-activity)
 
-  o <- list(user = as_tibble(o_summ),
-            session = as_tibble(session_df),
-            hits = nested_hits
+  o <- list(user = o_summ,
+            session = out_session,
+            hits = out_hits
             )
   attr(o, "nextPageToken") <- x$nextPageToken
   attr(o, "totalRows") <- x$totalRows
   
   o
-  
-}
-
-parse_activity_row <- function(x){
-  activity_type <- x$activityType
-  stopifnot(activity_type %in% c("PAGEVIEW",
-                                 "SCREENVIEW",
-                                 "GOAL",
-                                 "ECOMMERCE",
-                                 "EVENT"))
-  o <- x
-  if(!is.null(o$customDimension)){
-    o$customDimensionIndex <- o$customDimension$index
-    o$customDimensionValue <- o$customDimension$value
-  } else {
-    o$customDimensionIndex <- NA_integer_
-    o$customDimensionValue <- NA_character_
-  }
-  
-  # init all possible values
-  o$pagePath <- NA_character_
-  o$pageTitle <- NA_character_
-  
-  o$screenName <- NA_character_
-  o$mobileDeviceBranding <- NA_character_
-  o$mobileDeviceModel <- NA_character_
-  o$appName <- NA_character_
-  
-  # ecommerce TBD
-  
-  o$goalIndex <- 
-  
-  if(!is.null(x$pageview)){
-    o$pagePath <- x$pageview$pagePath
-    o$pageTitle <- x$pageview$pageTitle
-  }  
-
-  
- o
   
 }
 
