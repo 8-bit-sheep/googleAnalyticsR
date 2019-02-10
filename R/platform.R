@@ -1,4 +1,3 @@
-
 #' Modelling function factory for Google Analytics data
 #' 
 #' @param gadata The data from an API call
@@ -42,24 +41,50 @@ model_func_checker <- function(f){
 create_shiny_module_funcs <- function(data_f,
                                       model_f, 
                                       .server_dots, 
-                                      .ui_dots){
+                                      .ui_dots,
+                                      ui_out_func = shiny::textOutput){
   assert_that(
-    is.function(f)
+    is.function(data_f),
+    is.function(model_f),
+    is.list(.server_dots),
+    is.list(.ui_dots),
+    is.function(ui_out_func)
   )
   
   if(!check_packages_installed("shiny", stop_if_not = FALSE)){
     return()
   }
   
-  server_func <- function(input, output, session, selected_id, .server_dots){
+  server_func <- function(input, output, session, view_id, .server_dots){
     
     gadata <- shiny::reactive({
       shiny::validate(shiny::need(selected_id()))
       
-      data_f(selected_id(), ...)
+      do.call(data_f, args = c(list(view_id = view_id()), 
+                               .server_dots))
+    })
+    
+    model_output <- shiny::reactive({
+      shiny::validate(shiny::need(gadata()))
+      
+      do.call(model_f, args = c(list(gadata = gadata()), 
+                               .server_dots))
     })
   }
   
+  ui_func <- function(id, .ui_dots){
+    ns <- shiny::NS(id)
+    
+    do.call(ui_out_func, args = c(outputId = ns("ui_out_func"), 
+                                  .ui_dots))
+  }
+  
+  list(
+    shiny_module = list(
+      ui = ui_func,
+      server = server_func
+    )
+  )
   
 }
 
