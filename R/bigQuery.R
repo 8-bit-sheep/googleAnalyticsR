@@ -78,10 +78,7 @@ google_analytics_bq <- function(projectId,
          call. = FALSE)
   }
   
-  if (!requireNamespace("bigQueryR", quietly = TRUE)) {
-    stop("bigQueryR needed for this function to work. Please install it via install.packages('bigQueryR')",
-         call. = FALSE)
-  }
+  check_packages_installed("bigQueryR")
   
   ## if Sys.Date() == end then construct for ga_sessions_intradata_ too.
   if(is.null(query)){

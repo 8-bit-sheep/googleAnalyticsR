@@ -22,7 +22,7 @@ shinyServer(function(input, output, session){
       need(token(), "Authenticate")
     )
     
-    with_shiny(google_analytics_account_list, shiny_access_token = token())
+    with_shiny(ga_account_list, shiny_access_token = token())
   })
   
   selected_id <- callModule(authDropdown, "auth_menu", ga.table = ga_accounts)
