@@ -41,3 +41,4 @@ Other managementAPI functions: \code{\link{ga_adwords_list}},
   \code{\link{ga_segment_list}},
   \code{\link{ga_unsampled_list}}
 }
+\concept{managementAPI functions}

@@ -4,7 +4,8 @@
 \alias{google_analytics_bq_asynch}
 \title{Asynch fetch}
 \usage{
-google_analytics_bq_asynch(projectId, datasetId, query, bucket, download_file)
+google_analytics_bq_asynch(projectId, datasetId, query, bucket,
+  download_file)
 }
 \description{
 Asynch fetch
