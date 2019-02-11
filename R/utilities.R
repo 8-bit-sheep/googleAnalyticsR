@@ -1,3 +1,14 @@
+
+#' assign new value if not null and check passes
+#' @noRd
+assign_new <- function(new, old, check_f = is.function){
+  if(!is.null(new)){
+    assert_that(check_f(new))
+    return(new)
+  }
+  old
+}
+
 #' Function argument names
 #' @noRd
 function_args <- function(f, include_dots = FALSE){

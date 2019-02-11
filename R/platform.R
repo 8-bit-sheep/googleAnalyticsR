@@ -74,6 +74,8 @@ ga_model_load <- function(filename = "my-model.gamr"){
 
 #' Modelling function factory for Google Analytics data
 #'
+#' Create ga_model objects for easy application of models to data
+#' 
 #' @param data_f A function that gets the data -
 #'   must have viewId as first argument
 #' @param required_columns What dimensions and metrics are required
@@ -84,12 +86,16 @@ ga_model_load <- function(filename = "my-model.gamr"){
 #' @param renderShiny A shiny render function that will create the output for outputShiny from model_f
 #' @param outputShiny A shiny UI output function that will display the results renderShiny
 #'
+#' @details 
+#' 
 #' The passed functions should all have \code{...} to make them flexible
 #'   in what arguments can be added.  Do not have the same argument names in both functions.
 #'
 #' @export
 #' @import assertthat
 #' @family GA modelling functions
+#' 
+#' @return A \code{ga_model} object to pass to \link{ga_model}
 #'
 #' @examples
 #'
@@ -168,25 +174,99 @@ ga_model_make <- function(data_f,
     stop("data_f() arguments need to include ...", call.=FALSE)
   }
   
-  if(!any(function_args(data_f, TRUE) == "...")){
+  if(!any(function_args(model_f, TRUE) == "...")){
     stop("model_f() arguments need to include ...", call.=FALSE)
   }
   
   structure(
     list(
-      data_f = data_f,
-      required_columns = required_columns,
-      model_f = model_f,
+      data_f            = data_f,
+      required_columns  = required_columns,
+      model_f           = model_f,
       required_packages = required_packages,
-      description = description,
+      description       = description,
       shiny_module = create_shiny_module_funcs(data_f = data_f,
                                                model_f = model_f,
                                                outputShiny = outputShiny,
                                                renderShiny = renderShiny)
-    ), class = "ga_model"
+    ), 
+    class = "ga_model"
   )
   
 }
+
+#' Edit a created ga_model
+#' 
+#' Change features of a model by changing the functions within it.
+#' 
+#' @param model The model to edit - if a filepath will load model and 
+#'   save back edited model to the same file
+#' @inheritParams ga_model_make
+#' 
+#' 
+#' @export
+#' @family GA modelling functions
+ga_model_edit <- function(model,
+                          data_f = NULL,
+                          required_columns = NULL,
+                          model_f = NULL,
+                          required_packages = NULL,
+                          description = NULL,
+                          outputShiny = NULL,
+                          renderShiny = NULL){
+  
+  save_me <- ""
+  if(is.character(model)){
+    save_me <- model
+    model <- ga_model_load(model)
+  }
+  
+  assert_that(is.ga_model(model))
+  
+  data_f2              <- model$data_f
+  required_columns2    <- model$required_columns
+  model_f2             <- model$model_f
+  required_packages2   <- model$required_packages
+  description2         <- model$description
+  shiny_module_ui2     <- model$shiny_module$ui
+  shiny_module_server2 <- model$shiny_module$server
+  
+  data_f2            <- assign_new(data_f, data_f2)
+  required_columns2  <- assign_new(required_columns, required_columns2, is.character)
+  model_f2           <- assign_new(model_f, model_f2)
+  required_packages2 <- assign_new(required_packages, required_packages2, is.character)
+  description2       <- assign_new(description, description2, assertthat::is.string)
+  
+  if(any(!is.null(outputShiny), !is.null(renderShiny))){
+    shiny_module_ui2     <- assign_new(outputShiny, shiny_module_ui2)
+    shiny_module_server2 <- assign_new(renderShiny, shiny_module_server2)
+    
+    shiny_module <- create_shiny_module_funcs(data_f = data_f2,
+                                              model_f = model_f2,
+                                              outputShiny = shiny_module_ui2,
+                                              renderShiny = shiny_module_server2)
+  } else {
+    shiny_module <- model$shiny_module
+  }
+
+  model <- structure(
+    list(
+      data_f            = data_f2,
+      required_columns  = required_columns2,
+      model_f           = model_f2,
+      required_packages = required_packages2,
+      description       = description2,
+      shiny_module      = shiny_module
+    ), 
+    class = "ga_model"
+  )
+  
+  if(save_me != "") ga_model_save(model, filename = save_me)
+  
+  model
+}
+
+
 
 is.ga_model <- function(x){
   inherits(x, "ga_model")
@@ -216,7 +296,8 @@ create_shiny_module_funcs <- function(data_f,
     })
     
     model_output <- shiny::reactive({
-      shiny::validate(shiny::need(gadata(), message = "Waiting for data"))
+      shiny::validate(shiny::need(gadata(), 
+                                  message = "Waiting for data"))
       gadata <- gadata()
       
       model_f(gadata, ...)
@@ -224,7 +305,8 @@ create_shiny_module_funcs <- function(data_f,
     })
     
     output$ui_out <- renderShiny({
-      shiny::validate(shiny::need(model_output(), message = "Waiting for model output"))
+      shiny::validate(shiny::need(model_output(), 
+                                  message = "Waiting for model output"))
       
       message("Rendering model output")
       

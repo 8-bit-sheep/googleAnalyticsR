@@ -6,7 +6,8 @@
 \usage{
 ga_model_make(data_f, required_columns, model_f,
   required_packages = NULL, description = NULL,
-  outputShiny = shiny::plotOutput, renderShiny = shiny::renderPlot)
+  outputShiny = shiny::plotOutput, renderShiny = function(x)
+  shiny::renderPlot(plot(x)))
 }
 \arguments{
 \item{data_f}{A function that gets the data -
@@ -21,15 +22,19 @@ must take data from result of data_f in first argument.}
 
 \item{description}{An optional description of what the model does}
 
-\item{outputShiny}{A shiny UI output function that will display the results renderShiny
-
-The passed functions should all have \code{...} to make them flexible
-  in what arguments can be added.  Do not have the same argument names in both functions.}
+\item{outputShiny}{A shiny UI output function that will display the results renderShiny}
 
 \item{renderShiny}{A shiny render function that will create the output for outputShiny from model_f}
 }
+\value{
+A \code{ga_model} object to pass to \link{ga_model}
+}
 \description{
-Modelling function factory for Google Analytics data
+Create ga_model objects for easy application of models to data
+}
+\details{
+The passed functions should all have \code{...} to make them flexible
+  in what arguments can be added.  Do not have the same argument names in both functions.
 }
 \examples{
 
@@ -71,10 +76,24 @@ Modelling function factory for Google Analytics data
 
  ga_model(81416156, model2)
 
+ # to use in Shiny, supply the output and render functions
+ myRenderPlot <- function(x){
+   # base plot needs to plot here, not in model_f as can't pass plot objects
+   shiny::renderPlot(plot(x$decom))
+ }
+
+ decomp_ga <- ga_model_make(get_model_data,
+                            required_columns = c("date", "sessions"),
+                            model_f = decompose_sessions,
+                            description = "Performs decomposition on session data and creates a plot",
+                            outputShiny = shiny::plotOutput,
+                            renderShiny = myRenderPlot)
+
 }
 }
 \seealso{
-Other GA modelling functions: \code{\link{ga_model_load}},
-  \code{\link{ga_model_save}}, \code{\link{ga_model}}
+Other GA modelling functions: \code{\link{ga_model_edit}},
+  \code{\link{ga_model_load}}, \code{\link{ga_model_save}},
+  \code{\link{ga_model}}
 }
 \concept{GA modelling functions}

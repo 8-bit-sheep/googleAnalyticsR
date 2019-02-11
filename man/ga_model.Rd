@@ -18,7 +18,8 @@ created by \link{ga_model_make}}
 Use a model function created by ga_model_make
 }
 \seealso{
-Other GA modelling functions: \code{\link{ga_model_load}},
-  \code{\link{ga_model_make}}, \code{\link{ga_model_save}}
+Other GA modelling functions: \code{\link{ga_model_edit}},
+  \code{\link{ga_model_load}}, \code{\link{ga_model_make}},
+  \code{\link{ga_model_save}}
 }
 \concept{GA modelling functions}
