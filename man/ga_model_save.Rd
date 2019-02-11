@@ -4,7 +4,7 @@
 \alias{ga_model_save}
 \title{Save a created model}
 \usage{
-ga_model_save(model, filename = "gamodel.rds")
+ga_model_save(model, filename = "my-model.gamr")
 }
 \arguments{
 \item{model}{model to save}

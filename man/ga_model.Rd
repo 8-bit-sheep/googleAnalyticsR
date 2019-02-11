@@ -9,7 +9,7 @@ ga_model(viewId, model, ...)
 \arguments{
 \item{viewId}{The GA viewId to operate on}
 
-\item{model}{A file location of a model object or a model object 
+\item{model}{A file location of a model object or a model object
 created by \link{ga_model_make}}
 
 \item{...}{Other arguments to pass to the model as needed}

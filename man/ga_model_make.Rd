@@ -6,25 +6,27 @@
 \usage{
 ga_model_make(data_f, required_columns, model_f,
   required_packages = NULL, description = NULL,
-  ui_out_func = shiny::textOutput)
+  outputShiny = shiny::plotOutput, renderShiny = shiny::renderPlot)
 }
 \arguments{
-\item{data_f}{A function that gets the data - 
+\item{data_f}{A function that gets the data -
 must have viewId as first argument}
 
 \item{required_columns}{What dimensions and metrics are required}
 
-\item{model_f}{A function that inputs gadata, and outputs a list of assets - 
+\item{model_f}{A function that inputs gadata, and outputs a list of assets -
 must take data from result of data_f in first argument.}
 
 \item{required_packages}{The packages needed for data_f and model_f to work}
 
 \item{description}{An optional description of what the model does}
 
-\item{ui_out_func}{A shiny UI output function that will display the results of model_f
+\item{outputShiny}{A shiny UI output function that will display the results renderShiny
 
-The passed functions should all have \code{...} to make them flexible 
+The passed functions should all have \code{...} to make them flexible
   in what arguments can be added.  Do not have the same argument names in both functions.}
+
+\item{renderShiny}{A shiny render function that will create the output for outputShiny from model_f}
 }
 \description{
 Modelling function factory for Google Analytics data
@@ -33,13 +35,13 @@ Modelling function factory for Google Analytics data
 
 \dontrun{
 
- get_model_data <- function(viewId, 
-                           date_range = c(Sys.Date()- 300, Sys.Date()), 
+ get_model_data <- function(viewId,
+                           date_range = c(Sys.Date()- 300, Sys.Date()),
                            ...){
-   google_analytics(viewId, 
-                    date_range = date_range, 
-                    metrics = "sessions", 
-                    dimensions = "date", 
+   google_analytics(viewId,
+                    date_range = date_range,
+                    metrics = "sessions",
+                    dimensions = "date",
                     max = -1)
  }
 
@@ -48,28 +50,27 @@ Modelling function factory for Google Analytics data
    d <- decompose(web_data_ts)
    list(decom = d, plot = plot(d))
  }
- 
+
  decomp_ga <- ga_model_make(get_model_data,
                             required_columns = c("date", "sessions"),
                             model_f = decompose_sessions,
-                            description = "Performs decomposition on session 
-                                           data and created a plot")
- 
+                            description = "Performs decomposition on session data and creates a plot")
+
  # fetches data and outputs decomposition
  ga_model(81416156, decomp_ga)
- 
+
  # save the model for later
  model_location <- "inst/models/decomp_ga.gamodel"
  ga_model_save(decomp_ga, filename = model_location)
- 
+
  # can load model from file
  ga_model(81416156, model_location)
- 
+
  # load model and use again
  model2 <- ga_model_load(model_location)
- 
+
  ga_model(81416156, model2)
- 
+
 }
 }
 \seealso{

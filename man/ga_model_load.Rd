@@ -4,7 +4,7 @@
 \alias{ga_model_load}
 \title{Load a created model}
 \usage{
-ga_model_load(filename = "gamodel.rds")
+ga_model_load(filename = "my-model.gamr")
 }
 \arguments{
 \item{filename}{name to load model from}
