@@ -3,6 +3,7 @@
 S3method(print,customDimension_ga)
 S3method(print,ga_custom_data_source_upload)
 S3method(print,ga_custom_datasource)
+S3method(print,ga_model)
 export("%>%")
 export(aggregateGAData)
 export(allowed_metric_dim)

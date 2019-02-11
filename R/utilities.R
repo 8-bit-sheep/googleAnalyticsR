@@ -1,3 +1,12 @@
+#' Function argument names
+#' @noRd
+function_args <- function(f, include_dots = FALSE){
+  if(include_dots){
+   return(names(formals(f))) 
+  }
+  setdiff(names(formals(f)),"...")
+}
+
 #' check package installed
 #' @noRd
 #' @importFrom purrr walk

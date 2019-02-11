@@ -5,7 +5,8 @@
 \title{Modelling function factory for Google Analytics data}
 \usage{
 ga_model_make(data_f, required_columns, model_f,
-  required_packages = NULL, ui_out_func = shiny::textOutput)
+  required_packages = NULL, description = NULL,
+  ui_out_func = shiny::textOutput)
 }
 \arguments{
 \item{data_f}{A function that gets the data - 
@@ -17,6 +18,8 @@ must have viewId as first argument}
 must take data from result of data_f in first argument.}
 
 \item{required_packages}{The packages needed for data_f and model_f to work}
+
+\item{description}{An optional description of what the model does}
 
 \item{ui_out_func}{A shiny UI output function that will display the results of model_f
 
@@ -48,7 +51,9 @@ Modelling function factory for Google Analytics data
  
  decomp_ga <- ga_model_make(get_model_data,
                             required_columns = c("date", "sessions"),
-                            model_f = decompose_sessions)
+                            model_f = decompose_sessions,
+                            description = "Performs decomposition on session 
+                                           data and created a plot")
  
  # fetches data and outputs decomposition
  ga_model(81416156, decomp_ga)
