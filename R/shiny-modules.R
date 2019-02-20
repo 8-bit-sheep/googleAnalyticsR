@@ -82,7 +82,7 @@ authDropdown <- function(input, output, session, ga.table, viewIdOnly = TRUE){
   pList <- shiny::reactive({
     ga.table <- ga.table()
     
-    ga.table[,c('accountName','webPropertyId','websiteUrl','viewName', 'viewId')]
+    ga.table[,c('accountName','accountId','webPropertyId','websiteUrl','viewName', 'viewId')]
     
   })
   
