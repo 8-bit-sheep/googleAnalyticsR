@@ -86,8 +86,10 @@ authDropdown <- function(input, output, session,
     ga.table <- ga.table()
     
     ga.table %>% 
-      select(accountName, webPropertyId, websiteUrl,
+      select(accountName, accountId, 
+             webPropertyId, websiteUrl,
              viewName, viewId)
+
     
   })
   

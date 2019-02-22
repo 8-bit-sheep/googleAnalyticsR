@@ -3,6 +3,7 @@
 * Clean up error messages
 * Fix anti_sampling breaking if using date formats "4daysAgo" etc.
 * Deprecated `google_analytics_meta()` for `ga_meta()`
+* Add `accountId` to the output of Shiny module `authDropdown` when `viewIdOnly=TRUE`
 
 # googleAnalyticsR 0.6.0
 
