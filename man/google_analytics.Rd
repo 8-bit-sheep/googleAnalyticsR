@@ -137,6 +137,12 @@ google_analytics(ga_id,
                  metrics = "sessions", 
                  dimensions = "date")
 
+## change the quotaUser to fetch under
+google_analytics(1234567, date_range = c("30daysAgo", "yesterday"), metrics = "sessions")
+
+options("googleAnalyticsR.quotaUser" = "test_user")
+google_analytics(1234567, date_range = c("30daysAgo", "yesterday"), metrics = "sessions")
+
 }
 
 }

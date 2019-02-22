@@ -4,6 +4,7 @@
 * Fix anti_sampling breaking if using date formats "4daysAgo" etc.
 * Deprecated `google_analytics_meta()` for `ga_meta()`
 * Add `accountId` to the output of Shiny module `authDropdown` when `viewIdOnly=TRUE`
+* Add `quotaUser` to reporting v4 API requests to avoid quota limits if several users from same ip attempt to run API calls (#235) - default is `Sys.info()[["user"]]` or set via `options("googleAuthR.quotaUser")`
 
 # googleAnalyticsR 0.6.0
 
