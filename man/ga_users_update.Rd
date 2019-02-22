@@ -49,3 +49,4 @@ Other User management functions: \code{\link{ga_users_add}},
   \code{\link{ga_users_delete}},
   \code{\link{ga_users_list}}
 }
+\concept{User management functions}

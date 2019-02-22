@@ -76,13 +76,20 @@ authDropdownUI <- function(id,
 #' @return GA View Id selected
 #' 
 #' @family Shiny modules
+#' @importFrom dplyr select
 #' @export
-authDropdown <- function(input, output, session, ga.table, viewIdOnly = TRUE){
+authDropdown <- function(input, output, session, 
+                         ga.table, viewIdOnly = TRUE){
   
   pList <- shiny::reactive({
+    shiny::req(ga.table)
     ga.table <- ga.table()
     
-    ga.table[,c('accountName','accountId','webPropertyId','websiteUrl','viewName', 'viewId')]
+    ga.table %>% 
+      select(accountName, accountId, 
+             webPropertyId, websiteUrl,
+             viewName, viewId)
+
     
   })
   
