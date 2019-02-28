@@ -42,7 +42,7 @@ process_date <- function(x){
 
 check_empty <- function(x){
   if(any(is.null(x), length(x) == 0)){
-    myMessage("No items found")
+    myMessage("No items found", level = 3)
     return(NULL)
   } else {
     TRUE

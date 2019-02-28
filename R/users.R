@@ -48,8 +48,15 @@ ga_users_list <- function(accountId,
 #' @importFrom dplyr rename select ends_with
 parse_ga_users_list <- function(x){
   
-  x %>% 
-    management_api_parsing("analytics#entityUserLinks") %>% 
+  y <- x %>% 
+    management_api_parsing("analytics#entityUserLinks")
+  
+  if(is.null(y)){
+    myMessage("No users found")
+    return(data.frame())
+  }
+  
+  y %>% 
     select(-userRef.kind, -ends_with("kind"), -ends_with("href")) %>% 
     rename(linkId = id)
   
@@ -295,7 +302,8 @@ ga_users_add <- function(email,
   assert_that(
     is.character(email),
     is.character(permissions),
-    is.string(accountId)
+    is.string(accountId),
+    all(permissions %in% c("MANAGE_USERS","EDIT","COLLABORATE","READ_AND_ANALYZE"))
   )
   
   the_url <- make_user_url(accountId, webPropertyId, viewId)
