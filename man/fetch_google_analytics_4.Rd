@@ -34,7 +34,7 @@ library(googleAnalyticsR)
 ga_auth()
 
 ## get your accounts
-account_list <- google_analytics_account_list()
+account_list <- ga_account_list()
 
 ## pick a profile with data to query
 
@@ -60,3 +60,4 @@ Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4_slow}},
   \code{\link{google_analytics}},
   \code{\link{make_ga_4_req}}
 }
+\concept{GAv4 fetch functions}

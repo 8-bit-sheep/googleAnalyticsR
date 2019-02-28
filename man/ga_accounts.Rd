@@ -32,3 +32,4 @@ Other account structure functions: \code{\link{ga_view_list}},
   \code{\link{ga_webproperty}},
   \code{\link{google_analytics_account_list}}
 }
+\concept{account structure functions}

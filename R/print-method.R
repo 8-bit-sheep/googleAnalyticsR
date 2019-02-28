@@ -1,3 +1,14 @@
+#' @export
+print.ga_model <- function(x, ...){
+  cat("==ga_model object==\n")
+  cat0("Description: ", x$description)
+  cat0("Data args:   ", paste(function_args(x$data_f), collapse = " "))
+  cat0("Input data:  ", paste(x$required_columns, collapse = " "))
+  cat0("Model args:  ", paste(function_args(x$model_f), collapse = " "))
+  cat0("Packages:    ", paste(x$required_packages, collapse = " "))
+}
+
+
 # #' @export
 # print.ga_profileFilterLink <- function(x, ...){
 #   cat("==Google Analytics Profile (View) Filter Link==\n")
