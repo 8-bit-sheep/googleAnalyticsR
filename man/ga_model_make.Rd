@@ -6,8 +6,8 @@
 \usage{
 ga_model_make(data_f, required_columns, model_f,
   required_packages = NULL, description = NULL,
-  outputShiny = shiny::plotOutput, renderShiny = function(x)
-  shiny::renderPlot(plot(x)))
+  outputShiny = shiny::plotOutput, renderShiny = shiny::renderPlot,
+  renderShinyInput = base::plot)
 }
 \arguments{
 \item{data_f}{A function that gets the data -
@@ -76,10 +76,12 @@ The passed functions should all have \code{...} to make them flexible
 
  ga_model(81416156, model2)
 
- # to use in Shiny, supply the output and render functions
- myRenderPlot <- function(x){
-   # base plot needs to plot here, not in model_f as can't pass plot objects
-   shiny::renderPlot(plot(x$decom))
+ # to use in Shiny, supply the output and render functions, 
+   and a function that will return the right object e.g. plot
+ 
+ # this will be passed to shiny::renderPlot
+ myRenderPlot <- function(model){
+   plot(model$decom)
  }
 
  decomp_ga <- ga_model_make(get_model_data,
@@ -87,7 +89,8 @@ The passed functions should all have \code{...} to make them flexible
                             model_f = decompose_sessions,
                             description = "Performs decomposition on session data and creates a plot",
                             outputShiny = shiny::plotOutput,
-                            renderShiny = myRenderPlot)
+                            renderShiny = shiny::renderPlot,
+                            renderShinyInput = myRenderPlot)
 
 }
 }

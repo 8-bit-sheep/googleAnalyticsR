@@ -137,10 +137,12 @@ ga_model_load <- function(filename = "my-model.gamr"){
 #'
 #'  ga_model(81416156, model2)
 #'
-#'  # to use in Shiny, supply the output and render functions
-#'  myRenderPlot <- function(x){
-#'    # base plot needs to plot here, not in model_f as can't pass plot objects
-#'    shiny::renderPlot(plot(x$decom))
+#'  # to use in Shiny, supply the output and render functions, 
+#'    and a function that will return the right object e.g. plot
+#'  
+#'  # this will be passed to shiny::renderPlot
+#'  myRenderPlot <- function(model){
+#'    plot(model$decom)
 #'  }
 #'
 #'  decomp_ga <- ga_model_make(get_model_data,
@@ -148,7 +150,8 @@ ga_model_load <- function(filename = "my-model.gamr"){
 #'                             model_f = decompose_sessions,
 #'                             description = "Performs decomposition on session data and creates a plot",
 #'                             outputShiny = shiny::plotOutput,
-#'                             renderShiny = myRenderPlot)
+#'                             renderShiny = shiny::renderPlot,
+#'                             renderShinyInput = myRenderPlot)
 #'
 #' }
 ga_model_make <- function(data_f,
@@ -157,7 +160,8 @@ ga_model_make <- function(data_f,
                           required_packages = NULL,
                           description = NULL,
                           outputShiny = shiny::plotOutput,
-                          renderShiny = function(x) shiny::renderPlot(plot(x))){
+                          renderShiny = shiny::renderPlot,
+                          renderShinyInput = base::plot){
   
   assert_that(
     is.function(data_f),
@@ -188,7 +192,8 @@ ga_model_make <- function(data_f,
       shiny_module = create_shiny_module_funcs(data_f = data_f,
                                                model_f = model_f,
                                                outputShiny = outputShiny,
-                                               renderShiny = renderShiny)
+                                               renderShiny = renderShiny,
+                                               renderShinyInput = renderShinyInput)
     ), 
     class = "ga_model"
   )
@@ -213,7 +218,8 @@ ga_model_edit <- function(model,
                           required_packages = NULL,
                           description = NULL,
                           outputShiny = NULL,
-                          renderShiny = NULL){
+                          renderShiny = NULL,
+                          renderShinyInput = NULL){
   
   save_me <- ""
   if(is.character(model)){
@@ -237,14 +243,20 @@ ga_model_edit <- function(model,
   required_packages2 <- assign_new(required_packages, required_packages2, is.character)
   description2       <- assign_new(description, description2, assertthat::is.string)
   
-  if(any(!is.null(outputShiny), !is.null(renderShiny))){
+  if(any(!is.null(outputShiny), !is.null(renderShiny), !is.null(renderShinyInput))){
+    assert_that(
+      !is.null(outputShiny),
+      !is.null(renderShiny),
+      !is.null(renderShinyInput)
+    )
     shiny_module_ui2     <- assign_new(outputShiny, shiny_module_ui2)
     shiny_module_server2 <- assign_new(renderShiny, shiny_module_server2)
     
     shiny_module <- create_shiny_module_funcs(data_f = data_f2,
                                               model_f = model_f2,
                                               outputShiny = shiny_module_ui2,
-                                              renderShiny = shiny_module_server2)
+                                              renderShiny = shiny_module_server2,
+                                              renderShinyInput = renderShinyInput)
   } else {
     shiny_module <- model$shiny_module
   }
@@ -277,15 +289,24 @@ is.ga_model <- function(x){
 create_shiny_module_funcs <- function(data_f,
                                       model_f,
                                       outputShiny,
-                                      renderShiny){
+                                      renderShiny,
+                                      renderShinyInput){
   assert_that(
     is.function(data_f),
     is.function(model_f),
     is.function(outputShiny),
-    is.function(renderShiny)
+    is.function(renderShiny),
+    is.function(renderShinyInput)
   )
   
-  server_func <- function(input, output, session, view_id, ...){
+  ui <- function(id, ...){
+    ns <- shiny::NS(id)
+    
+    outputShiny(outputId = ns("ui_out"), ...)
+    
+  }
+  
+  server <- function(input, output, session, view_id, ...){
     
     gadata <- shiny::reactive({
       
@@ -310,23 +331,18 @@ create_shiny_module_funcs <- function(data_f,
       
       message("Rendering model output")
       
-      model_output()
+      renderShinyInput(model_output())
       
-    }, ...)
+    })
     
     return(model_output)
   }
   
-  ui_func <- function(id, ...){
-    ns <- shiny::NS(id)
-    
-    outputShiny(outputId = ns("ui_out"), ...)
-    
-  }
+
   
   list(
-    ui = ui_func,
-    server = server_func
+    ui = ui,
+    server = server
   )
   
 }

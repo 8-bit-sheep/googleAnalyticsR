@@ -6,7 +6,7 @@
 \usage{
 ga_model_edit(model, data_f = NULL, required_columns = NULL,
   model_f = NULL, required_packages = NULL, description = NULL,
-  outputShiny = NULL, renderShiny = NULL)
+  outputShiny = NULL, renderShiny = NULL, renderShinyInput = NULL)
 }
 \arguments{
 \item{model}{The model to edit - if a filepath will load model and 
