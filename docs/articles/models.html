@@ -185,7 +185,7 @@
 <p>Downloading Google Analytics data is all well and good, but the reason most users want to use the API is to then operate and act upon that data.</p>
 <p>There are several tutorials linked from the homepage that demonstrate various applications of using <code>googleAnalyticsR</code> to analyse data, but they can still be intimidating for new users of R.</p>
 <p>To make it easier to distribute these analysis, <code>googleAnalyticsR</code> now includes the <code>ga_model_*</code> functions to help end users get to insights more quickly.</p>
-<p><code>ga_model</code> objects can be saved to the new <code>.gamr</code> format. Loading these files using <code><a href="../reference/ga_model.html">ga_model()</a></code> and specifying your own Google Analytics viewId, all the data processing, modelling and visualisation steps can be encapsulted to give you the output.</p>
+<p><code>ga_model</code> objects can be saved to the new <code>.gamr</code> format. Loading these files using <code><a href="../reference/ga_model.html">ga_model()</a></code> and specifying your own Google Analytics viewId, all the data processing, modelling and visualisation steps can be encapsulated to give you the output.</p>
 <p><code>.gamr</code> files also includes the ability to create Shiny modules which you can use to quickly create online Shiny dashboards displaying the model results, and which can switch to users own Google Analytics data using the multi-user login capabilities.</p>
 <p>The <code>.gamr</code> file format can be shared with others online or within your organisation. A new R package that includes some more advanced examples is available from <a href="https://github.com/IronistM/googleAnalyticsModelR/"><code>IronistM/googleAnalyticsModelR/</code></a></p>
 <div id="a-simple-example" class="section level2">
@@ -269,9 +269,10 @@ decomp_ga &lt;-<span class="st"> </span><span class="kw"><a href="../reference/g
                            <span class="dt">description =</span> <span class="st">"Performs decomposition and creates a plot"</span>,
                            <span class="dt">outputShiny =</span> shiny<span class="op">::</span>plotOutput,
                            <span class="dt">renderShiny =</span> shiny<span class="op">::</span>renderPlot)</code></pre></div>
-<div id="advanced-use" class="section level3">
-<h3 class="hasAnchor">
-<a href="#advanced-use" class="anchor"></a>Advanced use</h3>
+</div>
+<div id="advanced-use" class="section level2">
+<h2 class="hasAnchor">
+<a href="#advanced-use" class="anchor"></a>Advanced use</h2>
 <p>The more arguments you provide to the model creation functions, the more complicated it is for the end user, but the more flexible the model. It is suggested making several narrow useage models is better than one complicated one.</p>
 <p>For instance, you could modify the above model to allow the end user to specify the metric, timespan and seasonality of the decomposition:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_model_data &lt;-<span class="st"> </span><span class="cf">function</span>(viewId,
@@ -314,7 +315,6 @@ decomp_ga_advanced &lt;-<span class="st"> </span><span class="kw"><a href="../re
 ##  $ output:List of 6
 ##   ..- attr(*, "class")= chr "decomposed.ts"
 ##  $ plot  : NULL</code></pre>
-</div>
 <div id="working-with-the-model-object" class="section level3">
 <h3 class="hasAnchor">
 <a href="#working-with-the-model-object" class="anchor"></a>Working with the model object</h3>
@@ -345,9 +345,10 @@ decomp_ga_advanced &lt;-<span class="st"> </span><span class="kw"><a href="../re
 <p>You can also pass it the filename, which will load, make the edit, then save the model to disk again:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ga_model_edit.html">ga_model_edit</a></span>(<span class="st">"my_model.gamr"</span>, <span class="dt">description =</span> <span class="st">"New description"</span>)</code></pre></div>
 </div>
-<div id="causalimpact-example" class="section level3">
-<h3 class="hasAnchor">
-<a href="#causalimpact-example" class="anchor"></a>CausalImpact example</h3>
+</div>
+<div id="causalimpact-example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#causalimpact-example" class="anchor"></a>CausalImpact example</h2>
 <p>To make your own portable GA Effect, this model uses the CausalImpact and dygraphs libraries to make a plot of your GA data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsR)
 
@@ -451,7 +452,6 @@ ci &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_model
 <img src="model-ga-effect.png">
 </div>
 </div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -462,6 +462,8 @@ ci &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_model
 <li><a href="#a-simple-example">A simple example</a></li>
       <li><a href="#shiny-modules">Shiny modules</a></li>
       <li><a href="#creating-model--gamr-objects">Creating model <code>.gamr</code> objects</a></li>
+      <li><a href="#advanced-use">Advanced use</a></li>
+      <li><a href="#causalimpact-example">CausalImpact example</a></li>
       </ul>
 </div>
       </div>

@@ -8,7 +8,7 @@ There are several tutorials linked from the homepage that demonstrate various ap
 
 To make it easier to distribute these analysis, `googleAnalyticsR` now includes the `ga_model_*` functions to help end users get to insights more quickly.
 
-`ga_model` objects can be saved to the new `.gamr` format.  Loading these files using `ga_model()` and specifying your own Google Analytics viewId, all the data processing, modelling and visualisation steps can be encapsulted to give you the output.  
+`ga_model` objects can be saved to the new `.gamr` format.  Loading these files using `ga_model()` and specifying your own Google Analytics viewId, all the data processing, modelling and visualisation steps can be encapsulated to give you the output.  
 
 `.gamr` files also includes the ability to create Shiny modules which you can use to quickly create online Shiny dashboards displaying the model results, and which can switch to users own Google Analytics data using the multi-user login capabilities.
 
@@ -101,7 +101,7 @@ decomp_ga <- ga_model_make(get_model_data,
                            renderShiny = shiny::renderPlot)
 ```
 
-### Advanced use
+## Advanced use
 
 The more arguments you provide to the model creation functions, the more complicated it is for the end user, but the more flexible the model.  It is suggested making several narrow useage models is better than one complicated one.
 
@@ -180,9 +180,11 @@ You can also pass it the filename, which will load, make the edit, then save the
 ga_model_edit("my_model.gamr", description = "New description")
 ```
 
-### CausalImpact example
+## CausalImpact example
 
 To make your own portable GA Effect, this model uses the CausalImpact and dygraphs libraries to make a plot of your GA data.
+
+This example model is available via `ga_model_example("ga-effect.gamr")`
 
 ```{r}
 library(googleAnalyticsR)
