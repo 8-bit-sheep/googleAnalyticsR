@@ -12,7 +12,7 @@ ga_model(viewId, model, ...)
 \item{model}{A file location of a model object or a model object
 created by \link{ga_model_make}}
 
-\item{...}{Other arguments to pass to the model as needed}
+\item{...}{Other arguments to pass into the model as needed}
 }
 \description{
 Use a model function created by ga_model_make
@@ -23,4 +23,3 @@ Other GA modelling functions: \code{\link{ga_model_edit}},
   \code{\link{ga_model_load}}, \code{\link{ga_model_make}},
   \code{\link{ga_model_save}}
 }
-\concept{GA modelling functions}

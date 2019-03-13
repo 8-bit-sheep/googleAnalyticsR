@@ -6,7 +6,7 @@
 \usage{
 ga_model_edit(model, data_f = NULL, required_columns = NULL,
   model_f = NULL, required_packages = NULL, description = NULL,
-  outputShiny = NULL, renderShiny = NULL, renderShinyInput = NULL)
+  outputShiny = NULL, renderShiny = NULL, output_f = NULL)
 }
 \arguments{
 \item{model}{The model to edit - if a filepath will load model and 
@@ -17,7 +17,7 @@ save back edited model to the same file}
 \item{required_columns}{What dimensions and metrics are required}
 
 \item{model_f}{A function that inputs data, and outputs a list of assets -
-must take data from result of \code{data_f} in first argument.}
+must take data from result of \code{data_f} in first argument}
 
 \item{required_packages}{The packages needed for \code{data_f} and \code{model_f} to work}
 
@@ -25,9 +25,9 @@ must take data from result of \code{data_f} in first argument.}
 
 \item{outputShiny}{A shiny UI output function that will display the results \code{renderShiny}}
 
-\item{renderShiny}{A shiny render function that will create the output for \code{outputShiny} from \code{model_f}}
+\item{renderShiny}{A shiny render function that will create the output for \code{outputShiny} from \code{output_f}}
 
-\item{renderShinyInput}{The function that will produce the output for \code{renderShiny} to render}
+\item{output_f}{A function that inputs the output from \code{model_f}, outputs a visualisation}
 }
 \description{
 Change features of a model by changing the functions within it.
@@ -37,4 +37,3 @@ Other GA modelling functions: \code{\link{ga_model_example}},
   \code{\link{ga_model_load}}, \code{\link{ga_model_make}},
   \code{\link{ga_model_save}}, \code{\link{ga_model}}
 }
-\concept{GA modelling functions}

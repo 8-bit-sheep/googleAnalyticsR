@@ -165,6 +165,13 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../articles/models.html">
+    <span class="fa fa-calculator"></span>
+     
+    Models
+  </a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
@@ -394,6 +401,12 @@ Default <code>NULL</code>, set to <code>TRUE</code> or <code>FALSE</code> if you
                  <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"2017-01-01"</span>, <span class='st'>"2017-03-01"</span>),
                  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='st'>"sessions"</span>,
                  <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='st'>"date"</span>)
+
+<span class='co'>## change the quotaUser to fetch under</span>
+<span class='fu'>google_analytics</span>(<span class='fl'>1234567</span>, <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"30daysAgo"</span>, <span class='st'>"yesterday"</span>), <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='st'>"sessions"</span>)
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>options</a></span>(<span class='st'>"googleAnalyticsR.quotaUser"</span> <span class='kw'>=</span> <span class='st'>"test_user"</span>)
+<span class='fu'>google_analytics</span>(<span class='fl'>1234567</span>, <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"30daysAgo"</span>, <span class='st'>"yesterday"</span>), <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='st'>"sessions"</span>)
 
 <span class='co'># }</span><div class='input'>
 </div></pre>

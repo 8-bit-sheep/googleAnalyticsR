@@ -43,4 +43,3 @@ Other User management functions: \code{\link{ga_users_delete_linkid}},
   \code{\link{ga_users_list}},
   \code{\link{ga_users_update}}
 }
-\concept{User management functions}

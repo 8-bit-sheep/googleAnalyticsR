@@ -5,6 +5,7 @@
 * Deprecated `google_analytics_meta()` for `ga_meta()`
 * Add `accountId` to the output of Shiny module `authDropdown` when `viewIdOnly=TRUE`
 * Add `quotaUser` to reporting v4 API requests to avoid quota limits if several users from same ip attempt to run API calls (#235) - default is `Sys.info()[["user"]]` or set via `options("googleAuthR.quotaUser")`
+* Add `ga_model_*` functions to use GA data (#234)
 
 # googleAnalyticsR 0.6.0
 

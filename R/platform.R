@@ -3,7 +3,7 @@
 #' @param viewId The GA viewId to operate on
 #' @param model A file location of a model object or a model object
 #'   created by \link{ga_model_make}
-#' @param ... Other arguments to pass to the model as needed
+#' @param ... Other arguments to pass into the model as needed
 #'
 #' @export
 #' @family GA modelling functions
@@ -20,11 +20,9 @@ ga_model <- function(viewId, model, ...){
   
   gadata <- model$data_f(viewId, ...)
   
-  message("Downloaded data.
-          Rows:", nrow(gadata),
-          " Columns:", paste(names(gadata), collapse = " "))
+  myMessage("Downloaded data: Rows:", nrow(gadata), " Columns:", paste(names(gadata), collapse = " "), level = 3)
   
-  if(!all(names(gadata) %in% model$required_columns)){
+  if(length(intersect(names(gadata), model$required_columns)) == 0){
     stop("All required columns were not found in returned data.
          Got: ", paste(names(gadata), collapse=" "),
          " Needed: ", paste(model$required_columns, collapse = " "),
@@ -32,9 +30,16 @@ ga_model <- function(viewId, model, ...){
   }
   
   o <- model$model_f(gadata, ...)
+  myMessage("Applied model to data", level = 3)
   
-  message("Applied model to data, returning its output")
-  o
+  if(!is.null(model$output_f)){
+    myMessage("Creating plot", level = 3)    
+    p <- model$output_f(o, ...)
+  } else {
+    p <- NULL
+  }
+
+  list(input = gadata, output = o, plot = p)
 }
 
 #' Save a created model
@@ -93,17 +98,18 @@ ga_model_example <- function(name, location = "googleAnalyticsR"){
 #' @param data_f A function that gets the data 
 #' @param required_columns What dimensions and metrics are required
 #' @param model_f A function that inputs data, and outputs a list of assets -
-#'   must take data from result of \code{data_f} in first argument.
+#'   must take data from result of \code{data_f} in first argument
+#' @param output_f A function that inputs the output from \code{model_f}, outputs a visualisation
 #' @param required_packages The packages needed for \code{data_f} and \code{model_f} to work
 #' @param description An optional description of what the model does
-#' @param renderShiny A shiny render function that will create the output for \code{outputShiny} from \code{model_f}
+#' @param renderShiny A shiny render function that will create the output for \code{outputShiny} from \code{output_f}
 #' @param outputShiny A shiny UI output function that will display the results \code{renderShiny}
-#' @param renderShinyInput The function that will produce the output for \code{renderShiny} to render
 #'
 #' @details 
 #' 
 #' The passed functions should all have \code{...} to make them flexible
 #'   in what arguments can be added.  Do not have the same argument names in both functions.
+#' The \code{data_f} function result will feed to \code{model_f}
 #'
 #' @export
 #' @import assertthat
@@ -126,9 +132,7 @@ ga_model_example <- function(name, location = "googleAnalyticsR"){
 #'  }
 #'
 #'  decompose_sessions <- function(df, ...){
-#'    web_data_ts <- ts(df$sessions, frequency = 7)
-#'    d <- decompose(web_data_ts)
-#'    list(decom = d, plot = plot(d))
+#'    decompose(ts(df$sessions, frequency = 7))
 #'  }
 #'
 #'  decomp_ga <- ga_model_make(get_model_data,
@@ -146,36 +150,29 @@ ga_model_example <- function(name, location = "googleAnalyticsR"){
 #'  # can load model from file
 #'  ga_model(81416156, model_location)
 #'
-#'  # load model and use again
+#'  # or load model to an object and use 
 #'  model2 <- ga_model_load(model_location)
 #'
 #'  ga_model(81416156, model2)
-#'
-#'  # to use in Shiny, supply the output and render functions, 
-#'    and a function that will return the right object e.g. plot
 #'  
-#'  # this will be passed to shiny::renderPlot
-#'  myRenderPlot <- function(model){
-#'    plot(model$decom)
-#'  }
-#'
+#'  # for shiny include functions for the UI and server rendering
 #'  decomp_ga <- ga_model_make(get_model_data,
 #'                             required_columns = c("date", "sessions"),
 #'                             model_f = decompose_sessions,
-#'                             description = "Performs decomposition on session data and creates a plot",
+#'                             output_f = graphics::plot,
+#'                             description = "Performs decomposition and creates a plot",
 #'                             outputShiny = shiny::plotOutput,
-#'                             renderShiny = shiny::renderPlot,
-#'                             renderShinyInput = myRenderPlot)
+#'                             renderShiny = shiny::renderPlot)
 #'
 #' }
 ga_model_make <- function(data_f,
                           required_columns,
                           model_f,
+                          output_f = NULL,
                           required_packages = NULL,
                           description = NULL,
                           outputShiny = shiny::plotOutput,
-                          renderShiny = shiny::renderPlot,
-                          renderShinyInput = base::plot){
+                          renderShiny = shiny::renderPlot){
   
   assert_that(
     is.function(data_f),
@@ -183,10 +180,16 @@ ga_model_make <- function(data_f,
     is.function(model_f)
   )
   
-  if(any(function_args(data_f) %in% function_args(model_f))){
-    stop("data_f() and model_f() functions should not have same argument names",
-         call. = FALSE)
-  }
+  # if(any(function_args(data_f) %in% function_args(model_f))){
+  #   stop("data_f() and model_f() functions should not have same argument names",
+  #        call. = FALSE)
+  # }
+  # 
+  # if(!is.null(output_f)){
+  #   assert_that(is.function(output_f),
+  #               !any(function_args(output_f) %in% function_args(data_f)),
+  #               !any(function_args(output_f) %in% function_args(model_f)))
+  # }
   
   if(!any(function_args(data_f, TRUE) == "...")){
     stop("data_f() arguments need to include ...", call.=FALSE)
@@ -196,18 +199,23 @@ ga_model_make <- function(data_f,
     stop("model_f() arguments need to include ...", call.=FALSE)
   }
   
+  if(!any(function_args(output_f, TRUE) == "...")){
+    stop("output_f() arguments need to include ...", call.=FALSE)
+  }
+  
   structure(
     list(
       data_f            = data_f,
       required_columns  = required_columns,
       model_f           = model_f,
+      output_f          = output_f,
       required_packages = required_packages,
       description       = description,
       shiny_module = create_shiny_module_funcs(data_f = data_f,
                                                model_f = model_f,
+                                               output_f = output_f,
                                                outputShiny = outputShiny,
-                                               renderShiny = renderShiny,
-                                               renderShinyInput = renderShinyInput)
+                                               renderShiny = renderShiny)
     ), 
     class = "ga_model"
   )
@@ -233,7 +241,7 @@ ga_model_edit <- function(model,
                           description = NULL,
                           outputShiny = NULL,
                           renderShiny = NULL,
-                          renderShinyInput = NULL){
+                          output_f = NULL){
   
   save_me <- ""
   if(is.character(model)){
@@ -246,6 +254,7 @@ ga_model_edit <- function(model,
   data_f2              <- model$data_f
   required_columns2    <- model$required_columns
   model_f2             <- model$model_f
+  output_f2            <- model$output_f
   required_packages2   <- model$required_packages
   description2         <- model$description
   shiny_module_ui2     <- model$shiny_module$ui
@@ -254,23 +263,23 @@ ga_model_edit <- function(model,
   data_f2            <- assign_new(data_f, data_f2)
   required_columns2  <- assign_new(required_columns, required_columns2, is.character)
   model_f2           <- assign_new(model_f, model_f2)
+  output_f2          <- assign_new(output_f, output_f2)
   required_packages2 <- assign_new(required_packages, required_packages2, is.character)
   description2       <- assign_new(description, description2, assertthat::is.string)
   
-  if(any(!is.null(outputShiny), !is.null(renderShiny), !is.null(renderShinyInput))){
+  if(any(!is.null(outputShiny), !is.null(renderShiny))){
     assert_that(
       !is.null(outputShiny),
-      !is.null(renderShiny),
-      !is.null(renderShinyInput)
+      !is.null(renderShiny)
     )
     shiny_module_ui2     <- assign_new(outputShiny, shiny_module_ui2)
     shiny_module_server2 <- assign_new(renderShiny, shiny_module_server2)
     
     shiny_module <- create_shiny_module_funcs(data_f = data_f2,
                                               model_f = model_f2,
+                                              output_f = output_f2,
                                               outputShiny = shiny_module_ui2,
-                                              renderShiny = shiny_module_server2,
-                                              renderShinyInput = renderShinyInput)
+                                              renderShiny = shiny_module_server2)
   } else {
     shiny_module <- model$shiny_module
   }
@@ -302,15 +311,16 @@ is.ga_model <- function(x){
 #' @import assertthat
 create_shiny_module_funcs <- function(data_f,
                                       model_f,
+                                      output_f,
                                       outputShiny,
-                                      renderShiny,
-                                      renderShinyInput){
+                                      renderShiny
+                                      ){
   assert_that(
     is.function(data_f),
     is.function(model_f),
     is.function(outputShiny),
     is.function(renderShiny),
-    is.function(renderShinyInput)
+    is.function(output_f)
   )
   
   ui <- function(id, ...){
@@ -345,14 +355,12 @@ create_shiny_module_funcs <- function(data_f,
       
       message("Rendering model output")
       
-      renderShinyInput(model_output())
+      output_f(model_output(), ...)
       
     })
     
     return(model_output)
   }
-  
-
   
   list(
     ui = ui,

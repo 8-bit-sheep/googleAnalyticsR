@@ -51,4 +51,3 @@ Download Unsampled Report from Google Drive
 
 }
 }
-\concept{managementAPI functions, googleDriveAPI functions}

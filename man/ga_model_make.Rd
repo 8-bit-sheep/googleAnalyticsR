@@ -4,10 +4,9 @@
 \alias{ga_model_make}
 \title{Modelling function factory for Google Analytics data}
 \usage{
-ga_model_make(data_f, required_columns, model_f,
+ga_model_make(data_f, required_columns, model_f, output_f = NULL,
   required_packages = NULL, description = NULL,
-  outputShiny = shiny::plotOutput, renderShiny = shiny::renderPlot,
-  renderShinyInput = base::plot)
+  outputShiny = shiny::plotOutput, renderShiny = shiny::renderPlot)
 }
 \arguments{
 \item{data_f}{A function that gets the data}
@@ -15,7 +14,9 @@ ga_model_make(data_f, required_columns, model_f,
 \item{required_columns}{What dimensions and metrics are required}
 
 \item{model_f}{A function that inputs data, and outputs a list of assets -
-must take data from result of \code{data_f} in first argument.}
+must take data from result of \code{data_f} in first argument}
+
+\item{output_f}{A function that inputs the output from \code{model_f}, outputs a visualisation}
 
 \item{required_packages}{The packages needed for \code{data_f} and \code{model_f} to work}
 
@@ -23,9 +24,7 @@ must take data from result of \code{data_f} in first argument.}
 
 \item{outputShiny}{A shiny UI output function that will display the results \code{renderShiny}}
 
-\item{renderShiny}{A shiny render function that will create the output for \code{outputShiny} from \code{model_f}}
-
-\item{renderShinyInput}{The function that will produce the output for \code{renderShiny} to render}
+\item{renderShiny}{A shiny render function that will create the output for \code{outputShiny} from \code{output_f}}
 }
 \value{
 A \code{ga_model} object to pass to \link{ga_model}
@@ -36,6 +35,7 @@ Create ga_model objects for easy application of models to data
 \details{
 The passed functions should all have \code{...} to make them flexible
   in what arguments can be added.  Do not have the same argument names in both functions.
+The \code{data_f} function result will feed to \code{model_f}
 }
 \examples{
 
@@ -52,9 +52,7 @@ The passed functions should all have \code{...} to make them flexible
  }
 
  decompose_sessions <- function(df, ...){
-   web_data_ts <- ts(df$sessions, frequency = 7)
-   d <- decompose(web_data_ts)
-   list(decom = d, plot = plot(d))
+   decompose(ts(df$sessions, frequency = 7))
  }
 
  decomp_ga <- ga_model_make(get_model_data,
@@ -72,26 +70,19 @@ The passed functions should all have \code{...} to make them flexible
  # can load model from file
  ga_model(81416156, model_location)
 
- # load model and use again
+ # or load model to an object and use 
  model2 <- ga_model_load(model_location)
 
  ga_model(81416156, model2)
-
- # to use in Shiny, supply the output and render functions, 
-   and a function that will return the right object e.g. plot
  
- # this will be passed to shiny::renderPlot
- myRenderPlot <- function(model){
-   plot(model$decom)
- }
-
+ # for shiny include functions for the UI and server rendering
  decomp_ga <- ga_model_make(get_model_data,
                             required_columns = c("date", "sessions"),
                             model_f = decompose_sessions,
-                            description = "Performs decomposition on session data and creates a plot",
+                            output_f = graphics::plot,
+                            description = "Performs decomposition and creates a plot",
                             outputShiny = shiny::plotOutput,
-                            renderShiny = shiny::renderPlot,
-                            renderShinyInput = myRenderPlot)
+                            renderShiny = shiny::renderPlot)
 
 }
 }
@@ -101,4 +92,3 @@ Other GA modelling functions: \code{\link{ga_model_edit}},
   \code{\link{ga_model_load}}, \code{\link{ga_model_save}},
   \code{\link{ga_model}}
 }
-\concept{GA modelling functions}

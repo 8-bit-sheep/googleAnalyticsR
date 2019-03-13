@@ -61,4 +61,3 @@ Other custom variable functions: \code{\link{ga_custom_vars_create}},
   \code{\link{ga_custom_vars_list}},
   \code{\link{ga_custom_vars}}
 }
-\concept{custom variable functions}

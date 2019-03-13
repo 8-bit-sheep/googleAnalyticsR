@@ -48,6 +48,9 @@ navbar:
       - text: "RMarkdown"
         icon: fa-pencil-square
         href: articles/rmarkdown.html
+    - text: "Models"
+      icon: fa-calculator
+      href: articles/models.html
     - text: "Help"
       icon: fa-question-circle
       menu:
@@ -115,6 +118,16 @@ reference:
       - make_ga_4_req
       - fetch_google_analytics_4
       - fetch_google_analytics_4_slow
+  - title: "Model functions"
+    desc: >
+      Functions to create and use models with your Google Analytics data
+    contents:
+      - ga_model
+      - ga_model_example
+      - ga_model_load
+      - ga_model_make
+      - ga_model_edit
+      - ga_model_save
   - title: "Account structure"
     desc: >
       Viewing the account > webproperty > view structure
