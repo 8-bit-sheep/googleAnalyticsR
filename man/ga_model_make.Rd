@@ -10,21 +10,22 @@ ga_model_make(data_f, required_columns, model_f,
   renderShinyInput = base::plot)
 }
 \arguments{
-\item{data_f}{A function that gets the data -
-must have viewId as first argument}
+\item{data_f}{A function that gets the data}
 
 \item{required_columns}{What dimensions and metrics are required}
 
-\item{model_f}{A function that inputs gadata, and outputs a list of assets -
-must take data from result of data_f in first argument.}
+\item{model_f}{A function that inputs data, and outputs a list of assets -
+must take data from result of \code{data_f} in first argument.}
 
-\item{required_packages}{The packages needed for data_f and model_f to work}
+\item{required_packages}{The packages needed for \code{data_f} and \code{model_f} to work}
 
 \item{description}{An optional description of what the model does}
 
-\item{outputShiny}{A shiny UI output function that will display the results renderShiny}
+\item{outputShiny}{A shiny UI output function that will display the results \code{renderShiny}}
 
-\item{renderShiny}{A shiny render function that will create the output for outputShiny from model_f}
+\item{renderShiny}{A shiny render function that will create the output for \code{outputShiny} from \code{model_f}}
+
+\item{renderShinyInput}{The function that will produce the output for \code{renderShiny} to render}
 }
 \value{
 A \code{ga_model} object to pass to \link{ga_model}
@@ -59,13 +60,13 @@ The passed functions should all have \code{...} to make them flexible
  decomp_ga <- ga_model_make(get_model_data,
                             required_columns = c("date", "sessions"),
                             model_f = decompose_sessions,
-                            description = "Performs decomposition on session data and creates a plot")
+                            description = "Performs decomposition and creates plot")
 
  # fetches data and outputs decomposition
  ga_model(81416156, decomp_ga)
 
  # save the model for later
- model_location <- "inst/models/decomp_ga.gamodel"
+ model_location <- "inst/models/decomp_ga.gamr"
  ga_model_save(decomp_ga, filename = model_location)
 
  # can load model from file
@@ -96,6 +97,7 @@ The passed functions should all have \code{...} to make them flexible
 }
 \seealso{
 Other GA modelling functions: \code{\link{ga_model_edit}},
+  \code{\link{ga_model_example}},
   \code{\link{ga_model_load}}, \code{\link{ga_model_save}},
   \code{\link{ga_model}}
 }

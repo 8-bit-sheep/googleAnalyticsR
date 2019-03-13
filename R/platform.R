@@ -71,20 +71,34 @@ ga_model_load <- function(filename = "my-model.gamr"){
   
 }
 
+#' Load an example model
+#' 
+#' @param name name of the model
+#' @param location location of model
+#' @export
+#' @import assertthat
+#' @family GA modelling functions
+ga_model_example <- function(name, location = "googleAnalyticsR"){
+  # this will fetch from more places such as other packages and GCS eventually
+  filename <- system.file("models", name, package = location)
+  
+  ga_model_load(filename)
+}
+
 
 #' Modelling function factory for Google Analytics data
 #'
 #' Create ga_model objects for easy application of models to data
 #' 
-#' @param data_f A function that gets the data -
-#'   must have viewId as first argument
+#' @param data_f A function that gets the data 
 #' @param required_columns What dimensions and metrics are required
-#' @param model_f A function that inputs gadata, and outputs a list of assets -
-#'   must take data from result of data_f in first argument.
-#' @param required_packages The packages needed for data_f and model_f to work
+#' @param model_f A function that inputs data, and outputs a list of assets -
+#'   must take data from result of \code{data_f} in first argument.
+#' @param required_packages The packages needed for \code{data_f} and \code{model_f} to work
 #' @param description An optional description of what the model does
-#' @param renderShiny A shiny render function that will create the output for outputShiny from model_f
-#' @param outputShiny A shiny UI output function that will display the results renderShiny
+#' @param renderShiny A shiny render function that will create the output for \code{outputShiny} from \code{model_f}
+#' @param outputShiny A shiny UI output function that will display the results \code{renderShiny}
+#' @param renderShinyInput The function that will produce the output for \code{renderShiny} to render
 #'
 #' @details 
 #' 
@@ -120,13 +134,13 @@ ga_model_load <- function(filename = "my-model.gamr"){
 #'  decomp_ga <- ga_model_make(get_model_data,
 #'                             required_columns = c("date", "sessions"),
 #'                             model_f = decompose_sessions,
-#'                             description = "Performs decomposition on session data and creates a plot")
+#'                             description = "Performs decomposition and creates plot")
 #'
 #'  # fetches data and outputs decomposition
 #'  ga_model(81416156, decomp_ga)
 #'
 #'  # save the model for later
-#'  model_location <- "inst/models/decomp_ga.gamodel"
+#'  model_location <- "inst/models/decomp_ga.gamr"
 #'  ga_model_save(decomp_ga, filename = model_location)
 #'
 #'  # can load model from file
