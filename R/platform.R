@@ -328,20 +328,23 @@ create_shiny_module_funcs <- function(data_f,
   
   server <- function(input, output, session, view_id, ...){
     
+    dots <- list(...)
+    
     gadata <- shiny::reactive({
-      
-      view_id <- view_id()
-      
-      data_f(view_id, ...)
+
+      myMessage("Fetching data", level = 3)
+      do.call(data_f, 
+              args = c(list(viewId = view_id()), 
+                       eval_input_list(dots)))
       
     })
     
     model_output <- shiny::reactive({
       shiny::validate(shiny::need(gadata(), 
                                   message = "Waiting for data"))
-      gadata <- gadata()
-      
-      model_f(gadata, ...)
+      myMessage("Modelling data", level = 3)
+
+      do.call(model_f, args = c(list(gadata()), eval_input_list(dots)))
       
     })
     
@@ -349,9 +352,8 @@ create_shiny_module_funcs <- function(data_f,
       shiny::validate(shiny::need(model_output(), 
                                   message = "Waiting for model output"))
       
-      message("Rendering model output")
-      
-      output_f(model_output(), ...)
+      myMessage("Rendering model output", level = 3)
+      do.call(output_f, args = c(list(model_output()), eval_input_list(dots)))
       
     })
     
@@ -365,4 +367,14 @@ create_shiny_module_funcs <- function(data_f,
   
 }
 
+# force evaluation to reactive inputs update
+eval_input_list <- function(dots){
+  lapply(dots, function(x){
+    if(inherits(x, "reactive")){
+      do.call(x, args = list())
+    } else {
+      x
+    }
+  })
+}
 
