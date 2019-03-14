@@ -45,7 +45,7 @@ d2 <- ga_model(my_viewid, model = decomp_ga, date_range = c("20daysAgo","yesterd
 
 ## Shiny modules
 
-The model can also be used to create a Shiny app, as it creates a [Shiny module](https://shiny.rstudio.com/articles/modules.html) of the model.
+The model can also be used to create a Shiny app, as it creates a [Shiny module](https://shiny.rstudio.com/articles/modules.html) of the model.  It is suggested this is the easiest route to turn your local GA analysis into Shiny apps. 
 
 An example is shown below, which allows whoever logs in to apply the model to their own Google Analytics data.  You can run the app yourself via:
 
@@ -53,6 +53,49 @@ An example is shown below, which allows whoever logs in to apply the model to th
 
 ![](model-shiny-module.png)
 
+The model code is encapsulated in the Shiny module so the actual Shiny app is relatively simple:
+
+```r
+library(shiny)
+library(googleAuthR)
+library(googleAnalyticsR) 
+
+gar_set_client(web_json = "ga-web-client.json",
+               scopes = "https://www.googleapis.com/auth/analytics.readonly")
+
+# loads a pre-existing model
+model <- ga_model_example("decomp_ga.gamr", location = "googleAnalyticsR")
+
+## ui.R
+ui <- fluidPage(title = "googleAnalyticsR Test Deployment",
+                
+                authDropdownUI("auth_menu"),
+                h2("Model Description"),
+                textOutput("model_description"),
+                h2("Model Output"),
+                model$shiny_module$ui("model1")
+                
+)
+
+## server.R
+server <- function(input, output, session){
+  
+  gar_shiny_auth(session)
+  
+  al <- reactive(ga_account_list())
+  
+  # module for authentication
+  view_id <- callModule(authDropdown, "auth_menu", ga.table = al)
+  output$model_description <- renderText(model$description)
+  
+  # module to display model results
+  callModule(model$shiny_module$server, "model1", view_id = view_id)
+  
+}
+
+shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)
+
+```
 ## Creating model `.gamr` objects
 
 To create your own models, you need to predefine all the functions to look after the fetching, modelling and viewing of the data.  You then pass those functions to the `ga_model_make()` function.
@@ -63,7 +106,7 @@ The functions need to follow these specifications:
 * `model_f` - A function to work with the data you have fetched. The first argument should be the data.frame that is produced by the data fetching function, `data_f()`.
 * `output_f` - A function to plot the data. The first argument should be the data.frame that is produced by the model function, `model_f()`. 
 * All functions you create must include `...` as an argument. 
-* All functions must use different arguments (apart from `...`), to avoid clashes.
+* Take care if you use the same argument name that it is consistent with all functions
 
 If you want to also create the Shiny modules, then you also need to specify:
 * `outputShiny` - the output function for the UI, such as `plotOutput`
@@ -142,7 +185,6 @@ It would then be used via:
 
 ```{r message=FALSE, warning=FALSE}
 result <- ga_model(81416156, decomp_ga_advanced, metric="users", frequency = 30)
-str(result, max.level = 1)
 ```
 
 ### Working with the model object

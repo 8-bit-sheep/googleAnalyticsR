@@ -139,3 +139,4 @@ Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4_slow}},
   \code{\link{fetch_google_analytics_4}},
   \code{\link{google_analytics}}
 }
+\concept{GAv4 fetch functions}

@@ -215,12 +215,51 @@ d2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_model
 <div id="shiny-modules" class="section level2">
 <h2 class="hasAnchor">
 <a href="#shiny-modules" class="anchor"></a>Shiny modules</h2>
-<p>The model can also be used to create a Shiny app, as it creates a <a href="https://shiny.rstudio.com/articles/modules.html">Shiny module</a> of the model.</p>
+<p>The model can also be used to create a Shiny app, as it creates a <a href="https://shiny.rstudio.com/articles/modules.html">Shiny module</a> of the model. It is suggested this is the easiest route to turn your local GA analysis into Shiny apps.</p>
 <p>An example is shown below, which allows whoever logs in to apply the model to their own Google Analytics data. You can run the app yourself via:</p>
 <p><code><a href="https://www.rdocumentation.org/packages/shiny/topics/runApp">shiny::runApp(system.file("shiny/hello-world-models", package="googleAnalyticsR"))</a></code></p>
 <div class="figure">
 <img src="model-shiny-module.png">
 </div>
+<p>The model code is encapsulated in the Shiny module so the actual Shiny app is relatively simple:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(shiny)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAuthR)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsR) 
+
+<span class="kw"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html">gar_set_client</a></span>(<span class="dt">web_json =</span> <span class="st">"ga-web-client.json"</span>,
+               <span class="dt">scopes =</span> <span class="st">"https://www.googleapis.com/auth/analytics.readonly"</span>)
+
+<span class="co"># loads a pre-existing model</span>
+model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_model_example.html">ga_model_example</a></span>(<span class="st">"decomp_ga.gamr"</span>, <span class="dt">location =</span> <span class="st">"googleAnalyticsR"</span>)
+
+## ui.R
+ui &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/fluidPage">fluidPage</a></span>(<span class="dt">title =</span> <span class="st">"googleAnalyticsR Test Deployment"</span>,
+                
+                <span class="kw"><a href="../reference/authDropdownUI.html">authDropdownUI</a></span>(<span class="st">"auth_menu"</span>),
+                <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/builder">h2</a></span>(<span class="st">"Model Description"</span>),
+                <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/textOutput">textOutput</a></span>(<span class="st">"model_description"</span>),
+                <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/builder">h2</a></span>(<span class="st">"Model Output"</span>),
+                model<span class="op">$</span>shiny_module<span class="op">$</span><span class="kw">ui</span>(<span class="st">"model1"</span>)
+                
+)
+
+## server.R
+server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session){
+  
+  <span class="kw"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_auth.html">gar_shiny_auth</a></span>(session)
+  
+  al &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/reactive">reactive</a></span>(<span class="kw"><a href="../reference/ga_account_list.html">ga_account_list</a></span>())
+  
+  <span class="co"># module for authentication</span>
+  view_id &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/callModule">callModule</a></span>(authDropdown, <span class="st">"auth_menu"</span>, <span class="dt">ga.table =</span> al)
+  output<span class="op">$</span>model_description &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/renderText">renderText</a></span>(model<span class="op">$</span>description)
+  
+  <span class="co"># module to display model results</span>
+  <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/callModule">callModule</a></span>(model<span class="op">$</span>shiny_module<span class="op">$</span>server, <span class="st">"model1"</span>, <span class="dt">view_id =</span> view_id)
+  
+}
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/shinyApp">shinyApp</a></span>(<span class="kw"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_ui.html">gar_shiny_ui</a></span>(ui, <span class="dt">login_ui =</span> silent_auth), server)</code></pre></div>
 </div>
 <div id="creating-model--gamr-objects" class="section level2">
 <h2 class="hasAnchor">
@@ -235,7 +274,7 @@ d2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_model
 <li>
 <code>output_f</code> - A function to plot the data. The first argument should be the data.frame that is produced by the model function, <code>model_f()</code>.</li>
 <li>All functions you create must include <code>...</code> as an argument.</li>
-<li>All functions must use different arguments (apart from <code>...</code>), to avoid clashes.</li>
+<li>Take care if you use the same argument name that it is consistent with all functions</li>
 </ul>
 <p>If you want to also create the Shiny modules, then you also need to specify: * <code>outputShiny</code> - the output function for the UI, such as <code>plotOutput</code> * <code>renderShiny</code> - the render function for the server, such as <code>renderPlot</code></p>
 <p>You then supply supporting information to make sure the user can run the model:</p>
@@ -305,16 +344,6 @@ decomp_ga_advanced &lt;-<span class="st"> </span><span class="kw"><a href="../re
 <p>It would then be used via:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_model.html">ga_model</a></span>(<span class="dv">81416156</span>, decomp_ga_advanced, <span class="dt">metric=</span><span class="st">"users"</span>, <span class="dt">frequency =</span> <span class="dv">30</span>)</code></pre></div>
 <p><img src="models_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(result, <span class="dt">max.level =</span> <span class="dv">1</span>)</code></pre></div>
-<pre><code>## List of 3
-##  $ input :'data.frame':  301 obs. of  3 variables:
-##   ..- attr(*, "totals")=List of 1
-##   ..- attr(*, "minimums")=List of 1
-##   ..- attr(*, "maximums")=List of 1
-##   ..- attr(*, "rowCount")= int 301
-##  $ output:List of 6
-##   ..- attr(*, "class")= chr "decomposed.ts"
-##  $ plot  : NULL</code></pre>
 <div id="working-with-the-model-object" class="section level3">
 <h3 class="hasAnchor">
 <a href="#working-with-the-model-object" class="anchor"></a>Working with the model object</h3>
@@ -350,6 +379,7 @@ decomp_ga_advanced &lt;-<span class="st"> </span><span class="kw"><a href="../re
 <h2 class="hasAnchor">
 <a href="#causalimpact-example" class="anchor"></a>CausalImpact example</h2>
 <p>To make your own portable GA Effect, this model uses the CausalImpact and dygraphs libraries to make a plot of your GA data.</p>
+<p>This example model is available via <code><a href="../reference/ga_model_example.html">ga_model_example("ga-effect.gamr")</a></code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsR)
 
 get_ci_data &lt;-<span class="st"> </span><span class="cf">function</span>(viewId, 

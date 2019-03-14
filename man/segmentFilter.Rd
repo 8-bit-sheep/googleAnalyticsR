@@ -4,7 +4,8 @@
 \alias{segmentFilter}
 \title{Segment Filter}
 \usage{
-segmentFilter(not = FALSE, simpleSegment = NULL, sequenceSegment = NULL)
+segmentFilter(not = FALSE, simpleSegment = NULL,
+  sequenceSegment = NULL)
 }
 \arguments{
 \item{not}{Negation of this filter}

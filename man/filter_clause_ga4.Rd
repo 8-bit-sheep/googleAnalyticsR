@@ -67,3 +67,4 @@ ga_data1 <- google_analytics_4(ga_id,
 Other filter functions: \code{\link{dim_filter}},
   \code{\link{met_filter}}
 }
+\concept{filter functions}

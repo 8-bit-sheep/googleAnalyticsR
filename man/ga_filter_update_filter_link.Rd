@@ -4,8 +4,8 @@
 \alias{ga_filter_update_filter_link}
 \title{Update an existing profile filter link. Patch semantics supported}
 \usage{
-ga_filter_update_filter_link(viewFilterLink, accountId, webPropertyId, viewId,
-  linkId, method = c("PUT", "PATCH"))
+ga_filter_update_filter_link(viewFilterLink, accountId, webPropertyId,
+  viewId, linkId, method = c("PUT", "PATCH"))
 }
 \arguments{
 \item{viewFilterLink}{The profileFilterLink object}
@@ -81,3 +81,4 @@ Other managementAPI functions: \code{\link{ga_adwords_list}},
   \code{\link{ga_unsampled_list}},
   \code{\link{ga_unsampled}}
 }
+\concept{managementAPI functions}

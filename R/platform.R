@@ -3,11 +3,12 @@
 #' @param viewId The GA viewId to operate on
 #' @param model A file location of a model object or a model object
 #'   created by \link{ga_model_make}
+#' @param load_libs Whether to load the library requirements into your namespace
 #' @param ... Other arguments to pass into the model as needed
 #'
 #' @export
 #' @family GA modelling functions
-ga_model <- function(viewId, model, ...){
+ga_model <- function(viewId, model, load_libs = TRUE, ...){
   
   # a filepath
   if(is.character(model)){
@@ -16,7 +17,7 @@ ga_model <- function(viewId, model, ...){
   
   assert_that(is.ga_model(model))
   
-  check_packages_installed(model$required_packages)
+  check_packages_installed(model$required_packages, load_them = load_libs)
   
   gadata <- model$data_f(viewId, ...)
   
@@ -168,7 +169,7 @@ ga_model_example <- function(name, location = "googleAnalyticsR"){
 ga_model_make <- function(data_f,
                           required_columns,
                           model_f,
-                          output_f = NULL,
+                          output_f = graphics::plot,
                           required_packages = NULL,
                           description = NULL,
                           outputShiny = shiny::plotOutput,
@@ -180,17 +181,6 @@ ga_model_make <- function(data_f,
     is.function(model_f)
   )
   
-  # if(any(function_args(data_f) %in% function_args(model_f))){
-  #   stop("data_f() and model_f() functions should not have same argument names",
-  #        call. = FALSE)
-  # }
-  # 
-  # if(!is.null(output_f)){
-  #   assert_that(is.function(output_f),
-  #               !any(function_args(output_f) %in% function_args(data_f)),
-  #               !any(function_args(output_f) %in% function_args(model_f)))
-  # }
-  
   if(!any(function_args(data_f, TRUE) == "...")){
     stop("data_f() arguments need to include ...", call.=FALSE)
   }
@@ -199,7 +189,7 @@ ga_model_make <- function(data_f,
     stop("model_f() arguments need to include ...", call.=FALSE)
   }
   
-  if(!any(function_args(output_f, TRUE) == "...")){
+  if(!is.null(output_f) && !any(function_args(output_f, TRUE) == "...")){
     stop("output_f() arguments need to include ...", call.=FALSE)
   }
   
@@ -315,6 +305,12 @@ create_shiny_module_funcs <- function(data_f,
                                       outputShiny,
                                       renderShiny
                                       ){
+  
+  if(any(is.null(output_f), is.null(outputShiny), is.null(renderShiny))){
+    myMessage("can't create Shiny module as necessary functions are NULL", level = 3)
+    return(NULL)
+  }
+  
   assert_that(
     is.function(data_f),
     is.function(model_f),

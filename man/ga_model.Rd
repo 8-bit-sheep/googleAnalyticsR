@@ -4,13 +4,15 @@
 \alias{ga_model}
 \title{Use a model function created by ga_model_make}
 \usage{
-ga_model(viewId, model, ...)
+ga_model(viewId, model, load_libs = TRUE, ...)
 }
 \arguments{
 \item{viewId}{The GA viewId to operate on}
 
 \item{model}{A file location of a model object or a model object
 created by \link{ga_model_make}}
+
+\item{load_libs}{Whether to load the library requirements into your namespace}
 
 \item{...}{Other arguments to pass into the model as needed}
 }
@@ -23,3 +25,4 @@ Other GA modelling functions: \code{\link{ga_model_edit}},
   \code{\link{ga_model_load}}, \code{\link{ga_model_make}},
   \code{\link{ga_model_save}}
 }
+\concept{GA modelling functions}

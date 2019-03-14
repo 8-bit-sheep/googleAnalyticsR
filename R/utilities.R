@@ -21,7 +21,7 @@ function_args <- function(f, include_dots = FALSE){
 #' check package installed
 #' @noRd
 #' @importFrom purrr walk
-check_packages_installed <- function(x, stop_if_not = TRUE){
+check_packages_installed <- function(x, stop_if_not = TRUE, load_them = FALSE){
   if(is.null(x)){
     return()
   }
@@ -39,6 +39,11 @@ check_packages_installed <- function(x, stop_if_not = TRUE){
   }
   
   walk(x, check_one)
+  
+  if(load_them){
+    walk(x, library, character.only = TRUE)
+  }
+
 }
 
 #' convert 'yesterday', 'today', 'Ndaysago etc. into R dates
