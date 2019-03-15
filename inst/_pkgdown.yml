@@ -128,6 +128,7 @@ reference:
       - ga_model_make
       - ga_model_edit
       - ga_model_save
+      - ga_model_tweet
   - title: "Account structure"
     desc: >
       Viewing the account > webproperty > view structure

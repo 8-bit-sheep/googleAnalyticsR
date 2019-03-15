@@ -1,5 +1,5 @@
 ---
-title: "Pre-trained statistical models and visualisations with Google Analytics data"
+title: "Statistical models and visualisations with Google Analytics data"
 ---
 
 Downloading Google Analytics data is all well and good, but the reason most users want to use the API is to then operate and act upon that data.
@@ -60,6 +60,12 @@ This model allows you to alter the date range of the data fetched:
 ```{r message=FALSE, warning=FALSE}
 # change default date range to 20 days ago to yesterday
 d2 <- ga_model(my_viewid, model = decomp_ga, date_range = c("20daysAgo","yesterday"))
+```
+
+You can examine the properties of the model and the arguments it was sent via its print method:
+
+```{r}
+d2
 ```
 
 ## Shiny modules
@@ -332,7 +338,8 @@ dygraph_plot <- function(impact, event_date, ...){
   ci <- xts::xts(ci)
 
   ## the dygraph output
-  dygraph(data=ci[,c('response', 'point.pred', 'point.pred.lower', 'point.pred.upper')], 
+  dygraph(data=ci[,c('response', 
+                     'point.pred', 'point.pred.lower', 'point.pred.upper')], 
           main="Expected (95% confidence level) vs Observed", group="ci") %>%
     dyEvent(x = event_date, "Event") %>%
     dySeries(c('point.pred.lower', 'point.pred','point.pred.upper'), 

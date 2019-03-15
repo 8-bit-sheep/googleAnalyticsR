@@ -41,8 +41,21 @@ ga_model <- function(viewId, model, load_libs = TRUE, ...){
   } else {
     p <- NULL
   }
+  
+  structure(
+    list(input = gadata, 
+         output = o, 
+         plot = p, 
+         model = model, 
+         viewId = viewId, 
+         args = list(...)), 
+    class = c("ga_model_result","list")
+  )
 
-  list(input = gadata, output = o, plot = p)
+}
+
+is.ga_model_result <- function(x){
+  inherits(x, "ga_model_result")
 }
 
 #' Save a created model
@@ -299,6 +312,8 @@ is.ga_model <- function(x){
   inherits(x, "ga_model")
 }
 
+
+
 #' @noRd
 #' @import assertthat
 create_shiny_module_funcs <- function(data_f,
@@ -383,4 +398,137 @@ eval_input_list <- function(dots){
     }
   })
 }
+
+#' Upload an interactive visualisation so it can be embedded in a tweet
+#' 
+#' Inspired by \url{https://datatitian.com/how-to-turn-your-ggplot2-visualization-into-an-interactive-tweet/} this uploads your model output into Google Cloud storage, in the right format to embd in a tweet
+#' 
+#' @param model_output A \code{ga_model_result} object created by \link{ga_model}
+#' @param twitter Your twitter handle e.g. \code{@holomarked}
+#' @param title Twitter preview card title text
+#' @param bucket The GCS bucket to upload to
+#' @param image an optional image to display before the visualition runs
+#' 
+#' @details 
+#' Authenticate with `googleCloudStorageR` first.  \url{https://cards-dev.twitter.com/validator} is useful to test what it will look like on Twitter.
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#'   library(googleAnalyticsModelR)
+#'   library(googleAnalyticsR)
+#' 
+#'   output <- ga_time_normalised(81416156, interactive_plot = TRUE)
+#'   
+#'   # if you have a plotly account, get a static image
+#'   plotly_IMAGE(output$plot, out_file = "tweet.png")
+#' 
+#'   library(googleCloudStorageR)
+#'   ga_model_tweet(output, 
+#'                  "@HoloMarked", 
+#'                  "Test2 ga_model twitter upload", 
+#'                  bucket = "mark-edmondson-public-read",
+#'                  image = "tweet.png")
+#' }
+#' 
+#' @importFrom htmlwidgets saveWidget
+#' @importFrom googleCloudStorageR gcs_download_url gcs_upload
+#' @export
+ga_model_tweet <- function(model_output,
+                           twitter,
+                           title,
+                           bucket,
+                           image = ""){
+  assert_that(
+    is.ga_model_result(model_output),
+    is.string(twitter),
+    is.string(title)
+  )
+  
+  # deal with plotly spacing
+  if(!is.null(model_output$plot$sizingPolicy$padding)){
+    model_output$plot$sizingPolicy$padding <- "0"
+  }
+  
+  my_tmpdir <- tempdir()
+  tmp <- tempfile(tmpdir = my_tmpdir, fileext = ".html")
+  on.exit(unlink(tmp))
+  
+  the_name <- gsub("[^A-Za-z0-9]","-", title)
+  
+  libdir <- file.path(my_tmpdir,paste0(the_name, "/lib"))
+  on.exit(unlink(libdir))
+  
+  htmlwidgets::saveWidget(
+    model_output$plot, 
+    libdir = libdir,
+    tmp,
+    title = title,
+    selfcontained = FALSE
+  )
+  
+  download_url <- gcs_download_url(paste0(the_name,".html"),
+                                   bucket = bucket,
+                                   public = TRUE)
+  
+  if(image != ""){
+    image_loc <- paste0(the_name,"/",image)
+    gcs_upload(image, 
+               bucket = bucket, 
+               name = image_loc,
+               predefinedAcl = "publicRead")
+    image <- gcs_download_url(image_loc, bucket= bucket, public=TRUE)
+  }
+
+  add_twitter_meta(tmp,
+                   twitter = twitter,
+                   title = title,
+                   description = model_output$model$description,
+                   url = download_url,
+                   image = image)
+
+  
+  gcs_upload(tmp, 
+             bucket = bucket, 
+             name = paste0(the_name, ".html"),
+             predefinedAcl = "publicRead")
+  
+  # some other weird files in here?
+  all_tmp <- list.files(my_tmpdir, recursive = TRUE)
+  all_tmp <- all_tmp[grepl(the_name, all_tmp)]
+  
+  lapply(all_tmp, function(x){
+    gcs_upload(file.path(my_tmpdir, x), 
+               bucket = bucket, 
+               name = x,
+               predefinedAcl = "publicRead")
+  })
+
+  myMessage("Share this link in a tweet to see visualisation: ",
+            download_url, level = 3)
+  
+  download_url
+  
+}
+
+add_twitter_meta <- function(html, 
+                             twitter, title, description, url, image = ''){
+  
+  o <- readChar(html, file.info(html)$size)
+  
+  meta <- c('<meta name="twitter:card" content="player" />',
+    sprintf('<meta name="twitter:site" content="%s" />',twitter),
+    sprintf('<meta name="twitter:title" content="%s" />',title),
+    sprintf('<meta name="twitter:description" content="%s" />',description),
+    sprintf('<meta name="twitter:player" content="%s" />',url),
+    '<meta name="twitter:player:width" content="517" />',
+    '<meta name="twitter:player:height" content="408" />',
+    sprintf('<meta name="twitter:image" content="%s" />',image))
+  
+  o <- gsub("<head>", paste(c("<head>", meta), collapse = "\n"), o)
+  writeChar(o, html)
+}
+
+
+
 

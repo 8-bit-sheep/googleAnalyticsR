@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • googleAnalyticsR</title>
+<title>Upload an interactive visualisation so it can be embedded in a tweet — ga_model_tweet • googleAnalyticsR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,9 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Upload an interactive visualisation so it can be embedded in a tweet — ga_model_tweet" />
+
+<meta property="og:description" content="Inspired by https://datatitian.com/how-to-turn-your-ggplot2-visualization-into-an-interactive-tweet/ this uploads your model output into Google Cloud storage, in the right format to embd in a tweet" />
 
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -60,7 +62,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -211,26 +213,79 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Upload an interactive visualisation so it can be embedded in a tweet</h1>
+    
+    <div class="hidden name"><code>ga_model_tweet.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="big-query.html">Big Query Exports from Google Analytics 360 to R</a></li>
-        <li><a href="ganalytics.html">ganalytics - Advanced dynamic segment and Filter examples</a></li>
-        <li><a href="googleAnalyticsR.html">googleAnalyticsR</a></li>
-        <li><a href="management.html">Management API</a></li>
-        <li><a href="models.html">Statistical models and visualisations with Google Analytics data</a></li>
-        <li><a href="rmarkdown.html">RMarkdown reports with Google Analytics API data</a></li>
-        <li><a href="setup.html">Setting up Google Analytics API downloads to R</a></li>
-        <li><a href="shiny.html">Shiny Apps that call Google Analytics API data</a></li>
-        <li><a href="v3.html">Google Analytics Reporting API v3 R functions</a></li>
-        <li><a href="v4.html">Google Analytics Reporting API v4 in R Examples</a></li>
-      </ul>
+    <div class="ref-description">
+    
+    <p>Inspired by <a href='https://datatitian.com/how-to-turn-your-ggplot2-visualization-into-an-interactive-tweet/'>https://datatitian.com/how-to-turn-your-ggplot2-visualization-into-an-interactive-tweet/</a> this uploads your model output into Google Cloud storage, in the right format to embd in a tweet</p>
+    
     </div>
+
+    <pre class="usage"><span class='fu'>ga_model_tweet</span>(<span class='no'>model_output</span>, <span class='no'>twitter</span>, <span class='no'>title</span>, <span class='no'>bucket</span>, <span class='kw'>image</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>model_output</th>
+      <td><p>A <code>ga_model_result</code> object created by <a href='ga_model.html'>ga_model</a></p></td>
+    </tr>
+    <tr>
+      <th>twitter</th>
+      <td><p>Your twitter handle e.g. <code>@holomarked</code></p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>Twitter preview card title text</p></td>
+    </tr>
+    <tr>
+      <th>bucket</th>
+      <td><p>The GCS bucket to upload to</p></td>
+    </tr>
+    <tr>
+      <th>image</th>
+      <td><p>an optional image to display before the visualition runs</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Authenticate with `googleCloudStorageR` first.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>googleAnalyticsModelR</span>)
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>googleAnalyticsR</span>)
+
+  <span class='no'>output</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/googleAnalyticsModelR/topics/ga_time_normalised'>ga_time_normalised</a></span>(<span class='fl'>81416156</span>, <span class='kw'>interactive_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+  <span class='co'># if you have a plotly account, get a static image</span>
+  <span class='fu'>plotly_IMAGE</span>(<span class='no'>output</span>$<span class='no'>plot</span>, <span class='kw'>out_file</span> <span class='kw'>=</span> <span class='st'>"tweet.png"</span>)
+
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>googleCloudStorageR</span>)
+  <span class='fu'>ga_model_tweet</span>(<span class='no'>output</span>,
+                 <span class='st'>"@HoloMarked"</span>,
+                 <span class='st'>"Test2 ga_model twitter upload"</span>,
+                 <span class='kw'>bucket</span> <span class='kw'>=</span> <span class='st'>"mark-edmondson-public-read"</span>,
+                 <span class='kw'>image</span> <span class='kw'>=</span> <span class='st'>"tweet.png"</span>)
+<span class='co'># }</span><div class='input'>
+</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 
