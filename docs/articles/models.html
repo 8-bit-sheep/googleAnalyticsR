@@ -188,10 +188,27 @@
 <p><code>ga_model</code> objects can be saved to the new <code>.gamr</code> format. Loading these files using <code><a href="../reference/ga_model.html">ga_model()</a></code> and specifying your own Google Analytics viewId, all the data processing, modelling and visualisation steps can be encapsulated to give you the output.</p>
 <p><code>.gamr</code> files also includes the ability to create Shiny modules which you can use to quickly create online Shiny dashboards displaying the model results, and which can switch to users own Google Analytics data using the multi-user login capabilities.</p>
 <p>The <code>.gamr</code> file format can be shared with others online or within your organisation. A new R package that includes some more advanced examples is available from <a href="https://github.com/IronistM/googleAnalyticsModelR/"><code>IronistM/googleAnalyticsModelR/</code></a></p>
-<div id="a-simple-example" class="section level2">
+<div id="pre-packaged-examples" class="section level2">
 <h2 class="hasAnchor">
-<a href="#a-simple-example" class="anchor"></a>A simple example</h2>
-<p>Included within the package are some simple models to demonstrate its use.</p>
+<a href="#pre-packaged-examples" class="anchor"></a>Pre-packaged examples</h2>
+<p>A ready-made model is available in the <a href="https://github.com/IronistM/googleAnalyticsModelR/"><code>googleAnalyticsModelR</code> package</a>. This function loads the pre-made model object created by the <code>ga_model_*</code> functions in <code>googleAnalyticsR</code>. Some examples include:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(prophet)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsR)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsModelR)
+
+my_view_id &lt;-<span class="st"> </span><span class="dv">81416156</span>
+
+forecast_data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/googleAnalyticsModelR/topics/ga_model_prophet">ga_model_prophet</a></span>(my_view_id, <span class="dt">interactive_plot =</span> <span class="ot">FALSE</span>)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(forecast_data<span class="op">$</span>plot)</code></pre></div>
+<p><img src="models_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">output &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/googleAnalyticsModelR/topics/ga_time_normalised">ga_time_normalised</a></span>(my_view_id, <span class="dt">interactive_plot =</span> <span class="ot">FALSE</span>)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(output<span class="op">$</span>plot)</code></pre></div>
+<p><img src="models_files/figure-html/unnamed-chunk-1-2.png" width="700"></p>
+</div>
+<div id="a-simple-example-loading-a-model-directly" class="section level2">
+<h2 class="hasAnchor">
+<a href="#a-simple-example-loading-a-model-directly" class="anchor"></a>A simple example loading a model directly</h2>
+<p>The above loads models within a wrapper function, but you can also load model objects yourself via <code><a href="../reference/ga_model_load.html">ga_model_load()</a></code>. Included within the package are some simple models to demonstrate its use which use <code><a href="../reference/ga_model_load.html">ga_model_load()</a></code> to load from the package examples, via <code><a href="../reference/ga_model_example.html">ga_model_example()</a></code></p>
 <p>The example below performs decomposition on the sessions to your website. Behind the scenes the model downloads your data with the right columns, applies the decomposition model then plots it, returning the data plotted for you to work with later:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsR)  <span class="co"># load library</span>
 
@@ -201,16 +218,16 @@
 <span class="co"># your own Google Analytics viewID</span>
 my_viewid &lt;-<span class="st"> </span><span class="dv">81416156</span>
 
-<span class="co"># load the model</span>
+<span class="co"># load the model (equivalent to ga_model_load())</span>
 decomp_ga &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_model_example.html">ga_model_example</a></span>(<span class="st">"decomp_ga.gamr"</span>)
 
 <span class="co"># apply model to your data</span>
 d1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_model.html">ga_model</a></span>(my_viewid, <span class="dt">model =</span> decomp_ga)</code></pre></div>
-<p><img src="models_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
+<p><img src="models_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 <p>This model allows you to alter the date range of the data fetched:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># change default date range to 20 days ago to yesterday</span>
 d2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_model.html">ga_model</a></span>(my_viewid, <span class="dt">model =</span> decomp_ga, <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"20daysAgo"</span>,<span class="st">"yesterday"</span>))</code></pre></div>
-<p><img src="models_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p><img src="models_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 <div id="shiny-modules" class="section level2">
 <h2 class="hasAnchor">
@@ -260,6 +277,11 @@ server &lt;-<span class="st"> </span><span class="cf">function</span>(input, out
 }
 
 <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/shinyApp">shinyApp</a></span>(<span class="kw"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_ui.html">gar_shiny_ui</a></span>(ui, <span class="dt">login_ui =</span> silent_auth), server)</code></pre></div>
+<p>If you want to pass reactive input objects to your model’s module, do so by wrapping them in <code><a href="https://www.rdocumentation.org/packages/shiny/topics/reactive">shiny::reactive()</a></code> e.g.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/callModule">callModule</a></span>(model<span class="op">$</span>shiny_module<span class="op">$</span>server,
+             <span class="st">"model1"</span>,
+             <span class="dt">view_id =</span> view_id,
+             <span class="dt">reactive_var =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/reactive">reactive</a></span>(input<span class="op">$</span>my_option))</code></pre></div>
 </div>
 <div id="creating-model--gamr-objects" class="section level2">
 <h2 class="hasAnchor">
@@ -343,7 +365,7 @@ decomp_ga_advanced &lt;-<span class="st"> </span><span class="kw"><a href="../re
                            <span class="dt">renderShiny =</span> shiny<span class="op">::</span>renderPlot)</code></pre></div>
 <p>It would then be used via:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_model.html">ga_model</a></span>(<span class="dv">81416156</span>, decomp_ga_advanced, <span class="dt">metric=</span><span class="st">"users"</span>, <span class="dt">frequency =</span> <span class="dv">30</span>)</code></pre></div>
-<p><img src="models_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="models_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div id="working-with-the-model-object" class="section level3">
 <h3 class="hasAnchor">
 <a href="#working-with-the-model-object" class="anchor"></a>Working with the model object</h3>
@@ -380,9 +402,11 @@ decomp_ga_advanced &lt;-<span class="st"> </span><span class="kw"><a href="../re
 <a href="#causalimpact-example" class="anchor"></a>CausalImpact example</h2>
 <p>To make your own portable GA Effect, this model uses the CausalImpact and dygraphs libraries to make a plot of your GA data.</p>
 <p>This example model is available via <code><a href="../reference/ga_model_example.html">ga_model_example("ga-effect.gamr")</a></code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsR)
-
-get_ci_data &lt;-<span class="st"> </span><span class="cf">function</span>(viewId, 
+<div id="get-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#get-data" class="anchor"></a>Get data</h3>
+<p>The data will focus on sessions per channel grouping. For this example the end user can select the date range, but we set a default of the last 600 days.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_ci_data &lt;-<span class="st"> </span><span class="cf">function</span>(viewId, 
                         <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>()<span class="op">-</span><span class="dv">600</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>()),
                         ...){
   
@@ -391,9 +415,10 @@ get_ci_data &lt;-<span class="st"> </span><span class="cf">function</span>(viewI
                    <span class="dt">metrics =</span> <span class="st">"sessions"</span>,
                    <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"date"</span>, <span class="st">"channelGrouping"</span>), 
                    <span class="dt">max =</span> <span class="op">-</span><span class="dv">1</span>)
-}
-
-<span class="co"># response_dim is the channel to predict.</span>
+}</code></pre></div>
+<p>The modelling step is copied over from the <a href="http://www.dartistics.com/timeseries.html">dartistics.com time-services example</a>.</p>
+<p>The function transforms the data into the right shape, and performs the CausalImpact model. The user can select the event date to examine, the channel to test (response) and possible predictors to help the model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># response_dim is the channel to predict.</span>
 <span class="co"># predictors help with forecast</span>
 do_ci &lt;-<span class="st"> </span><span class="cf">function</span>(df, 
                   event_date,
@@ -431,9 +456,9 @@ do_ci &lt;-<span class="st"> </span><span class="cf">function</span>(df,
 
   CausalImpact<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/CausalImpact/topics/CausalImpact">CausalImpact</a></span>(model_data,  pre.period, post.period)
 
-}
-
-dygraph_plot &lt;-<span class="st"> </span><span class="cf">function</span>(impact, event_date, ...){
+}</code></pre></div>
+<p>Finally the CausalImpact model is sent into Dygraphs for interactive visualisation. The event date is the same as the one sent to the modelling step, and used to indicate it on the plot:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dygraph_plot &lt;-<span class="st"> </span><span class="cf">function</span>(impact, event_date, ...){
   <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(dygraphs)
   ## the data for the plot is in here
   ci &lt;-<span class="st"> </span>impact<span class="op">$</span>series
@@ -447,11 +472,11 @@ dygraph_plot &lt;-<span class="st"> </span><span class="cf">function</span>(impa
 <span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/dygraphs/topics/dySeries">dySeries</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'point.pred.lower'</span>, <span class="st">'point.pred'</span>,<span class="st">'point.pred.upper'</span>), 
              <span class="dt">label=</span><span class="st">'Expected'</span>) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/dygraphs/topics/dySeries">dySeries</a></span>(<span class="st">'response'</span>, <span class="dt">label=</span><span class="st">"Observed"</span>)
-}
-
-req_packs &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"CausalImpact"</span>, <span class="st">"xts"</span>, <span class="st">"tidyr"</span>, <span class="st">"googleAnalyticsR"</span>, <span class="st">"assertthat"</span>, <span class="st">"dygraphs"</span>)
-
-ci_model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_model_make.html">ga_model_make</a></span>(get_ci_data,
+}</code></pre></div>
+<p>The main functions done, we now specify which R packages the model needs the user to load.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">req_packs &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"CausalImpact"</span>, <span class="st">"xts"</span>, <span class="st">"tidyr"</span>, <span class="st">"googleAnalyticsR"</span>, <span class="st">"assertthat"</span>, <span class="st">"dygraphs"</span>)</code></pre></div>
+<p>Finally we make the model, specifying which columns we expect the data to fetch, a description and specifying which Shiny functions are needed to show the dygraph if the model is used in a Shiny app.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_model_make.html">ga_model_make</a></span>(get_ci_data,
                           <span class="dt">required_columns =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"date"</span>,<span class="st">"channelGrouping"</span>,<span class="st">"sessions"</span>),
                           <span class="dt">model_f =</span> do_ci,
                           <span class="dt">output_f =</span> dygraph_plot,
@@ -471,6 +496,7 @@ ci_model</code></pre></div>
 <span class="kw"><a href="../reference/ga_model_save.html">ga_model_save</a></span>(ci_model, <span class="st">"causalImpact_model.gamr"</span>)</code></pre></div>
 <p>To use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsR)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(CausalImpact)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(xts)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dygraphs)
@@ -482,6 +508,7 @@ ci &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_model
 <img src="model-ga-effect.png">
 </div>
 </div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -489,7 +516,8 @@ ci &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_model
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#a-simple-example">A simple example</a></li>
+<li><a href="#pre-packaged-examples">Pre-packaged examples</a></li>
+      <li><a href="#a-simple-example-loading-a-model-directly">A simple example loading a model directly</a></li>
       <li><a href="#shiny-modules">Shiny modules</a></li>
       <li><a href="#creating-model--gamr-objects">Creating model <code>.gamr</code> objects</a></li>
       <li><a href="#advanced-use">Advanced use</a></li>

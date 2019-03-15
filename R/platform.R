@@ -21,7 +21,9 @@ ga_model <- function(viewId, model, load_libs = TRUE, ...){
   
   gadata <- model$data_f(viewId, ...)
   
-  myMessage("Downloaded data: Rows:", nrow(gadata), " Columns:", paste(names(gadata), collapse = " "), level = 3)
+  myMessage("Downloaded data: Rows:", 
+            nrow(gadata), " Columns:", 
+            paste(names(gadata), collapse = " "), level = 3)
   
   if(length(intersect(names(gadata), model$required_columns)) == 0){
     stop("All required columns were not found in returned data.
@@ -307,7 +309,8 @@ create_shiny_module_funcs <- function(data_f,
                                       ){
   
   if(any(is.null(output_f), is.null(outputShiny), is.null(renderShiny))){
-    myMessage("can't create Shiny module as necessary functions are NULL", level = 3)
+    myMessage("Can't create Shiny module as necessary functions are NULL", 
+              level = 3)
     return(NULL)
   }
   
@@ -344,7 +347,9 @@ create_shiny_module_funcs <- function(data_f,
                                   message = "Waiting for data"))
       myMessage("Modelling data", level = 3)
 
-      do.call(model_f, args = c(list(gadata()), eval_input_list(dots)))
+      do.call(model_f, 
+              args = c(list(gadata()), 
+                       eval_input_list(dots)))
       
     })
     
@@ -353,7 +358,8 @@ create_shiny_module_funcs <- function(data_f,
                                   message = "Waiting for model output"))
       
       myMessage("Rendering model output", level = 3)
-      do.call(output_f, args = c(list(model_output()), eval_input_list(dots)))
+      do.call(output_f,
+              args = c(list(model_output()), eval_input_list(dots)))
       
     })
     

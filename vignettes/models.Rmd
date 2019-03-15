@@ -14,9 +14,28 @@ To make it easier to distribute these analysis, `googleAnalyticsR` now includes 
 
 The `.gamr` file format can be shared with others online or within your organisation.  A new R package that includes some more advanced examples is available from [`IronistM/googleAnalyticsModelR/`](https://github.com/IronistM/googleAnalyticsModelR/)
 
-## A simple example
+## Pre-packaged examples
 
-Included within the package are some simple models to demonstrate its use.  
+A ready-made model is available in the [`googleAnalyticsModelR` package](https://github.com/IronistM/googleAnalyticsModelR/).  This function loads the pre-made model object created by the `ga_model_*` functions in `googleAnalyticsR`.  Some examples include:
+
+```{r message=FALSE, warning=FALSE}
+library(prophet)
+library(googleAnalyticsR)
+library(googleAnalyticsModelR)
+
+my_view_id <- 81416156
+
+forecast_data <- ga_model_prophet(my_view_id, interactive_plot = FALSE)
+print(forecast_data$plot)
+
+
+output <- ga_time_normalised(my_view_id, interactive_plot = FALSE)
+print(output$plot)
+```
+
+## A simple example loading a model directly
+
+The above loads models within a wrapper function, but you can also load model objects yourself via `ga_model_load()`. Included within the package are some simple models to demonstrate its use which use `ga_model_load()` to load from the package examples, via `ga_model_example()`
 
 The example below performs decomposition on the sessions to your website.  Behind the scenes the model downloads your data with the right columns, applies the decomposition model then plots it, returning the data plotted for you to work with later:
 
@@ -29,7 +48,7 @@ ga_auth()
 # your own Google Analytics viewID
 my_viewid <- 81416156
 
-# load the model
+# load the model (equivalent to ga_model_load())
 decomp_ga <- ga_model_example("decomp_ga.gamr")
 
 # apply model to your data
@@ -96,6 +115,17 @@ server <- function(input, output, session){
 shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)
 
 ```
+
+If you want to pass reactive input objects to your model's module, do so by wrapping them in `shiny::reactive()` e.g.
+
+```r
+  callModule(model$shiny_module$server,
+             "model1",
+             view_id = view_id,
+             reactive_var = reactive(input$my_option))
+```
+
+
 ## Creating model `.gamr` objects
 
 To create your own models, you need to predefine all the functions to look after the fetching, modelling and viewing of the data.  You then pass those functions to the `ga_model_make()` function.
@@ -228,9 +258,11 @@ To make your own portable GA Effect, this model uses the CausalImpact and dygrap
 
 This example model is available via `ga_model_example("ga-effect.gamr")`
 
-```{r}
-library(googleAnalyticsR)
+### Get data
 
+The data will focus on sessions per channel grouping.  For this example the end user can select the date range, but we set a default of the last 600 days.
+
+```{r}
 get_ci_data <- function(viewId, 
                         date_range = c(Sys.Date()-600, Sys.Date()),
                         ...){
@@ -241,7 +273,13 @@ get_ci_data <- function(viewId,
                    dimensions = c("date", "channelGrouping"), 
                    max = -1)
 }
+```
 
+The modelling step is copied over from the [dartistics.com time-services example](http://www.dartistics.com/timeseries.html).
+
+The function transforms the data into the right shape, and performs the CausalImpact model.  The user can select the event date to examine, the channel to test (response) and possible predictors to help the model.
+
+```{r}
 # response_dim is the channel to predict.
 # predictors help with forecast
 do_ci <- function(df, 
@@ -281,9 +319,13 @@ do_ci <- function(df,
   CausalImpact::CausalImpact(model_data,  pre.period, post.period)
 
 }
+```
 
+Finally the CausalImpact model is sent into Dygraphs for interactive visualisation.  The event date is the same as the one sent to the modelling step, and used to indicate it on the plot:
+
+```{r}
 dygraph_plot <- function(impact, event_date, ...){
-  require(dygraphs)
+
   ## the data for the plot is in here
   ci <- impact$series
   
@@ -297,9 +339,17 @@ dygraph_plot <- function(impact, event_date, ...){
              label='Expected') %>%
     dySeries('response', label="Observed")
 }
+```
 
+The main functions done, we now specify which R packages the model needs the user to load.  
+
+```{r}
 req_packs <- c("CausalImpact", "xts", "tidyr", "googleAnalyticsR", "assertthat", "dygraphs")
+```
 
+Finally we make the model, specifying which columns we expect the data to fetch, a description and specifying which Shiny functions are needed to show the dygraph if the model is used in a Shiny app.
+
+```{r}
 ci_model <- ga_model_make(get_ci_data,
                           required_columns = c("date","channelGrouping","sessions"),
                           model_f = do_ci,
@@ -322,6 +372,7 @@ To use:
 
 ```{r message=FALSE, warning=FALSE}
 library(googleAnalyticsR)
+library(CausalImpact)
 library(xts)
 library(tidyr)
 library(dygraphs)
