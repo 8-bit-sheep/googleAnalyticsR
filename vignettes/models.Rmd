@@ -51,7 +51,7 @@ ga_model_tweet(forecast_data,
 
 ```
 
-Which embeds in a tweet:
+Which embeds in a tweet (you have to click the play icon to activate the visualisation):
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Still playing with embedding interactive plots in tweets. These are all made by one R function, googleAnalyticsR::ga_model_tweet : <a href="https://t.co/pos14U9x7j">https://t.co/pos14U9x7j</a> - this is the prophet forecasting example requested by <a href="https://twitter.com/VincentTerrasi?ref_src=twsrc%5Etfw">@VincentTerrasi</a></p>&mdash; Mark Edmondson (@HoloMarkeD) <a href="https://twitter.com/HoloMarkeD/status/1106948306515709954?ref_src=twsrc%5Etfw">March 16, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
@@ -414,7 +414,11 @@ ci <- ga_model(81416156, ci_model, event_date = as.Date("2019-01-01"))
 ci$plot
 ```
 
-Similarly, you can launch this in a Shiny app by slightly modifying the example above.  
+That can display in a tweet:
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">An example for the documentation - CausalImpact/Dygraphs with ga_models <a href="https://t.co/9qfvi3uvLc">https://t.co/9qfvi3uvLc</a></p>&mdash; Mark Edmondson (@HoloMarkeD) <a href="https://twitter.com/HoloMarkeD/status/1106958249130119169?ref_src=twsrc%5Etfw">March 16, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+Similarly, you can launch this in a Shiny app by slightly modifying the Shiny example used previously.  
 
 This is available within the package via `shiny::runApp(system.file("shiny/models-ga-effect", package="googleAnalyticsR"))`
 

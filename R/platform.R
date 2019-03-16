@@ -477,7 +477,7 @@ ga_model_tweet <- function(model_output,
                          package = "googleAnalyticsR")
   }
   
-  image_loc <- paste0(the_name,"/",image)
+  image_loc <- paste0(the_name,"/",basename(image))
   gcs_upload(image, 
                bucket = bucket, 
                name = image_loc,
@@ -508,7 +508,7 @@ ga_model_tweet <- function(model_output,
                predefinedAcl = "publicRead")
   })
 
-  myMessage("Share this link in a tweet to see visualisation: ",
+  myMessage("Preview this link at https://cards-dev.twitter.com/validator then use in a tweet to see visualisation: ",
             download_url, level = 3)
   
   download_url
