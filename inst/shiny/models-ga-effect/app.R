@@ -10,7 +10,6 @@ gar_set_client(web_json = "ga-web-client.json",
 
 # loads a pre-existing model
 model <- ga_model_example("ga-effect.gamr", location = "googleAnalyticsR")
-model <- ci_model
 
 ## ui.R
 ui <- fluidPage(title = "googleAnalyticsR GA-Effect Model",
