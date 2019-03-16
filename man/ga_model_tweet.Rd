@@ -21,7 +21,7 @@ ga_model_tweet(model_output, twitter, title, bucket, image = "")
 Inspired by \url{https://datatitian.com/how-to-turn-your-ggplot2-visualization-into-an-interactive-tweet/} this uploads your model output into Google Cloud storage, in the right format to embd in a tweet
 }
 \details{
-Authenticate with `googleCloudStorageR` first.
+Authenticate with `googleCloudStorageR` first.  \url{https://cards-dev.twitter.com/validator} is useful to test what it will look like on Twitter.
 }
 \examples{
 

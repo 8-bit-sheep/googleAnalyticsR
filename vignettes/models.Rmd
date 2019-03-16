@@ -16,7 +16,9 @@ The `.gamr` file format can be shared with others online or within your organisa
 
 ## Pre-packaged examples
 
-A ready-made model is available in the [`googleAnalyticsModelR` package](https://github.com/IronistM/googleAnalyticsModelR/).  This function loads the pre-made model object created by the `ga_model_*` functions in `googleAnalyticsR`.  Some examples include:
+A ready-made model is available in the [`googleAnalyticsModelR` package](https://github.com/IronistM/googleAnalyticsModelR/).  This function loads the pre-made model object created by the `ga_model_*` functions in `googleAnalyticsR`.  
+
+Some examples below (the graphs are interactive when looking on a webpage):
 
 ```{r message=FALSE, warning=FALSE}
 library(prophet)
@@ -25,13 +27,34 @@ library(googleAnalyticsModelR)
 
 my_view_id <- 81416156
 
-forecast_data <- ga_model_prophet(my_view_id, interactive_plot = FALSE)
-print(forecast_data$plot)
-
-
-output <- ga_time_normalised(my_view_id, interactive_plot = FALSE)
-print(output$plot)
+forecast_data <- ga_model_prophet(my_view_id, interactive_plot = TRUE)
+forecast_data$plot
 ```
+
+Time-normalised visits to your website:
+
+```{r message=FALSE, warning=FALSE}
+output <- ga_time_normalised(my_view_id, interactive_plot = TRUE)
+output$plot
+```
+
+As we have a standardised model structure, it makes it easier to use the output in other functions.  For example, you can make a webpage suitable for embedding in Twitter tweets and upload via googleCloudStorageR using `ga_model_tweet()`:
+
+
+```r
+library(googleCloudStorageR)
+
+ga_model_tweet(forecast_data, 
+               "@HoloMarkeD", 
+               title = "ga_model example - prophet forecasting",
+               bucket = "mark-edmondson-public-read")
+
+```
+
+Which embeds in a tweet:
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Still playing with embedding interactive plots in tweets. These are all made by one R function, googleAnalyticsR::ga_model_tweet : <a href="https://t.co/pos14U9x7j">https://t.co/pos14U9x7j</a> - this is the prophet forecasting example requested by <a href="https://twitter.com/VincentTerrasi?ref_src=twsrc%5Etfw">@VincentTerrasi</a></p>&mdash; Mark Edmondson (@HoloMarkeD) <a href="https://twitter.com/HoloMarkeD/status/1106948306515709954?ref_src=twsrc%5Etfw">March 16, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
 
 ## A simple example loading a model directly
 
@@ -357,6 +380,7 @@ req_packs <- c("CausalImpact", "xts", "tidyr", "googleAnalyticsR", "assertthat",
 Finally we make the model, specifying which columns we expect the data to fetch, a description and specifying which Shiny functions are needed to show the dygraph if the model is used in a Shiny app.
 
 ```{r}
+library(googleAnalyticsR)
 ci_model <- ga_model_make(get_ci_data,
                           required_columns = c("date","channelGrouping","sessions"),
                           model_f = do_ci,
@@ -375,7 +399,7 @@ ci_model
 ga_model_save(ci_model, "causalImpact_model.gamr")
 ```
 
-To use:
+To use and make an interactive plot:
 
 ```{r message=FALSE, warning=FALSE}
 library(googleAnalyticsR)
@@ -385,6 +409,9 @@ library(tidyr)
 library(dygraphs)
 
 ci <- ga_model(81416156, ci_model, event_date = as.Date("2019-01-01"))
+
+# print to show the plot object
+ci$plot
 ```
 
 Similarly, you can launch this in a Shiny app by slightly modifying the example above.  

@@ -471,21 +471,25 @@ ga_model_tweet <- function(model_output,
                                    bucket = bucket,
                                    public = TRUE)
   
-  if(image != ""){
-    image_loc <- paste0(the_name,"/",image)
-    gcs_upload(image, 
+  if(image == ""){
+    # use a default image instead
+    image <- system.file("hexlogo", "twitter-default-play.png",
+                         package = "googleAnalyticsR")
+  }
+  
+  image_loc <- paste0(the_name,"/",image)
+  gcs_upload(image, 
                bucket = bucket, 
                name = image_loc,
                predefinedAcl = "publicRead")
-    image <- gcs_download_url(image_loc, bucket= bucket, public=TRUE)
-  }
+  image_url <- gcs_download_url(image_loc, bucket= bucket, public=TRUE)
 
   add_twitter_meta(tmp,
                    twitter = twitter,
                    title = title,
                    description = model_output$model$description,
                    url = download_url,
-                   image = image)
+                   image = image_url)
 
   
   gcs_upload(tmp, 
