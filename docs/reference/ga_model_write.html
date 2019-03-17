@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Upload an interactive visualisation so it can be embedded in a tweet — ga_model_tweet • googleAnalyticsR</title>
+<title>Write the ga_model functions to a file — ga_model_write • googleAnalyticsR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Upload an interactive visualisation so it can be embedded in a tweet — ga_model_tweet" />
+<meta property="og:title" content="Write the ga_model functions to a file — ga_model_write" />
 
-<meta property="og:description" content="Inspired by https://datatitian.com/how-to-turn-your-ggplot2-visualization-into-an-interactive-tweet/ this uploads your model output into Google Cloud storage, in the right format to embed in a tweet" />
+<meta property="og:description" content="Write the ga_model functions to a file" />
 
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -213,51 +213,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Upload an interactive visualisation so it can be embedded in a tweet</h1>
+    <h1>Write the ga_model functions to a file</h1>
     
-    <div class="hidden name"><code>ga_model_tweet.Rd</code></div>
+    <div class="hidden name"><code>ga_model_write.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Inspired by <a href='https://datatitian.com/how-to-turn-your-ggplot2-visualization-into-an-interactive-tweet/'>https://datatitian.com/how-to-turn-your-ggplot2-visualization-into-an-interactive-tweet/</a> this uploads your model output into Google Cloud storage, in the right format to embed in a tweet</p>
+    <p>Write the ga_model functions to a file</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>ga_model_tweet</span>(<span class='no'>model_output</span>, <span class='no'>twitter</span>, <span class='no'>title</span>, <span class='no'>bucket</span>, <span class='kw'>image</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
+    <pre class="usage"><span class='fu'>ga_model_write</span>(<span class='no'>model</span>, <span class='kw'>filepath</span> <span class='kw'>=</span> <span class='st'>"ga_model.R"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>model_output</th>
-      <td><p>A <code>ga_model_result</code> object created by <a href='ga_model.html'>ga_model</a></p></td>
+      <th>model</th>
+      <td><p>The <code>ga_model</code> object to extract functions from to write</p></td>
     </tr>
     <tr>
-      <th>twitter</th>
-      <td><p>Your twitter handle e.g. <code>@holomarked</code></p></td>
-    </tr>
-    <tr>
-      <th>title</th>
-      <td><p>Twitter preview card title text</p></td>
-    </tr>
-    <tr>
-      <th>bucket</th>
-      <td><p>The GCS bucket to upload to</p></td>
-    </tr>
-    <tr>
-      <th>image</th>
-      <td><p>An optional image to display before the visualition runs</p></td>
+      <th>filepath</th>
+      <td><p>The filepath to write the functions to</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This should work with all model outputs that are using <code><a href='https://www.rdocumentation.org/packages/base/topics/library'>library(htmlwidgets)</a></code></p>
-<p>If using plotly, you need an account to use <code>plotly_IMAGE</code> to generate the preview image.</p>
-<p>If you don't use a preview image, a generic one will be supplied instead.</p>
-<p>You need to authenticate with `googleCloudStorageR` before running this function so it can upload the appropriate files and make them public.</p>
-<p><a href='https://cards-dev.twitter.com/validator'>https://cards-dev.twitter.com/validator</a> is useful to test what it will look like on Twitter.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -265,43 +245,17 @@
   <code><a href='ga_model_example.html'>ga_model_example</a></code>,
   <code><a href='ga_model_load.html'>ga_model_load</a></code>, <code><a href='ga_model_make.html'>ga_model_make</a></code>,
   <code><a href='ga_model_save.html'>ga_model_save</a></code>,
-  <code><a href='ga_model_write.html'>ga_model_write</a></code>, <code><a href='ga_model.html'>ga_model</a></code></p></div>
+  <code><a href='ga_model_tweet.html'>ga_model_tweet</a></code>, <code><a href='ga_model.html'>ga_model</a></code></p></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-</div><span class='co'># NOT RUN {</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>googleAnalyticsModelR</span>)
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>googleAnalyticsR</span>)
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>plotly</span>)
-
-  <span class='co'># create your htmlwidget output - in this case plot.ly</span>
-  <span class='no'>output</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/googleAnalyticsModelR/topics/ga_time_normalised'>ga_time_normalised</a></span>(<span class='fl'>81416156</span>, <span class='kw'>interactive_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-  <span class='co'># if you have a plot.ly account, you can generate a static image</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/plotly/topics/plotly_IMAGE'>plotly_IMAGE</a></span>(<span class='no'>output</span>$<span class='no'>plot</span>, <span class='kw'>out_file</span> <span class='kw'>=</span> <span class='st'>"tweet.png"</span>)
-
-  <span class='co'># now upload - assumes auto-authentication with googleCloudStorage</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>googleCloudStorageR</span>)
-  <span class='fu'>ga_model_tweet</span>(<span class='no'>output</span>,
-                 <span class='st'>"@HoloMarked"</span>,
-                 <span class='st'>"Test2 ga_model twitter upload"</span>,
-                 <span class='kw'>bucket</span> <span class='kw'>=</span> <span class='st'>"mark-edmondson-public-read"</span>,
-                 <span class='kw'>image</span> <span class='kw'>=</span> <span class='st'>"tweet.png"</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>

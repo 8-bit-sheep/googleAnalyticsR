@@ -88,7 +88,19 @@ d2 <- ga_model(my_viewid, model = decomp_ga, date_range = c("20daysAgo","yesterd
 You can examine the properties of the model and the arguments it was sent via its print method:
 
 ```{r}
+decomp_ga
+```
+
+You can also see an overview on how a particular call to a model was created by printing out the model's result directly to console:
+
+```{r}
 d2
+```
+
+And if you want to review the code of the model, use `ga_model_write()` to write the functions out to a file.
+
+```r
+ga_model_write(decomp_ga, "my_model.R")
 ```
 
 ## Shiny modules
@@ -155,6 +167,7 @@ If you want to pass reactive input objects to your model's module, do so by wrap
 ```
 
 
+
 ## Creating model `.gamr` objects
 
 To create your own models, you need to predefine all the functions to look after the fetching, modelling and viewing of the data.  You then pass those functions to the `ga_model_make()` function.
@@ -165,9 +178,10 @@ The functions need to follow these specifications:
 * `model_f` - A function to work with the data you have fetched. The first argument should be the data.frame that is produced by the data fetching function, `data_f()`.
 * `output_f` - A function to plot the data. The first argument should be the data.frame that is produced by the model function, `model_f()`. 
 * All functions you create must include `...` as an argument. 
-* Take care if you use the same argument name that it is consistent with all functions
+* Take care if you use the same argument name that it is consistent with all functions as it will be passed to all of them.
 
 If you want to also create the Shiny modules, then you also need to specify:
+
 * `outputShiny` - the output function for the UI, such as `plotOutput`
 * `renderShiny` - the render function for the server, such as `renderPlot`
 
@@ -177,7 +191,7 @@ You then supply supporting information to make sure the user can run the model:
 * `required_packages` - The packages the end user needs to have installed to run your functions.
 * `description` - A sentence on what the model is so they can be distinguished. 
 
-To create the example model above, the above was applied as shown below:
+To create the decomposition example model, this was applied as shown below:
 
 ```r
 get_model_data <- function(viewId,
@@ -205,7 +219,7 @@ decomp_ga <- ga_model_make(get_model_data,
 
 ## Advanced use
 
-The more arguments you provide to the model creation functions, the more complicated it is for the end user, but the more flexible the model.  It is suggested making several narrow useage models is better than one complicated one.
+The more arguments you provide to the model creation functions, the more complicated it is for the end user, but the more flexible the model.  It is suggested making several narrow usage models is better than one complicated one.
 
 For instance, you could modify the above model to allow the end user to specify the metric, timespan and seasonality of the decomposition:
 
@@ -271,7 +285,7 @@ ga_model(81416156, "my_model.gamr")
 
 If you need to change parts of a model, `ga_model_edit()` lets you change individual aspects:
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 ga_model_edit(decomp_ga_advanced, description = "New description")
 ```
 
@@ -281,9 +295,25 @@ You can also pass it the filename, which will load, make the edit, then save the
 ga_model_edit("my_model.gamr", description = "New description")
 ```
 
-## CausalImpact example
+If you want to examine or change the functions in a model, you can use `ga_model_write()` to write them to a file, or examine them directly from the model object.  The structure of the model object can be examined using `str()`:
 
-To make your own portable GA Effect, this model uses the CausalImpact and dygraphs libraries to make a plot of your GA data.
+```{r}
+str(decomp_ga_advanced, give.attr = FALSE)
+```
+
+And you can access various elements by the usual list methods:
+ 
+```{r}
+decomp_ga_advanced$data_f
+
+
+decomp_ga_advanced$description
+```
+
+
+## GA Effect with ga_models
+
+To make your own portable [GA Effect](https://gallery.shinyapps.io/ga-effect/), this model uses the CausalImpact and dygraphs libraries to make a plot of your GA data.
 
 This example model is available via `ga_model_example("ga-effect.gamr")`
 
@@ -414,7 +444,7 @@ ci <- ga_model(81416156, ci_model, event_date = as.Date("2019-01-01"))
 ci$plot
 ```
 
-That can display in a tweet:
+That can display interactively in a tweet:
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">An example for the documentation - CausalImpact/Dygraphs with ga_models <a href="https://t.co/9qfvi3uvLc">https://t.co/9qfvi3uvLc</a></p>&mdash; Mark Edmondson (@HoloMarkeD) <a href="https://twitter.com/HoloMarkeD/status/1106958249130119169?ref_src=twsrc%5Etfw">March 16, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
@@ -423,4 +453,6 @@ Similarly, you can launch this in a Shiny app by slightly modifying the Shiny ex
 This is available within the package via `shiny::runApp(system.file("shiny/models-ga-effect", package="googleAnalyticsR"))`
 
 ![](model-ga-effect.png)
+
+Dress it up in a nice theme and add some more inputs and outputs and you are close to the finished result.
 

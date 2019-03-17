@@ -21,7 +21,7 @@ print.ga_model <- function(x, ...){
   cat0("Data args:   ", paste(function_args(x$data_f), collapse = " "))
   cat0("Input data:  ", paste(x$required_columns, collapse = " "))
   cat0("Model args:  ", paste(function_args(x$model_f), collapse = " "))
-  cat0("Output args: ", paste(function_args(x$output_f), collapse = " "))
+  if(!is.null(x$output_f)) cat0("Output args: ", paste(function_args(x$output_f), collapse = " "))
   cat0("Packages:    ", paste(x$required_packages, collapse = " "))
 }
 
