@@ -37,7 +37,7 @@ server <- function(input, output, session){
   output$model_description <- renderText(model$description)
   callModule(model$shiny_module$server, "model1", 
              view_id = view_id, 
-             event_date = input$event_date)
+             event_date = reactive(input$event_date))
 
 }
 

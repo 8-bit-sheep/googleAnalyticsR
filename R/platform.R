@@ -401,28 +401,40 @@ eval_input_list <- function(dots){
 
 #' Upload an interactive visualisation so it can be embedded in a tweet
 #' 
-#' Inspired by \url{https://datatitian.com/how-to-turn-your-ggplot2-visualization-into-an-interactive-tweet/} this uploads your model output into Google Cloud storage, in the right format to embd in a tweet
+#' Inspired by \url{https://datatitian.com/how-to-turn-your-ggplot2-visualization-into-an-interactive-tweet/} this uploads your model output into Google Cloud storage, in the right format to embed in a tweet
 #' 
 #' @param model_output A \code{ga_model_result} object created by \link{ga_model}
 #' @param twitter Your twitter handle e.g. \code{@holomarked}
 #' @param title Twitter preview card title text
 #' @param bucket The GCS bucket to upload to
-#' @param image an optional image to display before the visualition runs
+#' @param image An optional image to display before the visualition runs
 #' 
 #' @details 
-#' Authenticate with `googleCloudStorageR` first.  \url{https://cards-dev.twitter.com/validator} is useful to test what it will look like on Twitter.
+#' 
+#' This should work with all model outputs that are using \code{library(htmlwidgets)}
+#' 
+#' If using plotly, you need an account to use \code{plotly_IMAGE} to generate the preview image.
+#' 
+#' If you don't use a preview image, a generic one will be supplied instead.
+#' 
+#' You need to authenticate with `googleCloudStorageR` before running this function so it can upload the appropriate files and make them public.   
+#' 
+#' \url{https://cards-dev.twitter.com/validator} is useful to test what it will look like on Twitter.
 #' 
 #' @examples 
 #' 
 #' \dontrun{
 #'   library(googleAnalyticsModelR)
 #'   library(googleAnalyticsR)
+#'   library(plotly)
 #' 
+#'   # create your htmlwidget output - in this case plot.ly
 #'   output <- ga_time_normalised(81416156, interactive_plot = TRUE)
 #'   
-#'   # if you have a plotly account, get a static image
+#'   # if you have a plot.ly account, you can generate a static image
 #'   plotly_IMAGE(output$plot, out_file = "tweet.png")
 #' 
+#'   # now upload - assumes auto-authentication with googleCloudStorage
 #'   library(googleCloudStorageR)
 #'   ga_model_tweet(output, 
 #'                  "@HoloMarked", 
@@ -434,6 +446,7 @@ eval_input_list <- function(dots){
 #' @importFrom htmlwidgets saveWidget
 #' @importFrom googleCloudStorageR gcs_download_url gcs_upload
 #' @export
+#' @family GA modelling functions
 ga_model_tweet <- function(model_output,
                            twitter,
                            title,
@@ -533,6 +546,38 @@ add_twitter_meta <- function(html,
   writeChar(o, html)
 }
 
+
+
+#' Write the ga_model functions to a file
+#' 
+#' @param model The \code{ga_model} object to extract functions from to write
+#' @param filepath The filepath to write the functions to
+#' 
+#' @export
+#' @family GA modelling functions
+#' @import assertthat
+#' @importFrom formatR tidy_file
+ga_model_write <- function(model, filepath = "ga_model.R"){
+  
+  assert_that(is.ga_model(model))
+  
+  the_text <- 
+    c(sprintf("# ga_model: %s\n", model$description),
+      paste0("library(",model$required_packages,")"),
+      write_f("\n# fetch data\ndata_f", model$data_f),
+      write_f("\n# model data\nmodel_f", model$model_f),
+      write_f("\n# output data\noutput_f", model$output_f))
+  
+  writeLines(the_text, con = filepath)
+  suppressMessages(formatR::tidy_file(filepath, width.cutoff = 80))
+  myMessage("Written model to ", filepath, level = 3)
+}
+
+write_f <- function(name, f){
+  c(sprintf("%s <- function(%s)", name, paste(names(formals(f)), collapse = ",\n")),
+    sprintf("%s\n", as.character(body(f))),
+    "}")
+}
 
 
 

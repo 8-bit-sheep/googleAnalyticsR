@@ -15,25 +15,36 @@ ga_model_tweet(model_output, twitter, title, bucket, image = "")
 
 \item{bucket}{The GCS bucket to upload to}
 
-\item{image}{an optional image to display before the visualition runs}
+\item{image}{An optional image to display before the visualition runs}
 }
 \description{
-Inspired by \url{https://datatitian.com/how-to-turn-your-ggplot2-visualization-into-an-interactive-tweet/} this uploads your model output into Google Cloud storage, in the right format to embd in a tweet
+Inspired by \url{https://datatitian.com/how-to-turn-your-ggplot2-visualization-into-an-interactive-tweet/} this uploads your model output into Google Cloud storage, in the right format to embed in a tweet
 }
 \details{
-Authenticate with `googleCloudStorageR` first.  \url{https://cards-dev.twitter.com/validator} is useful to test what it will look like on Twitter.
+This should work with all model outputs that are using \code{library(htmlwidgets)}
+
+If using plotly, you need an account to use \code{plotly_IMAGE} to generate the preview image.
+
+If you don't use a preview image, a generic one will be supplied instead.
+
+You need to authenticate with `googleCloudStorageR` before running this function so it can upload the appropriate files and make them public.   
+
+\url{https://cards-dev.twitter.com/validator} is useful to test what it will look like on Twitter.
 }
 \examples{
 
 \dontrun{
   library(googleAnalyticsModelR)
   library(googleAnalyticsR)
+  library(plotly)
 
+  # create your htmlwidget output - in this case plot.ly
   output <- ga_time_normalised(81416156, interactive_plot = TRUE)
   
-  # if you have a plotly account, get a static image
+  # if you have a plot.ly account, you can generate a static image
   plotly_IMAGE(output$plot, out_file = "tweet.png")
 
+  # now upload - assumes auto-authentication with googleCloudStorage
   library(googleCloudStorageR)
   ga_model_tweet(output, 
                  "@HoloMarked", 
@@ -43,3 +54,11 @@ Authenticate with `googleCloudStorageR` first.  \url{https://cards-dev.twitter.c
 }
 
 }
+\seealso{
+Other GA modelling functions: \code{\link{ga_model_edit}},
+  \code{\link{ga_model_example}},
+  \code{\link{ga_model_load}}, \code{\link{ga_model_make}},
+  \code{\link{ga_model_save}},
+  \code{\link{ga_model_write}}, \code{\link{ga_model}}
+}
+\concept{GA modelling functions}

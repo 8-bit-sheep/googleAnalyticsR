@@ -91,6 +91,7 @@ The \code{data_f} function result will feed to \code{model_f}
 Other GA modelling functions: \code{\link{ga_model_edit}},
   \code{\link{ga_model_example}},
   \code{\link{ga_model_load}}, \code{\link{ga_model_save}},
-  \code{\link{ga_model}}
+  \code{\link{ga_model_tweet}},
+  \code{\link{ga_model_write}}, \code{\link{ga_model}}
 }
 \concept{GA modelling functions}

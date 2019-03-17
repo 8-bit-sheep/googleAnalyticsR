@@ -35,6 +35,8 @@ Change features of a model by changing the functions within it.
 \seealso{
 Other GA modelling functions: \code{\link{ga_model_example}},
   \code{\link{ga_model_load}}, \code{\link{ga_model_make}},
-  \code{\link{ga_model_save}}, \code{\link{ga_model}}
+  \code{\link{ga_model_save}},
+  \code{\link{ga_model_tweet}},
+  \code{\link{ga_model_write}}, \code{\link{ga_model}}
 }
 \concept{GA modelling functions}
