@@ -30,7 +30,9 @@ These are all great libraries, that I have taken inspiration from.
 * Shiny App compatible
 * The same authentication flow can be used with other `googleAuthR` apps like [`searchConsoleR`](https://github.com/MarkEdmondson1234/searchConsoleR)
 * Automatic batching, sampling avoidance with daily walk, multi-account fetching, multi-channel funnel
-* Support for `googleAuthR` batch, meaning 10 calls at once to GA - great for big fetches.  For big data calls this is implemented automatically so could be 10x quicker than normal GA fetching
+* Optimisations to make fetching large amounts of data as quickly as possible (batching, caching etc.)
+* Management API features
+* The `.gamr` file format for sharing modelling analysis of Google Analytics data.
 * Meta data included in attributes of returned dataframe including date ranges, totals, min and max
 
 ## Install
