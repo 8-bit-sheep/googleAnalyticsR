@@ -443,8 +443,6 @@ eval_input_list <- function(dots){
 #'                  image = "tweet.png")
 #' }
 #' 
-#' @importFrom htmlwidgets saveWidget
-#' @importFrom googleCloudStorageR gcs_download_url gcs_upload
 #' @export
 #' @family GA modelling functions
 ga_model_tweet <- function(model_output,
@@ -480,7 +478,7 @@ ga_model_tweet <- function(model_output,
     selfcontained = FALSE
   )
   
-  download_url <- gcs_download_url(paste0(the_name,".html"),
+  download_url <- googleCloudStorageR::gcs_download_url(paste0(the_name,".html"),
                                    bucket = bucket,
                                    public = TRUE)
   
@@ -491,11 +489,11 @@ ga_model_tweet <- function(model_output,
   }
   
   image_loc <- paste0(the_name,"/",basename(image))
-  gcs_upload(image, 
+  googleCloudStorageR::gcs_upload(image, 
                bucket = bucket, 
                name = image_loc,
                predefinedAcl = "publicRead")
-  image_url <- gcs_download_url(image_loc, bucket= bucket, public=TRUE)
+  image_url <- googleCloudStorageR::gcs_download_url(image_loc, bucket= bucket, public=TRUE)
 
   add_twitter_meta(tmp,
                    twitter = twitter,
@@ -505,7 +503,7 @@ ga_model_tweet <- function(model_output,
                    image = image_url)
 
   
-  gcs_upload(tmp, 
+  googleCloudStorageR::gcs_upload(tmp, 
              bucket = bucket, 
              name = paste0(the_name, ".html"),
              predefinedAcl = "publicRead")
@@ -515,7 +513,7 @@ ga_model_tweet <- function(model_output,
   all_tmp <- all_tmp[grepl(the_name, all_tmp)]
   
   lapply(all_tmp, function(x){
-    gcs_upload(file.path(my_tmpdir, x), 
+    googleCloudStorageR::gcs_upload(file.path(my_tmpdir, x), 
                bucket = bucket, 
                name = x,
                predefinedAcl = "publicRead")
@@ -556,7 +554,6 @@ add_twitter_meta <- function(html,
 #' @export
 #' @family GA modelling functions
 #' @import assertthat
-#' @importFrom formatR tidy_file
 ga_model_write <- function(model, filepath = "ga_model.R"){
   
   assert_that(is.ga_model(model))
