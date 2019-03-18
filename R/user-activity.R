@@ -119,45 +119,29 @@ page_user_activity <- function(x){
 #' @importFrom tidyr unnest
 parse_user_activity <- function(x){
   
-  o <- x
-  o_summ <- as_tibble(as.data.frame(x$summary, stringsAsFactors = FALSE))
-  o_dates <- map(x$dateGroups, "sessions")
-  o_dates <- setNames(o_dates, map_chr(x$dateGroups, "activityDate"))
-  o_sess <- map(o_dates, ~setNames(.x, map_chr(.x, "sessionId")))
+  o_sess <- map_dfr(x$sessions, function(y){
+    data.frame(sessionId = y$sessionId, 
+               deviceCategory = y$deviceCategory, 
+               platform = y$platform, 
+               dataSource = y$dataSource,
+               sessionDate = y$sessionDate,
+               stringsAsFactors = FALSE)  
+  })
   
-  o_acts <- map(o_sess, 
-                function(date){
-                  map(date, 
-                      function(sid){ 
-                        setNames(sid$activities, 
-                                 map_chr(sid$activities, 
-                                         ~format(timestamp_to_r(.x[["activityTime"]]))))
-                        }
-                      )
-                  })
-  
-  session_level <- setNames(map(x$dateGroups, function(x){
-    setNames(map(x$sessions, function(y){
-      data.frame(sessionId = y$sessionId, 
-                 deviceCategory = y$deviceCategory, 
-                 platform = y$platform, 
-                 dataSource = y$dataSource,
-                 stringsAsFactors = FALSE)   
-    }), map_chr(x$sessions, "sessionId"))
-  }), map_chr(x$dateGroups, "activityDate"))
-  
-  session_df <- session_level %>% 
-    map(bind_rows) %>% 
-    bind_rows(.id = "date") %>% 
-    mutate(clientId = o_summ$clientId[[1]])
+  o_acts <- setNames(map(x$sessions, 
+                function(sid){
+                  setNames(sid$activities, 
+                           map_chr(sid$activities, 
+                                   ~format(timestamp_to_r(.x[["activityTime"]]))
+                                   ))
+                  }),
+                map_chr(x$sessions, "sessionId"))
   
   activity <- NULL
   nested_hits <- o_acts %>% 
-    map(tibble::enframe, name = "sessionId", value = "activity") %>% 
-    bind_rows(.id = "date") %>% 
+    tibble::enframe(name = "sessionId", value = "activity") %>% 
     tidyr::unnest() %>% 
-    mutate(clientId = o_summ$clientId[[1]],
-           activityTime = iso8601_to_r(map_chr(activity, "activityTime")),
+    mutate(activityTime = iso8601_to_r(map_chr(activity, "activityTime")),
            source = map_chr(activity, "source"),
            medium = map_chr(activity, "medium"),
            channelGrouping = map_chr(activity, "channelGrouping"),
@@ -165,16 +149,15 @@ parse_user_activity <- function(x){
            keyword = map_chr(activity, "keyword"),
            hostname = map_chr(activity, "hostname"),
            landingPagePath = map_chr(activity, "landingPagePath"),
-           deviceCategory = map_chr(activity, "deviceCategory"),
-           devicePlatform = map_chr(activity, "devicePlatform"),
-           operatingSystem = map_chr(activity, "operatingSystem"),
            activityType = map_chr(activity, "activityType"),
            customDimension = map(activity, "customDimension"),
            pagePath = map_chr(activity, ~safe_extract(.x$pageview$pagePath)),
            pageTitle = map_chr(activity, ~safe_extract(.x$pageview$pageTitle)),
            screenName = map_chr(activity, ~safe_extract(.x$appview$screenName)),
-           mobileDeviceBranding = map_chr(activity, ~safe_extract(.x$appview$mobileDeviceBranding)),       
-           mobileDeviceModel = map_chr(activity, ~safe_extract(.x$appview$mobileDeviceModel)),
+           mobileDeviceBranding = map_chr(activity, 
+                                          ~safe_extract(.x$appview$mobileDeviceBranding)),       
+           mobileDeviceModel = map_chr(activity, 
+                                       ~safe_extract(.x$appview$mobileDeviceModel)),
            appName = map_chr(activity, ~safe_extract(.x$appview$appName)),   
            ecommerce = map(activity, "ecommerce"),
            goals = map(activity, "goals"),
@@ -186,25 +169,19 @@ parse_user_activity <- function(x){
            eventCount = map_chr(activity, ~safe_extract(.x$event$eventCount))
            )
   
-  # move hit level data to session where it makes sense?
-  # out_session <- nested_hits %>% 
-  #   select(sessionId, has_goal, source, medium, channelGrouping, campaign, keyword, landingPagePath) %>% 
-  #   distinct() %>% 
-  #   right_join(session_df, by = c("sessionId")) %>%
-    
-  out_session <- session_df %>% 
-    select(date, sessionId, clientId, everything())
-  
-  # out_hits <- nested_hits %>% 
-  #   select(-source, -medium, -channelGrouping, -campaign, -keyword, -landingPagePath, -activity)
   out_hits <- nested_hits %>% select(-activity)
 
-  o <- list(user = o_summ,
-            session = out_session,
+  o <- list(session = o_sess,
             hits = out_hits
             )
   attr(o, "nextPageToken") <- x$nextPageToken
   attr(o, "totalRows") <- x$totalRows
+  attr(o, "sampleRate") <- x$sampleRate
+  
+  if(as.numeric(x$sampleRate) < 1){
+    myMessage("Data is sampled at a sample rate of ", as.numeric(o$sampleRate)*100, "%", 
+              level = 3)
+  }
   
   o
   
