@@ -103,6 +103,13 @@ iso8601_to_r <- function(x){
   as.POSIXct(gsub("\\....Z$","",x), format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
 }
 
+safe_extract <- function(x){
+  if(is.null(x)){
+    return(NA_character_)
+  }
+  x
+}
+
 
 #' data.frames within data.frames to flatten, take residual lists and concat them
 #' @noRd
@@ -114,6 +121,15 @@ super_flatten <- function(x){
     flatten(recursive = TRUE) %>% 
     mutate_if(is.list, ~purrr::map_chr(., paste, collapse = ","))
 }
+
+#' Nested lists with data.frames within
+#' list entity names become a column
+#' @noRd
+# nested_flatten <- function(x){
+#   x %>% 
+#     map_if(is.list, function(x) ) %>% 
+#     mutate_if(is.list, nested_flatten)
+# }
 
 
 # common paging function

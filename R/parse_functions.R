@@ -87,7 +87,7 @@ google_analytics_4_parse <- function(x){
   timelr <- NULL
   if(!is.null(x$data$dataLastRefreshed)){
     # convert timezone to locale
-    timelr <- format(as.POSIXct(x$data$dataLastRefreshed, tz="UTC", format = "%Y-%m-%dT%H:%M:%S"), tz = Sys.timezone())
+    timelr <- format(timestamp_to_r(x$data$dataLastRefreshed))
     myMessage("API data last refreshed: ",timelr, level = 3)
   }
   

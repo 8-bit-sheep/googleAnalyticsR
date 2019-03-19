@@ -538,7 +538,6 @@ fetch_google_analytics_4_slow <- function(request_list,
   ## make the function
   f <- get_ga4_function()
   
-  
   do_it <- TRUE
   
   ## just need the first one, which we modify
