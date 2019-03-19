@@ -34,7 +34,7 @@ library(googleAnalyticsR)
 ga_auth()
 
 ## get your accounts
-account_list <- google_analytics_account_list()
+account_list <- ga_account_list()
 
 ## pick a profile with data to query
 

@@ -13,7 +13,8 @@
                                     "https://www.googleapis.com/auth/analytics.edit",
                                     "https://www.googleapis.com/auth/analytics.manage.users",
                                     "https://www.googleapis.com/auth/analytics.user.deletion"),
-    googleAuthR.httr_oauth_cache = "ga.oauth"
+    googleAuthR.httr_oauth_cache = "ga.oauth",
+    googleAuthR.quotaUser = Sys.info()[["user"]]
   )
   
   toset <- !(names(op.googleAnalyticsR) %in% names(op))
@@ -62,7 +63,7 @@
     options(googleAuthR.webapp.client_id = Sys.getenv("GA_WEB_CLIENT_SECRET"))
   }
   
-  default_project_message()
+
   
   f <- function(req){
     

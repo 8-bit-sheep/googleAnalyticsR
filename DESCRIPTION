@@ -37,15 +37,20 @@ Imports:
 Suggests:
     bigQueryR (>= 0.3.1),
     covr,
+    formatR,
     ganalytics,
+    googleAnalyticsModelR,
     googleCloudStorageR (>= 0.2.0),
     httptest (>= 3.2.2),
     knitr,
     miniUI (>= 0.1.1),
     rmarkdown,
-    shiny (>= 0.13.2)
+    shiny (>= 0.13.2),
+    googleAnalyticsModelR
 License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
-Remotes: MarkEdmondson1234/googleAuthR
+Remotes: 
+  jdeboer/ganalytics,
+  IronistM/googleAnalyticsModelR

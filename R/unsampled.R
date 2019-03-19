@@ -165,57 +165,74 @@ ga_unsampled_download <- function(reportTitle,
     )
   }
   
-  unsamps <- ga_unsampled_list(accountId = accountId, 
-                               webPropertyId = webPropertyId, 
-                               profileId = profileId)
-
+  unsamps <- ga_unsampled_list(
+    accountId = accountId,
+    webPropertyId = webPropertyId,
+    profileId = profileId
+  )
+  
   report <- unsamps[unsamps$title == reportTitle, ]
-
-    
-  if(nrow(report) == 0) {
+  
+  
+  if (nrow(report) == 0) {
     stop("Report title not found. Please enter a valid title. 
-         Remember it is case-sensitive",
-         call.=FALSE) 
+           Remember it is case-sensitive",
+      call. = FALSE
+    )
   }
   
-  if(nrow(report) > 1) {
+  if (nrow(report) > 1) {
     myMessage(sprintf("WARNING: There are multiple reports with the same title of %s. 
-            Choosing the most recently created.", reportTitle),
-              level=3)  #need to find way to avoid progress bar overwriting
-
+                Choosing the most recently created.", reportTitle),
+      level = 3
+    ) # need to find way to avoid progress bar overwriting
+  
     report <- report[report$created == max(report$created), ]
   }
   
   # now there is only 1 report
-  if(report$status != "COMPLETED") {
+  if (report$status != "COMPLETED") {
     stop(sprintf("The unsampled report has not COMPLETED. It is currently %s. 
-               Please try again at a later time.", report$status),
-         call.=FALSE)
+                   Please try again at a later time.", report$status),
+      call. = FALSE
+    )
   }
-
+  # resolves issue 208
+  if (length(report$downloadType) == 0) {
+    stop(
+      'No download related fields found (downloadType and driveDownloadDetails). 
+           Was expecting "GOOGLE_DRIVE" downloadType.',
+      call. = FALSE
+    )
+  }
+  
   # https://developers.google.com/analytics/devguides/config/mgmt/v3/unsampled-reports
-  if(any(is.null(report$downloadType), report$downloadType != "GOOGLE_DRIVE")) {
+  if (report$downloadType != "GOOGLE_DRIVE") {
     stop(
       "Only Google Drive download links are currently supported. 
-      Contact your Analytics 360 account manager if you would like to change 
-      the download location of your unsampled reports.",
+        Contact your Analytics 360 account manager if you would like to change 
+        the download location of your unsampled reports.",
       call. = FALSE
     )
   }
   # Get document metadata
-  url <- sprintf("https://www.googleapis.com/drive/v2/files/%s", 
-                 toString(report$driveDownloadDetails))
+  url <- sprintf(
+    "https://www.googleapis.com/drive/v2/files/%s",
+    toString(report$driveDownloadDetails)
+  )
   
   document <- gar_api_generator(url, "GET")()
   
   download_link <- document[["content"]][["webContentLink"]]
-
+  
   # Additional parsing from confirmation page if file is too large
-  too_large <- (as.numeric(document[["content"]][["fileSize"]]) / 1048576) >= 25 # bytes to MB  if(too_large){ 
-    
-  html <- GET(document[["content"]][["webContentLink"]],
-              add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]))
-  #Read and parse html for confirmation code
+  too_large <- (as.numeric(document[["content"]][["fileSize"]]) / 1048576) >= 25 # bytes to MB  if(too_large){
+  
+  html <- GET(
+    document[["content"]][["webContentLink"]],
+    add_headers(Authorization = document[["request"]][["headers"]][["Authorization"]])
+  )
+  # Read and parse html for confirmation code
   stop_for_status(html)
   too_large_html <- content(html, "text")
   pat <- "&amp;confirm=(.*?)&amp;"
@@ -223,35 +240,41 @@ ga_unsampled_download <- function(reportTitle,
   pat <- "&amp;"
   confirm_code <- gsub(pat, "", confirm_code[[1]])
   
-  #Final url is in this pattern:
-  #https://drive.google.com/a/{company_domain}/uc?export=download&confirm={4character_confirmation_code}&id={documentid}
+  # Final url is in this pattern:
+  # https://drive.google.com/a/{company_domain}/uc?export=download&confirm={4character_confirmation_code}&id={documentid}
   pat <- "id=.*download$"
   base_url <- gsub(pat, "", download_link)
-  download_link <- paste0(base_url, "export=download", "&", confirm_code, "&id=", 
-                          document[["content"]][["id"]])
+  download_link <- paste0(
+    base_url, "export=download", "&", confirm_code, "&id=",
+    document[["content"]][["id"]]
+  )
 
   # Currently writing with same filename to current working directory
-  if(isTRUE(downloadFile)){ 
-    
+  if (isTRUE(downloadFile)) {
     filename <- sprintf("%s.csv", toString(report$title))
-    
-    r <- GET(download_link,
-             add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]),
-             write_disk(filename, overwrite=TRUE),
-             progress())
-    
-    stop_for_status(r)
-    
-    myMessage(sprintf("%s successfully downloaded!", filename),
-              level=3)
-    out <- filename
-  } else{ 
-    r <- GET(download_link,
-             add_headers(Authorization=document[["request"]][["headers"]][["Authorization"]]))
-    stop_for_status(r) 
-    
-    out <- content(r) 
-  }
   
-  out
+    r <- GET(
+      download_link,
+      add_headers(Authorization = document[["request"]][["headers"]][["Authorization"]]),
+      write_disk(filename, overwrite = TRUE),
+      progress()
+    )
+  
+    stop_for_status(r)
+  
+    myMessage(sprintf("%s successfully downloaded!", filename),
+      level = 3
+    )
+    out <- filename
+  } else {
+    r <- GET(
+      download_link,
+      add_headers(Authorization = document[["request"]][["headers"]][["Authorization"]])
+    )
+    stop_for_status(r)
+  
+    out <- content(r)
+  }
+
+out
 }

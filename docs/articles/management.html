@@ -127,6 +127,13 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../articles/models.html">
+    <span class="fa fa-calculator"></span>
+     
+    Models
+  </a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
@@ -199,332 +206,55 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ga_account_list is most commonly used</span>
 <span class="co"># (restricted to top 10 with the head() function)</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="../reference/ga_account_list.html">ga_account_list</a></span>(), <span class="dt">n =</span> <span class="dv">10</span>)</code></pre></div>
-<pre><code>##    accountId        accountName internalWebPropertyId    level
-## 1   62477307 Aller Media Nordic              94746559  PREMIUM
-## 2   62477307 Aller Media Nordic              94746559  PREMIUM
-## 3   62477307 Aller Media Nordic              94746559  PREMIUM
-## 4   62477307 Aller Media Nordic              94746559  PREMIUM
-## 5   62477307 Aller Media Nordic              94746559  PREMIUM
-## 6   62477307 Aller Media Nordic              94746559  PREMIUM
-## 7  120229978               APPs             177894020 STANDARD
-## 8  120229978               APPs             177894020 STANDARD
-## 9  120229978               APPs             177890976 STANDARD
-## 10 120229978               APPs             177890976 STANDARD
-##          websiteUrl  webPropertyId              webPropertyName type
-## 1  http://nyhavn.dk    UA-219709-9 DK: Nyhavn rejser - Nyt site  WEB
-## 2  http://nyhavn.dk    UA-219709-9 DK: Nyhavn rejser - Nyt site  WEB
-## 3  http://nyhavn.dk    UA-219709-9 DK: Nyhavn rejser - Nyt site  WEB
-## 4  http://nyhavn.dk    UA-219709-9 DK: Nyhavn rejser - Nyt site  WEB
-## 5  http://nyhavn.dk    UA-219709-9 DK: Nyhavn rejser - Nyt site  WEB
-## 6  http://nyhavn.dk    UA-219709-9 DK: Nyhavn rejser - Nyt site  WEB
-## 7   http://iform.dk UA-120229978-2           App not configured  WEB
-## 8   http://iform.dk UA-120229978-2           App not configured  WEB
-## 9   http://iform.dk UA-120229978-3      BCM type not configured  WEB
-## 10  http://iform.dk UA-120229978-3      BCM type not configured  WEB
-##       viewId                       viewName
-## 1  186748193     erhverv.nyhavn.dk - Master
-## 2  186653986 erhverv.nyhavn.dk - Unfiltered
-## 3  131664847    Nyhavn Blog - Filtered view
-## 4  103820874           Nyhavn Filtered view
-## 5  107489314                       testview
-## 6   98747569                     Unfiltered
-## 7  176488363         App_not_configured_ALL
-## 8  176884999         App_not_configured_RAW
-## 9  176495554    BCM_type_not_configured_ALL
-## 10 176882051    BCM_type_not_configured_RAW</code></pre>
+<pre><code>##    accountId      accountName internalWebPropertyId    level
+## 1   79301104          cloudyr             118427305 STANDARD
+## 2   54516992     Demo Account              87479473 STANDARD
+## 3   54516992     Demo Account              87479473 STANDARD
+## 4   54516992     Demo Account              87479473 STANDARD
+## 5   73050356     GDE Tracking             110873793 STANDARD
+## 6   73050356     GDE Tracking             110873793 STANDARD
+## 7   47480439    MarkEdmondson              78737968 STANDARD
+## 8   47480439    MarkEdmondson              78742336 STANDARD
+## 9   47584925   RaspberryPi UA              78875592 STANDARD
+## 10  54019251 Sunholo Websites              86845257 STANDARD
+##                                 websiteUrl webPropertyId
+## 1                 http://cloudyr.github.io UA-79301104-1
+## 2  https://shop.googlemerchandisestore.com UA-54516992-1
+## 3  https://shop.googlemerchandisestore.com UA-54516992-1
+## 4  https://shop.googlemerchandisestore.com UA-54516992-1
+## 5                  http://gde-websites.com UA-73050356-1
+## 6                  http://gde-websites.com UA-73050356-1
+## 7                  http://markedmondson.me UA-47480439-2
+## 8                  http://markedmondson.me UA-47480439-1
+## 9                           http://erm.com UA-47584925-1
+## 10        https://gwt-download.appspot.com UA-54019251-1
+##             webPropertyName type starred    viewId          viewName
+## 1       the cloudyr project  WEB      NA 123875646 All Web Site Data
+## 2  Google Merchandise Store  WEB      NA  92320289     1 Master View
+## 3  Google Merchandise Store  WEB      NA  92324711       2 Test View
+## 4  Google Merchandise Store  WEB      NA  90822334   3 Raw Data View
+## 5              GDE Tracking  WEB      NA 115760903      Bot excluded
+## 6              GDE Tracking  WEB      NA 115751114          RAW DATA
+## 7       MarkEdmondson oldGA  WEB    TRUE  81416156         Live Blog
+## 8          markedmondson.me  WEB      NA  81416941 All Web Site Data
+## 9               raspberryPi  WEB      NA  81569059 All Web Site Data
+## 10             GWT Download  WEB      NA  90130533 All Web Site Data</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this only lists account meta-data</span>
 <span class="kw"><a href="../reference/ga_accounts.html">ga_accounts</a></span>()</code></pre></div>
-<pre><code>##           id                                                name
-## 1     130829                                          IIH Nordic
-## 2     216346                                     www.viivilla.no
-## 3     637354                                   www.posterland.dk
-## 4     695460                                      Benjamin Media
-## 5    1585437                                              Idenyt
-## 6    1858096                                     www.viivilla.se
-## 7    2758029                                        Ekspres Bank
-## 8    5373930                                              GDS DK
-## 9    5373967                                              GDS SE
-## 10   5373991                                              ILL NL
-## 11   5374347                                              BOB DK
-## 12   6173460                                              ATR DK
-## 13   6187057                                              KOM DK
-## 14   6187187                                              KOM SE
-## 15   6187221                                              KOM NO
-## 16   6187251                                              KOM SF
-## 17   6187271                                              IFO DK
-## 18   6187298                                              IFO SE
-## 19   6187322                                              IFO NO
-## 20   6187343                                              IFO SF
-## 21   6187369                                              GDS NO
-## 22   6187387                                              GDS SF
-## 23   6187803                                              ILL DK
-## 24   6187819                                              ILL SE
-## 25   6187843                                              ILL NO
-## 26   6187870                                              ILL SF
-## 27   6187906                                              DIF DK
-## 28   6187937                                              DIF SE
-## 29   6188037                                              DIF NO
-## 30   6188055                                              DIF SF
-## 31   6188180                                              HIS DK
-## 32   6188201                                              HIS SE
-## 33   6188219                                              HIS NO
-## 34   6188238                                              HIS SF
-## 35   6627687                                              NGM DK
-## 36   6627762                                              NGM SE
-## 37   6627796                                              NGM NO
-## 38   6627837                                              NGM SF
-## 39   6628087                                              ATR NO
-## 40   6628131                                              ATR SE
-## 41   7406541                                                 KSW
-## 42  12022232                                              HIS NL
-## 43  19662071                             Vestas Wind Systems A/S
-## 44  23095041                      http://bonnierpublications.com
-## 45  25569294                                  iformkostdagbok.se
-## 46  27331166                                  iformkostdagbok.no
-## 47  33545516                           Merck Global TEST Account
-## 48  35085180                                       lahjalehti.fi
-## 49  35454547                                sinunlahjalehtesi.fi
-## 50  35846759                                     Ekspres Bank ny
-## 51  36044303                     Merck Global Rollup GHH Account
-## 52  39239835                                   Merck Initiatives
-## 53  40189966                                   Merck GHH APAC-CN
-## 54  40191959          Merck Global - Countries - Corporate - GHH
-## 55  40205238       Merck GHH Emerging Markets - 0 - Asia Pacific
-## 56  40205920                                        Merck GHH US
-## 57  40207526                                     Merck GHH Japan
-## 58  40210201                             Merck GHH Europe Canada
-## 59  40258367              Merck GHH Emerging Markets - 1 - EEMEA
-## 60  40269182                         Merck GHH Europe Canada - 2
-## 61  40276789      Merck GHH Emerging Markets - 2 - Latin America
-## 62  40287219                         Merck GHH Europe Canada - 1
-## 63  42015978                     Merck Global Rollup MCC Account
-## 64  47480439                                       MarkEdmondson
-## 65  49948161                            Life Extension Europe UK
-## 66  49948265                           Life Extension Europe COM
-## 67  49950147                            Life Extension Europe FR
-## 68  49951441                            Life Extension Europe DE
-## 69  53486370                            Life Extension Europe IT
-## 70  53488129                            Life Extension Europe ES
-## 71  54516992                                        Demo Account
-## 72  54836995                      Danfoss - EMA - _Global (.com)
-## 73  59745908                                            Rockwool
-## 74  62477307                                  Aller Media Nordic
-## 75  68612674                                                wype
-## 76  73439771            Merck/MSD - GHH - US - integrated master
-## 77  74640842 Merck/MSD - GHH - international - integrated master
-## 78  75903262                                             maaltid
-## 79  77294772                                 Ekspres Bank - 2016
-## 80  77307136                                 Ekspres Bank - 2016
-## 81  78158829                                                 PHI
-## 82  79273183                                       partnerskaber
-## 83  80263539                                            MoreShop
-## 84  87922917                                  Bonnierexpeditions
-## 85  91022814                            test new brandsite (ifo)
-## 86  91647284        Merck/MSD - GHH - mobile - integrated master
-## 87  96445678                                Bonnier Publications
-## 88  98838423              GHH Merck Connect - Data Layer Markets
-## 89 102358263                      E-invasion Webshop Prefetching
-## 90 104762453                               www.ao.dk prefetching
-## 91 106653537                                         IIHTestSite
-## 92 109979189        Merck GHH US integrated master -  raw backup
-## 93 115815822                                        Falck - OPEX
-## 94 120229978                                                APPs
-## 95 121203813                                                 SHI
-## 96 123282826                            Bonnier and Benjamin IIH
-##                created             updated
-## 1  2005-11-15 17:15:33 2016-05-12 16:12:22
-## 2  2006-01-11 21:11:25 2015-08-10 19:30:34
-## 3  2006-08-29 10:24:28 2015-08-11 21:41:14
-## 4  2006-09-14 11:40:46 2016-09-27 12:49:50
-## 5  2007-03-29 12:17:02 2015-10-06 08:33:02
-## 6  2007-05-15 11:32:59 2016-01-26 16:12:43
-## 7  2007-10-08 11:56:17 2015-08-10 21:35:44
-## 8  2008-08-22 10:47:53 2015-08-10 22:47:48
-## 9  2008-08-22 10:51:37 2015-08-11 21:49:56
-## 10 2008-08-22 10:53:43 2015-08-10 23:03:13
-## 11 2008-08-22 11:38:01 2015-08-11 23:25:56
-## 12 2008-11-03 12:04:52 2015-08-12 00:12:57
-## 13 2008-11-04 12:25:34 2016-02-19 13:45:41
-## 14 2008-11-04 12:39:03 2015-08-11 23:09:03
-## 15 2008-11-04 12:41:25 2015-08-05 19:34:35
-## 16 2008-11-04 12:44:07 2015-08-10 19:05:58
-## 17 2008-11-04 12:46:36 2016-10-27 08:41:41
-## 18 2008-11-04 12:49:05 2017-01-17 14:03:04
-## 19 2008-11-04 12:52:19 2017-01-17 14:02:45
-## 20 2008-11-04 12:54:32 2015-08-11 21:09:06
-## 21 2008-11-04 12:56:38 2015-08-10 21:17:11
-## 22 2008-11-04 12:58:21 2015-08-10 18:33:07
-## 23 2008-11-04 13:36:47 2015-08-05 19:01:58
-## 24 2008-11-04 13:38:18 2015-08-05 20:16:02
-## 25 2008-11-04 13:39:57 2015-08-10 23:28:22
-## 26 2008-11-04 13:42:19 2015-08-11 22:54:34
-## 27 2008-11-04 13:45:47 2015-08-05 17:41:07
-## 28 2008-11-04 13:48:47 2015-08-10 20:22:35
-## 29 2008-11-04 13:57:19 2015-08-10 18:15:34
-## 30 2008-11-04 13:58:40 2015-08-11 21:38:29
-## 31 2008-11-04 14:09:05 2015-08-10 17:55:59
-## 32 2008-11-04 14:10:15 2015-08-05 17:23:21
-## 33 2008-11-04 14:11:31 2016-09-21 12:33:56
-## 34 2008-11-04 14:12:39 2015-08-10 21:45:25
-## 35 2008-12-10 10:47:33 2015-08-11 22:49:46
-## 36 2008-12-10 10:53:44 2015-08-10 18:38:15
-## 37 2008-12-10 10:56:33 2015-08-10 22:10:12
-## 38 2008-12-10 10:59:59 2015-08-10 23:40:00
-## 39 2008-12-10 11:23:15 2015-08-10 19:06:41
-## 40 2008-12-10 11:26:18 2015-08-10 19:46:07
-## 41 2009-02-10 07:31:01 2018-02-06 12:15:44
-## 42 2009-12-11 11:57:25 2015-08-12 00:12:25
-## 43 2010-11-12 09:37:32 2018-12-19 10:05:58
-## 44 2011-05-03 06:45:22 2015-08-10 23:46:54
-## 45 2011-09-07 06:41:22 2016-10-04 11:06:28
-## 46 2011-11-28 08:05:57 2016-10-04 11:06:09
-## 47 2012-07-20 14:34:04 2015-08-05 18:05:18
-## 48 2012-09-26 07:24:26 2015-08-10 21:52:32
-## 49 2012-10-10 11:22:57 2015-08-11 22:47:57
-## 50 2012-10-25 08:16:53 2018-03-19 11:41:01
-## 51 2012-11-01 20:13:24 2016-10-26 16:15:07
-## 52 2013-03-13 15:18:48 2018-12-04 09:04:16
-## 53 2013-04-17 04:46:16 2015-08-10 22:02:13
-## 54 2013-04-17 04:50:22 2015-08-18 12:15:15
-## 55 2013-04-17 04:47:45 2015-09-16 07:19:52
-## 56 2013-04-17 04:52:02 2015-12-03 16:11:11
-## 57 2013-04-17 04:51:26 2015-08-11 00:09:19
-## 58 2013-04-17 04:49:13 2016-04-07 12:11:28
-## 59 2013-04-19 14:56:07 2018-04-30 05:38:27
-## 60 2013-04-19 14:59:22 2018-04-30 05:39:09
-## 61 2013-04-19 14:57:02 2015-08-10 19:23:22
-## 62 2013-04-19 14:58:38 2018-04-30 05:38:47
-## 63 2013-06-26 13:21:52 2015-08-10 20:08:00
-## 64 2014-01-25 12:17:05 2015-08-10 18:47:15
-## 65 2014-04-11 15:16:46 2015-08-10 23:44:50
-## 66 2014-04-11 15:11:19 2018-06-25 11:30:50
-## 67 2014-04-11 15:18:08 2015-08-12 00:04:03
-## 68 2014-04-11 15:14:10 2015-08-10 19:37:51
-## 69 2014-08-04 08:59:44 2015-08-10 23:00:04
-## 70 2014-08-04 08:58:42 2015-08-10 22:40:16
-## 71 2014-09-06 17:53:33 2018-02-11 23:40:54
-## 72 2014-09-16 08:11:53 2017-07-12 11:51:38
-## 73 2015-02-13 13:39:27 2015-08-05 20:18:36
-## 74 2015-04-30 10:03:17 2018-05-24 11:07:31
-## 75 2015-10-09 10:57:19 2015-10-09 10:57:19
-## 76 2016-02-08 16:19:20 2017-12-06 08:46:05
-## 77 2016-03-03 10:58:54 2018-07-25 10:35:21
-## 78 2016-04-04 12:41:03 2016-09-07 11:04:03
-## 79 2016-05-04 17:40:03 2016-05-04 18:00:08
-## 80 2016-05-04 17:40:31 2016-05-04 17:40:31
-## 81 2016-05-23 10:25:08 2016-05-26 06:26:25
-## 82 2016-06-14 08:46:55 2016-06-14 08:46:55
-## 83 2016-07-04 14:14:09 2016-08-16 11:29:50
-## 84 2016-11-23 07:53:40 2016-11-23 07:53:40
-## 85 2017-01-27 09:11:06 2018-04-20 13:17:19
-## 86 2017-02-09 14:16:18 2017-02-09 14:16:18
-## 87 2017-03-30 07:10:57 2017-03-30 07:10:57
-## 88 2017-05-09 20:56:39 2017-05-12 17:23:24
-## 89 2017-07-11 07:01:09 2017-07-11 07:01:09
-## 90 2017-08-17 10:06:35 2017-08-17 10:06:35
-## 91 2017-09-18 13:06:56 2017-09-18 13:06:56
-## 92 2017-11-21 09:46:56 2017-12-04 14:26:17
-## 93 2018-03-15 09:09:28 2018-06-07 10:16:19
-## 94 2018-06-01 07:36:04 2018-06-01 07:36:04
-## 95 2018-06-22 12:45:33 2018-06-22 12:45:33
-## 96 2018-08-02 11:32:23 2018-08-14 09:30:44
-##                             permissions.effective
-## 1  COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 2               COLLABORATE,EDIT,READ_AND_ANALYZE
-## 3  COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 4               COLLABORATE,EDIT,READ_AND_ANALYZE
-## 5               COLLABORATE,EDIT,READ_AND_ANALYZE
-## 6               COLLABORATE,EDIT,READ_AND_ANALYZE
-## 7  COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 8               COLLABORATE,EDIT,READ_AND_ANALYZE
-## 9               COLLABORATE,EDIT,READ_AND_ANALYZE
-## 10              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 11              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 12              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 13              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 14              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 15              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 16              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 17              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 18              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 19              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 20              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 21              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 22              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 23              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 24              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 25              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 26              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 27              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 28              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 29              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 30              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 31              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 32              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 33              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 34              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 35              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 36              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 37              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 38              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 39              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 40              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 41              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 42              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 43 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 44              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 45              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 46              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 47 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 48              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 49              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 50 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 51 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 52 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 53 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 54 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 55 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 56 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 57 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 58 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 59                  MANAGE_USERS,READ_AND_ANALYZE
-## 60 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 61 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 62 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 63 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 64              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 65                   COLLABORATE,READ_AND_ANALYZE
-## 66                   COLLABORATE,READ_AND_ANALYZE
-## 67                   COLLABORATE,READ_AND_ANALYZE
-## 68                   COLLABORATE,READ_AND_ANALYZE
-## 69                   COLLABORATE,READ_AND_ANALYZE
-## 70                   COLLABORATE,READ_AND_ANALYZE
-## 71                               READ_AND_ANALYZE
-## 72                               READ_AND_ANALYZE
-## 73 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 74                                               
-## 75              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 76 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 77 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 78              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 79 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 80 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 81              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 82              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 83              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 84              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 85              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 86 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 87              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 88 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 89 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 90 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 91                  MANAGE_USERS,READ_AND_ANALYZE
-## 92 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 93                                               
-## 94              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 95              COLLABORATE,EDIT,READ_AND_ANALYZE
-## 96 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE</code></pre>
+<pre><code>##         id             name             created             updated
+## 1 47480439    MarkEdmondson 2014-01-25 12:17:05 2015-08-10 18:47:15
+## 2 47584925   RaspberryPi UA 2014-01-29 17:01:47 2015-08-10 21:40:04
+## 3 54019251 Sunholo Websites 2014-08-20 19:17:05 2015-08-10 19:50:44
+## 4 54516992     Demo Account 2014-09-06 17:53:33 2018-02-11 23:40:54
+## 5 73050356     GDE Tracking 2016-01-29 20:40:44 2016-01-29 20:40:44
+## 6 79301104          cloudyr 2016-06-14 14:29:50 2016-06-14 14:29:50
+##                            permissions.effective
+## 1 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
+## 2 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
+## 3 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
+## 4                               READ_AND_ANALYZE
+## 5 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
+## 6</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this gives meta-data for all web-properties for this accountId</span>
 <span class="kw"><a href="../reference/ga_webproperty_list.html">ga_webproperty_list</a></span>(<span class="dv">47480439</span>)</code></pre></div>
 <pre><code>##              id accountId internalWebPropertyId                name
@@ -536,9 +266,12 @@
 ##   dataRetentionTtl dataRetentionResetOnNewActivity             created
 ## 1        MONTHS_26                            TRUE 2014-01-25 12:17:05
 ## 2       INDEFINITE                            TRUE 2014-01-25 12:19:20
-##               updated defaultProfileId             permissions.effective
-## 1 2014-01-25 12:17:06             &lt;NA&gt; COLLABORATE,EDIT,READ_AND_ANALYZE
-## 2 2018-04-12 11:37:38         81416156 COLLABORATE,EDIT,READ_AND_ANALYZE</code></pre>
+##               updated defaultProfileId
+## 1 2014-01-25 12:17:06             &lt;NA&gt;
+## 2 2018-04-12 11:37:38         81416156
+##                            permissions.effective
+## 1 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
+## 2 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is meta-data for one particular web-property</span>
 <span class="kw"><a href="../reference/ga_webproperty.html">ga_webproperty</a></span>(<span class="dt">accountId =</span> <span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-1"</span>)</code></pre></div>
 <pre><code>## $id
@@ -579,7 +312,8 @@
 ## 
 ## $permissions
 ## $permissions$effective
-## [1] "COLLABORATE"      "EDIT"             "READ_AND_ANALYZE"
+## [1] "COLLABORATE"      "EDIT"             "MANAGE_USERS"    
+## [4] "READ_AND_ANALYZE"
 ## 
 ## 
 ## $created
@@ -610,8 +344,8 @@
 ## 1      USD Europe/Copenhagen http://markedmondson.me  WEB
 ##               created             updated eCommerceTracking
 ## 1 2014-01-25 12:17:05 2015-06-14 13:18:53             FALSE
-##               permissions.effective
-## 1 COLLABORATE,EDIT,READ_AND_ANALYZE</code></pre>
+##                            permissions.effective
+## 1 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is meta-data for this particular viewId (profileId)</span>
 <span class="kw"><a href="../reference/ga_view.html">ga_view</a></span>(<span class="dt">accountId =</span> <span class="dv">47480439</span>, <span class="dt">webPropertyId =</span> <span class="st">"UA-47480439-1"</span>, <span class="dt">profileId =</span> <span class="dv">81416941</span>)</code></pre></div>
 <pre><code>## $id
@@ -649,7 +383,8 @@
 ## 
 ## $permissions
 ## $permissions$effective
-## [1] "COLLABORATE"      "EDIT"             "READ_AND_ANALYZE"
+## [1] "COLLABORATE"      "EDIT"             "MANAGE_USERS"    
+## [4] "READ_AND_ANALYZE"
 ## 
 ## 
 ## $created
@@ -714,47 +449,47 @@
 ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, 
                             <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
                             <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
-<pre><code>## 2019-01-10 13:38:17&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<pre><code>## 2019-03-17 11:53:52&gt; Downloaded [240] rows from a total of [240].</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</code></pre></div>
 <pre><code>##   hour       date sessions bounceRate
-## 1   00 2018-12-31        0    0.00000
-## 2   00 2019-01-01        2    0.00000
-## 3   00 2019-01-02        3  100.00000
-## 4   00 2019-01-03        7   57.14286
-## 5   00 2019-01-04        5   40.00000
-## 6   00 2019-01-05        6   83.33333</code></pre>
+## 1   00 2019-03-07       73   79.45205
+## 2   00 2019-03-08       20   90.00000
+## 3   00 2019-03-09        6   66.66667
+## 4   00 2019-03-10        5   80.00000
+## 5   00 2019-03-11       11   54.54545
+## 6   00 2019-03-12       12   83.33333</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if we want totals per hour over the dates:</span>
 <span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"sessions"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  sessions
 ##    &lt;chr&gt;    &lt;dbl&gt;
-##  1 00          47
-##  2 01          41
-##  3 02          26
-##  4 03          37
-##  5 04          42
-##  6 05          43
-##  7 06          41
-##  8 07          49
-##  9 08          70
-## 10 09          85
-## # ... with 14 more rows</code></pre>
+##  1 00         183
+##  2 01         122
+##  3 02          93
+##  4 03         110
+##  5 04         119
+##  6 05         105
+##  7 06         103
+##  8 07         114
+##  9 08         153
+## 10 09         170
+## # … with 14 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># it knows not to sum metrics that are rates:</span>
 <span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"bounceRate"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  bounceRate
 ##    &lt;chr&gt;      &lt;dbl&gt;
-##  1 00          60.8
-##  2 01          68.8
-##  3 02          46.8
-##  4 03          70.6
-##  5 04          76.5
-##  6 05          82.6
-##  7 06          75.9
-##  8 07          79.2
-##  9 08          89.4
-## 10 09          47.2
-## # ... with 14 more rows</code></pre>
+##  1 00          73.7
+##  2 01          76.8
+##  3 02          78.2
+##  4 03          87.8
+##  5 04          72.0
+##  6 05          77.0
+##  7 06          76.2
+##  8 07          84.9
+##  9 08          79.4
+## 10 09          81.9
+## # … with 14 more rows</code></pre>
 <ul>
 <li>
 <code><a href="../reference/allowed_metric_dim.html">allowed_metric_dim()</a></code> - Create named list of allowed GA metrics/dimensions. This is useful to have nice looking labels for dimension and metric selection pickers, or to create lookup tables.</li>

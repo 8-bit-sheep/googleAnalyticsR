@@ -1,3 +1,31 @@
+#' @export
+print.ga_model_result <- function(x, ...){
+  cat("==ga_model_result object==\n")
+  cat0("Input names:       ", paste(names(x$input), collapse = " "))
+  cat0("Input dimensions:  ", dim(x$input))
+  cat0("Output names:      ", paste(names(x$output), collapse = " "))
+  cat0("Output dimensions: ", dim(x$output))
+  cat0("Plot class:        ", class(x$plot))
+  if(!is.null(x$plot)) print(x$plot)
+  cat0("Model args passed: ", paste(names(x$args),"=", x$args))
+  print(x$model)
+}
+
+
+
+
+#' @export
+print.ga_model <- function(x, ...){
+  cat("==ga_model object==\n")
+  cat0("Description: ", x$description)
+  cat0("Data args:   ", paste(function_args(x$data_f), collapse = " "))
+  cat0("Input data:  ", paste(x$required_columns, collapse = " "))
+  cat0("Model args:  ", paste(function_args(x$model_f), collapse = " "))
+  if(!is.null(x$output_f)) cat0("Output args: ", paste(function_args(x$output_f), collapse = " "))
+  cat0("Packages:    ", paste(x$required_packages, collapse = " "))
+}
+
+
 # #' @export
 # print.ga_profileFilterLink <- function(x, ...){
 #   cat("==Google Analytics Profile (View) Filter Link==\n")

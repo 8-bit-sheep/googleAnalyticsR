@@ -165,6 +165,13 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../articles/models.html">
+    <span class="fa fa-calculator"></span>
+     
+    Models
+  </a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
@@ -281,6 +288,24 @@
                                    <span class='kw'>dimensions</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'cohort'</span>),
                                    <span class='kw'>cohort</span> <span class='kw'>=</span> <span class='no'>cohort4</span>,
                                    <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'cohortTotalUsers'</span>))
+
+
+<span class='co'>### Lifetime Value report - just a variation of the cohort report with lifetimeValue = TRUE</span>
+<span class='co'>### and ltv specific metrics</span>
+<span class='co'>### The view MUST be an app view at the moment</span>
+
+<span class='co'>## make a cohort group with lifetimeValue = TRUE</span>
+
+<span class='no'>cohort_ltv</span> <span class='kw'>&lt;-</span> <span class='fu'>make_cohort_group</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"cohort 1"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"2018-12-01"</span>, <span class='st'>"2018-12-31"</span>),
+                                     <span class='st'>"cohort 2"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"2019-01-01"</span>, <span class='st'>"2019-01-31"</span>)),
+                                     <span class='kw'>lifetimeValue</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'>## call a cohort report with ltv metrics</span>
+
+<span class='no'>ltv_example</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>ga_id</span>,
+                               <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'cohort'</span>, <span class='st'>"acquisitionTrafficChannel"</span>),
+                               <span class='kw'>cohorts</span> <span class='kw'>=</span> <span class='no'>cohort_ltv</span>,
+                               <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"cohortGoalCompletionsPerUserWithLifetimeCriteria"</span>))
 
 <span class='co'># }</span><div class='input'>
 </div></pre>

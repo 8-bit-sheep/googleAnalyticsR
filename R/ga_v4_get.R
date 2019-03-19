@@ -287,6 +287,12 @@ make_ga_4_req <- function(viewId,
 #'                  metrics = "sessions", 
 #'                  dimensions = "date")
 #' 
+#' ## change the quotaUser to fetch under
+#' google_analytics(1234567, date_range = c("30daysAgo", "yesterday"), metrics = "sessions")
+#' 
+#' options("googleAnalyticsR.quotaUser" = "test_user")
+#' google_analytics(1234567, date_range = c("30daysAgo", "yesterday"), metrics = "sessions")
+#' 
 #' }
 #' 
 #' @family GAv4 fetch functions
@@ -530,11 +536,7 @@ fetch_google_analytics_4_slow <- function(request_list,
   ## make the fetch function
   myMessage("Calling APIv4 slowly....", level = 2)
   ## make the function
-  f <- gar_api_generator("https://analyticsreporting.googleapis.com/v4/reports:batchGet",
-                         "POST",
-                         data_parse_function = google_analytics_4_parse_batch,
-                         simplifyVector = FALSE)
-  
+  f <- get_ga4_function()
   
   do_it <- TRUE
   
@@ -604,7 +606,7 @@ fetch_google_analytics_4_slow <- function(request_list,
 #' ga_auth()
 #' 
 #' ## get your accounts
-#' account_list <- google_analytics_account_list()
+#' account_list <- ga_account_list()
 #' 
 #' ## pick a profile with data to query
 #' 
@@ -655,10 +657,7 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE, useResourceQuo
   
   myMessage("Calling APIv4....", level = 2)
   ## make the function
-  f <- gar_api_generator("https://analyticsreporting.googleapis.com/v4/reports:batchGet",
-                         "POST",
-                         data_parse_function = google_analytics_4_parse_batch,
-                         simplifyVector = FALSE)
+  f <- get_ga4_function()
   
   ## if under 5, one call
   if(!is.null(request_list$viewId) || length(request_list) <= ga_batch_limit){
@@ -743,3 +742,20 @@ fetch_google_analytics_4 <- function(request_list, merge = FALSE, useResourceQuo
 
   out
 }
+
+#' @noRd
+#' @importFrom googleAuthR gar_api_generator
+get_ga4_function <- function(){
+  the_user <- getOption("googleAnalyticsR.quotaUser", Sys.info()[["user"]])
+  
+  if(the_user != Sys.info()[["user"]]){
+    myMessage("Fetching API under quotaUser: ", the_user, level =3)
+  }
+
+  gar_api_generator("https://analyticsreporting.googleapis.com/v4/reports:batchGet",
+                    "POST",
+                    pars_args = list(quotaUser = the_user),
+                    data_parse_function = google_analytics_4_parse_batch,
+                    simplifyVector = FALSE)
+}
+

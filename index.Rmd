@@ -5,8 +5,8 @@ output:
     toc: false
 ---
 
-[![Downloads](http://cranlogs.r-pkg.org/badges/googleAnalyticsR)](http://www.r-pkg.org/pkg/googleAnalyticsR)
-[![CRAN](http://www.r-pkg.org/badges/version/googleAnalyticsR)](https://cran.r-project.org/package=googleAnalyticsR)
+[![Downloads](https://cranlogs.r-pkg.org/badges/googleAnalyticsR)](https://www.r-pkg.org/pkg/googleAnalyticsR)
+[![CRAN](https://www.r-pkg.org/badges/version/googleAnalyticsR)](https://cran.r-project.org/package=googleAnalyticsR)
 [![Travis-CI Build Status](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master)](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR)
 
 # pkgdown <img src="man/figures/logo.png" align="right" alt="" width="120" />
@@ -25,20 +25,21 @@ Collaboration is welcomed and encouraged, if you are interested get in touch.
 
 ## Features
 
-* First [Google Analytics Reporting v4 API](http://code.markedmondson.me/googleAnalyticsR/articles/v4.html) library for R
-* Automatic [anti-sampling techniques](http://code.markedmondson.me/googleAnalyticsR/articles/v4.html#anti-sampling) to return more detailed data
+* First [Google Analytics Reporting v4 API](https://code.markedmondson.me/googleAnalyticsR/articles/v4.html) library for R
+* Automatic [anti-sampling techniques](https://code.markedmondson.me/googleAnalyticsR/articles/v4.html#anti-sampling) to return more detailed data
 * v4 features include: metric expressions, pivots, date comparisons, batching.
-* Auto-paging, [auto-authentication](http://code.markedmondson.me/googleAnalyticsR/articles/setup.html) options
+* Auto-paging, [auto-authentication](https://code.markedmondson.me/googleAnalyticsR/articles/setup.html) options
 * API metadata of possible metrics and dimensions
-* GA360 support for features such as [resource quotas](http://code.markedmondson.me/googleAnalyticsR/articles/v4.html#ga360_quota_system).
-* Multi-user login to enable [Google Analytics powered Shiny Apps](http://code.markedmondson.me/googleAnalyticsR/articles/shiny.html)
-* Integration with [BigQuery Google Analytics Premium/360 exports](http://code.markedmondson.me/googleAnalyticsR/articles/big-query.html).
-* Single authentication flow can be used with other [`googleAuthR`](http://code.markedmondson.me/googleAuthR/) apps like [`searchConsoleR`](https://github.com/MarkEdmondson1234/searchConsoleR)
+* GA360 support for features such as [resource quotas](https://code.markedmondson.me/googleAnalyticsR/articles/v4.html#ga360_quota_system).
+* Multi-user login to enable [Google Analytics powered Shiny Apps](https://code.markedmondson.me/googleAnalyticsR/articles/shiny.html)
+* Integration with [BigQuery Google Analytics Premium/360 exports](https://code.markedmondson.me/googleAnalyticsR/articles/big-query.html).
+* Single authentication flow can be used with other [`googleAuthR`](https://code.markedmondson.me/googleAuthR/) apps like [`searchConsoleR`](https://github.com/MarkEdmondson1234/searchConsoleR)
 * Automatic batching, multi-account fetching, multi-channel funnnels
 * Support for `googleAuthR` batch.  For big data calls this could be 10x quicker than normal GA fetching
 * Meta data in attributes of returned dataframe including date ranges, totals, min and max
+* The `.gamr` file format for [sharing modelling analysis of Google Analytics data](https://code.markedmondson.me/googleAnalyticsR/articles/models.html).
 * Automatic caching of API requests
-* Management API features such as [unsampled report downloads](http://code.markedmondson.me/googleAnalyticsR/articles/management.html#unsampled_reports) and [view filter setup](http://code.markedmondson.me/googleAnalyticsR/articles/management.html#view_filters)
+* Management API features such as [unsampled report downloads](https://code.markedmondson.me/googleAnalyticsR/articles/management.html#unsampled_reports) and [view filter setup](https://code.markedmondson.me/googleAnalyticsR/articles/management.html#view_filters)
 
 ## Thanks 
 

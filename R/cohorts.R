@@ -15,7 +15,13 @@ cohort_metric_check <- function(metrics){
                        "ga:cohortRetentionRate",
                        "ga:cohortRevenuePerUser",
                        "ga:cohortVisitDurationPerUser",
-                       "ga:cohortSessionsPerUser")
+                       "ga:cohortSessionsPerUser",
+                       "ga:cohortTotalUsersWithLifetimeCriteria",
+                       "ga:cohortAppviewsPerUserWithLifetimeCriteria",
+                       "ga:cohortGoalCompletionsPerUserWithLifetimeCriteria",
+                       "ga:cohortPageviewsPerUserWithLifetimeCriteria",
+                       "ga:cohortRevenuePerUserWithLifetimeCriteria",
+                       "ga:cohortSessionsPerUserWithLifetimeCriteria")
   
   if(all(metrics %in% allowed_metrics)){
     out <- TRUE
@@ -105,6 +111,24 @@ cohort_dimension_check <- function(dimensions){
 #'                                    cohort = cohort4, 
 #'                                    metrics = c('cohortTotalUsers'))
 #'                                      
+#'                                      
+#' ### Lifetime Value report - just a variation of the cohort report with lifetimeValue = TRUE
+#' ### and ltv specific metrics
+#' ### The view MUST be an app view at the moment
+#'  
+#' ## make a cohort group with lifetimeValue = TRUE
+#'  
+#' cohort_ltv <- make_cohort_group(list("cohort 1" = c("2018-12-01", "2018-12-31"), 
+#'                                      "cohort 2" = c("2019-01-01", "2019-01-31")), 
+#'                                      lifetimeValue = TRUE)                                                                       
+#' 
+#' ## call a cohort report with ltv metrics
+#' 
+#' ltv_example <- google_analytics(ga_id, 
+#'                                dimensions = c('cohort', "acquisitionTrafficChannel"), 
+#'                                cohorts = cohort_ltv, 
+#'                                metrics = c("cohortGoalCompletionsPerUserWithLifetimeCriteria"))                                                                             
+#'                                       
 #' }
 #' 
 #' @family v4 cohort functions

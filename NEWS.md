@@ -1,8 +1,13 @@
-# 0.6.0.9000
+# googleAnalyticsR 0.6.0.9000
 
 * Clean up error messages
 * Fix anti_sampling breaking if using date formats "4daysAgo" etc.
 * Deprecated `google_analytics_meta()` for `ga_meta()`
+* Add `accountId` to the output of Shiny module `authDropdown` when `viewIdOnly=TRUE`
+* Add `quotaUser` to reporting v4 API requests to avoid quota limits if several users from same ip attempt to run API calls (#235) - default is `Sys.info()[["user"]]` or set via `options("googleAuthR.quotaUser")`
+* Add `ga_model_*` functions to use GA data (#234)
+* Add `ga_model_tweet` to enable data viz in tweets
+* Add `ga_model_write` to write model functions to a file
 
 # googleAnalyticsR 0.6.0
 

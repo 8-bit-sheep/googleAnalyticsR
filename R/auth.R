@@ -65,6 +65,8 @@
 #' @export
 ga_auth <- function(token = NULL, new_user = FALSE, no_auto = FALSE){
   
+  default_project_message()
+  
   if(!is.null(token)){
     return(gar_auth(token = token))
   }

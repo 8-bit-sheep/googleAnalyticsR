@@ -6,6 +6,7 @@ articles:
   ganalytics: ganalytics.html
   googleAnalyticsR: googleAnalyticsR.html
   management: management.html
+  models: models.html
   rmarkdown: rmarkdown.html
   setup: setup.html
   shiny: shiny.html
