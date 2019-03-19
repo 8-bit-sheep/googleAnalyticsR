@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Segment Filter — segmentFilter • googleAnalyticsR</title>
+<title>User Activity Request — ga_clientid_activity • googleAnalyticsR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Segment Filter — segmentFilter" />
+<meta property="og:title" content="User Activity Request — ga_clientid_activity" />
 
-<meta property="og:description" content="Segment Filter" />
+<meta property="og:description" content="Get activity on an individual user" />
 
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -220,51 +220,98 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Segment Filter</h1>
+    <h1>User Activity Request</h1>
     
-    <div class="hidden name"><code>segmentFilter.Rd</code></div>
+    <div class="hidden name"><code>ga_clientid_activity.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Segment Filter</p>
+    <p>Get activity on an individual user</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>segmentFilter</span>(<span class='kw'>not</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simpleSegment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sequenceSegment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>ga_clientid_activity</span>(<span class='no'>ids</span>, <span class='no'>viewId</span>, <span class='kw'>id_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"CLIENT_ID"</span>, <span class='st'>"USER_ID"</span>),
+  <span class='kw'>activity_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>not</th>
-      <td><p>Negation of this filter</p></td>
+      <th>ids</th>
+      <td><p>The userId or clientId.  You can send in a vector of them</p></td>
     </tr>
     <tr>
-      <th>simpleSegment</th>
-      <td><p>An simple segment</p></td>
+      <th>viewId</th>
+      <td><p>The viewId</p></td>
     </tr>
     <tr>
-      <th>sequenceSegment</th>
-      <td><p>An sequence segment</p></td>
+      <th>id_type</th>
+      <td><p>Whether its userId or clientId</p></td>
+    </tr>
+    <tr>
+      <th>activity_type</th>
+      <td><p>If specified, filters down response to the activity type.  Choice between <code>"PAGEVIEW","SCREENVIEW","GOAL","ECOMMERCE","EVENT"</code></p></td>
+    </tr>
+    <tr>
+      <th>date_range</th>
+      <td><p>A vector of start and end dates.  If not used will default to a week.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A list of data.frames: <code>$sessions</code> contains session level data. <code>$hits</code> contains individual activity data</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>If true, match the complement of simple or sequence segment above.
-For example, to match all visits not from "New York", set to TRUE.</p>
+    <p>The User Activity API lets you query an individual user's movement through your website, by sending in the individual `clientId` or `userId`.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search'>https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search</a></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+<span class='co'># access data for individual users</span>
+<span class='no'>uar</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_clientid_activity</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"1106980347.1461227730"</span>, <span class='st'>"476443645.1541099566"</span>),
+                         <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>81416156</span>,
+                         <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"2019-01-01"</span>,<span class='st'>"2019-02-01"</span>))
+
+<span class='co'># access the data.frames returned:</span>
+
+<span class='co'># the session level data for the users passed in</span>
+<span class='no'>uar</span>$<span class='no'>sessions</span>
+
+<span class='co'># the hit level activity for the users passed in</span>
+<span class='no'>uar</span>$<span class='no'>hits</span>
+
+<span class='co'># filter the response to only include certain activity types, such as goals:</span>
+
+<span class='no'>only_goals</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_clientid_activity</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"1106980347.1461227730"</span>,
+                                     <span class='st'>"476443645.1541099566"</span>),
+                     <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>81416156</span>,
+                     <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"2019-01-01"</span>,<span class='st'>"2019-02-01"</span>),
+                     <span class='kw'>activity_types</span> <span class='kw'>=</span> <span class='st'>"GOAL"</span>)
+
+
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
-          </ul>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

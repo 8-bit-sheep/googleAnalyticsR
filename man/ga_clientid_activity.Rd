@@ -25,7 +25,7 @@ A list of data.frames: \code{$sessions} contains session level data. \code{$hits
 Get activity on an individual user
 }
 \details{
-The
+The User Activity API lets you query an individual user's movement through your website, by sending in the individual `clientId` or `userId`.
 }
 \examples{
 
@@ -33,8 +33,8 @@ The
 
 # access data for individual users
 uar <- ga_clientid_activity(c("1106980347.1461227730", "476443645.1541099566"),
-                     viewId = 81416156, 
-                     date_range = c("2019-01-01","2019-02-01"))
+                         viewId = 81416156, 
+                         date_range = c("2019-01-01","2019-02-01"))
 
 # access the data.frames returned:
 
@@ -43,7 +43,14 @@ uar$sessions
 
 # the hit level activity for the users passed in
 uar$hits
-                     
+
+# filter the response to only include certain activity types, such as goals:
+
+only_goals <- ga_clientid_activity(c("1106980347.1461227730", 
+                                     "476443645.1541099566"),
+                     viewId = 81416156, 
+                     date_range = c("2019-01-01","2019-02-01"),
+                     activity_types = "GOAL")                      
 
 
 }

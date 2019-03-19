@@ -27,6 +27,9 @@ navbar:
         - text: "v4 API"
           href: articles/v4.html
           icon: fa-cogs
+        - text: "User Activity API"
+          href: articles/user-activity.html
+          icon: fa-user
         - text: "v3 API"
           href: articles/v3.html
           icon: fa-cog
@@ -200,6 +203,7 @@ reference:
     desc: >
       Work with individual website visitor IDs
     contents:
+      - ga_clientid_activity
       - ga_clientid_deletion
       - ga_clientid_hash
   - title: "Custom variables"

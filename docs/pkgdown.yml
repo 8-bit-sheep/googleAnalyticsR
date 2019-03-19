@@ -10,6 +10,7 @@ articles:
   rmarkdown: rmarkdown.html
   setup: setup.html
   shiny: shiny.html
+  user-activity: user-activity.html
   v3: v3.html
   v4: v4.html
 urls:

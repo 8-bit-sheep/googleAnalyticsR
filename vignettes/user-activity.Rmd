@@ -1,0 +1,75 @@
+---
+title: "User Activity API"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The [User Activity API](https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search) lets you query an individual user's movement through your website, by sending in the individual `clientId` or `userId`.  It is accessed via the `ga_clientid_activity()` function.
+
+## User Activity API example
+
+You first need to have a `clientId` or `userId` to query.  You can get this via the User Explorer report in the Web UI, or via a BigQuery export, or if you know the ID from other sources such as you have set the `userId` from your CRM system.
+
+Once you have an ID, specify the Google Analytics view that user was browsing and the data range of the activity you want to query:
+
+```r
+a_user <- ga_clientid_activity("1106980347.1461227730",
+                               viewId = 81416156, 
+                               date_range = c("2019-01-01","2019-02-01"))
+```
+
+## Multiple ids
+
+You can send in multiple IDs of the same type in a vector:
+
+```r
+two_clientIds <- c("1106980347.1461227730", "476443645.1541099566")
+two_users <- ga_clientid_activity(two_clientIds,
+                                  viewId = 81416156, 
+                                  date_range = c("2019-01-01","2019-02-01"))
+```
+
+## Return format
+
+The API returns two types of data: session level and activity hit level.  Access it via `$sessions` or `$hits`:
+
+```r
+two_users$sessions
+#    sessionId deviceCategory  platform dataSource sessionDate                    id
+#1  1548361067        desktop Macintosh        web  2019-01-24 1106980347.1461227730
+#2  1548261976        desktop Macintosh        web  2019-01-23 1106980347.1461227730
+#3  1548251272        desktop Macintosh        web  2019-01-23 1106980347.1461227730
+#4  1548017997        desktop Macintosh        web  2019-01-20 1106980347.1461227730
+# ...
+
+two_users$hits
+# A tibble: 102 x 26
+#   sessionId activityTime        source medium channelGrouping campaign keyword hostname
+#   <chr>     <dttm>              <chr>  <chr>  <chr>           <chr>    <chr>   <chr>   
+# 1 15483610… 2019-01-24 21:17:47 t.co   refer… Social          (not se… (not s… code.ma…
+# 2 15482619… 2019-01-23 17:46:16 t.co   refer… Social          (not se… (not s… code.ma…
+# 3 15482512… 2019-01-23 14:47:52 t.co   refer… Social          (not se… (not s… code.ma…
+# ...
+```
+
+The data.frames returned include the id you sent in as the `$id` column so you can distinguish between users.
+
+## Filtering the response
+
+If you specify the `activity_type` parameter, you can filter down the response to only the events you include in a vector.  
+
+The permitted types are: `c("PAGEVIEW","SCREENVIEW","GOAL","ECOMMERCE","EVENT")` - include some of these to specify which you would like to see.
+
+```r
+only_goals <- ga_clientid_activity(two_clientIds,
+                                   viewId = 81416156, 
+                                   date_range = c("2019-01-01","2019-02-01"),
+                                   activity_types = "GOAL")
+```
+
+## Sampled response
+
+The API response may be sampled - it will send a message if this happens.  If it does, follow the advice on the [API documentation](https://developers.google.com/analytics/devguides/reporting/core/v4/user-reporting) such as splitting up the call into smaller date ranges. 
+

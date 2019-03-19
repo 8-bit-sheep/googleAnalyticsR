@@ -79,6 +79,9 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_cache_call.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_clientid_activity.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_clientid_deletion.html</loc>
   </url>
   <url>
@@ -413,6 +416,9 @@
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//articles/shiny.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/user-activity.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//articles/v3.html</loc>

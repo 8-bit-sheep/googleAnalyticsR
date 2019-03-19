@@ -8,6 +8,7 @@
 * Add `ga_model_*` functions to use GA data (#234)
 * Add `ga_model_tweet` to enable data viz in tweets
 * Add `ga_model_write` to write model functions to a file
+* Add userActivity API via `gar_clientid_activity()`
 
 # googleAnalyticsR 0.6.0
 

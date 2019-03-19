@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RMarkdown reports with Google Analytics API data • googleAnalyticsR</title>
+<title>User Activity API • googleAnalyticsR</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="RMarkdown reports with Google Analytics API data">
+<script src="../pkgdown.js"></script><meta property="og:title" content="User Activity API">
 <meta property="og:description" content="">
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png">
 <meta name="twitter:card" content="summary">
@@ -179,68 +179,71 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>RMarkdown reports with Google Analytics API data</h1>
+      <h1>User Activity API</h1>
             
       
       
-      <div class="hidden name"><code>rmarkdown.Rmd</code></div>
+      <div class="hidden name"><code>user-activity.Rmd</code></div>
 
     </div>
 
     
     
-<p><code>googleAnalyticsR</code> can be used to generate reports in RMarkdown documents.</p>
-<div id="offline-authentication" class="section level2">
+<p>The <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search">User Activity API</a> lets you query an individual user’s movement through your website, by sending in the individual <code>clientId</code> or <code>userId</code>. It is accessed via the <code><a href="../reference/ga_clientid_activity.html">ga_clientid_activity()</a></code> function.</p>
+<div id="user-activity-api-example" class="section level2">
 <h2 class="hasAnchor">
-<a href="#offline-authentication" class="anchor"></a>Offline Authentication</h2>
-<p>Run your authentication in the setup block, making sure you have run the authentication first outside of RMarkdown, to ensure the necessary <code>.httr-oauth</code> file is in the same working directory as the RMarkdown document.</p>
-<div id="example" class="section level3">
-<h3 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h3>
-<pre class="markdown"><code>
----
-title: "Google Analytics Report"
-author: "Mark Edmondson"
-date: "8 July 2016"
-output: html_document
----
+<a href="#user-activity-api-example" class="anchor"></a>User Activity API example</h2>
+<p>You first need to have a <code>clientId</code> or <code>userId</code> to query. You can get this via the User Explorer report in the Web UI, or via a BigQuery export, or if you know the ID from other sources such as you have set the <code>userId</code> from your CRM system.</p>
+<p>Once you have an ID, specify the Google Analytics view that user was browsing and the data range of the activity you want to query:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a_user &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_clientid_activity.html">ga_clientid_activity</a></span>(<span class="st">"1106980347.1461227730"</span>,
+                               <span class="dt">viewId =</span> <span class="dv">81416156</span>, 
+                               <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"2019-01-01"</span>,<span class="st">"2019-02-01"</span>))</code></pre></div>
+</div>
+<div id="multiple-ids" class="section level2">
+<h2 class="hasAnchor">
+<a href="#multiple-ids" class="anchor"></a>Multiple ids</h2>
+<p>You can send in multiple IDs of the same type in a vector:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">two_clientIds &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"1106980347.1461227730"</span>, <span class="st">"476443645.1541099566"</span>)
+two_users &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_clientid_activity.html">ga_clientid_activity</a></span>(two_clientIds,
+                                  <span class="dt">viewId =</span> <span class="dv">81416156</span>, 
+                                  <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"2019-01-01"</span>,<span class="st">"2019-02-01"</span>))</code></pre></div>
+</div>
+<div id="return-format" class="section level2">
+<h2 class="hasAnchor">
+<a href="#return-format" class="anchor"></a>Return format</h2>
+<p>The API returns two types of data: session level and activity hit level. Access it via <code>$sessions</code> or <code>$hits</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">two_users<span class="op">$</span>sessions
+<span class="co">#    sessionId deviceCategory  platform dataSource sessionDate                    id</span>
+<span class="co">#1  1548361067        desktop Macintosh        web  2019-01-24 1106980347.1461227730</span>
+<span class="co">#2  1548261976        desktop Macintosh        web  2019-01-23 1106980347.1461227730</span>
+<span class="co">#3  1548251272        desktop Macintosh        web  2019-01-23 1106980347.1461227730</span>
+<span class="co">#4  1548017997        desktop Macintosh        web  2019-01-20 1106980347.1461227730</span>
+<span class="co"># ...</span>
 
-```{r}
-knitr::opts_chunk$set(echo = TRUE)
-library(googleAnalyticsR)
-## Make sure to run this at least once outside of the document to
-##   ensure the cache file is present. 
-ga_auth("rmd.auth")
-
-ga_data </code></pre>
-<p>Alternatively, you can use <code><a href="https://code.markedmondson.me/googleAuthR//reference/gar_auth_service.html">googleAuthR::gar_auth_service()</a></code> and use the authentication JSON downloaded from the Google console.</p>
+two_users<span class="op">$</span>hits
+<span class="co"># A tibble: 102 x 26</span>
+<span class="co">#   sessionId activityTime        source medium channelGrouping campaign keyword hostname</span>
+<span class="co">#   &lt;chr&gt;     &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   </span>
+<span class="co"># 1 15483610… 2019-01-24 21:17:47 t.co   refer… Social          (not se… (not s… code.ma…</span>
+<span class="co"># 2 15482619… 2019-01-23 17:46:16 t.co   refer… Social          (not se… (not s… code.ma…</span>
+<span class="co"># 3 15482512… 2019-01-23 14:47:52 t.co   refer… Social          (not se… (not s… code.ma…</span>
+<span class="co"># ...</span></code></pre></div>
+<p>The data.frames returned include the id you sent in as the <code>$id</code> column so you can distinguish between users.</p>
 </div>
-</div>
-<div id="multi-user-authentication" class="section level2">
+<div id="filtering-the-response" class="section level2">
 <h2 class="hasAnchor">
-<a href="#multi-user-authentication" class="anchor"></a>Multi-user authentication</h2>
-<p>A new feature of <code>googleAuthR</code> is authentication from within RMarkdown using javascript authentication instead of Shiny. A demo of using this with G+ is here: <a href="https://mark.shinyapps.io/googleAuthRMarkdown/" class="uri">https://mark.shinyapps.io/googleAuthRMarkdown/</a></p>
-<p>Similar code can be adapted to use with Google Analytics data. You will still need to host the RMarkdown document on a Shiny server though, such as <a href="http://shinyapps.io" class="uri">http://shinyapps.io</a></p>
+<a href="#filtering-the-response" class="anchor"></a>Filtering the response</h2>
+<p>If you specify the <code>activity_type</code> parameter, you can filter down the response to only the events you include in a vector.</p>
+<p>The permitted types are: <code><a href="https://www.rdocumentation.org/packages/base/topics/c">c("PAGEVIEW","SCREENVIEW","GOAL","ECOMMERCE","EVENT")</a></code> - include some of these to specify which you would like to see.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">only_goals &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_clientid_activity.html">ga_clientid_activity</a></span>(two_clientIds,
+                                   <span class="dt">viewId =</span> <span class="dv">81416156</span>, 
+                                   <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"2019-01-01"</span>,<span class="st">"2019-02-01"</span>),
+                                   <span class="dt">activity_types =</span> <span class="st">"GOAL"</span>)</code></pre></div>
 </div>
-<div id="uploading-rmarkdown-files-to-shinyapps-ioshiny-server" class="section level2">
+<div id="sampled-response" class="section level2">
 <h2 class="hasAnchor">
-<a href="#uploading-rmarkdown-files-to-shinyapps-ioshiny-server" class="anchor"></a>Uploading RMarkdown files to Shinyapps.io/Shiny Server</h2>
-<p>To see the reports online, you can upload RMarkdown documents to Shiny servers or shinyapps.io.</p>
-<p>However, you need to ensure that the authentication file is present when uploaded. This can be specified in the meta data via <code>resource_files</code></p>
-<pre class="markdown"><code>
----
-title: "Google Analytics Report"
-author: "Mark Edmondson"
-date: "8 July 2016"
-output: html_document
-resource_files:
-  - .httr-oauth
----
-</code></pre>
-<p>Then when you upload to Shiny Server or shinyapps.io, you should see the file in your upload choices:</p>
-<div class="figure">
-<img src="auth_token_markdown.png">
-</div>
+<a href="#sampled-response" class="anchor"></a>Sampled response</h2>
+<p>The API response may be sampled - it will send a message if this happens. If it does, follow the advice on the <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/user-reporting">API documentation</a> such as splitting up the call into smaller date ranges.</p>
 </div>
   </div>
 
@@ -249,9 +252,11 @@ resource_files:
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#offline-authentication">Offline Authentication</a></li>
-      <li><a href="#multi-user-authentication">Multi-user authentication</a></li>
-      <li><a href="#uploading-rmarkdown-files-to-shinyapps-ioshiny-server">Uploading RMarkdown files to Shinyapps.io/Shiny Server</a></li>
+<li><a href="#user-activity-api-example">User Activity API example</a></li>
+      <li><a href="#multiple-ids">Multiple ids</a></li>
+      <li><a href="#return-format">Return format</a></li>
+      <li><a href="#filtering-the-response">Filtering the response</a></li>
+      <li><a href="#sampled-response">Sampled response</a></li>
       </ul>
 </div>
       </div>

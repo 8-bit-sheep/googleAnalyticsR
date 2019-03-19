@@ -73,6 +73,13 @@
       </a>
     </li>
     <li>
+      <a href="../articles/user-activity.html">
+        <span class="fa fa-user"></span>
+         
+        User Activity API
+      </a>
+    </li>
+    <li>
       <a href="../articles/v3.html">
         <span class="fa fa-cog"></span>
          
@@ -449,46 +456,46 @@
 ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, 
                             <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
                             <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
-<pre><code>## 2019-03-17 11:53:52&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<pre><code>## 2019-03-19 21:53:50&gt; Downloaded [240] rows from a total of [240].</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</code></pre></div>
 <pre><code>##   hour       date sessions bounceRate
-## 1   00 2019-03-07       73   79.45205
-## 2   00 2019-03-08       20   90.00000
-## 3   00 2019-03-09        6   66.66667
-## 4   00 2019-03-10        5   80.00000
-## 5   00 2019-03-11       11   54.54545
-## 6   00 2019-03-12       12   83.33333</code></pre>
+## 1   00 2019-03-09        6   66.66667
+## 2   00 2019-03-10        5   80.00000
+## 3   00 2019-03-11       11   54.54545
+## 4   00 2019-03-12       12   83.33333
+## 5   00 2019-03-13       12   83.33333
+## 6   00 2019-03-14       25   52.00000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if we want totals per hour over the dates:</span>
 <span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"sessions"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  sessions
 ##    &lt;chr&gt;    &lt;dbl&gt;
-##  1 00         183
-##  2 01         122
-##  3 02          93
-##  4 03         110
-##  5 04         119
-##  6 05         105
-##  7 06         103
-##  8 07         114
-##  9 08         153
-## 10 09         170
+##  1 00         120
+##  2 01          76
+##  3 02          57
+##  4 03          75
+##  5 04          79
+##  6 05          74
+##  7 06          83
+##  8 07          82
+##  9 08         112
+## 10 09         137
 ## # … with 14 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># it knows not to sum metrics that are rates:</span>
 <span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"bounceRate"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  bounceRate
 ##    &lt;chr&gt;      &lt;dbl&gt;
-##  1 00          73.7
-##  2 01          76.8
-##  3 02          78.2
-##  4 03          87.8
-##  5 04          72.0
-##  6 05          77.0
-##  7 06          76.2
-##  8 07          84.9
-##  9 08          79.4
-## 10 09          81.9
+##  1 00          74.5
+##  2 01          74.0
+##  3 02          80.8
+##  4 03          82.7
+##  5 04          72.4
+##  6 05          74.4
+##  7 06          68.6
+##  8 07          83.2
+##  9 08          82.9
+## 10 09          80.6
 ## # … with 14 more rows</code></pre>
 <ul>
 <li>
