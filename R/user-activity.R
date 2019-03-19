@@ -1,34 +1,51 @@
 #' User Activity Request
 #' 
+#' Get activity on an individual user
+#' 
 #' @param viewId The viewId
-#' @param id The user or clientId.  You can send in a vector of them
+#' @param ids The userId or clientId.  You can send in a vector of them
 #' @param id_type Whether its userId or clientId
 #' @param date_range A vector of start and end dates.  If not used will default to a week.
+#' @param activity_type If specified, filters down response to the activity type.  Choice between \code{"PAGEVIEW","SCREENVIEW","GOAL","ECOMMERCE","EVENT"}
 #' 
+#' @details 
+#' 
+#' The
 #' 
 #' @export
+#' 
+#' @return A list of data.frames: \code{$sessions} contains session level data. \code{$hits} contains individual activity data
 #' @importFrom googleAuthR gar_api_generator gar_api_page
 #' @import assertthat
 #' @examples 
 #' 
 #' \dontrun{
 #' 
-#' googleAuthR::gar_set_client(scopes = "https://www.googleapis.com/auth/analytics")
-#' ga_auth("test.oauth")
-#' ga_clientid_activity(c("1106980347.1461227730", "476443645.1541099566"),
+#' # access data for individual users
+#' uar <- ga_clientid_activity(c("1106980347.1461227730", "476443645.1541099566"),
 #'                      viewId = 81416156, 
 #'                      date_range = c("2019-01-01","2019-02-01"))
 #' 
+#' # access the data.frames returned:
+#' 
+#' # the session level data for the users passed in
+#' uar$sessions
+#' 
+#' # the hit level activity for the users passed in
+#' uar$hits
+#'                      
+#' 
+#' 
 #' }
-#' @seealso https://developers.google.com/analytics/trusted-testing/user-reporting/
-#' @importFrom purrr map
+#' @seealso \url{https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search}
+#' @importFrom purrr map map_dfr
 ga_clientid_activity <- function(ids, 
                                  viewId, 
                                  id_type = c("CLIENT_ID","USER_ID"), 
                                  activity_type = NULL,
                                  date_range = NULL){
-  ids <- as.character(ids)
-  viewId <- as.character(viewId)
+  ids     <- as.character(ids)
+  viewId  <- as.character(viewId)
   id_type <- match.arg(id_type)
   
   results <- map(ids, 
@@ -38,15 +55,15 @@ ga_clientid_activity <- function(ids,
                  activity_type = activity_type,
                  date_range = date_range)
   
-  list(
-    users = map_dfr(results, "user"),
-    sessions = map_dfr(results, "session"),
-    hits = map_dfr(results, "hits")
+  structure(
+    list(
+      sessions = map_dfr(results, "session"),
+      hits = map_dfr(results, "hits")
+    ),
+    class = c("ga_user_result", "list")
   )
+
 }
-
-
-
 
 #' @noRd
 #' @importFrom purrr map_dfr
@@ -68,10 +85,16 @@ ga_clientid_activity_one <- function(id,
   
   at <- NULL
   if(!is.null(activity_type)){
+    
+    possible_types <- c("PAGEVIEW","SCREENVIEW","GOAL","ECOMMERCE","EVENT")
     assert_that(
-      is.character(activity_type),
-      all(activity_type %in% c("PAGEVIEW","SCREENVIEW","GOAL","ECOMMERCE","EVENT"))
+      is.character(activity_type)
     )
+    
+    if(!all(activity_type %in% possible_types)){
+      stop("activity_type must be NULL or a vector of these types: ",
+           paste(possible_types, collapse = " "), call. = FALSE)
+    }
     at <- activity_type
   }
   
@@ -100,9 +123,13 @@ ga_clientid_activity_one <- function(id,
                     body_list = body)
   
 
-  list(user = map_dfr(o, "user"),
-       session = map_dfr(o, "session"),
-       hits = map_dfr(o, "hits"))
+  out <- list(session = map_dfr(o, "session"),
+              hits = map_dfr(o, "hits"))
+  
+  out$session$id <- id
+  out$hits$id <- id
+  
+  out
   
 }
 

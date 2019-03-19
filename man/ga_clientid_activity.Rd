@@ -8,29 +8,46 @@ ga_clientid_activity(ids, viewId, id_type = c("CLIENT_ID", "USER_ID"),
   activity_type = NULL, date_range = NULL)
 }
 \arguments{
+\item{ids}{The userId or clientId.  You can send in a vector of them}
+
 \item{viewId}{The viewId}
 
 \item{id_type}{Whether its userId or clientId}
 
-\item{date_range}{A vector of start and end dates.  If not used will default to a week.}
+\item{activity_type}{If specified, filters down response to the activity type.  Choice between \code{"PAGEVIEW","SCREENVIEW","GOAL","ECOMMERCE","EVENT"}}
 
-\item{id}{The user or clientId.  You can send in a vector of them}
+\item{date_range}{A vector of start and end dates.  If not used will default to a week.}
+}
+\value{
+A list of data.frames: \code{$sessions} contains session level data. \code{$hits} contains individual activity data
 }
 \description{
-User Activity Request
+Get activity on an individual user
+}
+\details{
+The
 }
 \examples{
 
 \dontrun{
 
-googleAuthR::gar_set_client(scopes = "https://www.googleapis.com/auth/analytics")
-ga_auth("test.oauth")
-ga_clientid_activity(c("1106980347.1461227730", "476443645.1541099566"),
+# access data for individual users
+uar <- ga_clientid_activity(c("1106980347.1461227730", "476443645.1541099566"),
                      viewId = 81416156, 
                      date_range = c("2019-01-01","2019-02-01"))
+
+# access the data.frames returned:
+
+# the session level data for the users passed in
+uar$sessions
+
+# the hit level activity for the users passed in
+uar$hits
+                     
+
 
 }
 }
 \seealso{
-https://developers.google.com/analytics/trusted-testing/user-reporting/
+\url{https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search}
 }
