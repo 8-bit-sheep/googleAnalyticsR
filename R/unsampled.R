@@ -223,7 +223,7 @@ ga_unsampled_download <- function(reportTitle,
   
   document <- gar_api_generator(url, "GET")()
   
-  download_link <- document[["content"]][["webContentLink"]]
+  download_link <- document[["content"]][["selfLink"]]
   
   # Writing with same filename to current working directory
   if (isTRUE(downloadFile)) {
@@ -231,6 +231,7 @@ ga_unsampled_download <- function(reportTitle,
   
     r <- GET(
       download_link,
+      query = list(alt = "media"),
       add_headers(Authorization = document[["request"]][["headers"]][["Authorization"]]),
       write_disk(filename, overwrite = TRUE),
       progress()
