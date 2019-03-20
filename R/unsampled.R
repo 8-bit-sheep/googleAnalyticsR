@@ -225,31 +225,7 @@ ga_unsampled_download <- function(reportTitle,
   
   download_link <- document[["content"]][["webContentLink"]]
   
-  # Additional parsing from confirmation page if file is too large
-  too_large <- (as.numeric(document[["content"]][["fileSize"]]) / 1048576) >= 25 # bytes to MB  if(too_large){
-  
-  html <- GET(
-    document[["content"]][["webContentLink"]],
-    add_headers(Authorization = document[["request"]][["headers"]][["Authorization"]])
-  )
-  # Read and parse html for confirmation code
-  stop_for_status(html)
-  too_large_html <- content(html, "text")
-  pat <- "&amp;confirm=(.*?)&amp;"
-  confirm_code <- regmatches(too_large_html, gregexpr(pat, too_large_html))
-  pat <- "&amp;"
-  confirm_code <- gsub(pat, "", confirm_code[[1]])
-  
-  # Final url is in this pattern:
-  # https://drive.google.com/a/{company_domain}/uc?export=download&confirm={4character_confirmation_code}&id={documentid}
-  pat <- "id=.*download$"
-  base_url <- gsub(pat, "", download_link)
-  download_link <- paste0(
-    base_url, "export=download", "&", confirm_code, "&id=",
-    document[["content"]][["id"]]
-  )
-
-  # Currently writing with same filename to current working directory
+  # Writing with same filename to current working directory
   if (isTRUE(downloadFile)) {
     filename <- sprintf("%s.csv", toString(report$title))
   
