@@ -249,8 +249,8 @@ ga_clientid_activity_unnest <- function(hits, column = c("customDimension","ecom
   na_or_value <- function(x) if(!is.null(x$value)) x$value else NA_character_
   
   if(column == "customDimension"){
-    unnested <- hit_data %>%
-      select(customDimension) %>%
+    unnested <- hits %>%
+      select(id, sessionId, activityTime, customDimension) %>%
       unnest(customDimension) %>%
       mutate(cd_index = map_chr(customDimension, "index"),
              cd_value = map_chr(customDimension, na_or_value))   %>%

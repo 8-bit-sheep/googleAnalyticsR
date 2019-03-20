@@ -268,6 +268,19 @@ a_user<span class="op">$</span>hits <span class="op">%&gt;%</span><span class="s
 <span class="co">#2 1106980347.1461227… 1546979541 2019-01-08 21:34:18 1         Time over a minut… /googleAnalyticsR/articles/ganalytics…</span>
 <span class="co">#3 1106980347.1461227… 1546802623 2019-01-06 20:26:59 1         Time over a minut… /googleAnalyticsR/articles/v4.html    </span>
 <span class="co">#4 1106980347.1461227… 1546467261 2019-01-02 23:15:50 1         Time over a minut… /googleAnalyticsR/   </span></code></pre></div>
+<p>To unnest custom dimensions, some example code is below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr) <span class="co"># devtools::install_github("tidyverse/tidyr")</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(purrr)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)
+
+a_user<span class="op">$</span>hits <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(id, sessionId, activityTime, customDimension) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span>(customDimension) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">cd_index =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(customDimension, <span class="st">"index"</span>), 
+         <span class="dt">cd_value =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(customDimension, <span class="op">~</span><span class="st"> </span><span class="cf">if</span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NULL">is.null</a></span>(.<span class="op">$</span>value)) .<span class="op">$</span>value <span class="cf">else</span> <span class="ot">NA_character_</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(cd_value)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>customDimension) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/pivot_wide.html">pivot_wide</a></span>(<span class="dt">names_from =</span> cd_index, <span class="dt">values_from =</span> cd_value, <span class="dt">names_prefix =</span> <span class="st">"customDim"</span>)</code></pre></div>
 </div>
 </div>
 <div id="filtering-the-response" class="section level2">

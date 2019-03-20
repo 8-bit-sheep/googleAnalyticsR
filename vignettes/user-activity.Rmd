@@ -124,6 +124,7 @@ a_user$hits %>%
          cd_value = map_chr(customDimension, ~ if(!is.null(.$value)) .$value else NA_character_)) %>%
   filter(!is.na(cd_value)) %>%
   select(-customDimension) %>%
+  distinct() %>%
   pivot_wide(names_from = cd_index, values_from = cd_value, names_prefix = "customDim")
 ```
 
