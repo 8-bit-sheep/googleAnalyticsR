@@ -19,5 +19,4 @@ Other v4 cohort functions: \code{\link{cohort_dimension_check}},
   \code{\link{cohort_metric_check}}, \code{\link{cohort}},
   \code{\link{make_cohort_group}}
 }
-\concept{v4 cohort functions}
 \keyword{internal}

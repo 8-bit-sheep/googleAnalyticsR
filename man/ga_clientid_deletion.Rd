@@ -4,8 +4,8 @@
 \alias{ga_clientid_deletion}
 \title{Create or update a user deletion request}
 \usage{
-ga_clientid_deletion(userId, propertyId, idType = c("CLIENT_ID",
-  "USER_ID", "APP_INSTANCE_ID"), propertyType = c("ga", "firebase"))
+ga_clientid_deletion(userId, propertyId, idType = c("CLIENT_ID", "USER_ID",
+  "APP_INSTANCE_ID"), propertyType = c("ga", "firebase"))
 }
 \arguments{
 \item{userId}{A character vector of user ID's}

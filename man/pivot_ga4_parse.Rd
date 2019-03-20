@@ -13,5 +13,4 @@ pivot data parsing
 Other pivot functions: \code{\link{makePivotData}},
   \code{\link{makePivotNames}}
 }
-\concept{pivot functions}
 \keyword{internal}
