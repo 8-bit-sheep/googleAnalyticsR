@@ -80,3 +80,4 @@ Other v4 cohort functions: \code{\link{cohortGroup}},
   \code{\link{cohort_dimension_check}},
   \code{\link{cohort_metric_check}}, \code{\link{cohort}}
 }
+\concept{v4 cohort functions}

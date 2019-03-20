@@ -51,4 +51,5 @@ VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Remotes: 
   jdeboer/ganalytics,
-  MarkEdmondson1234/googleAuthR
+  MarkEdmondson1234/googleAuthR,
+  tidyverse/tidyr
