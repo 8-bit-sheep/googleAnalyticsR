@@ -194,7 +194,7 @@ parse_user_activity <- function(x){
                                        ~safe_extract(.x$appview$mobileDeviceModel)),
            appName = map_chr(activity, ~safe_extract(.x$appview$appName)),   
            ecommerce = map(activity, "ecommerce"),
-           goals = map(activity, "goals"),
+           goals = map(map(activity, "goals"), "goals"),
            has_goal = map_lgl(goals, ~!is.null(.)),
            eventCategory = map_chr(activity, ~safe_extract(.x$event$eventCategory)),
            eventAction = map_chr(activity, ~safe_extract(.x$event$eventAction)),

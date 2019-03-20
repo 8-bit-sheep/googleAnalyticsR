@@ -190,10 +190,13 @@
     
     
 <p>The <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search">User Activity API</a> lets you query an individual user’s movement through your website, by sending in the individual <code>clientId</code> or <code>userId</code>. It is accessed via the <code><a href="../reference/ga_clientid_activity.html">ga_clientid_activity()</a></code> function.</p>
+<p>At the moment it is available on the dev version of <code>googleAnalyticsR &gt;= 0.6.9000</code> so install via:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"MarkEdmondson1234/googleAnalyticsR"</span>)</code></pre></div>
 <div id="user-activity-api-example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#user-activity-api-example" class="anchor"></a>User Activity API example</h2>
-<p>You first need to have a <code>clientId</code> or <code>userId</code> to query. You can get this via the User Explorer report in the Web UI, or via a BigQuery export, or if you know the ID from other sources such as you have set the <code>userId</code> from your CRM system.</p>
+<p>You first need to have a <code>clientId</code> or <code>userId</code> to query. You can get this via the User Explorer report in the Web UI, or via a BigQuery export, or you may be capturing the id in a custom dimension.</p>
+<p>If you know the ID from other sources such as you have set the <code>userId</code> from your CRM system.</p>
 <p>Once you have an ID, specify the Google Analytics view that user was browsing and the data range of the activity you want to query:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a_user &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_clientid_activity.html">ga_clientid_activity</a></span>(<span class="st">"1106980347.1461227730"</span>,
                                <span class="dt">viewId =</span> <span class="dv">81416156</span>, 
@@ -228,7 +231,42 @@ two_users<span class="op">$</span>hits
 <span class="co"># 2 15482619… 2019-01-23 17:46:16 t.co   refer… Social          (not se… (not s… code.ma…</span>
 <span class="co"># 3 15482512… 2019-01-23 14:47:52 t.co   refer… Social          (not se… (not s… code.ma…</span>
 <span class="co"># ...</span></code></pre></div>
+<p>The amount of data returned is rich for the activity, the data columns are shown below (Although some will be empty for some rows if not applicable).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(two_users<span class="op">$</span>hits)
+<span class="co"># [1] "sessionId"            "activityTime"         "source"               "medium"              </span>
+<span class="co"># [5] "channelGrouping"      "campaign"             "keyword"              "hostname"            </span>
+<span class="co"># [9] "landingPagePath"      "activityType"         "customDimension"      "pagePath"            </span>
+<span class="co">#[13] "pageTitle"            "screenName"           "mobileDeviceBranding" "mobileDeviceModel"   </span>
+<span class="co">#[17] "appName"              "ecommerce"            "goals"                "has_goal"            </span>
+<span class="co">#[21] "eventCategory"        "eventAction"          "eventLabel"           "eventValue"          </span>
+<span class="co">#[25] "eventCount"           "id" </span></code></pre></div>
 <p>The data.frames returned include the id you sent in as the <code>$id</code> column so you can distinguish between users.</p>
+<div id="nested-columns" class="section level3">
+<h3 class="hasAnchor">
+<a href="#nested-columns" class="anchor"></a>Nested columns</h3>
+<p>The output uses nested columns for some values so you may want to get familiar with the <code><a href="https://tidyr.tidyverse.org/reference/unnest.html">tidyr::unnest()</a></code> function when working with the data.</p>
+<p>The nested columns are <code>hits$customDimension</code>, <code>hits$ecommerce</code> and <code>hits$goals</code>.</p>
+<p>The nesting is necessary as you can have multiple of these events per hit, and expanding them in the response would make a very large <code>data.frame</code> to work with.</p>
+<p>An example on how to unnest goals is shown below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(purrr)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)
+
+a_user<span class="op">$</span>hits <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(has_goal) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># filter to just hits with goals</span>
+<span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(id, sessionId, goals) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span>(goals) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># unnest the goals list column</span>
+<span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">goalIndex =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(goals, <span class="st">"goalIndex"</span>), 
+         <span class="dt">goalName =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(goals, <span class="st">"goalName"</span>), 
+         <span class="dt">goalCompletionLocation =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(goals, <span class="st">"goalCompletionLocation"</span>))
+<span class="co"># A tibble: 4 x 4</span>
+<span class="co">#  goals      goalIndex goalName             goalCompletionLocation                    </span>
+<span class="co">#  &lt;list&gt;     &lt;chr&gt;     &lt;chr&gt;                &lt;chr&gt;                                     </span>
+<span class="co">#1 &lt;list [7]&gt; 20        Visited over 4 pages /googleAnalyticsR/articles/setup.html     </span>
+<span class="co">#2 &lt;list [7]&gt; 1         Time over a minute 1 /googleAnalyticsR/articles/ganalytics.html</span>
+<span class="co">#3 &lt;list [7]&gt; 1         Time over a minute 1 /googleAnalyticsR/articles/v4.html        </span>
+<span class="co">#4 &lt;list [7]&gt; 1         Time over a minute 1 /googleAnalyticsR/</span></code></pre></div>
+</div>
 </div>
 <div id="filtering-the-response" class="section level2">
 <h2 class="hasAnchor">

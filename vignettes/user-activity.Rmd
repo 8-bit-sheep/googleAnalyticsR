@@ -62,13 +62,51 @@ two_users$hits
 # ...
 ```
 
-The amount of data returned is rich for the activity, the data columns are shown below (Although some will be empty for some rows if not applicable)
+The amount of data returned is rich for the activity, the data columns are shown below (Although some will be empty for some rows if not applicable).  
 
-```
-
+```r
+names(two_users$hits)
+# [1] "sessionId"            "activityTime"         "source"               "medium"              
+# [5] "channelGrouping"      "campaign"             "keyword"              "hostname"            
+# [9] "landingPagePath"      "activityType"         "customDimension"      "pagePath"            
+#[13] "pageTitle"            "screenName"           "mobileDeviceBranding" "mobileDeviceModel"   
+#[17] "appName"              "ecommerce"            "goals"                "has_goal"            
+#[21] "eventCategory"        "eventAction"          "eventLabel"           "eventValue"          
+#[25] "eventCount"           "id" 
 ```
 
 The data.frames returned include the id you sent in as the `$id` column so you can distinguish between users.
+
+### Nested columns
+
+The output uses nested columns for some values so you may want to get familiar with the `tidyr::unnest()` function when working with the data.
+
+The nested columns are `hits$customDimension`, `hits$ecommerce` and `hits$goals`.
+
+The nesting is necessary as you can have multiple of these events per hit, and expanding them in the response would make a very large `data.frame` to work with.
+
+An example on how to unnest goals is shown below:
+
+```r
+library(tidyr)
+library(purrr)
+library(dplyr)
+
+a_user$hits %>% 
+  filter(has_goal) %>% # filter to just hits with goals
+  select(id, sessionId, goals) %>% 
+  unnest(goals) %>% # unnest the goals list column
+  mutate(goalIndex = map_chr(goals, "goalIndex"), 
+         goalName = map_chr(goals, "goalName"), 
+         goalCompletionLocation = map_chr(goals, "goalCompletionLocation"))
+# A tibble: 4 x 4
+#  goals      goalIndex goalName             goalCompletionLocation                    
+#  <list>     <chr>     <chr>                <chr>                                     
+#1 <list [7]> 20        Visited over 4 pages /googleAnalyticsR/articles/setup.html     
+#2 <list [7]> 1         Time over a minute 1 /googleAnalyticsR/articles/ganalytics.html
+#3 <list [7]> 1         Time over a minute 1 /googleAnalyticsR/articles/v4.html        
+#4 <list [7]> 1         Time over a minute 1 /googleAnalyticsR/
+```
 
 ## Filtering the response
 
