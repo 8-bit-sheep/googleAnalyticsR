@@ -1,5 +1,5 @@
 #' Get Unsampled Report Meta Data
-#'
+#' 
 #' @param accountId Account Id
 #' @param webPropertyId Web Property Id
 #' @param profileId Profile Id
@@ -107,8 +107,10 @@ parse_unsampled_list <- function(x){
 
 }
 
-#' Download Unsampled Report from Google Drive
-#'
+#' Download Unsampled Report from Google Drive. You must be authenticated with the
+#' same account that you setup the unsampled report. This means service account 
+#' authentication is not supported.
+#' 
 #' @param reportTitle Title of Unsampled Report (case-sensitive)
 #' @param accountId Account Id
 #' @param webPropertyId Web Property Id
