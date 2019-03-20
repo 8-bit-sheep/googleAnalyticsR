@@ -110,6 +110,23 @@ a_user$hits %>%
 #4 1106980347.1461227… 1546467261 2019-01-02 23:15:50 1         Time over a minut… /googleAnalyticsR/   
 ```
 
+To unnest custom dimensions, some example code is below:
+
+```r
+library(tidyr) # devtools::install_github("tidyverse/tidyr")
+library(purrr)
+library(dplyr)
+
+a_user$hits %>% 
+  select(id, sessionId, activityTime, customDimension) %>% 
+  unnest(customDimension) %>% 
+  mutate(cd_index = map_chr(customDimension, "index"), 
+         cd_value = map_chr(customDimension, ~ if(!is.null(.$value)) .$value else NA_character_)) %>%
+  filter(!is.na(cd_value)) %>%
+  select(-customDimension) %>%
+  pivot_wide(names_from = cd_index, values_from = cd_value, names_prefix = "customDim")
+```
+
 ## Filtering the response
 
 If you specify the `activity_type` parameter, you can filter down the response to only the events you include in a vector.  

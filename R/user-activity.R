@@ -225,3 +225,53 @@ parse_user_activity <- function(x){
   
 }
 
+#' Unnest user activity columns
+#' 
+#' A function to help expand data out of nested columns
+#' 
+#' @param hits The hits data.frame with the columns to expand
+#' @param column Which column to expand - one of \code{"customDimension","ecommerce","goals"}
+#' 
+#' @export
+#' @import assertthat
+#' @importFrom purrr map map_chr map_lgl
+#' @importFrom dplyr select filter bind_cols mutate
+#' @importFrom tidyr unnest pivot_wide
+ga_clientid_activity_unnest <- function(hits, column = c("customDimension","ecommerce","goals")){
+  
+  column <- match.arg(column)
+  assert_that(is.data.frame(hits))
+  
+  if(!any(names(hits) %in% column)){
+    stop("Couldn't find column ", column, " in passed hits data.frame", call. = FALSE)
+  }
+  
+  na_or_value <- function(x) if(!is.null(x$value)) x$value else NA_character_
+  
+  if(column == "customDimension"){
+    unnested <- hit_data %>%
+      select(customDimension) %>%
+      unnest(customDimension) %>%
+      mutate(cd_index = map_chr(customDimension, "index"),
+             cd_value = map_chr(customDimension, na_or_value))   %>%
+      filter(!is.na(cd_value)) %>%
+      select(-customDimension) %>%
+      distinct() %>%
+      pivot_wide(names_from = cd_index, values_from = cd_value, names_prefix = "customDim")
+  } else if(column == "goals"){
+    unnested <- hit_data %>% 
+      filter(has_goal) %>% # filter to just hits with goals
+      select(id, sessionId, activityTime, goals) %>% 
+      unnest(goals) %>% # unnest the goals list column
+      mutate(goalIndex = map_chr(goals, "goalIndex"), 
+             goalName = map_chr(goals, "goalName"), 
+             goalCompletionLocation = map_chr(goals, "goalCompletionLocation")) %>%
+      select(-goals)
+  } else {
+    stop("ecommerce not supported yet", call. = FALSE)
+  }
+  
+  bind_cols(hits, unnested)
+  
+}
+
