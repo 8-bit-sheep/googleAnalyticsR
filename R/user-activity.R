@@ -12,6 +12,8 @@
 #' 
 #' The User Activity API lets you query an individual user's movement through your website, by sending in the individual `clientId` or `userId`.
 #' 
+#' Bear in mind each call will count against your API quota, so fetching a large amount of client ids will be limited by that.
+#' 
 #' @export
 #' 
 #' @return A list of data.frames: \code{$sessions} contains session level data. \code{$hits} contains individual activity data
@@ -79,6 +81,8 @@ ga_clientid_activity_one <- function(id,
                                      id_type, 
                                      activity_type,
                                      date_range){
+  
+  myMessage("Fetching id: ", id, level = 3)
   
   the_dates <- NULL
   if(!is.null(date_range)){

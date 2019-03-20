@@ -26,6 +26,8 @@ Get activity on an individual user
 }
 \details{
 The User Activity API lets you query an individual user's movement through your website, by sending in the individual `clientId` or `userId`.
+
+Bear in mind each call will count against your API quota, so fetching a large amount of client ids will be limited by that.
 }
 \examples{
 

@@ -8,15 +8,16 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The [User Activity API](https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search) lets you query an individual user's movement through your website, by sending in the individual `clientId` or `userId`.  It is accessed via the `ga_clientid_activity()` function.
 
-At the moment it is available on the dev version of `googleAnalyticsR >= 0.6.9000` so install via:
+At the moment it is available on the dev version of `googleAnalyticsR >= 0.6.9000` and needs `googleAuthR >= 0.7.0.9000` so install via:
 
 ```r
+remotes::install_github("MarkEdmondson1234/googleAuthR")
 remotes::install_github("MarkEdmondson1234/googleAnalyticsR")
 ```
 
 ## User Activity API example
 
-You first need to have a `clientId` or `userId` to query.  You can get this via the User Explorer report in the Web UI, or via a BigQuery export, or you may be capturing the id in a custom dimension.  
+You first need to have a `clientId` or `userId` to query.  You can get this via the User Explorer report in the Web UI, or via a BigQuery export, or you may be capturing the ID in a custom dimension.  
 
 If you know the ID from other sources such as you have set the `userId` from your CRM system.
 
@@ -75,7 +76,7 @@ names(two_users$hits)
 #[25] "eventCount"           "id" 
 ```
 
-The data.frames returned include the id you sent in as the `$id` column so you can distinguish between users.
+The data.frames returned include the ID you sent in as the `$id` column so you can distinguish between users.
 
 ### Nested columns
 
@@ -94,18 +95,19 @@ library(dplyr)
 
 a_user$hits %>% 
   filter(has_goal) %>% # filter to just hits with goals
-  select(id, sessionId, goals) %>% 
+  select(id, sessionId, activityTime, goals) %>% 
   unnest(goals) %>% # unnest the goals list column
   mutate(goalIndex = map_chr(goals, "goalIndex"), 
          goalName = map_chr(goals, "goalName"), 
-         goalCompletionLocation = map_chr(goals, "goalCompletionLocation"))
-# A tibble: 4 x 4
-#  goals      goalIndex goalName             goalCompletionLocation                    
-#  <list>     <chr>     <chr>                <chr>                                     
-#1 <list [7]> 20        Visited over 4 pages /googleAnalyticsR/articles/setup.html     
-#2 <list [7]> 1         Time over a minute 1 /googleAnalyticsR/articles/ganalytics.html
-#3 <list [7]> 1         Time over a minute 1 /googleAnalyticsR/articles/v4.html        
-#4 <list [7]> 1         Time over a minute 1 /googleAnalyticsR/
+         goalCompletionLocation = map_chr(goals, "goalCompletionLocation")) %>%
+  select(-goals)
+## A tibble: 4 x 6
+#  id                  sessionId  activityTime        goalIndex goalName           goalCompletionLocation                
+#  <chr>               <chr>      <dttm>              <chr>     <chr>              <chr>                                 
+#1 1106980347.1461227… 1548016803 2019-01-20 21:40:53 20        Visited over 4 pa… /googleAnalyticsR/articles/setup.html 
+#2 1106980347.1461227… 1546979541 2019-01-08 21:34:18 1         Time over a minut… /googleAnalyticsR/articles/ganalytics…
+#3 1106980347.1461227… 1546802623 2019-01-06 20:26:59 1         Time over a minut… /googleAnalyticsR/articles/v4.html    
+#4 1106980347.1461227… 1546467261 2019-01-02 23:15:50 1         Time over a minut… /googleAnalyticsR/   
 ```
 
 ## Filtering the response
@@ -121,7 +123,49 @@ only_goals <- ga_clientid_activity(two_clientIds,
                                    activity_types = "GOAL")
 ```
 
+## Example calling users via a custom dimension
+
+If you are capturing Google Analytics cookie ID in a custom dimension (Which is a good idea!) then the below workflow shows how you can use the standard reporting API to fetch more detail on the users:
+
+```r
+library(googleAnalyticsR)
+
+al <- ga_account_list()
+
+# get a viewID you know has implemented putting cookie ID in a custom dimension
+viewId <- 84714057
+
+view_row <- al[al$viewId == viewId,]
+
+# get the custom dimensions
+cus_dims <- ga_custom_vars_list(accountId = view_row$accountId,
+                                webPropertyId = view_row$webPropertyId,
+                                type = "customDimensions")
+                                
+#In this example, client.id is in ga:dimension2
+
+# date range of ids to query
+dates <- c(Sys.Date() - 30, Sys.Date() - 1)
+
+# download all client.ids who had a pageview in last 30 days
+# change this query to a segment of users you are interested in
+cids <- google_analytics(viewId, date_range = dates,
+                         dimensions = "dimension2", metrics = "pageviews",
+                         order = order_type("pageviews", "DESCENDING"),
+                         max = 1000)
+
+# download user activity for all the users
+user_activities <- ga_clientid_activity(cids$dimension2,
+                                        viewId = viewId,
+                                        date_range = dates)
+
+```
+
+
 ## Sampled response
 
 The API response may be sampled - it will send a message if this happens.  If it does, follow the advice on the [API documentation](https://developers.google.com/analytics/devguides/reporting/core/v4/user-reporting) such as splitting up the call into smaller date ranges. 
+
+Also bear in mind each API call counts against your Analytics Reporting v4 API quota which by default is 50k per day, so you won't be able to fetch more user activity than that without increasing your API quota. 
+
 

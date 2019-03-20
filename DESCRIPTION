@@ -23,7 +23,7 @@ Depends:
 Imports:
     assertthat (>= 0.2.0),
     dplyr (>= 0.7.0),
-    googleAuthR (>= 0.7.0),
+    googleAuthR (>= 0.7.0.9000),
     httr (>= 1.3.1),
     jsonlite (>= 1.5),
     magrittr (>= 1.5),
@@ -53,4 +53,5 @@ VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Remotes: 
   jdeboer/ganalytics,
-  IronistM/googleAnalyticsModelR
+  IronistM/googleAnalyticsModelR,
+  MarkEdmondson1234/googleAuthR
