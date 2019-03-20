@@ -39,7 +39,6 @@ Suggests:
     covr,
     formatR,
     ganalytics,
-    googleAnalyticsModelR,
     googleCloudStorageR (>= 0.2.0),
     httptest (>= 3.2.2),
     knitr,
