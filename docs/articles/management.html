@@ -737,46 +737,46 @@
 ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, 
                             <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
                             <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
-<pre><code>## 2019-03-20 15:09:35&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<pre><code>## 2019-03-21 14:07:05&gt; Downloaded [240] rows from a total of [240].</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</code></pre></div>
 <pre><code>##   hour       date sessions bounceRate
-## 1   00 2019-03-10        5   80.00000
-## 2   00 2019-03-11       11   54.54545
-## 3   00 2019-03-12       12   83.33333
-## 4   00 2019-03-13       12   83.33333
-## 5   00 2019-03-14       25   52.00000
-## 6   00 2019-03-15       11   72.72727</code></pre>
+## 1   00 2019-03-11       11   54.54545
+## 2   00 2019-03-12       12   83.33333
+## 3   00 2019-03-13       12   83.33333
+## 4   00 2019-03-14       25   52.00000
+## 5   00 2019-03-15       11   72.72727
+## 6   00 2019-03-16        8   75.00000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if we want totals per hour over the dates:</span>
 <span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"sessions"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  sessions
 ##    &lt;chr&gt;    &lt;dbl&gt;
-##  1 00         128
-##  2 01          86
-##  3 02          66
-##  4 03          79
-##  5 04          80
-##  6 05          75
-##  7 06          85
-##  8 07          84
-##  9 08         118
-## 10 09         161
+##  1 00         150
+##  2 01          94
+##  3 02          73
+##  4 03          84
+##  5 04          89
+##  6 05          78
+##  7 06          99
+##  8 07         113
+##  9 08         143
+## 10 09         197
 ## # … with 14 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># it knows not to sum metrics that are rates:</span>
 <span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"bounceRate"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  bounceRate
 ##    &lt;chr&gt;      &lt;dbl&gt;
-##  1 00          75.7
-##  2 01          71.3
-##  3 02          82.5
+##  1 00          75.1
+##  2 01          69.0
+##  3 02          82.8
 ##  4 03          83.2
-##  5 04          72.8
-##  6 05          71.8
-##  7 06          71.9
-##  8 07          82.7
-##  9 08          84.9
-## 10 09          75.0
+##  5 04          74.0
+##  6 05          72.5
+##  7 06          74.6
+##  8 07          82.9
+##  9 08          83.2
+## 10 09          72.9
 ## # … with 14 more rows</code></pre>
 <ul>
 <li>

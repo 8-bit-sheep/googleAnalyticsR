@@ -36,4 +36,3 @@ Other account structure functions: \code{\link{ga_accounts}},
   \code{\link{ga_webproperty_list}},
   \code{\link{ga_webproperty}}
 }
-\concept{account structure functions}

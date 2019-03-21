@@ -121,11 +121,37 @@ a_user$hits %>%
   select(id, sessionId, activityTime, customDimension) %>% 
   unnest(customDimension) %>% 
   mutate(cd_index = map_chr(customDimension, "index"), 
-         cd_value = map_chr(customDimension, ~ if(!is.null(.$value)) .$value else NA_character_)) %>%
+         cd_value = map_chr(customDimension, ~ .$value %||% NA_character_)) %>%
   filter(!is.na(cd_value)) %>%
   select(-customDimension) %>%
   distinct() %>%
   pivot_wide(names_from = cd_index, values_from = cd_value, names_prefix = "customDim")
+```
+
+To unnest ecommerce and filter to only transactions, an example is shown below:
+
+```r
+a_user$hits %>%
+  filter(activityType == "ECOMMERCE") %>%
+  select(id, sessionId, activityTime, ecommerce) %>%
+  mutate(transaction = map(ecommerce, "transaction"),
+         transactionRevenue = map_dbl(transaction, ~.[["transactionRevenue"]] %||% NA),
+         transactionId = map_chr(transaction, ~.[["transactionId"]] %||% NA)) %>%
+  filter(!is.na(transactionRevenue)) %>%
+  select(-transaction, -ecommerce)
+```
+
+To get the traffic sources per hit, you only need the first hit per session so can compute via:
+
+```r
+a_user$hits %>%
+  filter(activityType == "PAGEVIEW") %>%
+  select(id, sessionId, activityTime, 
+         source, medium, 
+         channelGrouping, campaign, 
+         keyword, landingPagePath) %>%
+  group_by(id, sessionId) %>%
+  summarise_all(min)
 ```
 
 ## Filtering the response

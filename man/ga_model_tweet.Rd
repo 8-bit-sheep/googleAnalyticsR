@@ -61,4 +61,3 @@ Other GA modelling functions: \code{\link{ga_model_edit}},
   \code{\link{ga_model_save}},
   \code{\link{ga_model_write}}, \code{\link{ga_model}}
 }
-\concept{GA modelling functions}

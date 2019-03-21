@@ -4,8 +4,8 @@
 \alias{ga_filter_delete}
 \title{Delete a filter from account or remove from view.}
 \usage{
-ga_filter_delete(accountId, webPropertyId = NULL, viewId = NULL,
-  filterId, removeFromView = FALSE)
+ga_filter_delete(accountId, webPropertyId = NULL, viewId = NULL, filterId,
+  removeFromView = FALSE)
 }
 \arguments{
 \item{accountId}{Account Id of the account that contains the filter}
@@ -44,4 +44,3 @@ Other managementAPI functions: \code{\link{ga_adwords_list}},
   \code{\link{ga_unsampled_list}},
   \code{\link{ga_unsampled}}
 }
-\concept{managementAPI functions}

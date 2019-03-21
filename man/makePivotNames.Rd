@@ -13,5 +13,4 @@ Make pivot column names
 Other pivot functions: \code{\link{makePivotData}},
   \code{\link{pivot_ga4_parse}}
 }
-\concept{pivot functions}
 \keyword{internal}

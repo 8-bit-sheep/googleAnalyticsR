@@ -33,4 +33,3 @@ Call via \code{shiny::callModule(multi_select, "your_id")}
 Other Shiny modules: \code{\link{authDropdownUI}},
   \code{\link{authDropdown}}, \code{\link{multi_selectUI}}
 }
-\concept{Shiny modules}
