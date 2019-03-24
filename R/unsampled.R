@@ -1,5 +1,5 @@
 #' Get Unsampled Report Meta Data
-#'
+#' 
 #' @param accountId Account Id
 #' @param webPropertyId Web Property Id
 #' @param profileId Profile Id
@@ -107,8 +107,10 @@ parse_unsampled_list <- function(x){
 
 }
 
-#' Download Unsampled Report from Google Drive
-#'
+#' Download Unsampled Report from Google Drive. You must be authenticated with the
+#' same account that you setup the unsampled report. This means service account 
+#' authentication is not supported.
+#' 
 #' @param reportTitle Title of Unsampled Report (case-sensitive)
 #' @param accountId Account Id
 #' @param webPropertyId Web Property Id
@@ -223,38 +225,15 @@ ga_unsampled_download <- function(reportTitle,
   
   document <- gar_api_generator(url, "GET")()
   
-  download_link <- document[["content"]][["webContentLink"]]
+  download_link <- document[["content"]][["selfLink"]]
   
-  # Additional parsing from confirmation page if file is too large
-  too_large <- (as.numeric(document[["content"]][["fileSize"]]) / 1048576) >= 25 # bytes to MB  if(too_large){
-  
-  html <- GET(
-    document[["content"]][["webContentLink"]],
-    add_headers(Authorization = document[["request"]][["headers"]][["Authorization"]])
-  )
-  # Read and parse html for confirmation code
-  stop_for_status(html)
-  too_large_html <- content(html, "text")
-  pat <- "&amp;confirm=(.*?)&amp;"
-  confirm_code <- regmatches(too_large_html, gregexpr(pat, too_large_html))
-  pat <- "&amp;"
-  confirm_code <- gsub(pat, "", confirm_code[[1]])
-  
-  # Final url is in this pattern:
-  # https://drive.google.com/a/{company_domain}/uc?export=download&confirm={4character_confirmation_code}&id={documentid}
-  pat <- "id=.*download$"
-  base_url <- gsub(pat, "", download_link)
-  download_link <- paste0(
-    base_url, "export=download", "&", confirm_code, "&id=",
-    document[["content"]][["id"]]
-  )
-
-  # Currently writing with same filename to current working directory
+  # Writing with same filename to current working directory
   if (isTRUE(downloadFile)) {
     filename <- sprintf("%s.csv", toString(report$title))
   
     r <- GET(
       download_link,
+      query = list(alt = "media"),
       add_headers(Authorization = document[["request"]][["headers"]][["Authorization"]]),
       write_disk(filename, overwrite = TRUE),
       progress()
