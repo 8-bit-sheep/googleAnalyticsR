@@ -125,7 +125,7 @@ a_user$hits %>%
   filter(!is.na(cd_value)) %>%
   select(-customDimension) %>%
   distinct() %>%
-  pivot_wide(names_from = cd_index, values_from = cd_value, names_prefix = "customDim")
+  pivot_wider(names_from = cd_index, values_from = cd_value, names_prefix = "customDim")
 ```
 
 To unnest ecommerce and filter to only transactions, an example is shown below:

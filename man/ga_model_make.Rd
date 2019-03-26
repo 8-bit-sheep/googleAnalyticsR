@@ -4,9 +4,10 @@
 \alias{ga_model_make}
 \title{Modelling function factory for Google Analytics data}
 \usage{
-ga_model_make(data_f, required_columns, model_f, output_f = graphics::plot,
-  required_packages = NULL, description = NULL,
-  outputShiny = shiny::plotOutput, renderShiny = shiny::renderPlot)
+ga_model_make(data_f, required_columns, model_f,
+  output_f = graphics::plot, required_packages = NULL,
+  description = NULL, outputShiny = shiny::plotOutput,
+  renderShiny = shiny::renderPlot)
 }
 \arguments{
 \item{data_f}{A function that gets the data}
@@ -93,3 +94,4 @@ Other GA modelling functions: \code{\link{ga_model_edit}},
   \code{\link{ga_model_tweet}},
   \code{\link{ga_model_write}}, \code{\link{ga_model}}
 }
+\concept{GA modelling functions}

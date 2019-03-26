@@ -2,7 +2,9 @@
 % Please edit documentation in R/unsampled.R
 \name{ga_unsampled_download}
 \alias{ga_unsampled_download}
-\title{Download Unsampled Report from Google Drive}
+\title{Download Unsampled Report from Google Drive. You must be authenticated with the
+same account that you setup the unsampled report. This means service account 
+authentication is not supported.}
 \usage{
 ga_unsampled_download(reportTitle, accountId, webPropertyId, profileId,
   downloadFile = TRUE)
@@ -22,7 +24,9 @@ ga_unsampled_download(reportTitle, accountId, webPropertyId, profileId,
 file location if \code{downloadFile} is TRUE, else a \code{data.frame} of download
 }
 \description{
-Download Unsampled Report from Google Drive
+Download Unsampled Report from Google Drive. You must be authenticated with the
+same account that you setup the unsampled report. This means service account 
+authentication is not supported.
 }
 \examples{
 
@@ -51,3 +55,4 @@ Download Unsampled Report from Google Drive
 
 }
 }
+\concept{managementAPI functions, googleDriveAPI functions}

@@ -236,7 +236,7 @@ parse_user_activity <- function(x){
 #' @import assertthat
 #' @importFrom purrr map map_chr map_lgl
 #' @importFrom dplyr select filter bind_cols mutate
-#' @importFrom tidyr unnest pivot_wide
+#' @importFrom tidyr unnest pivot_wider
 ga_clientid_activity_unnest <- function(hits, column = c("customDimension","ecommerce","goals")){
   
   column <- match.arg(column)
@@ -257,7 +257,7 @@ ga_clientid_activity_unnest <- function(hits, column = c("customDimension","ecom
       filter(!is.na(cd_value)) %>%
       select(-customDimension) %>%
       distinct() %>%
-      pivot_wide(names_from = cd_index, values_from = cd_value, names_prefix = "customDim")
+      pivot_wider(names_from = cd_index, values_from = cd_value, names_prefix = "customDim")
   } else if(column == "goals"){
     unnested <- hit_data %>% 
       filter(has_goal) %>% # filter to just hits with goals

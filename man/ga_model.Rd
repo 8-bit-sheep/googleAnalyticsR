@@ -27,3 +27,4 @@ Other GA modelling functions: \code{\link{ga_model_edit}},
   \code{\link{ga_model_tweet}},
   \code{\link{ga_model_write}}
 }
+\concept{GA modelling functions}

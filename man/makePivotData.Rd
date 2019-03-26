@@ -18,4 +18,5 @@ Make pivot data rows
 Other pivot functions: \code{\link{makePivotNames}},
   \code{\link{pivot_ga4_parse}}
 }
+\concept{pivot functions}
 \keyword{internal}

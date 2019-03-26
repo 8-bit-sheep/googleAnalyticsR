@@ -39,3 +39,4 @@ Other GA modelling functions: \code{\link{ga_model_example}},
   \code{\link{ga_model_tweet}},
   \code{\link{ga_model_write}}, \code{\link{ga_model}}
 }
+\concept{GA modelling functions}

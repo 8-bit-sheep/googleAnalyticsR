@@ -22,4 +22,5 @@ Other v4 cohort functions: \code{\link{cohortGroup}},
   \code{\link{cohort_metric_check}},
   \code{\link{make_cohort_group}}
 }
+\concept{v4 cohort functions}
 \keyword{internal}

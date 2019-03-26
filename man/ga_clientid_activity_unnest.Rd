@@ -4,8 +4,8 @@
 \alias{ga_clientid_activity_unnest}
 \title{Unnest user activity columns}
 \usage{
-ga_clientid_activity_unnest(hits, column = c("customDimension", "ecommerce",
-  "goals"))
+ga_clientid_activity_unnest(hits, column = c("customDimension",
+  "ecommerce", "goals"))
 }
 \arguments{
 \item{hits}{The hits data.frame with the columns to expand}
