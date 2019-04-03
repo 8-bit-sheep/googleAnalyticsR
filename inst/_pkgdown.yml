@@ -63,6 +63,13 @@ navbar:
       - text: "News"
         icon: fa-newspaper
         href: news/index.html
+      - text: "FAQs"
+        icon: fa-glasses
+        href: articles/faq.html
+      - text: "Practical tips"
+        icon: fa-bicycle
+        href: articles/practical-tips.html
+        
 reference:
   - title: "Authentication and Setup"
     desc: >
