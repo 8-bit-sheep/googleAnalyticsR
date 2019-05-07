@@ -28,4 +28,5 @@ If you are contributing code, then please also include:
 * Include an example on how to use the function in the examples section
 * Try to stick to the same coding style as the rest of the package
 * Add some documentation on how to use the functions.   
+* Please try to keep to the https://style.tidyverse.org/ in contributed code (or correct code you see that does not comply!)
 
