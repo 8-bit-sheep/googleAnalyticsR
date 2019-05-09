@@ -90,11 +90,11 @@ head(amd)
 
 ## User management
 
-* ga_users_list() - list user access to your Google Analytics accounts, web properties or views
-* ga_users_delete() - delete user access via email
-* ga_users_delete_linkid() - delete user access via the linkId
-* ga_users_add() - add users to accounts
-* ga_users_update() - update a user
+* `ga_users_list()` - list user access to your Google Analytics accounts, web properties or views
+* `ga_users_delete()` - delete user access via email
+* `ga_users_delete_linkid()` - delete user access via the linkId
+* `ga_users_add()` - add users to accounts
+* `ga_users_update()` - update a user
 
 User management follows the recommended workflows outlined in this [Google reference article](https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management). 
 
@@ -250,6 +250,133 @@ The filter edit functions are contributed by @zselinger which allow you to updat
 * `ga_goal_list()` -	List goals
 * `ga_goal_add()` - Create and add Goals to a web property
 * `ga_goal_update()` - Modify an existing goal
+
+
+## Example: Copying GA goals
+
+We can programatically copy goal configurations from any GA view (the source) to another GA view (the destination) within an entirely separate property. This can be helpful to maintain standardised goal configurations for multiple properties, and also for GA migrations.
+
+This example will first copy a single goal from one property to another, then use the [`map()`](https://purrr.tidyverse.org/reference/map.html) function from `purrr` to copy multiple goals at once.
+
+We use the Google Analytics demo account as the source view for this example - you can [read more about the demo account here](https://support.google.com/analytics/answer/6367342?hl=en).
+
+## Auth and setup
+
+We authenticate and load the necessary packages, following the instructions from the [documentation](http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#choose-authentication-method).
+
+```{r auth_setup, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(stringr)
+library(rlist)
+```
+
+## Copying a single goal
+
+For this first section, we copy a single Goal from one view to another. To achieve this, we will:
+
+1. Retrieve the accountId, webPropertyId and viewId from our **source** GA view (the one where our goal to be copied over currently exists).
+2. Get a list of the goals currently configured in the source GA view.
+3. Retrieve the accountId, webPropertyId and viewId from our **destination** GA view (the one where our goal will be copied **to**).
+4. Get the configuration details of a single goal to be copied.
+5. Submit the goal details to our destination property.
+
+### 1. Retrieve the accountId, webPropertyId and viewId from our source GA view
+
+We use the `ga_account_list()` function, which returns an account summary for all available accounts as a dataframe.
+Then, we filter the dataframe down to a specific account and view name using the `filter()` and `str_detect()` functions from the tidyverse.
+
+You can supply your own filter conditions as necessary, to locate your desired view information.
+
+```{r}
+# Account info and list of goals for source, to be copied
+source_account <- ga_account_list() %>% 
+  filter(str_detect(accountName, "Demo Account"), str_detect(viewName, "Master"))
+source_account
+```
+
+### 2. Get a list of the goals currently configured from our source GA view
+
+Now that we have the account summary, we can use the view details to get a list of goal data, with each item in the list showing goal details.
+
+```{r get_goals, warning = FALSE, message = FALSE}
+source_goals <- ga_goal_list(source_account$accountId, source_account$webPropertyId, source_account$viewId)
+source_goals
+```
+
+### 3. Retrieve the accountId, webPropertyId and viewId from our destination GA view
+
+We again filter the results from `ga_account_list()`, to get account information for our destination GA property. In this example, we filter for "Your_Account" and the view called "Filtered".
+
+The `dest_account` dataframe should contain the same columns and data types as your `source_account` dataframe.
+
+```{r warning = FALSE, message = FALSE}
+# Account info for destination account
+dest_account <- ga_account_list() %>% 
+  filter(str_detect(accountName, "Your_Account"), str_detect(viewName, "Filtered"))
+```
+
+### 4. Get the configuration details of a single goal to be copied.
+
+For this first example, we add a single goal (ID 1) to the destination view, passed as a list to the [`ga_goal_add()`](http://code.markedmondson.me/googleAnalyticsR/reference/ga_goal_add.html) function. 
+
+We now use the `ga_goal()` function to retrieve the goal specifications as a list. We use `ga_goal()` because it provides the goal configuration data in the necessary format for our `goal_add()` request. 
+
+In the example below, we retrieve the details for the goal in slot 1. 
+
+```{r get_goal_list, warning = FALSE, message = FALSE}
+# Get goal ID 1
+goal_one <- ga_goal(source_account$accountId, source_account$webPropertyId, source_account$viewId, 
+                    goalId = 1) %>% 
+  # Strip out instance-specific metadata (property, profile, view data and original creation dates)
+  list.remove( c("accountId", "webPropertyId", "selfLink", "internalWebPropertyId", "profileId", "parentLink", "created", "updated"))
+
+goal_one
+```
+
+### 5. Submit the goal details to our destination property.
+
+We can then use the goal details contained in `goal_one` to submit a `ga_goal_add()` request to our destination property.
+
+```{r copy_goal, eval=FALSE}
+ga_goal_add(goal_one, dest_account$accountId, dest_account$webPropertyId, dest_account$viewId)
+```
+
+All being well, you should see console output containing the details of your newly submitted goal in the destination property.
+
+You can repeat the above steps for any goal IDs you'd like to copy over, and to one or multiple destination views.
+
+---
+
+## Copying multiple goals
+
+Using the [`map()`](https://purrr.tidyverse.org/reference/map.html) function from the `tidyverse`, we can quickly scale up this approach. We can copy all goals from a view at once, rather than one at a time.
+
+First, we define a function to copy a single goal, given a goal ID, details of the source view ID and destination view IDs. In effect, we make a function to perform steps 1-5 from the "Copying a single goal" section in this page.
+
+```{r copy_function, eval=FALSE}
+# Takes a goal ID, source account information & dest account information, copies goal over
+copy_goal <- function(goal_id, source_df, dest_df) {
+  source_goal <- ga_goal(source_df$accountId, source_df$webPropertyId, source_df$viewId, goal_id) %>% 
+    list.remove( c("accountId", "webPropertyId", "selfLink", "internalWebPropertyId", "profileId", "parentLink", "created", "updated")) 
+  ga_goal_add(source_goal, dest_df$accountId, dest_df$webPropertyId, dest_df$viewId)
+}
+```
+
+Having our goal-copying function defined, it is a simple step to apply it across all goal IDs from the source view.
+
+The example below re-uses the `source_goals`, `source_account` and `dest_account` objects which were created earlier.
+
+```{r copy_loop, eval=FALSE}
+# For each goal ID in our source view, apply the copy_goal function, 
+# using source_account and dest_account account parameters as fixed 2nd / third arguments
+map(source_goals$id, copy_goal, source_account, dest_account)
+```
+
+## Write request limits
+
+At the time of writing, there is a daily limit of 50 write requests per day, per Google Cloud project, which restricts the number of times this can be performed. However, it is possible to request that this limit be increased.
+
+For more information, check the Google documentation at https://developers.google.com/analytics/devguides/config/mgmt/v3/limits-quotas#write_requests.
 
 ## Remarketing segments
 
