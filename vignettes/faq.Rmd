@@ -1,0 +1,72 @@
+---
+title: "FAQs"
+---
+
+`googleAnalyticsR` provides convenient access to the Google Analytics API, helping analysts and developers programatically access Google Analytics data, automate Google Analytics related workflows and benefit from working with data in larger volumes and finer granularity. The FAQ below provides some context around the library especially for those new to R,  to the Google Analytics API or both. 
+
+### In which way will the use of this library help me ? 
+
+Connecting and interacting with an API involves a number of steps including authentication, passing data and instructions back and forth between server and client following protocol specifics etc. This can add a level of complexity to the interaction with a web API.
+
+* `googleAnalyticsR` intermediates between the user and the API, abstracting out the low level details of the interactions with the API. This involves providing a friendly method to authenticate and query  the API  and convert API data in a convenient format (typically an R data frame) that's easy to work with directly.
+
+
+* Additionally the library provides many advanced functionalities which are developed on top of the Google Analytics API, for example the possibility to overcome the commonly experienced issue of sampling. Check out the [homepage](http://code.markedmondson.me/googleAnalyticsR) for a detailed list of these functionalities. 
+
+### How much R do I need to know before getting started  ?
+
+
+Having a very basic knowledge of R is sufficient for anyone who wants to start using this library to automate access to Google Analytics data. [Dartistics.com](http://www.dartistics.com) offers a very accessible R guide with special focus on R's applications for digital analytics. 
+
+
+### What if R is not my main programming language ?
+
+In this case you might still find it convenient to access the Google Analytics data using the library and then continue working with the obtained dataset in a different programming language. 
+
+### Does knowing SQL help ?
+
+Familiarity with the basic concepts of SQL will be useful. In many ways the process of querying the Google Analytics API via this library resembles that of querying a database.
+
+
+### How much of the Google Analytics API functionality is covered by the library ?
+
+The library is actively developed  and now covers all key functionalities of the API and even most of the less commonly used ones. Check out the [news section](http://code.markedmondson.me/googleAnalyticsR/news/index.html)  to see the progress of the library in time. Practically speaking the vast majority of tasks that one can perform via the Google Analytics UI, it's possible to do programatically using the API and the library.
+
+### I notice some similar functionality but for different versions of the API such as v3 and v4. Why is that  ? Which API version should I prefer ?
+
+As the GA API evolves over time, different versions of it become available. The library includes functions for the two latest versions, v3 and v4. All the new API features will become available only for the v4 API so becoming familiar with the v4 functions could be beneficial in this respect. (There are two basic features not available currently for version 4 which are discussed in the [v4 API section](http://code.markedmondson.me/googleAnalyticsR/articles/v4.html))
+
+
+### The documentation refers to various APIs such as the Reporting API and Management API -  What's the difference and which API should I look at first ? 
+
+The "GA API" is essentially is a set of distinct but related APIs such as the ones mentioned above.
+More information about the distinction [here]( https://developers.google.com/analytics/devguides/platform/)
+Depending on the nature of the request one API or another is responsible to handle it. 
+For instance: The Management API is associated mainly with the types of actions one would normally perform on the admin section of a Google Analytics account. It can help automate account configuration and provide access to configuration data. 
+
+Practically for most users the reporting API is the one that is most commonly used as it allows access to the metrics, dimensions, segments and related data associated with the user navigation through a web property. 
+
+### What are some common workflows using googleAnalyticsR  ?
+
+A typical basic workflow is to use the library for easy authentication to the Google Analytics API and then use the reporting API to collect -unsampled- data from your Google Analytics account.
+
+More advanced workflows (once the data is retrieved) could involve:
+
+* [Use of the library's modeling functions for statistical analysis](http://code.markedmondson.me/googleAnalyticsR/articles/models.html)
+* [Interaction with bigquery](http://code.markedmondson.me/googleAnalyticsR/articles/big-query.html)
+* [Programmatic user management via the management API](http://code.markedmondson.me/googleAnalyticsR/articles/management.html)
+* [Rmarkdown report publishing](http://code.markedmondson.me/googleAnalyticsR/articles/rmarkdown.html)
+* [Generation of GA powered shiny apps](http://code.markedmondson.me/googleAnalyticsR/articles/shiny.html)
+
+
+### Questions/Suggestions/Issues ? 
+
+* If you wish to contribute code/documentation or if you 'd like to report a bug please read the [contributing page on github](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/CONTRIBUTING)
+
+* You can also ask a question on [Stackoverflow](https://stackoverflow.com/search?q=googleanalyticsR) using the appropriate tags and there is a good chance someone will answer it for you.
+
+* You can as well join an active slack community of users of the library, where you can post questions or suggestions or answer questions of others. See top of [homepage](http://code.markedmondson.me/googleAnalyticsR) for more info. 
+
+For feature requests please visit the [feature request guide on github](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/.github/ISSUE_TEMPLATE/feature_request.md)
+
+
