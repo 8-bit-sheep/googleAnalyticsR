@@ -224,23 +224,6 @@ metrics = "sessions", dimensions = c("date", "medium"))
 More details about these special cases of authentication are available on the corresponding sections of this site
 for [Shiny](http://code.markedmondson.me/googleAnalyticsR/articles/shiny.html) and [Rmarkdown](http://code.markedmondson.me/googleAnalyticsR/articles/rmarkdown.html)
 
-## 5 (optional): Explore the GA metrics and dimensions
-
-
-To see what dimensions and metrics are available via the API as well as their precise definition, you can use this command:
-
-```r
-## get a list of what metrics and dimensions you can use
-meta <- google_analytics_meta()
-```
-
-![](meta_data_screenshot.png)
-
-If offline, this data is also available by typing `meta`, although it won't be quite as up to date.  
-
-The meta data does not include multi-channel as they are not available, for those [see the online version](https://developers.google.com/analytics/devguides/reporting/mcf/dimsmets/).
-
-When using the library, you can call metrics and dimensions with or without the `ga:` prefix (`mcf:` for multi-channel metrics/dimensions.)
 
 
 ### Where to go from here ?
