@@ -212,8 +212,50 @@ ga_custom_vars_list(54019251, webPropertyId = "UA-54019251-4", type = "customDim
 
 ## AdWords
 
-* `ga_adwords()`	Get AdWords Link meta data
+
+
+* `ga_adwords()`	Get Google Analytics - AdWords Link meta data
 * `ga_adwords_list()`	List AdWords
+* `ga_adwords_add_linkid()` Create a link between and Adwords (Google ads) account and a Google Analytics property
+* `ga_adwords_delete_linkid()` Delete a Google Analytics webProperty-Google Ads link
+
+For many websites Google search advertising, aka Adwords, is a key traffic channel which comes with its own reporting system. 
+Linking Google Analytics with Adwords makes sense as it allows Google ads data to be included in Analytics reports and vice versa. 
+For instance linking the two together can add to the Analytics reports more than 30 metrics and dimensions related to ads (such as the keywords that triggered  an ad or the ad ROI) 
+You can use the function `ga_adwords_list()` to request a list of existing links between Google Analytics and Adwords associated with your user. 
+The `ga_adwords()` function provides meta data about a specific Google Analytics - Adwords link.
+
+If a link between Analytics and Google ads has not been established, this can be done easily via the Management API using the `ga_adwords_add_linkid()` function.
+A requirement is that your email has access rights to both the Analytics and Adwords account. 
+You will also need the Adwords customer ID which  can be obtained via the Adwords API or  UI.
+Also required is the id of the Google Analytics account and associated GA property to which the Adwords account will be linked. 
+This operation will create a new entityAdWordsLinks resource. 
+To remove this  entityAdWordsLinks later if needed the `ga_adwords_delete_linkid()` function can be used. 
+
+```{r}
+# Lists webProperty-Google Ads links
+#ga_adwords_list(accountId = 65973592, webPropertyId = "UA-65973592-1")
+
+# Get information about a web property-Google Ads link 
+#ga_adwords(accountId = 65973592, webPropertyId = "UA-65973592-1", webPropertyAdWordsLinkId = "QrcfI2DTSMayqbrLiHYUqw")
+
+# establish a new link between GA and Adwords
+#ga_adwords_add_linkid(adwordsAccountId = "280-234-7592", linkName = "Google Ads Link", accountId = "65973592", webPropertyId = "UA-65973592-1")
+
+#check that it has been added
+#ga_adwords_list(accountId = 65973592, webPropertyId = "UA-65973592-1")
+
+# delete the link
+#ga_adwords_delete_linkid(accountId  = 65973592, webPropertyId ="UA-65973592-1", webPropertyAdWordsLinkId = "ezW2dyaiQcGheWRAo69nCw")
+
+#check that the link has been removed
+#ga_adwords_list(accountId = 65973592, webPropertyId = "UA-65973592-1")
+
+
+
+```
+
+
 
 ## Custom Data Sources
 
