@@ -248,6 +248,7 @@ ga_unsampled_download <- function(reportTitle,
   } else {
     r <- GET(
       download_link,
+      query = list(alt = "media"),
       add_headers(Authorization = document[["request"]][["headers"]][["Authorization"]])
     )
     stop_for_status(r)
