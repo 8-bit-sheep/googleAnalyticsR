@@ -384,7 +384,7 @@ google_analytics <- function(viewId,
   }
   
   if(max > reqRowLimit){
-    myMessage("Multi-call to API", level = 2)
+    myMessage("Multi-call to API", level = 1)
   }
   
   meta_batch_start_index <- seq(from=0, to=max, by=reqRowLimit)

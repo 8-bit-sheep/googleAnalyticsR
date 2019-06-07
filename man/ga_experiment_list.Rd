@@ -20,8 +20,10 @@ Experiments List
 List Experiments
 }
 \seealso{
-Other managementAPI functions: \code{\link{ga_adwords_list}},
-  \code{\link{ga_adwords}}, \code{\link{ga_clientid_hash}},
+Other managementAPI functions: \code{\link{ga_adwords_add_linkid}},
+  \code{\link{ga_adwords_delete_linkid}},
+  \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}},
+  \code{\link{ga_clientid_hash}},
   \code{\link{ga_experiment}}, \code{\link{ga_filter_add}},
   \code{\link{ga_filter_apply_to_view}},
   \code{\link{ga_filter_delete}},

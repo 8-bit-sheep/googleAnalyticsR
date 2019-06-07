@@ -18,8 +18,9 @@ hashedClientId object list
 Get hashed version of client id (also known as hashClientId, hashedClientId, or BigQuery's fullVisitorId)
 }
 \seealso{
-Other managementAPI functions: \code{\link{ga_adwords_list}},
-  \code{\link{ga_adwords}},
+Other managementAPI functions: \code{\link{ga_adwords_add_linkid}},
+  \code{\link{ga_adwords_delete_linkid}},
+  \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}},
   \code{\link{ga_experiment_list}},
   \code{\link{ga_experiment}}, \code{\link{ga_filter_add}},
   \code{\link{ga_filter_apply_to_view}},
