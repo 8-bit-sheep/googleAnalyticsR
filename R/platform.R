@@ -279,15 +279,14 @@ ga_model_edit <- function(model,
     )
     shiny_module_ui2     <- assign_new(outputShiny, shiny_module_ui2)
     shiny_module_server2 <- assign_new(renderShiny, shiny_module_server2)
-    
-    shiny_module <- create_shiny_module_funcs(data_f = data_f2,
-                                              model_f = model_f2,
-                                              output_f = output_f2,
-                                              outputShiny = shiny_module_ui2,
-                                              renderShiny = shiny_module_server2)
-  } else {
-    shiny_module <- model$shiny_module
   }
+  
+  shiny_module <- create_shiny_module_funcs(data_f = data_f2,
+                                            model_f = model_f2,
+                                            output_f = output_f2,
+                                            outputShiny = shiny_module_ui2,
+                                            renderShiny = shiny_module_server2)
+
 
   model <- structure(
     list(

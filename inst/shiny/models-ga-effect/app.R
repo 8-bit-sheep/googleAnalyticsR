@@ -8,6 +8,8 @@ library(tidyr)
 gar_set_client(web_json = "ga-web-client.json",
                scopes = "https://www.googleapis.com/auth/analytics.readonly")
 
+options(googleAuthR.redirect = "http://localhost:1221")
+
 # loads a pre-existing model
 model <- ga_model_example("ga-effect.gamr", location = "googleAnalyticsR")
 
