@@ -320,6 +320,16 @@ google_analytics <- function(viewId,
                              useResourceQuotas= NULL,
                              rows_per_call = 10000L){
   
+  if(is_default_project()){
+    if(!interactive()){
+      default_project_message()
+      stop("The default Google Cloud Project for googleAnalyticsR is intended 
+           for evalutation only, not production scripts.  
+           Please set your own client.id and client.secret via googleAuthR::gar_set_client()
+           or otherwise as suggested on the website.", call. = FALSE)
+    }
+  }
+  
   timer_start <- Sys.time()
 
   assert_that_ifnn(useResourceQuotas, is.flag)

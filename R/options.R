@@ -63,6 +63,16 @@
     options(googleAuthR.webapp.client_id = Sys.getenv("GA_WEB_CLIENT_SECRET"))
   }
   
+  if(Sys.getenv("GAR_CLIENT_JSON") != ""){
+    packageStartupMessage("Setting your own Google Cloud Project client.id")
+    googleAuthR::gar_set_client(json = Sys.getenv("GAR_CLIENT_JSON"))
+  }
+  
+  if(Sys.getenv("GAR_CLIENT_WEB_JSON") != ""){
+    packageStartupMessage("Setting your own Google Cloud Project client.id")
+    googleAuthR::gar_set_client(web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"))
+  }
+  
 
   
   f <- function(req){
