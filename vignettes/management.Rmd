@@ -5,6 +5,7 @@ title: "Management API"
 ```{r setup, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 # auto-auth when done locally
 library(googleAnalyticsR)
+ga_auth(email=Sys.getenv("GARGLE_EMAIL"))
 ```
 
 The Management API v3 covers all API calls that are not data reporting related and are for getting meta information about your Google Analytics account or to change account settings.

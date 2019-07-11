@@ -164,6 +164,20 @@
         News
       </a>
     </li>
+    <li>
+      <a href="../articles/faq.html">
+        <span class="fa fa-glasses"></span>
+         
+        FAQs
+      </a>
+    </li>
+    <li>
+      <a href="../articles/practical-tips.html">
+        <span class="fa fa-bicycle"></span>
+         
+        Practical tips
+      </a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -355,19 +369,6 @@ client_two &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 <a href="#authentication-with-shiny-and-rmarkdown" class="anchor"></a>Authentication with shiny and Rmarkdown</h3>
 <p>More details about these special cases of authentication are available on the corresponding sections of this site for <a href="http://code.markedmondson.me/googleAnalyticsR/articles/shiny.html">Shiny</a> and <a href="http://code.markedmondson.me/googleAnalyticsR/articles/rmarkdown.html">Rmarkdown</a></p>
 </div>
-</div>
-<div id="optional-explore-the-ga-metrics-and-dimensions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#optional-explore-the-ga-metrics-and-dimensions" class="anchor"></a>5 (optional): Explore the GA metrics and dimensions</h2>
-<p>To see what dimensions and metrics are available via the API as well as their precise definition, you can use this command:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## get a list of what metrics and dimensions you can use
-meta &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_meta.html">google_analytics_meta</a></span>()</code></pre></div>
-<div class="figure">
-<img src="meta_data_screenshot.png">
-</div>
-<p>If offline, this data is also available by typing <code>meta</code>, although it won’t be quite as up to date.</p>
-<p>The meta data does not include multi-channel as they are not available, for those <a href="https://developers.google.com/analytics/devguides/reporting/mcf/dimsmets/">see the online version</a>.</p>
-<p>When using the library, you can call metrics and dimensions with or without the <code>ga:</code> prefix (<code>mcf:</code> for multi-channel metrics/dimensions.)</p>
 <div id="where-to-go-from-here" class="section level3">
 <h3 class="hasAnchor">
 <a href="#where-to-go-from-here" class="anchor"></a>Where to go from here ?</h3>
@@ -385,7 +386,6 @@ meta &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_met
       <li><a href="#make-first-api-call">2. Make first API call</a></li>
       <li><a href="#choose-authentication-method">3. Choose authentication method</a></li>
       <li><a href="#optional-review-useful-auth-options">4 (optional): Review useful auth options</a></li>
-      <li><a href="#optional-explore-the-ga-metrics-and-dimensions">5 (optional): Explore the GA metrics and dimensions</a></li>
       </ul>
 </div>
       </div>

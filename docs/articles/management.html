@@ -164,6 +164,20 @@
         News
       </a>
     </li>
+    <li>
+      <a href="../articles/faq.html">
+        <span class="fa fa-glasses"></span>
+         
+        FAQs
+      </a>
+    </li>
+    <li>
+      <a href="../articles/practical-tips.html">
+        <span class="fa fa-bicycle"></span>
+         
+        Practical tips
+      </a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -249,10 +263,10 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this only lists account meta-data</span>
 <span class="kw"><a href="../reference/ga_accounts.html">ga_accounts</a></span>()</code></pre></div>
 <pre><code>##         id             name             created             updated
-## 1 47480439    MarkEdmondson 2014-01-25 12:17:05 2015-08-10 18:47:15
+## 1 47480439    MarkEdmondson 2014-01-25 12:17:05 2019-06-01 08:09:58
 ## 2 47584925   RaspberryPi UA 2014-01-29 17:01:47 2015-08-10 21:40:04
 ## 3 54019251 Sunholo Websites 2014-08-20 19:17:05 2015-08-10 19:50:44
-## 4 54516992     Demo Account 2014-09-06 17:53:33 2018-02-11 23:40:54
+## 4 54516992     Demo Account 2014-09-06 17:53:33 2019-06-10 17:56:03
 ## 5 73050356     GDE Tracking 2016-01-29 20:40:44 2016-01-29 20:40:44
 ## 6 79301104          cloudyr 2016-06-14 14:29:50 2016-06-14 14:29:50
 ##                            permissions.effective
@@ -456,46 +470,46 @@
 ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, 
                             <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
                             <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</code></pre></div>
-<pre><code>## 2019-03-26 10:30:38&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<pre><code>## 2019-07-11 21:46:54&gt; Downloaded [240] rows from a total of [240].</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</code></pre></div>
 <pre><code>##   hour       date sessions bounceRate
-## 1   00 2019-03-16        8   75.00000
-## 2   00 2019-03-17       21  100.00000
-## 3   00 2019-03-18        9   77.77778
-## 4   00 2019-03-19       14   78.57143
-## 5   00 2019-03-20       27   74.07407
-## 6   00 2019-03-21       11   81.81818</code></pre>
+## 1   00 2019-07-01        4   75.00000
+## 2   00 2019-07-02        7   85.71429
+## 3   00 2019-07-03        8   75.00000
+## 4   00 2019-07-04       12   58.33333
+## 5   00 2019-07-05        5   80.00000
+## 6   00 2019-07-06        5  100.00000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if we want totals per hour over the dates:</span>
 <span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"sessions"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  sessions
 ##    &lt;chr&gt;    &lt;dbl&gt;
-##  1 00         125
-##  2 01          85
-##  3 02          87
-##  4 03          83
-##  5 04          77
-##  6 05          77
-##  7 06          83
-##  8 07          91
-##  9 08         106
-## 10 09         158
+##  1 00          69
+##  2 01          54
+##  3 02          47
+##  4 03          54
+##  5 04          53
+##  6 05          38
+##  7 06          48
+##  8 07          52
+##  9 08          95
+## 10 09         107
 ## # … with 14 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># it knows not to sum metrics that are rates:</span>
 <span class="kw"><a href="../reference/aggregateGAData.html">aggregateGAData</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"bounceRate"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  bounceRate
 ##    &lt;chr&gt;      &lt;dbl&gt;
-##  1 00          79.9
-##  2 01          67.3
-##  3 02          81.1
-##  4 03          76.0
-##  5 04          76.4
-##  6 05          73.0
-##  7 06          82.2
-##  8 07          83.7
-##  9 08          88.2
-## 10 09          77.0
+##  1 00          79.7
+##  2 01          54  
+##  3 02          71.2
+##  4 03          61.3
+##  5 04          66.3
+##  6 05          54.3
+##  7 06          57.4
+##  8 07          74.5
+##  9 08          71.7
+## 10 09          72.1
 ## # … with 14 more rows</code></pre>
 <ul>
 <li>
@@ -513,11 +527,16 @@ amd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/allowed
 <h2 class="hasAnchor">
 <a href="#user-management" class="anchor"></a>User management</h2>
 <ul>
-<li>ga_users_list() - list user access to your Google Analytics accounts, web properties or views</li>
-<li>ga_users_delete() - delete user access via email</li>
-<li>ga_users_delete_linkid() - delete user access via the linkId</li>
-<li>ga_users_add() - add users to accounts</li>
-<li>ga_users_update() - update a user</li>
+<li>
+<code><a href="../reference/ga_users_list.html">ga_users_list()</a></code> - list user access to your Google Analytics accounts, web properties or views</li>
+<li>
+<code><a href="../reference/ga_users_delete.html">ga_users_delete()</a></code> - delete user access via email</li>
+<li>
+<code><a href="../reference/ga_users_delete_linkid.html">ga_users_delete_linkid()</a></code> - delete user access via the linkId</li>
+<li>
+<code><a href="../reference/ga_users_add.html">ga_users_add()</a></code> - add users to accounts</li>
+<li>
+<code><a href="../reference/ga_users_update.html">ga_users_update()</a></code> - update a user</li>
 </ul>
 <p>User management follows the recommended workflows outlined in this <a href="https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management">Google reference article</a>.</p>
 <p>The <code>ga_users_*</code> functions use the management APIs batching endpoint, to take advantage of the special increased quota limits when dealing with User management that API offers. For example, every 30 API calls that are batched that deal with user management only increments one API call against your management API quota. You can have 300 API calls in one batch (e.g. that costs 10 API calls against the quota), and <code>googleAnalyticsR</code> will split any list of emails into 300 emails per batch for you, so you can send in all emails you have.</p>
@@ -612,10 +631,33 @@ o &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumenta
 <a href="#adwords" class="anchor"></a>AdWords</h2>
 <ul>
 <li>
-<code><a href="../reference/ga_adwords.html">ga_adwords()</a></code> Get AdWords Link meta data</li>
+<code><a href="../reference/ga_adwords.html">ga_adwords()</a></code> Get Google Analytics - AdWords Link meta data</li>
 <li>
 <code><a href="../reference/ga_adwords_list.html">ga_adwords_list()</a></code> List AdWords</li>
+<li>
+<code><a href="../reference/ga_adwords_add_linkid.html">ga_adwords_add_linkid()</a></code> Create a link between and Adwords (Google ads) account and a Google Analytics property</li>
+<li>
+<code><a href="../reference/ga_adwords_delete_linkid.html">ga_adwords_delete_linkid()</a></code> Delete a Google Analytics webProperty-Google Ads link</li>
 </ul>
+<p>For many websites Google search advertising, aka Adwords, is a key traffic channel which comes with its own reporting system. Linking Google Analytics with Adwords makes sense as it allows Google ads data to be included in Analytics reports and vice versa. For instance linking the two together can add to the Analytics reports more than 30 metrics and dimensions related to ads (such as the keywords that triggered an ad or the ad ROI) You can use the function <code><a href="../reference/ga_adwords_list.html">ga_adwords_list()</a></code> to request a list of existing links between Google Analytics and Adwords associated with your user. The <code><a href="../reference/ga_adwords.html">ga_adwords()</a></code> function provides meta data about a specific Google Analytics - Adwords link.</p>
+<p>If a link between Analytics and Google ads has not been established, this can be done easily via the Management API using the <code><a href="../reference/ga_adwords_add_linkid.html">ga_adwords_add_linkid()</a></code> function. A requirement is that your email has access rights to both the Analytics and Adwords account. You will also need the Adwords customer ID which can be obtained via the Adwords API or UI. Also required is the id of the Google Analytics account and associated GA property to which the Adwords account will be linked. This operation will create a new entityAdWordsLinks resource. To remove this entityAdWordsLinks later if needed the <code><a href="../reference/ga_adwords_delete_linkid.html">ga_adwords_delete_linkid()</a></code> function can be used.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Lists webProperty-Google Ads links</span>
+<span class="co">#ga_adwords_list(accountId = 65973592, webPropertyId = "UA-65973592-1")</span>
+
+<span class="co"># Get information about a web property-Google Ads link </span>
+<span class="co">#ga_adwords(accountId = 65973592, webPropertyId = "UA-65973592-1", webPropertyAdWordsLinkId = "QrcfI2DTSMayqbrLiHYUqw")</span>
+
+<span class="co"># establish a new link between GA and Adwords</span>
+<span class="co">#ga_adwords_add_linkid(adwordsAccountId = "280-234-7592", linkName = "Google Ads Link", accountId = "65973592", webPropertyId = "UA-65973592-1")</span>
+
+<span class="co">#check that it has been added</span>
+<span class="co">#ga_adwords_list(accountId = 65973592, webPropertyId = "UA-65973592-1")</span>
+
+<span class="co"># delete the link</span>
+<span class="co">#ga_adwords_delete_linkid(accountId  = 65973592, webPropertyId ="UA-65973592-1", webPropertyAdWordsLinkId = "ezW2dyaiQcGheWRAo69nCw")</span>
+
+<span class="co">#check that the link has been removed</span>
+<span class="co">#ga_adwords_list(accountId = 65973592, webPropertyId = "UA-65973592-1")</span></code></pre></div>
 </div>
 <div id="custom-data-sources" class="section level2">
 <h2 class="hasAnchor">
@@ -680,6 +722,188 @@ o &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumenta
 <li>
 <code><a href="../reference/ga_goal_update.html">ga_goal_update()</a></code> - Modify an existing goal</li>
 </ul>
+</div>
+<div id="example-copying-ga-goals" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example-copying-ga-goals" class="anchor"></a>Example: Copying GA goals</h2>
+<p>We can programatically copy goal configurations from any GA view (the source) to another GA view (the destination) within an entirely separate property. This can be helpful to maintain standardised goal configurations for multiple properties, and also for GA migrations.</p>
+<p>This example will first copy a single goal from one property to another, then use the <a href="https://purrr.tidyverse.org/reference/map.html"><code>map()</code></a> function from <code>purrr</code> to copy multiple goals at once.</p>
+<p>We use the Google Analytics demo account as the source view for this example - you can <a href="https://support.google.com/analytics/answer/6367342?hl=en">read more about the demo account here</a>.</p>
+</div>
+<div id="auth-and-setup" class="section level2">
+<h2 class="hasAnchor">
+<a href="#auth-and-setup" class="anchor"></a>Auth and setup</h2>
+<p>We authenticate and load the necessary packages, following the instructions from the <a href="http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#choose-authentication-method">documentation</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(stringr)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rlist)</code></pre></div>
+</div>
+<div id="copying-a-single-goal" class="section level2">
+<h2 class="hasAnchor">
+<a href="#copying-a-single-goal" class="anchor"></a>Copying a single goal</h2>
+<p>For this first section, we copy a single Goal from one view to another. To achieve this, we will:</p>
+<ol style="list-style-type: decimal">
+<li>Retrieve the accountId, webPropertyId and viewId from our <strong>source</strong> GA view (the one where our goal to be copied over currently exists).</li>
+<li>Get a list of the goals currently configured in the source GA view.</li>
+<li>Retrieve the accountId, webPropertyId and viewId from our <strong>destination</strong> GA view (the one where our goal will be copied <strong>to</strong>).</li>
+<li>Get the configuration details of a single goal to be copied.</li>
+<li>Submit the goal details to our destination property.</li>
+</ol>
+<div id="retrieve-the-accountid-webpropertyid-and-viewid-from-our-source-ga-view" class="section level3">
+<h3 class="hasAnchor">
+<a href="#retrieve-the-accountid-webpropertyid-and-viewid-from-our-source-ga-view" class="anchor"></a>1. Retrieve the accountId, webPropertyId and viewId from our source GA view</h3>
+<p>We use the <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> function, which returns an account summary for all available accounts as a dataframe. Then, we filter the dataframe down to a specific account and view name using the <code><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter()</a></code> and <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code> functions from the tidyverse.</p>
+<p>You can supply your own filter conditions as necessary, to locate your desired view information.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Account info and list of goals for source, to be copied</span>
+source_account &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_account_list.html">ga_account_list</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(accountName, <span class="st">"Demo Account"</span>), <span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(viewName, <span class="st">"Master"</span>))
+source_account</code></pre></div>
+<pre><code>##   accountId  accountName internalWebPropertyId    level
+## 1  54516992 Demo Account              87479473 STANDARD
+##                                websiteUrl webPropertyId
+## 1 https://shop.googlemerchandisestore.com UA-54516992-1
+##            webPropertyName type starred   viewId      viewName
+## 1 Google Merchandise Store  WEB      NA 92320289 1 Master View</code></pre>
+</div>
+<div id="get-a-list-of-the-goals-currently-configured-from-our-source-ga-view" class="section level3">
+<h3 class="hasAnchor">
+<a href="#get-a-list-of-the-goals-currently-configured-from-our-source-ga-view" class="anchor"></a>2. Get a list of the goals currently configured from our source GA view</h3>
+<p>Now that we have the account summary, we can use the view details to get a list of goal data, with each item in the list showing goal details.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">source_goals &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_goal_list.html">ga_goal_list</a></span>(source_account<span class="op">$</span>accountId, source_account<span class="op">$</span>webPropertyId, source_account<span class="op">$</span>viewId)
+source_goals</code></pre></div>
+<pre><code>##   id accountId webPropertyId internalWebPropertyId profileId
+## 1  1  54516992 UA-54516992-1              87479473  92320289
+## 2  2  54516992 UA-54516992-1              87479473  92320289
+## 3  3  54516992 UA-54516992-1              87479473  92320289
+## 4  4  54516992 UA-54516992-1              87479473  92320289
+##                 name value active            type             created
+## 1 Purchase Completed     0   TRUE URL_DESTINATION 2014-10-10 20:13:47
+## 2      Engaged Users     0   TRUE VISIT_NUM_PAGES 2015-02-23 16:18:06
+## 3      Registrations     0   TRUE URL_DESTINATION 2015-02-27 12:15:01
+## 4   Entered Checkout     0   TRUE URL_DESTINATION 2015-07-20 23:57:22
+##               updated
+## 1 2016-11-10 23:07:35
+## 2 2015-04-14 12:02:21
+## 3 2016-07-26 16:14:09
+## 4 2016-07-26 16:19:40
+##                                 urlDestinationDetails.url
+## 1                                  /ordercompleted\\.html
+## 2                                                    &lt;NA&gt;
+## 3                                 /registersuccess\\.html
+## 4 /yourinfo\\.html|/guestregister\\.html|/shipping\\.html
+##   urlDestinationDetails.caseSensitive urlDestinationDetails.matchType
+## 1                               FALSE                           REGEX
+## 2                                  NA                            &lt;NA&gt;
+## 3                               FALSE                           REGEX
+## 4                               FALSE                           REGEX
+##   urlDestinationDetails.firstStepRequired
+## 1                                    TRUE
+## 2                                      NA
+## 3                                   FALSE
+## 4                                   FALSE
+##                                                                                                                            urlDestinationDetails.steps
+## 1 1:4,c("Cart", "Billing and Shipping", "Payment", "Review"),c("/basket\\\\.html", "/yourinfo\\\\.html", "/payment\\\\.html", "/revieworder\\\\.html")
+## 2                                                                                                                                                     
+## 3                                                                                                                                                     
+## 4                                                                                                                                                     
+##   visitNumPagesDetails.comparisonType visitNumPagesDetails.comparisonValue
+## 1                                &lt;NA&gt;                                 &lt;NA&gt;
+## 2                        GREATER_THAN                                   10
+## 3                                &lt;NA&gt;                                 &lt;NA&gt;
+## 4                                &lt;NA&gt;                                 &lt;NA&gt;</code></pre>
+</div>
+<div id="retrieve-the-accountid-webpropertyid-and-viewid-from-our-destination-ga-view" class="section level3">
+<h3 class="hasAnchor">
+<a href="#retrieve-the-accountid-webpropertyid-and-viewid-from-our-destination-ga-view" class="anchor"></a>3. Retrieve the accountId, webPropertyId and viewId from our destination GA view</h3>
+<p>We again filter the results from <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code>, to get account information for our destination GA property. In this example, we filter for “Your_Account” and the view called “Filtered”.</p>
+<p>The <code>dest_account</code> dataframe should contain the same columns and data types as your <code>source_account</code> dataframe.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Account info for destination account</span>
+dest_account &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_account_list.html">ga_account_list</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(accountName, <span class="st">"Your_Account"</span>), <span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(viewName, <span class="st">"Filtered"</span>))</code></pre></div>
+</div>
+<div id="get-the-configuration-details-of-a-single-goal-to-be-copied-" class="section level3">
+<h3 class="hasAnchor">
+<a href="#get-the-configuration-details-of-a-single-goal-to-be-copied-" class="anchor"></a>4. Get the configuration details of a single goal to be copied.</h3>
+<p>For this first example, we add a single goal (ID 1) to the destination view, passed as a list to the <a href="http://code.markedmondson.me/googleAnalyticsR/reference/ga_goal_add.html"><code><a href="../reference/ga_goal_add.html">ga_goal_add()</a></code></a> function.</p>
+<p>We now use the <code><a href="../reference/ga_goal.html">ga_goal()</a></code> function to retrieve the goal specifications as a list. We use <code><a href="../reference/ga_goal.html">ga_goal()</a></code> because it provides the goal configuration data in the necessary format for our <code>goal_add()</code> request.</p>
+<p>In the example below, we retrieve the details for the goal in slot 1.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get goal ID 1</span>
+goal_one &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_goal.html">ga_goal</a></span>(source_account<span class="op">$</span>accountId, source_account<span class="op">$</span>webPropertyId, source_account<span class="op">$</span>viewId, 
+                    <span class="dt">goalId =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="co"># Strip out instance-specific metadata (property, profile, view data and original creation dates)</span>
+<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rlist/topics/list.remove">list.remove</a></span>( <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"accountId"</span>, <span class="st">"webPropertyId"</span>, <span class="st">"selfLink"</span>, <span class="st">"internalWebPropertyId"</span>, <span class="st">"profileId"</span>, <span class="st">"parentLink"</span>, <span class="st">"created"</span>, <span class="st">"updated"</span>))
+
+goal_one</code></pre></div>
+<pre><code>## $id
+## [1] "1"
+## 
+## $kind
+## [1] "analytics#goal"
+## 
+## $name
+## [1] "Purchase Completed"
+## 
+## $value
+## [1] 0
+## 
+## $active
+## [1] TRUE
+## 
+## $type
+## [1] "URL_DESTINATION"
+## 
+## $urlDestinationDetails
+## $urlDestinationDetails$url
+## [1] "/ordercompleted\\.html"
+## 
+## $urlDestinationDetails$caseSensitive
+## [1] FALSE
+## 
+## $urlDestinationDetails$matchType
+## [1] "REGEX"
+## 
+## $urlDestinationDetails$firstStepRequired
+## [1] TRUE
+## 
+## $urlDestinationDetails$steps
+##   number                 name                 url
+## 1      1                 Cart      /basket\\.html
+## 2      2 Billing and Shipping    /yourinfo\\.html
+## 3      3              Payment     /payment\\.html
+## 4      4               Review /revieworder\\.html</code></pre>
+</div>
+<div id="submit-the-goal-details-to-our-destination-property-" class="section level3">
+<h3 class="hasAnchor">
+<a href="#submit-the-goal-details-to-our-destination-property-" class="anchor"></a>5. Submit the goal details to our destination property.</h3>
+<p>We can then use the goal details contained in <code>goal_one</code> to submit a <code><a href="../reference/ga_goal_add.html">ga_goal_add()</a></code> request to our destination property.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ga_goal_add.html">ga_goal_add</a></span>(goal_one, dest_account<span class="op">$</span>accountId, dest_account<span class="op">$</span>webPropertyId, dest_account<span class="op">$</span>viewId)</code></pre></div>
+<p>All being well, you should see console output containing the details of your newly submitted goal in the destination property.</p>
+<p>You can repeat the above steps for any goal IDs you’d like to copy over, and to one or multiple destination views.</p>
+<hr>
+</div>
+</div>
+<div id="copying-multiple-goals" class="section level2">
+<h2 class="hasAnchor">
+<a href="#copying-multiple-goals" class="anchor"></a>Copying multiple goals</h2>
+<p>Using the <a href="https://purrr.tidyverse.org/reference/map.html"><code>map()</code></a> function from the <code>tidyverse</code>, we can quickly scale up this approach. We can copy all goals from a view at once, rather than one at a time.</p>
+<p>First, we define a function to copy a single goal, given a goal ID, details of the source view ID and destination view IDs. In effect, we make a function to perform steps 1-5 from the “Copying a single goal” section in this page.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Takes a goal ID, source account information &amp; dest account information, copies goal over</span>
+copy_goal &lt;-<span class="st"> </span><span class="cf">function</span>(goal_id, source_df, dest_df) {
+  source_goal &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga_goal.html">ga_goal</a></span>(source_df<span class="op">$</span>accountId, source_df<span class="op">$</span>webPropertyId, source_df<span class="op">$</span>viewId, goal_id) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rlist/topics/list.remove">list.remove</a></span>( <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"accountId"</span>, <span class="st">"webPropertyId"</span>, <span class="st">"selfLink"</span>, <span class="st">"internalWebPropertyId"</span>, <span class="st">"profileId"</span>, <span class="st">"parentLink"</span>, <span class="st">"created"</span>, <span class="st">"updated"</span>)) 
+  <span class="kw"><a href="../reference/ga_goal_add.html">ga_goal_add</a></span>(source_goal, dest_df<span class="op">$</span>accountId, dest_df<span class="op">$</span>webPropertyId, dest_df<span class="op">$</span>viewId)
+}</code></pre></div>
+<p>Having our goal-copying function defined, it is a simple step to apply it across all goal IDs from the source view.</p>
+<p>The example below re-uses the <code>source_goals</code>, <code>source_account</code> and <code>dest_account</code> objects which were created earlier.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># For each goal ID in our source view, apply the copy_goal function, </span>
+<span class="co"># using source_account and dest_account account parameters as fixed 2nd / third arguments</span>
+<span class="kw">map</span>(source_goals<span class="op">$</span>id, copy_goal, source_account, dest_account)</code></pre></div>
+</div>
+<div id="write-request-limits" class="section level2">
+<h2 class="hasAnchor">
+<a href="#write-request-limits" class="anchor"></a>Write request limits</h2>
+<p>At the time of writing, there is a daily limit of 50 write requests per day, per Google Cloud project, which restricts the number of times this can be performed. However, it is possible to request that this limit be increased.</p>
+<p>For more information, check the Google documentation at <a href="https://developers.google.com/analytics/devguides/config/mgmt/v3/limits-quotas#write_requests" class="uri">https://developers.google.com/analytics/devguides/config/mgmt/v3/limits-quotas#write_requests</a>.</p>
 </div>
 <div id="remarketing-segments" class="section level2">
 <h2 class="hasAnchor">
@@ -758,6 +982,11 @@ my_remarketing2 &lt;-<span class="st"> </span><span class="kw"><a href="../refer
       <li><a href="#experiments">Experiments</a></li>
       <li><a href="#view-filters">View Filters</a></li>
       <li><a href="#goals">Goals</a></li>
+      <li><a href="#example-copying-ga-goals">Example: Copying GA goals</a></li>
+      <li><a href="#auth-and-setup">Auth and setup</a></li>
+      <li><a href="#copying-a-single-goal">Copying a single goal</a></li>
+      <li><a href="#copying-multiple-goals">Copying multiple goals</a></li>
+      <li><a href="#write-request-limits">Write request limits</a></li>
       <li><a href="#remarketing-segments">Remarketing segments</a></li>
       <li><a href="#unsampled-reports">Unsampled reports</a></li>
       <li><a href="#users">Users</a></li>

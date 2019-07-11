@@ -3,10 +3,12 @@ pkgdown: 1.3.0
 pkgdown_sha: ~
 articles:
   big-query: big-query.html
+  faq: faq.html
   ganalytics: ganalytics.html
   googleAnalyticsR: googleAnalyticsR.html
   management: management.html
   models: models.html
+  practical-tips: practical-tips.html
   rmarkdown: rmarkdown.html
   setup: setup.html
   shiny: shiny.html

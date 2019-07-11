@@ -25,6 +25,7 @@ library(prophet)
 library(googleAnalyticsR)
 library(googleAnalyticsModelR)
 
+ga_auth(email = Sys.getenv("GARGLE_EMAIL"))
 my_view_id <- 81416156
 
 forecast_data <- ga_model_prophet(my_view_id, interactive_plot = TRUE)
@@ -66,7 +67,7 @@ The example below performs decomposition on the sessions to your website.  Behin
 library(googleAnalyticsR)  # load library
 
 # authenticate
-ga_auth() 
+ga_auth(email = Sys.getenv("GARGLE_EMAIL"))
 
 # your own Google Analytics viewID
 my_viewid <- 81416156
@@ -410,7 +411,6 @@ req_packs <- c("CausalImpact", "xts", "tidyr", "googleAnalyticsR", "assertthat",
 Finally we make the model, specifying which columns we expect the data to fetch, a description and specifying which Shiny functions are needed to show the dygraph if the model is used in a Shiny app.
 
 ```{r}
-library(googleAnalyticsR)
 ci_model <- ga_model_make(get_ci_data,
                           required_columns = c("date","channelGrouping","sessions"),
                           model_f = do_ci,
@@ -437,6 +437,8 @@ library(CausalImpact)
 library(xts)
 library(tidyr)
 library(dygraphs)
+
+ga_auth(email = Sys.getenv("GARGLE_EMAIL"))
 
 ci <- ga_model(81416156, ci_model, event_date = as.Date("2019-01-01"))
 

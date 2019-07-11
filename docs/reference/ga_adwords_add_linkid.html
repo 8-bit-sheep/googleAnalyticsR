@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Update a user access in Google Analytics — ga_users_update • googleAnalyticsR</title>
+<title>Creates a Google Analytics webProperty-Google Ads link — ga_adwords_add_linkid • googleAnalyticsR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Update a user access in Google Analytics — ga_users_update" />
+<meta property="og:title" content="Creates a Google Analytics webProperty-Google Ads link — ga_adwords_add_linkid" />
 
-<meta property="og:description" content="This is for altering existing user access." />
+<meta property="og:description" content="Creates a link between and Adwords (Google ads) account and a Google Analytics property so that Adwords data can be accessed via Google Analytics and vice versa." />
 
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -234,30 +234,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Update a user access in Google Analytics</h1>
+    <h1>Creates a Google Analytics webProperty-Google Ads link</h1>
     
-    <div class="hidden name"><code>ga_users_update.Rd</code></div>
+    <div class="hidden name"><code>ga_adwords_add_linkid.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This is for altering existing user access.</p>
+    <p>Creates a link between and Adwords (Google ads) account and a Google Analytics property so that Adwords data can be accessed via Google Analytics and vice versa.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>ga_users_update</span>(<span class='no'>linkId</span>, <span class='no'>update_object</span>, <span class='no'>accountId</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>ga_adwords_add_linkid</span>(<span class='no'>adwordsAccountId</span>, <span class='no'>linkName</span>, <span class='no'>accountId</span>, <span class='no'>webPropertyId</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>linkId</th>
-      <td><p>The linkId to update</p></td>
+      <th>adwordsAccountId</th>
+      <td><p>the customer id of the Adwords account visible within the Adwords account UI on the top right corner -or accessible via the Adwords API</p></td>
     </tr>
     <tr>
-      <th>update_object</th>
-      <td><p>A list that will be turned into JSON via <a href='https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>toJSON</a> that represents the new configuration for this linkId</p></td>
+      <th>linkName</th>
+      <td><p>a user defined way to call the link between the Adwords and Google Analytics accounts</p></td>
     </tr>
     <tr>
       <th>accountId</th>
@@ -265,25 +264,37 @@
     </tr>
     <tr>
       <th>webPropertyId</th>
-      <td><p>Web Property Id - set to NULL to operate on account level only</p></td>
-    </tr>
-    <tr>
-      <th>viewId</th>
-      <td><p>viewId - set to NULL to operate on webProperty level only</p></td>
+      <td><p>Web Property Id</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The new user object that has been altered.</p>
+    <p>confirmation message if successful</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management'>Google help article on user permissions</a></p>
-<p>Other User management functions: <code><a href='ga_users_add.html'>ga_users_add</a></code>,
-  <code><a href='ga_users_delete_linkid.html'>ga_users_delete_linkid</a></code>,
-  <code><a href='ga_users_delete.html'>ga_users_delete</a></code>,
-  <code><a href='ga_users_list.html'>ga_users_list</a></code></p></div>
+    <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/webPropertyAdWordsLinks/insert '>Google documentation</a></p>
+<p>Other managementAPI functions: <code><a href='ga_adwords_delete_linkid.html'>ga_adwords_delete_linkid</a></code>,
+  <code><a href='ga_adwords_list.html'>ga_adwords_list</a></code>, <code><a href='ga_adwords.html'>ga_adwords</a></code>,
+  <code><a href='ga_clientid_hash.html'>ga_clientid_hash</a></code>,
+  <code><a href='ga_experiment_list.html'>ga_experiment_list</a></code>,
+  <code><a href='ga_experiment.html'>ga_experiment</a></code>, <code><a href='ga_filter_add.html'>ga_filter_add</a></code>,
+  <code><a href='ga_filter_apply_to_view.html'>ga_filter_apply_to_view</a></code>,
+  <code><a href='ga_filter_delete.html'>ga_filter_delete</a></code>,
+  <code><a href='ga_filter_list.html'>ga_filter_list</a></code>,
+  <code><a href='ga_filter_update_filter_link.html'>ga_filter_update_filter_link</a></code>,
+  <code><a href='ga_filter_update.html'>ga_filter_update</a></code>,
+  <code><a href='ga_filter_view_list.html'>ga_filter_view_list</a></code>,
+  <code><a href='ga_filter_view.html'>ga_filter_view</a></code>, <code><a href='ga_filter.html'>ga_filter</a></code>,
+  <code><a href='ga_goal_add.html'>ga_goal_add</a></code>, <code><a href='ga_goal_list.html'>ga_goal_list</a></code>,
+  <code><a href='ga_goal_update.html'>ga_goal_update</a></code>, <code><a href='ga_goal.html'>ga_goal</a></code>,
+  <code><a href='ga_remarketing_estimate.html'>ga_remarketing_estimate</a></code>,
+  <code><a href='ga_remarketing_get.html'>ga_remarketing_get</a></code>,
+  <code><a href='ga_remarketing_list.html'>ga_remarketing_list</a></code>,
+  <code><a href='ga_segment_list.html'>ga_segment_list</a></code>,
+  <code><a href='ga_unsampled_list.html'>ga_unsampled_list</a></code>,
+  <code><a href='ga_unsampled.html'>ga_unsampled</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -292,15 +303,9 @@
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>googleAnalyticsR</span>)
 <span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
 
-<span class='co'># the update to perform</span>
-<span class='no'>o</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>permissions</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>local</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"EDIT"</span>)))
-
-<span class='fu'>ga_users_update</span>(<span class='st'>"UA-123456-1:1111222233334444"</span>,
-                <span class='kw'>update_object</span> <span class='kw'>=</span> <span class='no'>o</span>,
-                <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='fl'>47480439</span>,
-                <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-123456-1"</span>)
-
-<span class='co'># }</span></pre>
+<span class='fu'>ga_adwords_add_linkid</span>(<span class='st'>"280-234-7592"</span>, <span class='st'>"Google Ads Link"</span>, <span class='st'>"65973592"</span>, <span class='st'>"UA-65973592-1"</span>)
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
