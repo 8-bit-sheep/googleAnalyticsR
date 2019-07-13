@@ -324,9 +324,9 @@ google_analytics <- function(viewId,
     if(!interactive()){
       default_project_message()
       stop("The default Google Cloud Project for googleAnalyticsR is intended 
-           for evalutation only, not production scripts.  
-           Please set your own client.id and client.secret via googleAuthR::gar_set_client()
-           or otherwise as suggested on the website.", call. = FALSE)
+           \nfor evalutation only, not production scripts.  
+           \nPlease set your own client.id and client.secret via googleAuthR::gar_set_client()
+           \nor otherwise as suggested on the website.", call. = FALSE)
     }
   }
   

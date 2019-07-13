@@ -2,55 +2,11 @@ source("setup.R")
 
 context("Batch API Mocking")
 
-test_that("Record requests if online", {
-  skip_if_disconnected()
-  googleAuthR::skip_if_no_env_auth(local_auth)
-  
-  ## test reqs
-  capture_requests(
-    {
-      google_analytics_3(c(ga_id, ga_id2),
-                       start = "2015-07-31", end = "2015-10-01",
-                       dimensions=c('medium'),
-                       metrics = c('sessions'),
-                       sort = "ga:sessions")
-      
-      google_analytics_3(c(ga_id2, ga_id),
-                       start = "2015-07-30", end = "2015-10-01",
-                       dimensions=c('medium'),
-                       metrics = c('sessions'),
-                       sort = "ga:sessions",
-                       multi_account_batching = TRUE)
-      
-      google_analytics_3(ga_id,
-                       start = "2017-07-30", end = "2017-08-01",
-                       dimensions=c('medium'),
-                       metrics = c('sessions'),
-                       sort = "ga:sessions",
-                       samplingLevel = "WALK")
-      
-      google_analytics_3(ga_id,
-                       start = "2015-07-30", end = "2016-10-01",
-                       dimensions=c('medium','source','hour','pagePath'),
-                       metrics = c('sessions'),
-                       sort = "ga:sessions",
-                       max_results = 30000)
-      
-      google_analytics_3(ga_id,
-                       start = "2015-07-30", end = "2015-10-01",
-                       dimensions=c('medium'),
-                       metrics = c('sessions'),
-                       sort = "ga:sessions")
-    })
-  
-  
-  
-})
 
 
 context("v3 API")
 
-with_mock_API({
+
   
   test_that("v3 multi account batching without flag", {
 
@@ -132,5 +88,3 @@ with_mock_API({
   #   expect_equal(v3$sessions, v4$sessions)
   # 
   # })
-
-})

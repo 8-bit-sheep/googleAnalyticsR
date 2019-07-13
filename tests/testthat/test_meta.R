@@ -1,60 +1,10 @@
 source("setup.R")
 
-context("Meta API Mocking")
-
-test_that("Record requests if online", {
-  skip_if_disconnected()
-  googleAuthR::skip_if_no_env_auth(local_auth)
-  
-  ## test reqs
-  capture_requests(
-    {
-      google_analytics_meta()
-      ga_accounts()
-      ga_account_list()
-      ga_webproperty_list(accountId)
-      ga_webproperty(accountId, "UA-54019251-1")
-      ga_view_list(accountId, webPropId)
-      ga_view(accountId, webPropertyId = webPropId, profileId = ga_id)      
-      ga_adwords_list(accountId, webPropertyId = webPropId)      
-      ga_adwords(accountId, 
-                 webPropertyId = webPropId, 
-                 webPropertyAdWordsLinkId = "34H8JW1_R4K3Nh4uZpsIvw")      
-      ga_custom_datasource(accountId2, webPropId2)      
-      ga_custom_upload_list(accountId2, 
-                            webPropertyId = webPropId2, 
-                            customDataSourceId = "kvks-PO8SfG-yRcKjI00-g")      
-      google_analytics_meta()
-      gacl <- ga_custom_vars_list(accountId, webPropId, type = "customMetrics")
-      gacl2 <- ga_custom_vars_list(accountId, webPropId, type = "customDimensions") 
-      
-      gacm <- ga_custom_vars(accountId, webPropId, type = "customDimensions", customId = "ga:dimension1") 
-      
-      goals <- ga_goal_list(accountId, webPropId, ga_id)
-      
-      goal <- ga_goal(accountId, webPropId, ga_id, 1)
-      
-      
-      exper <- ga_experiment_list(accountId, webPropId, ga_id)
-      
-      
-      
-      acc <- ga_users_list(accountId)
-      web <- ga_users_list(accountId, webPropertyId = webPropId)
-      view <- ga_users_list(accountId, webPropertyId = webPropId, viewId = ga_id)
-      
-      
-    })
-  
-  
-  
-})
-
 context("Meta data")
 
 test_that("Download meta data", {
   skip_on_cran()
-  meta <- google_analytics_meta()
+  meta <- ga_meta()
   
   expect_s3_class(meta, "data.frame")
   
