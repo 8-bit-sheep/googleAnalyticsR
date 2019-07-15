@@ -64,12 +64,12 @@
   }
   
   if(Sys.getenv("GAR_CLIENT_JSON") != ""){
-    packageStartupMessage("Setting your own Google Cloud Project client.id")
+    packageStartupMessage("Setting your own client.id")
     googleAuthR::gar_set_client(json = Sys.getenv("GAR_CLIENT_JSON"))
   }
   
   if(Sys.getenv("GAR_CLIENT_WEB_JSON") != ""){
-    packageStartupMessage("Setting your own Google Cloud Project client.id")
+    packageStartupMessage("Setting your own web client.id")
     googleAuthR::gar_set_client(web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"))
   }
   
