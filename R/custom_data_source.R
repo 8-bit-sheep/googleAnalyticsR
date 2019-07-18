@@ -1,3 +1,5 @@
+management_url <- "https://www.googleapis.com/analytics/v3/management/"
+
 #' List Custom Data Sources
 #' 
 #' Get a list of custom data sources you have configured in Google Analytics web UI.
@@ -16,8 +18,7 @@
 ga_custom_datasource <- function(accountId,
                                  webPropertyId){
   
-  url <- "https://www.googleapis.com/analytics/v3/management/"
-  cds <- gar_api_generator(url,
+  cds <- gar_api_generator(management_url,
                            "GET",
                            path_args = list(
                              accounts = accountId,
@@ -48,9 +49,7 @@ ga_custom_upload_list <- function(accountId,
                                   webPropertyId,
                                   customDataSourceId){
   
-  url <- "https://www.googleapis.com/analytics/v3/management/"
-  
-  cds <- gar_api_generator(url,
+  cds <- gar_api_generator(management_url,
                            "GET",
                            path_args = list(
                              accounts = accountId,
@@ -155,8 +154,7 @@ ga_custom_upload <- function(accountId,
     uploadId <- upload_object$id
   }
   
-  url <- "https://www.googleapis.com/analytics/v3/management/"
-  cds <- gar_api_generator(url,
+  cds <- gar_api_generator(management_url,
                            "GET",
                            path_args = list(
                              accounts = accountId,
@@ -259,8 +257,7 @@ ga_custom_upload_file <- function(accountId,
     stop("Unsupported upload, must be a file location or R data.frame, got:", class(upload))
   }
   
-  url <- "https://www.googleapis.com/upload/analytics/v3/management/"
-  cds <- gar_api_generator(url,
+  cds <- gar_api_generator(management_url,
                            "POST",
                            path_args = list(
                              accounts = accountId,
@@ -303,10 +300,8 @@ ga_custom_upload_delete <- function(accountId,
                                     customDataSourceId,
                                     customDataImportUids){
   
-  url <- "https://www.googleapis.com/analytics/v3/management/"
-  
   delete_upload_file <- gar_api_generator(
-    url,
+    management_url,
     "POST",
     path_args = list(
       accounts = accountId,
