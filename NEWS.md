@@ -1,5 +1,6 @@
 # googleAnalyticsR 0.6.0.9000
 
+* `ga_custom_upload_delete()` - allows to delete custom data uploads (#263, byapparov)
 * Clean up error messages
 * Fix anti_sampling breaking if using date formats "4daysAgo" etc.
 * Deprecated `google_analytics_meta()` for `ga_meta()`

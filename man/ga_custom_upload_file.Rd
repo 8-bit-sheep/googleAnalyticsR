@@ -26,7 +26,7 @@ You need to create a custom data source in the web UI first.
 
 If you are uploading an R data frame, the function will prefix the column names with \code{"ga:"} for you if necessary.
   
-After upload check the status by querying data sources using \link{ga_custom_upload} 
+After upload check the status by querying data sources using \link{ga_custom_upload}
   and examining the \code{status} field.
 
 Currently only supports simple uploads (not resumable).
@@ -75,6 +75,7 @@ A guide for preparing the data is available: \href{https://developers.google.com
 The dev guide for this function: \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/data-import#format}{Data Import Developer Guide}
 
 Other custom datasource functions: \code{\link{ga_custom_datasource}},
+  \code{\link{ga_custom_upload_delete}},
   \code{\link{ga_custom_upload_list}},
   \code{\link{ga_custom_upload}}
 }

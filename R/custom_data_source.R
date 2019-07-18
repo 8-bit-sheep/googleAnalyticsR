@@ -71,7 +71,7 @@ parse_custom_upload_list <- function(x){
   o <- x %>% 
     management_api_parsing("analytics#uploads")
 
-  if(is.null(o)){
+  if (is.null(o)) {
     return(data.frame())
   }
   
@@ -87,9 +87,7 @@ parse_custom_upload_list <- function(x){
 #'
 #' Get the status of a custom upload
 #' 
-#' @param accountId Account Id
-#' @param webPropertyId Web Property Id
-#' @param customDataSourceId Custom data source Id
+#' @inheritParams ga_custom_upload_list
 #' @param uploadId upload Id
 #' @param upload_object A custom upload Id object. Supply this or the other arguments.
 #' 
@@ -143,11 +141,11 @@ ga_custom_upload <- function(accountId,
                              uploadId,
                              upload_object){
   
-  if(missing(upload_object)){
-    if(any(missing(accountId), 
+  if ( missing(upload_object)) {
+    if (any(missing(accountId), 
            missing(webPropertyId), 
            missing(customDataSourceId),
-           missing(uploadId))){
+           missing(uploadId))) {
       stop("Must supply one of upload_object or all other arguments")
     }
   } else {
@@ -179,9 +177,7 @@ ga_custom_upload <- function(accountId,
 #' 
 #' Upload external data up to 1GB to Google Analytics via the management API.
 #'
-#' @param accountId Account Id
-#' @param webPropertyId Web Property Id
-#' @param customDataSourceId Custom data source Id
+#' @inheritParams ga_custom_upload_list
 #' @param upload An R data.frame or a file path location (character)
 #' 
 #' @details 
@@ -190,7 +186,7 @@ ga_custom_upload <- function(accountId,
 #' 
 #' If you are uploading an R data frame, the function will prefix the column names with \code{"ga:"} for you if necessary.
 #'   
-#' After upload check the status by querying data sources using \link{ga_custom_upload} 
+#' After upload check the status by querying data sources using \link{ga_custom_upload}
 #'   and examining the \code{status} field.
 #'
 #' Currently only supports simple uploads (not resumable).
@@ -250,14 +246,14 @@ ga_custom_upload_file <- function(accountId,
                                   customDataSourceId,
                                   upload){
   
-  if(inherits(upload, "data.frame")){
+  if (inherits(upload, "data.frame")) {
     temp <- tempfile()
     on.exit(unlink(temp))
     
     names(upload) <- vapply(names(upload), checkPrefix, character(1))
     write.csv(upload, file = temp, row.names = FALSE)
 
-  } else if(inherits(upload, "character")){
+  } else if (inherits(upload, "character")) {
     temp <- upload
   } else {
     stop("Unsupported upload, must be a file location or R data.frame, got:", class(upload))
@@ -280,7 +276,7 @@ ga_custom_upload_file <- function(accountId,
   
   req <- cds(the_body = upload_me)
   
-  if(req$status == 200){
+  if (req$status == 200) {
     myMessage("File uploaded", level = 3)
   } else {
     myMessage("Problem upload file", level = 3)
@@ -292,4 +288,35 @@ ga_custom_upload_file <- function(accountId,
     c(res, webPropertyId = webPropertyId), 
     class = "ga_custom_data_source_upload"
   )
+}
+
+#' Deletes custom upload files for a given ids vector
+#'
+#' @inheritParams ga_custom_upload_list
+#' @param customDataImportsUids vector of file upload ids.
+#' @seealso https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/uploads/deleteUploadData
+#' @importFrom googleAuthR gar_api_generator
+#' @family custom datasource functions
+#' @export
+ga_custom_upload_delete <- function(accountId,
+                                    webPropertyId,
+                                    customDataSourceId,
+                                    customDataImportUids){
+  
+  url <- "https://www.googleapis.com/analytics/v3/management/"
+  
+  delete_upload_file <- gar_api_generator(
+    url,
+    "POST",
+    path_args = list(
+      accounts = accountId,
+      webproperties = webPropertyId,
+      customDataSources = customDataSourceId,
+      deleteUploadData = ""
+    ),
+    data_parse_function = function(x) x
+  )
+  
+  body <-  list(customDataImportUids = customDataImportUids)
+  delete_upload_file(the_body = body)
 }
