@@ -14,7 +14,7 @@ ga_custom_upload_delete(accountId, webPropertyId, customDataSourceId,
 
 \item{customDataSourceId}{Custom data source Id}
 
-\item{customDataImportsUids}{vector of file upload ids.}
+\item{customDataImportUids}{vector of file upload ids.}
 }
 \description{
 Deletes custom upload files for a given ids vector

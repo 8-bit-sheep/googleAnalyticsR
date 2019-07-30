@@ -296,7 +296,7 @@ ga_custom_upload_file <- function(accountId,
 #' Deletes custom upload files for a given ids vector
 #'
 #' @inheritParams ga_custom_upload_list
-#' @param customDataImportsUids vector of file upload ids.
+#' @param customDataImportUids vector of file upload ids.
 #' @seealso https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/uploads/deleteUploadData
 #' @importFrom googleAuthR gar_api_generator
 #' @family custom datasource functions
