@@ -52,7 +52,17 @@ only_goals <- ga_clientid_activity(c("1106980347.1461227730",
                                      "476443645.1541099566"),
                      viewId = 81416156, 
                      date_range = c("2019-01-01","2019-02-01"),
-                     activity_types = "GOAL")                      
+                     activity_types = "GOAL") 
+
+# to access all activity use google_analytics() to fetch the clientId dimension
+viewId <- 123456
+date_range <- c("yesterday","yesterday")
+cids <- google_analytics(viewId, date_range = date_range, 
+                         metrics = "sessions", dimensions = "clientId")
+
+users <- ga_clientid_activity(cids$clientId,
+                              viewId = viewId, 
+                              date_range = date_range)                     
 
 
 }

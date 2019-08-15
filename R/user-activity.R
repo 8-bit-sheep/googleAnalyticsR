@@ -42,7 +42,17 @@
 #'                                      "476443645.1541099566"),
 #'                      viewId = 81416156, 
 #'                      date_range = c("2019-01-01","2019-02-01"),
-#'                      activity_types = "GOAL")                      
+#'                      activity_types = "GOAL") 
+#'
+#' # to access all activity use google_analytics() to fetch the clientId dimension
+#' viewId <- 123456
+#' date_range <- c("yesterday","yesterday")
+#' cids <- google_analytics(viewId, date_range = date_range, 
+#'                          metrics = "sessions", dimensions = "clientId")
+#' 
+#' users <- ga_clientid_activity(cids$clientId,
+#'                               viewId = viewId, 
+#'                               date_range = date_range)                     
 #' 
 #' 
 #' }
@@ -178,7 +188,7 @@ parse_user_activity <- function(x){
   activity <- NULL
   nested_hits <- o_acts %>% 
     tibble::enframe(name = "sessionId", value = "activity") %>% 
-    tidyr::unnest() %>% 
+    tidyr::unnest(cols = activity) %>% 
     mutate(activityTime = iso8601_to_r(map_chr(activity, "activityTime")),
            source = map_chr(activity, "source"),
            medium = map_chr(activity, "medium"),
@@ -251,7 +261,7 @@ ga_clientid_activity_unnest <- function(hits, column = c("customDimension","ecom
   if(column == "customDimension"){
     unnested <- hits %>%
       select(id, sessionId, activityTime, customDimension) %>%
-      unnest(customDimension) %>%
+      unnest(cols = customDimension) %>%
       mutate(cd_index = map_chr(customDimension, "index"),
              cd_value = map_chr(customDimension, na_or_value))   %>%
       filter(!is.na(cd_value)) %>%
@@ -262,7 +272,7 @@ ga_clientid_activity_unnest <- function(hits, column = c("customDimension","ecom
     unnested <- hit_data %>% 
       filter(has_goal) %>% # filter to just hits with goals
       select(id, sessionId, activityTime, goals) %>% 
-      unnest(goals) %>% # unnest the goals list column
+      unnest(cols = goals) %>% # unnest the goals list column
       mutate(goalIndex = map_chr(goals, "goalIndex"), 
              goalName = map_chr(goals, "goalName"), 
              goalCompletionLocation = map_chr(goals, "goalCompletionLocation")) %>%

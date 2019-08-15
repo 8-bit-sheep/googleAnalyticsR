@@ -245,18 +245,20 @@
 <li>Fix anti_sampling breaking if using date formats “4daysAgo” etc.</li>
 <li>Deprecated <code><a href="../reference/ga_meta.html">google_analytics_meta()</a></code> for <code><a href="../reference/ga_meta.html">ga_meta()</a></code>
 </li>
-<li>Add <code>accountId</code> to the output of Shiny module <code>authDropdown</code> when <code>viewIdOnly=TRUE</code>
+<li>Add <code>accountId</code> to the output of Shiny module <code>authDropdown</code> when <code>viewIdOnly=FALSE</code>
 </li>
 <li>Add <code>quotaUser</code> to reporting v4 API requests to avoid quota limits if several users from same ip attempt to run API calls (#235) - default is <code>Sys.info()[["user"]]</code> or set via <code><a href="https://www.rdocumentation.org/packages/base/topics/options">options("googleAuthR.quotaUser")</a></code>
 </li>
 <li>Add <code>ga_model_*</code> functions to use GA data (#234)</li>
 <li>Add <code>ga_model_tweet</code> to enable data viz in tweets</li>
-<li>Add <code>ga_model_write</code> to write model functions to a file</li>
 <li>Add userActivity API via <code>gar_clientid_activity()</code>
 </li>
 <li>Use new authentication setup via <code>googleAuthR v0.9.0</code> and <code>gargle</code>
 </li>
-<li>Prevent use of default client id project in non-interactive scripts.</li>
+<li>Prevent use of default client id project in non-interactive scripts.<br>
+</li>
+<li>Update docs to use <code>clientId</code> dimension in user activity API calls</li>
+<li>Update <code><a href="https://tidyr.tidyverse.org/reference/nest.html">tidyr::unnest</a></code> to use <code>cols</code> parameter (#266)</li>
 </ul>
 </div>
     <div id="googleanalyticsr-0-6-0" class="section level1">
