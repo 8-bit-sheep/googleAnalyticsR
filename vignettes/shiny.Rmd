@@ -64,6 +64,8 @@ To aid with creating Shiny apps using this package, some [Shiny modules](http://
 
 ![](authDropdown.png)
 
+Make sure to authenticate with at least `https://www.googleapis.com/auth/analytics.edit` scopes since this is needed for listing GA accounts. 
+
 This is useful in combination with `googleAuthR`'s `googleAuth` module that helps with user login:
 
 ```r
