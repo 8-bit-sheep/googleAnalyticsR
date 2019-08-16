@@ -256,6 +256,7 @@
 <a href="#authentication-modules" class="anchor"></a>Authentication modules</h2>
 <p><code>authDropdown</code> and <code>authDropdownUI</code> create a row of selects to help with choosing a GA View.</p>
 <p><img src="authDropdown.png"></p>
+<p>Make sure to authenticate with at least <code>https://www.googleapis.com/auth/analytics.edit</code> scopes since this is needed for listing GA accounts.</p>
 <p>This is useful in combination with <code>googleAuthR</code>’s <code>googleAuth</code> module that helps with user login:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">## ui.R</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://code.markedmondson.me/googleAuthR//reference/googleAuthUI.html">googleAuthUI</a></span>(<span class="st">"login"</span>),</a>

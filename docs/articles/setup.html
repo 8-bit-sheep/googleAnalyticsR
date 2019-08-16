@@ -266,6 +266,8 @@
 <li>Create your own GCP project, download the client JSON and save to a global location, which you point to via a environment argument <code>GAR_CLIENT_JSON</code> in an <code>.Renviron</code> file e.g. <code>GAR_CLIENT_JSON=~/dev/auth/client.json</code>
 </li>
 <li>Authenticate with <code><a href="../reference/ga_auth.html">ga_auth(email="your@email.com")</a></code> to create an authentication token cache, and repeat the <code><a href="../reference/ga_auth.html">ga_auth(email="your@email.com")</a></code> call to default to that email in future API calls</li>
+<li>Set an environment argument <code>GARGLE_EMAIL</code> in the same <code>.Renviron</code> file to your email to auto-authenticate on package load e.g. <code>GARGLE_EMAIL=your@email.com</code>
+</li>
 </ol>
 </div>
 <div id="details" class="section level3">
@@ -276,10 +278,10 @@
 <p>Note that no matter which method you use, the authentication is actually done via the <a href="http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html"><code>googleAuthR</code></a> package. In its documentation pages you can read more about advanced use cases.</p>
 <p>To authenticate you need a client project (that authentication is performed through) and the user email to authenticate with (that gives access to that user’s Google Analytics accounts)</p>
 </div>
-<div id="email-authentication-" class="section level3">
+<div id="email-authentication" class="section level3">
 <h3 class="hasAnchor">
-<a href="#email-authentication-" class="anchor"></a>Email authentication.</h3>
-<p>As of version <code>googleAnalyticSR&gt;=0.6.0.9000</code> authentication is done via the <a href="https://CRAN.R-project.org/package=gargle"><code>gargle</code> package</a>. This creates a global cache that is accessed via the email you authenticate with.</p>
+<a href="#email-authentication" class="anchor"></a>Email authentication</h3>
+<p>As of version <code>googleAnalyticsR&gt;=0.6.0.9000</code> authentication is done via the <a href="https://CRAN.R-project.org/package=gargle"><code>gargle</code> package</a>. This creates a global cache that is accessed via the email you authenticate with.</p>
 <p>If you use <code><a href="../reference/ga_auth.html">ga_auth()</a></code> the first time then it will ask you to create email credentials. You can then authenticate in the browser via your email. The next time you wish to authenticate, <code><a href="../reference/ga_auth.html">ga_auth()</a></code> will give you an option to use those credentials again:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsR)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="../reference/ga_auth.html">ga_auth</a></span>()</a>
@@ -290,6 +292,9 @@
 <p>If you want to skip the menu, supply the email you wish to authenticate with:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsR)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="../reference/ga_auth.html">ga_auth</a></span>(<span class="dt">email =</span> <span class="st">"mark@work.com)</span></a></code></pre></div>
+<p>To auto-authenticate on package load, add an environment argument <code>GARGLE_EMAIL</code> via an <code>.Renviron</code> file or otherwise.</p>
+<p>e.g. in <code>.Renviron</code></p>
+<p><code>GARGLE_EMAIL=your@email.com</code></p>
 </div>
 <div id="authentication-method-1-the-default-googleanalyticsr-project" class="section level3">
 <h3 class="hasAnchor">
@@ -330,7 +335,7 @@ GAR_CLIENT_JSON=~/dev/auth/gcp_client.json</code></pre>
 <a class="sourceLine" id="cb10-2" data-line-number="2">            <span class="dt">scopes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"https://www.googleapis.com/auth/analytics"</span>,</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">                       <span class="st">"https://www.googleapis.com/auth/webmasters"</span>))</a></code></pre></div>
 <blockquote>
-<p>Note: With either shared or personal project using the <code><a href="../reference/ga_auth.html">ga_auth()</a></code> function, you can specify the email you will use by passing that to the <code><a href="../reference/ga_auth.html">ga_auth()</a></code> function e.g. <code>ga_auth(email="my@email.com)</code>. This will skip the interactive menu choice for authentication. This can be useful when authenticating within an Rmarkdown document in which case it is recommended to specify your email (an Rmarkdown document can change the working directory during knitting).</p>
+<p>Note: With either the default or your own GCP projects using the <code><a href="../reference/ga_auth.html">ga_auth()</a></code> function, you can specify the email you will use by passing that to the <code><a href="../reference/ga_auth.html">ga_auth()</a></code> function e.g. <code>ga_auth(email="my@email.com)</code>. This will skip the interactive menu choice for authentication. This can be useful when authenticating within an Rmarkdown document in which case it is recommended to specify your email (an Rmarkdown document can change the working directory during knitting).</p>
 </blockquote>
 </div>
 <div id="authentication-method-3-google-cloud-service-account" class="section level3">
@@ -365,6 +370,22 @@ GAR_CLIENT_JSON=~/dev/auth/gcp_client.json</code></pre>
 <h2 class="hasAnchor">
 <a href="#optional-review-useful-auth-options" class="anchor"></a>4 (optional): Review useful auth options</h2>
 <p>This section covers some other aspects of authentication under various scenarios of use. This information is useful especially if you work systematically with Google Analytics and possibly other Google products too.</p>
+</div>
+<div id="auto-authentication" class="section level2">
+<h2 class="hasAnchor">
+<a href="#auto-authentication" class="anchor"></a>Auto-authentication</h2>
+<p>To save authenticating and setting your GCP client each R session, you can specify the files/email in an <code>.Renviron</code> file that will be looked for each time you load <code><a href="https://www.rdocumentation.org/packages/base/topics/library">library(googleAnalyticsR)</a></code></p>
+<ul>
+<li>
+<code>GAR_CLIENT_JSON</code> takes care of the GCP project client.id to authenticate under</li>
+<li>
+<code>GARGLE_EMAIL</code> lets you specify an email address that has already authenticated to skip the interactive menu. Make sure you authenticate with the right scopes and GCP project first in an interactive session.</li>
+</ul>
+<p>You can set environment arguments via <code><a href="https://www.rdocumentation.org/packages/base/topics/Sys.setenv">Sys.setenv()</a></code> but the recommend way is to use an <code>.Renviron</code> file saved in your home directory.</p>
+<pre><code># In your .Renviron
+GAR_CLIENT_JSON=~/dev/auth/gcp_client.json
+GARGLE_EMAIL=my-email@me.com</code></pre>
+<p>Restart your R session to enact the arguments created in <code>.Renviron</code></p>
 <div id="multiple-api-authentification" class="section level3">
 <h3 class="hasAnchor">
 <a href="#multiple-api-authentification" class="anchor"></a>Multiple API authentification</h3>
@@ -375,18 +396,18 @@ GAR_CLIENT_JSON=~/dev/auth/gcp_client.json</code></pre>
 <h3 class="hasAnchor">
 <a href="#multiple-ga-accounts" class="anchor"></a>Multiple GA accounts</h3>
 <p>Using gargle means that you get a menu option to choose which email to authenticate with each time you issue <code><a href="../reference/ga_auth.html">ga_auth()</a></code>. This makes working with multiple GA accounts a lot easier to work with.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsR)</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw"><a href="../reference/ga_auth.html">ga_auth</a></span>(<span class="dt">email=</span><span class="st">"mark@work.com"</span>)</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">client_one &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(ga_id_one, </a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">                               <span class="dt">date_range =</span> my_date_range,</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">                               <span class="dt">metrics =</span> <span class="st">"sessions"</span>, </a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">                               <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"date"</span>, <span class="st">"medium"</span>))</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="kw"><a href="../reference/ga_auth.html">ga_auth</a></span>(<span class="dt">email=</span><span class="st">"mark@work3.com"</span>)</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">client_one &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(ga_id_two, </a>
-<a class="sourceLine" id="cb12-10" data-line-number="10">                               <span class="dt">date_range =</span> my_date_range,</a>
-<a class="sourceLine" id="cb12-11" data-line-number="11">                               <span class="dt">metrics =</span> <span class="st">"sessions"</span>, </a>
-<a class="sourceLine" id="cb12-12" data-line-number="12">                               <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"date"</span>, <span class="st">"medium"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsR)</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw"><a href="../reference/ga_auth.html">ga_auth</a></span>(<span class="dt">email=</span><span class="st">"mark@work.com"</span>)</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">client_one &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(ga_id_one, </a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">                               <span class="dt">date_range =</span> my_date_range,</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">                               <span class="dt">metrics =</span> <span class="st">"sessions"</span>, </a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">                               <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"date"</span>, <span class="st">"medium"</span>))</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="kw"><a href="../reference/ga_auth.html">ga_auth</a></span>(<span class="dt">email=</span><span class="st">"mark@work3.com"</span>)</a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">client_one &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(ga_id_two, </a>
+<a class="sourceLine" id="cb13-10" data-line-number="10">                               <span class="dt">date_range =</span> my_date_range,</a>
+<a class="sourceLine" id="cb13-11" data-line-number="11">                               <span class="dt">metrics =</span> <span class="st">"sessions"</span>, </a>
+<a class="sourceLine" id="cb13-12" data-line-number="12">                               <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"date"</span>, <span class="st">"medium"</span>))</a></code></pre></div>
 </div>
 <div id="authentication-with-shiny-and-rmarkdown" class="section level3">
 <h3 class="hasAnchor">
@@ -410,6 +431,7 @@ GAR_CLIENT_JSON=~/dev/auth/gcp_client.json</code></pre>
       <li><a href="#make-your-first-api-call">2. Make your first API call</a></li>
       <li><a href="#choose-authentication-method">3. Choose authentication method</a></li>
       <li><a href="#optional-review-useful-auth-options">4 (optional): Review useful auth options</a></li>
+      <li><a href="#auto-authentication">Auto-authentication</a></li>
       </ul>
 </div>
       </div>

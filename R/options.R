@@ -9,7 +9,6 @@
     googleAuthR.webapp.client_secret = "0zBtmZ_klTEzXUaTUTP5AkNQ",
     googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics", 
                                     "https://www.googleapis.com/auth/analytics.readonly",
-                                    "https://www.googleapis.com/auth/analytics.manage.users.readonly",
                                     "https://www.googleapis.com/auth/analytics.edit",
                                     "https://www.googleapis.com/auth/analytics.manage.users",
                                     "https://www.googleapis.com/auth/analytics.user.deletion"),
@@ -119,10 +118,14 @@
     options(googleAuthR.webapp.client_id = Sys.getenv("GA_WEB_CLIENT_SECRET"))
   }
   
-  needed <- c("https://www.googleapis.com/auth/analytics.readonly")
+  needed <- c("https://www.googleapis.com/auth/analytics", 
+              "https://www.googleapis.com/auth/analytics.readonly",
+              "https://www.googleapis.com/auth/analytics.edit",
+              "https://www.googleapis.com/auth/analytics.manage.users",
+              "https://www.googleapis.com/auth/analytics.user.deletion")
   
   googleAuthR::gar_attach_auto_auth(needed, 
-                                    environment_var = "GA_AUTH_FILE")
+                                    environment_var = "GARGLE_EMAIL")
   
   invisible()
   

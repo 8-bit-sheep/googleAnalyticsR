@@ -79,6 +79,7 @@ Recommended long term defaults are:
 
 1. Create your own GCP project, download the client JSON and save to a global location, which you point to via a environment argument `GAR_CLIENT_JSON` in an `.Renviron` file e.g. `GAR_CLIENT_JSON=~/dev/auth/client.json`
 2. Authenticate with `ga_auth(email="your@email.com")` to create an authentication token cache, and repeat the `ga_auth(email="your@email.com")` call to default to that email in future API calls
+3. Set an environment argument `GARGLE_EMAIL` in the same `.Renviron` file to your email to auto-authenticate on package load e.g. `GARGLE_EMAIL=your@email.com`
 
 ### Details
 
@@ -90,9 +91,9 @@ Note that no matter which method you use, the authentication is actually done vi
 
 To authenticate you need a client project (that authentication is performed through) and the user email to authenticate with (that gives access to that user's Google Analytics accounts)
 
-### Email authentication.
+### Email authentication
 
-As of version `googleAnalyticSR>=0.6.0.9000` authentication is done via the [`gargle` package]( https://CRAN.R-project.org/package=gargle).  This creates a global cache that is accessed via the email you authenticate with.  
+As of version `googleAnalyticsR>=0.6.0.9000` authentication is done via the [`gargle` package]( https://CRAN.R-project.org/package=gargle).  This creates a global cache that is accessed via the email you authenticate with.  
 
 If you use `ga_auth()` the first time then it will ask you to create email credentials.  You can then authenticate in the browser via your email.  The next time you wish to authenticate, `ga_auth()` will give you an option to use those credentials again:
 
@@ -111,6 +112,12 @@ If you want to skip the menu, supply the email you wish to authenticate with:
 library(googleAnalyticsR)
 ga_auth(email = "mark@work.com)
 ```
+
+To auto-authenticate on package load, add an environment argument `GARGLE_EMAIL` via an `.Renviron` file or otherwise. 
+
+e.g. in `.Renviron` 
+
+`GARGLE_EMAIL=your@email.com`
 
 ### Authentication method #1: The default googleAnalyticsR project
 
@@ -175,7 +182,7 @@ googleAuthR::gar_set_client(web_json = "~/dev/auth/gcp_web_client.json"
 
 
 > Note:
-> With either shared or personal project using the `ga_auth()` function, you can specify the email you will use by passing that to the `ga_auth()` function e.g. `ga_auth(email="my@email.com)`. This will skip the interactive menu choice for authentication.
+> With either the default or your own GCP projects using the `ga_auth()` function, you can specify the email you will use by passing that to the `ga_auth()` function e.g. `ga_auth(email="my@email.com)`. This will skip the interactive menu choice for authentication.
 > This can be useful when authenticating within an Rmarkdown document in which case it is recommended to specify your email  (an Rmarkdown document can change the working directory during knitting). 
 
 
@@ -210,6 +217,23 @@ Note: A service account is a special type of account that belongs to an applicat
 
 
 This section covers some other aspects of authentication under various scenarios of use. This information is useful especially if you work systematically with Google Analytics and possibly other Google products too. 
+
+## Auto-authentication
+
+To save authenticating and setting your GCP client each R session, you can specify the files/email in an `.Renviron` file that will be looked for each time you load `library(googleAnalyticsR)`
+
+* `GAR_CLIENT_JSON` takes care of the GCP project client.id to authenticate under
+* `GARGLE_EMAIL` lets you specify an email address that has already authenticated to skip the interactive menu. Make sure you authenticate with the right scopes and GCP project first in an interactive session.
+
+You can set environment arguments via `Sys.setenv()` but the recommend way is to use an `.Renviron` file saved in your home directory.  
+
+```
+# In your .Renviron
+GAR_CLIENT_JSON=~/dev/auth/gcp_client.json
+GARGLE_EMAIL=my-email@me.com
+```
+
+Restart your R session to enact the arguments created in `.Renviron`
 
 ### Multiple API authentification
 

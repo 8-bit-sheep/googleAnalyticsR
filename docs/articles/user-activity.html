@@ -268,7 +268,7 @@
 <div id="nested-columns" class="section level3">
 <h3 class="hasAnchor">
 <a href="#nested-columns" class="anchor"></a>Nested columns</h3>
-<p>The output uses nested columns for some values so you may want to get familiar with the <code><a href="https://tidyr.tidyverse.org/reference/nest.html">tidyr::unnest()</a></code> function when working with the data.</p>
+<p>The output uses nested columns for some values so you may want to get familiar with the <code><a href="https://tidyr.tidyverse.org/reference/unnest.html">tidyr::unnest()</a></code> function when working with the data.</p>
 <p>The nested columns are <code>hits$customDimension</code>, <code>hits$ecommerce</code> and <code>hits$goals</code>.</p>
 <p>The nesting is necessary as you can have multiple of these events per hit, and expanding them in the response would make a very large <code>data.frame</code> to work with.</p>
 <p>An example on how to unnest goals is shown below:</p>
@@ -279,7 +279,7 @@
 <a class="sourceLine" id="cb6-5" data-line-number="5">a_user<span class="op">$</span>hits <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(has_goal) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># filter to just hits with goals</span></a>
 <a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(id, sessionId, activityTime, goals) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(goals) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># unnest the goals list column</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span>(goals) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># unnest the goals list column</span></a>
 <a class="sourceLine" id="cb6-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">goalIndex =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(goals, <span class="st">"goalIndex"</span>), </a>
 <a class="sourceLine" id="cb6-10" data-line-number="10">         <span class="dt">goalName =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(goals, <span class="st">"goalName"</span>), </a>
 <a class="sourceLine" id="cb6-11" data-line-number="11">         <span class="dt">goalCompletionLocation =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(goals, <span class="st">"goalCompletionLocation"</span>)) <span class="op">%&gt;%</span></a>
@@ -298,7 +298,7 @@
 <a class="sourceLine" id="cb7-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb7-5" data-line-number="5">a_user<span class="op">$</span>hits <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(id, sessionId, activityTime, customDimension) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(customDimension) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span>(customDimension) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb7-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">cd_index =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(customDimension, <span class="st">"index"</span>), </a>
 <a class="sourceLine" id="cb7-9" data-line-number="9">         <span class="dt">cd_value =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(customDimension, <span class="op">~</span><span class="st"> </span>.<span class="op">$</span>value <span class="op">%||%</span><span class="st"> </span><span class="ot">NA_character_</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb7-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(cd_value)) <span class="op">%&gt;%</span></a>
