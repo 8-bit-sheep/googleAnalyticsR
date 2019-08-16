@@ -170,6 +170,7 @@ reference:
       - ga_custom_upload_list
       - ga_custom_upload
       - ga_custom_upload_file
+      - ga_custom_upload_delete
   - title: "Setting up View filters"
     desc: >
       Manipulate the filters that are applied to your Google Analytics Views
