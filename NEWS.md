@@ -12,6 +12,7 @@
 * Prevent use of default client id project in non-interactive scripts.  
 * Update docs to use `clientId` dimension in user activity API calls
 * Update `tidyr::unnest` to use `cols` parameter (#266)
+* Add `ga_custom_upload_delete()` - thanks @byapprov (#263)
 
 # googleAnalyticsR 0.6.0
 
