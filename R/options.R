@@ -126,6 +126,8 @@
   
   googleAuthR::gar_attach_auto_auth(needed, 
                                     environment_var = "GARGLE_EMAIL")
+  googleAuthR::gar_attach_auto_auth(needed, 
+                                    environment_var = "GA_AUTH_FILE")
   
   invisible()
   
