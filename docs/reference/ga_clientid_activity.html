@@ -311,6 +311,16 @@
                      <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"2019-01-01"</span>,<span class='st'>"2019-02-01"</span>),
                      <span class='kw'>activity_types</span> <span class='kw'>=</span> <span class='st'>"GOAL"</span>)
 
+<span class='co'># to access all activity use google_analytics() to fetch the clientId dimension</span>
+<span class='no'>viewId</span> <span class='kw'>&lt;-</span> <span class='fl'>123456</span>
+<span class='no'>date_range</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"yesterday"</span>,<span class='st'>"yesterday"</span>)
+<span class='no'>cids</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>viewId</span>, <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='no'>date_range</span>,
+                         <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='st'>"sessions"</span>, <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='st'>"clientId"</span>)
+
+<span class='no'>users</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_clientid_activity</span>(<span class='no'>cids</span>$<span class='no'>clientId</span>,
+                              <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='no'>viewId</span>,
+                              <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='no'>date_range</span>)
+
 
 <span class='co'># }</span></pre>
   </div>

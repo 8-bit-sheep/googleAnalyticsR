@@ -3,14 +3,15 @@
 * Clean up error messages
 * Fix anti_sampling breaking if using date formats "4daysAgo" etc.
 * Deprecated `google_analytics_meta()` for `ga_meta()`
-* Add `accountId` to the output of Shiny module `authDropdown` when `viewIdOnly=TRUE`
+* Add `accountId` to the output of Shiny module `authDropdown` when `viewIdOnly=FALSE`
 * Add `quotaUser` to reporting v4 API requests to avoid quota limits if several users from same ip attempt to run API calls (#235) - default is `Sys.info()[["user"]]` or set via `options("googleAuthR.quotaUser")`
 * Add `ga_model_*` functions to use GA data (#234)
 * Add `ga_model_tweet` to enable data viz in tweets
-* Add `ga_model_write` to write model functions to a file
 * Add userActivity API via `gar_clientid_activity()`
 * Use new authentication setup via `googleAuthR v0.9.0` and `gargle`
 * Prevent use of default client id project in non-interactive scripts.  
+* Update docs to use `clientId` dimension in user activity API calls
+* Update `tidyr::unnest` to use `cols` parameter (#266)
 
 # googleAnalyticsR 0.6.0
 

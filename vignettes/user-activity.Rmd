@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The [User Activity API](https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search) lets you query an individual user's movement through your website, by sending in the individual `clientId` or `userId`.  It is accessed via the `ga_clientid_activity()` function.
 
-At the moment it is available on the dev version of `googleAnalyticsR >= 0.6.9000` and needs `googleAuthR >= 0.7.0.9000` so install via:
+Use Activity is available in version of `googleAnalyticsR >= 0.6.9000` and needs `googleAuthR >= 0.7.0.9000` so install via:
 
 ```r
 remotes::install_github("MarkEdmondson1234/googleAuthR")
@@ -17,16 +17,25 @@ remotes::install_github("MarkEdmondson1234/googleAnalyticsR")
 
 ## User Activity API example
 
-You first need to have a `clientId` or `userId` to query.  You can get this via the User Explorer report in the Web UI, or via a BigQuery export, or you may be capturing the ID in a custom dimension.  
+You first need to have a `clientId` or `userId` to query.  You can now get this from the reporting API via the dimension `ga:clientId`.
 
-If you know the ID from other sources such as you have set the `userId` from your CRM system.
+Its also available via the User Explorer report in the Web UI, or via a BigQuery export, or you may be capturing the ID in a custom dimension.  
 
 Once you have an ID, specify the Google Analytics view that user was browsing and the data range of the activity you want to query:
 
 ```r
-a_user <- ga_clientid_activity("1106980347.1461227730",
-                               viewId = 81416156, 
-                               date_range = c("2019-01-01","2019-02-01"))
+viewId <- 123456
+date_range <- c("yesterday","yesterday")
+cids <- google_analytics(viewId, date_range = date_range, 
+                         metrics = "sessions", dimensions = "clientId")
+users <- ga_clientid_activity(cids$clientId,
+                              viewId = viewId, 
+                              date_range = date_range)
+#> 2019-08-15 10:43:15> Fetching id: 19123.15505123
+#> 2019-08-15 10:43:16> Fetching id: 12123.15657123
+#> 2019-08-15 10:43:17> Fetching id: 11234.15657123
+#> 2019-08-15 10:43:17> Fetching id: 21123.1565123
+#> ..etc..
 ```
 
 ## Multiple ids

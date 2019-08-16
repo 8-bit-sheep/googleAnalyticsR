@@ -5,7 +5,7 @@ title: "Practical Tips"
 ### Keep metrics and dimensions within easy reach
 
 With several hundreds of metrics and dimensions available in GA it can be handy to have a reference of what's what within easy reach. 
-The `google_analytics_meta()` function returns a table containing a list of all GA metrics and dimensions along with their definitions and other useful meta data. 
+The `ga_meta()` function returns a table containing a list of all GA metrics and dimensions along with their definitions and other useful meta data. 
 
 ![](meta_data_screenshot.png)
 

@@ -216,13 +216,13 @@ parse_ga_account_summary <- function(x){
               accountName = name,
               ## fix bug if webProperties is NULL
               webProperties = purrr::map_if(webProperties, is.null, ~ data.frame())) %>%
-    unnest() %>% ##unnest webprops
+    unnest(cols = webProperties) %>% ##unnest webprops
     mutate(webPropertyId = id,
            webPropertyName = name,
            ## fix bug if profiles is NULL
            profiles = purrr::map_if(profiles, is.null, ~ data.frame())) %>%
     select(-kind, -id, -name) %>%
-    unnest() %>% ## unnest profiles
+    unnest(cols = profiles) %>% ## unnest profiles
     mutate(viewId = id,
            viewName = name) %>%
     select(-kind, -id, -name)
