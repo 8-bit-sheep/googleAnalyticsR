@@ -150,6 +150,9 @@ ga_clientid_activity_one <- function(id,
   out$session$id <- id
   out$hits$id <- id
   
+  # rate limit assuming 2000 in 100 seconds
+  Sys.sleep(0.05)
+  
   out
   
 }

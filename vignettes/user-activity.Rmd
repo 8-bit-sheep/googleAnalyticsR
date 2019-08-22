@@ -178,7 +178,7 @@ only_goals <- ga_clientid_activity(two_clientIds,
 
 ## Example calling users via a custom dimension
 
-If you are capturing Google Analytics cookie ID in a custom dimension (Which is a good idea!) then the below workflow shows how you can use the standard reporting API to fetch more detail on the users:
+If you are capturing Google Analytics cookie ID or a userId in a custom dimension then the below workflow shows how you can use the standard reporting API to fetch more detail on the users:
 
 ```r
 library(googleAnalyticsR)
@@ -195,7 +195,7 @@ cus_dims <- ga_custom_vars_list(accountId = view_row$accountId,
                                 webPropertyId = view_row$webPropertyId,
                                 type = "customDimensions")
                                 
-#In this example, client.id is in ga:dimension2
+#In this example, user.id is in ga:dimension2
 
 # date range of ids to query
 dates <- c(Sys.Date() - 30, Sys.Date() - 1)
