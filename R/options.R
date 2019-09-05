@@ -124,6 +124,7 @@
               "https://www.googleapis.com/auth/analytics.manage.users",
               "https://www.googleapis.com/auth/analytics.user.deletion")
   
+  packageStartupMessage("Attempting auto-authentication")
   googleAuthR::gar_attach_auto_auth(needed, 
                                     environment_var = "GARGLE_EMAIL")
   googleAuthR::gar_attach_auto_auth(needed, 

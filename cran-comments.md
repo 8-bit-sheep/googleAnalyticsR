@@ -1,7 +1,7 @@
 ## Test environments
 
-* local OS X install, R 3.5.0
-* ubuntu 12.04 (on travis-ci), R 3.5.1
+* local OS X install, R 3.6.1
+* ubuntu 12.04 (on travis-ci), R 3.6.1
 * win-builder, R Under development (unstable) (2018-12-19 r75867)
 
 
