@@ -4,7 +4,8 @@
 \alias{authDropdown}
 \title{authDropdown [Shiny Module]}
 \usage{
-authDropdown(input, output, session, ga.table, viewIdOnly = TRUE)
+authDropdown(input, output, session, ga.table, viewIdOnly = TRUE,
+  rmNA = TRUE)
 }
 \arguments{
 \item{input}{shiny input}
@@ -16,6 +17,8 @@ authDropdown(input, output, session, ga.table, viewIdOnly = TRUE)
 \item{ga.table}{A table of GA tables}
 
 \item{viewIdOnly}{Default only returns the viewId, set to FALSE to return the row of ga.table satisfying the selections}
+
+\item{rmNA}{Will remove any rows that have NA listed for the columns.  Set to FALSE to return all rows.}
 }
 \value{
 GA View Id selected

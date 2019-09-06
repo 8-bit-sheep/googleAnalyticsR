@@ -81,6 +81,7 @@ If you have used the package and published online then get in touch and I'll lis
 * Nico has a guide on how to insert [Google Analytics data into a map](https://www.ridgeway.com/blog/performance-optimisation/how-to-insert-ga-data-into-a-map-using-r-and-build)
 * Dusan goes into how to setup and use [googleAnalyticsR in Serbian](https://dusanmilosevic.com/google-analytics-api-v4-i-r-programski-jezik/)
 * Pavel talks about how to [automate website analytics with R and googleAnalyticsR](https://fathomfuel.com/automating-website-analytics-with-r-part-1/)
+* Mayo shows how to [visualise geographical data from your Google Analytics data](https://www.mayoracek.com/r-programming/visualize-geographical-data-help-google-analytics-r/)
 
 ## My website
 

@@ -19,7 +19,7 @@ Authors@R: c(person("Mark", "Edmondson", email = "m@sunholo.com",
 URL: http://code.markedmondson.me/googleAnalyticsR/
 BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
 Depends:
-    R (>= 3.2.0)
+    R (>= 3.5.0)
 Imports:
     assertthat (>= 0.2.0),
     dplyr (>= 0.8.0),

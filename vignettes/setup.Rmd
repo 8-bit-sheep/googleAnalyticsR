@@ -61,11 +61,12 @@ account_list$viewId
 ## View account_list and pick the viewId you want to extract data from. 
 ga_id <- 123456
 
-## simple query to test connection
+## simple query to test connection, get 10 rows
 google_analytics(ga_id,
                  date_range = c("2017-01-01", "2017-03-01"),
                  metrics = "sessions",
-                 dimensions = "date")
+                 dimensions = "date",
+                 max = 10)
 
 ```
 
@@ -100,7 +101,8 @@ If you use `ga_auth()` the first time then it will ask you to create email crede
 ```r
 library(googleAnalyticsR)
 ga_auth()
-#>The googleAnalyticsR package is requesting access to your Google account. Select a #> pre-authorised account or enter '0' to obtain a new token. Press Esc/Ctrl + C to abort.
+#>The googleAnalyticsR package is requesting access to your Google account. 
+#> Select a pre-authorised account or enter '0' to obtain a new token. Press  #>Esc/Ctrl + C to abort.
 
 #> 1: mark@work.com
 #> 2: home@home.com
@@ -121,29 +123,47 @@ e.g. in `.Renviron`
 
 ### Authentication method #1: The default googleAnalyticsR project
 
-The fast authentication way of the previous section worked via the default Google Project for googleAnalyticsR which is shared with all googleAnalyticsR users. Even though it is a shared project other package users are not able to see and access your GA data. 
+The fast authentication way of the previous section worked via the default Google Cloud Project for googleAnalyticsR which is shared with all googleAnalyticsR users. Even though it is a shared project other package users are not able to see and access your GA data. 
 
-You can not use the default project for scheduled scripts on servers - only interactivly. It is intended for users to get to know the library looking for data as quickly as possible. 
+However since Google has changed verification processes, the consent screen for the default googleAnalyticsR library may warn of 'danger', which you will need to trust and accept if you want to continue using the default project.  It is preferred to use your own and get your own verificataion process.
 
-You will not need your own Google Cloud Platform credentials and you can directly authenticate using the `ga_auth()` function and your browser.
+You can not use the default project for scheduled scripts on servers - only interactivly. The default library is only intended for users to get to know the library looking for data as quickly as possible. 
+
+With the amount of API calls possible with this library via batching and walking, its more likely the default shared Google API project will hit the 50,000 calls per day quota.
+
+However, using the default project means you will not need to go through the process outlined below to create your own Google Cloud Platform credentials and you can directly authenticate using the `ga_auth()` function and your browser as soon as the library is downloaded.
 
 
 ### Authentication method #2: Your own Google Project
 
-With the amount of API calls possible with this library via batching and walking, its more likely the default shared Google API project will hit the 50,000 calls per day limit.
+To mitigate all the above, use your own Google Developer Console client ID, so it is not shared across all users of this library.
 
-To mitigate that, use your own Google Developer Console Project key, so it is not shared across all users of this library.
+1. Download your Google Cloud Project client JSON and place it in a location pointed to via the `GAR_CLIENT_JSON` environment argument.  
 
-Once you obtain the credentials for your project set these options before any call to `ga_auth()` or other data fetching calls.
+This file is found in the Google Cloud Platform under `APIs & Services > Credentials > Create credentials >  OAuth client ID > Other`.  For Shiny authentication, choose `Web application` instead of `Other`.
 
-As of 2019 the recommend method is to download the client JSON and place it in a location pointed to via the GAR_CLIENT_JSON environment argument.  In the below examples the file is downloaded to `~/dev/auth/gcp_client.json`
+In the below examples the client ID file is downloaded to `~/dev/auth/gcp_client.json`
+
+2. Set an environment argument to point at the location of the client ID:
 
 ```
 # In your .Renviron
 GAR_CLIENT_JSON=~/dev/auth/gcp_client.json
 ```
 
-Alternatively, you can set it before the library is avaialble via [`googleAuthR::gar_set_client()`](https://code.markedmondson.me/googleAuthR/reference/gar_set_client.html)
+You can also set your clientID before the library is available via [`googleAuthR::gar_set_client()`](https://code.markedmondson.me/googleAuthR/reference/gar_set_client.html)
+
+3. Once you have set the credentials for your project set these options before any call to `ga_auth()` or other data fetching calls.
+
+If set via environment argument, restart R and then load the library:
+
+```r
+#Setting client.id from gar_auth_configure(path = json)
+library(googleAnalyticsR)
+ga_auth()
+```
+
+If setting in the script via [`googleAuthR::gar_set_client()`](https://code.markedmondson.me/googleAuthR/reference/gar_set_client.html) then it wil look like this:
 
 ```r
 googleAuthR::gar_set_client("~/dev/auth/gcp_client.json")
@@ -151,7 +171,7 @@ library(googleAnalyticsR)
 ga_auth()
 ```
 
-Or the oldest method (deprecated) -
+The oldest method (deprecated) -
 [Donal Phipps](http://donalphipps.co.uk/) has very kindly created a screencast on how to set this up that you can find embedded below and via [this link](https://www.youtube.com/watch?v=4B88dRbwNfc).
 
 <iframe width="560" height="315" src="http://www.youtube.com/embed/4B88dRbwNfc?rel=0" frameborder="0" allowfullscreen></iframe>
