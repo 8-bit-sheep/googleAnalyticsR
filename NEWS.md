@@ -14,6 +14,7 @@
 * Update `tidyr::unnest` to use `cols` parameter (#266)
 * Add `ga_custom_upload_delete()` - thanks @byapprov (#263)
 * Fix sending in multiple segment definitions in a list (#253)
+* Fix `ga_segment_list()` returning data if no custom segments created (#259)
 
 # googleAnalyticsR 0.6.0
 

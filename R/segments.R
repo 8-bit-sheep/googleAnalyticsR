@@ -28,9 +28,15 @@ parse_ga_segment_list <- function(x){
     return(data.frame())
   }
   
-  o <- o %>% 
-    mutate(created = iso8601_to_r(created),
-           updated = iso8601_to_r(updated))
+  if(!is.null(o$created)){
+    o <- o %>% 
+      mutate(created = iso8601_to_r(created),
+             updated = iso8601_to_r(updated))
+  } else {
+    o$created <- NA
+    o$updated <- NA
+  }
+
   
   attr(o, "nextLink") <- x$nextLink
   
