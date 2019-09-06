@@ -157,6 +157,8 @@ make_ga_4_req <- function(viewId,
     if(!any("segment" %in% dimensions)){
       dimensions <- c(dimensions, "segment")
     }
+    
+
   }
 
   id <- sapply(viewId, checkPrefix, prefix = "ga")
@@ -335,6 +337,12 @@ google_analytics <- function(viewId,
   assert_that_ifnn(useResourceQuotas, is.flag)
 
   if(!is.null(segments)){
+    # fix 253
+    # make sure its a list of segment_ga4 objects
+    if(class(segments) == "list" &&
+       all(unlist(lapply(segments, function(x) inherits(x, "segment_ga4"))))){
+      class(segments) <- "segment_ga4"
+    }
     segments <- as(segments, "segment_ga4")
   }
   

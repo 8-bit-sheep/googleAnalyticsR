@@ -8,11 +8,12 @@
 * Add `ga_model_*` functions to use GA data (#234)
 * Add `ga_model_tweet` to enable data viz in tweets
 * Add userActivity API via `gar_clientid_activity()`
-* Use new authentication setup via `googleAuthR v0.9.0` and `gargle`
+* Use new authentication setup via `googleAuthR v1.0.0` and `gargle`
 * Prevent use of default client id project in non-interactive scripts.  
 * Update docs to use `clientId` dimension in user activity API calls
 * Update `tidyr::unnest` to use `cols` parameter (#266)
 * Add `ga_custom_upload_delete()` - thanks @byapprov (#263)
+* Fix sending in multiple segment definitions in a list (#253)
 
 # googleAnalyticsR 0.6.0
 
