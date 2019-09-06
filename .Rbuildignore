@@ -11,6 +11,8 @@
 ^docs$
 ^doc*
 ^_pkgdown\.yml$
+^vignettes*
+^vignettes$
 ^vignettes/website/*
 ^vignettes/cache*
 ^index\.md$

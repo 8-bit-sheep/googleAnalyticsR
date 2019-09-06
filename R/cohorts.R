@@ -120,15 +120,16 @@ cohort_dimension_check <- function(dimensions){
 #' ## make a cohort group with lifetimeValue = TRUE
 #'  
 #' cohort_ltv <- make_cohort_group(list("cohort 1" = c("2018-12-01", "2018-12-31"), 
-#'                                      "cohort 2" = c("2019-01-01", "2019-01-31")), 
-#'                                      lifetimeValue = TRUE)                                                                       
-#' 
+#'                                      "cohort 2" = c("2019-01-01", "2019-01-31")),
+#'                                      lifetimeValue = TRUE)
+#'                                      
 #' ## call a cohort report with ltv metrics
 #' 
 #' ltv_example <- google_analytics(ga_id, 
 #'      dimensions = c('cohort', "acquisitionTrafficChannel"), 
 #'      cohorts = cohort_ltv, 
-#'      metrics = c("cohortGoalCompletionsPerUserWithLifetimeCriteria"))              #'                                       
+#'      metrics = c("cohortGoalCompletionsPerUserWithLifetimeCriteria"))              
+#'                                     
 #' }
 #' 
 #' @family v4 cohort functions

@@ -1,12 +1,6 @@
 ---
 title: "ganalytics - Advanced dynamic segment and Filter examples"
 author: "Johann de Boer"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{ganalytics}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 [`ganalytics`](https://CRAN.R-project.org/package=ganalytics) provides functions that makes it easy to define filters and segments using natural R language comparison and logical operators. This example demonstrates how to define dynamic segments using functions from the `ganalytics` package and using those segments with the `googleAnalyticsR` package. You need `googleAnalyticsR>=0.6.0` and `ganalytics>=0.10.6`.
