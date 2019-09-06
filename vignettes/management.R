@@ -27,7 +27,7 @@ ga_view(accountId = 47480439, webPropertyId = "UA-47480439-1", profileId = 81416
 # here we just return the first 5 columns and rows for brevity
 head(meta[,1:5])
 
-head(google_analytics_meta())[,1:5]
+head(ga_meta())[,1:5]
 
 ## ------------------------------------------------------------------------
 # use `aggregateGAData` so you can on the fly create summary data
@@ -38,13 +38,13 @@ ga_data <- google_analytics(81416156,
 head(ga_data)
 
 # if we want totals per hour over the dates:
-aggregateGAData(ga_data[,c("hour","sessions")], agg_names = "hour")
+ga_aggregate(ga_data[,c("hour","sessions")], agg_names = "hour")
 
 # it knows not to sum metrics that are rates:
-aggregateGAData(ga_data[,c("hour","bounceRate")], agg_names = "hour")
+ga_aggregate(ga_data[,c("hour","bounceRate")], agg_names = "hour")
 
 ## ------------------------------------------------------------------------
 #
-amd <- allowed_metric_dim()
+amd <- ga_allowed_metric_dim()
 head(amd)
 

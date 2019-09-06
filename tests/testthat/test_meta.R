@@ -202,12 +202,12 @@ context("Allow metrics and dimensions")
 test_that("Allowed metrics call", {
   skip_on_cran()
   
-  m1 <- allowed_metric_dim("METRIC")
-  m2 <- allowed_metric_dim("METRIC", "segment")
-  m3 <- allowed_metric_dim("METRIC", "cohort")
-  d1 <- allowed_metric_dim("DIMENSION")
-  d2 <- allowed_metric_dim("DIMENSION", "segment")
-  d3 <- allowed_metric_dim("DIMENSION", "cohort")
+  m1 <- ga_allowed_metric_dim("METRIC")
+  m2 <- ga_allowed_metric_dim("METRIC", "segment")
+  m3 <- ga_allowed_metric_dim("METRIC", "cohort")
+  d1 <- ga_allowed_metric_dim("DIMENSION")
+  d2 <- ga_allowed_metric_dim("DIMENSION", "segment")
+  d3 <- ga_allowed_metric_dim("DIMENSION", "cohort")
   
   expect_named(m1)
   expect_named(m2)

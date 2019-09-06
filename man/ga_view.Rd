@@ -29,10 +29,9 @@ ga_view(1058095, webPropertyId = "UA-1058095-1", profileId = 1855267)
 }
 }
 \seealso{
-Other account structure functions: \code{\link{ga_accounts}},
-  \code{\link{ga_view_list}},
+Other account structure functions: \code{\link{ga_account_list}},
+  \code{\link{ga_accounts}}, \code{\link{ga_view_list}},
   \code{\link{ga_webproperty_list}},
-  \code{\link{ga_webproperty}},
-  \code{\link{google_analytics_account_list}}
+  \code{\link{ga_webproperty}}
 }
 \concept{account structure functions}

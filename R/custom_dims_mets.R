@@ -11,6 +11,15 @@
 #'   
 #' @return A named list of parameters for use in API calls
 #' @export
+ga_allowed_metric_dim <- function(type = c("METRIC", "DIMENSION"),
+                                  subType = c("all","segment","cohort"),
+                                  callAPI = FALSE){
+  allowed_metric_dim(type=type,
+                     subType=subType,
+                     callAPI = callAPI)
+}
+
+
 allowed_metric_dim <- function(type = c("METRIC", "DIMENSION"),
                                subType = c("all","segment","cohort"),
                                callAPI = FALSE){
@@ -18,7 +27,7 @@ allowed_metric_dim <- function(type = c("METRIC", "DIMENSION"),
   subType <- match.arg(subType)
   
   if(callAPI){
-    meta <- google_analytics_meta()
+    meta <- ga_meta()
   } else {
     meta <- googleAnalyticsR::meta
   }

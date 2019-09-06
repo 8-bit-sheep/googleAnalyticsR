@@ -2,12 +2,9 @@
 % Please edit documentation in R/meta.R
 \name{ga_meta}
 \alias{ga_meta}
-\alias{google_analytics_meta}
 \title{Get current dimensions and metrics available in GA API.}
 \usage{
 ga_meta()
-
-google_analytics_meta()
 }
 \value{
 dataframe of dimensions and metrics available to use

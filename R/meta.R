@@ -19,10 +19,3 @@ ga_meta <- function(){
   meta()
   
 }
-
-#' @rdname ga_meta
-#' @export
-google_analytics_meta <- function(){
-  .Deprecated("ga_meta", package = "googleAnalyticsR")
-  ga_meta()
-}

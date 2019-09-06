@@ -1,12 +1,3 @@
-#' @rdname ga_account_list
-#' @export
-google_analytics_account_list <- function(){
-  
-  .Deprecated("ga_account_list", package = "googleAnalyticsR")
-  
-  ga_account_list()
-}
-
 #' Account summary for all accounts available to your user
 #' 
 #' Get a summary of all your accounts, web properties and views your authenticated user can see.

@@ -12,6 +12,8 @@ getColNameOfClass <- function(df, class_name){
 }
 
 
+
+
 #' Aggregate a Google Analytics dataframe over inputted columns
 #' 
 #' A helper function to aggregate over dimensions
@@ -39,13 +41,21 @@ getColNameOfClass <- function(df, class_name){
 #'                             metrics = "sessions", dimensions = c("hour","date"))
 #'                             
 #' # if we want totals per hour over the dates:
-#' aggregateGAData(ga_data[,c("hour","sessions")], agg_names = "hour")
+#' ga_aggregate(ga_data[,c("hour","sessions")], agg_names = "hour")
 #' 
 #' # it knows not to sum metrics that are rates:
-#' aggregateGAData(ga_data[,c("hour","bounceRate")], agg_names = "hour")
+#' ga_aggregate(ga_data[,c("hour","bounceRate")], agg_names = "hour")
 #' 
 #' 
 #' }
+ga_aggregate <- function(ga_data, 
+                         agg_names=NULL,
+                         mean_regex="^avg|^percent|Rate$|^CPC$|^CTR$|^CPM$|^RPC$|^ROI$|^ROAS$|Per"){
+
+  aggregateGAData(ga_data, agg_names= agg_names, mean_regex=mean_regex)
+}
+
+
 aggregateGAData <- function(ga_data, 
                             agg_names=NULL,
                             mean_regex="^avg|^percent|Rate$|^CPC$|^CTR$|^CPM$|^RPC$|^ROI$|^ROAS$|Per"){
