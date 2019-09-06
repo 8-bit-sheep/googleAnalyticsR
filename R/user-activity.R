@@ -248,7 +248,7 @@ parse_user_activity <- function(x){
 #' @export
 #' @import assertthat
 #' @importFrom purrr map map_chr map_lgl
-#' @importFrom dplyr select filter bind_cols mutate
+#' @importFrom dplyr select filter bind_cols mutate distinct
 #' @importFrom tidyr unnest pivot_wider
 ga_clientid_activity_unnest <- function(hits, column = c("customDimension","ecommerce","goals")){
   

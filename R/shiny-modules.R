@@ -94,7 +94,7 @@ authDropdown <- function(input, output, session,
     
     # remove NA (#104)
     if(rmNA){
-      tt <- tt[complete.cases(tt),]
+      tt <- tt[stats::complete.cases(tt),]
     }
     
     tt

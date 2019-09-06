@@ -1,5 +1,11 @@
 ---
 title: "Practical Tips"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Practical Tips}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ### Keep metrics and dimensions within easy reach

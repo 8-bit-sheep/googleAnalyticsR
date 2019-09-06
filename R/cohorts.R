@@ -112,7 +112,8 @@ cohort_dimension_check <- function(dimensions){
 #'                                    metrics = c('cohortTotalUsers'))
 #'                                      
 #'                                      
-#' ### Lifetime Value report - just a variation of the cohort report with lifetimeValue = TRUE
+#' ### Lifetime Value report - just a variation of the cohort report 
+#' # with lifetimeValue = TRUE
 #' ### and ltv specific metrics
 #' ### The view MUST be an app view at the moment
 #'  
@@ -125,10 +126,9 @@ cohort_dimension_check <- function(dimensions){
 #' ## call a cohort report with ltv metrics
 #' 
 #' ltv_example <- google_analytics(ga_id, 
-#'                                dimensions = c('cohort', "acquisitionTrafficChannel"), 
-#'                                cohorts = cohort_ltv, 
-#'                                metrics = c("cohortGoalCompletionsPerUserWithLifetimeCriteria"))                                                                             
-#'                                       
+#'      dimensions = c('cohort', "acquisitionTrafficChannel"), 
+#'      cohorts = cohort_ltv, 
+#'      metrics = c("cohortGoalCompletionsPerUserWithLifetimeCriteria"))              #'                                       
 #' }
 #' 
 #' @family v4 cohort functions

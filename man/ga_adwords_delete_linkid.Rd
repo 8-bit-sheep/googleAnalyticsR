@@ -27,7 +27,8 @@ Removes a link between and Adwords (Google ads) account and a Google Analytics p
 library(googleAnalyticsR)
 ga_auth()
 
-# get the ID of the Adwords- Google Analytics link that you want to delete (it's the ID corresponding to the webPropertyAdWordsLinkId field)
+# get the ID of the Adwords- Google Analytics link that you want to delete 
+# ID corresponding to the webPropertyAdWordsLinkId field
 ga_adwords_list(65973592, "UA-65973592-1") 
  
 ga_adwords_delete_linkid(65973592, "UA-65973592-1", "ezW2dyaiQcGheWRAo69nCw")

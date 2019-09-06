@@ -12,6 +12,7 @@
 ^doc*
 ^_pkgdown\.yml$
 ^vignettes/website/*
+^vignettes/cache*
 ^index\.md$
 ^index\.Rmd$
 ^CODE_OF_CONDUCT\.md$

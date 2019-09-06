@@ -9,6 +9,7 @@
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
+vignettes/cache
 .Rproj.user
 inst/doc
 #tests/testthat/mock/

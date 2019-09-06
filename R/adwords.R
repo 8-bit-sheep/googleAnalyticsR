@@ -143,10 +143,9 @@ ga_adwords_add_linkid <- function(adwordsAccountId, linkName, accountId, webProp
 }
 
 
-#'
 #' Deletes a Google Analytics webProperty-Google Ads link
 #'
-#' @param webPropertyAdWordsLinkId   webPropertyAdWordsLinkId
+#' @param webPropertyAdWordsLinkId webPropertyAdWordsLinkId
 #' @param accountId Account Id
 #' @param webPropertyId Web Property Id
 #'
@@ -168,7 +167,8 @@ ga_adwords_add_linkid <- function(adwordsAccountId, linkName, accountId, webProp
 #' library(googleAnalyticsR)
 #' ga_auth()
 #' 
-#' # get the ID of the Adwords- Google Analytics link that you want to delete (it's the ID corresponding to the webPropertyAdWordsLinkId field)
+#' # get the ID of the Adwords- Google Analytics link that you want to delete 
+#' # ID corresponding to the webPropertyAdWordsLinkId field
 #' ga_adwords_list(65973592, "UA-65973592-1") 
 #'  
 #' ga_adwords_delete_linkid(65973592, "UA-65973592-1", "ezW2dyaiQcGheWRAo69nCw")

@@ -1,6 +1,6 @@
 Package: googleAnalyticsR
 Type: Package
-Version: 0.6.0.9000
+Version: 0.7.0
 Title: Google Analytics API into R
 Description: Interact with the Google Analytics 
   APIs <https://developers.google.com/analytics/>, including 
@@ -19,11 +19,11 @@ Authors@R: c(person("Mark", "Edmondson", email = "m@sunholo.com",
 URL: http://code.markedmondson.me/googleAnalyticsR/
 BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
 Depends:
-    R (>= 3.5.0)
+    R (>= 3.3.0)
 Imports:
     assertthat (>= 0.2.0),
     dplyr (>= 0.8.0),
-    googleAuthR (>= 1.0.0.1),
+    googleAuthR (>= 1.0.0),
     httr (>= 1.3.1),
     jsonlite (>= 1.5),
     magrittr (>= 1.5),
@@ -31,8 +31,9 @@ Imports:
     methods,
     purrr (>= 0.2.2),
     rlang (>= 0.1.0),
+    stats,
     tibble (>= 2.0.1),
-    tidyr (>= 0.6.3),
+    tidyr (>= 0.8.99),
     utils
 Suggests:
     bigQueryR (>= 0.3.1),

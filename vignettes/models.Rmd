@@ -1,6 +1,18 @@
 ---
 title: "Statistical models and visualisations with Google Analytics data"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ga_model guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
+
+```{r setup, include=FALSE}
+library(googleAnalyticsR)
+ga_cache_call("cache")
+```
+
 
 Downloading Google Analytics data is all well and good, but the reason most users want to use the API is to then operate and act upon that data.
 

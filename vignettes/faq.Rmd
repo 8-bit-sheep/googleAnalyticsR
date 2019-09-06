@@ -1,5 +1,11 @@
 ---
 title: "FAQs"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{FAQs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 `googleAnalyticsR` provides convenient access to the Google Analytics API, helping analysts and developers programatically access Google Analytics data, automate Google Analytics related workflows and benefit from working with data in larger volumes and finer granularity. The FAQ below provides some context around the library especially for those new to R,  to the Google Analytics API or both. 
