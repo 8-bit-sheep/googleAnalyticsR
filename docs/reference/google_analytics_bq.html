@@ -8,10 +8,12 @@
 
 <title>Get Google Analytics 360 BigQuery data — google_analytics_bq • googleAnalyticsR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,13 +32,13 @@
 
 
 
-<meta property="og:title" content="Get Google Analytics 360 BigQuery data — google_analytics_bq" />
 
+<meta property="og:title" content="Get Google Analytics 360 BigQuery data — google_analytics_bq" />
 <meta property="og:description" content="Turn a google_analytics style call into BigQuery SQL. 
 Used with Google Analytics 360 BigQuery exports." />
-
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -76,7 +78,7 @@ Used with Google Analytics 360 BigQuery exports." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -220,7 +222,6 @@ Used with Google Analytics 360 BigQuery exports." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -241,17 +242,15 @@ Used with Google Analytics 360 BigQuery exports." />
     </div>
 
     <div class="ref-description">
-    
     <p>Turn a google_analytics style call into BigQuery SQL. 
 Used with Google Analytics 360 BigQuery exports.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>google_analytics_bq</span>(<span class='no'>projectId</span>, <span class='no'>datasetId</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>filters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>max_results</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>query</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>return_query_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>bucket</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>download_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -308,11 +307,10 @@ Used with Google Analytics 360 BigQuery exports.</p>
       <td><p>Where to save asynch files.  If NULL saves to current working directory.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>data.frame of results</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>All data will be unsampled, and requests will cost money against your BigQuery quota.</p>
@@ -325,25 +323,20 @@ e.g. unique pageviews or unique events.</p>
 <p>Custom dimensions can be specified as session or hit level, so ignoring the setting in GA interface.</p>
 <p>You can get a sample Google Analytics dataset in bigquery by following the instructions
   here: <a href='https://support.google.com/analytics/answer/3416091?hl=en'>https://support.google.com/analytics/answer/3416091?hl=en</a></p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://support.google.com/analytics/answer/4419694?hl=en'>https://support.google.com/analytics/answer/4419694?hl=en</a>
          <a href='https://support.google.com/analytics/answer/3437719?hl=en'>https://support.google.com/analytics/answer/3437719?hl=en</a></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>

@@ -5,7 +5,7 @@
 #'
 #' @return hashedClientId object list
 #' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
+#' @family clientid functions
 #' @export
 ga_clientid_hash <- function(webPropertyId, clientId){
   
@@ -69,6 +69,7 @@ ga_clientid_hash <- function(webPropertyId, clientId){
 #' @export
 #' @import assertthat
 #' @importFrom googleAuthR gar_api_generator
+#' @family clientid functions
 ga_clientid_deletion <- function(userId,
                              propertyId,
                              idType = c("CLIENT_ID", "USER_ID", "APP_INSTANCE_ID"),

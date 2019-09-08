@@ -8,10 +8,12 @@
 
 <title>Fetch GAv4 requests one at a time — fetch_google_analytics_4_slow • googleAnalyticsR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,13 +32,13 @@
 
 
 
-<meta property="og:title" content="Fetch GAv4 requests one at a time — fetch_google_analytics_4_slow" />
 
+<meta property="og:title" content="Fetch GAv4 requests one at a time — fetch_google_analytics_4_slow" />
 <meta property="og:description" content="Due to large complicated queries causing the v4 API to timeout, 
   this option is added to fetch via the more traditional one report per request" />
-
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -76,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -220,7 +222,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -241,15 +242,13 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Due to large complicated queries causing the v4 API to timeout, 
   this option is added to fetch via the more traditional one report per request</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>fetch_google_analytics_4_slow</span>(<span class='no'>request_list</span>, <span class='no'>max_rows</span>, <span class='kw'>allRows</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>useResourceQuotas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -271,28 +270,24 @@
 Default <code>NULL</code>, set to <code>TRUE</code> or <code>FALSE</code> if you have access to this feature.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A dataframe of all the requests</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other GAv4 fetch functions: <code><a href='fetch_google_analytics_4.html'>fetch_google_analytics_4</a></code>,
   <code><a href='google_analytics.html'>google_analytics</a></code>,
   <code><a href='make_ga_4_req.html'>make_ga_4_req</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>`segmentFilterClause_ga4` class. — segmentFilterClause_ga4-class • googleAnalyticsR</title>
+<title>Aggregate a Google Analytics dataframe over inputted columns — ga_aggregate • googleAnalyticsR</title>
 
 
 <!-- jquery -->
@@ -33,8 +33,8 @@
 
 
 
-<meta property="og:title" content="`segmentFilterClause_ga4` class. — segmentFilterClause_ga4-class" />
-<meta property="og:description" content="Segment filter clause." />
+<meta property="og:title" content="Aggregate a Google Analytics dataframe over inputted columns — ga_aggregate" />
+<meta property="og:description" content="A helper function to aggregate over dimensions" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -235,22 +235,64 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>`segmentFilterClause_ga4` class.</h1>
+    <h1>Aggregate a Google Analytics dataframe over inputted columns</h1>
     
-    <div class="hidden name"><code>segmentFilterClause_ga4-class.Rd</code></div>
+    <div class="hidden name"><code>ga_aggregate.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Segment filter clause.</p>
+    <p>A helper function to aggregate over dimensions</p>
     </div>
 
+    <pre class="usage"><span class='fu'>ga_aggregate</span>(<span class='no'>ga_data</span>, <span class='kw'>agg_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>mean_regex</span> <span class='kw'>=</span> <span class='st'>"^avg|^percent|Rate$|^CPC$|^CTR$|^CPM$|^RPC$|^ROI$|^ROAS$|Per"</span>)</pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>ga_data</th>
+      <td><p>A dataframe of data to aggregate</p></td>
+    </tr>
+    <tr>
+      <th>agg_names</th>
+      <td><p>The columns to aggregate over</p></td>
+    </tr>
+    <tr>
+      <th>mean_regex</th>
+      <td><p>The regex for column names to do mean() rather than sum()</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Will auto select metrics if they are numeric class columns.
+  Will auto perform mean aggregation it metric names match <code>mean_regex</code> argument
+  If agg_names is NULL will aggregate over all</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+<span class='co'># use `aggregateGAData` so you can on the fly create summary data</span>
+<span class='no'>ga_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='fl'>81416156</span>,
+                            <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"10daysAgo"</span>, <span class='st'>"yesterday"</span>),
+                            <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='st'>"sessions"</span>, <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"hour"</span>,<span class='st'>"date"</span>))
+
+<span class='co'># if we want totals per hour over the dates:</span>
+<span class='fu'>ga_aggregate</span>(<span class='no'>ga_data</span>[,<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"hour"</span>,<span class='st'>"sessions"</span>)], <span class='kw'>agg_names</span> <span class='kw'>=</span> <span class='st'>"hour"</span>)
+
+<span class='co'># it knows not to sum metrics that are rates:</span>
+<span class='fu'>ga_aggregate</span>(<span class='no'>ga_data</span>[,<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"hour"</span>,<span class='st'>"bounceRate"</span>)], <span class='kw'>agg_names</span> <span class='kw'>=</span> <span class='st'>"hour"</span>)
 
 
-
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

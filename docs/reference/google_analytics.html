@@ -8,10 +8,12 @@
 
 <title>Get Google Analytics v4 data — google_analytics • googleAnalyticsR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,12 +32,12 @@
 
 
 
+
 <meta property="og:title" content="Get Google Analytics v4 data — google_analytics" />
-
 <meta property="og:description" content="Fetch Google Analytics data using the v4 API.  For the v3 API use google_analytics_3.  See website help for lots of examples: Google Analytics Reporting API v4 in R" />
-
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -75,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -219,7 +221,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -240,9 +241,7 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Fetch Google Analytics data using the v4 API.  For the v3 API use <a href='google_analytics_3.html'>google_analytics_3</a>.  See website help for lots of examples: <a href='http://code.markedmondson.me/googleAnalyticsR/articles/v4.html'>Google Analytics Reporting API v4 in R</a></p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>google_analytics</span>(<span class='no'>viewId</span>, <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -255,7 +254,7 @@
   <span class='kw'>useResourceQuotas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rows_per_call</span> <span class='kw'>=</span> <span class='fl'>10000L</span>)
 
 <span class='fu'>google_analytics_4</span>(<span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -351,16 +350,14 @@ Default <code>NULL</code>, set to <code>TRUE</code> or <code>FALSE</code> if you
       <td><p>Arguments passed to google_analytics</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A Google Analytics data.frame, with attributes showing row totals, sampling etc.</p>
-    
     <h2 class="hasAnchor" id="row-requests"><a class="anchor" href="#row-requests"></a>Row requests</h2>
 
     
     <p>By default the API call will use v4 batching that splits requests into 5 separate calls of 10k rows each.  This can go up to 100k, so this means up to 500k rows can be fetched per API call, however the API servers will fail with a 500 error if the query is too complicated as the processing time at Google's end gets too long.  In this case, you may want to tweak the <code>rows_per_call</code> argument downwards, or fall back to using <code>slow_fetch = FALSE</code> which will send an API request one at a time.  If fetching data via scheduled scripts this is recommended as the default.</p>
-    
     <h2 class="hasAnchor" id="anti-sampling"><a class="anchor" href="#anti-sampling"></a>Anti-sampling</h2>
 
     
@@ -369,7 +366,6 @@ Default <code>NULL</code>, set to <code>TRUE</code> or <code>FALSE</code> if you
   of the result yourself instead e.g. <code><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head(ga_data_unsampled, 50300)</a></code></p>  
 <p><code>anti_sample</code> being TRUE will also set <code>samplingLevel='LARGE'</code> to minimise 
   the number of calls.</p>
-    
     <h2 class="hasAnchor" id="resource-quotas"><a class="anchor" href="#resource-quotas"></a>Resource Quotas</h2>
 
     
@@ -377,7 +373,6 @@ Default <code>NULL</code>, set to <code>TRUE</code> or <code>FALSE</code> if you
   set the <code>useResourceQuotas=TRUE</code> and set the Google Cloud 
   client ID to the project that has resource quotas activated, 
   via <a href='https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html'>gar_set_client</a> or options.</p>
-    
     <h2 class="hasAnchor" id="caching"><a class="anchor" href="#caching"></a>Caching</h2>
 
     
@@ -387,13 +382,11 @@ Default <code>NULL</code>, set to <code>TRUE</code> or <code>FALSE</code> if you
   the <a href='https://code.markedmondson.me/googleAuthR//reference/gar_cache_setup.html'>gar_cache_setup</a> function.  This can be useful
   when running RMarkdown reports using data. To empty the cache use 
   <a href='https://code.markedmondson.me/googleAuthR//reference/gar_cache_setup.html'>gar_cache_empty</a>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other GAv4 fetch functions: <code><a href='fetch_google_analytics_4_slow.html'>fetch_google_analytics_4_slow</a></code>,
   <code><a href='fetch_google_analytics_4.html'>fetch_google_analytics_4</a></code>,
   <code><a href='make_ga_4_req.html'>make_ga_4_req</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -436,19 +429,12 @@ Default <code>NULL</code>, set to <code>TRUE</code> or <code>FALSE</code> if you
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#row-requests">Row requests</a></li>
-
       <li><a href="#anti-sampling">Anti-sampling</a></li>
-
       <li><a href="#resource-quotas">Resource Quotas</a></li>
-
       <li><a href="#caching">Caching</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

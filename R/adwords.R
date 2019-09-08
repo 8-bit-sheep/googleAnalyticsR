@@ -6,7 +6,7 @@
 #'
 #' @return AdWords Meta data
 #' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
+#' @family Google Ad management functions
 #' @export
 ga_adwords <- function(accountId,
                        webPropertyId,
@@ -33,7 +33,7 @@ ga_adwords <- function(accountId,
 #'
 #' @return AdWords Links
 #' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
+#' @family Google Ad management functions
 #' @export
 ga_adwords_list <- function(accountId,
                             webPropertyId){
@@ -88,7 +88,7 @@ parse_ga_adwords_list <- function(x){
 #' 
 #'
 #' @return confirmation message if successful
-#' @family managementAPI functions
+#' @family Google Ad management functions
 #'
 #' @importFrom googleAuthR gar_api_generator
 #' @export
@@ -155,7 +155,7 @@ ga_adwords_add_linkid <- function(adwordsAccountId, linkName, accountId, webProp
 #' Removes a link between and Adwords (Google ads) account and a Google Analytics property
 #'
 #' @return HTTP Status Code 204 with empty response body, if successful
-#' @family managementAPI functions
+#' @family Google Ad management functions
 #'
 #' @importFrom googleAuthR gar_api_generator
 #' @export

@@ -8,10 +8,12 @@
 
 <title>List account metadata — ga_accounts • googleAnalyticsR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,12 +32,12 @@
 
 
 
+
 <meta property="og:title" content="List account metadata — ga_accounts" />
-
 <meta property="og:description" content="This gets a list of account meta data, that can be used in other management API functions." />
-
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -75,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -219,7 +221,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -240,29 +241,25 @@
     </div>
 
     <div class="ref-description">
-    
     <p>This gets a list of account meta data, that can be used in other management API functions.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>ga_accounts</span>()</pre>
-        
+
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>data.frame</code> with accountid, name, an R datetime object (<code>POSIXct</code>) when the account was created and last updated, and the effective permissions your user has for those accounts.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This gets the meta data associated with the accounts you have access to with your user.  
 If you want all information such as web properties and viewIds, use <a href='ga_account_list.html'>ga_account_list</a> instead.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other account structure functions: <code><a href='ga_view_list.html'>ga_view_list</a></code>,
-  <code><a href='ga_view.html'>ga_view</a></code>, <code><a href='ga_webproperty_list.html'>ga_webproperty_list</a></code>,
-  <code><a href='ga_webproperty.html'>ga_webproperty</a></code>,
-  <code><a href='ga_account_list.html'>google_analytics_account_list</a></code></p></div>
-    
+    <div class='dont-index'><p>Other account structure functions: <code><a href='ga_account_list.html'>ga_account_list</a></code>,
+  <code><a href='ga_view_list.html'>ga_view_list</a></code>, <code><a href='ga_view.html'>ga_view</a></code>,
+  <code><a href='ga_webproperty_list.html'>ga_webproperty_list</a></code>,
+  <code><a href='ga_webproperty.html'>ga_webproperty</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -276,13 +273,9 @@ If you want all information such as web properties and viewIds, use <a href='ga_
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

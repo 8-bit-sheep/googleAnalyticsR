@@ -60,10 +60,10 @@ These are helper utility functions to work with Google Analytics data.
 head(meta[,1:5])
 
 # or ensure an up to date version by calling the metadata API.
-head(google_analytics_meta())[,1:5]
+head(ga_meta())[,1:5]
 ```
 
-* `aggregateGAData()` - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed. This is used internally when using anti-sampling, and is also useful to respond to dimension selections in Shiny dashboards, where you don't want to perform a new API call each time you need aggregated data.  Download all data first in a more unaggregated form, then use this function.
+* `ga_aggregate` - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed. This is used internally when using anti-sampling, and is also useful to respond to dimension selections in Shiny dashboards, where you don't want to perform a new API call each time you need aggregated data.  Download all data first in a more unaggregated form, then use this function.
 
 ```{r}
 # use `aggregateGAData` so you can on the fly create summary data
@@ -74,18 +74,17 @@ ga_data <- google_analytics(81416156,
 head(ga_data)
 
 # if we want totals per hour over the dates:
-aggregateGAData(ga_data[,c("hour","sessions")], agg_names = "hour")
+ga_aggregate(ga_data[,c("hour","sessions")], agg_names = "hour")
 
 # it knows not to sum metrics that are rates:
-aggregateGAData(ga_data[,c("hour","bounceRate")], agg_names = "hour")
+ga_aggregate(ga_data[,c("hour","bounceRate")], agg_names = "hour")
 ```
 
 
-* `allowed_metric_dim()` - Create named list of allowed GA metrics/dimensions.  This is useful to have nice looking labels for dimension and metric selection pickers, or to create lookup tables.
+* `ga_allowed_metric_dim()` - Create named list of allowed GA metrics/dimensions.  This is useful to have nice looking labels for dimension and metric selection pickers, or to create lookup tables.
 
 ```{r}
-#
-amd <- allowed_metric_dim()
+amd <- ga_allowed_metric_dim()
 head(amd)
 ```
 
@@ -233,27 +232,24 @@ Also required is the id of the Google Analytics account and associated GA proper
 This operation will create a new entityAdWordsLinks resource. 
 To remove this  entityAdWordsLinks later if needed the `ga_adwords_delete_linkid()` function can be used. 
 
-```{r}
+```r
 # Lists webProperty-Google Ads links
-#ga_adwords_list(accountId = 65973592, webPropertyId = "UA-65973592-1")
+ga_adwords_list(accountId = 65973592, webPropertyId = "UA-65973592-1")
 
 # Get information about a web property-Google Ads link 
-#ga_adwords(accountId = 65973592, webPropertyId = "UA-65973592-1", webPropertyAdWordsLinkId = "QrcfI2DTSMayqbrLiHYUqw")
+ga_adwords(accountId = 65973592, webPropertyId = "UA-65973592-1", webPropertyAdWordsLinkId = "QrcfI2DTSMayqbrLiHYUqw")
 
 # establish a new link between GA and Adwords
-#ga_adwords_add_linkid(adwordsAccountId = "280-234-7592", linkName = "Google Ads Link", accountId = "65973592", webPropertyId = "UA-65973592-1")
+ga_adwords_add_linkid(adwordsAccountId = "280-234-7592", linkName = "Google Ads Link", accountId = "65973592", webPropertyId = "UA-65973592-1")
 
 #check that it has been added
-#ga_adwords_list(accountId = 65973592, webPropertyId = "UA-65973592-1")
+ga_adwords_list(accountId = 65973592, webPropertyId = "UA-65973592-1")
 
 # delete the link
-#ga_adwords_delete_linkid(accountId  = 65973592, webPropertyId ="UA-65973592-1", webPropertyAdWordsLinkId = "ezW2dyaiQcGheWRAo69nCw")
+ga_adwords_delete_linkid(accountId  = 65973592, webPropertyId ="UA-65973592-1", webPropertyAdWordsLinkId = "ezW2dyaiQcGheWRAo69nCw")
 
 #check that the link has been removed
-#ga_adwords_list(accountId = 65973592, webPropertyId = "UA-65973592-1")
-
-
-
+ga_adwords_list(accountId = 65973592, webPropertyId = "UA-65973592-1")
 ```
 
 

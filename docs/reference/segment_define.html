@@ -8,10 +8,12 @@
 
 <title>Make a segment definition — segment_define • googleAnalyticsR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,8 +32,8 @@
 
 
 
-<meta property="og:title" content="Make a segment definition — segment_define" />
 
+<meta property="og:title" content="Make a segment definition — segment_define" />
 <meta property="og:description" content="Defines the segment to be a set of SegmentFilters 
   which are combined together with a logical AND operation.  
 segment_define is in the hierarchy of segment creation, for which you will also need:
@@ -39,9 +41,9 @@ segment_define : AND combination of segmentFilters
 segment_vector_simple or segment_vector_sequence
 segment_element that are combined in OR lists for segment_vectors_*
 " />
-
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -81,7 +83,7 @@ segment_element that are combined in OR lists for segment_vectors_*
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -225,7 +227,6 @@ segment_element that are combined in OR lists for segment_vectors_*
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -246,7 +247,6 @@ segment_element that are combined in OR lists for segment_vectors_*
     </div>
 
     <div class="ref-description">
-    
     <p>Defines the segment to be a set of SegmentFilters 
   which are combined together with a logical AND operation.</p>  
 <p><code>segment_define</code> is in the hierarchy of segment creation, for which you will also need:</p><ul>
@@ -254,11 +254,10 @@ segment_element that are combined in OR lists for segment_vectors_*
 <li><p><a href='segment_vector_simple.html'>segment_vector_simple</a> or <a href='segment_vector_sequence.html'>segment_vector_sequence</a></p></li>
 <li><p><a href='segment_element.html'>segment_element</a> that are combined in OR lists for <code>segment_vectors_*</code></p></li>
 </ul>
-    
     </div>
 
     <pre class="usage"><span class='fu'>segment_define</span>(<span class='no'>segment_filters</span>, <span class='kw'>not_vector</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -272,29 +271,25 @@ segment_element that are combined in OR lists for segment_vectors_*
 If NULL, assumed FALSE</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>segmentDefinition object for <a href='segment_ga4.html'>segment_ga4</a></p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other v4 segment functions: <code><a href='segment_element.html'>segment_element</a></code>,
   <code><a href='segment_ga4.html'>segment_ga4</a></code>,
   <code><a href='segment_vector_sequence.html'>segment_vector_sequence</a></code>,
   <code><a href='segment_vector_simple.html'>segment_vector_simple</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>

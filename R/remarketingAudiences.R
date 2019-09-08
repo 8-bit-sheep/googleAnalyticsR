@@ -7,7 +7,7 @@
 #' @return Remarketing Audience object
 #' @seealso \href{https://support.google.com/analytics/answer/2611268?hl=en}{About remarketing audiences}
 #' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
+#' @family remarketing management functions
 #' @export
 ga_remarketing_get <- function(accountId,
                                webPropertyId,
@@ -35,7 +35,7 @@ ga_remarketing_get <- function(accountId,
 #' @return Remarketing audience list
 #' @seealso \href{https://support.google.com/analytics/answer/2611268?hl=en}{About remarketing audiences}
 #' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
+#' @family remarketing management functions
 #' @export
 ga_remarketing_list <- function(accountId,
                                 webPropertyId){
@@ -66,7 +66,7 @@ ga_remarketing_list <- function(accountId,
 #' @return data.frame
 #' @seealso \href{https://support.google.com/analytics/answer/2611268?hl=en}{About remarketing audiences}
 #' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
+#' @family remarketing management functions
 #' @export
 ga_remarketing_estimate <- function(remarketingAudience){
   
@@ -127,6 +127,7 @@ ga_remarketing_estimate <- function(remarketingAudience){
 
 #' 
 #' }
+#' @family remarketing management functions
 ga_remarketing_build <- function(segment, 
                                  membershipDurationDays = NULL, 
                                  daysToLookBack = NULL, 
@@ -193,6 +194,7 @@ is.ga4_remarketing_segment <- function(x) inherits(x, "ga4_remarketing_segment")
 
 #' 
 #' }
+#' @family remarketing management functions
 ga_remarketing_create <- function(adwordsLinkId,
                                   include,
                                   exclude = NULL,
@@ -240,11 +242,8 @@ ga_remarketing_create <- function(adwordsLinkId,
     stop("Unknown audienceType:", audienceType, call. = FALSE)
   }
   
-  ra <- rmNullObs(ra)
+  rmNullObs(ra)
   
-  ra
-  
-  # ga_remarketing_do_call(ra, accountId, webPropertyId)
   
 }
 

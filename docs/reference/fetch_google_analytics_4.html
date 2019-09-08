@@ -8,10 +8,12 @@
 
 <title>Fetch multiple GAv4 requests — fetch_google_analytics_4 • googleAnalyticsR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,12 +32,12 @@
 
 
 
+
 <meta property="og:title" content="Fetch multiple GAv4 requests — fetch_google_analytics_4" />
-
 <meta property="og:description" content="Fetch the GAv4 requests as created by make_ga_4_req" />
-
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -75,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -219,7 +221,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -240,14 +241,12 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Fetch the GAv4 requests as created by <a href='make_ga_4_req.html'>make_ga_4_req</a></p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>fetch_google_analytics_4</span>(<span class='no'>request_list</span>, <span class='kw'>merge</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>useResourceQuotas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -265,21 +264,18 @@
 Default <code>NULL</code>, set to <code>TRUE</code> or <code>FALSE</code> if you have access to this feature.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A dataframe if one request, or a list of data.frames if multiple.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For same viewId, daterange, segments, samplingLevel and cohortGroup, v4 batches can be made</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other GAv4 fetch functions: <code><a href='fetch_google_analytics_4_slow.html'>fetch_google_analytics_4_slow</a></code>,
   <code><a href='google_analytics.html'>google_analytics</a></code>,
   <code><a href='make_ga_4_req.html'>make_ga_4_req</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -316,13 +312,9 @@ Default <code>NULL</code>, set to <code>TRUE</code> or <code>FALSE</code> if you
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

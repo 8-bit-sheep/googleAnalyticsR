@@ -8,10 +8,12 @@
 
 <title>Create a cohort group — make_cohort_group • googleAnalyticsR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,12 +32,12 @@
 
 
 
+
 <meta property="og:title" content="Create a cohort group — make_cohort_group" />
-
 <meta property="og:description" content="Create a cohort group" />
-
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -75,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -219,7 +221,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -240,13 +241,11 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Create a cohort group</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>make_cohort_group</span>(<span class='no'>cohorts</span>, <span class='kw'>lifetimeValue</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>cohort_types</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -263,23 +262,20 @@
       <td><p>placeholder, does nothing as only FIRST_VISIT_DATE supported.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A cohortGroup object</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Example: <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list("cohort 1" = c("2015-08-01", "2015-08-01"), 
                     "cohort 2" = c("2015-07-01","2015-07-01"))</a></code></p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohort_and_lifetime_value_ltv_dimensions_and_metrics'>https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohort_and_lifetime_value_ltv_dimensions_and_metrics</a></p>
 <p>Other v4 cohort functions: <code><a href='cohortGroup.html'>cohortGroup</a></code>,
   <code><a href='cohort_dimension_check.html'>cohort_dimension_check</a></code>,
   <code><a href='cohort_metric_check.html'>cohort_metric_check</a></code>, <code><a href='cohort.html'>cohort</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -291,7 +287,7 @@
 <span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
 
 <span class='co'>## get your accounts</span>
-<span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_account_list.html'>google_analytics_account_list</a></span>()
+<span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_account_list</span>()
 
 <span class='co'>## pick a profile with data to query</span>
 
@@ -311,7 +307,8 @@
                                    <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'cohortTotalUsers'</span>))
 
 
-<span class='co'>### Lifetime Value report - just a variation of the cohort report with lifetimeValue = TRUE</span>
+<span class='co'>### Lifetime Value report - just a variation of the cohort report </span>
+<span class='co'># with lifetimeValue = TRUE</span>
 <span class='co'>### and ltv specific metrics</span>
 <span class='co'>### The view MUST be an app view at the moment</span>
 
@@ -324,9 +321,9 @@
 <span class='co'>## call a cohort report with ltv metrics</span>
 
 <span class='no'>ltv_example</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>ga_id</span>,
-                               <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'cohort'</span>, <span class='st'>"acquisitionTrafficChannel"</span>),
-                               <span class='kw'>cohorts</span> <span class='kw'>=</span> <span class='no'>cohort_ltv</span>,
-                               <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"cohortGoalCompletionsPerUserWithLifetimeCriteria"</span>))
+     <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'cohort'</span>, <span class='st'>"acquisitionTrafficChannel"</span>),
+     <span class='kw'>cohorts</span> <span class='kw'>=</span> <span class='no'>cohort_ltv</span>,
+     <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"cohortGoalCompletionsPerUserWithLifetimeCriteria"</span>))
 
 <span class='co'># }</span><div class='input'>
 </div></pre>
@@ -335,13 +332,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

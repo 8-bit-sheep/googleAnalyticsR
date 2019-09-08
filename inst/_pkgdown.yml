@@ -107,10 +107,9 @@ reference:
     desc: >
       Useful functions for working with the Google Analytics data
     contents:
-      - aggregateGAData
-      - allowed_metric_dim
-      - google_analytics_meta
-      - meta
+      - ga_aggregate
+      - ga_allowed_metric_dim
+      - ga_meta
   - title: "Shiny modules"
     desc: >
       Using Google Analytics with Shiny
@@ -215,6 +214,7 @@ reference:
       - ga_clientid_activity
       - ga_clientid_deletion
       - ga_clientid_hash
+      - ga_clientid_activity_unnest
   - title: "Custom variables"
     desc: >
       Work with custom dimensions and metrics for your Google Analytics account

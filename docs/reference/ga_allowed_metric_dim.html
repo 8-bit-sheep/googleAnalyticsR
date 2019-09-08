@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>`segmentFilterClause_ga4` class. — segmentFilterClause_ga4-class • googleAnalyticsR</title>
+<title>Create named list of allowed GA metrics/dimensions — ga_allowed_metric_dim • googleAnalyticsR</title>
 
 
 <!-- jquery -->
@@ -33,8 +33,8 @@
 
 
 
-<meta property="og:title" content="`segmentFilterClause_ga4` class. — segmentFilterClause_ga4-class" />
-<meta property="og:description" content="Segment filter clause." />
+<meta property="og:title" content="Create named list of allowed GA metrics/dimensions — ga_allowed_metric_dim" />
+<meta property="og:description" content="Create named list of allowed GA metrics/dimensions" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -235,22 +235,48 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>`segmentFilterClause_ga4` class.</h1>
+    <h1>Create named list of allowed GA metrics/dimensions</h1>
     
-    <div class="hidden name"><code>segmentFilterClause_ga4-class.Rd</code></div>
+    <div class="hidden name"><code>ga_allowed_metric_dim.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Segment filter clause.</p>
+    <p>Create named list of allowed GA metrics/dimensions</p>
     </div>
 
+    <pre class="usage"><span class='fu'>ga_allowed_metric_dim</span>(<span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"METRIC"</span>, <span class='st'>"DIMENSION"</span>),
+  <span class='kw'>subType</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"segment"</span>, <span class='st'>"cohort"</span>), <span class='kw'>callAPI</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>type</th>
+      <td><p>Type of parameter to create</p></td>
+    </tr>
+    <tr>
+      <th>subType</th>
+      <td><p>to restrict to only those in this type</p></td>
+    </tr>
+    <tr>
+      <th>callAPI</th>
+      <td><p>This will update the meta table (Requires online authorization)</p>
+<p>This is useful to expand goalXCompletions to all the possibilities,
+  as well as restricting to those that variables that work with your API call.</p>
+<p>Use internal meta table, but you have option to update to the latest version.</p></td>
+    </tr>
+    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A named list of parameters for use in API calls</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
     </ul>
 
   </div>

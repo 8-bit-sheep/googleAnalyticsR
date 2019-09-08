@@ -8,10 +8,12 @@
 
 <title>Make a dimension or metric filter clause object — filter_clause_ga4 • googleAnalyticsR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,12 +32,12 @@
 
 
 
+
 <meta property="og:title" content="Make a dimension or metric filter clause object — filter_clause_ga4" />
-
 <meta property="og:description" content="Make a dimension or metric filter clause object" />
-
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -75,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -219,7 +221,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -240,13 +241,11 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Make a dimension or metric filter clause object</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>filter_clause_ga4</span>(<span class='no'>filters</span>, <span class='kw'>operator</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"OR"</span>, <span class='st'>"AND"</span>))</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -259,22 +258,19 @@
       <td><p>combination of filter.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>dim_fil_ga4</code> or <code>met_fil_ga4</code>
   for use in <code><a href='make_ga_4_req.html'>make_ga_4_req</a></code></p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If you have dimension and metric filters,
   make the clauses in two separate calls, then pass the objects to <a href='make_ga_4_req.html'>make_ga_4_req</a></p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other filter functions: <code><a href='dim_filter.html'>dim_filter</a></code>,
   <code><a href='met_filter.html'>met_filter</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -286,7 +282,7 @@
 <span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
 
 <span class='co'>## get your accounts</span>
-<span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_account_list.html'>google_analytics_account_list</a></span>()
+<span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_account_list</span>()
 
 <span class='co'>## pick a profile with data to query</span>
 
@@ -321,13 +317,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

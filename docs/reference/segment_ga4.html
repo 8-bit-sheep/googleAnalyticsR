@@ -8,10 +8,12 @@
 
 <title>Make a segment object for use — segment_ga4 • googleAnalyticsR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,14 +32,14 @@
 
 
 
-<meta property="og:title" content="Make a segment object for use — segment_ga4" />
 
+<meta property="og:title" content="Make a segment object for use — segment_ga4" />
 <meta property="og:description" content="A Segment is a subset of the Analytics data. 
 For example, of the entire set of users, one Segment 
 might be users from a particular country or city." />
-
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -77,7 +79,7 @@ might be users from a particular country or city." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -221,7 +223,6 @@ might be users from a particular country or city." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -242,16 +243,14 @@ might be users from a particular country or city." />
     </div>
 
     <div class="ref-description">
-    
     <p>A Segment is a subset of the Analytics data. 
 For example, of the entire set of users, one Segment 
 might be users from a particular country or city.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>segment_ga4</span>(<span class='no'>name</span>, <span class='kw'>segment_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>user_segment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>session_segment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -272,11 +271,10 @@ might be users from a particular country or city.</p>
       <td><p>A list of <code>segment_define</code>'s that apply to sessions</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a segmentFilter object. You can pass a list of these to the request.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>segment_ga4</code> is the top hierarchy of segment creation, for which you will also need:</p><ul>
@@ -284,14 +282,12 @@ might be users from a particular country or city.</p>
 <li><p><a href='segment_vector_simple.html'>segment_vector_simple</a> or <a href='segment_vector_sequence.html'>segment_vector_sequence</a></p></li>
 <li><p><a href='segment_element.html'>segment_element</a> that are combined in OR lists for <code>segment_vectors_*</code></p></li>
 </ul>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other v4 segment functions: <code><a href='segment_define.html'>segment_define</a></code>,
   <code><a href='segment_element.html'>segment_element</a></code>,
   <code><a href='segment_vector_sequence.html'>segment_vector_sequence</a></code>,
   <code><a href='segment_vector_simple.html'>segment_vector_simple</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -303,7 +299,7 @@ might be users from a particular country or city.</p>
 <span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
 
 <span class='co'>## get your accounts</span>
-<span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_account_list.html'>google_analytics_account_list</a></span>()
+<span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_account_list</span>()
 
 <span class='co'>## pick a profile with data to query</span>
 
@@ -391,13 +387,9 @@ might be users from a particular country or city.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

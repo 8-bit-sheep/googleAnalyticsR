@@ -39,7 +39,7 @@ is.filterManagement <- function(x){
 #'
 #' @return filter list
 #' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
+#' @family filter management functions
 #' @export
 ga_filter_view_list <- function(accountId,
                                 webPropertyId,
@@ -89,7 +89,7 @@ parse_ga_filter_view_list <- function(x){
 #'
 #' @return filter list
 #' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
+#' @family filter management functions
 #' @export
 ga_filter_view <- function(accountId,
                            webPropertyId,
@@ -118,7 +118,7 @@ ga_filter_view <- function(accountId,
 #'
 #' @return filter list
 #' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
+#' @family filter management functions
 #' @export
 ga_filter <- function(accountId,
                       filterId){
@@ -142,7 +142,7 @@ ga_filter <- function(accountId,
 #'
 #' @return filter list
 #' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
+#' @family filter management functions
 #' @export
 ga_filter_list <- function(accountId){
   
@@ -194,7 +194,7 @@ ga_filter_list_parse <- function(x){
 #'
 #' @importFrom googleAuthR gar_api_generator
 #' @import assertthat
-#' @family managementAPI functions
+#' @family filter management functions
 #' @export
 ga_filter_delete <- function(accountId, 
                              webPropertyId = NULL, 

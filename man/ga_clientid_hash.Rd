@@ -18,25 +18,8 @@ hashedClientId object list
 Get hashed version of client id (also known as hashClientId, hashedClientId, or BigQuery's fullVisitorId)
 }
 \seealso{
-Other managementAPI functions: \code{\link{ga_adwords_add_linkid}},
-  \code{\link{ga_adwords_delete_linkid}},
-  \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}},
-  \code{\link{ga_experiment_list}},
-  \code{\link{ga_experiment}}, \code{\link{ga_filter_add}},
-  \code{\link{ga_filter_apply_to_view}},
-  \code{\link{ga_filter_delete}},
-  \code{\link{ga_filter_list}},
-  \code{\link{ga_filter_update_filter_link}},
-  \code{\link{ga_filter_update}},
-  \code{\link{ga_filter_view_list}},
-  \code{\link{ga_filter_view}}, \code{\link{ga_filter}},
-  \code{\link{ga_goal_add}}, \code{\link{ga_goal_list}},
-  \code{\link{ga_goal_update}}, \code{\link{ga_goal}},
-  \code{\link{ga_remarketing_estimate}},
-  \code{\link{ga_remarketing_get}},
-  \code{\link{ga_remarketing_list}},
-  \code{\link{ga_segment_list}},
-  \code{\link{ga_unsampled_list}},
-  \code{\link{ga_unsampled}}
+Other clientid functions: \code{\link{ga_clientid_activity_unnest}},
+  \code{\link{ga_clientid_activity}},
+  \code{\link{ga_clientid_deletion}}
 }
-\concept{managementAPI functions}
+\concept{clientid functions}

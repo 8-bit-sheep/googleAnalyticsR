@@ -20,25 +20,8 @@ filter list
 List filters for view (profile)
 }
 \seealso{
-Other managementAPI functions: \code{\link{ga_adwords_add_linkid}},
-  \code{\link{ga_adwords_delete_linkid}},
-  \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}},
-  \code{\link{ga_clientid_hash}},
-  \code{\link{ga_experiment_list}},
-  \code{\link{ga_experiment}}, \code{\link{ga_filter_add}},
-  \code{\link{ga_filter_apply_to_view}},
-  \code{\link{ga_filter_delete}},
+Other filter management functions: \code{\link{ga_filter_delete}},
   \code{\link{ga_filter_list}},
-  \code{\link{ga_filter_update_filter_link}},
-  \code{\link{ga_filter_update}},
-  \code{\link{ga_filter_view}}, \code{\link{ga_filter}},
-  \code{\link{ga_goal_add}}, \code{\link{ga_goal_list}},
-  \code{\link{ga_goal_update}}, \code{\link{ga_goal}},
-  \code{\link{ga_remarketing_estimate}},
-  \code{\link{ga_remarketing_get}},
-  \code{\link{ga_remarketing_list}},
-  \code{\link{ga_segment_list}},
-  \code{\link{ga_unsampled_list}},
-  \code{\link{ga_unsampled}}
+  \code{\link{ga_filter_view}}, \code{\link{ga_filter}}
 }
-\concept{managementAPI functions}
+\concept{filter management functions}

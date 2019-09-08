@@ -8,10 +8,12 @@
 
 <title>Delete users access from account, webproperty or view level — ga_users_delete_linkid • googleAnalyticsR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,14 +32,14 @@
 
 
 
-<meta property="og:title" content="Delete users access from account, webproperty or view level — ga_users_delete_linkid" />
 
+<meta property="og:title" content="Delete users access from account, webproperty or view level — ga_users_delete_linkid" />
 <meta property="og:description" content="The linkId is in the form of the accountId/webPropertyId/viewId colon separated from a link unique Id.
 Delete user access by supplying the linkId for that user at the level they have been given access.  It won't work to delete user links at account level if they have been assigned at web property or view level - you will need to get the linkId for that level instead. e.g. a user needs permissions.local to be non-NULL to be deleted at that level.  The parameter check will do this check before deletion and throw an error if they can not be deleted.   Set this to check=FALSE to suppress this behaviour.
 If you supply more than one linkId, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a TRUE result on successful batch, but individual linkIds may have failed.  Check via ga_users_list afterwards and try to delete individual linkIds to get more descriptive error messages." />
-
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -77,7 +79,7 @@ If you supply more than one linkId, then batch processing will be applied.  Batc
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -221,7 +223,6 @@ If you supply more than one linkId, then batch processing will be applied.  Batc
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -242,16 +243,14 @@ If you supply more than one linkId, then batch processing will be applied.  Batc
     </div>
 
     <div class="ref-description">
-    
     <p>The <code>linkId</code> is in the form of the accountId/webPropertyId/viewId colon separated from a link unique Id.</p>
 <p>Delete user access by supplying the linkId for that user at the level they have been given access.  It won't work to delete user links at account level if they have been assigned at web property or view level - you will need to get the linkId for that level instead. e.g. a user needs <code>permissions.local</code> to be non-NULL to be deleted at that level.  The parameter <code>check</code> will do this check before deletion and throw an error if they can not be deleted.   Set this to <code>check=FALSE</code> to suppress this behaviour.</p>
 <p>If you supply more than one <code>linkId</code>, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a <code>TRUE</code> result on successful batch, but individual <code>linkId</code>s may have failed.  Check via <a href='ga_users_list.html'>ga_users_list</a> afterwards and try to delete individual linkIds to get more descriptive error messages.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>ga_users_delete_linkid</span>(<span class='no'>linkId</span>, <span class='no'>accountId</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>check</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -276,11 +275,10 @@ If you supply more than one linkId, then batch processing will be applied.  Batc
       <td><p>If the default <code>TRUE</code> will check that the user has user access at the level you are trying to delete them from - if not will throw an error.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>TRUE if the deletion is successful, an error if not.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete'>Google Documentation</a></p>
@@ -288,7 +286,6 @@ If you supply more than one linkId, then batch processing will be applied.  Batc
   <code><a href='ga_users_delete.html'>ga_users_delete</a></code>,
   <code><a href='ga_users_list.html'>ga_users_list</a></code>,
   <code><a href='ga_users_update.html'>ga_users_update</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -315,11 +312,8 @@ If you supply more than one linkId, then batch processing will be applied.  Batc
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

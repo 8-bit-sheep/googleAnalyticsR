@@ -28,6 +28,8 @@ Get activity on an individual user
 The User Activity API lets you query an individual user's movement through your website, by sending in the individual `clientId` or `userId`.
 
 Bear in mind each call will count against your API quota, so fetching a large amount of client ids will be limited by that.
+
+Use \link{ga_clientid_activity_unnest} to unnest deeply nested data in the hits data.
 }
 \examples{
 
@@ -76,4 +78,9 @@ only_goals <- ga_clientid_activity(c("1106980347.1461227730",
 }
 \seealso{
 \url{https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search}
+
+Other clientid functions: \code{\link{ga_clientid_activity_unnest}},
+  \code{\link{ga_clientid_deletion}},
+  \code{\link{ga_clientid_hash}}
 }
+\concept{clientid functions}

@@ -53,4 +53,9 @@ ga_clientid_deletion(ids, "UA-1234-2")
 }
 \seealso{
 \url{https://developers.google.com/analytics/devguides/config/userdeletion/v3/}
+
+Other clientid functions: \code{\link{ga_clientid_activity_unnest}},
+  \code{\link{ga_clientid_activity}},
+  \code{\link{ga_clientid_hash}}
 }
+\concept{clientid functions}

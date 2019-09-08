@@ -8,10 +8,12 @@
 
 <title>Modelling function factory for Google Analytics data — ga_model_make • googleAnalyticsR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,12 +32,12 @@
 
 
 
+
 <meta property="og:title" content="Modelling function factory for Google Analytics data — ga_model_make" />
-
 <meta property="og:description" content="Create ga_model objects for easy application of models to data" />
-
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -75,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -219,7 +221,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -240,16 +241,14 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Create ga_model objects for easy application of models to data</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>ga_model_make</span>(<span class='no'>data_f</span>, <span class='no'>required_columns</span>, <span class='no'>model_f</span>,
   <span class='kw'>output_f</span> <span class='kw'>=</span> <span class='kw pkg'>graphics</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>, <span class='kw'>required_packages</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>outputShiny</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/shiny/topics/plotOutput'>plotOutput</a></span>,
   <span class='kw'>renderShiny</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/shiny/topics/renderPlot'>renderPlot</a></span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -287,17 +286,15 @@ must take data from result of <code>data_f</code> in first argument</p></td>
       <td><p>A shiny render function that will create the output for <code>outputShiny</code> from <code>output_f</code></p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>ga_model</code> object to pass to <a href='ga_model.html'>ga_model</a></p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The passed functions should all have <code>...</code> to make them flexible
   in what arguments can be added.  Do not have the same argument names in both functions.
 The <code>data_f</code> function result will feed to <code>model_f</code></p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other GA modelling functions: <code><a href='ga_model_edit.html'>ga_model_edit</a></code>,
@@ -305,7 +302,6 @@ The <code>data_f</code> function result will feed to <code>model_f</code></p>
   <code><a href='ga_model_load.html'>ga_model_load</a></code>, <code><a href='ga_model_save.html'>ga_model_save</a></code>,
   <code><a href='ga_model_tweet.html'>ga_model_tweet</a></code>,
   <code><a href='ga_model_write.html'>ga_model_write</a></code>, <code><a href='ga_model.html'>ga_model</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -359,13 +355,9 @@ The <code>data_f</code> function result will feed to <code>model_f</code></p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

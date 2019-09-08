@@ -8,10 +8,12 @@
 
 <title>Changelog • googleAnalyticsR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,10 +32,11 @@
 
 
 
-<meta property="og:title" content="Changelog" />
 
+<meta property="og:title" content="Changelog" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -73,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -217,7 +220,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -236,14 +238,14 @@
       
     </div>
 
-    <div id="googleanalyticsr-0-6-0-9000" class="section level1">
+    <div id="googleanalyticsr-0-7-0" class="section level1">
 <h1 class="page-header">
-<a href="#googleanalyticsr-0-6-0-9000" class="anchor"></a>googleAnalyticsR 0.6.0.9000<small> Unreleased </small>
+<a href="#googleanalyticsr-0-7-0" class="anchor"></a>googleAnalyticsR 0.7.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>Clean up error messages</li>
 <li>Fix anti_sampling breaking if using date formats “4daysAgo” etc.</li>
-<li>Deprecated <code><a href="../reference/ga_meta.html">google_analytics_meta()</a></code> for <code><a href="../reference/ga_meta.html">ga_meta()</a></code>
+<li>Deprecated <code>google_analytics_meta()</code> for <code><a href="../reference/ga_meta.html">ga_meta()</a></code>
 </li>
 <li>Add <code>accountId</code> to the output of Shiny module <code>authDropdown</code> when <code>viewIdOnly=FALSE</code>
 </li>
@@ -253,13 +255,15 @@
 <li>Add <code>ga_model_tweet</code> to enable data viz in tweets</li>
 <li>Add userActivity API via <code>gar_clientid_activity()</code>
 </li>
-<li>Use new authentication setup via <code>googleAuthR v0.9.0</code> and <code>gargle</code>
+<li>Use new authentication setup via <code>googleAuthR v1.0.0</code> and <code>gargle</code>
 </li>
 <li>Prevent use of default client id project in non-interactive scripts.<br>
 </li>
 <li>Update docs to use <code>clientId</code> dimension in user activity API calls</li>
-<li>Update <code><a href="https://tidyr.tidyverse.org/reference/unnest.html">tidyr::unnest</a></code> to use <code>cols</code> parameter (#266)</li>
+<li>Update <code><a href="https://tidyr.tidyverse.org/reference/nest.html">tidyr::unnest</a></code> to use <code>cols</code> parameter (#266)</li>
 <li>Add <code><a href="../reference/ga_custom_upload_delete.html">ga_custom_upload_delete()</a></code> - thanks <a href='https://github.com/byapprov'>@byapprov</a> (#263)</li>
+<li>Fix sending in multiple segment definitions in a list (#253)</li>
+<li>Fix <code><a href="../reference/ga_segment_list.html">ga_segment_list()</a></code> returning data if no custom segments created (#259)</li>
 </ul>
 </div>
     <div id="googleanalyticsr-0-6-0" class="section level1">
@@ -410,7 +414,7 @@
 <ul>
 <li>Use <code>aggregateGAData</code> to solve issue with anti_sampling repeating rows (#49)</li>
 <li>Fix bug with anti-sample when periods included 0-row data (#42)</li>
-<li>Fix <code><a href="../reference/ga_account_list.html">google_analytics_account_list()</a></code> parsing bug if only one view available (#52, #41)</li>
+<li>Fix <code>google_analytics_account_list()</code> parsing bug if only one view available (#52, #41)</li>
 <li>Fix segments not being able to be used in Cohort reports (#63)</li>
 <li>Fix bug with anti-sample when querying over 1000 days (#66 - thanks <a href='https://github.com/olivia-icivics'>@olivia-icivics</a>)</li>
 </ul>
@@ -537,7 +541,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#googleanalyticsr-0-6-0-9000">0.6.0.9000</a></li>
+        <li><a href="#googleanalyticsr-0-7-0">0.7.0</a></li>
         <li><a href="#googleanalyticsr-0-6-0">0.6.0</a></li>
         <li><a href="#googleanalytics-0-5-0">0.5.0</a></li>
         <li><a href="#googleanalytics-0-4-2">0.4.2</a></li>

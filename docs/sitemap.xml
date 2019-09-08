@@ -4,12 +4,6 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//index.html</loc>
   </url>
   <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/aggregateGAData.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/allowed_metric_dim.html</loc>
-  </url>
-  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/authDropdown.html</loc>
   </url>
   <url>
@@ -77,6 +71,12 @@
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_adwords_list.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_aggregate.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_allowed_metric_dim.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html</loc>
@@ -413,9 +413,6 @@
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//articles/ganalytics.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//articles/googleAnalyticsR.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//articles/management.html</loc>

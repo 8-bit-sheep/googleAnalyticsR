@@ -8,10 +8,12 @@
 
 <title>User Activity Request — ga_clientid_activity • googleAnalyticsR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,12 +32,12 @@
 
 
 
+
 <meta property="og:title" content="User Activity Request — ga_clientid_activity" />
-
 <meta property="og:description" content="Get activity on an individual user" />
-
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -75,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -219,7 +221,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -240,14 +241,12 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Get activity on an individual user</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>ga_clientid_activity</span>(<span class='no'>ids</span>, <span class='no'>viewId</span>, <span class='kw'>id_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"CLIENT_ID"</span>, <span class='st'>"USER_ID"</span>),
   <span class='kw'>activity_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -272,20 +271,21 @@
       <td><p>A vector of start and end dates.  If not used will default to a week.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list of data.frames: <code>$sessions</code> contains session level data. <code>$hits</code> contains individual activity data</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The User Activity API lets you query an individual user's movement through your website, by sending in the individual `clientId` or `userId`.</p>
 <p>Bear in mind each call will count against your API quota, so fetching a large amount of client ids will be limited by that.</p>
-    
+<p>Use <a href='ga_clientid_activity_unnest.html'>ga_clientid_activity_unnest</a> to unnest deeply nested data in the hits data.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search'>https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search</a></p></div>
-    
+    <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search'>https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search</a></p>
+<p>Other clientid functions: <code><a href='ga_clientid_activity_unnest.html'>ga_clientid_activity_unnest</a></code>,
+  <code><a href='ga_clientid_deletion.html'>ga_clientid_deletion</a></code>,
+  <code><a href='ga_clientid_hash.html'>ga_clientid_hash</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -294,6 +294,22 @@
 <span class='no'>uar</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_clientid_activity</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"1106980347.1461227730"</span>, <span class='st'>"476443645.1541099566"</span>),
                          <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>81416156</span>,
                          <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"2019-01-01"</span>,<span class='st'>"2019-02-01"</span>))
+
+<span class='co'># access clientIds for users who have transacted</span>
+<span class='no'>viewId</span> <span class='kw'>&lt;-</span> <span class='fl'>106249469</span>
+<span class='no'>date_range</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"2019-01-01"</span>,<span class='st'>"2019-02-01"</span>)
+<span class='no'>cids</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>viewId</span>,
+                         <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='no'>date_range</span>,
+                         <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='st'>"sessions"</span>,
+                         <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='st'>"clientId"</span>,
+                         <span class='kw'>met_filters</span> <span class='kw'>=</span> <span class='fu'><a href='filter_clause_ga4.html'>filter_clause_ga4</a></span>(
+                           <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='met_filter.html'>met_filter</a></span>(<span class='st'>"transactions"</span>,
+                                           <span class='st'>"GREATER_THAN"</span>,
+                                           <span class='fl'>0</span>)
+                                )))
+<span class='no'>transactors</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_clientid_activity</span>(<span class='no'>cids</span>$<span class='no'>clientId</span>,
+                                    <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='no'>viewId</span>,
+                                    <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='no'>date_range</span>)
 
 <span class='co'># access the data.frames returned:</span>
 
@@ -311,15 +327,6 @@
                      <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"2019-01-01"</span>,<span class='st'>"2019-02-01"</span>),
                      <span class='kw'>activity_types</span> <span class='kw'>=</span> <span class='st'>"GOAL"</span>)
 
-<span class='co'># to access all activity use google_analytics() to fetch the clientId dimension</span>
-<span class='no'>viewId</span> <span class='kw'>&lt;-</span> <span class='fl'>123456</span>
-<span class='no'>date_range</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"yesterday"</span>,<span class='st'>"yesterday"</span>)
-<span class='no'>cids</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>viewId</span>, <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='no'>date_range</span>,
-                         <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='st'>"sessions"</span>, <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='st'>"clientId"</span>)
-
-<span class='no'>users</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_clientid_activity</span>(<span class='no'>cids</span>$<span class='no'>clientId</span>,
-                              <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='no'>viewId</span>,
-                              <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='no'>date_range</span>)
 
 
 <span class='co'># }</span></pre>
@@ -328,13 +335,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

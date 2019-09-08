@@ -8,10 +8,12 @@
 
 <title>Function reference • googleAnalyticsR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,10 +32,11 @@
 
 
 
-<meta property="og:title" content="Function reference" />
 
+<meta property="og:title" content="Function reference" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -73,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -217,7 +220,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -381,27 +383,21 @@
       <tr>
         
         <td>
-          <p><code><a href="aggregateGAData.html">aggregateGAData()</a></code> </p>
+          <p><code><a href="ga_aggregate.html">ga_aggregate()</a></code> </p>
         </td>
         <td><p>Aggregate a Google Analytics dataframe over inputted columns</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="allowed_metric_dim.html">allowed_metric_dim()</a></code> </p>
+          <p><code><a href="ga_allowed_metric_dim.html">ga_allowed_metric_dim()</a></code> </p>
         </td>
         <td><p>Create named list of allowed GA metrics/dimensions</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="ga_meta.html">ga_meta()</a></code> <code><a href="ga_meta.html">google_analytics_meta()</a></code> </p>
+          <p><code><a href="ga_meta.html">ga_meta()</a></code> </p>
         </td>
         <td><p>Get current dimensions and metrics available in GA API.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="meta.html">meta</a></code> </p>
-        </td>
-        <td><p>Google Analytics API metadata</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -539,7 +535,7 @@
       <tr>
         
         <td>
-          <p><code><a href="ga_account_list.html">google_analytics_account_list()</a></code> <code><a href="ga_account_list.html">ga_account_list()</a></code> </p>
+          <p><code><a href="ga_account_list.html">ga_account_list()</a></code> </p>
         </td>
         <td><p>Account summary for all accounts available to your user</p></td>
       </tr><tr>
@@ -852,6 +848,12 @@ authentication is not supported.</p></td>
           <p><code><a href="ga_clientid_hash.html">ga_clientid_hash()</a></code> </p>
         </td>
         <td><p>Get hashed version of client id (also known as hashClientId, hashedClientId, or BigQuery's fullVisitorId)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ga_clientid_activity_unnest.html">ga_clientid_activity_unnest()</a></code> </p>
+        </td>
+        <td><p>Unnest user activity columns</p></td>
       </tr>
     </tbody><tbody>
       <tr>

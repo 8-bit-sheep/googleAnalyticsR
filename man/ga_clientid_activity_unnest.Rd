@@ -12,11 +12,51 @@ ga_clientid_activity_unnest(hits, column = c("customDimension",
 
 \item{column}{Which column to expand - one of \code{"customDimension","ecommerce","goals"}}
 }
+\value{
+An unnested data.frame tibble for all hits that matches the column
+}
 \description{
 This helper function works with the output of user activity and parses out inner nested structure you may require.
 
 Thanks to @jimmyg3g on GitHub for help with the ecommerce parsing.
 }
 \details{
-A function to help expand data out of nested columns
+A function to help expand data out of nested columns returned by \link{ga_clientid_activity}
 }
+\examples{
+
+\dontrun{
+# access clientIds for users who have transacted
+viewId <- 106249469
+date_range <- c("2019-01-01","2019-02-01")
+cids <- google_analytics(viewId, 
+                         date_range = date_range, 
+                         metrics = "sessions", 
+                         dimensions = "clientId", 
+                         met_filters = filter_clause_ga4(
+                           list(met_filter("transactions", 
+                                           "GREATER_THAN", 
+                                           0)
+                                )))
+                                
+transactors <- ga_clientid_activity(cids$clientId,
+                                    viewId = viewId, 
+                                    date_range = date_range)
+
+# unnest ecommerce activity hits from users
+ga_clientid_activity_unnest(transactors$hits, "ecommerce")   
+
+# unnest goal activity hits from users
+ga_clientid_activity_unnest(transactors$hits, "goals") 
+
+# unnest custom dimension activity hits from users
+ga_clientid_activity_unnest(transactors$hits, "customDimension") 
+
+}
+}
+\seealso{
+Other clientid functions: \code{\link{ga_clientid_activity}},
+  \code{\link{ga_clientid_deletion}},
+  \code{\link{ga_clientid_hash}}
+}
+\concept{clientid functions}

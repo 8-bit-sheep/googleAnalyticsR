@@ -52,3 +52,10 @@ ga_remarketing_create(adwords_link = adword_link,
 
 }
 }
+\seealso{
+Other remarketing management functions: \code{\link{ga_remarketing_build}},
+  \code{\link{ga_remarketing_estimate}},
+  \code{\link{ga_remarketing_get}},
+  \code{\link{ga_remarketing_list}}
+}
+\concept{remarketing management functions}

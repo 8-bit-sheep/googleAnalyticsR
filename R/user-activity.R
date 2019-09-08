@@ -14,6 +14,8 @@
 #' 
 #' Bear in mind each call will count against your API quota, so fetching a large amount of client ids will be limited by that.
 #' 
+#' Use \link{ga_clientid_activity_unnest} to unnest deeply nested data in the hits data.
+#' 
 #' @export
 #' 
 #' @return A list of data.frames: \code{$sessions} contains session level data. \code{$hits} contains individual activity data
@@ -65,6 +67,7 @@
 #' }
 #' @seealso \url{https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search}
 #' @importFrom purrr map map_dfr
+#' @family clientid functions
 ga_clientid_activity <- function(ids, 
                                  viewId, 
                                  id_type = c("CLIENT_ID","USER_ID"), 
@@ -247,10 +250,12 @@ parse_user_activity <- function(x){
 
 #' Unnest user activity columns
 #' 
-#' A function to help expand data out of nested columns
+#' A function to help expand data out of nested columns returned by \link{ga_clientid_activity}
 #' 
 #' @param hits The hits data.frame with the columns to expand
 #' @param column Which column to expand - one of \code{"customDimension","ecommerce","goals"}
+#' 
+#' @return An unnested data.frame tibble for all hits that matches the column
 #' 
 #' @description 
 #' 
@@ -263,6 +268,37 @@ parse_user_activity <- function(x){
 #' @importFrom purrr map map_chr map_lgl
 #' @importFrom dplyr select filter bind_cols mutate distinct
 #' @importFrom tidyr unnest pivot_wider hoist unnest_longer unnest_wider
+#' @examples 
+#' 
+#' \dontrun{
+#' # access clientIds for users who have transacted
+#' viewId <- 106249469
+#' date_range <- c("2019-01-01","2019-02-01")
+#' cids <- google_analytics(viewId, 
+#'                          date_range = date_range, 
+#'                          metrics = "sessions", 
+#'                          dimensions = "clientId", 
+#'                          met_filters = filter_clause_ga4(
+#'                            list(met_filter("transactions", 
+#'                                            "GREATER_THAN", 
+#'                                            0)
+#'                                 )))
+#'                                 
+#' transactors <- ga_clientid_activity(cids$clientId,
+#'                                     viewId = viewId, 
+#'                                     date_range = date_range)
+#'
+#' # unnest ecommerce activity hits from users
+#' ga_clientid_activity_unnest(transactors$hits, "ecommerce")   
+#'
+#'# unnest goal activity hits from users
+#' ga_clientid_activity_unnest(transactors$hits, "goals") 
+#'
+#'# unnest custom dimension activity hits from users
+#' ga_clientid_activity_unnest(transactors$hits, "customDimension") 
+#' 
+#' }
+#' @family clientid functions
 ga_clientid_activity_unnest <- function(hits, 
                                         column = c("customDimension","ecommerce","goals")){
   

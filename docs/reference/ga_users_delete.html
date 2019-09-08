@@ -8,10 +8,12 @@
 
 <title>Delete all user access for an email — ga_users_delete • googleAnalyticsR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,13 +32,13 @@
 
 
 
-<meta property="og:title" content="Delete all user access for an email — ga_users_delete" />
 
+<meta property="og:title" content="Delete all user access for an email — ga_users_delete" />
 <meta property="og:description" content="This is a wrapper around calls to ga_users_list and ga_users_delete_linkid.  If you want more fine-grained control look at those functions.
 The user email is deleted from all web properties and views underneath the accountId you provide." />
-
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -76,7 +78,7 @@ The user email is deleted from all web properties and views underneath the accou
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -220,7 +222,6 @@ The user email is deleted from all web properties and views underneath the accou
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -241,14 +242,12 @@ The user email is deleted from all web properties and views underneath the accou
     </div>
 
     <div class="ref-description">
-    
     <p>This is a wrapper around calls to <a href='ga_users_list.html'>ga_users_list</a> and <a href='ga_users_delete_linkid.html'>ga_users_delete_linkid</a>.  If you want more fine-grained control look at those functions.</p>
 <p>The user email is deleted from all web properties and views underneath the accountId you provide.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>ga_users_delete</span>(<span class='no'>email</span>, <span class='no'>accountId</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -261,11 +260,10 @@ The user email is deleted from all web properties and views underneath the accou
       <td><p>The accountId that the user will be deleted from including all web properties and Views underneath.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This deletes a user via their email reference for all webproperties and views for the account given.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete'>Google Documentation</a></p>
@@ -273,7 +271,6 @@ The user email is deleted from all web properties and views underneath the accou
   <code><a href='ga_users_delete_linkid.html'>ga_users_delete_linkid</a></code>,
   <code><a href='ga_users_list.html'>ga_users_list</a></code>,
   <code><a href='ga_users_update.html'>ga_users_update</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -291,11 +288,8 @@ The user email is deleted from all web properties and views underneath the accou
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
