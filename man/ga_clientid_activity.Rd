@@ -37,6 +37,22 @@ Bear in mind each call will count against your API quota, so fetching a large am
 uar <- ga_clientid_activity(c("1106980347.1461227730", "476443645.1541099566"),
                          viewId = 81416156, 
                          date_range = c("2019-01-01","2019-02-01"))
+                         
+# access clientIds for users who have transacted
+viewId <- 106249469
+date_range <- c("2019-01-01","2019-02-01")
+cids <- google_analytics(viewId, 
+                         date_range = date_range, 
+                         metrics = "sessions", 
+                         dimensions = "clientId", 
+                         met_filters = filter_clause_ga4(
+                           list(met_filter("transactions", 
+                                           "GREATER_THAN", 
+                                           0)
+                                )))
+transactors <- ga_clientid_activity(cids$clientId,
+                                    viewId = viewId, 
+                                    date_range = date_range)
 
 # access the data.frames returned:
 
@@ -54,15 +70,6 @@ only_goals <- ga_clientid_activity(c("1106980347.1461227730",
                      date_range = c("2019-01-01","2019-02-01"),
                      activity_types = "GOAL") 
 
-# to access all activity use google_analytics() to fetch the clientId dimension
-viewId <- 123456
-date_range <- c("yesterday","yesterday")
-cids <- google_analytics(viewId, date_range = date_range, 
-                         metrics = "sessions", dimensions = "clientId")
-
-users <- ga_clientid_activity(cids$clientId,
-                              viewId = viewId, 
-                              date_range = date_range)                     
 
 
 }

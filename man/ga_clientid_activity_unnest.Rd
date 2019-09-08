@@ -13,5 +13,10 @@ ga_clientid_activity_unnest(hits, column = c("customDimension",
 \item{column}{Which column to expand - one of \code{"customDimension","ecommerce","goals"}}
 }
 \description{
+This helper function works with the output of user activity and parses out inner nested structure you may require.
+
+Thanks to @jimmyg3g on GitHub for help with the ecommerce parsing.
+}
+\details{
 A function to help expand data out of nested columns
 }

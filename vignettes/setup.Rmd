@@ -121,7 +121,7 @@ e.g. in `.Renviron`
 
 `GARGLE_EMAIL=your@email.com`
 
-### Authentication method #1: The default googleAnalyticsR project
+### 'Try-it-out' mode: The default googleAnalyticsR project
 
 The fast authentication way of the previous section worked via the default Google Cloud Project for googleAnalyticsR which is shared with all googleAnalyticsR users. Even though it is a shared project other package users are not able to see and access your GA data. 
 
@@ -134,7 +134,7 @@ With the amount of API calls possible with this library via batching and walking
 However, using the default project means you will not need to go through the process outlined below to create your own Google Cloud Platform credentials and you can directly authenticate using the `ga_auth()` function and your browser as soon as the library is downloaded.
 
 
-### Authentication method #2: Your own Google Project
+### 'Professional' mode: Your own Google Project
 
 To mitigate all the above, use your own Google Developer Console client ID, so it is not shared across all users of this library.
 
@@ -206,7 +206,7 @@ googleAuthR::gar_set_client(web_json = "~/dev/auth/gcp_web_client.json"
 > This can be useful when authenticating within an Rmarkdown document in which case it is recommended to specify your email  (an Rmarkdown document can change the working directory during knitting). 
 
 
-### Authentication method #3: Google Cloud service account
+### 'Server' mode: Google Cloud service account
 
 You can alternatively authenticate by downloading a JSON file attached to a Google Cloud service account.  More details on how to do that are on the [`googleAuthR` website](http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#authentication-with-a-json-file-via-service-accounts).  
 
@@ -224,8 +224,9 @@ A service authentication file then needs to be created that has edit access to t
 You should now be able to use the JSON auth file to authenticate with Google Analytics API via:
 
 ```r
+library(googleAuthR)
 library(googleAnalyticsR)
-googleAuthR::gar_auth_service("your_auth_file.json")
+gar_auth_service("your_auth_file.json")
 
 # test authentication
 al <- ga_account_list()

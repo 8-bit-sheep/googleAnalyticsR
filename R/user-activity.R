@@ -27,6 +27,22 @@
 #' uar <- ga_clientid_activity(c("1106980347.1461227730", "476443645.1541099566"),
 #'                          viewId = 81416156, 
 #'                          date_range = c("2019-01-01","2019-02-01"))
+#'                          
+#' # access clientIds for users who have transacted
+#' viewId <- 106249469
+#' date_range <- c("2019-01-01","2019-02-01")
+#' cids <- google_analytics(viewId, 
+#'                          date_range = date_range, 
+#'                          metrics = "sessions", 
+#'                          dimensions = "clientId", 
+#'                          met_filters = filter_clause_ga4(
+#'                            list(met_filter("transactions", 
+#'                                            "GREATER_THAN", 
+#'                                            0)
+#'                                 )))
+#' transactors <- ga_clientid_activity(cids$clientId,
+#'                                     viewId = viewId, 
+#'                                     date_range = date_range)
 #' 
 #' # access the data.frames returned:
 #' 
@@ -44,15 +60,6 @@
 #'                      date_range = c("2019-01-01","2019-02-01"),
 #'                      activity_types = "GOAL") 
 #'
-#' # to access all activity use google_analytics() to fetch the clientId dimension
-#' viewId <- 123456
-#' date_range <- c("yesterday","yesterday")
-#' cids <- google_analytics(viewId, date_range = date_range, 
-#'                          metrics = "sessions", dimensions = "clientId")
-#' 
-#' users <- ga_clientid_activity(cids$clientId,
-#'                               viewId = viewId, 
-#'                               date_range = date_range)                     
 #' 
 #' 
 #' }
@@ -245,12 +252,19 @@ parse_user_activity <- function(x){
 #' @param hits The hits data.frame with the columns to expand
 #' @param column Which column to expand - one of \code{"customDimension","ecommerce","goals"}
 #' 
+#' @description 
+#' 
+#' This helper function works with the output of user activity and parses out inner nested structure you may require.
+#' 
+#' Thanks to @jimmyg3g on GitHub for help with the ecommerce parsing.
+#' 
 #' @export
 #' @import assertthat
 #' @importFrom purrr map map_chr map_lgl
 #' @importFrom dplyr select filter bind_cols mutate distinct
-#' @importFrom tidyr unnest pivot_wider
-ga_clientid_activity_unnest <- function(hits, column = c("customDimension","ecommerce","goals")){
+#' @importFrom tidyr unnest pivot_wider hoist unnest_longer unnest_wider
+ga_clientid_activity_unnest <- function(hits, 
+                                        column = c("customDimension","ecommerce","goals")){
   
   column <- match.arg(column)
   assert_that(is.data.frame(hits))
@@ -264,27 +278,61 @@ ga_clientid_activity_unnest <- function(hits, column = c("customDimension","ecom
   if(column == "customDimension"){
     unnested <- hits %>%
       select(id, sessionId, activityTime, customDimension) %>%
-      unnest(cols = customDimension) %>%
-      mutate(cd_index = map_chr(customDimension, "index"),
-             cd_value = map_chr(customDimension, na_or_value))   %>%
-      filter(!is.na(cd_value)) %>%
-      select(-customDimension) %>%
-      distinct() %>%
-      pivot_wider(names_from = cd_index, values_from = cd_value, names_prefix = "customDim")
+      unnest(cols = customDimension) 
+    
+    if(nrow(unnested) > 0) {
+      unnested <- unnested %>%
+        mutate(cd_index = map_chr(customDimension, "index"),
+               cd_value = map_chr(customDimension, na_or_value))   %>%
+        filter(!is.na(cd_value)) %>%
+        select(-customDimension) %>%
+        distinct() %>%
+        pivot_wider(names_from = cd_index, values_from = cd_value, names_prefix = "customDim")
+    } else {
+      warning("No customDimension columns found to unnest", call. = FALSE)
+      unnested <- NULL
+    }
+
   } else if(column == "goals"){
-    unnested <- hit_data %>% 
-      filter(has_goal) %>% # filter to just hits with goals
-      select(id, sessionId, activityTime, goals) %>% 
-      unnest(cols = goals) %>% # unnest the goals list column
-      mutate(goalIndex = map_chr(goals, "goalIndex"), 
-             goalName = map_chr(goals, "goalName"), 
-             goalCompletionLocation = map_chr(goals, "goalCompletionLocation")) %>%
-      select(-goals)
+    unnested <- hits %>% 
+      filter(has_goal)
+    
+    if(nrow(unnested) > 0) {
+      unnested <- unnested %>%
+        select(id, sessionId, activityTime, goals) %>% 
+        unnest(cols = goals) %>% # unnest the goals list column
+        mutate(goalIndex = map_chr(goals, "goalIndex"), 
+               goalName = map_chr(goals, "goalName"), 
+               goalCompletionLocation = map_chr(goals, "goalCompletionLocation")) %>%
+        select(-goals)
+    } else {
+      warning("No goal columns found to unnest", call. = FALSE)
+      unnested <- NULL
+    }
   } else {
-    stop("ecommerce not supported yet", call. = FALSE)
+    unnested <- hits %>%
+      filter(activityType == 'ECOMMERCE')
+    
+    if(nrow(unnested) > 0) {
+      unnested <- unnested %>%    
+        select(id, sessionId, activityTime, activityType, ecommerce) %>%
+        hoist(ecommerce,
+              actionType = c('actionType'),
+              transactionId = c('transaction', 'transactionId'),
+              transactionRevenue = c('transaction', 'transactionRevenue'),
+              products = 'products',
+              ecommerceType = 'ecommerceType') %>% 
+        unnest_longer(products) %>% 
+        unnest_wider(products) %>%
+        filter(!is.na(transactionId)) %>%
+        select(-ecommerce)
+    } else {
+      warning("No ecommerce columns found to unnest", call. = FALSE)
+      unnested <- NULL
+    }
   }
   
-  bind_cols(hits, unnested)
+  unnested
   
 }
 
