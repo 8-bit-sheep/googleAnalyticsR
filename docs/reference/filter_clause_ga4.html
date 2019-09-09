@@ -301,13 +301,13 @@
 <span class='no'>fc</span> <span class='kw'>&lt;-</span> <span class='fu'>filter_clause_ga4</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>mf</span>, <span class='no'>mf2</span>), <span class='kw'>operator</span> <span class='kw'>=</span> <span class='st'>"AND"</span>)
 
 <span class='co'>## make v4 request</span>
-<span class='no'>ga_data1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics_4</a></span>(<span class='no'>ga_id</span>,
-                               <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"2015-07-30"</span>,<span class='st'>"2015-10-01"</span>),
-                               <span class='kw'>dimensions</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'source'</span>,<span class='st'>'medium'</span>),
-                               <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'sessions'</span>,<span class='st'>'bounces'</span>),
-                               <span class='kw'>met_filters</span> <span class='kw'>=</span> <span class='no'>fc</span>,
-                               <span class='kw'>dim_filters</span> <span class='kw'>=</span> <span class='no'>fc2</span>,
-                               <span class='kw'>filtersExpression</span> <span class='kw'>=</span> <span class='st'>"ga:source!=(direct)"</span>)
+<span class='no'>ga_data1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>ga_id</span>,
+                             <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"2015-07-30"</span>,<span class='st'>"2015-10-01"</span>),
+                             <span class='kw'>dimensions</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'source'</span>,<span class='st'>'medium'</span>),
+                             <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'sessions'</span>,<span class='st'>'bounces'</span>),
+                             <span class='kw'>met_filters</span> <span class='kw'>=</span> <span class='no'>fc</span>,
+                             <span class='kw'>dim_filters</span> <span class='kw'>=</span> <span class='no'>fc2</span>,
+                             <span class='kw'>filtersExpression</span> <span class='kw'>=</span> <span class='st'>"ga:source!=(direct)"</span>)
 
 <span class='co'># }</span><div class='input'>
 

@@ -82,6 +82,7 @@ If you have used the package and published online then get in touch and I'll lis
 * Dusan goes into how to setup and use [googleAnalyticsR in Serbian](https://dusanmilosevic.com/google-analytics-api-v4-i-r-programski-jezik/)
 * Pavel talks about how to [automate website analytics with R and googleAnalyticsR](https://fathomfuel.com/automating-website-analytics-with-r-part-1/)
 * Mayo shows how to [visualise geographical data from your Google Analytics data](https://www.mayoracek.com/r-programming/visualize-geographical-data-help-google-analytics-r/)
+* Habr.com show how to get data from [Google Analytics into Microsoft SQL Server](https://habr.com/en/post/466589/) via googleAnalyticsR
 
 ## My website
 

@@ -27,9 +27,6 @@ webPropId2 <- "UA-47480439-2"
 ga_id2 <- 81416156
 
 ## auto auth
-
-
-
 local_auth <- "GA_AUTH_FILE"
 
 

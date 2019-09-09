@@ -74,13 +74,17 @@ filter_clause_ga4 <- function(filters, operator = c("OR", "AND")){
 
 }
 
+is.ganalytics <- function(x){
+  attr(class(x),"package") =="ganalytics"
+}
+
 is.dim_filter_clause <- function(x){
   inherits(x, ".filter_clauses_ga4") && 
     all(unlist(lapply(x, is.dim_filter)))
 }
 
 is.dim_filter <- function(x){
-  inherits(x, "dim_fil_ga4")
+  inherits(x, "dim_fil_ga4") || is.ganalytics(x)
 }
 
 is.met_filter_clause <- function(x){
@@ -88,7 +92,7 @@ is.met_filter_clause <- function(x){
 }
 
 is.met_filter <- function(x){
-  inherits(x, "met_fil_ga4")
+  inherits(x, "met_fil_ga4") || is.ganalytics(x)
 }
 
 #' Make a dimension filter object

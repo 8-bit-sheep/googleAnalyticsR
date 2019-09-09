@@ -340,7 +340,9 @@ google_analytics <- function(viewId,
   dim_filters <- add_class_if_list(dim_filters, ".filter_clauses_ga4")
   met_filters <- add_class_if_list(met_filters, ".filter_clauses_ga4")
   
-  filtersExpression <- add_class_if_list(filtersExpression, "character")
+  if(!is.null(filtersExpression)){
+    filtersExpression <- as(filtersExpression, "character")
+  }
   
   assert_that(is.count(rows_per_call),
               rows_per_call <= 100000L)
