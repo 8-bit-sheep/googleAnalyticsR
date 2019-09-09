@@ -123,18 +123,16 @@ make_ga_4_req <- function(viewId,
                           histogramBuckets=NULL) {
 
   samplingLevel <- match.arg(samplingLevel)
-  
-  if(all(!is.null(dim_filters), !is.dim_filter(dim_filters))){
-    stop("Invalid dim_filter object", call. = FALSE)
+
+  if(!is.dim_filter_clause(dim_filters)){
+    assert_that_ifnn(dim_filters, is.dim_filter)
   }
   
-  if(all(!is.null(met_filters), !is.met_filter(met_filters))){
-    stop("Invalid met_filter object", call. = FALSE)
+  if(!is.met_filter_clause(met_filters)){
+    assert_that_ifnn(met_filters, is.met_filter)
   }
   
-  if(all(!is.null(filtersExpression), !is.string(filtersExpression))){
-    stop("filtersExpression is not a string", call. = FALSE)
-  }
+  assert_that_ifnn(filtersExpression, is.string)
   
   if(all(is.null(date_range), is.null(cohorts))){
     stop("Must supply one of date_range or cohorts", call. = FALSE)
@@ -142,7 +140,7 @@ make_ga_4_req <- function(viewId,
   
   if(!is.null(cohorts)){
     assert_that(cohort_metric_check(metrics),
-                            cohort_dimension_check(dimensions))
+                cohort_dimension_check(dimensions))
     if(!is.null(date_range)){
       stop("Don't supply date_range when using cohorts", 
               call. = FALSE)
@@ -157,8 +155,6 @@ make_ga_4_req <- function(viewId,
     if(!any("segment" %in% dimensions)){
       dimensions <- c(dimensions, "segment")
     }
-    
-
   }
 
   id <- sapply(viewId, checkPrefix, prefix = "ga")
@@ -341,9 +337,10 @@ google_analytics <- function(viewId,
   segments <- assign_list_class(segments, "segment_ga4")
   
   # 279
-  dim_filters <- assign_list_class(dim_filters, ".filter_clauses_ga4")
-  met_filters <- assign_list_class(met_filters, ".filter_clauses_ga4")
-  filtersExpression <- assign_list_class(filtersExpression, "character")
+  dim_filters <- add_class_if_list(dim_filters, ".filter_clauses_ga4")
+  met_filters <- add_class_if_list(met_filters, ".filter_clauses_ga4")
+  
+  filtersExpression <- add_class_if_list(filtersExpression, "character")
   
   assert_that(is.count(rows_per_call),
               rows_per_call <= 100000L)

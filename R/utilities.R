@@ -8,13 +8,24 @@ assign_list_class <- function(x, the_class){
     if(class(x) == "list" &&
        all(unlist(lapply(x, function(y) inherits(y, the_class))))){
       class(x) <- the_class
+    } else {
+      x <- as(x, the_class)
     }
-    x <- as(x, the_class)
+    
   }
   
   ## will be NULL if x was NULL
   x
 
+}
+
+add_class_if_list <- function(x, the_class){
+
+  if(!is.null(x) && class(x) == "list"){
+    class(x) <- the_class
+  }
+
+  x
 }
 
 
@@ -161,7 +172,8 @@ get_attr_nextLink <- function(x){
 # do an assert_that test only if x is not null
 assert_that_ifnn <- function(x, assert_f){
   if(!is.null(x)){
-    assert_that(assert_f(x))
+    assert_that(assert_f(x), 
+                msg = paste(deparse(substitute(assert_f)), "failed"))
   }
 }
 

@@ -74,8 +74,17 @@ filter_clause_ga4 <- function(filters, operator = c("OR", "AND")){
 
 }
 
+is.dim_filter_clause <- function(x){
+  inherits(x, ".filter_clauses_ga4") && 
+    all(unlist(lapply(x, is.dim_filter)))
+}
+
 is.dim_filter <- function(x){
   inherits(x, "dim_fil_ga4")
+}
+
+is.met_filter_clause <- function(x){
+  inherits(x, ".filter_clauses_ga4") && all(unlist(lapply(x, is.met_filter)))
 }
 
 is.met_filter <- function(x){
@@ -161,7 +170,7 @@ dim_filter <- function(dimension,
   
   if(all(operator != "IN_LIST", length(expressions) > 1)) {
     warning("Only first expression used if operator not 'IN_LIST'")
-    expressions <- expressions[1]
+    expressions <- expressions[[1]]
   }
 
   structure(
