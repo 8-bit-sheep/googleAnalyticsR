@@ -40,13 +40,13 @@
 #' fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
 #'
 #' ## make v4 request
-#' ga_data1 <- google_analytics_4(ga_id,
-#'                                date_range = c("2015-07-30","2015-10-01"),
-#'                                dimensions=c('source','medium'),
-#'                                metrics = c('sessions','bounces'),
-#'                                met_filters = fc,
-#'                                dim_filters = fc2,
-#'                                filtersExpression = "ga:source!=(direct)")
+#' ga_data1 <- google_analytics(ga_id,
+#'                              date_range = c("2015-07-30","2015-10-01"),
+#'                              dimensions=c('source','medium'),
+#'                              metrics = c('sessions','bounces'),
+#'                              met_filters = fc,
+#'                              dim_filters = fc2,
+#'                              filtersExpression = "ga:source!=(direct)")
 #'
 #' }
 #'
