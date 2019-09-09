@@ -1,5 +1,6 @@
 
 #' when we need a list of objs of class x to also be class x
+#' @noRd
 assign_list_class <- function(x, the_class){
   if(!is.null(x)){
     # fix 253
