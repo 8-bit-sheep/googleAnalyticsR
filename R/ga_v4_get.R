@@ -335,28 +335,15 @@ google_analytics <- function(viewId,
   timer_start <- Sys.time()
 
   assert_that_ifnn(useResourceQuotas, is.flag)
-
-  if(!is.null(segments)){
-    # fix 253
-    # make sure its a list of segment_ga4 objects
-    if(class(segments) == "list" &&
-       all(unlist(lapply(segments, function(x) inherits(x, "segment_ga4"))))){
-      class(segments) <- "segment_ga4"
-    }
-    segments <- as(segments, "segment_ga4")
-  }
   
-  if(!is.null(dim_filters)){
-    dim_filters <- as(dim_filters, ".filter_clauses_ga4")
-  }
+  # fix 253
+  # make sure its a list of segment_ga4 objects
+  segments <- assign_list_class(segments, "segment_ga4")
   
-  if(!is.null(met_filters)){
-    met_filters <- as(met_filters, ".filter_clauses_ga4")
-  }
-  
-  if(!is.null(filtersExpression)){
-    filtersExpression <- as(filtersExpression, "character")
-  }
+  # 279
+  dim_filters <- assign_list_class(dim_filters, ".filter_clauses_ga4")
+  met_filters <- assign_list_class(met_filters, ".filter_clauses_ga4")
+  filtersExpression <- assign_list_class(filtersExpression, "character")
   
   assert_that(is.count(rows_per_call),
               rows_per_call <= 100000L)

@@ -1,4 +1,22 @@
 
+#' when we need a list of objs of class x to also be class x
+assign_list_class <- function(x, the_class){
+  if(!is.null(x)){
+    # fix 253
+    # make sure its a list of segment_ga4 objects
+    if(class(x) == "list" &&
+       all(unlist(lapply(x, function(y) inherits(y, the_class))))){
+      class(x) <- the_class
+    }
+    x <- as(x, the_class)
+  }
+  
+  ## will be NULL if x was NULL
+  x
+
+}
+
+
 #' assign new value if not null and check passes
 #' @noRd
 assign_new <- function(new, old, check_f = is.function){
