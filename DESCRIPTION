@@ -33,7 +33,7 @@ Imports:
     rlang (>= 0.1.0),
     stats,
     tibble (>= 2.0.1),
-    tidyr (>= 0.8.99),
+    tidyr (>= 1.0.0),
     utils
 Suggests:
     bigQueryR (>= 0.3.1),
@@ -51,7 +51,3 @@ License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
-Remotes: 
-  jdeboer/ganalytics,
-  MarkEdmondson1234/googleAuthR,
-  tidyverse/tidyr
