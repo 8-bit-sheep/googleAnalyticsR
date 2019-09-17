@@ -36,3 +36,4 @@
 ^test\.oauth$
 ^Makefile$
 
+^CRAN-RELEASE$
