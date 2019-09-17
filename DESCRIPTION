@@ -4,8 +4,8 @@ Version: 0.7.0
 Title: Google Analytics API into R
 Description: Interact with the Google Analytics 
   APIs <https://developers.google.com/analytics/>, including 
-  the Core Reporting API (v3 and v4), Management API, and Multi-Channel
-  Funnel API.
+  the Core Reporting API (v3 and v4), Management API, User Activity API
+  and Multi-Channel Funnel API.
 Authors@R: c(person("Mark", "Edmondson", email = "m@sunholo.com",
                   role = c("aut", "cre"),
                   comment = c(ORCID = "0000-0002-8434-3881")),
