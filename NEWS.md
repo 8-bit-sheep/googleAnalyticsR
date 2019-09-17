@@ -1,3 +1,7 @@
+# googleAnalyticsR 0.7.0.9000
+
+* ...
+
 # googleAnalyticsR 0.7.0
 
 * Clean up error messages
