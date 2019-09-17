@@ -66,8 +66,6 @@ Other managementAPI functions: \code{\link{ga_experiment_list}},
   \code{\link{ga_experiment}}, \code{\link{ga_filter_add}},
   \code{\link{ga_filter_apply_to_view}},
   \code{\link{ga_filter_update}},
-  \code{\link{ga_segment_list}},
-  \code{\link{ga_unsampled_list}},
-  \code{\link{ga_unsampled}}
+  \code{\link{ga_segment_list}}
 }
 \concept{managementAPI functions}

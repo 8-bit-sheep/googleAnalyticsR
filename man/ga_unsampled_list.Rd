@@ -50,11 +50,7 @@ List Unsampled Reports
 
 }
 \seealso{
-Other managementAPI functions: \code{\link{ga_experiment_list}},
-  \code{\link{ga_experiment}}, \code{\link{ga_filter_add}},
-  \code{\link{ga_filter_apply_to_view}},
-  \code{\link{ga_filter_update_filter_link}},
-  \code{\link{ga_filter_update}},
-  \code{\link{ga_segment_list}}, \code{\link{ga_unsampled}}
+Other unsampled download functions: \code{\link{ga_unsampled_download}},
+  \code{\link{ga_unsampled}}
 }
-\concept{managementAPI functions}
+\concept{unsampled download functions}

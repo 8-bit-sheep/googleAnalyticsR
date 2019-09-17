@@ -49,5 +49,4 @@ Suggests:
     shiny (>= 0.13.2)
 License: MIT + file LICENSE
 LazyData: TRUE
-VignetteBuilder: knitr
 RoxygenNote: 6.1.1
