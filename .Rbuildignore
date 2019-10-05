@@ -35,5 +35,5 @@
 ^revdep*
 ^test\.oauth$
 ^Makefile$
-
+^Dockerfile$
 ^CRAN-RELEASE$
