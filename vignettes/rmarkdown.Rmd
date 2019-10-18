@@ -39,9 +39,12 @@ ga_data <- google_analytics(viewId = 12345,
 
 ....use ga_data to generate plots/tables later in the document....
 
+
 </code></pre>
 
 Alternatively, you can use `googleAuthR::gar_auth_service()` and use the authentication JSON downloaded from the Google console.
+
+<pre class="markdown"><code>
 
 &#96;&#96;&#96;{r}
 knitr::opts_chunk$set(echo = TRUE)
@@ -99,4 +102,4 @@ Then when you upload to Shiny Server or shinyapps.io, you should see the file in
 
 See details on [`gargle` vignette](https://cran.r-project.org/web/packages/gargle/vignettes/non-interactive-auth.html)
 
-However, the recommend method is to use service accounts and `googleAuthR::gar_auth_service()` when using a server since this is easier and more secure in the long run. 
+However, the recommend method is to use service accounts and `googleAuthR::gar_auth_service()` when using a server since this is easier and more secure in the long run.  Upload the JSON file instead of the cache folder.

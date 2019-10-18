@@ -231,21 +231,20 @@ ga_auth(email="me@work.com")
 
 ga_data </code></pre>
 <p>Alternatively, you can use <code><a href="https://code.markedmondson.me/googleAuthR//reference/gar_auth_service.html">googleAuthR::gar_auth_service()</a></code> and use the authentication JSON downloaded from the Google console.</p>
-<p>```{r} knitr::opts_chunk$set(echo = TRUE) library(googleAuthR) library(googleAnalyticsR)</p>
-</div>
-</div>
-<div id="service-json-download-from-your-own-gcp-project" class="section level2">
-<h2 class="hasAnchor">
-<a href="#service-json-download-from-your-own-gcp-project" class="anchor"></a>service JSON download from your own GCP project</h2>
-<p>ga_auth_service("your-creds.json)</p>
-</div>
-<div id="service-json-email-needs-to-be-added-as-a-user-of-the-viewid-to-work" class="section level1">
-<h1 class="hasAnchor">
-<a href="#service-json-email-needs-to-be-added-as-a-user-of-the-viewid-to-work" class="anchor"></a>service JSON email needs to be added as a user of the viewId to work</h1>
-<p>ga_data &lt;- google_analytics(viewId = 12345, dateRange = c(Sys.Date()-30, Sys.Date()), metrics = “sessions”, dimensions = “medium”) ```</p>
-<p>….use ga_data to generate plots/tables later in the document….</p>
+<pre class="markdown"><code>
 
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+library(googleAuthR)
+library(googleAnalyticsR)
 
+## service JSON download from your own GCP project
+ga_auth_service("your-creds.json)
+
+# service JSON email needs to be added as a user of the viewId to work
+ga_data </code></pre>
+</div>
+</div>
 <div id="multi-user-authentication" class="section level2">
 <h2 class="hasAnchor">
 <a href="#multi-user-authentication" class="anchor"></a>Multi-user authentication</h2>
@@ -273,8 +272,7 @@ resource_files:
 <p>Then when you upload to Shiny Server or shinyapps.io, you should see the file in your upload choices:</p>
 <p><img src="auth_token_markdown.png"></p>
 <p>See details on <a href="https://cran.r-project.org/web/packages/gargle/vignettes/non-interactive-auth.html"><code>gargle</code> vignette</a></p>
-<p>However, the recommend method is to use service accounts and <code><a href="https://code.markedmondson.me/googleAuthR//reference/gar_auth_service.html">googleAuthR::gar_auth_service()</a></code> when using a server since this is easier and more secure in the long run.</p>
-</div>
+<p>However, the recommend method is to use service accounts and <code><a href="https://code.markedmondson.me/googleAuthR//reference/gar_auth_service.html">googleAuthR::gar_auth_service()</a></code> when using a server since this is easier and more secure in the long run. Upload the JSON file instead of the cache folder.</p>
 </div>
   </div>
 
@@ -285,13 +283,8 @@ resource_files:
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#rmarkdown-authentication">RMarkdown Authentication</a></li>
-      <li><a href="#service-json-download-from-your-own-gcp-project">service JSON download from your own GCP project</a></li>
-      <li>
-<a href="#service-json-email-needs-to-be-added-as-a-user-of-the-viewid-to-work">service JSON email needs to be added as a user of the viewId to work</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#multi-user-authentication">Multi-user authentication</a></li>
+      <li><a href="#multi-user-authentication">Multi-user authentication</a></li>
       <li><a href="#uploading-rmarkdown-files-to-shinyapps-ioshiny-server">Uploading RMarkdown files to Shinyapps.io/Shiny Server</a></li>
-      </ul>
-</li>
       </ul>
 </div>
       </div>
