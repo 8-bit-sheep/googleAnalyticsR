@@ -89,3 +89,8 @@ print.ga_custom_datasource <- function(x, ...){
   cat0("- ", unlist(x$profilesLinked))
   
 }
+
+print.dim_fil_ga4 <- function(x, ...){
+  cat("==Google Analytics Dimension Filter")
+  cat0("name: ", x$dimensionName)
+}

@@ -69,7 +69,7 @@ filter_clause_ga4 <- function(filters, operator = c("OR", "AND")){
       operator = operator,
       filters = filters
     ),
-    class = class_name
+    class = paste0(class_name)
   )
 
 }
