@@ -21,6 +21,10 @@ management_api_parsing <- function(x, kind){
     super_flatten() %>%
     select(-kind)
   
+  if(is.null(o)){
+    return(data.frame())
+  }
+  
   if(!is.null(o$selfLink)){
     o <- o %>% select(-selfLink)
   }
