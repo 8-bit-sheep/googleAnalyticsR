@@ -561,7 +561,8 @@ fetch_google_analytics_4_slow <- function(request_list,
     body <- rmNullObs(body)
     
     myMessage("Slow fetch: [", 
-              the_req$pageToken, "] from estimated actual Rows [", actualRows, "]", 
+              the_req$pageToken, "] from estimated actual Rows [", 
+              actualRows, "]", 
               level = 3)
 
     out <- tryCatch(f(the_body = body),
@@ -573,6 +574,10 @@ fetch_google_analytics_4_slow <- function(request_list,
     npt <- attr(out[[1]], "nextPageToken")
     
     if(is.null(npt)){
+      do_it <- FALSE
+    }
+
+    if(as.integer(npt) >= max_rows){
       do_it <- FALSE
     }
     
