@@ -164,7 +164,8 @@ google_analytics_3 <- function(id,
                                  type),
                           "GET",
                           pars_args = ga_pars,
-                          data_parse_function = parse_google_analytics)
+                          data_parse_function = parse_google_analytics,
+                          checkTrailingSlash = FALSE)
   
   if(multi_account_batching){
     myMessage("Fetching all ids at same time (max 10 per API call)", level = 3)
