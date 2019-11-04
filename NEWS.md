@@ -1,3 +1,8 @@
+# googleAnalyticsR 0.7.0.9000
+
+* `slow_fetch=TRUE` now respects the `max_rows` argument (#282)
+* remove trailing slash sometimes breaking v3 API calls
+
 # googleAnalyticsR 0.7.0
 
 * Clean up error messages

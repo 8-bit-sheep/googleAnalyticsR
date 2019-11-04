@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9000</span>
       </span>
     </div>
 
@@ -445,46 +445,46 @@
 <a class="sourceLine" id="cb17-2" data-line-number="2">ga_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="dv">81416156</span>, </a>
 <a class="sourceLine" id="cb17-3" data-line-number="3">                            <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),</a>
 <a class="sourceLine" id="cb17-4" data-line-number="4">                            <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</a></code></pre></div>
-<pre><code>## 2019-09-09 22:32:17&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<pre><code>## 2019-10-18 13:40:25&gt; Downloaded [240] rows from a total of [240].</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(ga_data)</a></code></pre></div>
 <pre><code>##   hour       date sessions bounceRate
-## 1   00 2019-08-30        7   85.71429
-## 2   00 2019-08-31        5   40.00000
-## 3   00 2019-09-01        8   50.00000
-## 4   00 2019-09-02       10   70.00000
-## 5   00 2019-09-03        7  100.00000
-## 6   00 2019-09-04        6   83.33333</code></pre>
+## 1   00 2019-10-08        9   66.66667
+## 2   00 2019-10-09        8   37.50000
+## 3   00 2019-10-10       24   83.33333
+## 4   00 2019-10-11       17   76.47059
+## 5   00 2019-10-12        6   83.33333
+## 6   00 2019-10-13        4   75.00000</code></pre>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co"># if we want totals per hour over the dates:</span></a>
 <a class="sourceLine" id="cb21-2" data-line-number="2"><span class="kw"><a href="../reference/ga_aggregate.html">ga_aggregate</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"sessions"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  sessions
 ##    &lt;chr&gt;    &lt;dbl&gt;
-##  1 00          67
-##  2 01          51
-##  3 02          52
-##  4 03          50
-##  5 04          46
-##  6 05          48
-##  7 06          57
-##  8 07          53
-##  9 08          80
-## 10 09         114
+##  1 00         105
+##  2 01         119
+##  3 02         106
+##  4 03          84
+##  5 04          84
+##  6 05          89
+##  7 06         110
+##  8 07         108
+##  9 08         159
+## 10 09         168
 ## # … with 14 more rows</code></pre>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="co"># it knows not to sum metrics that are rates:</span></a>
 <a class="sourceLine" id="cb23-2" data-line-number="2"><span class="kw"><a href="../reference/ga_aggregate.html">ga_aggregate</a></span>(ga_data[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hour"</span>,<span class="st">"bounceRate"</span>)], <span class="dt">agg_names =</span> <span class="st">"hour"</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  bounceRate
 ##    &lt;chr&gt;      &lt;dbl&gt;
-##  1 00          68.9
-##  2 01          69.0
-##  3 02          76.2
-##  4 03          68.1
-##  5 04          59.3
-##  6 05          77.1
-##  7 06          81.0
-##  8 07          53.4
-##  9 08          76.1
-## 10 09          74.5
+##  1 00          68.6
+##  2 01          66.1
+##  3 02          67.2
+##  4 03          71.0
+##  5 04          77.9
+##  6 05          74.1
+##  7 06          73.9
+##  8 07          84.2
+##  9 08          81.9
+## 10 09          79.8
 ## # … with 14 more rows</code></pre>
 <ul>
 <li>

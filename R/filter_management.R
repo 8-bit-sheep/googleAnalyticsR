@@ -68,7 +68,7 @@ parse_ga_filter_view_list <- function(x){
   assert_that(x$kind == "analytics#profileFilterLinks")
 
   if(is.null(check_empty(x$items))){
-    return(NULL)
+    return(data.frame())
   }
   
   o <- x$items %>% 

@@ -34,3 +34,6 @@
 ^vignettes/v4\.Rmd$
 ^revdep*
 ^test\.oauth$
+^Makefile$
+^Dockerfile$
+^CRAN-RELEASE$

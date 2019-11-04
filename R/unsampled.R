@@ -7,7 +7,7 @@
 #'
 #' @return Unsampled Report Meta Data
 #' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions
+#' @family unsampled download functions
 #' @export
 ga_unsampled <- function(accountId,
                          webPropertyId,
@@ -68,7 +68,7 @@ ga_unsampled <- function(accountId,
 #' @importFrom googleAuthR gar_api_generator
 #' @importFrom purrr map
 #' @importFrom magrittr %>% 
-#' @family managementAPI functions
+#' @family unsampled download functions
 #' @export
 #' @import assertthat
 ga_unsampled_list <- function(accountId,
@@ -149,7 +149,7 @@ parse_unsampled_list <- function(x){
 #' @importFrom magrittr %>% 
 #' @importFrom dplyr filter
 #' @importFrom googleAuthR gar_api_generator
-#' @family managementAPI functions, googleDriveAPI functions
+#' @family unsampled download functions
 #' @export
 ga_unsampled_download <- function(reportTitle,
                                   accountId,
