@@ -59,32 +59,32 @@ ga_auth()
 ## instead put your options here, and run googleAuthR::gar_auth()
 
 ## get account info, including View Ids
-account_list <- google_analytics_account_list()
+account_list <- ga_account_list()
 ga_id <- account_list$viewId[1]
 
 ## get a list of what metrics and dimensions you can use
 
-meta <- google_analytics_meta()
+meta <- ga_meta()
 head(meta)
 
 ## pick the account_list$viewId you want to see data for.
 ## metrics and dimensions can have or have not "ga:" prefix
 
-gadata <- google_analytics(id = ga_id,
+gadata <- google_analytics_3(id = ga_id,
                            start="2015-08-01", end="2015-08-02",
                            metrics = c("sessions", "bounceRate"),
                            dimensions = c("source", "medium"))
                        
  ## multi accounts, pass character vector of viewIds
  ## outputs a list of data.frames, named after the viewId
- multi_gadata <- google_analytics(id = c("123456","9876545","765432"),
+ multi_gadata <- google_analytics_3(id = c("123456","9876545","765432"),
                                   start="2015-08-01", end="2015-08-02",
                                   metrics = c("sessions", "bounceRate"),
                                    dimensions = c("source", "medium"))
                                 
 ## if more than 10000 rows in results, auto batching
 ## example is setting lots of dimensions to try and create big sampled data
-batch_gadata <- google_analytics(id = ga_id,
+batch_gadata <- google_analytics_3(id = ga_id,
                                  start="2014-08-01", end="2015-08-02",
                                  metrics = c("sessions", "bounceRate"),
                                  dimensions = c("source", "medium", 
@@ -94,14 +94,14 @@ batch_gadata <- google_analytics(id = ga_id,
 
 ## mitigate sampling by setting samplingLevel="WALK"
 ## this will send lots and lots of calls to the Google API limits, beware
-walk_gadata <- google_analytics(id = ga_id,
+walk_gadata <- google_analytics_3(id = ga_id,
                                 start="2014-08-01", end="2015-08-02",
                                 metrics = c("sessions", "bounceRate"),
                                 dimensions = c("source", "medium", "landingPagePath"),
                                 max=99999999, samplingLevel="WALK")
                                 
 ## multi-channel funnels set type="mcf"
-mcf_gadata <- google_analytics(id = ga_id,
+mcf_gadata <- google_analytics_3(id = ga_id,
                                start="2015-08-01", end="2015-08-02",
                                metrics = c("totalConversions"),
                                dimensions = c("sourcePath"),
