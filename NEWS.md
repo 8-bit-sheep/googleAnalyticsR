@@ -1,3 +1,7 @@
+# googleAnalyticsR 0.7.1.9000
+
+* ...
+
 # googleAnalyticsR 0.7.1
 
 * `slow_fetch=TRUE` now respects the `max_rows` argument (#282)
