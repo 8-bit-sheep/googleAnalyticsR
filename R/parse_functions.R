@@ -225,7 +225,9 @@ parse_ga_account_summary <- function(x){
            webPropertyName = name,
            ## fix bug if profiles is NULL
            profiles = purrr::map_if(profiles, is.null, ~ data.frame())) %>%
-    select(-kind, -id, -name) %>%
+    # make sure to exclude starred column if exits to avoid 
+    # Error: Column name `starred` must not be duplicated.
+    select(-kind, -id, -name, -dplyr::contains("starred")) %>%
     unnest(cols = profiles) %>% ## unnest profiles
     mutate(viewId = id,
            viewName = name) %>%
