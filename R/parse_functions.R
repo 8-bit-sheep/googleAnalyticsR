@@ -227,7 +227,7 @@ parse_ga_account_summary <- function(x){
            profiles = purrr::map_if(profiles, is.null, ~ data.frame())) %>%
     # make sure to exclude starred column if exits to avoid 
     # Error: Column name `starred` must not be duplicated.
-    select(-kind, -id, -name, -dplyr::contains("starred")) %>%
+    select(-kind, -id, -name, -dplyr::matches("^starred$")) %>%
     unnest(cols = profiles) %>% ## unnest profiles
     mutate(viewId = id,
            viewName = name) %>%
