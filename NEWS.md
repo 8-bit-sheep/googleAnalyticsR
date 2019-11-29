@@ -1,6 +1,6 @@
 # googleAnalyticsR 0.7.1.9000
 
-* ...
+* fix `ga_account_list()` not dowloading starred columns (#284 - thanks @hidekoji)
 
 # googleAnalyticsR 0.7.1
 
