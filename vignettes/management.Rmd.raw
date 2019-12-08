@@ -2,6 +2,12 @@
 title: "Management API"
 ---
 
+```{r setup, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+# auto-auth when done locally
+library(googleAnalyticsR)
+ga_auth(email=Sys.getenv("GARGLE_EMAIL"))
+```
+
 The Management API v3 covers all API calls that are not data reporting related and are for getting meta information about your Google Analytics account or to change account settings.
 
 ## Account structure
@@ -19,226 +25,25 @@ The most day-to-day useful function is `ga_account_list()` which summarises all 
 
 You can then also get the meta-data for that particular entity via `ga_webproperty()` or `ga_view()`
 
-
-```r
+```{r account structure, message=FALSE, warning=FALSE}
 # ga_account_list is most commonly used
 # (restricted to top 10 with the head() function)
 head(ga_account_list(), n = 10)
-```
 
-```
-## # A tibble: 10 x 11
-##    accountId accountName internalWebProp… level websiteUrl type  starred
-##    <chr>     <chr>       <chr>            <chr> <chr>      <chr> <lgl>  
-##  1 79301104  cloudyr     118427305        STAN… http://cl… WEB   NA     
-##  2 54516992  Demo Accou… 87479473         STAN… https://s… WEB   NA     
-##  3 54516992  Demo Accou… 87479473         STAN… https://s… WEB   NA     
-##  4 54516992  Demo Accou… 87479473         STAN… https://s… WEB   NA     
-##  5 47480439  MarkEdmond… 78737968         STAN… http://ma… WEB   NA     
-##  6 47480439  MarkEdmond… 78742336         STAN… http://ma… WEB   NA     
-##  7 54019251  Sunholo We… 86845257         STAN… https://g… WEB   NA     
-##  8 54019251  Sunholo We… 86845257         STAN… https://g… WEB   NA     
-##  9 54019251  Sunholo We… 94325478         PREM… http://ma… WEB   NA     
-## 10 54019251  Sunholo We… 94325478         PREM… http://ma… WEB   TRUE   
-## # … with 4 more variables: webPropertyId <chr>, webPropertyName <chr>,
-## #   viewId <chr>, viewName <chr>
-```
-
-```r
 # this only lists account meta-data
 ga_accounts()
-```
 
-```
-##         id             name             created             updated
-## 1 47480439    MarkEdmondson 2014-01-25 12:17:05 2019-06-01 08:09:58
-## 2 54019251 Sunholo Websites 2014-08-20 19:17:05 2019-07-31 18:51:55
-## 3 54516992     Demo Account 2014-09-06 17:53:33 2019-06-10 17:56:03
-## 4 79301104          cloudyr 2016-06-14 14:29:50 2016-06-14 14:29:50
-##                            permissions.effective
-## 1 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 2 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 3                               READ_AND_ANALYZE
-## 4
-```
-
-```r
 # this gives meta-data for all web-properties for this accountId
 ga_webproperty_list(47480439)
-```
 
-```
-##              id accountId internalWebPropertyId                name
-## 1 UA-47480439-1  47480439              78742336    markedmondson.me
-## 2 UA-47480439-2  47480439              78737968 MarkEdmondson oldGA
-##                websiteUrl    level profileCount    industryVertical
-## 1 http://markedmondson.me STANDARD            1 HOBBIES_AND_LEISURE
-## 2 http://markedmondson.me STANDARD            1 HOBBIES_AND_LEISURE
-##   dataRetentionTtl dataRetentionResetOnNewActivity             created
-## 1        MONTHS_26                            TRUE 2014-01-25 12:17:05
-## 2       INDEFINITE                            TRUE 2014-01-25 12:19:20
-##               updated defaultProfileId
-## 1 2014-01-25 12:17:06             <NA>
-## 2 2018-04-12 11:37:38         81416156
-##                            permissions.effective
-## 1 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 2 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-```
-
-```r
 # this is meta-data for one particular web-property
 ga_webproperty(accountId = 47480439, webPropertyId = "UA-47480439-1")
-```
 
-```
-## $id
-## [1] "UA-47480439-1"
-## 
-## $kind
-## [1] "analytics#webproperty"
-## 
-## $selfLink
-## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1"
-## 
-## $accountId
-## [1] "47480439"
-## 
-## $internalWebPropertyId
-## [1] "78742336"
-## 
-## $name
-## [1] "markedmondson.me"
-## 
-## $websiteUrl
-## [1] "http://markedmondson.me"
-## 
-## $level
-## [1] "STANDARD"
-## 
-## $profileCount
-## [1] 1
-## 
-## $industryVertical
-## [1] "HOBBIES_AND_LEISURE"
-## 
-## $dataRetentionTtl
-## [1] "MONTHS_26"
-## 
-## $dataRetentionResetOnNewActivity
-## [1] TRUE
-## 
-## $permissions
-## $permissions$effective
-## [1] "COLLABORATE"      "EDIT"             "MANAGE_USERS"    
-## [4] "READ_AND_ANALYZE"
-## 
-## 
-## $created
-## [1] "2014-01-25T12:17:05.492Z"
-## 
-## $updated
-## [1] "2014-01-25T12:17:06.625Z"
-## 
-## $parentLink
-## $parentLink$type
-## [1] "analytics#account"
-## 
-## $parentLink$href
-## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439"
-## 
-## 
-## $childLink
-## $childLink$type
-## [1] "analytics#profiles"
-## 
-## $childLink$href
-## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1/profiles"
-```
-
-```r
 # this is meta-data for the views under this accountId/webPropertyId
 ga_view_list(accountId = 47480439, webPropertyId = "UA-47480439-1")
-```
 
-```
-##         id accountId webPropertyId internalWebPropertyId              name
-## 1 81416941  47480439 UA-47480439-1              78742336 All Web Site Data
-##   currency          timezone              websiteUrl type
-## 1      USD Europe/Copenhagen http://markedmondson.me  WEB
-##               created             updated eCommerceTracking
-## 1 2014-01-25 12:17:05 2015-06-14 13:18:53             FALSE
-##                            permissions.effective
-## 1 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-```
-
-```r
 # this is meta-data for this particular viewId (profileId)
 ga_view(accountId = 47480439, webPropertyId = "UA-47480439-1", profileId = 81416941)
-```
-
-```
-## $id
-## [1] "81416941"
-## 
-## $kind
-## [1] "analytics#profile"
-## 
-## $selfLink
-## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1/profiles/81416941"
-## 
-## $accountId
-## [1] "47480439"
-## 
-## $webPropertyId
-## [1] "UA-47480439-1"
-## 
-## $internalWebPropertyId
-## [1] "78742336"
-## 
-## $name
-## [1] "All Web Site Data"
-## 
-## $currency
-## [1] "USD"
-## 
-## $timezone
-## [1] "Europe/Copenhagen"
-## 
-## $websiteUrl
-## [1] "http://markedmondson.me"
-## 
-## $type
-## [1] "WEB"
-## 
-## $permissions
-## $permissions$effective
-## [1] "COLLABORATE"      "EDIT"             "MANAGE_USERS"    
-## [4] "READ_AND_ANALYZE"
-## 
-## 
-## $created
-## [1] "2014-01-25T12:17:05.492Z"
-## 
-## $updated
-## [1] "2015-06-14T13:18:53.638Z"
-## 
-## $eCommerceTracking
-## [1] FALSE
-## 
-## $parentLink
-## $parentLink$type
-## [1] "analytics#webproperty"
-## 
-## $parentLink$href
-## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1"
-## 
-## 
-## $childLink
-## $childLink$type
-## [1] "analytics#goals"
-## 
-## $childLink$href
-## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1/profiles/81416941/goals"
 ```
 
 
@@ -249,124 +54,38 @@ These are helper utility functions to work with Google Analytics data.
 * `google_analytics_meta()` - get a data.frame of available dimensions and metrics, or just use `meta` directly to get the version that comes with the library.
 
 
-
-```r
+```{r}
 # you can just use `meta` as is to get the available metrics,
 # here we just return the first 5 columns and rows for brevity
 head(meta[,1:5])
-```
 
-```
-##                      name      type dataType group     status
-## 1             ga:userType DIMENSION   STRING  User     PUBLIC
-## 2          ga:visitorType DIMENSION   STRING  User DEPRECATED
-## 3         ga:sessionCount DIMENSION   STRING  User     PUBLIC
-## 4           ga:visitCount DIMENSION   STRING  User DEPRECATED
-## 5 ga:daysSinceLastSession DIMENSION   STRING  User     PUBLIC
-## 6     ga:userDefinedValue DIMENSION   STRING  User     PUBLIC
-```
-
-```r
 # or ensure an up to date version by calling the metadata API.
 head(ga_meta())[,1:5]
 ```
 
-```
-##                      name      type dataType group     status
-## 1             ga:userType DIMENSION   STRING  User     PUBLIC
-## 2          ga:visitorType DIMENSION   STRING  User DEPRECATED
-## 3         ga:sessionCount DIMENSION   STRING  User     PUBLIC
-## 4           ga:visitCount DIMENSION   STRING  User DEPRECATED
-## 5 ga:daysSinceLastSession DIMENSION   STRING  User     PUBLIC
-## 6     ga:userDefinedValue DIMENSION   STRING  User     PUBLIC
-```
-
 * `ga_aggregate` - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed. This is used internally when using anti-sampling, and is also useful to respond to dimension selections in Shiny dashboards, where you don't want to perform a new API call each time you need aggregated data.  Download all data first in a more unaggregated form, then use this function.
 
-
-```r
+```{r}
 # use `aggregateGAData` so you can on the fly create summary data
 ga_data <- google_analytics(81416156, 
                             date_range = c("10daysAgo", "yesterday"),
                             metrics = c("sessions","bounceRate"), dimensions = c("hour","date"))
-```
 
-```
-## 2019-12-08 15:46:40> Downloaded [240] rows from a total of [240].
-```
-
-```r
 head(ga_data)
-```
 
-```
-##   hour       date sessions bounceRate
-## 1   00 2019-11-28        5         80
-## 2   00 2019-11-29        4         50
-## 3   00 2019-11-30        1        100
-## 4   00 2019-12-01        5         60
-## 5   00 2019-12-02        4        100
-## 6   00 2019-12-03        5         20
-```
-
-```r
 # if we want totals per hour over the dates:
 ga_aggregate(ga_data[,c("hour","sessions")], agg_names = "hour")
-```
 
-```
-## # A tibble: 24 x 2
-##    hour  sessions
-##    <chr>    <dbl>
-##  1 00          51
-##  2 01          53
-##  3 02          50
-##  4 03          40
-##  5 04          55
-##  6 05          47
-##  7 06          64
-##  8 07          41
-##  9 08          76
-## 10 09         130
-## # … with 14 more rows
-```
-
-```r
 # it knows not to sum metrics that are rates:
 ga_aggregate(ga_data[,c("hour","bounceRate")], agg_names = "hour")
-```
-
-```
-## # A tibble: 24 x 2
-##    hour  bounceRate
-##    <chr>      <dbl>
-##  1 00          70.5
-##  2 01          78.9
-##  3 02          68.3
-##  4 03          79  
-##  5 04          58.9
-##  6 05          65.8
-##  7 06          78.5
-##  8 07          56.8
-##  9 08          74.0
-## 10 09          73.0
-## # … with 14 more rows
 ```
 
 
 * `ga_allowed_metric_dim()` - Create named list of allowed GA metrics/dimensions.  This is useful to have nice looking labels for dimension and metric selection pickers, or to create lookup tables.
 
-
-```r
+```{r}
 amd <- ga_allowed_metric_dim()
 head(amd)
-```
-
-```
-##                   Users               New Users          % New Sessions 
-##              "ga:users"           "ga:newUsers" "ga:percentNewSessions" 
-##      1 Day Active Users      7 Day Active Users     14 Day Active Users 
-##          "ga:1dayUsers"          "ga:7dayUsers"         "ga:14dayUsers"
 ```
 
 ## User management
@@ -584,8 +303,7 @@ We use the Google Analytics demo account as the source view for this example - y
 
 We authenticate and load the necessary packages, following the instructions from the [documentation](http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#choose-authentication-method).
 
-
-```r
+```{r auth_setup, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(stringr)
 library(rlist)
@@ -608,74 +326,20 @@ Then, we filter the dataframe down to a specific account and view name using the
 
 You can supply your own filter conditions as necessary, to locate your desired view information.
 
-
-```r
+```{r}
 # Account info and list of goals for source, to be copied
 source_account <- ga_account_list() %>% 
   filter(str_detect(accountName, "Demo Account"), str_detect(viewName, "Master"))
 source_account
 ```
 
-```
-## # A tibble: 1 x 11
-##   accountId accountName internalWebProp… level websiteUrl type  starred
-##   <chr>     <chr>       <chr>            <chr> <chr>      <chr> <lgl>  
-## 1 54516992  Demo Accou… 87479473         STAN… https://s… WEB   NA     
-## # … with 4 more variables: webPropertyId <chr>, webPropertyName <chr>,
-## #   viewId <chr>, viewName <chr>
-```
-
 ### 2. Get a list of the goals currently configured from our source GA view
 
 Now that we have the account summary, we can use the view details to get a list of goal data, with each item in the list showing goal details.
 
-
-```r
+```{r get_goals, warning = FALSE, message = FALSE}
 source_goals <- ga_goal_list(source_account$accountId, source_account$webPropertyId, source_account$viewId)
 source_goals
-```
-
-```
-##   id accountId webPropertyId internalWebPropertyId profileId
-## 1  1  54516992 UA-54516992-1              87479473  92320289
-## 2  2  54516992 UA-54516992-1              87479473  92320289
-## 3  3  54516992 UA-54516992-1              87479473  92320289
-## 4  4  54516992 UA-54516992-1              87479473  92320289
-##                 name value active            type             created
-## 1 Purchase Completed     0   TRUE URL_DESTINATION 2014-10-10 20:13:47
-## 2      Engaged Users     0   TRUE VISIT_NUM_PAGES 2015-02-23 16:18:06
-## 3      Registrations     0   TRUE URL_DESTINATION 2015-02-27 12:15:01
-## 4   Entered Checkout     0   TRUE URL_DESTINATION 2015-07-20 23:57:22
-##               updated
-## 1 2016-11-10 23:07:35
-## 2 2015-04-14 12:02:21
-## 3 2016-07-26 16:14:09
-## 4 2016-07-26 16:19:40
-##                                 urlDestinationDetails.url
-## 1                                  /ordercompleted\\.html
-## 2                                                    <NA>
-## 3                                 /registersuccess\\.html
-## 4 /yourinfo\\.html|/guestregister\\.html|/shipping\\.html
-##   urlDestinationDetails.caseSensitive urlDestinationDetails.matchType
-## 1                               FALSE                           REGEX
-## 2                                  NA                            <NA>
-## 3                               FALSE                           REGEX
-## 4                               FALSE                           REGEX
-##   urlDestinationDetails.firstStepRequired
-## 1                                    TRUE
-## 2                                      NA
-## 3                                   FALSE
-## 4                                   FALSE
-##                                                                                                                            urlDestinationDetails.steps
-## 1 1:4,c("Cart", "Billing and Shipping", "Payment", "Review"),c("/basket\\\\.html", "/yourinfo\\\\.html", "/payment\\\\.html", "/revieworder\\\\.html")
-## 2                                                                                                                                                     
-## 3                                                                                                                                                     
-## 4                                                                                                                                                     
-##   visitNumPagesDetails.comparisonType visitNumPagesDetails.comparisonValue
-## 1                                <NA>                                 <NA>
-## 2                        GREATER_THAN                                   10
-## 3                                <NA>                                 <NA>
-## 4                                <NA>                                 <NA>
 ```
 
 ### 3. Retrieve the accountId, webPropertyId and viewId from our destination GA view
@@ -684,8 +348,7 @@ We again filter the results from `ga_account_list()`, to get account information
 
 The `dest_account` dataframe should contain the same columns and data types as your `source_account` dataframe.
 
-
-```r
+```{r warning = FALSE, message = FALSE}
 # Account info for destination account
 dest_account <- ga_account_list() %>% 
   filter(str_detect(accountName, "Your_Account"), str_detect(viewName, "Filtered"))
@@ -699,8 +362,7 @@ We now use the `ga_goal()` function to retrieve the goal specifications as a lis
 
 In the example below, we retrieve the details for the goal in slot 1. 
 
-
-```r
+```{r get_goal_list, warning = FALSE, message = FALSE}
 # Get goal ID 1
 goal_one <- ga_goal(source_account$accountId, source_account$webPropertyId, source_account$viewId, 
                     goalId = 1) %>% 
@@ -710,52 +372,11 @@ goal_one <- ga_goal(source_account$accountId, source_account$webPropertyId, sour
 goal_one
 ```
 
-```
-## $id
-## [1] "1"
-## 
-## $kind
-## [1] "analytics#goal"
-## 
-## $name
-## [1] "Purchase Completed"
-## 
-## $value
-## [1] 0
-## 
-## $active
-## [1] TRUE
-## 
-## $type
-## [1] "URL_DESTINATION"
-## 
-## $urlDestinationDetails
-## $urlDestinationDetails$url
-## [1] "/ordercompleted\\.html"
-## 
-## $urlDestinationDetails$caseSensitive
-## [1] FALSE
-## 
-## $urlDestinationDetails$matchType
-## [1] "REGEX"
-## 
-## $urlDestinationDetails$firstStepRequired
-## [1] TRUE
-## 
-## $urlDestinationDetails$steps
-##   number                 name                 url
-## 1      1                 Cart      /basket\\.html
-## 2      2 Billing and Shipping    /yourinfo\\.html
-## 3      3              Payment     /payment\\.html
-## 4      4               Review /revieworder\\.html
-```
-
 ### 5. Submit the goal details to our destination property.
 
 We can then use the goal details contained in `goal_one` to submit a `ga_goal_add()` request to our destination property.
 
-
-```r
+```{r copy_goal, eval=FALSE}
 ga_goal_add(goal_one, dest_account$accountId, dest_account$webPropertyId, dest_account$viewId)
 ```
 
@@ -771,8 +392,7 @@ Using the [`map()`](https://purrr.tidyverse.org/reference/map.html) function fro
 
 First, we define a function to copy a single goal, given a goal ID, details of the source view ID and destination view IDs. In effect, we make a function to perform steps 1-5 from the "Copying a single goal" section in this page.
 
-
-```r
+```{r copy_function, eval=FALSE}
 # Takes a goal ID, source account information & dest account information, copies goal over
 copy_goal <- function(goal_id, source_df, dest_df) {
   source_goal <- ga_goal(source_df$accountId, source_df$webPropertyId, source_df$viewId, goal_id) %>% 
@@ -785,8 +405,7 @@ Having our goal-copying function defined, it is a simple step to apply it across
 
 The example below re-uses the `source_goals`, `source_account` and `dest_account` objects which were created earlier.
 
-
-```r
+```{r copy_loop, eval=FALSE}
 # For each goal ID in our source view, apply the copy_goal function, 
 # using source_account and dest_account account parameters as fixed 2nd / third arguments
 map(source_goals$id, copy_goal, source_account, dest_account)
