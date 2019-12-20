@@ -573,14 +573,10 @@ fetch_google_analytics_4_slow <- function(request_list,
     actualRows <- attr(out[[1]], "rowCount")
     npt <- attr(out[[1]], "nextPageToken")
     
-    if(is.null(npt)){
+    if(is.null(npt) || as.integer(npt) >= max_rows){
       do_it <- FALSE
     }
 
-    if(as.integer(npt) >= max_rows){
-      do_it <- FALSE
-    }
-    
     the_req$pageToken <- npt
     response_list <- c(response_list, out)
 
