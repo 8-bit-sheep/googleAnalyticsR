@@ -50,7 +50,8 @@ List Unsampled Reports
 
 }
 \seealso{
-Other unsampled download functions: \code{\link{ga_unsampled_download}},
-  \code{\link{ga_unsampled}}
+Other unsampled download functions: 
+\code{\link{ga_unsampled_download}()},
+\code{\link{ga_unsampled}()}
 }
 \concept{unsampled download functions}

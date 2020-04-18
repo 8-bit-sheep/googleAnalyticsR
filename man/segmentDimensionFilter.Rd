@@ -4,11 +4,15 @@
 \alias{segmentDimensionFilter}
 \title{segmentDimensionFilter}
 \usage{
-segmentDimensionFilter(name, expressions, operator = c("REGEXP",
-  "BEGINS_WITH", "ENDS_WITH", "PARTIAL", "EXACT", "IN_LIST",
-  "NUMERIC_LESS_THAN", "NUMERIC_GREATER_THAN", "NUMERIC_BETWEEN"),
-  caseSensitive = FALSE, minComparisonValue = NULL,
-  maxComparisonValue = NULL)
+segmentDimensionFilter(
+  name,
+  expressions,
+  operator = c("REGEXP", "BEGINS_WITH", "ENDS_WITH", "PARTIAL", "EXACT", "IN_LIST",
+    "NUMERIC_LESS_THAN", "NUMERIC_GREATER_THAN", "NUMERIC_BETWEEN"),
+  caseSensitive = FALSE,
+  minComparisonValue = NULL,
+  maxComparisonValue = NULL
+)
 }
 \description{
 segmentDimensionFilter

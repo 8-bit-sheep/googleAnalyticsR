@@ -8,23 +8,36 @@
 
 <title>Changelog • googleAnalyticsR</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -35,7 +48,6 @@
 
 <meta property="og:title" content="Changelog" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -60,9 +72,10 @@
   gtag('config', 'UA-47480439-2');
 </script>
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -76,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9000</span>
       </span>
     </div>
 
@@ -221,7 +234,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -229,25 +247,36 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
-      
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="googleanalyticsr-0-7-0-9000" class="section level1">
-<h1 class="page-header">
-<a href="#googleanalyticsr-0-7-0-9000" class="anchor"></a>googleAnalyticsR 0.7.0.9000<small> Unreleased </small>
+    <div id="googleanalyticsr-0-7-1-9000" class="section level1">
+<h1 class="page-header" data-toc-text="0.7.1.9000">
+<a href="#googleanalyticsr-0-7-1-9000" class="anchor"></a>googleAnalyticsR 0.7.1.9000<small> Unreleased </small>
 </h1>
 <ul>
-<li>…</li>
+<li>fix <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> not dowloading starred columns (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/284'>#284</a> - thanks <a href='https://github.com/hidekoji'>@hidekoji</a>)</li>
+</ul>
+</div>
+    <div id="googleanalyticsr-0-7-1" class="section level1">
+<h1 class="page-header" data-toc-text="0.7.1">
+<a href="#googleanalyticsr-0-7-1" class="anchor"></a>googleAnalyticsR 0.7.1<small> 2019-11-04 </small>
+</h1>
+<ul>
+<li>
+<code>slow_fetch=TRUE</code> now respects the <code>max_rows</code> argument (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/282'>#282</a>)</li>
+<li>remove trailing slash breaking v3 API calls (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/286'>#286</a> - thanks <a href='https://github.com/octaviancorlade'>@octaviancorlade</a>)</li>
 </ul>
 </div>
     <div id="googleanalyticsr-0-7-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.7.0">
 <a href="#googleanalyticsr-0-7-0" class="anchor"></a>googleAnalyticsR 0.7.0<small> 2019-09-17 </small>
 </h1>
 <ul>
@@ -257,9 +286,9 @@
 </li>
 <li>Add <code>accountId</code> to the output of Shiny module <code>authDropdown</code> when <code>viewIdOnly=FALSE</code>
 </li>
-<li>Add <code>quotaUser</code> to reporting v4 API requests to avoid quota limits if several users from same ip attempt to run API calls (#235) - default is <code>Sys.info()[["user"]]</code> or set via <code><a href="https://www.rdocumentation.org/packages/base/topics/options">options("googleAuthR.quotaUser")</a></code>
+<li>Add <code>quotaUser</code> to reporting v4 API requests to avoid quota limits if several users from same ip attempt to run API calls (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/235'>#235</a>) - default is <code>Sys.info()[["user"]]</code> or set via <code><a href="https://rdrr.io/r/base/options.html">options("googleAuthR.quotaUser")</a></code>
 </li>
-<li>Add <code>ga_model_*</code> functions to use GA data (#234)</li>
+<li>Add <code>ga_model_*</code> functions to use GA data (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/234'>#234</a>)</li>
 <li>Add <code>ga_model_tweet</code> to enable data viz in tweets</li>
 <li>Add userActivity API via <code>gar_clientid_activity()</code>
 </li>
@@ -268,30 +297,30 @@
 <li>Prevent use of default client id project in non-interactive scripts.<br>
 </li>
 <li>Update docs to use <code>clientId</code> dimension in user activity API calls</li>
-<li>Update <code><a href="https://tidyr.tidyverse.org/reference/nest.html">tidyr::unnest</a></code> to use <code>cols</code> parameter (#266)</li>
-<li>Add <code><a href="../reference/ga_custom_upload_delete.html">ga_custom_upload_delete()</a></code> - thanks <a href='https://github.com/byapprov'>@byapprov</a> (#263)</li>
-<li>Fix sending in multiple segment definitions in a list (#253)</li>
-<li>Fix <code><a href="../reference/ga_segment_list.html">ga_segment_list()</a></code> returning data if no custom segments created (#259)</li>
-<li>Fix ability to list multiple dimensions and segments (#279)</li>
+<li>Update <code><a href="https://tidyr.tidyverse.org/reference/nest.html">tidyr::unnest</a></code> to use <code>cols</code> parameter (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/266'>#266</a>)</li>
+<li>Add <code><a href="../reference/ga_custom_upload_delete.html">ga_custom_upload_delete()</a></code> - thanks <a href='https://github.com/byapprov'>@byapprov</a> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/263'>#263</a>)</li>
+<li>Fix sending in multiple segment definitions in a list (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/253'>#253</a>)</li>
+<li>Fix <code><a href="../reference/ga_segment_list.html">ga_segment_list()</a></code> returning data if no custom segments created (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/259'>#259</a>)</li>
+<li>Fix ability to list multiple dimensions and segments (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/279'>#279</a>)</li>
 </ul>
 </div>
     <div id="googleanalyticsr-0-6-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.6.0">
 <a href="#googleanalyticsr-0-6-0" class="anchor"></a>googleAnalyticsR 0.6.0<small> 2018-12-21 </small>
 </h1>
 <ul>
 <li>Add goal management</li>
-<li>Add <code><a href="../reference/ga_clientid_deletion.html">ga_clientid_deletion()</a></code> function (#168) (renamed from <code>ga_user_deletion()</code>)</li>
-<li>Let <code>authDropdown</code> return more than just the viewId (#172)</li>
+<li>Add <code><a href="../reference/ga_clientid_deletion.html">ga_clientid_deletion()</a></code> function (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/168'>#168</a>) (renamed from <code>ga_user_deletion()</code>)</li>
+<li>Let <code>authDropdown</code> return more than just the viewId (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/172'>#172</a>)</li>
 <li>Export segment related classes and implicitly coerce table filters and segments to their appropriate classes in order to improve integration with the ganalytics package.</li>
-<li>Add support for <code>dataLastRefreshed</code> and stop caching if its present (e.g. query includes today) (#183)</li>
+<li>Add support for <code>dataLastRefreshed</code> and stop caching if its present (e.g. query includes today) (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/183'>#183</a>)</li>
 <li>Export dim_ga4, met_ga4 and order_type_ga4 classes in order to support the complete conversion of <code>ganalytics</code> query objects into googleAnalyticsR API requests.</li>
-<li>Fix segments that were not respecting “IMMEDIATELY_PRECEDES” vs “PRECEDES” (thanks <a href='https://github.com/digitos'>@digitos</a>) (#180)</li>
-<li>Fix default of pivot groups so they include first column (thanks <a href='https://github.com/gilliganondata'>@gilliganondata</a>) (#107)</li>
-<li>Support for creating remarketing audiences (#161)</li>
-<li>Support “NdaysAgo” in antisample calls (#209)</li>
-<li>Support more than 1000 entries in various management list functions (#174)</li>
-<li>Parse management API list responses into data.frames (#194)</li>
+<li>Fix segments that were not respecting “IMMEDIATELY_PRECEDES” vs “PRECEDES” (thanks <a href='https://github.com/digitos'>@digitos</a>) (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/180'>#180</a>)</li>
+<li>Fix default of pivot groups so they include first column (thanks <a href='https://github.com/gilliganondata'>@gilliganondata</a>) (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/107'>#107</a>)</li>
+<li>Support for creating remarketing audiences (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/161'>#161</a>)</li>
+<li>Support “NdaysAgo” in antisample calls (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/209'>#209</a>)</li>
+<li>Support more than 1000 entries in various management list functions (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/174'>#174</a>)</li>
+<li>Parse management API list responses into data.frames (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/194'>#194</a>)</li>
 <li>Add user management functions such as <code>ga_users_delete</code>, <code>ga_users_update</code> and <code>ga_users_add</code>
 </li>
 <li>Add custom dimension functions <code>ga_custom_vars_create</code> and <code>ga_custom_vars_patch</code>
@@ -299,7 +328,7 @@
 </ul>
 </div>
     <div id="googleanalytics-0-5-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5.0">
 <a href="#googleanalytics-0-5-0" class="anchor"></a>googleAnalytics 0.5.0<small> 2018-02-16 </small>
 </h1>
 <div id="breaking-changes" class="section level2">
@@ -311,14 +340,14 @@
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
-<li>Add support for resource based quotas if you are on GA360 (#127)</li>
+<li>Add support for resource based quotas if you are on GA360 (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/127'>#127</a>)</li>
 <li>Improve support for using different auth cache files with <code><a href="../reference/ga_auth.html">ga_auth()</a></code>
 </li>
 <li>Changed <code>google_analytics</code> to be the v4 API, <code>google_analytics_3</code> now supports v3</li>
 <li>change default cache token name from <code>.httr-oauth</code> to <code>ga.oauth</code> to avoid clashes</li>
 <li>You can now change the rows fetched per API page in v4 up to 100k</li>
-<li>Add unsampled report downloads (#44 - many thanks to <a href='https://github.com/j450h1'>@j450h1</a> for this work on this)</li>
-<li>Add management of View and account filters (#108 - many thanks to <a href='https://github.com/zselinger'>@zselinger</a> for the work on this)</li>
+<li>Add unsampled report downloads (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/44'>#44</a> - many thanks to <a href='https://github.com/j450h1'>@j450h1</a> for this work on this)</li>
+<li>Add management of View and account filters (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/108'>#108</a> - many thanks to <a href='https://github.com/zselinger'>@zselinger</a> for the work on this)</li>
 <li>If an <code>google_analytics</code> batch API call fails, it will automatically retry with a slower request rate</li>
 <li>v4 API requests will report how long it took to help with configurations</li>
 </ul>
@@ -327,25 +356,25 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fix bug where anti-sampling with no dimensions broke (#149 - thanks <a href='https://github.com/smach'>@smach</a>)</li>
+<li>Fix bug where anti-sampling with no dimensions broke (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/149'>#149</a> - thanks <a href='https://github.com/smach'>@smach</a>)</li>
 <li>Let v3 API calls use batching when also using other googleAuthR batching functions</li>
 </ul>
 </div>
 </div>
     <div id="googleanalytics-0-4-2" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.4.2">
 <a href="#googleanalytics-0-4-2" class="anchor"></a>googleAnalytics 0.4.2<small> 2017-10-20 </small>
 </h1>
 <div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fix bug of argument match in <code>multi_select</code>(#99 - thanks <a href='https://github.com/sdhaus'>@sdhaus</a>)</li>
-<li>Fix bug for data dimensions starting with a number (#100 - thanks <a href='https://github.com/kennyengci'>@kennyengci</a>)</li>
+<li>Fix bug of argument match in <code>multi_select</code>(<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/99'>#99</a> - thanks <a href='https://github.com/sdhaus'>@sdhaus</a>)</li>
+<li>Fix bug for data dimensions starting with a number (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/100'>#100</a> - thanks <a href='https://github.com/kennyengci'>@kennyengci</a>)</li>
 <li>Remove hourly anti-sampling as it doesn’t work</li>
 <li>Use tidy eval instead of dplyr underscore funcs (thanks <a href='https://github.com/kiendang'>@kiendang</a>)</li>
 <li>Fix multi-channel funnels raising error when no data available (thanks <a href='https://github.com/octaviancorlade'>@octaviancorlade</a>)</li>
-<li>Fix NULL validaation if no results returns in v4 API (#81 again - thanks <a href='https://github.com/ricardopinto'>@ricardopinto</a>)</li>
+<li>Fix NULL validaation if no results returns in v4 API (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/81'>#81</a> again - thanks <a href='https://github.com/ricardopinto'>@ricardopinto</a>)</li>
 </ul>
 </div>
 <div id="additions" class="section level2">
@@ -354,13 +383,13 @@
 <ul>
 <li>You can now set your <code>GA_CLIENT_ID</code>, <code>GA_CLIENT_SECRET</code> in environment arguments and they will be added to the project options on startup.</li>
 <li>Authenticate on startup with <code>GA_AUTH_FILE</code> pointing to your cache file.</li>
-<li>Add support for “today” and “yesterday” date values in anti_sample (#112)</li>
-<li>Add that <code>max</code> is ignored during <code>anti_sample=TRUE</code> (#111)</li>
+<li>Add support for “today” and “yesterday” date values in anti_sample (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/112'>#112</a>)</li>
+<li>Add that <code>max</code> is ignored during <code>anti_sample=TRUE</code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/111'>#111</a>)</li>
 </ul>
 </div>
 </div>
     <div id="googleanalyticsr-0-4-1" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.4.1">
 <a href="#googleanalyticsr-0-4-1" class="anchor"></a>googleAnalyticsR 0.4.1<small> 2017-06-19 </small>
 </h1>
 <div id="fixed" class="section level2">
@@ -371,7 +400,7 @@
 <li>Fixed <code>anti_sample="auto"</code> math to actually limit the number of sessions for the auto-batches</li>
 <li>Fixed error when no data present in requested <code>date_range</code> for a view, and <code>max = -1</code>
 </li>
-<li>Fix logic of <code>anti_sample_batches</code> to allow accurate day batches. (#74)</li>
+<li>Fix logic of <code>anti_sample_batches</code> to allow accurate day batches. (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/74'>#74</a>)</li>
 <li>Fix parsing of <code>ga_account_summary</code> broken by upgrade from <code>dplyr 0.5.0</code> &gt; <code>dplyr 0.7.0</code>
 </li>
 </ul>
@@ -380,14 +409,14 @@
 <h2 class="hasAnchor">
 <a href="#added" class="anchor"></a>Added</h2>
 <ul>
-<li>Add warning if using default project, and if API quota is tripped (#79)</li>
+<li>Add warning if using default project, and if API quota is tripped (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/79'>#79</a>)</li>
 <li>refactor defensive checks from <code>testthat</code> to <code>assertthat</code>
 </li>
 </ul>
 </div>
 </div>
     <div id="googleanalyticsr-0-4-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.4.0">
 <a href="#googleanalyticsr-0-4-0" class="anchor"></a>googleAnalyticsR 0.4.0<small> 2017-04-01 </small>
 </h1>
 <div id="added-1" class="section level2">
@@ -421,16 +450,16 @@
 <h2 class="hasAnchor">
 <a href="#fixed-1" class="anchor"></a>Fixed</h2>
 <ul>
-<li>Use <code>aggregateGAData</code> to solve issue with anti_sampling repeating rows (#49)</li>
-<li>Fix bug with anti-sample when periods included 0-row data (#42)</li>
-<li>Fix <code>google_analytics_account_list()</code> parsing bug if only one view available (#52, #41)</li>
-<li>Fix segments not being able to be used in Cohort reports (#63)</li>
-<li>Fix bug with anti-sample when querying over 1000 days (#66 - thanks <a href='https://github.com/olivia-icivics'>@olivia-icivics</a>)</li>
+<li>Use <code>aggregateGAData</code> to solve issue with anti_sampling repeating rows (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/49'>#49</a>)</li>
+<li>Fix bug with anti-sample when periods included 0-row data (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/42'>#42</a>)</li>
+<li>Fix <code>google_analytics_account_list()</code> parsing bug if only one view available (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/52'>#52</a>, <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/41'>#41</a>)</li>
+<li>Fix segments not being able to be used in Cohort reports (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/63'>#63</a>)</li>
+<li>Fix bug with anti-sample when querying over 1000 days (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/66'>#66</a> - thanks <a href='https://github.com/olivia-icivics'>@olivia-icivics</a>)</li>
 </ul>
 </div>
 </div>
     <div id="googleanalyticsr-0-3-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.3.0">
 <a href="#googleanalyticsr-0-3-0" class="anchor"></a>googleAnalyticsR 0.3.0<small> 2016-08-11 </small>
 </h1>
 <div id="added-2" class="section level2">
@@ -477,7 +506,7 @@
 <h2 class="hasAnchor">
 <a href="#fixed-2" class="anchor"></a>Fixed</h2>
 <ul>
-<li>Fix bug for calculated metrics if expression not starting with <code>ga:</code> (#28)</li>
+<li>Fix bug for calculated metrics if expression not starting with <code>ga:</code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/28'>#28</a>)</li>
 <li>Fix a parse bug if only metrics and no dimensions were used in <code><a href="../reference/google_analytics.html">google_analytics_4()</a></code>
 </li>
 <li>Refactoring v4 batching</li>
@@ -485,19 +514,19 @@
 </div>
 </div>
     <div id="googleanalyticsr-0-2-1" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.2.1">
 <a href="#googleanalyticsr-0-2-1" class="anchor"></a>googleAnalyticsR 0.2.1<small> 2016-06-16 </small>
 </h1>
 <div id="fixed-3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#fixed-3" class="anchor"></a>Fixed</h2>
 <ul>
-<li>Fix v4 bug where batches over 10000 had extra rows added (#19)</li>
+<li>Fix v4 bug where batches over 10000 had extra rows added (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/19'>#19</a>)</li>
 </ul>
 </div>
 </div>
     <div id="googleanalyticsr-0-2-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.2.0">
 <a href="#googleanalyticsr-0-2-0" class="anchor"></a>googleAnalyticsR 0.2.0<small> 2016-06-15 </small>
 </h1>
 <div id="added-3" class="section level2">
@@ -507,7 +536,7 @@
 <li>segment helper as RStudio Addin or <code>gadget_GASegment()</code>
 </li>
 <li>Local tests added</li>
-<li>Multi-account batching for v3 (#17)</li>
+<li>Multi-account batching for v3 (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/17'>#17</a>)</li>
 <li>Add BigQuery fetching for GoogleAnalytics 360 accounts via <code><a href="../reference/google_analytics_bq.html">google_analytics_bq()</a></code>
 </li>
 </ul>
@@ -516,24 +545,24 @@
 <h2 class="hasAnchor">
 <a href="#fixed-4" class="anchor"></a>Fixed</h2>
 <ul>
-<li>Fix order_type() for v4 (#18)</li>
+<li>Fix order_type() for v4 (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/18'>#18</a>)</li>
 </ul>
 </div>
 </div>
     <div id="googleanalyticsr-0-1-1" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.1">
 <a href="#googleanalyticsr-0-1-1" class="anchor"></a>googleAnalyticsR 0.1.1<small> 2016-05-25 </small>
 </h1>
 <div id="fixed-5" class="section level2">
 <h2 class="hasAnchor">
 <a href="#fixed-5" class="anchor"></a>Fixed</h2>
 <ul>
-<li>Patch to fix ignoring first row of v4 API results (#16)</li>
+<li>Patch to fix ignoring first row of v4 API results (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/16'>#16</a>)</li>
 </ul>
 </div>
 </div>
     <div id="googleanalyticsr-0-1-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.0">
 <a href="#googleanalyticsr-0-1-0" class="anchor"></a>googleAnalyticsR 0.1.0<small> 2016-05-12 </small>
 </h1>
 <div id="added-4" class="section level2">
@@ -546,27 +575,14 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#googleanalyticsr-0-7-0-9000">0.7.0.9000</a></li>
-        <li><a href="#googleanalyticsr-0-7-0">0.7.0</a></li>
-        <li><a href="#googleanalyticsr-0-6-0">0.6.0</a></li>
-        <li><a href="#googleanalytics-0-5-0">0.5.0</a></li>
-        <li><a href="#googleanalytics-0-4-2">0.4.2</a></li>
-        <li><a href="#googleanalyticsr-0-4-1">0.4.1</a></li>
-        <li><a href="#googleanalyticsr-0-4-0">0.4.0</a></li>
-        <li><a href="#googleanalyticsr-0-3-0">0.3.0</a></li>
-        <li><a href="#googleanalyticsr-0-2-1">0.2.1</a></li>
-        <li><a href="#googleanalyticsr-0-2-0">0.2.0</a></li>
-        <li><a href="#googleanalyticsr-0-1-1">0.1.1</a></li>
-        <li><a href="#googleanalyticsr-0-1-0">0.1.0</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -574,13 +590,16 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

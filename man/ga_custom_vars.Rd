@@ -4,8 +4,12 @@
 \alias{ga_custom_vars}
 \title{Get Custom Dimensions or Metrics}
 \usage{
-ga_custom_vars(accountId, webPropertyId, type = c("customMetrics",
-  "customDimensions"), customId)
+ga_custom_vars(
+  accountId,
+  webPropertyId,
+  type = c("customMetrics", "customDimensions"),
+  customId
+)
 }
 \arguments{
 \item{accountId}{Account Id}
@@ -23,8 +27,9 @@ Custom Metric or Dimension meta data
 Get Custom Dimensions or Metrics
 }
 \seealso{
-Other custom variable functions: \code{\link{ga_custom_vars_create}},
-  \code{\link{ga_custom_vars_list}},
-  \code{\link{ga_custom_vars_patch}}
+Other custom variable functions: 
+\code{\link{ga_custom_vars_create}()},
+\code{\link{ga_custom_vars_list}()},
+\code{\link{ga_custom_vars_patch}()}
 }
 \concept{custom variable functions}

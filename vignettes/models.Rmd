@@ -20,31 +20,6 @@ To make it easier to distribute these analysis, `googleAnalyticsR` now includes 
 
 The `.gamr` file format can be shared with others online or within your organisation.  A new R package that includes some more advanced examples is available from [`IronistM/googleAnalyticsModelR/`](https://github.com/IronistM/googleAnalyticsModelR/)
 
-## Pre-packaged examples
-
-A ready-made model is available in the [`googleAnalyticsModelR` package](https://github.com/IronistM/googleAnalyticsModelR/).  This function loads the pre-made model object created by the `ga_model_*` functions in `googleAnalyticsR`.  
-
-Some examples below (the graphs are interactive when looking on a webpage):
-
-```{r message=FALSE, warning=FALSE}
-library(prophet)
-library(googleAnalyticsR)
-library(googleAnalyticsModelR)
-
-ga_auth(email = Sys.getenv("GARGLE_EMAIL"))
-my_view_id <- 81416156
-
-forecast_data <- ga_model_prophet(my_view_id, interactive_plot = TRUE)
-forecast_data$plot
-```
-
-Time-normalised visits to your website:
-
-```{r message=FALSE, warning=FALSE}
-output <- ga_time_normalised(my_view_id, interactive_plot = TRUE)
-output$plot
-```
-
 As we have a standardised model structure, it makes it easier to use the output in other functions.  For example, you can make a webpage suitable for embedding in Twitter tweets and upload via googleCloudStorageR using `ga_model_tweet()`:
 
 

@@ -5,14 +5,28 @@
 \alias{google_analytics_4}
 \title{Get Google Analytics v4 data}
 \usage{
-google_analytics(viewId, date_range = NULL, metrics = NULL,
-  dimensions = NULL, dim_filters = NULL, met_filters = NULL,
-  filtersExpression = NULL, order = NULL, segments = NULL,
-  pivots = NULL, cohorts = NULL, max = 1000,
-  samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
-  histogramBuckets = NULL, anti_sample = FALSE,
-  anti_sample_batches = "auto", slow_fetch = FALSE,
-  useResourceQuotas = NULL, rows_per_call = 10000L)
+google_analytics(
+  viewId,
+  date_range = NULL,
+  metrics = NULL,
+  dimensions = NULL,
+  dim_filters = NULL,
+  met_filters = NULL,
+  filtersExpression = NULL,
+  order = NULL,
+  segments = NULL,
+  pivots = NULL,
+  cohorts = NULL,
+  max = 1000,
+  samplingLevel = c("DEFAULT", "SMALL", "LARGE"),
+  metricFormat = NULL,
+  histogramBuckets = NULL,
+  anti_sample = FALSE,
+  anti_sample_batches = "auto",
+  slow_fetch = FALSE,
+  useResourceQuotas = NULL,
+  rows_per_call = 10000L
+)
 
 google_analytics_4(...)
 }
@@ -147,8 +161,9 @@ google_analytics(1234567, date_range = c("30daysAgo", "yesterday"), metrics = "s
 
 }
 \seealso{
-Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4_slow}},
-  \code{\link{fetch_google_analytics_4}},
-  \code{\link{make_ga_4_req}}
+Other GAv4 fetch functions: 
+\code{\link{fetch_google_analytics_4_slow}()},
+\code{\link{fetch_google_analytics_4}()},
+\code{\link{make_ga_4_req}()}
 }
 \concept{GAv4 fetch functions}

@@ -77,8 +77,10 @@ ltv_example <- google_analytics(ga_id,
 \seealso{
 \url{https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohort_and_lifetime_value_ltv_dimensions_and_metrics}
 
-Other v4 cohort functions: \code{\link{cohortGroup}},
-  \code{\link{cohort_dimension_check}},
-  \code{\link{cohort_metric_check}}, \code{\link{cohort}}
+Other v4 cohort functions: 
+\code{\link{cohortGroup}()},
+\code{\link{cohort_dimension_check}()},
+\code{\link{cohort_metric_check}()},
+\code{\link{cohort}()}
 }
 \concept{v4 cohort functions}

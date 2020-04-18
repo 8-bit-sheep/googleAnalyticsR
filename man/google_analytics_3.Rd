@@ -4,11 +4,20 @@
 \alias{google_analytics_3}
 \title{Get Google Analytics v3 data (formerly google_analytics())}
 \usage{
-google_analytics_3(id, start, end, metrics = c("sessions", "bounceRate"),
-  dimensions = NULL, sort = NULL, filters = NULL, segment = NULL,
+google_analytics_3(
+  id,
+  start,
+  end,
+  metrics = c("sessions", "bounceRate"),
+  dimensions = NULL,
+  sort = NULL,
+  filters = NULL,
+  segment = NULL,
   samplingLevel = c("DEFAULT", "FASTER", "HIGHER_PRECISION", "WALK"),
-  max_results = 100, multi_account_batching = FALSE, type = c("ga",
-  "mcf"))
+  max_results = 100,
+  multi_account_batching = FALSE,
+  type = c("ga", "mcf")
+)
 }
 \arguments{
 \item{id}{A character vector of View Ids to fetch from.}

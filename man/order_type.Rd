@@ -4,9 +4,11 @@
 \alias{order_type}
 \title{Make an OrderType object}
 \usage{
-order_type(field, sort_order = c("ASCENDING", "DESCENDING"),
-  orderType = c("VALUE", "DELTA", "SMART", "HISTOGRAM_BUCKET",
-  "DIMENSION_AS_INTEGER"))
+order_type(
+  field,
+  sort_order = c("ASCENDING", "DESCENDING"),
+  orderType = c("VALUE", "DELTA", "SMART", "HISTOGRAM_BUCKET", "DIMENSION_AS_INTEGER")
+)
 }
 \arguments{
 \item{field}{One field to sort by}

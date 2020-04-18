@@ -74,9 +74,10 @@ A guide for preparing the data is available: \href{https://developers.google.com
 
 The dev guide for this function: \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/data-import#format}{Data Import Developer Guide}
 
-Other custom datasource functions: \code{\link{ga_custom_datasource}},
-  \code{\link{ga_custom_upload_delete}},
-  \code{\link{ga_custom_upload_list}},
-  \code{\link{ga_custom_upload}}
+Other custom datasource functions: 
+\code{\link{ga_custom_datasource}()},
+\code{\link{ga_custom_upload_delete}()},
+\code{\link{ga_custom_upload_list}()},
+\code{\link{ga_custom_upload}()}
 }
 \concept{custom datasource functions}

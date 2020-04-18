@@ -3,7 +3,6 @@
 \docType{package}
 \name{googleAnalyticsR}
 \alias{googleAnalyticsR}
-\alias{googleAnalyticsR-package}
 \title{Library for getting Google Analytics data into R}
 \description{
 \if{html}{

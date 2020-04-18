@@ -4,8 +4,10 @@
 \alias{segmentSequenceStep}
 \title{segmentSequenceStep}
 \usage{
-segmentSequenceStep(orFiltersForSegmentList, matchType = c("PRECEDES",
-  "IMMEDIATELY_PRECEDES"))
+segmentSequenceStep(
+  orFiltersForSegmentList,
+  matchType = c("PRECEDES", "IMMEDIATELY_PRECEDES")
+)
 }
 \arguments{
 \item{orFiltersForSegmentList}{A list of \link{orFiltersForSegment}}

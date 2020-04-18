@@ -8,23 +8,36 @@
 
 <title>Get Google Analytics 360 BigQuery data — google_analytics_bq • googleAnalyticsR</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -37,7 +50,6 @@
 <meta property="og:description" content="Turn a google_analytics style call into BigQuery SQL. 
 Used with Google Analytics 360 BigQuery exports." />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -62,9 +74,10 @@ Used with Google Analytics 360 BigQuery exports." />
   gtag('config', 'UA-47480439-2');
 </script>
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -78,7 +91,7 @@ Used with Google Analytics 360 BigQuery exports." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9000</span>
       </span>
     </div>
 
@@ -223,7 +236,12 @@ Used with Google Analytics 360 BigQuery exports." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -231,13 +249,14 @@ Used with Google Analytics 360 BigQuery exports." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Get Google Analytics 360 BigQuery data</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/bigQuery.R'><code>R/bigQuery.R</code></a></small>
     <div class="hidden name"><code>google_analytics_bq.Rd</code></div>
     </div>
 
@@ -246,10 +265,21 @@ Used with Google Analytics 360 BigQuery exports." />
 Used with Google Analytics 360 BigQuery exports.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>google_analytics_bq</span>(<span class='no'>projectId</span>, <span class='no'>datasetId</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>filters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>max_results</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>query</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>return_query_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>bucket</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>download_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>google_analytics_bq</span>(
+  <span class='no'>projectId</span>,
+  <span class='no'>datasetId</span>,
+  <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sort</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>filters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>max_results</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>query</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>return_query_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>bucket</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>download_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -316,7 +346,7 @@ Used with Google Analytics 360 BigQuery exports.</p>
     <p>All data will be unsampled, and requests will cost money against your BigQuery quota.</p>
 <p>Requires installation of bigQueryR and authentication under ga_bq_auth() 
 or googleAuthR::gar_auth() with BigQuery scope set.
-View your projectIds upon authentication via <code><a href='https://www.rdocumentation.org/packages/bigQueryR/topics/bqr_list_projects'>bqr_list_projects</a></code></p>
+View your projectIds upon authentication via <code>bqr_list_projects</code></p>
 <p>No segments for now.</p>
 <p>Goals are not specified in BQ exports, so you need to look at how you define them and replicate per view
 e.g. unique pageviews or unique events.</p>
@@ -329,17 +359,13 @@ e.g. unique pageviews or unique events.</p>
          <a href='https://support.google.com/analytics/answer/3437719?hl=en'>https://support.google.com/analytics/answer/3437719?hl=en</a></p></div>
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -347,13 +373,16 @@ e.g. unique pageviews or unique events.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

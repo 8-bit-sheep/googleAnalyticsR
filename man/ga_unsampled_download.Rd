@@ -6,8 +6,13 @@
 same account that you setup the unsampled report. This means service account 
 authentication is not supported.}
 \usage{
-ga_unsampled_download(reportTitle, accountId, webPropertyId, profileId,
-  downloadFile = TRUE)
+ga_unsampled_download(
+  reportTitle,
+  accountId,
+  webPropertyId,
+  profileId,
+  downloadFile = TRUE
+)
 }
 \arguments{
 \item{reportTitle}{Title of Unsampled Report (case-sensitive)}
@@ -56,7 +61,8 @@ authentication is not supported.
 }
 }
 \seealso{
-Other unsampled download functions: \code{\link{ga_unsampled_list}},
-  \code{\link{ga_unsampled}}
+Other unsampled download functions: 
+\code{\link{ga_unsampled_list}()},
+\code{\link{ga_unsampled}()}
 }
 \concept{unsampled download functions}

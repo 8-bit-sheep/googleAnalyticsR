@@ -4,8 +4,12 @@
 \alias{ga_remarketing_build}
 \title{Create a remarketing audience for creation}
 \usage{
-ga_remarketing_build(segment, membershipDurationDays = NULL,
-  daysToLookBack = NULL, state_duration = c("TEMPORARY", "PERMANENT"))
+ga_remarketing_build(
+  segment,
+  membershipDurationDays = NULL,
+  daysToLookBack = NULL,
+  state_duration = c("TEMPORARY", "PERMANENT")
+)
 }
 \arguments{
 \item{segment}{The definition of the segment (v3 syntax)}
@@ -51,9 +55,10 @@ ga_remarketing_create(adwords_link = adword_link,
 }
 }
 \seealso{
-Other remarketing management functions: \code{\link{ga_remarketing_create}},
-  \code{\link{ga_remarketing_estimate}},
-  \code{\link{ga_remarketing_get}},
-  \code{\link{ga_remarketing_list}}
+Other remarketing management functions: 
+\code{\link{ga_remarketing_create}()},
+\code{\link{ga_remarketing_estimate}()},
+\code{\link{ga_remarketing_get}()},
+\code{\link{ga_remarketing_list}()}
 }
 \concept{remarketing management functions}

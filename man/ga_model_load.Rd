@@ -13,10 +13,13 @@ ga_model_load(filename = "my-model.gamr")
 Load a created model
 }
 \seealso{
-Other GA modelling functions: \code{\link{ga_model_edit}},
-  \code{\link{ga_model_example}},
-  \code{\link{ga_model_make}}, \code{\link{ga_model_save}},
-  \code{\link{ga_model_tweet}},
-  \code{\link{ga_model_write}}, \code{\link{ga_model}}
+Other GA modelling functions: 
+\code{\link{ga_model_edit}()},
+\code{\link{ga_model_example}()},
+\code{\link{ga_model_make}()},
+\code{\link{ga_model_save}()},
+\code{\link{ga_model_tweet}()},
+\code{\link{ga_model_write}()},
+\code{\link{ga_model}()}
 }
 \concept{GA modelling functions}

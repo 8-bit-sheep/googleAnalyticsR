@@ -17,10 +17,11 @@ cohort(name, type = c("FIRST_VISIT_DATE"), dateRange)
 Cohort object
 }
 \seealso{
-Other v4 cohort functions: \code{\link{cohortGroup}},
-  \code{\link{cohort_dimension_check}},
-  \code{\link{cohort_metric_check}},
-  \code{\link{make_cohort_group}}
+Other v4 cohort functions: 
+\code{\link{cohortGroup}()},
+\code{\link{cohort_dimension_check}()},
+\code{\link{cohort_metric_check}()},
+\code{\link{make_cohort_group}()}
 }
 \concept{v4 cohort functions}
 \keyword{internal}

@@ -4,8 +4,10 @@
 \name{meta}
 \alias{meta}
 \title{Google Analytics API metadata}
-\format{A data frame containing metric and dimensions that 
-  you can query the Reporting API with.}
+\format{
+A data frame containing metric and dimensions that 
+  you can query the Reporting API with.
+}
 \source{
 \url{https://developers.google.com/analytics/devguides/reporting/core/dimsmets}
 }

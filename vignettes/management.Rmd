@@ -580,7 +580,7 @@ This example will first copy a single goal from one property to another, then us
 
 We use the Google Analytics demo account as the source view for this example - you can [read more about the demo account here](https://support.google.com/analytics/answer/6367342?hl=en).
 
-## Auth and setup
+### Auth and setup
 
 We authenticate and load the necessary packages, following the instructions from the [documentation](http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#choose-authentication-method).
 
@@ -591,7 +591,7 @@ library(stringr)
 library(rlist)
 ```
 
-## Copying a single goal
+### Copying a single goal
 
 For this first section, we copy a single Goal from one view to another. To achieve this, we will:
 
@@ -601,7 +601,7 @@ For this first section, we copy a single Goal from one view to another. To achie
 4. Get the configuration details of a single goal to be copied.
 5. Submit the goal details to our destination property.
 
-### 1. Retrieve the accountId, webPropertyId and viewId from our source GA view
+#### 1. Retrieve the accountId, webPropertyId and viewId from our source GA view
 
 We use the `ga_account_list()` function, which returns an account summary for all available accounts as a dataframe.
 Then, we filter the dataframe down to a specific account and view name using the `filter()` and `str_detect()` functions from the tidyverse.
@@ -625,7 +625,7 @@ source_account
 ## #   viewId <chr>, viewName <chr>
 ```
 
-### 2. Get a list of the goals currently configured from our source GA view
+#### 2. Get a list of the goals currently configured from our source GA view
 
 Now that we have the account summary, we can use the view details to get a list of goal data, with each item in the list showing goal details.
 
@@ -678,7 +678,7 @@ source_goals
 ## 4                                <NA>                                 <NA>
 ```
 
-### 3. Retrieve the accountId, webPropertyId and viewId from our destination GA view
+#### 3. Retrieve the accountId, webPropertyId and viewId from our destination GA view
 
 We again filter the results from `ga_account_list()`, to get account information for our destination GA property. In this example, we filter for "Your_Account" and the view called "Filtered".
 
@@ -691,7 +691,7 @@ dest_account <- ga_account_list() %>%
   filter(str_detect(accountName, "Your_Account"), str_detect(viewName, "Filtered"))
 ```
 
-### 4. Get the configuration details of a single goal to be copied.
+#### 4. Get the configuration details of a single goal to be copied.
 
 For this first example, we add a single goal (ID 1) to the destination view, passed as a list to the [`ga_goal_add()`](http://code.markedmondson.me/googleAnalyticsR/reference/ga_goal_add.html) function. 
 
@@ -750,7 +750,7 @@ goal_one
 ## 4      4               Review /revieworder\\.html
 ```
 
-### 5. Submit the goal details to our destination property.
+#### 5. Submit the goal details to our destination property.
 
 We can then use the goal details contained in `goal_one` to submit a `ga_goal_add()` request to our destination property.
 
@@ -765,7 +765,7 @@ You can repeat the above steps for any goal IDs you'd like to copy over, and to 
 
 ---
 
-## Copying multiple goals
+### Copying multiple goals
 
 Using the [`map()`](https://purrr.tidyverse.org/reference/map.html) function from the `tidyverse`, we can quickly scale up this approach. We can copy all goals from a view at once, rather than one at a time.
 

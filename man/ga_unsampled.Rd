@@ -22,7 +22,8 @@ Unsampled Report Meta Data
 Get Unsampled Report Meta Data
 }
 \seealso{
-Other unsampled download functions: \code{\link{ga_unsampled_download}},
-  \code{\link{ga_unsampled_list}}
+Other unsampled download functions: 
+\code{\link{ga_unsampled_download}()},
+\code{\link{ga_unsampled_list}()}
 }
 \concept{unsampled download functions}

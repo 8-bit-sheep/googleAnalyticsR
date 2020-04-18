@@ -27,9 +27,10 @@ Defines the segment to be a set of SegmentFilters
 }
 }
 \seealso{
-Other v4 segment functions: \code{\link{segment_element}},
-  \code{\link{segment_ga4}},
-  \code{\link{segment_vector_sequence}},
-  \code{\link{segment_vector_simple}}
+Other v4 segment functions: 
+\code{\link{segment_element}()},
+\code{\link{segment_ga4}},
+\code{\link{segment_vector_sequence}()},
+\code{\link{segment_vector_simple}()}
 }
 \concept{v4 segment functions}

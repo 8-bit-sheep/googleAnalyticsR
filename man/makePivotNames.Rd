@@ -10,8 +10,9 @@ makePivotNames(pivotHeaders)
 Make pivot column names
 }
 \seealso{
-Other pivot functions: \code{\link{makePivotData}},
-  \code{\link{pivot_ga4_parse}}
+Other pivot functions: 
+\code{\link{makePivotData}()},
+\code{\link{pivot_ga4_parse}()}
 }
 \concept{pivot functions}
 \keyword{internal}

@@ -4,15 +4,21 @@
 \alias{segment_element}
 \title{Make a segment element}
 \usage{
-segment_element(name, operator = c("REGEXP", "BEGINS_WITH", "ENDS_WITH",
-  "PARTIAL", "EXACT", "IN_LIST", "NUMERIC_LESS_THAN",
-  "NUMERIC_GREATER_THAN", "NUMERIC_BETWEEN", "LESS_THAN", "GREATER_THAN",
-  "EQUAL", "BETWEEN"), type = c("METRIC", "DIMENSION"), not = FALSE,
-  expressions = NULL, caseSensitive = NULL,
-  minComparisonValue = NULL, maxComparisonValue = NULL,
+segment_element(
+  name,
+  operator = c("REGEXP", "BEGINS_WITH", "ENDS_WITH", "PARTIAL", "EXACT", "IN_LIST",
+    "NUMERIC_LESS_THAN", "NUMERIC_GREATER_THAN", "NUMERIC_BETWEEN", "LESS_THAN",
+    "GREATER_THAN", "EQUAL", "BETWEEN"),
+  type = c("METRIC", "DIMENSION"),
+  not = FALSE,
+  expressions = NULL,
+  caseSensitive = NULL,
+  minComparisonValue = NULL,
+  maxComparisonValue = NULL,
   scope = c("SESSION", "USER", "HIT", "PRODUCT"),
-  comparisonValue = NULL, matchType = c("PRECEDES",
-  "IMMEDIATELY_PRECEDES"))
+  comparisonValue = NULL,
+  matchType = c("PRECEDES", "IMMEDIATELY_PRECEDES")
+)
 }
 \arguments{
 \item{name}{Name of the GA metric or dimension to segment on}
@@ -49,9 +55,10 @@ An SegmentFilterClause object
 }
 }
 \seealso{
-Other v4 segment functions: \code{\link{segment_define}},
-  \code{\link{segment_ga4}},
-  \code{\link{segment_vector_sequence}},
-  \code{\link{segment_vector_simple}}
+Other v4 segment functions: 
+\code{\link{segment_define}()},
+\code{\link{segment_ga4}},
+\code{\link{segment_vector_sequence}()},
+\code{\link{segment_vector_simple}()}
 }
 \concept{v4 segment functions}

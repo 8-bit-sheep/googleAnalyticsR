@@ -4,8 +4,13 @@
 \alias{ga_users_update}
 \title{Update a user access in Google Analytics}
 \usage{
-ga_users_update(linkId, update_object, accountId, webPropertyId = NULL,
-  viewId = NULL)
+ga_users_update(
+  linkId,
+  update_object,
+  accountId,
+  webPropertyId = NULL,
+  viewId = NULL
+)
 }
 \arguments{
 \item{linkId}{The linkId to update}
@@ -44,9 +49,10 @@ ga_users_update("UA-123456-1:1111222233334444",
 \seealso{
 \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management}{Google help article on user permissions}
 
-Other User management functions: \code{\link{ga_users_add}},
-  \code{\link{ga_users_delete_linkid}},
-  \code{\link{ga_users_delete}},
-  \code{\link{ga_users_list}}
+Other User management functions: 
+\code{\link{ga_users_add}()},
+\code{\link{ga_users_delete_linkid}()},
+\code{\link{ga_users_delete}()},
+\code{\link{ga_users_list}()}
 }
 \concept{User management functions}

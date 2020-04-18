@@ -4,8 +4,7 @@
 \alias{authDropdown}
 \title{authDropdown [Shiny Module]}
 \usage{
-authDropdown(input, output, session, ga.table, viewIdOnly = TRUE,
-  rmNA = TRUE)
+authDropdown(input, output, session, ga.table, viewIdOnly = TRUE, rmNA = TRUE)
 }
 \arguments{
 \item{input}{shiny input}
@@ -30,7 +29,9 @@ Shiny Module for use with \link{authDropdownUI}
 Call via \code{shiny::callModule(authDropdown, "your_id")}
 }
 \seealso{
-Other Shiny modules: \code{\link{authDropdownUI}},
-  \code{\link{multi_selectUI}}, \code{\link{multi_select}}
+Other Shiny modules: 
+\code{\link{authDropdownUI}()},
+\code{\link{multi_selectUI}()},
+\code{\link{multi_select}()}
 }
 \concept{Shiny modules}

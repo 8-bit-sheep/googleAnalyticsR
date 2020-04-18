@@ -15,10 +15,13 @@ ga_model_write(model, filepath = "ga_model.R")
 Write the ga_model functions to a file
 }
 \seealso{
-Other GA modelling functions: \code{\link{ga_model_edit}},
-  \code{\link{ga_model_example}},
-  \code{\link{ga_model_load}}, \code{\link{ga_model_make}},
-  \code{\link{ga_model_save}},
-  \code{\link{ga_model_tweet}}, \code{\link{ga_model}}
+Other GA modelling functions: 
+\code{\link{ga_model_edit}()},
+\code{\link{ga_model_example}()},
+\code{\link{ga_model_load}()},
+\code{\link{ga_model_make}()},
+\code{\link{ga_model_save}()},
+\code{\link{ga_model_tweet}()},
+\code{\link{ga_model}()}
 }
 \concept{GA modelling functions}

@@ -20,8 +20,9 @@ AdWords Meta data
 Get AdWords Link meta data
 }
 \seealso{
-Other Google Ad management functions: \code{\link{ga_adwords_add_linkid}},
-  \code{\link{ga_adwords_delete_linkid}},
-  \code{\link{ga_adwords_list}}
+Other Google Ad management functions: 
+\code{\link{ga_adwords_add_linkid}()},
+\code{\link{ga_adwords_delete_linkid}()},
+\code{\link{ga_adwords_list}()}
 }
 \concept{Google Ad management functions}

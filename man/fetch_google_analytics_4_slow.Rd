@@ -4,8 +4,12 @@
 \alias{fetch_google_analytics_4_slow}
 \title{Fetch GAv4 requests one at a time}
 \usage{
-fetch_google_analytics_4_slow(request_list, max_rows, allRows = FALSE,
-  useResourceQuotas = NULL)
+fetch_google_analytics_4_slow(
+  request_list,
+  max_rows,
+  allRows = FALSE,
+  useResourceQuotas = NULL
+)
 }
 \arguments{
 \item{request_list}{A list of requests created by \link{make_ga_4_req}}
@@ -25,8 +29,9 @@ Due to large complicated queries causing the v4 API to timeout,
   this option is added to fetch via the more traditional one report per request
 }
 \seealso{
-Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4}},
-  \code{\link{google_analytics}},
-  \code{\link{make_ga_4_req}}
+Other GAv4 fetch functions: 
+\code{\link{fetch_google_analytics_4}()},
+\code{\link{google_analytics}()},
+\code{\link{make_ga_4_req}()}
 }
 \concept{GAv4 fetch functions}

@@ -4,12 +4,24 @@
 \alias{make_ga_4_req}
 \title{Make a Google Analytics v4 API fetch}
 \usage{
-make_ga_4_req(viewId, date_range = NULL, metrics = NULL,
-  dimensions = NULL, dim_filters = NULL, met_filters = NULL,
-  filtersExpression = NULL, order = NULL, segments = NULL,
-  pivots = NULL, cohorts = NULL, pageToken = 0, pageSize = 1000,
-  samplingLevel = c("DEFAULT", "SMALL", "LARGE"), metricFormat = NULL,
-  histogramBuckets = NULL)
+make_ga_4_req(
+  viewId,
+  date_range = NULL,
+  metrics = NULL,
+  dimensions = NULL,
+  dim_filters = NULL,
+  met_filters = NULL,
+  filtersExpression = NULL,
+  order = NULL,
+  segments = NULL,
+  pivots = NULL,
+  cohorts = NULL,
+  pageToken = 0,
+  pageSize = 1000,
+  samplingLevel = c("DEFAULT", "SMALL", "LARGE"),
+  metricFormat = NULL,
+  histogramBuckets = NULL
+)
 }
 \arguments{
 \item{viewId}{viewId of data to get.}
@@ -135,8 +147,9 @@ fetch_google_analytics_4(list(ga_req1, ga_req2))
 
 }
 \seealso{
-Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4_slow}},
-  \code{\link{fetch_google_analytics_4}},
-  \code{\link{google_analytics}}
+Other GAv4 fetch functions: 
+\code{\link{fetch_google_analytics_4_slow}()},
+\code{\link{fetch_google_analytics_4}()},
+\code{\link{google_analytics}()}
 }
 \concept{GAv4 fetch functions}

@@ -22,7 +22,9 @@ Goal meta data
 Get goal
 }
 \seealso{
-Other goal management functions: \code{\link{ga_goal_add}},
-  \code{\link{ga_goal_list}}, \code{\link{ga_goal_update}}
+Other goal management functions: 
+\code{\link{ga_goal_add}()},
+\code{\link{ga_goal_list}()},
+\code{\link{ga_goal_update}()}
 }
 \concept{goal management functions}

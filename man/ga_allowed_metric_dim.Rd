@@ -4,8 +4,11 @@
 \alias{ga_allowed_metric_dim}
 \title{Create named list of allowed GA metrics/dimensions}
 \usage{
-ga_allowed_metric_dim(type = c("METRIC", "DIMENSION"),
-  subType = c("all", "segment", "cohort"), callAPI = FALSE)
+ga_allowed_metric_dim(
+  type = c("METRIC", "DIMENSION"),
+  subType = c("all", "segment", "cohort"),
+  callAPI = FALSE
+)
 }
 \arguments{
 \item{type}{Type of parameter to create}

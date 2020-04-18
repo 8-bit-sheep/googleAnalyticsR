@@ -4,8 +4,14 @@
 \alias{ga_goal_update}
 \title{Updates an existing goal.}
 \usage{
-ga_goal_update(Goal, accountId, webPropertyId, viewId, goalId,
-  method = c("PUT", "PATCH"))
+ga_goal_update(
+  Goal,
+  accountId,
+  webPropertyId,
+  viewId,
+  goalId,
+  method = c("PUT", "PATCH")
+)
 }
 \arguments{
 \item{Goal}{The Goal object to be updated
@@ -59,7 +65,9 @@ ga_goal_update(Goal, accountId, propertyId, viewId, 17, method = "PATCH")
 \seealso{
 \url{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/#Goals}
 
-Other goal management functions: \code{\link{ga_goal_add}},
-  \code{\link{ga_goal_list}}, \code{\link{ga_goal}}
+Other goal management functions: 
+\code{\link{ga_goal_add}()},
+\code{\link{ga_goal_list}()},
+\code{\link{ga_goal}()}
 }
 \concept{goal management functions}

@@ -4,8 +4,15 @@
 \alias{ga_custom_vars_patch}
 \title{Modify a custom dimension}
 \usage{
-ga_custom_vars_patch(id, accountId, webPropertyId, name = NULL,
-  active = NULL, scope = NULL, ignoreCustomDataSourceLinks = FALSE)
+ga_custom_vars_patch(
+  id,
+  accountId,
+  webPropertyId,
+  name = NULL,
+  active = NULL,
+  scope = NULL,
+  ignoreCustomDataSourceLinks = FALSE
+)
 }
 \arguments{
 \item{id}{The id of the custom dimension}
@@ -57,8 +64,9 @@ ga_custom_vars_list(54019251, webPropertyId = "UA-54019251-4", type = "customDim
 \seealso{
 \href{https://support.google.com/analytics/answer/2709828}{Custom dimensions support article}
 
-Other custom variable functions: \code{\link{ga_custom_vars_create}},
-  \code{\link{ga_custom_vars_list}},
-  \code{\link{ga_custom_vars}}
+Other custom variable functions: 
+\code{\link{ga_custom_vars_create}()},
+\code{\link{ga_custom_vars_list}()},
+\code{\link{ga_custom_vars}()}
 }
 \concept{custom variable functions}

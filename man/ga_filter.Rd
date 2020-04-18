@@ -18,9 +18,10 @@ filter list
 Get specific filter for account
 }
 \seealso{
-Other filter management functions: \code{\link{ga_filter_delete}},
-  \code{\link{ga_filter_list}},
-  \code{\link{ga_filter_view_list}},
-  \code{\link{ga_filter_view}}
+Other filter management functions: 
+\code{\link{ga_filter_delete}()},
+\code{\link{ga_filter_list}()},
+\code{\link{ga_filter_view_list}()},
+\code{\link{ga_filter_view}()}
 }
 \concept{filter management functions}

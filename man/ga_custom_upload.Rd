@@ -4,8 +4,13 @@
 \alias{ga_custom_upload}
 \title{Custom Data Source Upload Status}
 \usage{
-ga_custom_upload(accountId, webPropertyId, customDataSourceId, uploadId,
-  upload_object)
+ga_custom_upload(
+  accountId,
+  webPropertyId,
+  customDataSourceId,
+  uploadId,
+  upload_object
+)
 }
 \arguments{
 \item{accountId}{Account Id}
@@ -65,9 +70,10 @@ Status:                 COMPLETED
 
 }
 \seealso{
-Other custom datasource functions: \code{\link{ga_custom_datasource}},
-  \code{\link{ga_custom_upload_delete}},
-  \code{\link{ga_custom_upload_file}},
-  \code{\link{ga_custom_upload_list}}
+Other custom datasource functions: 
+\code{\link{ga_custom_datasource}()},
+\code{\link{ga_custom_upload_delete}()},
+\code{\link{ga_custom_upload_file}()},
+\code{\link{ga_custom_upload_list}()}
 }
 \concept{custom datasource functions}

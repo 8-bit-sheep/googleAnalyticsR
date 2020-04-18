@@ -4,8 +4,7 @@
 \alias{segmentFilterClause}
 \title{segmentFilterClause}
 \usage{
-segmentFilterClause(not = FALSE, dimensionFilter = NULL,
-  metricFilter = NULL)
+segmentFilterClause(not = FALSE, dimensionFilter = NULL, metricFilter = NULL)
 }
 \description{
 Make this internal

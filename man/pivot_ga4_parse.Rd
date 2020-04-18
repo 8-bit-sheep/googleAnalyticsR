@@ -10,8 +10,9 @@ pivot_ga4_parse(x, hasDateComparison)
 pivot data parsing
 }
 \seealso{
-Other pivot functions: \code{\link{makePivotData}},
-  \code{\link{makePivotNames}}
+Other pivot functions: 
+\code{\link{makePivotData}()},
+\code{\link{makePivotNames}()}
 }
 \concept{pivot functions}
 \keyword{internal}

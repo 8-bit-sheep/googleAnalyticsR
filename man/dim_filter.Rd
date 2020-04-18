@@ -4,10 +4,14 @@
 \alias{dim_filter}
 \title{Make a dimension filter object}
 \usage{
-dim_filter(dimension, operator = c("REGEXP", "BEGINS_WITH", "ENDS_WITH",
-  "PARTIAL", "EXACT", "NUMERIC_EQUAL", "NUMERIC_GREATER_THAN",
-  "NUMERIC_LESS_THAN", "IN_LIST"), expressions, caseSensitive = FALSE,
-  not = FALSE)
+dim_filter(
+  dimension,
+  operator = c("REGEXP", "BEGINS_WITH", "ENDS_WITH", "PARTIAL", "EXACT",
+    "NUMERIC_EQUAL", "NUMERIC_GREATER_THAN", "NUMERIC_LESS_THAN", "IN_LIST"),
+  expressions,
+  caseSensitive = FALSE,
+  not = FALSE
+)
 }
 \arguments{
 \item{dimension}{dimension name to filter on.}
@@ -67,7 +71,8 @@ ga_data1 <- google_analytics_4(ga_id,
 
 }
 \seealso{
-Other filter functions: \code{\link{filter_clause_ga4}},
-  \code{\link{met_filter}}
+Other filter functions: 
+\code{\link{filter_clause_ga4}()},
+\code{\link{met_filter}()}
 }
 \concept{filter functions}

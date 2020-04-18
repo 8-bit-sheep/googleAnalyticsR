@@ -26,8 +26,11 @@ wp <- ga_webproperty(1058095, "UA-1058095-1")
 }
 }
 \seealso{
-Other account structure functions: \code{\link{ga_account_list}},
-  \code{\link{ga_accounts}}, \code{\link{ga_view_list}},
-  \code{\link{ga_view}}, \code{\link{ga_webproperty_list}}
+Other account structure functions: 
+\code{\link{ga_account_list}()},
+\code{\link{ga_accounts}()},
+\code{\link{ga_view_list}()},
+\code{\link{ga_view}()},
+\code{\link{ga_webproperty_list}()}
 }
 \concept{account structure functions}

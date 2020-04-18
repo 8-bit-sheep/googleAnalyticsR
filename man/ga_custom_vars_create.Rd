@@ -4,8 +4,14 @@
 \alias{ga_custom_vars_create}
 \title{Create a custom dimension}
 \usage{
-ga_custom_vars_create(name, index, accountId, webPropertyId, active,
-  scope = c("HIT", "SESSION", "USER", "PRODUCT"))
+ga_custom_vars_create(
+  name,
+  index,
+  accountId,
+  webPropertyId,
+  active,
+  scope = c("HIT", "SESSION", "USER", "PRODUCT")
+)
 }
 \arguments{
 \item{name}{Name of custom dimension}
@@ -45,8 +51,9 @@ ga_custom_vars_list(54019251, webPropertyId = "UA-54019251-4", type = "customDim
 \seealso{
 \href{https://support.google.com/analytics/answer/2709828}{Custom dimensions support article}
 
-Other custom variable functions: \code{\link{ga_custom_vars_list}},
-  \code{\link{ga_custom_vars_patch}},
-  \code{\link{ga_custom_vars}}
+Other custom variable functions: 
+\code{\link{ga_custom_vars_list}()},
+\code{\link{ga_custom_vars_patch}()},
+\code{\link{ga_custom_vars}()}
 }
 \concept{custom variable functions}

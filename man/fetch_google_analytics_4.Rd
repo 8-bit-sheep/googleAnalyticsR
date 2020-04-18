@@ -4,8 +4,7 @@
 \alias{fetch_google_analytics_4}
 \title{Fetch multiple GAv4 requests}
 \usage{
-fetch_google_analytics_4(request_list, merge = FALSE,
-  useResourceQuotas = NULL)
+fetch_google_analytics_4(request_list, merge = FALSE, useResourceQuotas = NULL)
 }
 \arguments{
 \item{request_list}{A list of requests created by \link{make_ga_4_req}}
@@ -56,8 +55,9 @@ fetch_google_analytics_4(list(ga_req1, ga_req2))
 
 }
 \seealso{
-Other GAv4 fetch functions: \code{\link{fetch_google_analytics_4_slow}},
-  \code{\link{google_analytics}},
-  \code{\link{make_ga_4_req}}
+Other GAv4 fetch functions: 
+\code{\link{fetch_google_analytics_4_slow}()},
+\code{\link{google_analytics}()},
+\code{\link{make_ga_4_req}()}
 }
 \concept{GAv4 fetch functions}

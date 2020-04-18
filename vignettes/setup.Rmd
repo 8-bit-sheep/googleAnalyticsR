@@ -239,7 +239,7 @@ Note: A service account is a special type of account that belongs to an applicat
 
 This section covers some other aspects of authentication under various scenarios of use. This information is useful especially if you work systematically with Google Analytics and possibly other Google products too. 
 
-## Auto-authentication
+### Auto-authentication
 
 To save authenticating and setting your GCP client each R session, you can specify the files/email in an `.Renviron` file that will be looked for each time you load `library(googleAnalyticsR)`
 

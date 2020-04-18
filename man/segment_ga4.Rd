@@ -4,8 +4,12 @@
 \alias{segment_ga4}
 \title{Make a segment object for use}
 \usage{
-segment_ga4(name, segment_id = NULL, user_segment = NULL,
-  session_segment = NULL)
+segment_ga4(
+  name,
+  segment_id = NULL,
+  user_segment = NULL,
+  session_segment = NULL
+)
 }
 \arguments{
 \item{name}{The name of the segment for the reports.}
@@ -127,9 +131,10 @@ segment_seq_example <- google_analytics(ga_id,
 
 }
 \seealso{
-Other v4 segment functions: \code{\link{segment_define}},
-  \code{\link{segment_element}},
-  \code{\link{segment_vector_sequence}},
-  \code{\link{segment_vector_simple}}
+Other v4 segment functions: 
+\code{\link{segment_define}()},
+\code{\link{segment_element}()},
+\code{\link{segment_vector_sequence}()},
+\code{\link{segment_vector_simple}()}
 }
 \concept{v4 segment functions}

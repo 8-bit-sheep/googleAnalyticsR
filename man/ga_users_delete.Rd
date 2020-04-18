@@ -35,9 +35,10 @@ ga_users_delete(c("brian@agency.com", "bill@benland.com"), 1234567)
 \seealso{
 \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete}{Google Documentation}
 
-Other User management functions: \code{\link{ga_users_add}},
-  \code{\link{ga_users_delete_linkid}},
-  \code{\link{ga_users_list}},
-  \code{\link{ga_users_update}}
+Other User management functions: 
+\code{\link{ga_users_add}()},
+\code{\link{ga_users_delete_linkid}()},
+\code{\link{ga_users_list}()},
+\code{\link{ga_users_update}()}
 }
 \concept{User management functions}

@@ -20,11 +20,13 @@ created by \link{ga_model_make}}
 Use a model function created by ga_model_make
 }
 \seealso{
-Other GA modelling functions: \code{\link{ga_model_edit}},
-  \code{\link{ga_model_example}},
-  \code{\link{ga_model_load}}, \code{\link{ga_model_make}},
-  \code{\link{ga_model_save}},
-  \code{\link{ga_model_tweet}},
-  \code{\link{ga_model_write}}
+Other GA modelling functions: 
+\code{\link{ga_model_edit}()},
+\code{\link{ga_model_example}()},
+\code{\link{ga_model_load}()},
+\code{\link{ga_model_make}()},
+\code{\link{ga_model_save}()},
+\code{\link{ga_model_tweet}()},
+\code{\link{ga_model_write}()}
 }
 \concept{GA modelling functions}

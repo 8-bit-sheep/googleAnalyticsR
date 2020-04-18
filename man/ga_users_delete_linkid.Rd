@@ -4,8 +4,13 @@
 \alias{ga_users_delete_linkid}
 \title{Delete users access from account, webproperty or view level}
 \usage{
-ga_users_delete_linkid(linkId, accountId, webPropertyId = NULL,
-  viewId = NULL, check = TRUE)
+ga_users_delete_linkid(
+  linkId,
+  accountId,
+  webPropertyId = NULL,
+  viewId = NULL,
+  check = TRUE
+)
 }
 \arguments{
 \item{linkId}{The linkId(s) that is available using \link{ga_users_list} e.g. \code{47480439:104185380183364788718}}
@@ -53,9 +58,10 @@ ga_users_delete_linkid("47480439:114834495587136933146", 47480439)
 \seealso{
 \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete}{Google Documentation}
 
-Other User management functions: \code{\link{ga_users_add}},
-  \code{\link{ga_users_delete}},
-  \code{\link{ga_users_list}},
-  \code{\link{ga_users_update}}
+Other User management functions: 
+\code{\link{ga_users_add}()},
+\code{\link{ga_users_delete}()},
+\code{\link{ga_users_list}()},
+\code{\link{ga_users_update}()}
 }
 \concept{User management functions}

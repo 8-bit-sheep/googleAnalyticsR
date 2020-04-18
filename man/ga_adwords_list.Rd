@@ -18,8 +18,9 @@ AdWords Links
 List AdWords
 }
 \seealso{
-Other Google Ad management functions: \code{\link{ga_adwords_add_linkid}},
-  \code{\link{ga_adwords_delete_linkid}},
-  \code{\link{ga_adwords}}
+Other Google Ad management functions: 
+\code{\link{ga_adwords_add_linkid}()},
+\code{\link{ga_adwords_delete_linkid}()},
+\code{\link{ga_adwords}()}
 }
 \concept{Google Ad management functions}

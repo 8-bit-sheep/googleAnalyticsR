@@ -4,8 +4,14 @@
 \alias{ga_filter_update_filter_link}
 \title{Update an existing profile filter link. Patch semantics supported}
 \usage{
-ga_filter_update_filter_link(viewFilterLink, accountId, webPropertyId,
-  viewId, linkId, method = c("PUT", "PATCH"))
+ga_filter_update_filter_link(
+  viewFilterLink,
+  accountId,
+  webPropertyId,
+  viewId,
+  linkId,
+  method = c("PUT", "PATCH")
+)
 }
 \arguments{
 \item{viewFilterLink}{The profileFilterLink object}
@@ -62,10 +68,12 @@ response2 <- ga_filter_update_filter_link(viewFilterLink,
 \seealso{
 \url{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/profileFilterLinks}
 
-Other managementAPI functions: \code{\link{ga_experiment_list}},
-  \code{\link{ga_experiment}}, \code{\link{ga_filter_add}},
-  \code{\link{ga_filter_apply_to_view}},
-  \code{\link{ga_filter_update}},
-  \code{\link{ga_segment_list}}
+Other managementAPI functions: 
+\code{\link{ga_experiment_list}()},
+\code{\link{ga_experiment}()},
+\code{\link{ga_filter_add}()},
+\code{\link{ga_filter_apply_to_view}()},
+\code{\link{ga_filter_update}()},
+\code{\link{ga_segment_list}()}
 }
 \concept{managementAPI functions}

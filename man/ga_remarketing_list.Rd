@@ -20,9 +20,10 @@ List remarketing audiences
 \seealso{
 \href{https://support.google.com/analytics/answer/2611268?hl=en}{About remarketing audiences}
 
-Other remarketing management functions: \code{\link{ga_remarketing_build}},
-  \code{\link{ga_remarketing_create}},
-  \code{\link{ga_remarketing_estimate}},
-  \code{\link{ga_remarketing_get}}
+Other remarketing management functions: 
+\code{\link{ga_remarketing_build}()},
+\code{\link{ga_remarketing_create}()},
+\code{\link{ga_remarketing_estimate}()},
+\code{\link{ga_remarketing_get}()}
 }
 \concept{remarketing management functions}

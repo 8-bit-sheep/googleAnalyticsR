@@ -21,9 +21,10 @@ Get a list of custom data sources you have configured in Google Analytics web UI
 You primarily need this to get the \code{customDataSourceId} for the uploads via \link{ga_custom_upload_file}
 }
 \seealso{
-Other custom datasource functions: \code{\link{ga_custom_upload_delete}},
-  \code{\link{ga_custom_upload_file}},
-  \code{\link{ga_custom_upload_list}},
-  \code{\link{ga_custom_upload}}
+Other custom datasource functions: 
+\code{\link{ga_custom_upload_delete}()},
+\code{\link{ga_custom_upload_file}()},
+\code{\link{ga_custom_upload_list}()},
+\code{\link{ga_custom_upload}()}
 }
 \concept{custom datasource functions}

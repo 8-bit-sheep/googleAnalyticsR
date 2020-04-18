@@ -18,8 +18,9 @@ hashedClientId object list
 Get hashed version of client id (also known as hashClientId, hashedClientId, or BigQuery's fullVisitorId)
 }
 \seealso{
-Other clientid functions: \code{\link{ga_clientid_activity_unnest}},
-  \code{\link{ga_clientid_activity}},
-  \code{\link{ga_clientid_deletion}}
+Other clientid functions: 
+\code{\link{ga_clientid_activity_unnest}()},
+\code{\link{ga_clientid_activity}()},
+\code{\link{ga_clientid_deletion}()}
 }
 \concept{clientid functions}

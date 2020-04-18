@@ -4,9 +4,13 @@
 \alias{segmentMetricFilter}
 \title{segmentMetricFilter}
 \usage{
-segmentMetricFilter(name, scope = c("PRODUCT", "HIT", "SESSION", "USER"),
+segmentMetricFilter(
+  name,
+  scope = c("PRODUCT", "HIT", "SESSION", "USER"),
   operator = c("LESS_THAN", "GREATER_THAN", "EQUAL", "BETWEEN"),
-  comparisonValue = NULL, maxComparisonValue = NULL)
+  comparisonValue = NULL,
+  maxComparisonValue = NULL
+)
 }
 \description{
 segmentMetricFilter

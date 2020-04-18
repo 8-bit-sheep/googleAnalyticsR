@@ -4,8 +4,12 @@
 \alias{ga_clientid_deletion}
 \title{Create or update a user deletion request}
 \usage{
-ga_clientid_deletion(userId, propertyId, idType = c("CLIENT_ID",
-  "USER_ID", "APP_INSTANCE_ID"), propertyType = c("ga", "firebase"))
+ga_clientid_deletion(
+  userId,
+  propertyId,
+  idType = c("CLIENT_ID", "USER_ID", "APP_INSTANCE_ID"),
+  propertyType = c("ga", "firebase")
+)
 }
 \arguments{
 \item{userId}{A character vector of user ID's}
@@ -54,8 +58,9 @@ ga_clientid_deletion(ids, "UA-1234-2")
 \seealso{
 \url{https://developers.google.com/analytics/devguides/config/userdeletion/v3/}
 
-Other clientid functions: \code{\link{ga_clientid_activity_unnest}},
-  \code{\link{ga_clientid_activity}},
-  \code{\link{ga_clientid_hash}}
+Other clientid functions: 
+\code{\link{ga_clientid_activity_unnest}()},
+\code{\link{ga_clientid_activity}()},
+\code{\link{ga_clientid_hash}()}
 }
 \concept{clientid functions}

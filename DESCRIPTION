@@ -50,4 +50,4 @@ Suggests:
     shiny (>= 0.13.2)
 License: MIT + file LICENSE
 LazyData: TRUE
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0

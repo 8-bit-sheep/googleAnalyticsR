@@ -4,9 +4,17 @@
 \alias{ga_model_edit}
 \title{Edit a created ga_model}
 \usage{
-ga_model_edit(model, data_f = NULL, required_columns = NULL,
-  model_f = NULL, required_packages = NULL, description = NULL,
-  outputShiny = NULL, renderShiny = NULL, output_f = NULL)
+ga_model_edit(
+  model,
+  data_f = NULL,
+  required_columns = NULL,
+  model_f = NULL,
+  required_packages = NULL,
+  description = NULL,
+  outputShiny = NULL,
+  renderShiny = NULL,
+  output_f = NULL
+)
 }
 \arguments{
 \item{model}{The model to edit - if a filepath will load model and 
@@ -33,10 +41,13 @@ must take data from result of \code{data_f} in first argument}
 Change features of a model by changing the functions within it.
 }
 \seealso{
-Other GA modelling functions: \code{\link{ga_model_example}},
-  \code{\link{ga_model_load}}, \code{\link{ga_model_make}},
-  \code{\link{ga_model_save}},
-  \code{\link{ga_model_tweet}},
-  \code{\link{ga_model_write}}, \code{\link{ga_model}}
+Other GA modelling functions: 
+\code{\link{ga_model_example}()},
+\code{\link{ga_model_load}()},
+\code{\link{ga_model_make}()},
+\code{\link{ga_model_save}()},
+\code{\link{ga_model_tweet}()},
+\code{\link{ga_model_write}()},
+\code{\link{ga_model}()}
 }
 \concept{GA modelling functions}

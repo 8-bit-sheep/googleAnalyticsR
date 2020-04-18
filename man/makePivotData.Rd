@@ -15,8 +15,9 @@ makePivotData(pivotRows, pivotNames, index = 1)
 Make pivot data rows
 }
 \seealso{
-Other pivot functions: \code{\link{makePivotNames}},
-  \code{\link{pivot_ga4_parse}}
+Other pivot functions: 
+\code{\link{makePivotNames}()},
+\code{\link{pivot_ga4_parse}()}
 }
 \concept{pivot functions}
 \keyword{internal}

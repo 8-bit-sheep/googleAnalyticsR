@@ -28,9 +28,11 @@ al$viewId
 \seealso{
 https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountSummaries/list
 
-Other account structure functions: \code{\link{ga_accounts}},
-  \code{\link{ga_view_list}}, \code{\link{ga_view}},
-  \code{\link{ga_webproperty_list}},
-  \code{\link{ga_webproperty}}
+Other account structure functions: 
+\code{\link{ga_accounts}()},
+\code{\link{ga_view_list}()},
+\code{\link{ga_view}()},
+\code{\link{ga_webproperty_list}()},
+\code{\link{ga_webproperty}()}
 }
 \concept{account structure functions}

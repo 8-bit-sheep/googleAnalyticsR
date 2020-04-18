@@ -4,8 +4,13 @@
 \alias{ga_remarketing_create}
 \title{Create a new remarketing audience}
 \usage{
-ga_remarketing_create(adwordsLinkId, include, exclude = NULL,
-  audienceType = c("SIMPLE", "STATE_BASED"), name = NULL)
+ga_remarketing_create(
+  adwordsLinkId,
+  include,
+  exclude = NULL,
+  audienceType = c("SIMPLE", "STATE_BASED"),
+  name = NULL
+)
 }
 \arguments{
 \item{adwordsLinkId}{The adwords link to add the remarketing audience to}
@@ -53,9 +58,10 @@ ga_remarketing_create(adwords_link = adword_link,
 }
 }
 \seealso{
-Other remarketing management functions: \code{\link{ga_remarketing_build}},
-  \code{\link{ga_remarketing_estimate}},
-  \code{\link{ga_remarketing_get}},
-  \code{\link{ga_remarketing_list}}
+Other remarketing management functions: 
+\code{\link{ga_remarketing_build}()},
+\code{\link{ga_remarketing_estimate}()},
+\code{\link{ga_remarketing_get}()},
+\code{\link{ga_remarketing_list}()}
 }
 \concept{remarketing management functions}

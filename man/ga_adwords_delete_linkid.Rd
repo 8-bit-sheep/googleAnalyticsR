@@ -4,8 +4,7 @@
 \alias{ga_adwords_delete_linkid}
 \title{Deletes a Google Analytics webProperty-Google Ads link}
 \usage{
-ga_adwords_delete_linkid(accountId, webPropertyId,
-  webPropertyAdWordsLinkId)
+ga_adwords_delete_linkid(accountId, webPropertyId, webPropertyAdWordsLinkId)
 }
 \arguments{
 \item{accountId}{Account Id}
@@ -42,7 +41,9 @@ ga_adwords_list(65973592, "UA-65973592-1")
 \seealso{
 \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/webPropertyAdWordsLinks/delete }{Google documentation}
 
-Other Google Ad management functions: \code{\link{ga_adwords_add_linkid}},
-  \code{\link{ga_adwords_list}}, \code{\link{ga_adwords}}
+Other Google Ad management functions: 
+\code{\link{ga_adwords_add_linkid}()},
+\code{\link{ga_adwords_list}()},
+\code{\link{ga_adwords}()}
 }
 \concept{Google Ad management functions}

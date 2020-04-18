@@ -64,7 +64,8 @@ ga_data1 <- google_analytics(ga_id,
 
 }
 \seealso{
-Other filter functions: \code{\link{dim_filter}},
-  \code{\link{met_filter}}
+Other filter functions: 
+\code{\link{dim_filter}()},
+\code{\link{met_filter}()}
 }
 \concept{filter functions}

@@ -6,13 +6,20 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ganalytics - Advanced dynamic segment and Filter examples • googleAnalyticsR</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="ganalytics - Advanced dynamic segment and Filter examples">
-<meta property="og:description" content="">
+<meta property="og:description" content="googleAnalyticsR">
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png">
-<meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -24,7 +31,7 @@
   gtag('config', 'UA-47480439-2');
 </script>
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9000</span>
       </span>
     </div>
 
@@ -181,7 +188,14 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -190,14 +204,15 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>ganalytics - Advanced dynamic segment and Filter examples</h1>
+      <h1 data-toc-skip>ganalytics - Advanced dynamic segment and Filter examples</h1>
                         <h4 class="author">Johann de Boer</h4>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/vignettes/ganalytics.Rmd"><code>vignettes/ganalytics.Rmd</code></a></small>
       <div class="hidden name"><code>ganalytics.Rmd</code></div>
 
     </div>
@@ -210,14 +225,14 @@
 <h2 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h2>
 <p>Load the <code>ganalytics</code> library as well as <code>googleAnalyticsR</code> to make use of the new syntax.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(googleAnalyticsR)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ganalytics)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># authenticate</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="../reference/ga_auth.html">ga_auth</a></span>()</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># set to your view Id</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">view_id &lt;-<span class="st"> </span><span class="dv">81416156</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ganalytics</span>)
+
+<span class="co"># authenticate</span>
+<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span>()
+
+<span class="co"># set to your view Id</span>
+<span class="no">view_id</span> <span class="kw">&lt;-</span> <span class="fl">81416156</span></pre></body></html></div>
 </div>
 <div id="advanced-filter-syntax" class="section level2">
 <h2 class="hasAnchor">
@@ -229,28 +244,28 @@
 <li>At least one goal completion or transaction - a metric filter using an OR condition.</li>
 </ul>
 <p>The above list of filters will be defined using <code>ganalytics</code> expressions as follows:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Device category is desktop or tablet - a dimension filter using an OR condition.</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">desktop_or_mobile &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ganalytics/topics/Expr">Expr</a></span>(<span class="op">~</span>deviceCategory <span class="op">==</span><span class="st"> "desktop"</span>) <span class="op">|</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ganalytics/topics/Expr">Expr</a></span>(<span class="op">~</span>deviceCategory <span class="op">==</span><span class="st"> "tablet"</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># New visitors using either a desktop or tablet device - a dimension filter involving both an AND and an OR condition.</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">new_desktop_and_mobile_visitors &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ganalytics/topics/Expr">Expr</a></span>(<span class="op">~</span>userType <span class="op">==</span><span class="st"> "new"</span>) <span class="op">&amp;</span><span class="st"> </span>desktop_or_mobile</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co"># At least one goal completion or transaction - a metric filter using an OR condition.</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">at_least_one_conversion &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ganalytics/topics/Expr">Expr</a></span>(<span class="op">~</span>goalCompletionsAll <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">|</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ganalytics/topics/Expr">Expr</a></span>(<span class="op">~</span>transactions <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># Device category is desktop or tablet - a dimension filter using an OR condition.</span>
+<span class="no">desktop_or_mobile</span> <span class="kw">&lt;-</span> <span class="fu">Expr</span>(~<span class="no">deviceCategory</span> <span class="kw">==</span> <span class="st">"desktop"</span>) <span class="kw">|</span> <span class="fu">Expr</span>(~<span class="no">deviceCategory</span> <span class="kw">==</span> <span class="st">"tablet"</span>)
+
+<span class="co"># New visitors using either a desktop or tablet device - a dimension filter involving both an AND and an OR condition.</span>
+<span class="no">new_desktop_and_mobile_visitors</span> <span class="kw">&lt;-</span> <span class="fu">Expr</span>(~<span class="no">userType</span> <span class="kw">==</span> <span class="st">"new"</span>) <span class="kw">&amp;</span> <span class="no">desktop_or_mobile</span>
+
+<span class="co"># At least one goal completion or transaction - a metric filter using an OR condition.</span>
+<span class="no">at_least_one_conversion</span> <span class="kw">&lt;-</span> <span class="fu">Expr</span>(~<span class="no">goalCompletionsAll</span> <span class="kw">&gt;</span> <span class="fl">0</span>) <span class="kw">|</span> <span class="fu">Expr</span>(~<span class="no">transactions</span> <span class="kw">&gt;</span> <span class="fl">0</span>)</pre></body></html></div>
 <p>We can now use <code>googleAnalyticsR</code> to query the data with the above filters:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">results &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="dt">viewId =</span> view_id,</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"30daysAgo"</span>, <span class="st">"yesterday"</span>),</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"users"</span>, <span class="st">"sessions"</span>, <span class="st">"goalCompletionsAll"</span>),</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">  <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"deviceCategory"</span>, <span class="st">"userType"</span>),</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">  <span class="dt">dim_filters =</span> new_desktop_and_mobile_visitors,</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">  <span class="dt">met_filters =</span> at_least_one_conversion</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">)</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">results</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#  deviceCategory    userType users sessions goalCompletionsAll</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#1        desktop New Visitor  2721     2726                600</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#2         tablet New Visitor    67       67                 13            </span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">results</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(
+  <span class="kw">viewId</span> <span class="kw">=</span> <span class="no">view_id</span>,
+  <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"30daysAgo"</span>, <span class="st">"yesterday"</span>),
+  <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"users"</span>, <span class="st">"sessions"</span>, <span class="st">"goalCompletionsAll"</span>),
+  <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"deviceCategory"</span>, <span class="st">"userType"</span>),
+  <span class="kw">dim_filters</span> <span class="kw">=</span> <span class="no">new_desktop_and_mobile_visitors</span>,
+  <span class="kw">met_filters</span> <span class="kw">=</span> <span class="no">at_least_one_conversion</span>
+)
+
+<span class="no">results</span>
+<span class="co">#  deviceCategory    userType users sessions goalCompletionsAll</span>
+<span class="co">#1        desktop New Visitor  2721     2726                600</span>
+<span class="co">#2         tablet New Visitor    67       67                 13            </span></pre></body></html></div>
 </div>
 <div id="advanced-segment-syntax" class="section level2">
 <h2 class="hasAnchor">
@@ -262,66 +277,60 @@
 <li>Multi-session users: Users who have visited more than once during the defined date range.</li>
 </ul>
 <p>The above list of dynamic segments is defined using <code>ganalytics</code> expressions as follows:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">bounces &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ganalytics/topics/Expr">Expr</a></span>(<span class="op">~</span>bounces <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">mobile_or_tablet &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ganalytics/topics/Expr">Expr</a></span>(<span class="op">~</span>deviceCategory <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"mobile"</span>, <span class="st">"tablet"</span>))</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">multi_session_users &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ganalytics/topics/Include">Include</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/ganalytics/topics/PerUser">PerUser</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/ganalytics/topics/Expr">Expr</a></span>(<span class="op">~</span>sessions <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>)), <span class="dt">scope =</span> <span class="st">"users"</span>)</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">my_segment_list &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">    <span class="dt">bounced_sessions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/ganalytics/topics/PerSession">PerSession</a></span>(bounces),</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">    <span class="dt">mobile_or_tablet =</span> mobile_or_tablet,</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">    <span class="dt">multi_session_users =</span> multi_session_users)</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">results &lt;-<span class="st"> </span><span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">    <span class="dt">viewId =</span> view_id,</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">    <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"30daysAgo"</span>, <span class="st">"yesterday"</span>),</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">    <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"users"</span>, <span class="st">"sessions"</span>),</a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">    <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"segment"</span>),</a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">    <span class="dt">segments =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/ganalytics/topics/Segments">Segments</a></span>(my_segment_list)</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">  )</a>
-<a class="sourceLine" id="cb4-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20">results</a>
-<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#              segment users sessions</span></a>
-<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#1    bounced_sessions  3080     4070</span></a>
-<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#2    mobile_or_tablet   631      899</span></a>
-<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#3 multi_session_users    45      84</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">bounces</span> <span class="kw">&lt;-</span> <span class="fu">Expr</span>(~<span class="no">bounces</span> <span class="kw">!=</span> <span class="fl">0</span>)
+
+<span class="no">mobile_or_tablet</span> <span class="kw">&lt;-</span> <span class="fu">Expr</span>(~<span class="no">deviceCategory</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"mobile"</span>, <span class="st">"tablet"</span>))
+
+<span class="no">multi_session_users</span> <span class="kw">&lt;-</span> <span class="fu">Include</span>(<span class="fu">PerUser</span>(<span class="fu">Expr</span>(~<span class="no">sessions</span> <span class="kw">&gt;</span> <span class="fl">1</span>)), <span class="kw">scope</span> <span class="kw">=</span> <span class="st">"users"</span>)
+
+<span class="no">my_segment_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+    <span class="kw">bounced_sessions</span> <span class="kw">=</span> <span class="fu">PerSession</span>(<span class="no">bounces</span>),
+    <span class="kw">mobile_or_tablet</span> <span class="kw">=</span> <span class="no">mobile_or_tablet</span>,
+    <span class="kw">multi_session_users</span> <span class="kw">=</span> <span class="no">multi_session_users</span>)
+
+<span class="no">results</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(
+    <span class="kw">viewId</span> <span class="kw">=</span> <span class="no">view_id</span>,
+    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"30daysAgo"</span>, <span class="st">"yesterday"</span>),
+    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"users"</span>, <span class="st">"sessions"</span>),
+    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"segment"</span>),
+    <span class="kw">segments</span> <span class="kw">=</span> <span class="fu">Segments</span>(<span class="no">my_segment_list</span>)
+  )
+
+<span class="no">results</span>
+<span class="co">#              segment users sessions</span>
+<span class="co">#1    bounced_sessions  3080     4070</span>
+<span class="co">#2    mobile_or_tablet   631      899</span>
+<span class="co">#3 multi_session_users    45      84</span></pre></body></html></div>
 <div id="more-than-4-segments" class="section level3">
 <h3 class="hasAnchor">
 <a href="#more-than-4-segments" class="anchor"></a>More than 4 segments</h3>
 <p>The Google Analytics Reporting API can only be used to query 4 segments at a time, so if you have more than 4 you need to break the list segments into chunks:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">segment_chunks &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/split">split</a></span>(my_segment_list, (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq_along</a></span>(my_segment_list) <span class="op">-</span><span class="st"> </span>1L) <span class="op">%/%</span><span class="st"> </span>4L)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">segment_chunks</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span>(<span class="no">my_segment_list</span>, (<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span>(<span class="no">my_segment_list</span>) - <span class="fl">1L</span>) <span class="kw">%/%</span> <span class="fl">4L</span>)</pre></body></html></div>
 <p>We can now use <code>googleAnalyticsR</code> to query each chunk of segments and bind the results into a single <code>data.frame</code>. For each segment, we will request a count of users and sessions.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(purrr)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">results &lt;-<span class="st"> </span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_df</a></span>(segment_chunks, <span class="cf">function</span>(chunk) {</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">  <span class="kw"><a href="../reference/google_analytics.html">google_analytics</a></span>(</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">    <span class="dt">viewId =</span> view_id,</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">    <span class="dt">date_range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(start_date, end_date),</a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">    <span class="dt">metrics =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"users"</span>, <span class="st">"sessions"</span>),</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">    <span class="dt">dimensions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"segment"</span>),</a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">    <span class="dt">segments =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/ganalytics/topics/Segments">Segments</a></span>(chunk)</a>
-<a class="sourceLine" id="cb6-11" data-line-number="11">  )</a>
-<a class="sourceLine" id="cb6-12" data-line-number="12">})</a></code></pre></div>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">purrr</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
+
+<span class="no">results</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_df</a></span>(<span class="no">segment_chunks</span>, <span class="kw">function</span>(<span class="no">chunk</span>) {
+  <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(
+    <span class="kw">viewId</span> <span class="kw">=</span> <span class="no">view_id</span>,
+    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">start_date</span>, <span class="no">end_date</span>),
+    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"users"</span>, <span class="st">"sessions"</span>),
+    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"segment"</span>),
+    <span class="kw">segments</span> <span class="kw">=</span> <span class="fu">Segments</span>(<span class="no">chunk</span>)
+  )
+})</pre></body></html></div>
 </div>
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#setup">Setup</a></li>
-      <li><a href="#advanced-filter-syntax">Advanced Filter syntax</a></li>
-      <li><a href="#advanced-segment-syntax">Advanced Segment Syntax</a></li>
-      </ul>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
+
 
 
       <footer><div class="copyright">
@@ -329,12 +338,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

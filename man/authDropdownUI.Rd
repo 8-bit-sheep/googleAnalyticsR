@@ -22,7 +22,9 @@ Shiny UI
 Makes a dropdown row for use for authentication.
 }
 \seealso{
-Other Shiny modules: \code{\link{authDropdown}},
-  \code{\link{multi_selectUI}}, \code{\link{multi_select}}
+Other Shiny modules: 
+\code{\link{authDropdown}()},
+\code{\link{multi_selectUI}()},
+\code{\link{multi_select}()}
 }
 \concept{Shiny modules}

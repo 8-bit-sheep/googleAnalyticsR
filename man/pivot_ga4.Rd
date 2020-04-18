@@ -4,8 +4,13 @@
 \alias{pivot_ga4}
 \title{Make a pivot object}
 \usage{
-pivot_ga4(pivot_dim, metrics, dim_filter_clause = NULL, startGroup = 0,
-  maxGroupCount = 5)
+pivot_ga4(
+  pivot_dim,
+  metrics,
+  dim_filter_clause = NULL,
+  startGroup = 0,
+  maxGroupCount = 5
+)
 }
 \arguments{
 \item{pivot_dim}{A character vector of dimensions}

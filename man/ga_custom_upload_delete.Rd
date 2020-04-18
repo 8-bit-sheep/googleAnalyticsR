@@ -4,8 +4,12 @@
 \alias{ga_custom_upload_delete}
 \title{Deletes custom upload files for a given ids vector}
 \usage{
-ga_custom_upload_delete(accountId, webPropertyId, customDataSourceId,
-  customDataImportUids)
+ga_custom_upload_delete(
+  accountId,
+  webPropertyId,
+  customDataSourceId,
+  customDataImportUids
+)
 }
 \arguments{
 \item{accountId}{Account Id}
@@ -22,9 +26,10 @@ Deletes custom upload files for a given ids vector
 \seealso{
 https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/uploads/deleteUploadData
 
-Other custom datasource functions: \code{\link{ga_custom_datasource}},
-  \code{\link{ga_custom_upload_file}},
-  \code{\link{ga_custom_upload_list}},
-  \code{\link{ga_custom_upload}}
+Other custom datasource functions: 
+\code{\link{ga_custom_datasource}()},
+\code{\link{ga_custom_upload_file}()},
+\code{\link{ga_custom_upload_list}()},
+\code{\link{ga_custom_upload}()}
 }
 \concept{custom datasource functions}
