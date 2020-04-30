@@ -14,7 +14,7 @@ date_ga4 <- function(dvector){
   structure(
     list(startDate = dvector[1],
          endDate = dvector[2]),
-    class = "date_ga4"
+    class = c("date_ga4","list")
   )
 }
 
