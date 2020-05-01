@@ -10,31 +10,59 @@
 #' #' @importFrom googleAuthR gar_api_generator
 #' @family BatchRunReportsRequest functions
 #' @export
-batchRunReports <- function(BatchRunReportsRequest) {
+google_analytics_aw <- function(propertyId,
+                                metrics,
+                                date_range,
+                                dimensions,
+                                limit = 10) {
   url <- "https://analyticsdata.googleapis.com/v1alpha:batchRunReports"
+  
+  brrr <- BatchRunReportsRequest(
+    entity = list(propertyId = as.character(propertyId)),
+    requests = list(
+      RunReportRequest(
+        metrics = lapply(metrics, function(x) Metric(name = x)),
+        dimensions = lapply(dimensions, function(x) Dimension(name = x)),
+        dateRanges = date_ga4(date_range),
+        limit = limit
+      )
+    )
+  )
+  
+  parse_batchrunreports <- function(x){
+    o <- x$reports
+
+    the_data <- lapply(o$rows, function(x){
+      o <- cbind(get_value_cols(x, type = "dimensionValues"),
+                 get_value_cols(x, type = "metricValues"))
+      setNames(o, c(dimensions, metrics))
+    })
+    
+    Reduce(rbind, the_data)
+  }
+  
+  
   # analyticsdata.batchRunReports
   f <- gar_api_generator(url, "POST", 
                          data_parse_function = parse_batchrunreports)
   
-  stopifnot(inherits(BatchRunReportsRequest, "gar_BatchRunReportsRequest"))
-  o <- f(the_body = BatchRunReportsRequest)
+  stopifnot(inherits(brrr, "gar_BatchRunReportsRequest"))
+  o <- f(the_body = brrr)
   
   o
 }
 
-get_value <- function(x, 
+#' @noRd
+#' @importFrom tibble as_tibble
+get_value_cols <- function(x, 
                       type = c("dimensionValues", "metricValues")){
   type <- match.arg(type)
-  lapply(x[[type]], function(y) y[["value"]])
+  as_tibble(
+    do.call(rbind, lapply(x[[type]], function(y) y[["value"]])),
+    .name_repair = "minimal")
 } 
 
-parse_batchrunreports <- function(x){
-  o <- x$reports
-  lapply(o$rows, function(y){
-    cbind(get_value(y, "dimensionValues"), 
-          get_value(y, "metricValues"))
-  })
-}
+
 
 
 
