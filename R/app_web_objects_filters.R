@@ -1,3 +1,4 @@
+
 #' Filter Object
 #'
 #' @details
@@ -15,7 +16,7 @@
 #'
 #' @family Filter functions
 #' @export
-Filter <- function(fieldName,
+Filter_aw <- function(fieldName,
                    numericFilter = NULL, 
                    inListFilter = NULL, 
                    nullFilter = NULL,
@@ -23,11 +24,12 @@ Filter <- function(fieldName,
                    betweenFilter = NULL) {
   
   assert_that(is.string(fieldName))
-  only_one <- c(is.null(numericFilter),
+  only_one <- !c(is.null(numericFilter),
                 is.null(inListFilter),
                 is.null(nullFilter),
                 is.null(stringFilter),
                 is.null(betweenFilter))
+
   assert_that(is.flag(only_one[only_one]))  
   
   assert_that_ifnn(nullFilter, is.flag)
@@ -68,7 +70,7 @@ FilterExpression <- function(andGroup = NULL,
                              orGroup = NULL,
                              notExpression = NULL){
   
-  only_one <- c(is.null(andGroup),
+  only_one <- !c(is.null(andGroup),
                 is.null(filter),
                 is.null(orGroup),
                 is.null(notExpression))
@@ -103,7 +105,7 @@ is.FilterExpression <- function(x){
 #' @export
 FilterExpressionList <- function(expressions){
   
-  lapply(expressions, function(x) assert_that(is.FilterExpression(x)))
+  assert_that_list(expressions, is.FilterExpression)
   
   structure(list(expressions = expressions), 
             class = c("gar_FilterExpressionList","list"))
@@ -112,6 +114,7 @@ FilterExpressionList <- function(expressions){
 is.FilterExpressionList <- function(x){
   inherits(x, "gar_FilterExpressionList")
 }
+
 
 #' StringFilter Object
 #'

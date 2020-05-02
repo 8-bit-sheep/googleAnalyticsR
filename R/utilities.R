@@ -1,3 +1,6 @@
+assert_that_list <- function(the_list, assert_f){
+  lapply(the_list, function(x) assert_that(assert_f(x)))
+}
 
 #' when we need a list of objs of class x to also be class x
 #' @noRd

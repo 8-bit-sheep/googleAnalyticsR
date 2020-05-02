@@ -4,7 +4,7 @@
 \alias{BatchRunReportsRequest}
 \title{BatchRunReportsRequest Object}
 \usage{
-BatchRunReportsRequest(entity = NULL, requests = NULL)
+BatchRunReportsRequest(entity, requests)
 }
 \arguments{
 \item{entity}{A property whose events are tracked}

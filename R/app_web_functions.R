@@ -16,17 +16,25 @@ google_analytics_aw <- function(propertyId,
                                 dimensions,
                                 dimensionFilter = NULL,
                                 metricFilter = NULL,
-                                limit = 10) {
+                                orderBys = NULL,
+                                limit = 100) {
   url <- "https://analyticsdata.googleapis.com/v1alpha:batchRunReports"
   
+  assert_that_ifnn(dimensionFilter, is.FilterExpression)
+  assert_that_ifnn(metricFilter, is.FilterExpression)
+  assert_that_ifnn(orderBys, is.OrderBy)
+  
   brrr <- BatchRunReportsRequest(
-    entity = list(propertyId = as.character(propertyId)),
+    entity = Entity(propertyId),
     requests = list(
       RunReportRequest(
         metrics = lapply(metrics, function(x) Metric(name = x)),
         dimensions = lapply(dimensions, function(x) Dimension(name = x)),
         dateRanges = date_ga4(date_range),
         limit = limit,
+        dimensionFilter = dimensionFilter,
+        metricFilter = metricFilter,
+        orderBys = orderBys,
         keepEmptyRows = TRUE,
         returnPropertyQuota = TRUE
       )
@@ -39,6 +47,7 @@ google_analytics_aw <- function(propertyId,
     the_data <- lapply(o$rows, function(x){
       o <- cbind(get_value_cols(x, type = "dimensionValues"),
                  get_value_cols(x, type = "metricValues"))
+      # get col names from parent environment
       setNames(o, c(dimensions, metrics))
     })
     
@@ -59,6 +68,45 @@ google_analytics_aw <- function(propertyId,
   
   o
 }
+
+#' Create a filter for use with App+Web Reports
+#' 
+#' For use with \link{google_analytics_aw}
+#' 
+#' @param a_filter A Filter object or a FilterExpression or a list of FilterExpressions
+#' @param type The type of filter
+#' 
+#' @details The fields in the same FilterExpression need to be either all dimensions or all metrics.
+#' 
+#' @export
+gaw_filter_expression <- function(a_filter,
+                                  type = c("default","not","and","or")){
+  
+  type <- match.arg(type)
+  
+  if(is.Filter(a_filter)){
+    o <- FilterExpression(filter = a_filter)
+  } else if(is.FilterExpression(a_filter)){
+    if(type != "not"){
+      stop("FilterExpression passed: only valid for type = 'not' 
+         For type = 'and/or' wrap the FilterExpressions in a list()", 
+           call. = FALSE)
+    }
+    o <- FilterExpression(notExpression = a_filter)
+  } else {
+    assert_that(is.list(a_filter))
+    # a list -  need to convert it first
+    filter_list <- FilterExpressionList(a_filter)
+    o <- switch(type,
+              and = FilterExpression(andGroup = filter_list),
+              or  = FilterExpression(orGroup = filter_list))
+  }
+  
+  o
+  
+}
+
+
 
 #' @noRd
 #' @importFrom tibble as_tibble
