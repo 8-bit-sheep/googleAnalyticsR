@@ -158,22 +158,108 @@ ga_aw_filter <- function(field,
 #' 
 #' For use with \link{google_analytics_aw}
 #' 
-#' @param a_filter A Filter object or a FilterExpression or a list of FilterExpressions
+#' @param ... Vectors of \link{ga_aw_filter}, or vectors of FilterExpression created from previous calls to this function.
 #' @param type The type of filter
 #' 
-#' @details The fields in the same FilterExpression need to be either all dimensions or all metrics.
+#' @return A FilterExpression
+#' 
+#' @details The fields in a FilterExpression need to be either all dimensions or all metrics. Use them in the appropriate dimensionFilter or metricFilter arguments within \link{google_analytics_aw}
 #' 
 #' @export
-ga_aw_filter_expr <- function(...,
+#' @examples 
+#' 
+#' simple <- ga_aw_filter_expr(ga_aw_filter("city", "Copenhagen", "EXACT"))
+#' 
+#' multiple <- ga_aw_filter_expr(
+#'      ga_aw_filter("city", "C", "BEGINS_WITH"),
+#'      ga_aw_filter("continent", "Europe"),
+#'    type = "and")
+#'    
+#' negative <- ga_aw_filter_expr(
+#'      ga_aw_filter("city", "Copenhagen", "EXACT"),
+#'      ga_aw_filter("date", c("20200416","20200415")),
+#'    type = "not")
+#'
+#' # use previously created FilterExpressions
+#' complex <- ga_aw_filter_expr(
+#' 
+#' )
+#'    
+#' 
+ga_aw_filter_expr <- function(..., 
                               type = c("default","not","and","or")){
-  
   type <- match.arg(type)
-  
   dots <- list(...)
   
-  if(length(dots) == 1){
-    a_filter <- dots[[1]]
+  # a list of Filters
+  areFilters <- all(vapply(dots, is.Filter, FUN.VALUE = logical(1)))
+  areFilterExpressions <- all(vapply(dots, is.FilterExpression, 
+                                     FUN.VALUE = logical(1)))
+  
+  if(areFilters){
+    return(make_filter_expr(dots, type))
   }
+  
+  if(areFilterExpressions){
+    return(make_filter_expr_list(dots, type))
+  }
+
+  stop("Inconsistent filter objects - must all be Filters or FilterExpressions", call. = FALSE)
+  
+
+
+  
+}
+
+make_filter_expr_list <- function(dots, type){
+  # turn into a list of filterExpressionLists
+  assert_that_list(dots, is.FilterExpression)
+  if(type == "default"){
+    type <- "and"
+  }
+  
+  if(type == "not"){
+    stop("Can't use notExpression at FilterExpression level - create a Filter instead", call. = FALSE)
+  }
+  
+  assert_that(type %in% c("and","or"))
+  
+  filter_list <- FilterExpressionList(dots)
+  
+  construct_filter_expr(filter_list, type = type)
+}
+
+make_filter_expr <- function(dots, type){
+  assert_that_list(dots, is.Filter)
+  
+  if(length(dots) == 1 && type %in% c("and","or")){
+    stop("Invalid: can't have only one filter and type=", type, 
+         call. = FALSE)
+  }
+  
+  if(length(dots) == 1 && type == "default"){
+    # a simple filter
+    assert_that(is.Filter(dots[[1]]))
+    return(construct_filter_expr(dots[[1]], type = "default"))
+  }
+  
+  # length > 1 of Filters
+  lots_filters <- lapply(dots, construct_filter_expr, type = "default")
+  
+  construct_filter_expr(lots_filters, type = type)
+
+}
+
+
+
+#' Constructs filterExpressions
+#' @param a_filter A Filter object or a FilterExpression or a list of FilterExpressions
+#' @param type The type of filter
+#' @noRd
+construct_filter_expr <- function(a_filter,
+                                 type = c("default","not","and","or")){
+  
+  type <- match.arg(type)
   
   if(type == "default"){
     assert_that(is.Filter(a_filter))
@@ -182,13 +268,11 @@ ga_aw_filter_expr <- function(...,
     assert_that(is.FilterExpression(a_filter))
     o <- FilterExpression(notExpression = a_filter)
   } else if(type == "and"){
-    assert_that(is.list(a_filter))
-    filter_list <- FilterExpressionList(a_filter)
-    o <- FilterExpression(andGroup = filter_list)
+    assert_that_list(a_filter, is.FilterExpression)
+    o <- FilterExpression(andGroup = a_filter)
   } else if(type == "or"){
-    assert_that(is.list(a_filter))
-    filter_list <- FilterExpressionList(a_filter)
-    o <- FilterExpression(orGroup = filter_list)
+    assert_that_list(a_filter, is.FilterExpression)
+    o <- FilterExpression(orGroup = a_filter)
   }
   
   o
