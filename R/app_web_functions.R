@@ -69,7 +69,92 @@ google_analytics_aw <- function(propertyId,
   o
 }
 
-#' Create a filter for use with App+Web Reports
+#' Create a filter for use within App+Web filter expressions
+#' 
+#' Used within \link{ga_aw_filter_expr}
+#' 
+#' @param field The dimension or metric field name
+#' @param value The value - filter type is based on what class of object
+#' @param operation How the filter operates on field with value
+#' @param caseSensitive For character based value filters
+#' 
+#' @details 
+#' 
+#' Ensure your value is of the right class for the type of filter you desire:
+#' 
+#' \itemize{
+#'   \item{character: string filter}
+#'   \item{character vector: in list filter}
+#'   \item{numeric: Numeric filter}
+#'   \item{numeric 2-length vector: between filter}
+#'  }
+#' 
+#' For numerics also make sure to specify integer or float for metrics e.g.
+#' 1L or 1.00
+#' 
+#' @export
+#' @importFrom assertthat is.string is.count
+ga_aw_filter <- function(field,
+                         value, 
+                         operation = c("EXACT",
+                                       "BEGINS_WITH",
+                                       "ENDS_WITH",
+                                       "CONTAINS",
+                                       "FULL_REGEXP",
+                                       "PARTIAL_REGEXP",
+                                       "EQUAL",
+                                       "LESS_THAN",
+                                       "LESS_THAN_OR_EQUAL",
+                                       "GREATER_THAN",
+                                       "GREATER_THAN_OR_EQUAL"),
+                         caseSensitive = TRUE){
+  
+  if(is.string(value)){
+    assert_that(operation %in% c("EXACT",
+                                 "BEGINS_WITH",
+                                 "ENDS_WITH",
+                                 "CONTAINS",
+                                 "FULL_REGEXP",
+                                 "PARTIAL_REGEXP"))
+    o <- Filter_aw(field, 
+                   stringFilter = StringFilter(
+                     value,
+                     matchType = operation,
+                     caseSensitive = caseSensitive
+                   ))
+  } else if(is.character(value)){
+    o <- Filter_aw(field,
+                   inListFilter = InListFilter(
+                     value,
+                     caseSensitive = caseSensitive
+                   ))
+  } else if(is.count(value)){
+    assert_that(operation %in% c("EQUAL",
+                                 "LESS_THAN",
+                                 "LESS_THAN_OR_EQUAL",
+                                 "GREATER_THAN",
+                                 "GREATER_THAN_OR_EQUAL"))
+    o <- Filter_aw(field,
+                   numericFilter = NumericFilter(
+                     value,
+                     operation = operation
+                   ))
+  } else if(is.numeric(value) && length(value) == 2){
+    o <- Filter_aw(field,
+                   betweenFilter = BetweenFilter(
+                     fromValue = value[[1]],
+                     toValue = value[[2]]
+                   ))
+  } else {
+    stop("Didn't know what to do with value of type: ", class(value), 
+         call. = FALSE)
+  }
+  
+  o
+  
+}
+
+#' Create a filter expression for use with App+Web Reports
 #' 
 #' For use with \link{google_analytics_aw}
 #' 
@@ -79,27 +164,31 @@ google_analytics_aw <- function(propertyId,
 #' @details The fields in the same FilterExpression need to be either all dimensions or all metrics.
 #' 
 #' @export
-gaw_filter_expression <- function(a_filter,
-                                  type = c("default","not","and","or")){
+ga_aw_filter_expr <- function(...,
+                              type = c("default","not","and","or")){
   
   type <- match.arg(type)
   
-  if(is.Filter(a_filter)){
+  dots <- list(...)
+  
+  if(length(dots) == 1){
+    a_filter <- dots[[1]]
+  }
+  
+  if(type == "default"){
+    assert_that(is.Filter(a_filter))
     o <- FilterExpression(filter = a_filter)
-  } else if(is.FilterExpression(a_filter)){
-    if(type != "not"){
-      stop("FilterExpression passed: only valid for type = 'not' 
-         For type = 'and/or' wrap the FilterExpressions in a list()", 
-           call. = FALSE)
-    }
+  } else if(type == "not"){
+    assert_that(is.FilterExpression(a_filter))
     o <- FilterExpression(notExpression = a_filter)
-  } else {
+  } else if(type == "and"){
     assert_that(is.list(a_filter))
-    # a list -  need to convert it first
     filter_list <- FilterExpressionList(a_filter)
-    o <- switch(type,
-              and = FilterExpression(andGroup = filter_list),
-              or  = FilterExpression(orGroup = filter_list))
+    o <- FilterExpression(andGroup = filter_list)
+  } else if(type == "or"){
+    assert_that(is.list(a_filter))
+    filter_list <- FilterExpressionList(a_filter)
+    o <- FilterExpression(orGroup = filter_list)
   }
   
   o
