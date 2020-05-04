@@ -7,13 +7,37 @@
 ga_aw_filter_expr(..., type = c("default", "not", "and", "or"))
 }
 \arguments{
-\item{type}{The type of filter}
+\item{...}{Vectors of \link{ga_aw_filter}, or vectors of FilterExpression created from previous calls to this function.}
 
-\item{a_filter}{A Filter object or a FilterExpression or a list of FilterExpressions}
+\item{type}{The type of filter}
+}
+\value{
+A FilterExpression
 }
 \description{
 For use with \link{google_analytics_aw}
 }
 \details{
-The fields in the same FilterExpression need to be either all dimensions or all metrics.
+The fields in a FilterExpression need to be either all dimensions or all metrics. Use them in the appropriate dimensionFilter or metricFilter arguments within \link{google_analytics_aw}
+}
+\examples{
+
+simple <- ga_aw_filter_expr(ga_aw_filter("city", "Copenhagen", "EXACT"))
+
+multiple <- ga_aw_filter_expr(
+     ga_aw_filter("city", "C", "BEGINS_WITH"),
+     ga_aw_filter("continent", "Europe"),
+   type = "and")
+   
+negative <- ga_aw_filter_expr(
+     ga_aw_filter("city", "Copenhagen", "EXACT"),
+     ga_aw_filter("date", c("20200416","20200415")),
+   type = "not")
+
+# use previously created FilterExpressions
+complex <- ga_aw_filter_expr(
+
+)
+   
+
 }

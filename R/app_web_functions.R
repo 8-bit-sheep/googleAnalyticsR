@@ -80,17 +80,28 @@ google_analytics_aw <- function(propertyId,
 #' 
 #' @details 
 #' 
-#' Ensure your value is of the right class for the type of filter you desire:
+#' Ensure your value is of the right R class for the type of filter you desire.
 #' 
 #' \itemize{
 #'   \item{character: string filter}
 #'   \item{character vector: in list filter}
 #'   \item{numeric: Numeric filter}
 #'   \item{numeric 2-length vector: between filter}
+#'   \item{logical: TRUE will filter for NULLs}
 #'  }
 #' 
 #' For numerics also make sure to specify integer or float for metrics e.g.
-#' 1L or 1.00
+#' 1L vs 1.00
+#' 
+#' Ensure operation is valid for the type of field you are passing:
+#' 
+#' string filters: "EXACT","BEGINS_WITH","ENDS_WITH","CONTAINS","FULL_REGEXP",
+#'   "PARTIAL_REGEXP"
+#'   
+#' numeric filters: "EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "GREATER_THAN",
+#'   "GREATER_THAN_OR_EQUAL")
+#'   
+#'   
 #' 
 #' @export
 #' @importFrom assertthat is.string is.count
@@ -145,6 +156,8 @@ ga_aw_filter <- function(field,
                      fromValue = value[[1]],
                      toValue = value[[2]]
                    ))
+  } else if(is.flag(value)){
+    o <- Filter_aw(field, nullFilter = value)
   } else {
     stop("Didn't know what to do with value of type: ", class(value), 
          call. = FALSE)
@@ -197,6 +210,7 @@ ga_aw_filter_expr <- function(...,
                                      FUN.VALUE = logical(1)))
   
   if(areFilters){
+    
     return(make_filter_expr(dots, type))
   }
   
@@ -204,7 +218,8 @@ ga_aw_filter_expr <- function(...,
     return(make_filter_expr_list(dots, type))
   }
 
-  stop("Inconsistent filter objects - must all be Filters or FilterExpressions", call. = FALSE)
+  stop("Inconsistent filter objects - must all be Filters or FilterExpressions", 
+       call. = FALSE)
   
 
 
@@ -212,6 +227,7 @@ ga_aw_filter_expr <- function(...,
 }
 
 make_filter_expr_list <- function(dots, type){
+  myMessage("Got FilterExpressions", level = 2)
   # turn into a list of filterExpressionLists
   assert_that_list(dots, is.FilterExpression)
   if(type == "default"){
@@ -219,7 +235,10 @@ make_filter_expr_list <- function(dots, type){
   }
   
   if(type == "not"){
-    stop("Can't use notExpression at FilterExpression level - create a Filter instead", call. = FALSE)
+    if(length(dots) > 1){
+      stop("Invalid type='not' for multiple FilterExpressions (we don't know how to combine type=and/or) - build FilterExpression first and then pass back to ga_aw_filter_expr() with type = 'not'", call. = FALSE)
+    }
+    return(construct_filter_expr(dots[[1]], type = "not"))
   }
   
   assert_that(type %in% c("and","or"))
@@ -230,23 +249,22 @@ make_filter_expr_list <- function(dots, type){
 }
 
 make_filter_expr <- function(dots, type){
+  myMessage("Got Filters", level = 2)
   assert_that_list(dots, is.Filter)
   
   if(length(dots) == 1 && type %in% c("and","or")){
-    stop("Invalid: can't have only one filter and type=", type, 
-         call. = FALSE)
+    warning("Ignoring argument 'type': only one filter. type=", type)
   }
   
   if(length(dots) == 1 && type == "default"){
     # a simple filter
-    assert_that(is.Filter(dots[[1]]))
     return(construct_filter_expr(dots[[1]], type = "default"))
   }
   
-  # length > 1 of Filters
+  # length > 1 of Filters - make list of filterExpressions
   lots_filters <- lapply(dots, construct_filter_expr, type = "default")
   
-  construct_filter_expr(lots_filters, type = type)
+  make_filter_expr_list(lots_filters, type = type)
 
 }
 
@@ -260,22 +278,12 @@ construct_filter_expr <- function(a_filter,
                                  type = c("default","not","and","or")){
   
   type <- match.arg(type)
-  
-  if(type == "default"){
-    assert_that(is.Filter(a_filter))
-    o <- FilterExpression(filter = a_filter)
-  } else if(type == "not"){
-    assert_that(is.FilterExpression(a_filter))
-    o <- FilterExpression(notExpression = a_filter)
-  } else if(type == "and"){
-    assert_that_list(a_filter, is.FilterExpression)
-    o <- FilterExpression(andGroup = a_filter)
-  } else if(type == "or"){
-    assert_that_list(a_filter, is.FilterExpression)
-    o <- FilterExpression(orGroup = a_filter)
-  }
-  
-  o
+
+  switch(type,
+    default = FilterExpression(filter = a_filter),
+    not = FilterExpression(notExpression = a_filter),
+    and = FilterExpression(andGroup = a_filter),
+    or = FilterExpression(orGroup = a_filter))
   
 }
 

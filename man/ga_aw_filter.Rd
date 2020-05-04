@@ -26,15 +26,24 @@ ga_aw_filter(
 Used within \link{ga_aw_filter_expr}
 }
 \details{
-Ensure your value is of the right class for the type of filter you desire:
+Ensure your value is of the right R class for the type of filter you desire.
 
 \itemize{
   \item{character: string filter}
   \item{character vector: in list filter}
   \item{numeric: Numeric filter}
   \item{numeric 2-length vector: between filter}
+  \item{logical: TRUE will filter for NULLs}
  }
 
 For numerics also make sure to specify integer or float for metrics e.g.
-1L or 1.00
+1L vs 1.00
+
+Ensure operation is valid for the type of field you are passing:
+
+string filters: "EXACT","BEGINS_WITH","ENDS_WITH","CONTAINS","FULL_REGEXP",
+  "PARTIAL_REGEXP"
+  
+numeric filters: "EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "GREATER_THAN",
+  "GREATER_THAN_OR_EQUAL")
 }

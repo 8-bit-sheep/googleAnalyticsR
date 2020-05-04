@@ -81,10 +81,10 @@ FilterExpression <- function(andGroup = NULL,
   assert_that_ifnn(notExpression, is.FilterExpression)
   assert_that_ifnn(filter, is.Filter)
   
-  structure(list(andGroup = andGroup, 
+  structure(rmNullObs(list(andGroup = andGroup, 
                  filter = filter, 
                  orGroup = orGroup, 
-                 notExpression = notExpression),
+                 notExpression = notExpression)),
             class = c("gar_FilterExpression", "list"))
 }
 
