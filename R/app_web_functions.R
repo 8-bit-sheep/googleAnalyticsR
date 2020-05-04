@@ -169,7 +169,7 @@ ga_aw_filter <- function(field,
 
 #' Create a filter expression for use with App+Web Reports
 #' 
-#' For use with \link{google_analytics_aw}
+#' For use with \link{google_analytics_aw} - filter expressions are built up via filters or other nested filter expressions.
 #' 
 #' @param ... Vectors of \link{ga_aw_filter}, or vectors of FilterExpression created from previous calls to this function.
 #' @param type The type of filter
@@ -178,25 +178,33 @@ ga_aw_filter <- function(field,
 #' 
 #' @details The fields in a FilterExpression need to be either all dimensions or all metrics. Use them in the appropriate dimensionFilter or metricFilter arguments within \link{google_analytics_aw}
 #' 
+#' You can't pass a mix of filters and filter expressions, or multiple filter expressions with type="not" as it doesn't know how to combine the filters (and/or) - make a filter expression with type = "and/or" then pass that back into the function with type="not" to negate the filter expression.
+#' 
 #' @export
 #' @examples 
 #' 
 #' simple <- ga_aw_filter_expr(ga_aw_filter("city", "Copenhagen", "EXACT"))
 #' 
 #' multiple <- ga_aw_filter_expr(
-#'      ga_aw_filter("city", "C", "BEGINS_WITH"),
-#'      ga_aw_filter("continent", "Europe"),
-#'    type = "and")
+#'       ga_aw_filter("dayOfWeek", "4", "EXACT"),
+#'      ga_aw_filter("dayOfWeek", "5", "EXACT"),
+#'     type = "or")
 #'    
-#' negative <- ga_aw_filter_expr(
-#'      ga_aw_filter("city", "Copenhagen", "EXACT"),
-#'      ga_aw_filter("date", c("20200416","20200415")),
-#'    type = "not")
-#'
-#' # use previously created FilterExpressions
-#' complex <- ga_aw_filter_expr(
+#'# equivalent to above as uses InList filter
+#' multiple_or2 <- ga_aw_filter_expr(
+#'       ga_aw_filter("dayOfWeek", c("4","5")))
 #' 
-#' )
+#' # make a filter expression then pass it again with type='not' to negate it 
+#' negative <- ga_aw_filter_expr(multiple_or2, type = "not")
+#' 
+#' # or directly - 
+
+#' clean_city <- ga_aw_filter_expr(
+#'   ga_aw_filter("city", "(not set)", "EXACT",), type = "not")
+#'
+#' # use previously created FilterExpressions to build up more complex filters
+#' complex <- ga_aw_filter_expr(multiple_or2, clean_city)
+#' 
 #'    
 #' 
 ga_aw_filter_expr <- function(..., 
@@ -220,9 +228,6 @@ ga_aw_filter_expr <- function(...,
 
   stop("Inconsistent filter objects - must all be Filters or FilterExpressions", 
        call. = FALSE)
-  
-
-
   
 }
 
