@@ -20,9 +20,15 @@ google_analytics_aw <- function(propertyId,
                                 limit = 100) {
   url <- "https://analyticsdata.googleapis.com/v1alpha:batchRunReports"
   
-  assert_that_ifnn(dimensionFilter, is.FilterExpression)
-  assert_that_ifnn(metricFilter, is.FilterExpression)
-  assert_that_ifnn(orderBys, is.OrderBy)
+  # build a filterExpression if a Filter present
+  if(is.Filter(dimensionFilter)){
+    dimensionFilter <- ga_aw_filter_expr(dimensionFilter)
+  }
+  
+  # build a filterExpression if a Filter present
+  if(is.Filter(metricFilter)){
+    metricFilter <- ga_aw_filter_expr(metricFilter)
+  }  
   
   brrr <- BatchRunReportsRequest(
     entity = Entity(propertyId),

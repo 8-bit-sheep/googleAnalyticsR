@@ -62,6 +62,9 @@ RunReportRequest <- function(entity = NULL,
                              returnPropertyQuota = NULL){
   
   assert_that_ifnn(entity, is.Entity)
+  assert_that_ifnn(dimensionFilter, is.FilterExpression)
+  assert_that_ifnn(metricFilter, is.FilterExpression)
+  assert_that_ifnn(orderBys, is.OrderBy)
   
   structure(
     rmNullObs(
