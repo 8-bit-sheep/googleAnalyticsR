@@ -50,6 +50,10 @@ google_analytics_aw <- function(propertyId,
   parse_batchrunreports <- function(x){
     o <- x$reports
 
+    if(is.null(o$rows)){
+      myMessage("No data found", level = 3)
+      return(NULL)
+    }
     the_data <- lapply(o$rows, function(x){
       o <- cbind(get_value_cols(x, type = "dimensionValues"),
                  get_value_cols(x, type = "metricValues"))
