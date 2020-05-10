@@ -62,12 +62,18 @@ google_analytics_aw <- function(propertyId,
     })
     
     res <- Reduce(rbind, the_data)
-    attr(res, "propertyQuota") <- o$propertyQuota
+    
+    #type changes
+    if(!is.null(res$date)){
+      res$date <- as.Date(res$date, format = "%Y%m%d")
+    }
+    
+    quota_messages(o)
+    
     attr(res, "metadata") <- if(ncol(o$metadata) > 0) o$metadata else NULL
     
     res
   }
-  
   
   # analyticsdata.batchRunReports
   f <- gar_api_generator(url, "POST", 
@@ -77,6 +83,39 @@ google_analytics_aw <- function(propertyId,
   o <- f(the_body = brrr)
   
   o
+}
+
+quota_messages <- function(o){
+  pq <- o$propertyQuota
+  care_factor <- 0.5
+  verbose <- getOption("googleAuthR.verbose") < 3
+
+  # quota messages
+  if(pq$tokensPerDay$consumed > (care_factor*pq$tokensPerDay$remaining) ||
+     verbose){
+    myMessage("tokensPerDay: Query Cost [", pq$tokensPerDay$consumed, 
+              "] / Remaining [", pq$tokensPerDay$remaining,"]",
+              level = 3)
+  }
+  
+  if(pq$tokensPerHour$consumed > (care_factor*pq$tokensPerHour$remaining) ||
+     verbose){
+    myMessage("tokensPerHour: Query Cost [", pq$tokensPerHour$consumed, 
+              "] / Remaining [", pq$tokensPerHour$remaining,"]",
+              level = 3)
+  }
+  
+  if(pq$concurrentRequests < 10 || verbose){
+    myMessage("concurrentRequests: ", pq$concurrentRequests, 
+              " / 10",
+              level = 3)
+  }
+  
+  if(pq$serverErrorsPerProjectPerHour < 10 || verbose){
+    myMessage("serverErrorsPerProjectPerHour: ", pq$serverErrorsPerProjectPerHour, 
+              " / 10",
+              level = 3)
+  }
 }
 
 #' Create a filter for use within App+Web filter expressions
@@ -309,8 +348,14 @@ construct_filter_expr <- function(a_filter,
 get_value_cols <- function(x, 
                       type = c("dimensionValues", "metricValues")){
   type <- match.arg(type)
-  as_tibble(
+  o <- as_tibble(
     do.call(rbind, lapply(x[[type]], function(y) y[["value"]])),
     .name_repair = "minimal")
+  
+  if(type == "metricValues"){
+    o <- lapply(o, as.numeric)
+  }
+  
+  o
 } 
 

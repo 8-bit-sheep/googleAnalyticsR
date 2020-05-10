@@ -12,13 +12,12 @@ test_that("Basic fetch", {
   
   expect_s3_class(df, "data.frame")
   expect_equal(names(df), c("date","city","activeUsers"))
-  
-  city_dk <- ga_aw_filter_expr(
-    ga_aw_filter("city", "Copenhagen", "EXACT")
-  )
-  
-  expect_s3_class(city_dk, "gar_FilterExpression")
+  expect_s3_class(df$activeUsers, "numeric")
+  expect_s3_class(df$date, "Date")
+  expect_s3_class(df$city, "character")
 })
+
+context("App + Web Filters")
 
 test_that("Filter objects", {
   
@@ -45,5 +44,46 @@ test_that("Filter objects", {
   expect_s3_class(no_nulls, "gar_Filter")
   expect_true(no_nulls$nullFilter)
   
+  
+})
+
+test_that("Filter fetch types", {
+
+  test_filter <- function(dim_filter = NULL,
+                          met_filter = NULL){
+    google_analytics_aw(
+      206670707,
+      metrics = "activeUsers",
+      dimensions = c("date","city", "dayOfWeek"),
+      date_range = c("2020-03-31", "2020-04-27"),
+      dimensionFilter = dim_filter,
+      metricFilter = met_filter,
+      limit = 100
+    )
+  }
+  
+  #dimension filter
+  string_f <- ga_aw_filter("city","Copenhagen","EXACT", caseSensitive = FALSE)
+  string_data <- test_filter(string_f)
+  expect_equal(unique(string_data$city), "Copenhagen")
+  
+  in_list_f <- ga_aw_filter("city",c("Copenhagen","London"))
+  in_list_data <- test_filter(in_list_f)
+  expect_equal(unique(in_list_data$city), c("London", "Copenhagen"))
+  
+  # metric filters
+  numeric_f <- ga_aw_filter("activeUsers", 2L, "GREATER_THAN")
+  numeric_data <- test_filter(met_filter = numeric_f)
+  expect_true(all(numeric_data$activeUsers >2))
+  
+  numeric_list_f <- ga_aw_filter("activeUsers", c(2L,6L))
+  numeric_list_data <- test_filter(met_filter = numeric_list_f)
+  expect_true(all(numeric_list_data$activeUsers %in% 2:6))
+  
+  # need to create metric expressions that are floats
+  #float_f <- ga_aw_filter("")
+  
+  # what can I test this on?
+  #no_nulls <- ga_aw_filter("city", TRUE)
   
 })
