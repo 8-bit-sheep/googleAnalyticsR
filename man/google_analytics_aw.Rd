@@ -12,7 +12,8 @@ google_analytics_aw(
   dimensionFilter = NULL,
   metricFilter = NULL,
   orderBys = NULL,
-  limit = 100
+  limit = 100,
+  delimiter = "/"
 )
 }
 \arguments{

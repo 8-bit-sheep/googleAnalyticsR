@@ -45,7 +45,6 @@ BatchRunReportsRequest <- function(entity, requests){
 #' @return RunReportRequest object
 #'
 #' @family RunReportRequest functions
-#' @export
 RunReportRequest <- function(entity = NULL, 
                              metrics = NULL, 
                              currencyCode = NULL,
@@ -121,10 +120,11 @@ is.Entity <- function(x){
 #' @return Metric object
 #'
 #' @family Metric functions
-#' @export
-Metric <- function(expression = NULL,
-                   invisible = NULL,
-                   name = NULL) {
+Metric <- function(name, 
+                   expression = NULL,
+                   invisible = NULL) {
+  assert_that(is.string(name))
+  
   structure(list(expression = expression,
                  invisible = invisible,
                  name = name),
@@ -148,7 +148,6 @@ is.Metric <- function(x){
 #' @return DimensionExpression object
 #'
 #' @family DimensionExpression functions
-#' @export
 DimensionExpression <- function(lowerCase = NULL, 
                                 concatenate = NULL, 
                                 upperCase = NULL) {
@@ -174,8 +173,9 @@ is.DimensionExpression <- function(x){
 #' @return Dimension object
 #'
 #' @family Dimension functions
-#' @export
-Dimension <- function(name = NULL, dimensionExpression = NULL) {
+Dimension <- function(name, dimensionExpression = NULL) {
+  assert_that(is.string(name))
+  
   structure(list(name = name, 
                  dimensionExpression = dimensionExpression), 
             class = c("gar_Dimension","list"))

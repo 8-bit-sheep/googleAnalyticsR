@@ -4,14 +4,14 @@
 \alias{Metric}
 \title{Metric Object}
 \usage{
-Metric(expression = NULL, invisible = NULL, name = NULL)
+Metric(name, expression = NULL, invisible = NULL)
 }
 \arguments{
+\item{name}{The name of the metric}
+
 \item{expression}{A mathematical expression for derived metrics}
 
 \item{invisible}{Indicates if a metric is invisible}
-
-\item{name}{The name of the metric}
 }
 \value{
 Metric object

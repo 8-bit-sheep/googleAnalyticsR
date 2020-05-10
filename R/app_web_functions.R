@@ -10,6 +10,30 @@
 #' #' @importFrom googleAuthR gar_api_generator
 #' @family BatchRunReportsRequest functions
 #' @export
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' # metric and dimension expressions
+#' met_expression <- google_analytics_aw(
+#'   206670707,
+#'   metrics = c("activeUsers","sessions",sessionsPerUser = "sessions/activeUsers"),
+#'   dimensions = c("date","city","dayOfWeek"),
+#'   date_range = c("2020-03-31", "2020-04-27"),
+#'   dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
+#'   limit = 100
+#'   )
+#'
+#' dim_expression <- google_analytics_aw(
+#'   206670707,
+#'   metrics = c("activeUsers","sessions"),
+#'   dimensions = c("date","city","dayOfWeek", cdow = "city/dayOfWeek"),
+#'   date_range = c("2020-03-31", "2020-04-27"),
+#'   dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
+#'   limit = 100
+#'   )
+#' 
+#' }
 google_analytics_aw <- function(propertyId,
                                 metrics,
                                 date_range,
@@ -17,7 +41,8 @@ google_analytics_aw <- function(propertyId,
                                 dimensionFilter = NULL,
                                 metricFilter = NULL,
                                 orderBys = NULL,
-                                limit = 100) {
+                                limit = 100,
+                                delimiter = "/") {
   url <- "https://analyticsdata.googleapis.com/v1alpha:batchRunReports"
   
   # build a filterExpression if a Filter present
@@ -34,8 +59,8 @@ google_analytics_aw <- function(propertyId,
     entity = Entity(propertyId),
     requests = list(
       RunReportRequest(
-        metrics = lapply(metrics, function(x) Metric(name = x)),
-        dimensions = lapply(dimensions, function(x) Dimension(name = x)),
+        metrics = gaw_metric(metrics),
+        dimensions = gaw_dimension(dimensions, delimiter = delimiter),
         dateRanges = date_ga4(date_range),
         limit = limit,
         dimensionFilter = dimensionFilter,
@@ -83,6 +108,57 @@ google_analytics_aw <- function(propertyId,
   o <- f(the_body = brrr)
   
   o
+}
+
+gaw_metric <- function(metrics){
+  unnamed_metrics <- metrics[names(metrics) == ""]
+  named_metrics <- metrics[names(metrics) != ""]
+  
+  if(is.null(names(metrics))){
+    unnamed_metrics <- metrics
+  }
+  
+  all_metrics <- lapply(unnamed_metrics, function(x) Metric(name = x))
+  
+  if(length(named_metrics) > 0){
+    metric_exp <- lapply(names(named_metrics), function(x){
+      Metric(name = x, expression = unname(named_metrics[x]))
+    })
+    
+    all_metrics <- c(all_metrics, metric_exp)
+  }
+  
+  unname(all_metrics)
+
+}
+
+gaw_dimension <- function(dimensions, delimiter = "/"){
+
+  unnamed_dims <- dimensions[names(dimensions) == ""]
+  named_dims   <- dimensions[names(dimensions) != ""]
+  
+  if(is.null(names(dimensions))){
+    unnamed_dims <- dimensions
+  }
+  
+  all_dims <- lapply(unnamed_dims, function(x) Dimension(name = x))
+  
+  if(length(named_dims) > 0){
+    dim_exp <- lapply(names(named_dims), function(x){
+      Dimension(name = x, 
+        dimensionExpression = list(
+          concatenate = list(
+            dimensionNames = strsplit(unname(named_dims[x]),delimiter)[[1]],
+            delimiter = delimiter
+          )
+        )
+      )
+    })
+    
+    all_dims <- c(all_dims, dim_exp)
+  }
+  
+  unname(all_dims)
 }
 
 quota_messages <- function(o){

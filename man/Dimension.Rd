@@ -4,7 +4,7 @@
 \alias{Dimension}
 \title{Dimension Object}
 \usage{
-Dimension(name = NULL, dimensionExpression = NULL)
+Dimension(name, dimensionExpression = NULL)
 }
 \arguments{
 \item{name}{The name of the dimension}
