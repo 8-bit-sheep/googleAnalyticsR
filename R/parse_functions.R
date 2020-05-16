@@ -91,7 +91,7 @@ google_analytics_4_parse <- function(x){
   timelr <- NULL
   if(!is.null(x$data$dataLastRefreshed)){
     # convert timezone to locale
-    timelr <- format(timestamp_to_r(x$data$dataLastRefreshed))
+    timelr <- format(iso8601_to_r(x$data$dataLastRefreshed))
     myMessage("API data last refreshed: ",timelr, level = 3)
   }
   

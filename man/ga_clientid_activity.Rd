@@ -35,6 +35,8 @@ The User Activity API lets you query an individual user's movement through your 
 Bear in mind each call will count against your API quota, so fetching a large amount of client ids will be limited by that.
 
 Use \link{ga_clientid_activity_unnest} to unnest deeply nested data in the hits data.
+
+The timestamps are available to millisecond level but you will need to set your R options to see them e.g. \code{options(digits.secs=3)}
 }
 \examples{
 

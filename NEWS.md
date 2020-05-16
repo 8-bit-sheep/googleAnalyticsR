@@ -1,6 +1,7 @@
 # googleAnalyticsR 0.7.1.9000
 
 * fix `ga_account_list()` not dowloading starred columns (#284 - thanks @hidekoji)
+* Allow millisecond parsing of times (#314 - thanks @VadimChernik)
 
 # googleAnalyticsR 0.7.1
 

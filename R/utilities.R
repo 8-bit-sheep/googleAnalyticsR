@@ -130,7 +130,7 @@ check_empty <- function(x){
 #' iso8601 timestamp to R
 #' @noRd
 iso8601_to_r <- function(x){
-  as.POSIXct(gsub("\\....Z$","",x), format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
+  as.POSIXct(gsub("\\....Z$","",x), format = "%Y-%m-%dT%H:%M:%OS", tz = "UTC")
 }
 
 safe_extract <- function(x){
@@ -182,13 +182,6 @@ assert_that_ifnn <- function(x, assert_f){
 is.named <- function(x) {
   nm <- names(x)
   !is.null(nm) && all(!is.na(nm) & nm != "")
-}
-
-#' Timestamp to R date
-#' @keywords internal
-#' @noRd
-timestamp_to_r <- function(t){
-  as.POSIXct(t, format = "%Y-%m-%dT%H:%M:%S")
 }
 
 #' if argument is NULL, no line output
