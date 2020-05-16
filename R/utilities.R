@@ -344,12 +344,22 @@ idempotency <- function(){
 #' @details 0 = everything, 1 = debug, 2=normal, 3=important
 #' @keywords internal
 #' @noRd
+#' @import cli
 myMessage <- function(..., level = 2){
   
   compare_level <- getOption("googleAuthR.verbose")
   
   if(level >= compare_level){
-    message(Sys.time() ,"> ", ...)
+    time <- paste(Sys.time(),">")
+    mm <- paste(...)
+    if(grepl("^#", mm)){
+      cli_h1(mm)
+    } else {
+      cli_div(theme = list(span.time = list(color = "grey")))
+      cli_alert_info("{.time {time}} {mm}")
+      cli_end()
+    }
+    
   }
   
 }

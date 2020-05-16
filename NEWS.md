@@ -2,6 +2,8 @@
 
 * fix `ga_account_list()` not dowloading starred columns (#284 - thanks @hidekoji)
 * Allow millisecond parsing of times (#314 - thanks @VadimChernik)
+* update to use `cli` for nicer looking user messaging
+* Change the default client.id (#311)
 
 # googleAnalyticsR 0.7.1
 
