@@ -4,12 +4,14 @@
 \alias{ga_auth}
 \title{Authenticate with Google Analytics OAuth2}
 \usage{
-ga_auth(token = NULL, email = NULL)
+ga_auth(token = NULL, email = NULL, json_file = NULL)
 }
 \arguments{
 \item{token}{An existing token or file location of a token to authenticate with}
 
 \item{email}{An existing cached email to authenticate with or \code{TRUE} to authenticate with only email available.  If not set then you will get an interactive prompt asking you to choose which email to authenticate with.}
+
+\item{json_file}{Authentication service key you have downloaded from your Google Project - an alternative to OAuth2 email authentication}
 }
 \value{
 Invisibly, the token that has been saved to the session
@@ -106,7 +108,8 @@ ga_account_list() # lists one set of accounts
 ga_auth(email = "work@mybusiness.com") 
 ga_account_list() # lists second set of accounts
 
-
+# or authenticate via the service key, that has been added to the GA as a user
+ga_auth(json_file = "service-key.json")
 
 }
 

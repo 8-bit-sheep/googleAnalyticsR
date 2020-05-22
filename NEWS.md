@@ -4,6 +4,9 @@
 * Allow millisecond parsing of times (#314 - thanks @VadimChernik)
 * update to use `cli` for nicer looking user messaging
 * Change the default client.id (#311)
+* Allow authentication via a service account key directly in `ga_auth()`
+* Remove `GARGLE_EMAIL` auto-auth on package load as could stop package loading under some circumstances.
+* Add `ga_auth_setup()` to help walk through some of the advanced authentication setups
 
 # googleAnalyticsR 0.7.1
 

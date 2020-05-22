@@ -63,8 +63,6 @@
               "https://www.googleapis.com/auth/analytics.manage.users",
               "https://www.googleapis.com/auth/analytics.user.deletion")
   
-  googleAuthR::gar_attach_auto_auth(needed, 
-                                    environment_var = "GARGLE_EMAIL")
   # for json files
   googleAuthR::gar_attach_auto_auth(needed, 
                                     environment_var = "GA_AUTH_FILE")
