@@ -34,10 +34,6 @@ Check out the [NEWS](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/
 
 `googleAnalyticsR` requires the packages described in the [`Imports` field of the `DESCRIPTION` file](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/DESCRIPTION) to be installed first, which it will do via `install.packages("googleAnalyticsR", dependencies = TRUE)`
 
-You can visualise the dependencies here:
-
-![](googleAnaytics_deepdep.png)
-
 The depedencies are roughly split into the following roles:
 
 * `googleAuthR`, `gargle` are used for authentication with Google APIs

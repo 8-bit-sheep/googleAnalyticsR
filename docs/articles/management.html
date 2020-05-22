@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9001</span>
       </span>
     </div>
 
@@ -718,18 +718,17 @@
 <p>We can programatically copy goal configurations from any GA view (the source) to another GA view (the destination) within an entirely separate property. This can be helpful to maintain standardised goal configurations for multiple properties, and also for GA migrations.</p>
 <p>This example will first copy a single goal from one property to another, then use the <a href="https://purrr.tidyverse.org/reference/map.html"><code>map()</code></a> function from <code>purrr</code> to copy multiple goals at once.</p>
 <p>We use the Google Analytics demo account as the source view for this example - you can <a href="https://support.google.com/analytics/answer/6367342?hl=en">read more about the demo account here</a>.</p>
-</div>
-<div id="auth-and-setup" class="section level2">
-<h2 class="hasAnchor">
-<a href="#auth-and-setup" class="anchor"></a>Auth and setup</h2>
+<div id="auth-and-setup" class="section level3">
+<h3 class="hasAnchor">
+<a href="#auth-and-setup" class="anchor"></a>Auth and setup</h3>
 <p>We authenticate and load the necessary packages, following the instructions from the <a href="http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#choose-authentication-method">documentation</a>.</p>
 <div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">stringr</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rlist</span>)</pre></body></html></div>
 </div>
-<div id="copying-a-single-goal" class="section level2">
-<h2 class="hasAnchor">
-<a href="#copying-a-single-goal" class="anchor"></a>Copying a single goal</h2>
+<div id="copying-a-single-goal" class="section level3">
+<h3 class="hasAnchor">
+<a href="#copying-a-single-goal" class="anchor"></a>Copying a single goal</h3>
 <p>For this first section, we copy a single Goal from one view to another. To achieve this, we will:</p>
 <ol style="list-style-type: decimal">
 <li>Retrieve the accountId, webPropertyId and viewId from our <strong>source</strong> GA view (the one where our goal to be copied over currently exists).</li>
@@ -738,9 +737,9 @@
 <li>Get the configuration details of a single goal to be copied.</li>
 <li>Submit the goal details to our destination property.</li>
 </ol>
-<div id="retrieve-the-accountid-webpropertyid-and-viewid-from-our-source-ga-view" class="section level3">
-<h3 class="hasAnchor">
-<a href="#retrieve-the-accountid-webpropertyid-and-viewid-from-our-source-ga-view" class="anchor"></a>1. Retrieve the accountId, webPropertyId and viewId from our source GA view</h3>
+<div id="retrieve-the-accountid-webpropertyid-and-viewid-from-our-source-ga-view" class="section level4">
+<h4 class="hasAnchor">
+<a href="#retrieve-the-accountid-webpropertyid-and-viewid-from-our-source-ga-view" class="anchor"></a>1. Retrieve the accountId, webPropertyId and viewId from our source GA view</h4>
 <p>We use the <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> function, which returns an account summary for all available accounts as a dataframe. Then, we filter the dataframe down to a specific account and view name using the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> and <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code> functions from the tidyverse.</p>
 <p>You can supply your own filter conditions as necessary, to locate your desired view information.</p>
 <div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="co"># Account info and list of goals for source, to be copied</span>
@@ -754,9 +753,9 @@
 ## # … with 4 more variables: webPropertyId &lt;chr&gt;, webPropertyName &lt;chr&gt;,
 ## #   viewId &lt;chr&gt;, viewName &lt;chr&gt;</code></pre>
 </div>
-<div id="get-a-list-of-the-goals-currently-configured-from-our-source-ga-view" class="section level3">
-<h3 class="hasAnchor">
-<a href="#get-a-list-of-the-goals-currently-configured-from-our-source-ga-view" class="anchor"></a>2. Get a list of the goals currently configured from our source GA view</h3>
+<div id="get-a-list-of-the-goals-currently-configured-from-our-source-ga-view" class="section level4">
+<h4 class="hasAnchor">
+<a href="#get-a-list-of-the-goals-currently-configured-from-our-source-ga-view" class="anchor"></a>2. Get a list of the goals currently configured from our source GA view</h4>
 <p>Now that we have the account summary, we can use the view details to get a list of goal data, with each item in the list showing goal details.</p>
 <div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="no">source_goals</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_goal_list.html">ga_goal_list</a></span>(<span class="no">source_account</span>$<span class="no">accountId</span>, <span class="no">source_account</span>$<span class="no">webPropertyId</span>, <span class="no">source_account</span>$<span class="no">viewId</span>)
 <span class="no">source_goals</span></pre></body></html></div>
@@ -801,18 +800,18 @@
 ## 3                                &lt;NA&gt;                                 &lt;NA&gt;
 ## 4                                &lt;NA&gt;                                 &lt;NA&gt;</code></pre>
 </div>
-<div id="retrieve-the-accountid-webpropertyid-and-viewid-from-our-destination-ga-view" class="section level3">
-<h3 class="hasAnchor">
-<a href="#retrieve-the-accountid-webpropertyid-and-viewid-from-our-destination-ga-view" class="anchor"></a>3. Retrieve the accountId, webPropertyId and viewId from our destination GA view</h3>
+<div id="retrieve-the-accountid-webpropertyid-and-viewid-from-our-destination-ga-view" class="section level4">
+<h4 class="hasAnchor">
+<a href="#retrieve-the-accountid-webpropertyid-and-viewid-from-our-destination-ga-view" class="anchor"></a>3. Retrieve the accountId, webPropertyId and viewId from our destination GA view</h4>
 <p>We again filter the results from <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code>, to get account information for our destination GA property. In this example, we filter for “Your_Account” and the view called “Filtered”.</p>
 <p>The <code>dest_account</code> dataframe should contain the same columns and data types as your <code>source_account</code> dataframe.</p>
 <div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="co"># Account info for destination account</span>
 <span class="no">dest_account</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span>() <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(<span class="no">accountName</span>, <span class="st">"Your_Account"</span>), <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(<span class="no">viewName</span>, <span class="st">"Filtered"</span>))</pre></body></html></div>
 </div>
-<div id="get-the-configuration-details-of-a-single-goal-to-be-copied-" class="section level3">
-<h3 class="hasAnchor">
-<a href="#get-the-configuration-details-of-a-single-goal-to-be-copied-" class="anchor"></a>4. Get the configuration details of a single goal to be copied.</h3>
+<div id="get-the-configuration-details-of-a-single-goal-to-be-copied-" class="section level4">
+<h4 class="hasAnchor">
+<a href="#get-the-configuration-details-of-a-single-goal-to-be-copied-" class="anchor"></a>4. Get the configuration details of a single goal to be copied.</h4>
 <p>For this first example, we add a single goal (ID 1) to the destination view, passed as a list to the <a href="http://code.markedmondson.me/googleAnalyticsR/reference/ga_goal_add.html"><code><a href="../reference/ga_goal_add.html">ga_goal_add()</a></code></a> function.</p>
 <p>We now use the <code><a href="../reference/ga_goal.html">ga_goal()</a></code> function to retrieve the goal specifications as a list. We use <code><a href="../reference/ga_goal.html">ga_goal()</a></code> because it provides the goal configuration data in the necessary format for our <code>goal_add()</code> request.</p>
 <p>In the example below, we retrieve the details for the goal in slot 1.</p>
@@ -861,9 +860,9 @@
 ## 3      3              Payment     /payment\\.html
 ## 4      4               Review /revieworder\\.html</code></pre>
 </div>
-<div id="submit-the-goal-details-to-our-destination-property-" class="section level3">
-<h3 class="hasAnchor">
-<a href="#submit-the-goal-details-to-our-destination-property-" class="anchor"></a>5. Submit the goal details to our destination property.</h3>
+<div id="submit-the-goal-details-to-our-destination-property-" class="section level4">
+<h4 class="hasAnchor">
+<a href="#submit-the-goal-details-to-our-destination-property-" class="anchor"></a>5. Submit the goal details to our destination property.</h4>
 <p>We can then use the goal details contained in <code>goal_one</code> to submit a <code><a href="../reference/ga_goal_add.html">ga_goal_add()</a></code> request to our destination property.</p>
 <div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_goal_add.html">ga_goal_add</a></span>(<span class="no">goal_one</span>, <span class="no">dest_account</span>$<span class="no">accountId</span>, <span class="no">dest_account</span>$<span class="no">webPropertyId</span>, <span class="no">dest_account</span>$<span class="no">viewId</span>)</pre></body></html></div>
 <p>All being well, you should see console output containing the details of your newly submitted goal in the destination property.</p>
@@ -871,9 +870,9 @@
 <hr>
 </div>
 </div>
-<div id="copying-multiple-goals" class="section level2">
-<h2 class="hasAnchor">
-<a href="#copying-multiple-goals" class="anchor"></a>Copying multiple goals</h2>
+<div id="copying-multiple-goals" class="section level3">
+<h3 class="hasAnchor">
+<a href="#copying-multiple-goals" class="anchor"></a>Copying multiple goals</h3>
 <p>Using the <a href="https://purrr.tidyverse.org/reference/map.html"><code>map()</code></a> function from the <code>tidyverse</code>, we can quickly scale up this approach. We can copy all goals from a view at once, rather than one at a time.</p>
 <p>First, we define a function to copy a single goal, given a goal ID, details of the source view ID and destination view IDs. In effect, we make a function to perform steps 1-5 from the “Copying a single goal” section in this page.</p>
 <div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="co"># Takes a goal ID, source account information &amp; dest account information, copies goal over</span>
@@ -887,6 +886,7 @@
 <div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="co"># For each goal ID in our source view, apply the copy_goal function, </span>
 <span class="co"># using source_account and dest_account account parameters as fixed 2nd / third arguments</span>
 <span class="fu">map</span>(<span class="no">source_goals</span>$<span class="no">id</span>, <span class="no">copy_goal</span>, <span class="no">source_account</span>, <span class="no">dest_account</span>)</pre></body></html></div>
+</div>
 </div>
 <div id="write-request-limits" class="section level2">
 <h2 class="hasAnchor">

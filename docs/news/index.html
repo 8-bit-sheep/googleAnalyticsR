@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9001</span>
       </span>
     </div>
 
@@ -263,6 +263,13 @@
 </h1>
 <ul>
 <li>fix <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> not dowloading starred columns (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/284'>#284</a> - thanks <a href='https://github.com/hidekoji'>@hidekoji</a>)</li>
+<li>Allow millisecond parsing of times (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/314'>#314</a> - thanks <a href='https://github.com/VadimChernik'>@VadimChernik</a>)</li>
+<li>update to use <code>cli</code> for nicer looking user messaging</li>
+<li>Change the default client.id (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/311'>#311</a>)</li>
+<li>Allow authentication via a service account key directly in <code><a href="../reference/ga_auth.html">ga_auth()</a></code>
+</li>
+<li>Remove <code>GARGLE_EMAIL</code> auto-auth on package load as could stop package loading under some circumstances.</li>
+<li>Add <code><a href="../reference/ga_auth_setup.html">ga_auth_setup()</a></code> to help walk through some of the advanced authentication setups</li>
 </ul>
 </div>
     <div id="googleanalyticsr-0-7-1" class="section level1">

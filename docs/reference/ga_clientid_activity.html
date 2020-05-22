@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9001</span>
       </span>
     </div>
 
@@ -304,6 +304,7 @@
     <p>The User Activity API lets you query an individual user's movement through your website, by sending in the individual `clientId` or `userId`.</p>
 <p>Bear in mind each call will count against your API quota, so fetching a large amount of client ids will be limited by that.</p>
 <p>Use <a href='ga_clientid_activity_unnest.html'>ga_clientid_activity_unnest</a> to unnest deeply nested data in the hits data.</p>
+<p>The timestamps are available to millisecond level but you will need to set your R options to see them e.g. <code><a href='https://rdrr.io/r/base/options.html'>options(digits.secs=3)</a></code></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search'>https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search</a></p>

@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9001</span>
       </span>
     </div>
 
@@ -234,11 +234,11 @@
 
 <span class="co">## go through Google oAuth2 flow</span>
 <span class="co">## needs email that has access to the BigQuery dataset</span>
-<span class="fu">bqr_auth</span>()
+<span class="fu"><a href="https://rdrr.io/pkg/bigQueryR/man/bqr_auth.html">bqr_auth</a></span>()
 
 <span class="co">## get lists of your project and datasets</span>
-<span class="fu">bqr_list_projects</span>()
-<span class="fu">bqr_list_datasets</span>(<span class="st">"project-id"</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/pkg/bigQueryR/man/bqr_list_projects.html">bqr_list_projects</a></span>()
+<span class="fu"><a href="https://rdrr.io/pkg/bigQueryR/man/bqr_list_datasets.html">bqr_list_datasets</a></span>(<span class="st">"project-id"</span>)</pre></body></html></div>
 <p>If you want to authenticate with Google Analytics and BigQuery in the same session (or others) then its best to authenticate with <code><a href="https://code.markedmondson.me/googleAuthR//reference/gar_auth.html">googleAuthR::gar_auth()</a></code> with the appropriate scopes set. The below lets you authenticate with Google Analytics, Google Cloud Storage and BigQuery:</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">googleAuthR.scopes.selected</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"https://www.googleapis.com/auth/analytics"</span>,
                                         <span class="st">"https://www.googleapis.com/auth/cloud-platform"</span>,

@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9001</span>
       </span>
     </div>
 
@@ -263,7 +263,7 @@
     <p>A wrapper for <a href='https://code.markedmondson.me/googleAuthR//reference/gar_auth.html'>gar_auth</a> and <a href='https://code.markedmondson.me/googleAuthR//reference/gar_auth_service.html'>gar_auth_service</a></p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_auth</span>(<span class='kw'>token</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>email</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>ga_auth</span>(<span class='kw'>token</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>email</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>json_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -275,6 +275,10 @@
     <tr>
       <th>email</th>
       <td><p>An existing cached email to authenticate with or <code>TRUE</code> to authenticate with only email available.  If not set then you will get an interactive prompt asking you to choose which email to authenticate with.</p></td>
+    </tr>
+    <tr>
+      <th>json_file</th>
+      <td><p>Authentication service key you have downloaded from your Google Project - an alternative to OAuth2 email authentication</p></td>
     </tr>
     </table>
 
@@ -361,7 +365,8 @@ GA_WEB_CLIENT_SECRET="XXX"
 <span class='fu'>ga_auth</span>(<span class='kw'>email</span> <span class='kw'>=</span> <span class='st'>"work@mybusiness.com"</span>)
 <span class='fu'><a href='ga_account_list.html'>ga_account_list</a></span>() <span class='co'># lists second set of accounts</span>
 
-
+<span class='co'># or authenticate via the service key, that has been added to the GA as a user</span>
+<span class='fu'>ga_auth</span>(<span class='kw'>json_file</span> <span class='kw'>=</span> <span class='st'>"service-key.json"</span>)
 
 }</div></pre>
   </div>
