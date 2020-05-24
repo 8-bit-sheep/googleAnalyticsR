@@ -4,6 +4,7 @@ title: "Statistical models and visualisations with Google Analytics data"
 
 ```{r setup, include=FALSE}
 library(googleAnalyticsR)
+dir.create("cache", showWarnings = FALSE)
 ga_cache_call("cache")
 ```
 
