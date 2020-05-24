@@ -881,24 +881,24 @@ segment_seq_example
 <a href="#fetching-from-multiple-views" class="anchor"></a>Fetching from multiple views</h2>
 <p>Whilst the <a href="http://code.markedmondson.me/googleAnalyticsR/v3.html">v3 multi account batching feature</a> isn’t available for multi-accounts in v4, by using <a href="https://github.com/HenrikBengtsson/future.apply"><code>future.apply</code></a> you can launch multiple R sessions that will fetch the API in parallel. An example is shown below, that fetches from three View IDs at once.</p>
 <p>The limiting factor willl then be the v4 <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/limits-quotas">API limits</a>, which are currently 1000 requests per 100 seconds per user, per Google API project (e.g. you will probably want to setup your own Google project if making a lot of requests)</p>
-<div class="sourceCode" id="cb29"><html><body><pre class="r">library(googleAnalyticsR)
-library(future.apply)
+<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">future.apply</span>)
 
-## setup multisession R for your parallel data fetches 
-plan(multisession)
+<span class="co">## setup multisession R for your parallel data fetches </span>
+<span class="fu">plan</span>(<span class="no">multisession</span>)
 
-## the ViewIds to fetch all at once
-gaids &lt;- c(12345634, 9888890,10624323)
+<span class="co">## the ViewIds to fetch all at once</span>
+<span class="no">gaids</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">12345634</span>, <span class="fl">9888890</span>,<span class="fl">10624323</span>)
 
-my_fetch &lt;- function(x) {
-  google_analytics(x, 
-                   date_range = c("2017-01-01","yesterday"), 
-                   metrics = "sessions", 
-                   dimensions = c("date","medium")
+<span class="no">my_fetch</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x</span>) {
+  <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">x</span>,
+                   <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2017-01-01"</span>,<span class="st">"yesterday"</span>),
+                   <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
+                   <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"medium"</span>))
 }
 
-## makes 3 API calls at once
-all_data &lt;- future_lapply(gaids, my_fetch)</pre></body></html></div>
+<span class="co">## makes 3 API calls at once</span>
+<span class="no">all_data</span> <span class="kw">&lt;-</span> <span class="fu">future_lapply</span>(<span class="no">gaids</span>, <span class="no">my_fetch</span>)</pre></body></html></div>
 </div>
   </div>
 

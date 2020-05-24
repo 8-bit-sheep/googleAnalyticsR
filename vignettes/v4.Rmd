@@ -766,7 +766,7 @@ my_fetch <- function(x) {
   google_analytics(x, 
                    date_range = c("2017-01-01","yesterday"), 
                    metrics = "sessions", 
-                   dimensions = c("date","medium")
+                   dimensions = c("date","medium"))
 }
 
 ## makes 3 API calls at once
