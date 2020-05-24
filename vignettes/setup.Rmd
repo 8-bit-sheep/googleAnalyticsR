@@ -30,6 +30,13 @@ remotes::install_github("MarkEdmondson1234/googleAnalyticsR")
 
 Check out the [NEWS](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md) to see whats currently available in each version.
 
+### Docker image
+
+If you know docker, then a public image is available at `gcr.io/gcer-public/googleanalyticsr`
+
+* `gcr.io/gcer-public/googleanalyticsr:master` is the latest GitHub version
+* `gcr.io/gcer-public/googleanalyticsr:CRAN` will be the last CRAN version
+
 ### Dependencies
 
 `googleAnalyticsR` requires the packages described in the [`Imports` field of the `DESCRIPTION` file](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/DESCRIPTION) to be installed first, which it will do via `install.packages("googleAnalyticsR", dependencies = TRUE)`

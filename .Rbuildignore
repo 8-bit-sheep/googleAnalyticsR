@@ -37,3 +37,5 @@
 ^Makefile$
 ^Dockerfile$
 ^CRAN-RELEASE$
+^cloudbuild\.yml$
+^cloud_build*

@@ -17,3 +17,5 @@ inst/doc
 gar_parse_error.rds
 *.dcf
 test.oauth
+googleanalyticsr-auth-key.json
+.Renviron

@@ -27,7 +27,7 @@ ga_auth_setup <- function(){
                     set_to = setup_gargle_email(),
                     session_user = session_user)
   
-  gar_setup_menu_do(op,
+  done_it <- gar_setup_menu_do(op,
                     trigger = 3,
                     do_function = gar_setup_auth_key,
                     session_user = session_user,
@@ -35,15 +35,18 @@ ga_auth_setup <- function(){
                     file = "googleanalyticsr-auth-key.json",
                     default_key = "googleanalyticsr")
   
-  gar_setup_menu_do(op,
+  done_it <- gar_setup_menu_do(op,
                     trigger = 4,
                     do_function = gar_setup_env_check,
                     env_arg = "GA_AUTH_FILE",
                     set_to = gar_setup_get_authenv(session_user = session_user,
                                                    env_arg = "GA_AUTH_FILE"),
                     edit_option = TRUE,
-                    stop = TRUE,
                     session_user = session_user)
+  if(done_it){
+    the_email <- jsonlite::read_json(Sys.getenv("GA_AUTH_FILE"))$client_email
+    cli::cli_alert_success("To use service key for GA reporting add this email to the GA View with sufficient rights: ", the_email)
+  }
   
   return(invisible(""))
 }
@@ -51,5 +54,6 @@ ga_auth_setup <- function(){
 #returns gargle string for env
 setup_gargle_email <- function(){
   ee <- readline("Email to be used for auto-authentication: ")
+  cli::cli_alert_success("To use this email for GA reporting add this email to the GA View with sufficient rights: ", ee)
   paste0("GARGLE_EMAIL=",ee)
 }

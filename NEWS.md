@@ -2,9 +2,9 @@
 
 * fix `ga_account_list()` not dowloading starred columns (#284 - thanks @hidekoji)
 * Allow millisecond parsing of times (#314 - thanks @VadimChernik)
-* update to use `cli` for nicer looking user messaging
+* Update to use `cli` for nicer looking user messaging
 * Change the default client.id (#311)
-* Allow authentication via a service account key directly in `ga_auth()`
+* Allow authentication via a service account key directly in `ga_auth(json = "file.json")`
 * Remove `GARGLE_EMAIL` auto-auth on package load as could stop package loading under some circumstances.
 * Add `ga_auth_setup()` to help walk through some of the advanced authentication setups
 

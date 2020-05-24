@@ -47,9 +47,6 @@ The example below performs decomposition on the sessions to your website.  Behin
 ```{r message=FALSE, warning=FALSE}
 library(googleAnalyticsR)  # load library
 
-# authenticate
-ga_auth(email = Sys.getenv("GARGLE_EMAIL"))
-
 # your own Google Analytics viewID
 my_viewid <- 81416156
 
