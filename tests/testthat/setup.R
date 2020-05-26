@@ -14,7 +14,6 @@ googleAuthR::gar_set_client()
 if(file.exists("/workspace/auth.json")){
   message("Auth on Cloud Build")
   ga_auth(json_file = "/workspace/auth.json")
-  ga_account_list()$viewName
 }
 
 
@@ -28,9 +27,9 @@ ga_id2 <- 81416156
 
 test_that("Correct authentication", {
   al <- ga_account_list()
+  print(al)
   expect_true(accountId %in% al$accountId)
   expect_true(accountId2 %in% al$accountId)
   expect_true(ga_id %in% al$viewId)
   expect_true(ga_id2 %in% al$viewId)
-  
 })
