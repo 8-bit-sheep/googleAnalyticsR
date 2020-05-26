@@ -15,7 +15,8 @@ cr_deploy_packagetests(
   steps = auth_steps,
   cloudbuild_file = "cloud_build/cloudbuild-tests.yml",
   timeout = 2400,
-  env = c("NOT_CRAN=true",auth_env)
+  env = c("NOT_CRAN=true",auth_env),
+  build_image = "gcr.io/mark-edmondson-gde/googleanalyticsr-tests:master"
 )
 
 cr_deploy_pkgdown(
@@ -23,5 +24,6 @@ cr_deploy_pkgdown(
   secret = "github-ssh",
   github_repo = "MarkEdmondson1234/googleAnalyticsR",
   cloudbuild_file = "cloud_build/cloudbuild-pkgdown.yml",
+  build_image = "gcr.io/mark-edmondson-gde/googleanalyticsr-tests:master",
   env = auth_env
 )
