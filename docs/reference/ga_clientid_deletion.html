@@ -304,9 +304,9 @@
 
     <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/config/userdeletion/v3/'>https://developers.google.com/analytics/devguides/config/userdeletion/v3/</a></p>
 <p>Other clientid functions: 
-<code><a href='ga_clientid_activity_unnest.html'>ga_clientid_activity_unnest</a>()</code>,
-<code><a href='ga_clientid_activity.html'>ga_clientid_activity</a>()</code>,
-<code><a href='ga_clientid_hash.html'>ga_clientid_hash</a>()</code></p></div>
+<code>ga_clientid_activity_unnest()</code>,
+<code>ga_clientid_activity()</code>,
+<code>ga_clientid_hash()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -314,7 +314,7 @@
 
 <span class='co'># make sure you are authenticated with user deletion scopes</span>
 <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='kw'>googleAuthR.scopes.selected</span> <span class='kw'>=</span> <span class='st'>"https://www.googleapis.com/auth/analytics.user.deletion"</span>)
-<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>(<span class='kw'>new_user</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>ga_auth</span>(<span class='kw'>new_user</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># a vector of ids</span>
 <span class='no'>ids</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"1489547420.1526330722"</span>, <span class='st'>"1138076389.1526568883"</span>)

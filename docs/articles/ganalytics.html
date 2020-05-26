@@ -229,7 +229,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ganalytics</span>)
 
 <span class="co"># authenticate</span>
-<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span>()
+<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth</a></span>()
 
 <span class="co"># set to your view Id</span>
 <span class="no">view_id</span> <span class="kw">&lt;-</span> <span class="fl">81416156</span></pre></body></html></div>
@@ -253,7 +253,7 @@
 <span class="co"># At least one goal completion or transaction - a metric filter using an OR condition.</span>
 <span class="no">at_least_one_conversion</span> <span class="kw">&lt;-</span> <span class="fu">Expr</span>(~<span class="no">goalCompletionsAll</span> <span class="kw">&gt;</span> <span class="fl">0</span>) <span class="kw">|</span> <span class="fu">Expr</span>(~<span class="no">transactions</span> <span class="kw">&gt;</span> <span class="fl">0</span>)</pre></body></html></div>
 <p>We can now use <code>googleAnalyticsR</code> to query the data with the above filters:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">results</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">results</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html">google_analytics</a></span>(
   <span class="kw">viewId</span> <span class="kw">=</span> <span class="no">view_id</span>,
   <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"30daysAgo"</span>, <span class="st">"yesterday"</span>),
   <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"users"</span>, <span class="st">"sessions"</span>, <span class="st">"goalCompletionsAll"</span>),
@@ -288,7 +288,7 @@
     <span class="kw">mobile_or_tablet</span> <span class="kw">=</span> <span class="no">mobile_or_tablet</span>,
     <span class="kw">multi_session_users</span> <span class="kw">=</span> <span class="no">multi_session_users</span>)
 
-<span class="no">results</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(
+<span class="no">results</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html">google_analytics</a></span>(
     <span class="kw">viewId</span> <span class="kw">=</span> <span class="no">view_id</span>,
     <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"30daysAgo"</span>, <span class="st">"yesterday"</span>),
     <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"users"</span>, <span class="st">"sessions"</span>),
@@ -311,7 +311,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
 
 <span class="no">results</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_df</a></span>(<span class="no">segment_chunks</span>, <span class="kw">function</span>(<span class="no">chunk</span>) {
-  <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(
+  <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html">google_analytics</a></span>(
     <span class="kw">viewId</span> <span class="kw">=</span> <span class="no">view_id</span>,
     <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">start_date</span>, <span class="no">end_date</span>),
     <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"users"</span>, <span class="st">"sessions"</span>),

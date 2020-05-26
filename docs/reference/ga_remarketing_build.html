@@ -260,7 +260,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Create definitions to be used within <a href='ga_remarketing_create.html'>ga_remarketing_create</a></p>
+    <p>Create definitions to be used within ga_remarketing_create</p>
     </div>
 
     <pre class="usage"><span class='fu'>ga_remarketing_build</span>(
@@ -297,19 +297,19 @@
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other remarketing management functions: 
-<code><a href='ga_remarketing_create.html'>ga_remarketing_create</a>()</code>,
-<code><a href='ga_remarketing_estimate.html'>ga_remarketing_estimate</a>()</code>,
-<code><a href='ga_remarketing_get.html'>ga_remarketing_get</a>()</code>,
-<code><a href='ga_remarketing_list.html'>ga_remarketing_list</a>()</code></p></div>
+<code>ga_remarketing_create()</code>,
+<code>ga_remarketing_estimate()</code>,
+<code>ga_remarketing_get()</code>,
+<code>ga_remarketing_list()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>adword_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_adwords_list.html'>ga_adwords_list</a></span>(<span class='fl'>123456</span>, <span class='st'>"UA-123456-1"</span>)
+<span class='no'>adword_list</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_adwords_list</span>(<span class='fl'>123456</span>, <span class='st'>"UA-123456-1"</span>)
 
 <span class='no'>adword_link</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_adword</span>(<span class='no'>adword_list</span>$<span class='no'>id</span><span class='kw'>[[</span><span class='fl'>1</span>]])
 
-<span class='no'>segment_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_segment_list.html'>ga_segment_list</a></span>()$<span class='no'>items</span>$<span class='no'>definition</span>
+<span class='no'>segment_list</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_segment_list</span>()$<span class='no'>items</span>$<span class='no'>definition</span>
 
 <span class='no'>my_remarketing1</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_remarketing_build</span>(<span class='no'>segment_list</span><span class='kw'>[[</span><span class='fl'>1</span>]],
                     <span class='kw'>state_duration</span> <span class='kw'>=</span> <span class='st'>"TEMPORARY"</span>,
@@ -322,7 +322,7 @@
                      <span class='kw'>daysToLookBack</span> <span class='kw'>=</span> <span class='fl'>31</span>)
 
 <span class='co'># state based only can include exclusions</span>
-<span class='fu'><a href='ga_remarketing_create.html'>ga_remarketing_create</a></span>(<span class='kw'>adwords_link</span> <span class='kw'>=</span> <span class='no'>adword_link</span>,
+<span class='fu'>ga_remarketing_create</span>(<span class='kw'>adwords_link</span> <span class='kw'>=</span> <span class='no'>adword_link</span>,
                      <span class='kw'>include</span> <span class='kw'>=</span> <span class='no'>my_remarketing1</span>,
                      <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='no'>my_remarketing2</span>,
                      <span class='kw'>audienceType</span> <span class='kw'>=</span> <span class='st'>"STATE_BASED"</span>,

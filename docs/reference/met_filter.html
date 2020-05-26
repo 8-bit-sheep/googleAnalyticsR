@@ -293,12 +293,12 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code>met_fil_ga4</code> for use in <code><a href='filter_clause_ga4.html'>filter_clause_ga4</a></code></p>
+    <p>An object of class <code>met_fil_ga4</code> for use in <code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/filter_clause_ga4.html'>filter_clause_ga4</a></code></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other filter functions: 
-<code><a href='dim_filter.html'>dim_filter</a>()</code>,
-<code><a href='filter_clause_ga4.html'>filter_clause_ga4</a>()</code></p></div>
+<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/dim_filter.html'>dim_filter</a>()</code>,
+<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/filter_clause_ga4.html'>filter_clause_ga4</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -307,7 +307,7 @@
 
 <span class='co'>## authenticate,</span>
 <span class='co'>## or use the RStudio Addin "Google API Auth" with analytics scopes set</span>
-<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
+<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html'>ga_auth</a></span>()
 
 <span class='co'>## get your accounts</span>
 <span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_account_list</span>()
@@ -317,19 +317,19 @@
 <span class='no'>ga_id</span> <span class='kw'>&lt;-</span> <span class='no'>account_list</span>[<span class='fl'>23</span>,<span class='st'>'viewId'</span>]
 
 <span class='co'>## create filters on metrics</span>
-<span class='no'>mf</span> <span class='kw'>&lt;-</span> <span class='fu'>met_filter</span>(<span class='st'>"bounces"</span>, <span class='st'>"GREATER_THAN"</span>, <span class='fl'>0</span>)
-<span class='no'>mf2</span> <span class='kw'>&lt;-</span> <span class='fu'>met_filter</span>(<span class='st'>"sessions"</span>, <span class='st'>"GREATER"</span>, <span class='fl'>2</span>)
+<span class='no'>mf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/met_filter.html'>met_filter</a></span>(<span class='st'>"bounces"</span>, <span class='st'>"GREATER_THAN"</span>, <span class='fl'>0</span>)
+<span class='no'>mf2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/met_filter.html'>met_filter</a></span>(<span class='st'>"sessions"</span>, <span class='st'>"GREATER"</span>, <span class='fl'>2</span>)
 
 <span class='co'>## create filters on dimensions</span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='dim_filter.html'>dim_filter</a></span>(<span class='st'>"source"</span>,<span class='st'>"BEGINS_WITH"</span>,<span class='st'>"1"</span>,<span class='kw'>not</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>df2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='dim_filter.html'>dim_filter</a></span>(<span class='st'>"source"</span>,<span class='st'>"BEGINS_WITH"</span>,<span class='st'>"a"</span>,<span class='kw'>not</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/dim_filter.html'>dim_filter</a></span>(<span class='st'>"source"</span>,<span class='st'>"BEGINS_WITH"</span>,<span class='st'>"1"</span>,<span class='kw'>not</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>df2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/dim_filter.html'>dim_filter</a></span>(<span class='st'>"source"</span>,<span class='st'>"BEGINS_WITH"</span>,<span class='st'>"a"</span>,<span class='kw'>not</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'>## construct filter objects</span>
-<span class='no'>fc2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='filter_clause_ga4.html'>filter_clause_ga4</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>df</span>, <span class='no'>df2</span>), <span class='kw'>operator</span> <span class='kw'>=</span> <span class='st'>"AND"</span>)
-<span class='no'>fc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='filter_clause_ga4.html'>filter_clause_ga4</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>mf</span>, <span class='no'>mf2</span>), <span class='kw'>operator</span> <span class='kw'>=</span> <span class='st'>"AND"</span>)
+<span class='no'>fc2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/filter_clause_ga4.html'>filter_clause_ga4</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>df</span>, <span class='no'>df2</span>), <span class='kw'>operator</span> <span class='kw'>=</span> <span class='st'>"AND"</span>)
+<span class='no'>fc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/filter_clause_ga4.html'>filter_clause_ga4</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>mf</span>, <span class='no'>mf2</span>), <span class='kw'>operator</span> <span class='kw'>=</span> <span class='st'>"AND"</span>)
 
 <span class='co'>## make v4 request</span>
-<span class='no'>ga_data1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics_4</a></span>(<span class='no'>ga_id</span>,
+<span class='no'>ga_data1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html'>google_analytics_4</a></span>(<span class='no'>ga_id</span>,
                                <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2015-07-30"</span>,<span class='st'>"2015-10-01"</span>),
                                <span class='kw'>dimensions</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'source'</span>,<span class='st'>'medium'</span>),
                                <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'sessions'</span>,<span class='st'>'bounces'</span>),

@@ -262,14 +262,14 @@
 <a href="#googleanalyticsr-0-7-1-9000" class="anchor"></a>googleAnalyticsR 0.7.1.9000<small> Unreleased </small>
 </h1>
 <ul>
-<li>fix <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> not dowloading starred columns (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/284'>#284</a> - thanks <a href='https://github.com/hidekoji'>@hidekoji</a>)</li>
+<li>fix <code>ga_account_list()</code> not dowloading starred columns (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/284'>#284</a> - thanks <a href='https://github.com/hidekoji'>@hidekoji</a>)</li>
 <li>Allow millisecond parsing of times (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/314'>#314</a> - thanks <a href='https://github.com/VadimChernik'>@VadimChernik</a>)</li>
-<li>update to use <code>cli</code> for nicer looking user messaging</li>
+<li>Update to use <code>cli</code> for nicer looking user messaging</li>
 <li>Change the default client.id (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/311'>#311</a>)</li>
-<li>Allow authentication via a service account key directly in <code><a href="../reference/ga_auth.html">ga_auth()</a></code>
+<li>Allow authentication via a service account key directly in <code>ga_auth(json = "file.json")</code>
 </li>
 <li>Remove <code>GARGLE_EMAIL</code> auto-auth on package load as could stop package loading under some circumstances.</li>
-<li>Add <code><a href="../reference/ga_auth_setup.html">ga_auth_setup()</a></code> to help walk through some of the advanced authentication setups</li>
+<li>Add <code>ga_auth_setup()</code> to help walk through some of the advanced authentication setups</li>
 </ul>
 </div>
     <div id="googleanalyticsr-0-7-1" class="section level1">
@@ -289,7 +289,7 @@
 <ul>
 <li>Clean up error messages</li>
 <li>Fix anti_sampling breaking if using date formats “4daysAgo” etc.</li>
-<li>Removed <code>google_analytics_meta()</code> for <code><a href="../reference/ga_meta.html">ga_meta()</a></code>
+<li>Removed <code>google_analytics_meta()</code> for <code>ga_meta()</code>
 </li>
 <li>Add <code>accountId</code> to the output of Shiny module <code>authDropdown</code> when <code>viewIdOnly=FALSE</code>
 </li>
@@ -305,9 +305,9 @@
 </li>
 <li>Update docs to use <code>clientId</code> dimension in user activity API calls</li>
 <li>Update <code><a href="https://tidyr.tidyverse.org/reference/nest.html">tidyr::unnest</a></code> to use <code>cols</code> parameter (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/266'>#266</a>)</li>
-<li>Add <code><a href="../reference/ga_custom_upload_delete.html">ga_custom_upload_delete()</a></code> - thanks <a href='https://github.com/byapprov'>@byapprov</a> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/263'>#263</a>)</li>
+<li>Add <code>ga_custom_upload_delete()</code> - thanks <a href='https://github.com/byapprov'>@byapprov</a> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/263'>#263</a>)</li>
 <li>Fix sending in multiple segment definitions in a list (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/253'>#253</a>)</li>
-<li>Fix <code><a href="../reference/ga_segment_list.html">ga_segment_list()</a></code> returning data if no custom segments created (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/259'>#259</a>)</li>
+<li>Fix <code>ga_segment_list()</code> returning data if no custom segments created (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/259'>#259</a>)</li>
 <li>Fix ability to list multiple dimensions and segments (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/279'>#279</a>)</li>
 </ul>
 </div>
@@ -317,7 +317,7 @@
 </h1>
 <ul>
 <li>Add goal management</li>
-<li>Add <code><a href="../reference/ga_clientid_deletion.html">ga_clientid_deletion()</a></code> function (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/168'>#168</a>) (renamed from <code>ga_user_deletion()</code>)</li>
+<li>Add <code>ga_clientid_deletion()</code> function (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/168'>#168</a>) (renamed from <code>ga_user_deletion()</code>)</li>
 <li>Let <code>authDropdown</code> return more than just the viewId (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/172'>#172</a>)</li>
 <li>Export segment related classes and implicitly coerce table filters and segments to their appropriate classes in order to improve integration with the ganalytics package.</li>
 <li>Add support for <code>dataLastRefreshed</code> and stop caching if its present (e.g. query includes today) (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/183'>#183</a>)</li>
@@ -341,14 +341,14 @@
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#breaking-changes" class="anchor"></a>Breaking changes!</h2>
-<p>If you were using <code><a href="../reference/google_analytics.html">google_analytics()</a></code> before to fetch the v3 API, this is now available via <code><a href="../reference/google_analytics_3.html">google_analytics_3()</a></code> - replace all instances and it should work as before. However, you are encouraged to migrate to v4, which now runs when you use <code><a href="../reference/google_analytics.html">google_analytics()</a></code>(and for a while still at <code><a href="../reference/google_analytics.html">google_analytics_4()</a></code> too)</p>
+<p>If you were using <code>google_analytics()</code> before to fetch the v3 API, this is now available via <code>google_analytics_3()</code> - replace all instances and it should work as before. However, you are encouraged to migrate to v4, which now runs when you use <code>google_analytics()</code>(and for a while still at <code>google_analytics_4()</code> too)</p>
 </div>
 <div id="major-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
 <li>Add support for resource based quotas if you are on GA360 (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/127'>#127</a>)</li>
-<li>Improve support for using different auth cache files with <code><a href="../reference/ga_auth.html">ga_auth()</a></code>
+<li>Improve support for using different auth cache files with <code>ga_auth()</code>
 </li>
 <li>Changed <code>google_analytics</code> to be the v4 API, <code>google_analytics_3</code> now supports v3</li>
 <li>change default cache token name from <code>.httr-oauth</code> to <code>ga.oauth</code> to avoid clashes</li>
@@ -431,7 +431,7 @@
 <a href="#added-1" class="anchor"></a>Added</h2>
 <ul>
 <li>Deprecate <code>google_analytics_account_list</code> for <code>ga_account_list</code> to be in line with other functions</li>
-<li>Add custom data uploads via <code><a href="../reference/ga_custom_upload_file.html">ga_custom_upload_file()</a></code>
+<li>Add custom data uploads via <code>ga_custom_upload_file()</code>
 </li>
 <li>Cleaned up documentation a bit</li>
 <li>Added auto-authentication if you specify environment var <code>GA_AUTH_FILE</code>
@@ -476,8 +476,8 @@
 <li>Add BigQuery asynch fetch to Google Analytics 360 exports, for over 1,000,000 rows.</li>
 <li>A GA v4 example Shiny app added that runs on <code>https://mark.shinyapps.io/googleAnalyticsRv4Demo/</code>
 </li>
-<li>New argument <code>anti_sample</code> for <code><a href="../reference/google_analytics.html">google_analytics_4()</a></code> which will split up the calls into efficient batches to avoid sampling. Includes experimental sub-day hourly batching.</li>
-<li>Set argument <code>max = -1</code> in <code><a href="../reference/google_analytics.html">google_analytics_4()</a></code> to fetch all results.</li>
+<li>New argument <code>anti_sample</code> for <code>google_analytics_4()</code> which will split up the calls into efficient batches to avoid sampling. Includes experimental sub-day hourly batching.</li>
+<li>Set argument <code>max = -1</code> in <code>google_analytics_4()</code> to fetch all results.</li>
 <li>Add fix for <code>google_analytics_account_summary</code> parsing when no views in web properties.</li>
 <li>New argument <code>anti_sample_batches</code> lets you choose batch sizes (daily is equal to <code>anti_sample_batches=1</code>)</li>
 <li>Add several management API functions:
@@ -514,7 +514,7 @@
 <a href="#fixed-2" class="anchor"></a>Fixed</h2>
 <ul>
 <li>Fix bug for calculated metrics if expression not starting with <code>ga:</code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/28'>#28</a>)</li>
-<li>Fix a parse bug if only metrics and no dimensions were used in <code><a href="../reference/google_analytics.html">google_analytics_4()</a></code>
+<li>Fix a parse bug if only metrics and no dimensions were used in <code>google_analytics_4()</code>
 </li>
 <li>Refactoring v4 batching</li>
 </ul>
@@ -544,7 +544,7 @@
 </li>
 <li>Local tests added</li>
 <li>Multi-account batching for v3 (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/17'>#17</a>)</li>
-<li>Add BigQuery fetching for GoogleAnalytics 360 accounts via <code><a href="../reference/google_analytics_bq.html">google_analytics_bq()</a></code>
+<li>Add BigQuery fetching for GoogleAnalytics 360 accounts via <code>google_analytics_bq()</code>
 </li>
 </ul>
 </div>
