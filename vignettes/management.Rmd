@@ -243,7 +243,7 @@ ga_view(accountId = 47480439, webPropertyId = "UA-47480439-1", profileId = 81416
 
 These are helper utility functions to work with Google Analytics data.
 
-* `google_analytics_meta()` - get a data.frame of available dimensions and metrics, or just use `meta` directly to get the version that comes with the library.
+* `ga_meta()` - get a data.frame of available dimensions and metrics, or just use `meta` directly to get the version that comes with the library.
 
 
 
@@ -289,7 +289,7 @@ ga_data <- google_analytics(81416156,
 ```
 
 ```
-## [36mℹ[39m 2020-05-26 11:40:05 > Downloaded [ 240 ] rows from a total of [ 240 ].
+## [36mℹ[39m 2020-05-26 11:40:05 > Downloaded [ 240 ] rows from a total of [ 240 ].
 ```
 
 ```r

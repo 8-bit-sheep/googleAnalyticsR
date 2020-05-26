@@ -2,8 +2,6 @@ source("setup.R")
 
   context("Normal Data fetching")
   
-  ga_auth(email = Sys.getenv("GARGLE_EMAIL"))
-  
   test_that("Vanilla test data fetch", {
     skip_on_cran()
     t11 <-   google_analytics(ga_id, 
@@ -72,20 +70,18 @@ source("setup.R")
   })
   
   
-  
-  
-  # context("Anti-sampling")
-  # 
+  context("Anti-sampling")
+
   # test_that("Anti-sample when no sampling there", {
   #   skip_on_cran()
-  #   as <-   google_analytics(ga_id, 
+  #   as <-   google_analytics(ga_id,
   #                             date_range = c("2015-07-30","2016-10-01"),
-  #                             dimensions=c('minute','hour','landingPagePath','medium','eventLabel','campaign'), 
+  #                             dimensions=c('minute','hour','landingPagePath','medium','eventLabel','campaign'),
   #                             metrics = c('sessions'),
-  #                             anti_sample = TRUE)  
+  #                             anti_sample = TRUE)
   #   expect_s3_class(as, "data.frame")
-  #   
-  #   
+  # 
+  # 
   # })
   
   test_that("Aggregation works", {

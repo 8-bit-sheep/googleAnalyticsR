@@ -3,7 +3,6 @@ source("setup.R")
 context("Batch API Mocking")
 
 
-
 context("v3 API")
 
 
@@ -71,20 +70,20 @@ context("v3 API")
 
   })
 
-  # test_that("v4 API matches v3 equivalent API call", {
-  #   skip_on_cran()
-  #   v3 <- google_analytics_v3(ga_id,
-  #                          start = "2015-07-30", end = "2015-10-01",
-  #                          dimensions=c('medium'),
-  #                          metrics = c('sessions'),
-  #                          sort = "ga:sessions")
-  #   v4 <-  google_analytics(ga_id,
-  #                             date_range = c("2015-07-30","2015-10-01"),
-  #                             dimensions=c('medium'),
-  #                             metrics = c('sessions'),
-  #                             order = order_type("sessions"))
-  # 
-  #   expect_equal(v3$medium, v4$medium)
-  #   expect_equal(v3$sessions, v4$sessions)
-  # 
-  # })
+  test_that("v4 API matches v3 equivalent API call", {
+    skip_on_cran()
+    v3 <- google_analytics_3(ga_id,
+                           start = "2015-07-30", end = "2015-10-01",
+                           dimensions=c('medium'),
+                           metrics = c('sessions'),
+                           sort = "ga:sessions")
+    v4 <-  google_analytics(ga_id,
+                              date_range = c("2015-07-30","2015-10-01"),
+                              dimensions=c('medium'),
+                              metrics = c('sessions'),
+                              order = order_type("sessions"))
+
+    expect_equal(v3$medium, v4$medium)
+    expect_equal(v3$sessions, v4$sessions)
+
+  })
