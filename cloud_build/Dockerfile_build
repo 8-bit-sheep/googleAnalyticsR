@@ -1,9 +1,0 @@
-FROM gcr.io/gcer-public/packagetools:master
-
-RUN install2.r --error \ 
-    -r 'http://cran.rstudio.com' \
-    BoomSpikeSlab Boom bsts googleAnalyticsR xts dygraphs CausalImpact tidyr \
-    ## install Github packages
-    && installGithub.r MarkEdmondson1234/googleAnalyticsR \
-    ## clean up
-    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
