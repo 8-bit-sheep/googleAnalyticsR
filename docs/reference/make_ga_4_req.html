@@ -262,7 +262,7 @@
 
     <div class="ref-description">
     <p>This function constructs the Google Analytics API v4 call to be called
-  via <a href='fetch_google_analytics_4.html'>fetch_google_analytics_4</a></p>
+  via fetch_google_analytics_4</p>
     </div>
 
     <pre class="usage"><span class='fu'>make_ga_4_req</span>(
@@ -299,22 +299,22 @@ for two date ranges: <code><a href='https://rdrr.io/r/base/c.html'>c(start1,end1
     <tr>
       <th>metrics</th>
       <td><p>Metric(s) to fetch as a character vector.  You do not need to 
-supply the <code>"ga:"</code> prefix.  See <a href='meta.html'>meta</a> for a list of dimensons 
+supply the <code>"ga:"</code> prefix.  See meta for a list of dimensons 
 and metrics the API supports. Also supports your own calculated metrics.</p></td>
     </tr>
     <tr>
       <th>dimensions</th>
       <td><p>Dimension(s) to fetch as a character vector. You do not need to 
-supply the <code>"ga:"</code> prefix. See <a href='meta.html'>meta</a> for a list of dimensons 
+supply the <code>"ga:"</code> prefix. See meta for a list of dimensons 
 and metrics the API supports.</p></td>
     </tr>
     <tr>
       <th>dim_filters</th>
-      <td><p>A <a href='filter_clause_ga4.html'>filter_clause_ga4</a> wrapping <a href='dim_filter.html'>dim_filter</a></p></td>
+      <td><p>A filter_clause_ga4 wrapping dim_filter</p></td>
     </tr>
     <tr>
       <th>met_filters</th>
-      <td><p>A <a href='filter_clause_ga4.html'>filter_clause_ga4</a> wrapping <a href='met_filter.html'>met_filter</a></p></td>
+      <td><p>A filter_clause_ga4 wrapping met_filter</p></td>
     </tr>
     <tr>
       <th>filtersExpression</th>
@@ -322,19 +322,19 @@ and metrics the API supports.</p></td>
     </tr>
     <tr>
       <th>order</th>
-      <td><p>An <a href='order_type.html'>order_type</a> object</p></td>
+      <td><p>An order_type object</p></td>
     </tr>
     <tr>
       <th>segments</th>
-      <td><p>List of segments as created by <a href='segment_ga4.html'>segment_ga4</a></p></td>
+      <td><p>List of segments as created by segment_ga4</p></td>
     </tr>
     <tr>
       <th>pivots</th>
-      <td><p>Pivots of the data as created by <a href='pivot_ga4.html'>pivot_ga4</a></p></td>
+      <td><p>Pivots of the data as created by pivot_ga4</p></td>
     </tr>
     <tr>
       <th>cohorts</th>
-      <td><p>Cohorts created by <a href='make_cohort_group.html'>make_cohort_group</a></p></td>
+      <td><p>Cohorts created by make_cohort_group</p></td>
     </tr>
     <tr>
       <th>pageToken</th>
@@ -403,9 +403,9 @@ See details in make_ga_4_req</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other GAv4 fetch functions: 
-<code><a href='fetch_google_analytics_4_slow.html'>fetch_google_analytics_4_slow</a>()</code>,
-<code><a href='fetch_google_analytics_4.html'>fetch_google_analytics_4</a>()</code>,
-<code><a href='google_analytics.html'>google_analytics</a>()</code></p></div>
+<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/fetch_google_analytics_4_slow.html'>fetch_google_analytics_4_slow</a>()</code>,
+<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/fetch_google_analytics_4.html'>fetch_google_analytics_4</a>()</code>,
+<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html'>google_analytics</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -414,7 +414,7 @@ See details in make_ga_4_req</p></td>
 
 <span class='co'>## authenticate, </span>
 <span class='co'>## or use the RStudio Addin "Google API Auth" with analytics scopes set</span>
-<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
+<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html'>ga_auth</a></span>()
 
 <span class='co'>## get your accounts</span>
 <span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_account_list</span>()
@@ -423,17 +423,17 @@ See details in make_ga_4_req</p></td>
 
 <span class='no'>ga_id</span> <span class='kw'>&lt;-</span> <span class='no'>account_list</span>[<span class='fl'>23</span>,<span class='st'>'viewId'</span>]
 
-<span class='no'>ga_req1</span> <span class='kw'>&lt;-</span> <span class='fu'>make_ga_4_req</span>(<span class='no'>ga_id</span>,
+<span class='no'>ga_req1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/make_ga_4_req.html'>make_ga_4_req</a></span>(<span class='no'>ga_id</span>,
                          <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2015-07-30"</span>,<span class='st'>"2015-10-01"</span>),
                          <span class='kw'>dimensions</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'source'</span>,<span class='st'>'medium'</span>),
                          <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'sessions'</span>))
 
-<span class='no'>ga_req2</span> <span class='kw'>&lt;-</span> <span class='fu'>make_ga_4_req</span>(<span class='no'>ga_id</span>,
+<span class='no'>ga_req2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/make_ga_4_req.html'>make_ga_4_req</a></span>(<span class='no'>ga_id</span>,
                          <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2015-07-30"</span>,<span class='st'>"2015-10-01"</span>),
                          <span class='kw'>dimensions</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'source'</span>,<span class='st'>'medium'</span>),
                          <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'users'</span>))
 
-<span class='fu'><a href='fetch_google_analytics_4.html'>fetch_google_analytics_4</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>ga_req1</span>, <span class='no'>ga_req2</span>))
+<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/fetch_google_analytics_4.html'>fetch_google_analytics_4</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>ga_req1</span>, <span class='no'>ga_req2</span>))
 
 }</div></pre>
   </div>

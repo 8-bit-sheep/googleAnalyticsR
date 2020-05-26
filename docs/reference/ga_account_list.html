@@ -260,7 +260,7 @@
     </div>
 
     <div class="ref-description">
-    <p>This is the recommended way to get all your account details for your user, including the web property and View IDs.  The <code>$viewId</code> column contains the ID you need for the data fetching functions such as <a href='google_analytics.html'>google_analytics</a>.</p>
+    <p>This is the recommended way to get all your account details for your user, including the web property and View IDs.  The <code>$viewId</code> column contains the ID you need for the data fetching functions such as google_analytics.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ga_account_list</span>()</pre>
@@ -276,19 +276,19 @@
 
     <div class='dont-index'><p>https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountSummaries/list</p>
 <p>Other account structure functions: 
-<code><a href='ga_accounts.html'>ga_accounts</a>()</code>,
-<code><a href='ga_view_list.html'>ga_view_list</a>()</code>,
-<code><a href='ga_view.html'>ga_view</a>()</code>,
-<code><a href='ga_webproperty_list.html'>ga_webproperty_list</a>()</code>,
-<code><a href='ga_webproperty.html'>ga_webproperty</a>()</code></p></div>
+<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_accounts.html'>ga_accounts</a>()</code>,
+<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_view_list.html'>ga_view_list</a>()</code>,
+<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_view.html'>ga_view</a>()</code>,
+<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_webproperty_list.html'>ga_webproperty_list</a>()</code>,
+<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_webproperty.html'>ga_webproperty</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>googleAnalyticsR</span>)
-<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
-<span class='no'>al</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_account_list</span>()
+<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html'>ga_auth</a></span>()
+<span class='no'>al</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_account_list.html'>ga_account_list</a></span>()
 <span class='no'>al</span>$<span class='no'>viewId</span>
 }</div></pre>
   </div>
