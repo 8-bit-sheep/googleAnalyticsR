@@ -6,11 +6,13 @@ test_that("Can fetch user activity", {
   skip_on_cran()
   date_range <- c("2020-01-01","2020-01-02")
   # Get client-ID from e-commerce viewID
+  
   cids <- google_analytics(ga_id, date_range = date_range,
                            metrics = c("sessions", "transactionRevenue"), 
                            dimensions = "clientId", 
                            order = order_type("transactionRevenue", "DESCENDING"),
                            max = 5)
+  
   expect_s3_class(cids, "data.frame")
   
   users <- ga_clientid_activity(cids$clientId,
@@ -32,20 +34,3 @@ test_that("Can fetch user activity", {
   
 
 })
-
-
-# Sort id with the max transactionRevenue
-
-cids <- cids %>% arrange(-transactionRevenue) 
-
-# Get Activity 
-
-users <- ga_clientid_activity(cids$clientId[1:5],
-                              viewId = viewId,
-                              date_range = date_range)
-
-# unnest ecommerce column
-
-users$hits %>%
-  filter(activityType == "ECOMMERCE") %>%
-  select(id, sessionId, activityTime, ecommerce) 
