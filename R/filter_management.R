@@ -203,50 +203,37 @@ ga_filter_delete <- function(accountId,
                              removeFromView = FALSE) {
   
   url <- "https://www.googleapis.com/analytics/v3/management/"
+
   if(removeFromView){
-    
     assert_that(
       !is.null(webPropertyId),
       !is.null(viewId)
     )
     
-    f <- gar_api_generator(url,
-                           "DELETE",
-                           path_args = list(
-                             accounts = accountId,
-                             webproperties = webPropertyId,
-                             profiles = viewId,
-                             profileFilterLinks = paste(viewId,filterId, sep=":")
-                           ),
-                           data_parse_function = function(x) x)
-    out <- tryCatch(f(), 
-                    warning = function(ex){
-                      if(grepl("No JSON content detected",ex)){
-                        return(TRUE)
-                      } else {
-                        return(ex)
-                      }
-                    }) 
+    path_args = list(
+      accounts = accountId,
+      webproperties = webPropertyId,
+      profiles = viewId,
+      profileFilterLinks = paste(viewId,filterId, sep=":")
+    )
+    
   } else {
     
-    f <- gar_api_generator(url,
-                           "DELETE",
-                           path_args = list(
-                             accounts = accountId,
-                             filters = filterId
-                           ),
-                           data_parse_function = function(x) x)
-    out <- tryCatch(f(), 
-                    warning = function(ex){
-                      if(grepl("No JSON content detected",ex)){
-                        return(TRUE)
-                      } else {
-                        return(ex)
-                      }
-                    }) 
+    path_args = list(
+      accounts = accountId,
+      filters = filterId
+    )
+    
   }
   
-  out
+  f <- gar_api_generator(url,
+                         "DELETE",
+                         path_args = path_args,
+                         data_parse_function = function(x) {myMessage("Deleted filter: ", filterId, level = 3)})
+  
+  f()
+  
+  TRUE
 }
 
 

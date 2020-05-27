@@ -75,7 +75,7 @@ test_that("Add filter to the view", {
                                             webPropertyId = webPropId2, 
                                             viewId = ga_id2, 
                                             linkId = response$id)
-  expect_equal(response$kind, "analytics#profileFilterLink")
+  expect_equal(response2$kind, "analytics#profileFilterLink")
   expect_equal(response2$rank, 1)
   
   del <- ga_filter_delete(accountId = accountId2, 

@@ -27,7 +27,6 @@ ga_id2 <- 81416156
 
 test_that("Correct authentication", {
   al <- ga_account_list()
-  print(al)
   expect_true(accountId %in% al$accountId)
   expect_true(accountId2 %in% al$accountId)
   expect_true(ga_id %in% al$viewId)
