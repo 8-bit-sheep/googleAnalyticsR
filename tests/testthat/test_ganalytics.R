@@ -19,6 +19,7 @@
 #     dim_filters = new_desktop_and_mobile_visitors,
 #     met_filters = at_least_one_conversion
 #   )
+### Error in as.list.default(X) : no method for coercing this S4 class to a vector
 #   
 #   expect_s3_class(results, "data.frame")
 #   
