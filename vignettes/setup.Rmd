@@ -9,6 +9,31 @@ It assumes you have R installed on your machine and access rights to one or more
 
 The rest of this guide will give you an overview of the available set up options and cover some good practices to follow under different scenarios of use.  
 
+## 0. Quickstart RStudio Cloud Project
+
+If you wish to try out the library before installation, an RStudio Cloud project is available that has the library pre-installed.
+
+[Click this link and log in to RStudio Cloud to try it out](https://rstudio.cloud/project/1125233).
+
+Once you are logged in, issue the following two R commands in the R console bottom-left:
+
+```r
+library(googleAnalyticsR)
+ga_auth()
+```
+
+Select `1: Yes` to say you wish to keep your OAuth access credentials.
+
+The library should then launch a browser window and ask you to login to Google - log in with an email that has access to your Google Analytics - it will take you to a screen with an OOB token.  Copy-paste that token back into RStudio:
+
+![](rstudio-oob.png)
+
+(The OOB token is only needed on RStudio Cloud - if you have googleAnalyticsR installed locally on your desktop it will authenticate automatically via `httpuv`)
+
+You should then be authenticated and ready to use the functions in the package.  Try `ga_account_list()` as a way to check you are authenticated correctly:
+
+![](test_ga_account_list.png)
+
 ## 1. Install 
 
 The latest stable version of `googleAnalyticsR` is available on CRAN.
