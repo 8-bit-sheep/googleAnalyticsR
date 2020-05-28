@@ -233,7 +233,7 @@ ga_users_delete_linkid <- function(linkId,
     if(res$status_code == 204){
       myMessage("Successfully deleted linkId: ", linkId, level = 3)
     } else {
-      stop("Problem deleting linkId: ", linkId, call. = FALSE)
+      myMessage("Problem deleting linkId: ", linkId, level = 3)
     }
   } else {
     # batched deletion

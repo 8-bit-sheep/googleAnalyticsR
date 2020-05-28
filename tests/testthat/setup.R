@@ -16,6 +16,9 @@ if(file.exists("/workspace/auth.json")){
   ga_auth(json_file = "/workspace/auth.json")
 }
 
+dir.create("cache/")
+ga_cache_call("cache/")
+
 
 accountId <- 54019251
 webPropId <- "UA-54019251-4"

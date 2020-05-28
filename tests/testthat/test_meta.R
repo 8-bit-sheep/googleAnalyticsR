@@ -160,24 +160,7 @@ test_that("Can fetch experiment list", {
 
 })
 
-context("Users")
 
-test_that("Can fetch users list", {
-  skip_on_cran()
-  
-  accountId <- 54019251
-  webPropId <- "UA-54019251-4"
-  ga_id <- 106249469
-  
-  acc <- ga_users_list(accountId)
-  web <- ga_users_list(accountId, webPropertyId = webPropId)
-  view <- ga_users_list(accountId, webPropertyId = webPropId, viewId = ga_id)
-  
-  expect_s3_class(acc, "data.frame")
-  expect_s3_class(web, "data.frame")
-  expect_s3_class(view, "data.frame")
-  
-})
 
 ## I have no experiment to fetch....
 # test_that("Can fetch experiment", {

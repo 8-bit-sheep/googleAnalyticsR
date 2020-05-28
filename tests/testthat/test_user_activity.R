@@ -24,13 +24,16 @@ test_that("Can fetch user activity", {
   
   unnested <- users$hits %>%
       filter(activityType == "ECOMMERCE") %>%
-      select(id, sessionId, activityTime, ecommerce) %>% tidyr::unnest(ecommerce)
+      select(id, sessionId, activityTime, ecommerce) %>% 
+    tidyr::unnest(ecommerce)
   
   one_dude <- unnested[unnested$id == "1065716956.1577466261" ,"ecommerce"][[1]]
   
   expect_equal(one_dude[[1]], "PAYMENT")
   expect_equal(one_dude[[2]]$transactionRevenue, 1471.32)
   expect_equal(one_dude[[3]][[1]]$itemRevenue, 1471.32)
+  
+  a_hash <- ga_clientid_hash(webPropId, "1065716956.1577466261")
   
 
 })
