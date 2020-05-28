@@ -361,7 +361,11 @@ ga_auth(email = "mark@work.com)</pre></body></html></div>
 <h3 class="hasAnchor">
 <a href="#professional-mode-your-own-google-project" class="anchor"></a>‘Professional’ mode: Your own Google Project</h3>
 <p>To mitigate all the above, use your own Google Developer Console client ID, so it is not shared across all users of this library.</p>
-<p>The easiest way to set this up is to create your own Google Cloud Platform project and then in R use the <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth_setup.html">ga_auth_setup()</a></code> function to walk you through the configuration below.</p>
+<p>The easiest way to set this up is to create your own Google Cloud Platform project and then in R use the <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth_setup.html">ga_auth_setup()</a></code> function and select option 1.</p>
+<div id="setting-up-clientid-manually" class="section level4">
+<h4 class="hasAnchor">
+<a href="#setting-up-clientid-manually" class="anchor"></a>SEtting up clientId manually</h4>
+<p>The setup function foes through the steps below.</p>
 <ol style="list-style-type: decimal">
 <li>Download your Google Cloud Project client JSON and place it in a location pointed to via the <code>GAR_CLIENT_JSON</code> environment argument.</li>
 </ol>
@@ -391,6 +395,7 @@ GAR_CLIENT_JSON=~/dev/auth/gcp_client.json</code></pre>
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">googleAuthR.client_secret</span> <span class="kw">=</span> <span class="st">"3JhLa_GxxxxxCQYLe31c64"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">googleAuthR.scopes.selected</span> <span class="kw">=</span> <span class="st">"https://www.googleapis.com/auth/analytics"</span>)</pre></body></html></div>
 </div>
+</div>
 <div id="clientid-examples" class="section level3">
 <h3 class="hasAnchor">
 <a href="#clientid-examples" class="anchor"></a>clientId examples</h3>
@@ -411,6 +416,11 @@ GAR_CLIENT_JSON=~/dev/auth/gcp_client.json</code></pre>
 <a href="#server-mode-google-cloud-service-account" class="anchor"></a>‘Server’ mode: Google Cloud service account</h3>
 <p>You can alternatively authenticate by downloading a JSON file attached to a Google Cloud service account. More details on how to do that are on the <a href="http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#authentication-with-a-json-file-via-service-accounts"><code>googleAuthR</code> website</a>.</p>
 <p>A service authentication file then needs to be created that has edit access to the GA account. It is recommended to make a dedicated service account if you don’t need it for anything else.</p>
+<p>The easiest way is to use <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth_setup.html">ga_auth_setup()</a></code> and select option 3</p>
+<div id="manual-setup" class="section level4">
+<h4 class="hasAnchor">
+<a href="#manual-setup" class="anchor"></a>Manual setup</h4>
+<p>If you want to set it up yourself, the setup wizard goes through these steps:</p>
 <ol style="list-style-type: decimal">
 <li>Create your own Google Cloud Project or use an existing one.</li>
 <li>Set your own client.id/secret via <code><a href="https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html">googleAuthR::gar_set_client()</a></code>
@@ -426,13 +436,13 @@ GAR_CLIENT_JSON=~/dev/auth/gcp_client.json</code></pre>
 </li>
 </ol>
 <p>You should now be able to use the JSON auth file to authenticate with Google Analytics API via:</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAuthR</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
-<span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_auth_service.html">gar_auth_service</a></span>(<span class="st">"your_auth_file.json"</span>)
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
+<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth</a></span>(<span class="kw">json_file</span> <span class="kw">=</span> <span class="st">"your_auth_file.json"</span>)
 
 <span class="co"># test authentication</span>
 <span class="no">al</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_account_list.html">ga_account_list</a></span>()</pre></body></html></div>
 <p>Note: A service account is a special type of account that belongs to an application rather than an individual user. If you should use this option, chances are you are already familiar with how they work. If however you wish to find out more about when and how to use service accounts, follow the link to the Google Cloud documentation page on <a href="https://cloud.google.com/iam/docs/understanding-service-accounts">Understanding Service Accounts</a></p>
+</div>
 </div>
 </div>
 <div id="optional-review-useful-auth-options" class="section level2">
@@ -448,11 +458,14 @@ GAR_CLIENT_JSON=~/dev/auth/gcp_client.json</code></pre>
 <code>GAR_CLIENT_JSON</code> takes care of the GCP project client.id to authenticate under</li>
 <li>
 <code>GARGLE_EMAIL</code> lets you specify an email address that has already authenticated to skip the interactive menu. Make sure you authenticate with the right scopes and GCP project first in an interactive session.</li>
+<li>
+<code>GA_AUTH_FILE</code> is an optional argument if you have a service JSON key</li>
 </ul>
-<p>You can set environment arguments via <code><a href="https://rdrr.io/r/base/Sys.setenv.html">Sys.setenv()</a></code> but the recommend way is to use an <code>.Renviron</code> file saved in your home directory.</p>
+<p>You can set environment arguments via <code><a href="https://rdrr.io/r/base/Sys.setenv.html">Sys.setenv()</a></code> or using an <code>.Renviron</code> file saved in your home directory, but the recommended way is to use <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth_setup.html">ga_auth_setup()</a></code> and select option 2 (for OAuth2 email) or 4 (for JSON service account keys)</p>
 <pre><code># In your .Renviron
 GAR_CLIENT_JSON=~/dev/auth/gcp_client.json
-GARGLE_EMAIL=my-email@me.com</code></pre>
+GARGLE_EMAIL=my-email@me.com
+GA_AUTH_FILE=/Users/me/dev/auth/keys/googleanalyticsr-auth-key.json</code></pre>
 <p>Restart your R session to enact the arguments created in <code>.Renviron</code></p>
 </div>
 <div id="multiple-api-authentification" class="section level3">
