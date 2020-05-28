@@ -15,14 +15,15 @@ test_that("Can perform user management", {
   expect_s3_class(view, "data.frame")
   
   test_email_adds <- c("mark@iihnordic.com", "iihmarkedmondson@gmail.com")
-  ga_users_add(test_email_adds,
+  done <- ga_users_add(test_email_adds,
                permissions = "EDIT", accountId = accountId)
+  expect_true(done)
   
   acc2 <- ga_users_list(accountId)
   expect_true(all(test_email_adds %in% acc2$userRef.email))
   
   ga_users_delete(test_email_adds, accountId = accountId)
-  
+  Sys.sleep(5)
   acc3 <- ga_users_list(accountId)
   expect_false(all(test_email_adds %in% acc3$userRef.email))
   

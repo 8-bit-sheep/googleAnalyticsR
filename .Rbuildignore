@@ -39,3 +39,4 @@
 ^cloudbuild\.yml$
 ^cloud_build*
 ^pkgdown*
+^\.covrignore$
