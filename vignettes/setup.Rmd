@@ -169,7 +169,11 @@ ga_auth_setup()
 
 To mitigate all the above, use your own Google Developer Console client ID, so it is not shared across all users of this library.
 
-The easiest way to set this up is to create your own Google Cloud Platform project and then in R use the `ga_auth_setup()` function to walk you through the configuration below.
+The easiest way to set this up is to create your own Google Cloud Platform project and then in R use the `ga_auth_setup()` function and select option 1.
+
+#### SEtting up clientId manually
+
+The setup function foes through the steps below.
 
 1. Download your Google Cloud Project client JSON and place it in a location pointed to via the `GAR_CLIENT_JSON` environment argument.  
 
@@ -245,6 +249,12 @@ You can alternatively authenticate by downloading a JSON file attached to a Goog
 
 A service authentication file then needs to be created that has edit access to the GA account.  It is recommended to make a dedicated service account if you don't need it for anything else. 
 
+The easiest way is to use `ga_auth_setup()` and select option 3
+
+#### Manual setup
+
+If you want to set it up yourself, the setup wizard goes through these steps:
+
 1. Create your own Google Cloud Project or use an existing one.
 2. Set your own client.id/secret via `googleAuthR::gar_set_client()`
 3. Service accounts for your project can be created at this link: `https://console.cloud.google.com/iam-admin/serviceaccounts/create`
@@ -257,9 +267,8 @@ A service authentication file then needs to be created that has edit access to t
 You should now be able to use the JSON auth file to authenticate with Google Analytics API via:
 
 ```r
-library(googleAuthR)
 library(googleAnalyticsR)
-gar_auth_service("your_auth_file.json")
+ga_auth(json_file = "your_auth_file.json")
 
 # test authentication
 al <- ga_account_list()
@@ -278,13 +287,15 @@ To save authenticating and setting your GCP client each R session, you can speci
 
 * `GAR_CLIENT_JSON` takes care of the GCP project client.id to authenticate under
 * `GARGLE_EMAIL` lets you specify an email address that has already authenticated to skip the interactive menu. Make sure you authenticate with the right scopes and GCP project first in an interactive session.
+* `GA_AUTH_FILE` is an optional argument if you have a service JSON key
 
-You can set environment arguments via `Sys.setenv()` but the recommend way is to use an `.Renviron` file saved in your home directory.  
+You can set environment arguments via `Sys.setenv()` or using an `.Renviron` file saved in your home directory, but the recommended way is to use `ga_auth_setup()` and select option 2 (for OAuth2 email) or 4 (for JSON service account keys)
 
 ```
 # In your .Renviron
 GAR_CLIENT_JSON=~/dev/auth/gcp_client.json
 GARGLE_EMAIL=my-email@me.com
+GA_AUTH_FILE=/Users/me/dev/auth/keys/googleanalyticsr-auth-key.json
 ```
 
 Restart your R session to enact the arguments created in `.Renviron`
