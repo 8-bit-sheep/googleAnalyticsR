@@ -101,7 +101,7 @@
 ga_auth <- function(token = NULL, email = NULL, json_file = NULL){
   
   if(!is.null(json_file)){
-    client_email <- jsonlite::read_json(Sys.getenv("GA_AUTH_FILE"))$client_email
+    client_email <- jsonlite::read_json(json_file)$client_email
     cli::cli_alert_info(paste("Authenticating using", client_email))
     return(gar_auth_service(json_file))
   }
