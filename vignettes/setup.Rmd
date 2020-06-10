@@ -188,6 +188,7 @@ ga_auth_setup()
 #2: Setup auto-authentication (OAuth2 email)
 #3: Create and download JSON service account key
 #4: Setup auto-authentication (JSON service account key)
+#5: Add a service account email or another email to your GA account
 ```
 
 ### 'Professional' mode: Your own Google Project
