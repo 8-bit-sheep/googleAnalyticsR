@@ -197,13 +197,13 @@ To mitigate all the above, use your own Google Developer Console client ID, so i
 
 The easiest way to set this up is to create your own Google Cloud Platform project and then in R use the `ga_auth_setup()` function and select option 1.
 
-#### SEtting up clientId manually
+#### Setting up clientId manually
 
 The setup function foes through the steps below.
 
 1. Download your Google Cloud Project client JSON and place it in a location pointed to via the `GAR_CLIENT_JSON` environment argument.  
 
-This file is found in the Google Cloud Platform under `APIs & Services > Credentials > Create credentials >  OAuth client ID > Other`.  For Shiny authentication, choose `Web application` instead of `Other`.
+This file is found in the Google Cloud Platform under `APIs & Services > Credentials > Create credentials >  OAuth client ID > Desktop`.  For Shiny authentication, choose `Web application` instead of `Desktop`.
 
 In the below examples the client ID file is downloaded to `~/dev/auth/gcp_client.json`
 
@@ -226,11 +226,11 @@ library(googleAnalyticsR)
 ga_auth()
 ```
 
-If setting in the script via [`googleAuthR::gar_set_client()`](https://code.markedmondson.me/googleAuthR/reference/gar_set_client.html) then it wil look like this:
+If setting in the script via [`googleAuthR::gar_set_client()`](https://code.markedmondson.me/googleAuthR/reference/gar_set_client.html) then it will look like this:
 
 ```r
-googleAuthR::gar_set_client("~/dev/auth/gcp_client.json")
 library(googleAnalyticsR)
+googleAuthR::gar_set_client("~/dev/auth/gcp_client.json")
 ga_auth()
 ```
 
@@ -275,7 +275,19 @@ You can alternatively authenticate by downloading a JSON file attached to a Goog
 
 A service authentication file then needs to be created that has edit access to the GA account.  It is recommended to make a dedicated service account if you don't need it for anything else. 
 
-The easiest way is to use `ga_auth_setup()` and select option 3
+The easiest way is to use `ga_auth_setup()` and select option 3 to create the file for you using your own details for authorization, then option 5 to add it to the GA account you need.
+
+In your R script you can then authorize via:
+
+```r
+library(googleAnalyticsR)
+ga_auth(json_file="service-key.json")
+```
+
+...or if you have set the environment arg `GA_AUTH_FILE` to the service key filepath, simply loading the library to enact auto-authenticataion.
+
+This is helpful for Docker contaienrs where you don't want to usually include any authentication files, but can specify them via environment arguments when launching the container. 
+
 
 #### Manual setup
 
@@ -324,7 +336,7 @@ GARGLE_EMAIL=my-email@me.com
 GA_AUTH_FILE=/Users/me/dev/auth/keys/googleanalyticsr-auth-key.json
 ```
 
-Restart your R session to enact the arguments created in `.Renviron`
+Restart your R session to enact the arguments created in `.Renviron` - when you load the library they will be loaded in.
 
 ### Multiple API authentification
 
