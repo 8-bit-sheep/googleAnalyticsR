@@ -9,15 +9,17 @@ options(googleAuthR.scopes.selected =
             "https://www.googleapis.com/auth/drive"))
 
 # auth cache with custom project creds
-googleAuthR::gar_set_client()
+if(Sys.getenv("GAR_CLIENT_JSON") != ""){
+  googleAuthR::gar_set_client()
+  dir.create("cache/")
+  ga_cache_call("cache/")
+}
+
 
 if(file.exists("/workspace/auth.json")){
   message("Auth on Cloud Build")
   ga_auth(json_file = "/workspace/auth.json")
 }
-
-dir.create("cache/")
-ga_cache_call("cache/")
 
 
 accountId <- 54019251
