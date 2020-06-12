@@ -4,6 +4,7 @@ context("Goal management")
 
 test_that("Get Goal list for view", {
   skip_on_cran()
+  skip_on_travis()
   
   goals <- ga_goal_list(accountId, webPropId, ga_id)
   
@@ -13,6 +14,7 @@ test_that("Get Goal list for view", {
 
 test_that("Get Specific Goal", {
   skip_on_cran()
+  skip_on_travis()
   
   goal <- ga_goal(accountId, webPropId, ga_id , goalId = 1)
   
@@ -22,6 +24,7 @@ test_that("Get Specific Goal", {
 
 test_that("Add goal to the view", {
   skip_on_cran()
+  skip_on_travis()
   
   Goal <- list(
     id = '20',

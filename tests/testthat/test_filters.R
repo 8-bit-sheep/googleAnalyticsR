@@ -6,6 +6,7 @@ context("Filters API Mocking")
 
   test_that("Filter v4 GA fetches work", {
     skip_on_cran()
+    skip_on_travis()
     ## create filters on metrics
     mf <- met_filter("bounces", "GREATER_THAN", 0)
     mf2 <- met_filter("sessions", "GREATER", 2)

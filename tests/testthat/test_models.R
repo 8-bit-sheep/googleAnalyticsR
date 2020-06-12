@@ -4,6 +4,7 @@ context("Models")
 
 test_that("Read a model", {
   skip_on_cran()
+  skip_on_travis()
   
   # load the model (equivalent to ga_model_load())
   decomp_ga <- ga_model_example("decomp_ga.gamr")

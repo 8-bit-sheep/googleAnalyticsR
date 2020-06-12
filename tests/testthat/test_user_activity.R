@@ -4,6 +4,7 @@ context("User Activity")
 
 test_that("Can fetch user activity", {
   skip_on_cran()
+  skip_on_travis()
   date_range <- c("2020-01-01","2020-01-02")
   # Get client-ID from e-commerce viewID
   

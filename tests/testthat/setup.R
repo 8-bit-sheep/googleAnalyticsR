@@ -29,6 +29,9 @@ webPropId2 <- "UA-47480439-2"
 ga_id2 <- 81416156
 
 test_that("Correct authentication", {
+  skip_on_travis()
+  skip_on_cran()
+  
   al <- ga_account_list()
   expect_true(accountId %in% al$accountId)
   expect_true(accountId2 %in% al$accountId)

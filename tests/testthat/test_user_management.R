@@ -4,6 +4,7 @@ context("User Management")
 
 test_that("Can perform user management", {
   skip_on_cran()
+  skip_on_travis()
   test_email <- "googleanalyticsr-tests@g-analytics-r.iam.gserviceaccount.com"
   acc <- ga_users_list(accountId)
   web <- ga_users_list(accountId, webPropertyId = webPropId)
