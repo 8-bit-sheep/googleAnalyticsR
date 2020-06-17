@@ -428,7 +428,6 @@ google_analytics <- function(viewId,
     out <- fetch_google_analytics_4_slow(requests, 
                                          max_rows = max, allRows = allResults, 
                                          useResourceQuotas = useResourceQuotas)
-    allResults <- FALSE
   } else {
     ## only gets up to 50000 first time as we don't know true total row count yet
     out <- fetch_google_analytics_4(requests, 
