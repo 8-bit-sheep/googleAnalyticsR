@@ -55,9 +55,11 @@ ga_auth_setup <- function(){
   return(invisible(""))
 }
 
+#' @noRd
+#' @importFrom utils menu
 add_service_email <- function(){
   
-  which_email <- utils::menu(title = "Which email do you want to add permissions for?",
+  which_email <- menu(title = "Which email do you want to add permissions for?",
                       choices = c("The service email from GA_AUTH_FILE",
                                   "Another email"))
   if(which_email == 0){

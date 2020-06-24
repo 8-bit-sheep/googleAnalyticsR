@@ -15,7 +15,7 @@ ga_users_update(
 \arguments{
 \item{linkId}{The linkId to update}
 
-\item{update_object}{A list that will be turned into JSON via \link[jsonlite]{toJSON} that represents the new configuration for this linkId}
+\item{update_object}{A list that will be turned into JSON that represents the new configuration for this linkId}
 
 \item{accountId}{Account Id}
 

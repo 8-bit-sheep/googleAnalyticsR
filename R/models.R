@@ -400,7 +400,7 @@ eval_input_list <- function(dots){
 
 #' Upload an interactive visualisation so it can be embedded in a tweet
 #' 
-#' Inspired by \url{https://datatitian.com/how-to-turn-your-ggplot2-visualization-into-an-interactive-tweet/} this uploads your model output into Google Cloud storage, in the right format to embed in a tweet
+#' Inspired by \code{https://datatitian.com/how-to-turn-your-ggplot2-visualization-into-an-interactive-tweet/} this uploads your model output into Google Cloud storage, in the right format to embed in a tweet
 #' 
 #' @param model_output A \code{ga_model_result} object created by \link{ga_model}
 #' @param twitter Your twitter handle e.g. \code{@holomarked}

@@ -253,12 +253,6 @@ expect_null_or_s3_class <- function(thing, s3class){
   }
 }
 
-
-#' @importFrom magrittr %>%
-#' @export
-#' @keywords internal
-magrittr::`%>%`
-
 #' A helper function that tests whether an object is either NULL _or_
 #' a list of NULLs
 #'
