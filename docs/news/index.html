@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -257,9 +257,9 @@
       <small>Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="googleanalyticsr-0-7-1-9000" class="section level1">
-<h1 class="page-header" data-toc-text="0.7.1.9000">
-<a href="#googleanalyticsr-0-7-1-9000" class="anchor"></a>googleAnalyticsR 0.7.1.9000<small> Unreleased </small>
+    <div id="googleanalyticsr-0-8-0" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.0">
+<a href="#googleanalyticsr-0-8-0" class="anchor"></a>googleAnalyticsR 0.8.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>fix <code>ga_account_list()</code> not dowloading starred columns (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/284'>#284</a> - thanks <a href='https://github.com/hidekoji'>@hidekoji</a>)</li>
@@ -271,6 +271,8 @@
 <li>Remove <code>GARGLE_EMAIL</code> auto-auth on package load as could stop package loading under some circumstances.</li>
 <li>Add <code>ga_auth_setup()</code> to help walk through some of the advanced authentication setups</li>
 <li>Fix fetching all rows for <code>google_analytics()</code> when <code>slow_fetch=TRUE</code> and <code>max=-1</code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/321'>#321</a> - thanks <a href='https://github.com/wdwatkins'>@wdwatkins</a>)</li>
+<li>Move to Cloud Build authenticated tests via <code>googleCloudRunner</code>
+</li>
 </ul>
 </div>
     <div id="googleanalyticsr-0-7-1" class="section level1">
