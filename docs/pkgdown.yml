@@ -2,7 +2,7 @@ pandoc: 2.3.1
 pkgdown: 1.5.1
 pkgdown_sha: ~
 articles: []
-last_built: 2020-06-12T14:21Z
+last_built: 2020-06-24T10:10Z
 urls:
   reference: https://code.markedmondson.me/googleAnalyticsR//reference
   article: https://code.markedmondson.me/googleAnalyticsR//articles
