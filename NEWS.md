@@ -7,6 +7,7 @@
 * Allow authentication via a service account key directly in `ga_auth(json = "file.json")`
 * Remove `GARGLE_EMAIL` auto-auth on package load as could stop package loading under some circumstances.
 * Add `ga_auth_setup()` to help walk through some of the advanced authentication setups
+* Fix fetching all rows for `google_analytics()` when `slow_fetch=TRUE` and `max=-1` (#321 - thanks @wdwatkins)
 
 # googleAnalyticsR 0.7.1
 

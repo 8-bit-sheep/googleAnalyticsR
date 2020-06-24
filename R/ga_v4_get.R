@@ -569,9 +569,12 @@ fetch_google_analytics_4_slow <- function(request_list,
                     error = function(err){
                       custom_error(err)
                     })
-    
+
     actualRows <- attr(out[[1]], "rowCount")
     npt <- attr(out[[1]], "nextPageToken")
+    if(allRows){
+      max_rows <- as.integer(actualRows)
+    }
     
     if(is.null(npt) || as.integer(npt) >= max_rows){
       do_it <- FALSE
