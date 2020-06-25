@@ -25,3 +25,5 @@ cr_deploy_pkgdown(
   cloudbuild_file = "cloud_build/cloudbuild-pkgdown.yml",
   env = auth_env
 )
+
+# deploy Docker to github packages
