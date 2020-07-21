@@ -1,10 +1,10 @@
 # 0.8.0.9000
 
-* ...
+* Allow authentication with service JSON keys without needing to change default client.id (#324 - thanks @adamribaudo)
 
 # googleAnalyticsR 0.8.0
 
-* fix `ga_account_list()` not dowloading starred columns (#284 - thanks @hidekoji)
+* fix `ga_account_list()` not downloading starred columns (#284 - thanks @hidekoji)
 * Allow millisecond parsing of times (#314 - thanks @VadimChernik)
 * Update to use `cli` for nicer looking user messaging
 * Change the default client.id (#311)
