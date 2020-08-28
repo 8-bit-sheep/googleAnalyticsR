@@ -199,7 +199,7 @@ The easiest way to set this up is to create your own Google Cloud Platform proje
 
 #### Setting up clientId manually
 
-The setup function foes through the steps below.
+The setup function goes through the steps below.
 
 1. Download your Google Cloud Project client JSON and place it in a location pointed to via the `GAR_CLIENT_JSON` environment argument.  
 
