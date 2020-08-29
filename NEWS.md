@@ -1,6 +1,7 @@
 # 0.8.0.9000
 
 * Allow authentication with service JSON keys without needing to change default client.id (#324 - thanks @adamribaudo)
+* Fix GA Adwords list parsing (#322 - thanks @millett-a)
 
 # googleAnalyticsR 0.8.0
 
