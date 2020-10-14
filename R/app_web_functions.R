@@ -72,34 +72,6 @@ google_analytics_aw <- function(propertyId,
     )
   )
   
-  parse_batchrunreports <- function(x){
-    o <- x$reports
-
-    if(is.null(o$rows)){
-      myMessage("No data found", level = 3)
-      return(NULL)
-    }
-    the_data <- lapply(o$rows, function(x){
-      o <- cbind(get_value_cols(x, type = "dimensionValues"),
-                 get_value_cols(x, type = "metricValues"))
-      # get col names from parent environment
-      setNames(o, c(dimensions, metrics))
-    })
-    
-    res <- Reduce(rbind, the_data)
-    
-    #type changes
-    if(!is.null(res$date)){
-      res$date <- as.Date(res$date, format = "%Y%m%d")
-    }
-    
-    quota_messages(o)
-    
-    attr(res, "metadata") <- if(ncol(o$metadata) > 0) o$metadata else NULL
-    
-    res
-  }
-  
   # analyticsdata.batchRunReports
   f <- gar_api_generator(url, "POST", 
                          data_parse_function = parse_batchrunreports)
@@ -108,6 +80,38 @@ google_analytics_aw <- function(propertyId,
   o <- f(the_body = brrr)
   
   o
+}
+
+parse_batchrunreports <- function(x){
+  o <- x$reports
+  
+  if(is.null(o$rows)){
+    myMessage("No data found", level = 3)
+    return(NULL)
+  }
+  
+  dim_names <- o$dimensionHeaders[[1]]$name
+  met_names <- o$metricHeaders[[1]]$name
+  
+  the_data <- lapply(o$rows, function(x){
+    o <- cbind(get_value_cols(x, type = "dimensionValues"),
+               get_value_cols(x, type = "metricValues"))
+    
+    setNames(o, c(dim_names, met_names))
+  })
+  
+  res <- Reduce(rbind, the_data)
+  
+  #type changes
+  if(!is.null(res$date)){
+    res$date <- as.Date(res$date, format = "%Y%m%d")
+  }
+  
+  quota_messages(o)
+  
+  attr(res, "metadata") <- if(ncol(o$metadata) > 0) o$metadata else NULL
+  
+  res
 }
 
 gaw_metric <- function(metrics){
