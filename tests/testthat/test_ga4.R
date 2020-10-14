@@ -2,10 +2,9 @@ source("setup.R")
 
   context("Normal Data fetching")
   
-  ga_auth(email = Sys.getenv("GARGLE_EMAIL"))
-  
   test_that("Vanilla test data fetch", {
     skip_on_cran()
+    skip_on_travis()
     t11 <-   google_analytics(ga_id, 
                                 date_range = c("2015-07-30","2015-10-01"),
                                 dimensions=c('medium'), 
@@ -16,6 +15,7 @@ source("setup.R")
   
   test_that("With custom date ranges", {
     skip_on_cran()
+    skip_on_travis()
     t11 <-   google_analytics(ga_id, 
                               date_range = c("5DaysAgo","yesterday"),
                               dimensions=c('medium'), 
@@ -36,6 +36,7 @@ source("setup.R")
   
   test_that("Big v4 batch", {
     skip_on_cran()
+    skip_on_travis()
     big <-   google_analytics(ga_id, 
                                 date_range = c("2015-07-30","2015-12-31"),
                                 dimensions=c('medium','source','hour',
@@ -48,6 +49,7 @@ source("setup.R")
   
   test_that("Slow big v4 batch", {
     skip_on_cran()
+    skip_on_travis()
     big <-   google_analytics(ga_id, 
                                 date_range = c("2015-07-30","2015-09-01"),
                                 dimensions=c('medium','source','hour',
@@ -61,6 +63,7 @@ source("setup.R")
   
   test_that("v3 Multi-channel funnels", {
     skip_on_cran()
+    skip_on_travis()
     v3 <- google_analytics_3(ga_id, 
                            start = "2015-07-30", end = "2015-10-01",
                            dimensions=c('sourcePath'), 
@@ -72,24 +75,24 @@ source("setup.R")
   })
   
   
-  
-  
-  # context("Anti-sampling")
-  # 
-  # test_that("Anti-sample when no sampling there", {
-  #   skip_on_cran()
-  #   as <-   google_analytics(ga_id, 
-  #                             date_range = c("2015-07-30","2016-10-01"),
-  #                             dimensions=c('minute','hour','landingPagePath','medium','eventLabel','campaign'), 
-  #                             metrics = c('sessions'),
-  #                             anti_sample = TRUE)  
-  #   expect_s3_class(as, "data.frame")
-  #   
-  #   
-  # })
+  context("Anti-sampling")
+
+  test_that("Anti-sample when no sampling there", {
+    skip_on_cran()
+    skip_on_travis()
+    as <-   google_analytics(ga_id,
+                              date_range = c("2015-07-30","2016-10-01"),
+                              dimensions=c('minute','hour','landingPagePath','medium','eventLabel','campaign'),
+                              metrics = c('sessions'),
+                              anti_sample = TRUE)
+    expect_s3_class(as, "data.frame")
+
+
+  })
   
   test_that("Aggregation works", {
     skip_on_cran()
+    skip_on_travis()
     as <-   google_analytics(ga_id, 
                                date_range = c("2015-07-30","2016-10-01"),
                                dimensions=c('minute','hour','landingPagePath',
@@ -109,6 +112,7 @@ source("setup.R")
   
   test_that("Cohorts work", {
     skip_on_cran()
+    skip_on_travis()
     ## first make a cohort group
     cohort4 <- make_cohort_group(list("Jan2016" = c("2016-01-01", "2016-01-31"), 
                                       "Feb2016" = c("2016-02-01","2016-02-28")))
@@ -127,6 +131,7 @@ source("setup.R")
   
   test_that("Cohorts work with segments", {
     skip_on_cran()
+    skip_on_travis()
     ## first make a cohort group
     cohort4 <- make_cohort_group(list("Jan2016" = c("2016-01-01", "2016-01-31"), 
                                       "Feb2016" = c("2016-02-01","2016-02-28")))
@@ -171,6 +176,7 @@ source("setup.R")
   
   test_that("Pivots work", {
     skip_on_cran()
+    skip_on_travis()
     
     ## filter pivot results to 
     pivot_dim_filter1 <- dim_filter("source",
@@ -199,6 +205,7 @@ source("setup.R")
   
   test_that("Fetch segment list", {
     skip_on_cran()
+    skip_on_travis()
     ## get list of segments
     my_segments <- ga_segment_list()
     
@@ -209,6 +216,7 @@ source("setup.R")
   
   test_that("Segment v3 syntax work", {
     skip_on_cran()
+    skip_on_travis()
     ## choose the v3 segment
     segment_for_call <- "gaid::-4"
     
@@ -249,6 +257,7 @@ source("setup.R")
   
   test_that("Segment v4 syntax works - simple", {
     skip_on_cran()
+    skip_on_travis()
     ## make two segment elements
     se <- segment_element("sessions", 
                           operator = "GREATER_THAN", 
@@ -290,6 +299,7 @@ source("setup.R")
   
   test_that("Segment v4 Syntax - step sequence", {
     skip_on_cran()
+    skip_on_travis()
     ## Sequence segment
     
     se2 <- segment_element("medium", 

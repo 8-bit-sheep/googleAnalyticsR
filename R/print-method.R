@@ -107,8 +107,8 @@ print.ga_custom_datasource <- function(x, ...){
                     updated = x$updated,
                     stringsAsFactors = FALSE)
   
-  if(!is.null(out$created)) out$created <- timestamp_to_r(out$created)
-  if(!is.null(out$updated)) out$updated <- timestamp_to_r(out$updated)
+  if(!is.null(out$created)) out$created <- iso8601_to_r(out$created)
+  if(!is.null(out$updated)) out$updated <- iso8601_to_r(out$updated)
   
   cat("==Google Analytics Custom Data Sources==\n")
   cat0("Username:            ", y$username)

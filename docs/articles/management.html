@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
       </span>
     </div>
 
@@ -223,25 +223,25 @@
 <h2 class="hasAnchor">
 <a href="#account-structure" class="anchor"></a>Account structure</h2>
 <p>Shows the details for your account structure (<code>Accounts &gt; Web-properties &gt; Views (profiles)</code>) including creation time, user permissions etc.</p>
-<p>The most day-to-day useful function is <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> which summarises all account web properties and views available to your user.</p>
+<p>The most day-to-day useful function is <code>ga_account_list()</code> which summarises all account web properties and views available to your user.</p>
 <ul>
 <li>
-<code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> - Get account summary including the ViewId</li>
+<code>ga_account_list()</code> - Get account summary including the ViewId</li>
 <li>
-<code><a href="../reference/ga_accounts.html">ga_accounts()</a></code> - Get account metadata for your user</li>
+<code>ga_accounts()</code> - Get account metadata for your user</li>
 <li>
-<code><a href="../reference/ga_webproperty.html">ga_webproperty()</a></code> - Get web property</li>
+<code>ga_webproperty()</code> - Get web property</li>
 <li>
-<code><a href="../reference/ga_webproperty_list.html">ga_webproperty_list()</a></code> - List web properties for a particular accountId</li>
+<code>ga_webproperty_list()</code> - List web properties for a particular accountId</li>
 <li>
-<code><a href="../reference/ga_view.html">ga_view()</a></code> - Get single View (Profile)</li>
+<code>ga_view()</code> - Get single View (Profile)</li>
 <li>
-<code><a href="../reference/ga_view_list.html">ga_view_list()</a></code> - List Views (Profile) for a particular accountId/webPropertyId</li>
+<code>ga_view_list()</code> - List Views (Profile) for a particular accountId/webPropertyId</li>
 </ul>
-<p>You can then also get the meta-data for that particular entity via <code><a href="../reference/ga_webproperty.html">ga_webproperty()</a></code> or <code><a href="../reference/ga_view.html">ga_view()</a></code></p>
+<p>You can then also get the meta-data for that particular entity via <code>ga_webproperty()</code> or <code>ga_view()</code></p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># ga_account_list is most commonly used</span>
 <span class="co"># (restricted to top 10 with the head() function)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span>(), <span class="kw">n</span> <span class="kw">=</span> <span class="fl">10</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu">ga_account_list</span>(), <span class="kw">n</span> <span class="kw">=</span> <span class="fl">10</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 10 x 11
 ##    accountId accountName internalWebProp… level websiteUrl type  starred
 ##    &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;lgl&gt;  
@@ -255,10 +255,10 @@
 ##  8 54019251  Sunholo We… 86845257         STAN… https://g… WEB   NA     
 ##  9 54019251  Sunholo We… 94325478         PREM… http://ma… WEB   NA     
 ## 10 54019251  Sunholo We… 94325478         PREM… http://ma… WEB   TRUE   
-## # … with 4 more variables: webPropertyId &lt;chr&gt;, webPropertyName &lt;chr&gt;,
-## #   viewId &lt;chr&gt;, viewName &lt;chr&gt;</code></pre>
+## # … with 4 more variables: webPropertyId &lt;chr&gt;, webPropertyName &lt;chr&gt;, viewId &lt;chr&gt;,
+## #   viewName &lt;chr&gt;</code></pre>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># this only lists account meta-data</span>
-<span class="fu"><a href="../reference/ga_accounts.html">ga_accounts</a></span>()</pre></body></html></div>
+<span class="fu">ga_accounts</span>()</pre></body></html></div>
 <pre><code>##         id             name             created             updated
 ## 1 47480439    MarkEdmondson 2014-01-25 12:17:05 2019-06-01 08:09:58
 ## 2 54019251 Sunholo Websites 2014-08-20 19:17:05 2019-07-31 18:51:55
@@ -270,24 +270,21 @@
 ## 3                               READ_AND_ANALYZE
 ## 4</code></pre>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># this gives meta-data for all web-properties for this accountId</span>
-<span class="fu"><a href="../reference/ga_webproperty_list.html">ga_webproperty_list</a></span>(<span class="fl">47480439</span>)</pre></body></html></div>
+<span class="fu">ga_webproperty_list</span>(<span class="fl">47480439</span>)</pre></body></html></div>
 <pre><code>##              id accountId internalWebPropertyId                name
 ## 1 UA-47480439-1  47480439              78742336    markedmondson.me
 ## 2 UA-47480439-2  47480439              78737968 MarkEdmondson oldGA
-##                websiteUrl    level profileCount    industryVertical
-## 1 http://markedmondson.me STANDARD            1 HOBBIES_AND_LEISURE
-## 2 http://markedmondson.me STANDARD            1 HOBBIES_AND_LEISURE
-##   dataRetentionTtl dataRetentionResetOnNewActivity             created
-## 1        MONTHS_26                            TRUE 2014-01-25 12:17:05
-## 2       INDEFINITE                            TRUE 2014-01-25 12:19:20
-##               updated defaultProfileId
-## 1 2014-01-25 12:17:06             &lt;NA&gt;
-## 2 2018-04-12 11:37:38         81416156
-##                            permissions.effective
-## 1 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 2 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE</code></pre>
+##                websiteUrl    level profileCount    industryVertical dataRetentionTtl
+## 1 http://markedmondson.me STANDARD            1 HOBBIES_AND_LEISURE        MONTHS_26
+## 2 http://markedmondson.me STANDARD            1 HOBBIES_AND_LEISURE       INDEFINITE
+##   dataRetentionResetOnNewActivity             created             updated
+## 1                            TRUE 2014-01-25 12:17:05 2014-01-25 12:17:06
+## 2                            TRUE 2014-01-25 12:19:20 2018-04-12 11:37:38
+##   defaultProfileId                          permissions.effective
+## 1             &lt;NA&gt; COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
+## 2         81416156 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE</code></pre>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># this is meta-data for one particular web-property</span>
-<span class="fu"><a href="../reference/ga_webproperty.html">ga_webproperty</a></span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-1"</span>)</pre></body></html></div>
+<span class="fu">ga_webproperty</span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-1"</span>)</pre></body></html></div>
 <pre><code>## $id
 ## [1] "UA-47480439-1"
 ## 
@@ -326,8 +323,7 @@
 ## 
 ## $permissions
 ## $permissions$effective
-## [1] "COLLABORATE"      "EDIT"             "MANAGE_USERS"    
-## [4] "READ_AND_ANALYZE"
+## [1] "COLLABORATE"      "EDIT"             "MANAGE_USERS"     "READ_AND_ANALYZE"
 ## 
 ## 
 ## $created
@@ -351,17 +347,17 @@
 ## $childLink$href
 ## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1/profiles"</code></pre>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># this is meta-data for the views under this accountId/webPropertyId</span>
-<span class="fu"><a href="../reference/ga_view_list.html">ga_view_list</a></span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-1"</span>)</pre></body></html></div>
-<pre><code>##         id accountId webPropertyId internalWebPropertyId              name
-## 1 81416941  47480439 UA-47480439-1              78742336 All Web Site Data
-##   currency          timezone              websiteUrl type
-## 1      USD Europe/Copenhagen http://markedmondson.me  WEB
-##               created             updated eCommerceTracking
-## 1 2014-01-25 12:17:05 2015-06-14 13:18:53             FALSE
+<span class="fu">ga_view_list</span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-1"</span>)</pre></body></html></div>
+<pre><code>##         id accountId webPropertyId internalWebPropertyId              name currency
+## 1 81416941  47480439 UA-47480439-1              78742336 All Web Site Data      USD
+##            timezone              websiteUrl type             created
+## 1 Europe/Copenhagen http://markedmondson.me  WEB 2014-01-25 12:17:05
+##               updated eCommerceTracking
+## 1 2015-06-14 13:18:53             FALSE
 ##                            permissions.effective
 ## 1 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE</code></pre>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co"># this is meta-data for this particular viewId (profileId)</span>
-<span class="fu"><a href="../reference/ga_view.html">ga_view</a></span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-1"</span>, <span class="kw">profileId</span> <span class="kw">=</span> <span class="fl">81416941</span>)</pre></body></html></div>
+<span class="fu">ga_view</span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-1"</span>, <span class="kw">profileId</span> <span class="kw">=</span> <span class="fl">81416941</span>)</pre></body></html></div>
 <pre><code>## $id
 ## [1] "81416941"
 ## 
@@ -397,8 +393,7 @@
 ## 
 ## $permissions
 ## $permissions$effective
-## [1] "COLLABORATE"      "EDIT"             "MANAGE_USERS"    
-## [4] "READ_AND_ANALYZE"
+## [1] "COLLABORATE"      "EDIT"             "MANAGE_USERS"     "READ_AND_ANALYZE"
 ## 
 ## 
 ## $created
@@ -431,7 +426,7 @@
 <p>These are helper utility functions to work with Google Analytics data.</p>
 <ul>
 <li>
-<code>google_analytics_meta()</code> - get a data.frame of available dimensions and metrics, or just use <code>meta</code> directly to get the version that comes with the library.</li>
+<code>ga_meta()</code> - get a data.frame of available dimensions and metrics, or just use <code>meta</code> directly to get the version that comes with the library.</li>
 </ul>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co"># you can just use `meta` as is to get the available metrics,</span>
 <span class="co"># here we just return the first 5 columns and rows for brevity</span>
@@ -444,7 +439,7 @@
 ## 5 ga:daysSinceLastSession DIMENSION   STRING  User     PUBLIC
 ## 6     ga:userDefinedValue DIMENSION   STRING  User     PUBLIC</code></pre>
 <div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="co"># or ensure an up to date version by calling the metadata API.</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span>())[,<span class="fl">1</span>:<span class="fl">5</span>]</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu">ga_meta</span>())[,<span class="fl">1</span>:<span class="fl">5</span>]</pre></body></html></div>
 <pre><code>##                      name      type dataType group     status
 ## 1             ga:userType DIMENSION   STRING  User     PUBLIC
 ## 2          ga:visitorType DIMENSION   STRING  User DEPRECATED
@@ -457,55 +452,55 @@
 <code>ga_aggregate</code> - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed. This is used internally when using anti-sampling, and is also useful to respond to dimension selections in Shiny dashboards, where you don’t want to perform a new API call each time you need aggregated data. Download all data first in a more unaggregated form, then use this function.</li>
 </ul>
 <div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="co"># use `aggregateGAData` so you can on the fly create summary data</span>
-<span class="no">ga_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="fl">81416156</span>,
+<span class="no">ga_data</span> <span class="kw">&lt;-</span> <span class="fu">google_analytics</span>(<span class="fl">81416156</span>,
                             <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span>),
                             <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>), <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"hour"</span>,<span class="st">"date"</span>))</pre></body></html></div>
-<pre><code>## 2019-12-08 15:46:40&gt; Downloaded [240] rows from a total of [240].</code></pre>
+<pre><code>## [36mℹ[39m 2020-05-26 11:40:05 &gt; Downloaded [ 240 ] rows from a total of [ 240 ].</code></pre>
 <div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">ga_data</span>)</pre></body></html></div>
 <pre><code>##   hour       date sessions bounceRate
-## 1   00 2019-11-28        5         80
-## 2   00 2019-11-29        4         50
-## 3   00 2019-11-30        1        100
-## 4   00 2019-12-01        5         60
-## 5   00 2019-12-02        4        100
-## 6   00 2019-12-03        5         20</code></pre>
+## 1   00 2020-05-16       10   60.00000
+## 2   00 2020-05-17        8   37.50000
+## 3   00 2020-05-18        9   44.44444
+## 4   00 2020-05-19        8   50.00000
+## 5   00 2020-05-20       11   63.63636
+## 6   00 2020-05-21        8   50.00000</code></pre>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="co"># if we want totals per hour over the dates:</span>
-<span class="fu"><a href="../reference/ga_aggregate.html">ga_aggregate</a></span>(<span class="no">ga_data</span>[,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"hour"</span>,<span class="st">"sessions"</span>)], <span class="kw">agg_names</span> <span class="kw">=</span> <span class="st">"hour"</span>)</pre></body></html></div>
+<span class="fu">ga_aggregate</span>(<span class="no">ga_data</span>[,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"hour"</span>,<span class="st">"sessions"</span>)], <span class="kw">agg_names</span> <span class="kw">=</span> <span class="st">"hour"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  sessions
 ##    &lt;chr&gt;    &lt;dbl&gt;
-##  1 00          51
-##  2 01          53
-##  3 02          50
-##  4 03          40
-##  5 04          55
-##  6 05          47
-##  7 06          64
-##  8 07          41
-##  9 08          76
-## 10 09         130
+##  1 00          92
+##  2 01          64
+##  3 02          58
+##  4 03          64
+##  5 04          70
+##  6 05          74
+##  7 06          59
+##  8 07          66
+##  9 08          82
+## 10 09          89
 ## # … with 14 more rows</code></pre>
 <div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="co"># it knows not to sum metrics that are rates:</span>
-<span class="fu"><a href="../reference/ga_aggregate.html">ga_aggregate</a></span>(<span class="no">ga_data</span>[,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"hour"</span>,<span class="st">"bounceRate"</span>)], <span class="kw">agg_names</span> <span class="kw">=</span> <span class="st">"hour"</span>)</pre></body></html></div>
+<span class="fu">ga_aggregate</span>(<span class="no">ga_data</span>[,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"hour"</span>,<span class="st">"bounceRate"</span>)], <span class="kw">agg_names</span> <span class="kw">=</span> <span class="st">"hour"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 24 x 2
 ##    hour  bounceRate
 ##    &lt;chr&gt;      &lt;dbl&gt;
-##  1 00          70.5
-##  2 01          78.9
-##  3 02          68.3
-##  4 03          79  
-##  5 04          58.9
-##  6 05          65.8
-##  7 06          78.5
-##  8 07          56.8
-##  9 08          74.0
-## 10 09          73.0
+##  1 00          53.4
+##  2 01          65.1
+##  3 02          69.3
+##  4 03          60.5
+##  5 04          65.4
+##  6 05          79.9
+##  7 06          78.8
+##  8 07          66.1
+##  9 08          75.4
+## 10 09          66.3
 ## # … with 14 more rows</code></pre>
 <ul>
 <li>
-<code><a href="../reference/ga_allowed_metric_dim.html">ga_allowed_metric_dim()</a></code> - Create named list of allowed GA metrics/dimensions. This is useful to have nice looking labels for dimension and metric selection pickers, or to create lookup tables.</li>
+<code>ga_allowed_metric_dim()</code> - Create named list of allowed GA metrics/dimensions. This is useful to have nice looking labels for dimension and metric selection pickers, or to create lookup tables.</li>
 </ul>
-<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">amd</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_allowed_metric_dim.html">ga_allowed_metric_dim</a></span>()
+<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">amd</span> <span class="kw">&lt;-</span> <span class="fu">ga_allowed_metric_dim</span>()
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">amd</span>)</pre></body></html></div>
 <pre><code>##                   Users               New Users          % New Sessions 
 ##              "ga:users"           "ga:newUsers" "ga:percentNewSessions" 
@@ -517,15 +512,15 @@
 <a href="#user-management" class="anchor"></a>User management</h2>
 <ul>
 <li>
-<code><a href="../reference/ga_users_list.html">ga_users_list()</a></code> - list user access to your Google Analytics accounts, web properties or views</li>
+<code>ga_users_list()</code> - list user access to your Google Analytics accounts, web properties or views</li>
 <li>
-<code><a href="../reference/ga_users_delete.html">ga_users_delete()</a></code> - delete user access via email</li>
+<code>ga_users_delete()</code> - delete user access via email</li>
 <li>
-<code><a href="../reference/ga_users_delete_linkid.html">ga_users_delete_linkid()</a></code> - delete user access via the linkId</li>
+<code>ga_users_delete_linkid()</code> - delete user access via the linkId</li>
 <li>
-<code><a href="../reference/ga_users_add.html">ga_users_add()</a></code> - add users to accounts</li>
+<code>ga_users_add()</code> - add users to accounts</li>
 <li>
-<code><a href="../reference/ga_users_update.html">ga_users_update()</a></code> - update a user</li>
+<code>ga_users_update()</code> - update a user</li>
 </ul>
 <p>User management follows the recommended workflows outlined in this <a href="https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management">Google reference article</a>.</p>
 <p>The <code>ga_users_*</code> functions use the management APIs batching endpoint, to take advantage of the special increased quota limits when dealing with User management that API offers. For example, every 30 API calls that are batched that deal with user management only increments one API call against your management API quota. You can have 300 API calls in one batch (e.g. that costs 10 API calls against the quota), and <code>googleAnalyticsR</code> will split any list of emails into 300 emails per batch for you, so you can send in all emails you have.</p>
@@ -533,44 +528,44 @@
 <blockquote>
 <p>You will need to use your own Google Cloud Platform project if using any write API operations seriously, otherwise you will be at the mercy of the shared googleAnalyticsR’s quota limits. See the section in the Setup page on how to <a href="http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#your-own-google-project">setup using your own Google Project</a></p>
 </blockquote>
-<p>To see which users are attached, use <code><a href="../reference/ga_users_list.html">ga_users_list()</a></code>. Each user email is referenced under the <code>userRef.email</code> column, whereas the unique IDs used to see which user is linked to where is the <code>linkId</code> which is unique to each user and link to your account, web property or view/profile.</p>
+<p>To see which users are attached, use <code>ga_users_list()</code>. Each user email is referenced under the <code>userRef.email</code> column, whereas the unique IDs used to see which user is linked to where is the <code>linkId</code> which is unique to each user and link to your account, web property or view/profile.</p>
 <p>Users can be attached at various levels in the hierarchy so you can call the function at various viewing angles.</p>
 <div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="co"># default will list all users that match the id you supply</span>
-<span class="fu"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="fl">47480439</span>)
-<span class="fu"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-2"</span>)
-<span class="fu"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-2"</span>, <span class="kw">viewId</span> <span class="kw">=</span> <span class="fl">81416156</span>)
+<span class="fu">ga_users_list</span>(<span class="fl">47480439</span>)
+<span class="fu">ga_users_list</span>(<span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-2"</span>)
+<span class="fu">ga_users_list</span>(<span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-2"</span>, <span class="kw">viewId</span> <span class="kw">=</span> <span class="fl">81416156</span>)
 
 <span class="co"># only list users who have account level access</span>
-<span class="fu"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">viewId</span> <span class="kw">=</span> <span class="kw">NULL</span>)
+<span class="fu">ga_users_list</span>(<span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">viewId</span> <span class="kw">=</span> <span class="kw">NULL</span>)
 <span class="co"># only list users who have webProperty and above access</span>
-<span class="fu"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-2"</span>, <span class="kw">viewId</span> <span class="kw">=</span> <span class="kw">NULL</span>)</pre></body></html></div>
+<span class="fu">ga_users_list</span>(<span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-2"</span>, <span class="kw">viewId</span> <span class="kw">=</span> <span class="kw">NULL</span>)</pre></body></html></div>
 <p>Users can be attached at account, web-property and view level.</p>
 <p>Batching is incorporated for adding users, so you can pass in a vector of emails to add.</p>
-<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_users_add.html">ga_users_add</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"the_email@company.com"</span>, <span class="st">"another_email@company.com"</span>),
+<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="fu">ga_users_add</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"the_email@company.com"</span>, <span class="st">"another_email@company.com"</span>),
              <span class="kw">permissions</span> <span class="kw">=</span> <span class="st">"EDIT"</span>, <span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">47480439</span>)</pre></body></html></div>
-<p>To delete a user from all accounts, web-properties and views takes a few API calls to <code><a href="../reference/ga_users_list.html">ga_users_list()</a></code> to find all the possible links, which is done behind the scenes of <code><a href="../reference/ga_users_delete.html">ga_users_delete()</a></code>. You can pass the function multiple emails to delete many at once, which is done via batching:</p>
-<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="fl">47480439</span>)
+<p>To delete a user from all accounts, web-properties and views takes a few API calls to <code>ga_users_list()</code> to find all the possible links, which is done behind the scenes of <code>ga_users_delete()</code>. You can pass the function multiple emails to delete many at once, which is done via batching:</p>
+<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="fu">ga_users_list</span>(<span class="fl">47480439</span>)
 
-<span class="fu"><a href="../reference/ga_users_delete.html">ga_users_delete</a></span>(<span class="st">"the_email@company.com"</span>, <span class="fl">47480439</span>)
+<span class="fu">ga_users_delete</span>(<span class="st">"the_email@company.com"</span>, <span class="fl">47480439</span>)
 
 <span class="co"># delete many emails at once</span>
-<span class="fu"><a href="../reference/ga_users_delete.html">ga_users_delete</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"the_email@company.com"</span>, <span class="st">"another_email@company.com"</span>), <span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">47480439</span>)</pre></body></html></div>
+<span class="fu">ga_users_delete</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"the_email@company.com"</span>, <span class="st">"another_email@company.com"</span>), <span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">47480439</span>)</pre></body></html></div>
 <p>For more fine grained control, the below examples shows a workflow to list and delete user access for one user at View level using the linkId.</p>
 <div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="co"># get the linkId for the user you want to delete</span>
-<span class="fu"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-2"</span>, <span class="kw">viewId</span> <span class="kw">=</span> <span class="fl">81416156</span>)
-<span class="fu"><a href="../reference/ga_users_delete_linkid.html">ga_users_delete_linkid</a></span>(<span class="st">"81416156:114834495587136933146"</span>, <span class="fl">47480439</span>,
+<span class="fu">ga_users_list</span>(<span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-2"</span>, <span class="kw">viewId</span> <span class="kw">=</span> <span class="fl">81416156</span>)
+<span class="fu">ga_users_delete_linkid</span>(<span class="st">"81416156:114834495587136933146"</span>, <span class="fl">47480439</span>,
                 <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-2"</span>, <span class="kw">viewId</span> <span class="kw">=</span> <span class="fl">81416156</span>)
 
 <span class="co"># check its gone</span>
-<span class="fu"><a href="../reference/ga_users_list.html">ga_users_list</a></span>(<span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-2"</span>, <span class="kw">viewId</span> <span class="kw">=</span> <span class="fl">81416156</span>)
+<span class="fu">ga_users_list</span>(<span class="fl">47480439</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-47480439-2"</span>, <span class="kw">viewId</span> <span class="kw">=</span> <span class="fl">81416156</span>)
 
 <span class="co"># can only delete at level user has access, the above deletion woud have failed if via:</span>
-<span class="fu"><a href="../reference/ga_users_delete_linkid.html">ga_users_delete_linkid</a></span>(<span class="st">"47480439:114834495587136933146"</span>, <span class="fl">47480439</span>)</pre></body></html></div>
-<p>You can also modify existing users via <code><a href="../reference/ga_users_update.html">ga_users_update()</a></code> - the below modifies on the web property level:</p>
+<span class="fu">ga_users_delete_linkid</span>(<span class="st">"47480439:114834495587136933146"</span>, <span class="fl">47480439</span>)</pre></body></html></div>
+<p>You can also modify existing users via <code>ga_users_update()</code> - the below modifies on the web property level:</p>
 <div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="co"># the update to perform</span>
 <span class="no">o</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">permissions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">local</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"EDIT"</span>)))
 
-<span class="fu"><a href="../reference/ga_users_update.html">ga_users_update</a></span>(<span class="st">"UA-123456-1:1111222233334444"</span>,
+<span class="fu">ga_users_update</span>(<span class="st">"UA-123456-1:1111222233334444"</span>,
                 <span class="kw">update_object</span> <span class="kw">=</span> <span class="no">o</span>,
                 <span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">123456</span>,
                 <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-123456-1"</span>)</pre></body></html></div>
@@ -582,19 +577,19 @@
 <p>Custom variable management for a Google Analytics property.</p>
 <ul>
 <li>
-<code><a href="../reference/ga_custom_vars.html">ga_custom_vars()</a></code> - get meta data for a specific custom variable</li>
+<code>ga_custom_vars()</code> - get meta data for a specific custom variable</li>
 <li>
-<code><a href="../reference/ga_custom_vars_list.html">ga_custom_vars_list()</a></code> - list all custom dimensions or metrics</li>
+<code>ga_custom_vars_list()</code> - list all custom dimensions or metrics</li>
 <li>
-<code><a href="../reference/ga_custom_vars_create.html">ga_custom_vars_create()</a></code> - create a new custom variable</li>
+<code>ga_custom_vars_create()</code> - create a new custom variable</li>
 <li>
-<code><a href="../reference/ga_custom_vars_patch.html">ga_custom_vars_patch()</a></code> - update an existing custom variable</li>
+<code>ga_custom_vars_patch()</code> - update an existing custom variable</li>
 </ul>
 <p>Using these you can scale setting up custom dimensions across your Google Analytics web properties. Custom dimension updates are governed by the same rules as when you create them in the web interface, as this <a href="https://support.google.com/analytics/answer/2709828">Google article on custom dimensions and metrics explains</a>.</p>
 <p>You can’t delete custom dimensions, you can only de-activate them for reuse later on.</p>
 <p>A workflow is shown below that creates, then updates a custom variable to a new name.</p>
 <div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="co"># create custom var</span>
-<span class="fu"><a href="../reference/ga_custom_vars_create.html">ga_custom_vars_create</a></span>(<span class="st">"my_custom_dim"</span>,
+<span class="fu">ga_custom_vars_create</span>(<span class="st">"my_custom_dim"</span>,
                       <span class="kw">index</span> <span class="kw">=</span> <span class="fl">15</span>,
                       <span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">54019251</span>,
                       <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-54019251-4"</span>,
@@ -602,10 +597,10 @@
                       <span class="kw">active</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
 
 <span class="co"># view custom dimension in list</span>
-<span class="fu"><a href="../reference/ga_custom_vars_list.html">ga_custom_vars_list</a></span>(<span class="fl">54019251</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-54019251-4"</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"customDimensions"</span>)
+<span class="fu">ga_custom_vars_list</span>(<span class="fl">54019251</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-54019251-4"</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"customDimensions"</span>)
 
 <span class="co"># change a custom dimension</span>
-<span class="fu"><a href="../reference/ga_custom_vars_patch.html">ga_custom_vars_patch</a></span>(<span class="st">"ga:dimension7"</span>,
+<span class="fu">ga_custom_vars_patch</span>(<span class="st">"ga:dimension7"</span>,
                      <span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">54019251</span>,
                      <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-54019251-4"</span>,
                      <span class="kw">name</span> <span class="kw">=</span> <span class="st">"my_custom_dim2"</span>,
@@ -613,40 +608,40 @@
                      <span class="kw">active</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 
 <span class="co"># view custom dimensions again to see change</span>
-<span class="fu"><a href="../reference/ga_custom_vars_list.html">ga_custom_vars_list</a></span>(<span class="fl">54019251</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-54019251-4"</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"customDimensions"</span>)</pre></body></html></div>
+<span class="fu">ga_custom_vars_list</span>(<span class="fl">54019251</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-54019251-4"</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"customDimensions"</span>)</pre></body></html></div>
 </div>
 <div id="adwords" class="section level2">
 <h2 class="hasAnchor">
 <a href="#adwords" class="anchor"></a>AdWords</h2>
 <ul>
 <li>
-<code><a href="../reference/ga_adwords.html">ga_adwords()</a></code> Get Google Analytics - AdWords Link meta data</li>
+<code>ga_adwords()</code> Get Google Analytics - AdWords Link meta data</li>
 <li>
-<code><a href="../reference/ga_adwords_list.html">ga_adwords_list()</a></code> List AdWords</li>
+<code>ga_adwords_list()</code> List AdWords</li>
 <li>
-<code><a href="../reference/ga_adwords_add_linkid.html">ga_adwords_add_linkid()</a></code> Create a link between and Adwords (Google ads) account and a Google Analytics property</li>
+<code>ga_adwords_add_linkid()</code> Create a link between and Adwords (Google ads) account and a Google Analytics property</li>
 <li>
-<code><a href="../reference/ga_adwords_delete_linkid.html">ga_adwords_delete_linkid()</a></code> Delete a Google Analytics webProperty-Google Ads link</li>
+<code>ga_adwords_delete_linkid()</code> Delete a Google Analytics webProperty-Google Ads link</li>
 </ul>
-<p>For many websites Google search advertising, aka Adwords, is a key traffic channel which comes with its own reporting system. Linking Google Analytics with Adwords makes sense as it allows Google ads data to be included in Analytics reports and vice versa. For instance linking the two together can add to the Analytics reports more than 30 metrics and dimensions related to ads (such as the keywords that triggered an ad or the ad ROI) You can use the function <code><a href="../reference/ga_adwords_list.html">ga_adwords_list()</a></code> to request a list of existing links between Google Analytics and Adwords associated with your user. The <code><a href="../reference/ga_adwords.html">ga_adwords()</a></code> function provides meta data about a specific Google Analytics - Adwords link.</p>
-<p>If a link between Analytics and Google ads has not been established, this can be done easily via the Management API using the <code><a href="../reference/ga_adwords_add_linkid.html">ga_adwords_add_linkid()</a></code> function. A requirement is that your email has access rights to both the Analytics and Adwords account. You will also need the Adwords customer ID which can be obtained via the Adwords API or UI. Also required is the id of the Google Analytics account and associated GA property to which the Adwords account will be linked. This operation will create a new entityAdWordsLinks resource. To remove this entityAdWordsLinks later if needed the <code><a href="../reference/ga_adwords_delete_linkid.html">ga_adwords_delete_linkid()</a></code> function can be used.</p>
+<p>For many websites Google search advertising, aka Adwords, is a key traffic channel which comes with its own reporting system. Linking Google Analytics with Adwords makes sense as it allows Google ads data to be included in Analytics reports and vice versa. For instance linking the two together can add to the Analytics reports more than 30 metrics and dimensions related to ads (such as the keywords that triggered an ad or the ad ROI) You can use the function <code>ga_adwords_list()</code> to request a list of existing links between Google Analytics and Adwords associated with your user. The <code>ga_adwords()</code> function provides meta data about a specific Google Analytics - Adwords link.</p>
+<p>If a link between Analytics and Google ads has not been established, this can be done easily via the Management API using the <code>ga_adwords_add_linkid()</code> function. A requirement is that your email has access rights to both the Analytics and Adwords account. You will also need the Adwords customer ID which can be obtained via the Adwords API or UI. Also required is the id of the Google Analytics account and associated GA property to which the Adwords account will be linked. This operation will create a new entityAdWordsLinks resource. To remove this entityAdWordsLinks later if needed the <code>ga_adwords_delete_linkid()</code> function can be used.</p>
 <div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="co"># Lists webProperty-Google Ads links</span>
-<span class="fu"><a href="../reference/ga_adwords_list.html">ga_adwords_list</a></span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">65973592</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-65973592-1"</span>)
+<span class="fu">ga_adwords_list</span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">65973592</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-65973592-1"</span>)
 
 <span class="co"># Get information about a web property-Google Ads link </span>
-<span class="fu"><a href="../reference/ga_adwords.html">ga_adwords</a></span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">65973592</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-65973592-1"</span>, <span class="kw">webPropertyAdWordsLinkId</span> <span class="kw">=</span> <span class="st">"QrcfI2DTSMayqbrLiHYUqw"</span>)
+<span class="fu">ga_adwords</span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">65973592</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-65973592-1"</span>, <span class="kw">webPropertyAdWordsLinkId</span> <span class="kw">=</span> <span class="st">"QrcfI2DTSMayqbrLiHYUqw"</span>)
 
 <span class="co"># establish a new link between GA and Adwords</span>
-<span class="fu"><a href="../reference/ga_adwords_add_linkid.html">ga_adwords_add_linkid</a></span>(<span class="kw">adwordsAccountId</span> <span class="kw">=</span> <span class="st">"280-234-7592"</span>, <span class="kw">linkName</span> <span class="kw">=</span> <span class="st">"Google Ads Link"</span>, <span class="kw">accountId</span> <span class="kw">=</span> <span class="st">"65973592"</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-65973592-1"</span>)
+<span class="fu">ga_adwords_add_linkid</span>(<span class="kw">adwordsAccountId</span> <span class="kw">=</span> <span class="st">"280-234-7592"</span>, <span class="kw">linkName</span> <span class="kw">=</span> <span class="st">"Google Ads Link"</span>, <span class="kw">accountId</span> <span class="kw">=</span> <span class="st">"65973592"</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-65973592-1"</span>)
 
 <span class="co">#check that it has been added</span>
-<span class="fu"><a href="../reference/ga_adwords_list.html">ga_adwords_list</a></span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">65973592</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-65973592-1"</span>)
+<span class="fu">ga_adwords_list</span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">65973592</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-65973592-1"</span>)
 
 <span class="co"># delete the link</span>
-<span class="fu"><a href="../reference/ga_adwords_delete_linkid.html">ga_adwords_delete_linkid</a></span>(<span class="kw">accountId</span>  <span class="kw">=</span> <span class="fl">65973592</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span><span class="st">"UA-65973592-1"</span>, <span class="kw">webPropertyAdWordsLinkId</span> <span class="kw">=</span> <span class="st">"ezW2dyaiQcGheWRAo69nCw"</span>)
+<span class="fu">ga_adwords_delete_linkid</span>(<span class="kw">accountId</span>  <span class="kw">=</span> <span class="fl">65973592</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span><span class="st">"UA-65973592-1"</span>, <span class="kw">webPropertyAdWordsLinkId</span> <span class="kw">=</span> <span class="st">"ezW2dyaiQcGheWRAo69nCw"</span>)
 
 <span class="co">#check that the link has been removed</span>
-<span class="fu"><a href="../reference/ga_adwords_list.html">ga_adwords_list</a></span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">65973592</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-65973592-1"</span>)</pre></body></html></div>
+<span class="fu">ga_adwords_list</span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="fl">65973592</span>, <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="st">"UA-65973592-1"</span>)</pre></body></html></div>
 </div>
 <div id="custom-data-sources" class="section level2">
 <h2 class="hasAnchor">
@@ -654,13 +649,13 @@
 <p>See and upload custom data sources to Google Analytics</p>
 <ul>
 <li>
-<code><a href="../reference/ga_custom_datasource.html">ga_custom_datasource()</a></code> - List Custom Data Sources</li>
+<code>ga_custom_datasource()</code> - List Custom Data Sources</li>
 <li>
-<code><a href="../reference/ga_custom_upload.html">ga_custom_upload()</a></code> - Custom Data Source Upload Status</li>
+<code>ga_custom_upload()</code> - Custom Data Source Upload Status</li>
 <li>
-<code><a href="../reference/ga_custom_upload_file.html">ga_custom_upload_file()</a></code>- Upload a file to GA custom uploads</li>
+<code>ga_custom_upload_file()</code>- Upload a file to GA custom uploads</li>
 <li>
-<code><a href="../reference/ga_custom_upload_list.html">ga_custom_upload_list()</a></code> - List the files in a GA custom upload</li>
+<code>ga_custom_upload_list()</code> - List the files in a GA custom upload</li>
 </ul>
 </div>
 <div id="experiments" class="section level2">
@@ -668,9 +663,9 @@
 <a href="#experiments" class="anchor"></a>Experiments</h2>
 <ul>
 <li>
-<code><a href="../reference/ga_experiment.html">ga_experiment()</a></code> - Experiments Meta data</li>
+<code>ga_experiment()</code> - Experiments Meta data</li>
 <li>
-<code><a href="../reference/ga_experiment_list.html">ga_experiment_list()</a></code> - List Experiments</li>
+<code>ga_experiment_list()</code> - List Experiments</li>
 </ul>
 </div>
 <div id="view-filters" class="section level2">
@@ -679,23 +674,23 @@
 <p>The filter edit functions are contributed by <span class="citation">@zselinger</span> which allow you to update filters for your Google Analytics views at scale.</p>
 <ul>
 <li>
-<code><a href="../reference/ga_filter.html">ga_filter()</a></code> - Get specific filter for account</li>
+<code>ga_filter()</code> - Get specific filter for account</li>
 <li>
-<code><a href="../reference/ga_filter_add.html">ga_filter_add()</a></code> - Create a new filter and add it to the view (optional).</li>
+<code>ga_filter_add()</code> - Create a new filter and add it to the view (optional).</li>
 <li>
-<code><a href="../reference/ga_filter_apply_to_view.html">ga_filter_apply_to_view()</a></code> - Apply an existing filter to view.</li>
+<code>ga_filter_apply_to_view()</code> - Apply an existing filter to view.</li>
 <li>
-<code><a href="../reference/ga_filter_delete.html">ga_filter_delete()</a></code> - Delete a filter from account or remove from view.</li>
+<code>ga_filter_delete()</code> - Delete a filter from account or remove from view.</li>
 <li>
-<code><a href="../reference/ga_filter_list.html">ga_filter_list()</a></code> - List filters for account</li>
+<code>ga_filter_list()</code> - List filters for account</li>
 <li>
-<code><a href="../reference/ga_filter_update.html">ga_filter_update()</a></code> - Updates an existing filter.</li>
+<code>ga_filter_update()</code> - Updates an existing filter.</li>
 <li>
-<code><a href="../reference/ga_filter_update_filter_link.html">ga_filter_update_filter_link()</a></code> - Update an existing profile filter link. Patch semantics supported</li>
+<code>ga_filter_update_filter_link()</code> - Update an existing profile filter link. Patch semantics supported</li>
 <li>
-<code><a href="../reference/ga_filter_view.html">ga_filter_view()</a></code> - Get specific filter for view (profile)</li>
+<code>ga_filter_view()</code> - Get specific filter for view (profile)</li>
 <li>
-<code><a href="../reference/ga_filter_view_list.html">ga_filter_view_list()</a></code> - List filters for view (profile)</li>
+<code>ga_filter_view_list()</code> - List filters for view (profile)</li>
 </ul>
 </div>
 <div id="goals" class="section level2">
@@ -703,13 +698,13 @@
 <a href="#goals" class="anchor"></a>Goals</h2>
 <ul>
 <li>
-<code><a href="../reference/ga_goal.html">ga_goal()</a></code> - Get goal</li>
+<code>ga_goal()</code> - Get goal</li>
 <li>
-<code><a href="../reference/ga_goal_list.html">ga_goal_list()</a></code> - List goals</li>
+<code>ga_goal_list()</code> - List goals</li>
 <li>
-<code><a href="../reference/ga_goal_add.html">ga_goal_add()</a></code> - Create and add Goals to a web property</li>
+<code>ga_goal_add()</code> - Create and add Goals to a web property</li>
 <li>
-<code><a href="../reference/ga_goal_update.html">ga_goal_update()</a></code> - Modify an existing goal</li>
+<code>ga_goal_update()</code> - Modify an existing goal</li>
 </ul>
 </div>
 <div id="example-copying-ga-goals" class="section level2">
@@ -726,6 +721,7 @@
 <div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">stringr</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rlist</span>)</pre></body></html></div>
+<pre><code>## Error in library(rlist): there is no package called 'rlist'</code></pre>
 </div>
 <div id="copying-a-single-goal" class="section level2">
 <h2 class="hasAnchor">
@@ -741,40 +737,34 @@
 <div id="retrieve-the-accountid-webpropertyid-and-viewid-from-our-source-ga-view" class="section level3">
 <h3 class="hasAnchor">
 <a href="#retrieve-the-accountid-webpropertyid-and-viewid-from-our-source-ga-view" class="anchor"></a>1. Retrieve the accountId, webPropertyId and viewId from our source GA view</h3>
-<p>We use the <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> function, which returns an account summary for all available accounts as a dataframe. Then, we filter the dataframe down to a specific account and view name using the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> and <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code> functions from the tidyverse.</p>
+<p>We use the <code>ga_account_list()</code> function, which returns an account summary for all available accounts as a dataframe. Then, we filter the dataframe down to a specific account and view name using the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> and <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code> functions from the tidyverse.</p>
 <p>You can supply your own filter conditions as necessary, to locate your desired view information.</p>
-<div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="co"># Account info and list of goals for source, to be copied</span>
-<span class="no">source_account</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span>() <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="co"># Account info and list of goals for source, to be copied</span>
+<span class="no">source_account</span> <span class="kw">&lt;-</span> <span class="fu">ga_account_list</span>() <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(<span class="no">accountName</span>, <span class="st">"Demo Account"</span>), <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(<span class="no">viewName</span>, <span class="st">"Master"</span>))
 <span class="no">source_account</span></pre></body></html></div>
 <pre><code>## # A tibble: 1 x 11
-##   accountId accountName internalWebProp… level websiteUrl type  starred
-##   &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;lgl&gt;  
-## 1 54516992  Demo Accou… 87479473         STAN… https://s… WEB   NA     
-## # … with 4 more variables: webPropertyId &lt;chr&gt;, webPropertyName &lt;chr&gt;,
-## #   viewId &lt;chr&gt;, viewName &lt;chr&gt;</code></pre>
+##   accountId accountName internalWebProp… level websiteUrl type  starred webPropertyId
+##   &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;        
+## 1 54516992  Demo Accou… 87479473         STAN… https://s… WEB   NA      UA-54516992-1
+## # … with 3 more variables: webPropertyName &lt;chr&gt;, viewId &lt;chr&gt;, viewName &lt;chr&gt;</code></pre>
 </div>
 <div id="get-a-list-of-the-goals-currently-configured-from-our-source-ga-view" class="section level3">
 <h3 class="hasAnchor">
 <a href="#get-a-list-of-the-goals-currently-configured-from-our-source-ga-view" class="anchor"></a>2. Get a list of the goals currently configured from our source GA view</h3>
 <p>Now that we have the account summary, we can use the view details to get a list of goal data, with each item in the list showing goal details.</p>
-<div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="no">source_goals</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_goal_list.html">ga_goal_list</a></span>(<span class="no">source_account</span>$<span class="no">accountId</span>, <span class="no">source_account</span>$<span class="no">webPropertyId</span>, <span class="no">source_account</span>$<span class="no">viewId</span>)
+<div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="no">source_goals</span> <span class="kw">&lt;-</span> <span class="fu">ga_goal_list</span>(<span class="no">source_account</span>$<span class="no">accountId</span>, <span class="no">source_account</span>$<span class="no">webPropertyId</span>, <span class="no">source_account</span>$<span class="no">viewId</span>)
 <span class="no">source_goals</span></pre></body></html></div>
-<pre><code>##   id accountId webPropertyId internalWebPropertyId profileId
-## 1  1  54516992 UA-54516992-1              87479473  92320289
-## 2  2  54516992 UA-54516992-1              87479473  92320289
-## 3  3  54516992 UA-54516992-1              87479473  92320289
-## 4  4  54516992 UA-54516992-1              87479473  92320289
-##                 name value active            type             created
-## 1 Purchase Completed     0   TRUE URL_DESTINATION 2014-10-10 20:13:47
-## 2      Engaged Users     0   TRUE VISIT_NUM_PAGES 2015-02-23 16:18:06
-## 3      Registrations     0   TRUE URL_DESTINATION 2015-02-27 12:15:01
-## 4   Entered Checkout     0   TRUE URL_DESTINATION 2015-07-20 23:57:22
-##               updated
-## 1 2016-11-10 23:07:35
-## 2 2015-04-14 12:02:21
-## 3 2016-07-26 16:14:09
-## 4 2016-07-26 16:19:40
+<pre><code>##   id accountId webPropertyId internalWebPropertyId profileId               name
+## 1  1  54516992 UA-54516992-1              87479473  92320289 Purchase Completed
+## 2  2  54516992 UA-54516992-1              87479473  92320289      Engaged Users
+## 3  3  54516992 UA-54516992-1              87479473  92320289      Registrations
+## 4  4  54516992 UA-54516992-1              87479473  92320289   Entered Checkout
+##   value active            type             created             updated
+## 1     0   TRUE URL_DESTINATION 2014-10-10 20:13:47 2016-11-10 23:07:35
+## 2     0   TRUE VISIT_NUM_PAGES 2015-02-23 16:18:06 2015-04-14 12:02:21
+## 3     0   TRUE URL_DESTINATION 2015-02-27 12:15:01 2016-07-26 16:14:09
+## 4     0   TRUE URL_DESTINATION 2015-07-20 23:57:22 2016-07-26 16:19:40
 ##                                 urlDestinationDetails.url
 ## 1                                  /ordercompleted\\.html
 ## 2                                                    &lt;NA&gt;
@@ -804,68 +794,32 @@
 <div id="retrieve-the-accountid-webpropertyid-and-viewid-from-our-destination-ga-view" class="section level3">
 <h3 class="hasAnchor">
 <a href="#retrieve-the-accountid-webpropertyid-and-viewid-from-our-destination-ga-view" class="anchor"></a>3. Retrieve the accountId, webPropertyId and viewId from our destination GA view</h3>
-<p>We again filter the results from <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code>, to get account information for our destination GA property. In this example, we filter for “Your_Account” and the view called “Filtered”.</p>
+<p>We again filter the results from <code>ga_account_list()</code>, to get account information for our destination GA property. In this example, we filter for “Your_Account” and the view called “Filtered”.</p>
 <p>The <code>dest_account</code> dataframe should contain the same columns and data types as your <code>source_account</code> dataframe.</p>
-<div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="co"># Account info for destination account</span>
-<span class="no">dest_account</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span>() <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="co"># Account info for destination account</span>
+<span class="no">dest_account</span> <span class="kw">&lt;-</span> <span class="fu">ga_account_list</span>() <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(<span class="no">accountName</span>, <span class="st">"Your_Account"</span>), <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(<span class="no">viewName</span>, <span class="st">"Filtered"</span>))</pre></body></html></div>
 </div>
 <div id="get-the-configuration-details-of-a-single-goal-to-be-copied-" class="section level3">
 <h3 class="hasAnchor">
 <a href="#get-the-configuration-details-of-a-single-goal-to-be-copied-" class="anchor"></a>4. Get the configuration details of a single goal to be copied.</h3>
-<p>For this first example, we add a single goal (ID 1) to the destination view, passed as a list to the <a href="http://code.markedmondson.me/googleAnalyticsR/reference/ga_goal_add.html"><code><a href="../reference/ga_goal_add.html">ga_goal_add()</a></code></a> function.</p>
-<p>We now use the <code><a href="../reference/ga_goal.html">ga_goal()</a></code> function to retrieve the goal specifications as a list. We use <code><a href="../reference/ga_goal.html">ga_goal()</a></code> because it provides the goal configuration data in the necessary format for our <code>goal_add()</code> request.</p>
+<p>For this first example, we add a single goal (ID 1) to the destination view, passed as a list to the <a href="http://code.markedmondson.me/googleAnalyticsR/reference/ga_goal_add.html"><code>ga_goal_add()</code></a> function.</p>
+<p>We now use the <code>ga_goal()</code> function to retrieve the goal specifications as a list. We use <code>ga_goal()</code> because it provides the goal configuration data in the necessary format for our <code>goal_add()</code> request.</p>
 <p>In the example below, we retrieve the details for the goal in slot 1.</p>
-<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="co"># Get goal ID 1</span>
-<span class="no">goal_one</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_goal.html">ga_goal</a></span>(<span class="no">source_account</span>$<span class="no">accountId</span>, <span class="no">source_account</span>$<span class="no">webPropertyId</span>, <span class="no">source_account</span>$<span class="no">viewId</span>,
+<div class="sourceCode" id="cb41"><html><body><pre class="r"><span class="co"># Get goal ID 1</span>
+<span class="no">goal_one</span> <span class="kw">&lt;-</span> <span class="fu">ga_goal</span>(<span class="no">source_account</span>$<span class="no">accountId</span>, <span class="no">source_account</span>$<span class="no">webPropertyId</span>, <span class="no">source_account</span>$<span class="no">viewId</span>,
                     <span class="kw">goalId</span> <span class="kw">=</span> <span class="fl">1</span>) <span class="kw">%&gt;%</span>
   <span class="co"># Strip out instance-specific metadata (property, profile, view data and original creation dates)</span>
-  <span class="fu">list.remove</span>( <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"accountId"</span>, <span class="st">"webPropertyId"</span>, <span class="st">"selfLink"</span>, <span class="st">"internalWebPropertyId"</span>, <span class="st">"profileId"</span>, <span class="st">"parentLink"</span>, <span class="st">"created"</span>, <span class="st">"updated"</span>))
-
-<span class="no">goal_one</span></pre></body></html></div>
-<pre><code>## $id
-## [1] "1"
-## 
-## $kind
-## [1] "analytics#goal"
-## 
-## $name
-## [1] "Purchase Completed"
-## 
-## $value
-## [1] 0
-## 
-## $active
-## [1] TRUE
-## 
-## $type
-## [1] "URL_DESTINATION"
-## 
-## $urlDestinationDetails
-## $urlDestinationDetails$url
-## [1] "/ordercompleted\\.html"
-## 
-## $urlDestinationDetails$caseSensitive
-## [1] FALSE
-## 
-## $urlDestinationDetails$matchType
-## [1] "REGEX"
-## 
-## $urlDestinationDetails$firstStepRequired
-## [1] TRUE
-## 
-## $urlDestinationDetails$steps
-##   number                 name                 url
-## 1      1                 Cart      /basket\\.html
-## 2      2 Billing and Shipping    /yourinfo\\.html
-## 3      3              Payment     /payment\\.html
-## 4      4               Review /revieworder\\.html</code></pre>
+  <span class="fu">list.remove</span>( <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"accountId"</span>, <span class="st">"webPropertyId"</span>, <span class="st">"selfLink"</span>, <span class="st">"internalWebPropertyId"</span>, <span class="st">"profileId"</span>, <span class="st">"parentLink"</span>, <span class="st">"created"</span>, <span class="st">"updated"</span>))</pre></body></html></div>
+<pre><code>## Error in list.remove(., c("accountId", "webPropertyId", "selfLink", "internalWebPropertyId", : could not find function "list.remove"</code></pre>
+<div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="no">goal_one</span></pre></body></html></div>
+<pre><code>## Error in eval(expr, envir, enclos): object 'goal_one' not found</code></pre>
 </div>
 <div id="submit-the-goal-details-to-our-destination-property-" class="section level3">
 <h3 class="hasAnchor">
 <a href="#submit-the-goal-details-to-our-destination-property-" class="anchor"></a>5. Submit the goal details to our destination property.</h3>
-<p>We can then use the goal details contained in <code>goal_one</code> to submit a <code><a href="../reference/ga_goal_add.html">ga_goal_add()</a></code> request to our destination property.</p>
-<div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_goal_add.html">ga_goal_add</a></span>(<span class="no">goal_one</span>, <span class="no">dest_account</span>$<span class="no">accountId</span>, <span class="no">dest_account</span>$<span class="no">webPropertyId</span>, <span class="no">dest_account</span>$<span class="no">viewId</span>)</pre></body></html></div>
+<p>We can then use the goal details contained in <code>goal_one</code> to submit a <code>ga_goal_add()</code> request to our destination property.</p>
+<div class="sourceCode" id="cb45"><html><body><pre class="r"><span class="fu">ga_goal_add</span>(<span class="no">goal_one</span>, <span class="no">dest_account</span>$<span class="no">accountId</span>, <span class="no">dest_account</span>$<span class="no">webPropertyId</span>, <span class="no">dest_account</span>$<span class="no">viewId</span>)</pre></body></html></div>
 <p>All being well, you should see console output containing the details of your newly submitted goal in the destination property.</p>
 <p>You can repeat the above steps for any goal IDs you’d like to copy over, and to one or multiple destination views.</p>
 <hr>
@@ -876,15 +830,15 @@
 <a href="#copying-multiple-goals" class="anchor"></a>Copying multiple goals</h2>
 <p>Using the <a href="https://purrr.tidyverse.org/reference/map.html"><code>map()</code></a> function from the <code>tidyverse</code>, we can quickly scale up this approach. We can copy all goals from a view at once, rather than one at a time.</p>
 <p>First, we define a function to copy a single goal, given a goal ID, details of the source view ID and destination view IDs. In effect, we make a function to perform steps 1-5 from the “Copying a single goal” section in this page.</p>
-<div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="co"># Takes a goal ID, source account information &amp; dest account information, copies goal over</span>
+<div class="sourceCode" id="cb46"><html><body><pre class="r"><span class="co"># Takes a goal ID, source account information &amp; dest account information, copies goal over</span>
 <span class="no">copy_goal</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">goal_id</span>, <span class="no">source_df</span>, <span class="no">dest_df</span>) {
-  <span class="no">source_goal</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_goal.html">ga_goal</a></span>(<span class="no">source_df</span>$<span class="no">accountId</span>, <span class="no">source_df</span>$<span class="no">webPropertyId</span>, <span class="no">source_df</span>$<span class="no">viewId</span>, <span class="no">goal_id</span>) <span class="kw">%&gt;%</span>
+  <span class="no">source_goal</span> <span class="kw">&lt;-</span> <span class="fu">ga_goal</span>(<span class="no">source_df</span>$<span class="no">accountId</span>, <span class="no">source_df</span>$<span class="no">webPropertyId</span>, <span class="no">source_df</span>$<span class="no">viewId</span>, <span class="no">goal_id</span>) <span class="kw">%&gt;%</span>
     <span class="fu">list.remove</span>( <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"accountId"</span>, <span class="st">"webPropertyId"</span>, <span class="st">"selfLink"</span>, <span class="st">"internalWebPropertyId"</span>, <span class="st">"profileId"</span>, <span class="st">"parentLink"</span>, <span class="st">"created"</span>, <span class="st">"updated"</span>))
-  <span class="fu"><a href="../reference/ga_goal_add.html">ga_goal_add</a></span>(<span class="no">source_goal</span>, <span class="no">dest_df</span>$<span class="no">accountId</span>, <span class="no">dest_df</span>$<span class="no">webPropertyId</span>, <span class="no">dest_df</span>$<span class="no">viewId</span>)
+  <span class="fu">ga_goal_add</span>(<span class="no">source_goal</span>, <span class="no">dest_df</span>$<span class="no">accountId</span>, <span class="no">dest_df</span>$<span class="no">webPropertyId</span>, <span class="no">dest_df</span>$<span class="no">viewId</span>)
 }</pre></body></html></div>
 <p>Having our goal-copying function defined, it is a simple step to apply it across all goal IDs from the source view.</p>
 <p>The example below re-uses the <code>source_goals</code>, <code>source_account</code> and <code>dest_account</code> objects which were created earlier.</p>
-<div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="co"># For each goal ID in our source view, apply the copy_goal function, </span>
+<div class="sourceCode" id="cb47"><html><body><pre class="r"><span class="co"># For each goal ID in our source view, apply the copy_goal function, </span>
 <span class="co"># using source_account and dest_account account parameters as fixed 2nd / third arguments</span>
 <span class="fu">map</span>(<span class="no">source_goals</span>$<span class="no">id</span>, <span class="no">copy_goal</span>, <span class="no">source_account</span>, <span class="no">dest_account</span>)</pre></body></html></div>
 </div>
@@ -900,35 +854,35 @@
 <p>Remarketing segments lets you target users in Google Ads from Google Analytics segments.</p>
 <ul>
 <li>
-<code><a href="../reference/ga_remarketing_estimate.html">ga_remarketing_estimate()</a></code> - Estimate number of users added to the segment yesterday</li>
+<code>ga_remarketing_estimate()</code> - Estimate number of users added to the segment yesterday</li>
 <li>
-<code><a href="../reference/ga_remarketing_get.html">ga_remarketing_get()</a></code> - Get a remarketing audience</li>
+<code>ga_remarketing_get()</code> - Get a remarketing audience</li>
 <li>
-<code><a href="../reference/ga_remarketing_list.html">ga_remarketing_list()</a></code> - List remarketing audiences</li>
+<code>ga_remarketing_list()</code> - List remarketing audiences</li>
 <li>
-<code><a href="../reference/ga_remarketing_build.html">ga_remarketing_build()</a></code> - Create definitions to be used within <code><a href="../reference/ga_remarketing_create.html">ga_remarketing_create()</a></code>
+<code>ga_remarketing_build()</code> - Create definitions to be used within <code>ga_remarketing_create()</code>
 </li>
 <li>
-<code><a href="../reference/ga_remarketing_create.html">ga_remarketing_create()</a></code> - Create a remarketing audience</li>
+<code>ga_remarketing_create()</code> - Create a remarketing audience</li>
 </ul>
 <p>A demo of how you could use this based on your existing GA segments is:</p>
-<div class="sourceCode" id="cb45"><html><body><pre class="r"><span class="no">adword_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_adwords_list.html">ga_adwords_list</a></span>(<span class="fl">123456</span>, <span class="st">"UA-123456-1"</span>)
+<div class="sourceCode" id="cb48"><html><body><pre class="r"><span class="no">adword_list</span> <span class="kw">&lt;-</span> <span class="fu">ga_adwords_list</span>(<span class="fl">123456</span>, <span class="st">"UA-123456-1"</span>)
 
 <span class="no">adword_link</span> <span class="kw">&lt;-</span> <span class="fu">ga_adword</span>(<span class="no">adword_list</span>$<span class="no">id</span><span class="kw">[[</span><span class="fl">1</span>]])
 
-<span class="no">segment_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_segment_list.html">ga_segment_list</a></span>()$<span class="no">items</span>$<span class="no">definition</span>
+<span class="no">segment_list</span> <span class="kw">&lt;-</span> <span class="fu">ga_segment_list</span>()$<span class="no">items</span>$<span class="no">definition</span>
 
-<span class="no">my_remarketing1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_remarketing_build.html">ga_remarketing_build</a></span>(<span class="no">segment_list</span><span class="kw">[[</span><span class="fl">1</span>]],
+<span class="no">my_remarketing1</span> <span class="kw">&lt;-</span> <span class="fu">ga_remarketing_build</span>(<span class="no">segment_list</span><span class="kw">[[</span><span class="fl">1</span>]],
                       <span class="kw">state_duration</span> <span class="kw">=</span> <span class="st">"TEMPORARY"</span>,
                       <span class="kw">membershipDurationDays</span> <span class="kw">=</span> <span class="fl">90</span>,
                       <span class="kw">daysToLookBack</span> <span class="kw">=</span> <span class="fl">14</span>)
-<span class="no">my_remarketing2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_remarketing_build.html">ga_remarketing_build</a></span>(<span class="no">segment_list</span><span class="kw">[[</span><span class="fl">2</span>]],
+<span class="no">my_remarketing2</span> <span class="kw">&lt;-</span> <span class="fu">ga_remarketing_build</span>(<span class="no">segment_list</span><span class="kw">[[</span><span class="fl">2</span>]],
                       <span class="kw">state_duration</span> <span class="kw">=</span> <span class="st">"PERMANENT"</span>,
                       <span class="kw">membershipDurationDays</span> <span class="kw">=</span> <span class="fl">7</span>,
                       <span class="kw">daysToLookBack</span> <span class="kw">=</span> <span class="fl">31</span>)
 
 <span class="co"># state based only can include exclusions</span>
-<span class="fu"><a href="../reference/ga_remarketing_create.html">ga_remarketing_create</a></span>(<span class="kw">adwords_link</span> <span class="kw">=</span> <span class="no">adword_link</span>,
+<span class="fu">ga_remarketing_create</span>(<span class="kw">adwords_link</span> <span class="kw">=</span> <span class="no">adword_link</span>,
                      <span class="kw">include</span> <span class="kw">=</span> <span class="no">my_remarketing1</span>, <span class="kw">exclude</span> <span class="kw">=</span> <span class="no">my_remarketing2</span>,
                      <span class="kw">audienceType</span> <span class="kw">=</span> <span class="st">"STATE_BASED"</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"my_remarketing_seg1"</span>)</pre></body></html></div>
 </div>
@@ -938,11 +892,11 @@
 <p>Available only for GA360 accounts, you will need to authenticate with the Google drive scope to get download access. The download functions are contributed by <span class="citation">@j450h1</span></p>
 <ul>
 <li>
-<code><a href="../reference/ga_unsampled.html">ga_unsampled()</a></code> - Get Unsampled Report Meta Data</li>
+<code>ga_unsampled()</code> - Get Unsampled Report Meta Data</li>
 <li>
-<code><a href="../reference/ga_unsampled_download.html">ga_unsampled_download()</a></code> - Download Unsampled Report from Google Drive</li>
+<code>ga_unsampled_download()</code> - Download Unsampled Report from Google Drive</li>
 <li>
-<code><a href="../reference/ga_unsampled_list.html">ga_unsampled_list()</a></code> - List Unsampled Reports</li>
+<code>ga_unsampled_list()</code> - List Unsampled Reports</li>
 </ul>
 </div>
 <div id="users" class="section level2">
@@ -950,9 +904,9 @@
 <a href="#users" class="anchor"></a>Users</h2>
 <ul>
 <li>
-<code><a href="../reference/ga_clientid_hash.html">ga_clientid_hash()</a></code> - Creates the clientID hash that is used in BigQuery GA360 exports</li>
+<code>ga_clientid_hash()</code> - Creates the clientID hash that is used in BigQuery GA360 exports</li>
 <li>
-<code><a href="../reference/ga_clientid_deletion.html">ga_clientid_deletion()</a></code> - Delete a website visitor from Google Analytics</li>
+<code>ga_clientid_deletion()</code> - Delete a website visitor from Google Analytics</li>
 </ul>
 </div>
   </div>

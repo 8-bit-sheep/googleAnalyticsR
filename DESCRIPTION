@@ -1,6 +1,6 @@
 Package: googleAnalyticsR
 Type: Package
-Version: 0.7.1.9000
+Version: 0.8.0.9000
 Title: Google Analytics API into R
 Description: Interact with the Google Analytics 
   APIs <https://developers.google.com/analytics/>, including 
@@ -23,8 +23,9 @@ Depends:
     R (>= 3.3.0)
 Imports:
     assertthat (>= 0.2.0),
+    cli (>= 2.0.2),
     dplyr (>= 0.8.0),
-    googleAuthR (>= 1.1.1),
+    googleAuthR (>= 1.3.0),
     httr (>= 1.3.1),
     jsonlite (>= 1.5),
     magrittr (>= 1.5),
@@ -43,11 +44,12 @@ Suggests:
     ganalytics,
     googleCloudStorageR (>= 0.2.0),
     htmlwidgets,
-    httptest (>= 3.2.2),
     knitr,
     miniUI (>= 0.1.1),
     rmarkdown,
-    shiny (>= 0.13.2)
+    shiny (>= 0.13.2),
+    testthat
 License: MIT + file LICENSE
 LazyData: TRUE
 RoxygenNote: 7.1.0
+

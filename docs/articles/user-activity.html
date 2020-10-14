@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
       </span>
     </div>
 
@@ -218,7 +218,7 @@
 
     
     
-<p>The <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search">User Activity API</a> lets you query an individual user’s movement through your website, by sending in the individual <code>clientId</code> or <code>userId</code>. It is accessed via the <code><a href="../reference/ga_clientid_activity.html">ga_clientid_activity()</a></code> function.</p>
+<p>The <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search">User Activity API</a> lets you query an individual user’s movement through your website, by sending in the individual <code>clientId</code> or <code>userId</code>. It is accessed via the <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_clientid_activity.html">ga_clientid_activity()</a></code> function.</p>
 <p>Use Activity is available in version of <code>googleAnalyticsR &gt;= 0.6.9000</code> and needs <code>googleAuthR &gt;= 0.7.0.9000</code> so install via:</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"MarkEdmondson1234/googleAuthR"</span>)
 <span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"MarkEdmondson1234/googleAnalyticsR"</span>)</pre></body></html></div>
@@ -230,9 +230,9 @@
 <p>Once you have an ID, specify the Google Analytics view that user was browsing and the data range of the activity you want to query:</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">viewId</span> <span class="kw">&lt;-</span> <span class="fl">123456</span>
 <span class="no">date_range</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"yesterday"</span>,<span class="st">"yesterday"</span>)
-<span class="no">cids</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">viewId</span>, <span class="kw">date_range</span> <span class="kw">=</span> <span class="no">date_range</span>,
+<span class="no">cids</span> <span class="kw">&lt;-</span> <span class="fu">google_analytics</span>(<span class="no">viewId</span>, <span class="kw">date_range</span> <span class="kw">=</span> <span class="no">date_range</span>,
                          <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>, <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"clientId"</span>)
-<span class="no">users</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_clientid_activity.html">ga_clientid_activity</a></span>(<span class="no">cids</span>$<span class="no">clientId</span>,
+<span class="no">users</span> <span class="kw">&lt;-</span> <span class="fu">ga_clientid_activity</span>(<span class="no">cids</span>$<span class="no">clientId</span>,
                               <span class="kw">viewId</span> <span class="kw">=</span> <span class="no">viewId</span>,
                               <span class="kw">date_range</span> <span class="kw">=</span> <span class="no">date_range</span>)
 <span class="co">#&gt; 2019-08-15 10:43:15&gt; Fetching id: 19123.15505123</span>
@@ -246,7 +246,7 @@
 <a href="#multiple-ids" class="anchor"></a>Multiple ids</h2>
 <p>You can send in multiple IDs of the same type in a vector:</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">two_clientIds</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"1106980347.1461227730"</span>, <span class="st">"476443645.1541099566"</span>)
-<span class="no">two_users</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_clientid_activity.html">ga_clientid_activity</a></span>(<span class="no">two_clientIds</span>,
+<span class="no">two_users</span> <span class="kw">&lt;-</span> <span class="fu">ga_clientid_activity</span>(<span class="no">two_clientIds</span>,
                                   <span class="kw">viewId</span> <span class="kw">=</span> <span class="fl">81416156</span>,
                                   <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2019-01-01"</span>,<span class="st">"2019-02-01"</span>))</pre></body></html></div>
 </div>
@@ -345,7 +345,7 @@
 <a href="#filtering-the-response" class="anchor"></a>Filtering the response</h2>
 <p>If you specify the <code>activity_type</code> parameter, you can filter down the response to only the events you include in a vector.</p>
 <p>The permitted types are: <code><a href="https://rdrr.io/r/base/c.html">c("PAGEVIEW","SCREENVIEW","GOAL","ECOMMERCE","EVENT")</a></code> - include some of these to specify which you would like to see.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">only_goals</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_clientid_activity.html">ga_clientid_activity</a></span>(<span class="no">two_clientIds</span>,
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">only_goals</span> <span class="kw">&lt;-</span> <span class="fu">ga_clientid_activity</span>(<span class="no">two_clientIds</span>,
                                    <span class="kw">viewId</span> <span class="kw">=</span> <span class="fl">81416156</span>,
                                    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2019-01-01"</span>,<span class="st">"2019-02-01"</span>),
                                    <span class="kw">activity_types</span> <span class="kw">=</span> <span class="st">"GOAL"</span>)</pre></body></html></div>
@@ -356,7 +356,7 @@
 <p>If you are capturing Google Analytics cookie ID or a userId in a custom dimension then the below workflow shows how you can use the standard reporting API to fetch more detail on the users:</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
 
-<span class="no">al</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span>()
+<span class="no">al</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_account_list.html">ga_account_list</a></span>()
 
 <span class="co"># get a viewID you know has implemented putting cookie ID in a custom dimension</span>
 <span class="no">viewId</span> <span class="kw">&lt;-</span> <span class="fl">84714057</span>
@@ -364,7 +364,7 @@
 <span class="no">view_row</span> <span class="kw">&lt;-</span> <span class="no">al</span>[<span class="no">al</span>$<span class="no">viewId</span> <span class="kw">==</span> <span class="no">viewId</span>,]
 
 <span class="co"># get the custom dimensions</span>
-<span class="no">cus_dims</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_custom_vars_list.html">ga_custom_vars_list</a></span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="no">view_row</span>$<span class="no">accountId</span>,
+<span class="no">cus_dims</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_custom_vars_list.html">ga_custom_vars_list</a></span>(<span class="kw">accountId</span> <span class="kw">=</span> <span class="no">view_row</span>$<span class="no">accountId</span>,
                                 <span class="kw">webPropertyId</span> <span class="kw">=</span> <span class="no">view_row</span>$<span class="no">webPropertyId</span>,
                                 <span class="kw">type</span> <span class="kw">=</span> <span class="st">"customDimensions"</span>)
 
@@ -375,13 +375,13 @@
 
 <span class="co"># download all client.ids who had a pageview in last 30 days</span>
 <span class="co"># change this query to a segment of users you are interested in</span>
-<span class="no">cids</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">viewId</span>, <span class="kw">date_range</span> <span class="kw">=</span> <span class="no">dates</span>,
+<span class="no">cids</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html">google_analytics</a></span>(<span class="no">viewId</span>, <span class="kw">date_range</span> <span class="kw">=</span> <span class="no">dates</span>,
                          <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"dimension2"</span>, <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"pageviews"</span>,
-                         <span class="kw">order</span> <span class="kw">=</span> <span class="fu"><a href="../reference/order_type.html">order_type</a></span>(<span class="st">"pageviews"</span>, <span class="st">"DESCENDING"</span>),
+                         <span class="kw">order</span> <span class="kw">=</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/order_type.html">order_type</a></span>(<span class="st">"pageviews"</span>, <span class="st">"DESCENDING"</span>),
                          <span class="kw">max</span> <span class="kw">=</span> <span class="fl">1000</span>)
 
 <span class="co"># download user activity for all the users</span>
-<span class="no">user_activities</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_clientid_activity.html">ga_clientid_activity</a></span>(<span class="no">cids</span>$<span class="no">dimension2</span>,
+<span class="no">user_activities</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_clientid_activity.html">ga_clientid_activity</a></span>(<span class="no">cids</span>$<span class="no">dimension2</span>,
                                         <span class="kw">viewId</span> <span class="kw">=</span> <span class="no">viewId</span>,
                                         <span class="kw">date_range</span> <span class="kw">=</span> <span class="no">dates</span>)</pre></body></html></div>
 </div>

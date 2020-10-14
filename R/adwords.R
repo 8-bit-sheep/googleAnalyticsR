@@ -57,13 +57,18 @@ ga_adwords_list <- function(accountId,
 #' @noRd
 #' @import assertthat
 #' @importFrom dplyr bind_rows select
+#' @importFrom purrr as_vector
 parse_ga_adwords_list <- function(x){
   
   aaa <- Reduce(bind_rows, x$items$adWordsAccounts)
   o <- x %>% 
-    management_api_parsing("analytics#entityAdWordsLinks") %>% 
-    cbind(aaa) %>% 
+    management_api_parsing("analytics#entityAdWordsLinks")
+    
+  n.times <- as_vector(lapply(x$items$adWordsAccounts, nrow))
+  o <- o[rep(seq_len(nrow(o)), n.times),] %>%
+    cbind(aaa) %>%
     select(-adWordsAccounts, -entity.webPropertyRef.kind, -entity.webPropertyRef.href, -kind)
+  
   
   if(is.null(o)){
     return(data.frame())

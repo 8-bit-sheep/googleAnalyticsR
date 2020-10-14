@@ -3,7 +3,6 @@
 ^\.httr-oauth
 ^\.travis.yaml
 ^\.travis.yml
-^tests*
 ^cran-comments.md
 ^data-raw*
 ^codecov\.yml$
@@ -37,3 +36,7 @@
 ^Makefile$
 ^Dockerfile$
 ^CRAN-RELEASE$
+^cloudbuild\.yml$
+^cloud_build*
+^pkgdown*
+^\.covrignore$

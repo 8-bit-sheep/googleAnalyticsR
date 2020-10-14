@@ -6,6 +6,7 @@ context("Filters API Mocking")
 
   test_that("Filter v4 GA fetches work", {
     skip_on_cran()
+    skip_on_travis()
     ## create filters on metrics
     mf <- met_filter("bounces", "GREATER_THAN", 0)
     mf2 <- met_filter("sessions", "GREATER", 2)
@@ -17,8 +18,6 @@ context("Filters API Mocking")
     ## construct filter objects
     fc2 <- filter_clause_ga4(list(df, df2), operator = "AND")
     fc <- filter_clause_ga4(list(mf, mf2), operator = "AND")
-    
-    ga_auth(email = Sys.getenv("GARGLE_EMAIL"))
 
     out <- google_analytics(ga_id,
                               date_range = c("2015-07-30","2015-10-01"),

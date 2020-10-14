@@ -1,20 +1,8 @@
 pandoc: 2.3.1
 pkgdown: 1.5.1
 pkgdown_sha: ~
-articles:
-  big-query: big-query.html
-  faq: faq.html
-  ganalytics: ganalytics.html
-  management: management.html
-  models: models.html
-  practical-tips: practical-tips.html
-  rmarkdown: rmarkdown.html
-  setup: setup.html
-  shiny: shiny.html
-  user-activity: user-activity.html
-  v3: v3.html
-  v4: v4.html
-last_built: 2020-04-18T23:42Z
+articles: []
+last_built: 2020-06-24T13:11Z
 urls:
   reference: https://code.markedmondson.me/googleAnalyticsR//reference
   article: https://code.markedmondson.me/googleAnalyticsR//articles

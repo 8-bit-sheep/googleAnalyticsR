@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
       </span>
     </div>
 
@@ -221,23 +221,57 @@
 <p>This guide will walk you through the steps required to properly set up googleAnalyticsR in terms of installation and authentication.</p>
 <p>It assumes you have R installed on your machine and access rights to one or more Google Analytics accounts. In this case it will only take a few lines of R code to make a first test call to the GA API following the examples below.</p>
 <p>The rest of this guide will give you an overview of the available set up options and cover some good practices to follow under different scenarios of use.</p>
+<div id="quickstart-rstudio-cloud-project" class="section level2">
+<h2 class="hasAnchor">
+<a href="#quickstart-rstudio-cloud-project" class="anchor"></a>0. Quickstart RStudio Cloud Project</h2>
+<p>If you wish to try out the library before installation, an RStudio Cloud project is available that has the library pre-installed.</p>
+<p><a href="https://rstudio.cloud/project/1125233">Click this link and log in to RStudio Cloud to try it out</a>.</p>
+<p>Once you are logged in, issue the following two R commands in the R console bottom-left:</p>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
+<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth</a></span>()</pre></body></html></div>
+<p>Select <code>1: Yes</code> to say you wish to keep your OAuth access credentials.</p>
+<p>The library should then launch a browser window and ask you to login to Google - log in with an email that has access to your Google Analytics - it will take you to a screen with an OOB token. Copy-paste that token back into RStudio:</p>
+<p><img src="rstudio-oob.png"></p>
+<p>(The OOB token is only needed on RStudio Cloud - if you have googleAnalyticsR installed locally on your desktop it will authenticate automatically via <code>httpuv</code>)</p>
+<p>You should then be authenticated and ready to use the functions in the package. Try <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_account_list.html">ga_account_list()</a></code> as a way to check you are authenticated correctly:</p>
+<p><img src="test_ga_account_list.png"></p>
+</div>
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>1. Install</h2>
 <p>The latest stable version of <code>googleAnalyticsR</code> is available on CRAN. <img src="http://www.r-pkg.org/badges/version/googleAnalyticsR" alt="CRAN"></p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"googleAnalyticsR"</span>, <span class="kw">dependencies</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"googleAnalyticsR"</span>, <span class="kw">dependencies</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <div id="development-version-off-github" class="section level3">
 <h3 class="hasAnchor">
 <a href="#development-version-off-github" class="anchor"></a>Development version off GitHub</h3>
 <p>You may prefer to use the latest development version on GitHub which you can install via the below.</p>
 <p>Github check status: <a href="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR"><img src="https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master" alt="Travis-CI Build Status"></a></p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"MarkEdmondson1234/googleAnalyticsR"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"MarkEdmondson1234/googleAnalyticsR"</span>)</pre></body></html></div>
 <p>Check out the <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md">NEWS</a> to see whats currently available in each version.</p>
+</div>
+<div id="docker-image" class="section level3">
+<h3 class="hasAnchor">
+<a href="#docker-image" class="anchor"></a>Docker image</h3>
+<p>If you know docker, then a public image is available at <code>gcr.io/gcer-public/googleanalyticsr</code></p>
+<ul>
+<li>
+<code>gcr.io/gcer-public/googleanalyticsr:master</code> is the latest GitHub version</li>
+<li>
+<code>gcr.io/gcer-public/googleanalyticsr:CRAN</code> will be the last CRAN version</li>
+</ul>
 </div>
 <div id="dependencies" class="section level3">
 <h3 class="hasAnchor">
 <a href="#dependencies" class="anchor"></a>Dependencies</h3>
 <p><code>googleAnalyticsR</code> requires the packages described in the <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/DESCRIPTION"><code>Imports</code> field of the <code>DESCRIPTION</code> file</a> to be installed first, which it will do via <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("googleAnalyticsR", dependencies = TRUE)</a></code></p>
+<p>The depedencies are roughly split into the following roles:</p>
+<ul>
+<li>
+<code>googleAuthR</code>, <code>gargle</code> are used for authentication with Google APIs</li>
+<li>
+<code>jsonlite</code>, <code>httr</code> work with API responses</li>
+<li>Tidyverse packages such as <code>dplyr</code> and <code>purrr</code> are used to make outputs easy to use (clean data.frames rather than nested lists)</li>
+</ul>
 <p>Note that on linux systems, due to its reliance on <a href="https://CRAN.R-project.org/package=httr"><code>httr</code></a> and in turn <a href="https://CRAN.R-project.org/package=curl"><code>curl</code></a>, it may require installation of these dependencies via <code>apt-get</code> or similar: <code>libssl-dev</code> and <code>libcurl4-openssl-dev</code>.</p>
 <p>If you install <code>httpuv</code> then the authentication flows will occur behind the scenes - this is normally installed by default but if you do not include it you will need to use the more manual OOB method to generate authentication tokens.</p>
 </div>
@@ -246,16 +280,16 @@
 <h2 class="hasAnchor">
 <a href="#make-your-first-api-call" class="anchor"></a>2. Make your first API call</h2>
 <p>Once you have installed the package you can make a first call to the GA API to test the connection.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co">## setup</span>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co">## setup</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
 
 <span class="co">## This should send you to your browser to authenticate your email. </span>
 <span class="co"># Authenticate with an email that has access to the </span>
 <span class="co"># Google Analytics View you want to use.</span>
-<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span>()
+<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth</a></span>()
 
 <span class="co">## get your accounts</span>
-<span class="no">account_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span>()
+<span class="no">account_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_account_list.html">ga_account_list</a></span>()
 
 <span class="co">## account_list will have a column called "viewId"</span>
 <span class="no">account_list</span>$<span class="no">viewId</span>
@@ -264,7 +298,7 @@
 <span class="no">ga_id</span> <span class="kw">&lt;-</span> <span class="fl">123456</span>
 
 <span class="co">## simple query to test connection, get 10 rows</span>
-<span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
+<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
                  <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span>),
                  <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
                  <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"date"</span>,
@@ -277,11 +311,12 @@
 <div id="tldr" class="section level3">
 <h3 class="hasAnchor">
 <a href="#tldr" class="anchor"></a>TL;DR</h3>
+<p>Use <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth_setup.html">ga_auth_setup()</a></code> to configure your own GCP project and set up auto-authentication options.</p>
 <p>Recommended long term defaults are:</p>
 <ol style="list-style-type: decimal">
 <li>Create your own GCP project, download the client JSON and save to a global location, which you point to via a environment argument <code>GAR_CLIENT_JSON</code> in an <code>.Renviron</code> file e.g. <code>GAR_CLIENT_JSON=~/dev/auth/client.json</code>
 </li>
-<li>Authenticate with <code><a href="../reference/ga_auth.html">ga_auth(email="your@email.com")</a></code> to create an authentication token cache, and repeat the <code><a href="../reference/ga_auth.html">ga_auth(email="your@email.com")</a></code> call to default to that email in future API calls</li>
+<li>Authenticate with <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth(email="your@email.com")</a></code> to create an authentication token cache, and repeat the <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth(email="your@email.com")</a></code> call to default to that email in future API calls</li>
 <li>Set an environment argument <code>GARGLE_EMAIL</code> in the same <code>.Renviron</code> file to your email to auto-authenticate on package load e.g. <code>GARGLE_EMAIL=your@email.com</code>
 </li>
 </ol>
@@ -298,16 +333,16 @@
 <h3 class="hasAnchor">
 <a href="#email-authentication" class="anchor"></a>Email authentication</h3>
 <p>As of version <code>googleAnalyticsR&gt;=0.6.0.9000</code> authentication is done via the <a href="https://CRAN.R-project.org/package=gargle"><code>gargle</code> package</a>. This creates a global cache that is accessed via the email you authenticate with.</p>
-<p>If you use <code><a href="../reference/ga_auth.html">ga_auth()</a></code> the first time then it will ask you to create email credentials. You can then authenticate in the browser via your email. The next time you wish to authenticate, <code><a href="../reference/ga_auth.html">ga_auth()</a></code> will give you an option to use those credentials again:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
-<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span>()
+<p>If you use <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth()</a></code> the first time then it will ask you to create email credentials. You can then authenticate in the browser via your email. The next time you wish to authenticate, <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth()</a></code> will give you an option to use those credentials again:</p>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
+<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth</a></span>()
 <span class="co">#&gt;The googleAnalyticsR package is requesting access to your Google account. </span>
 <span class="co">#&gt; Select a pre-authorised account or enter '0' to obtain a new token. Press  #&gt;Esc/Ctrl + C to abort.</span>
 
 <span class="co">#&gt; 1: mark@work.com</span>
 <span class="co">#&gt; 2: home@home.com</span></pre></body></html></div>
 <p>If you want to skip the menu, supply the email you wish to authenticate with:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r">library(googleAnalyticsR)
+<div class="sourceCode" id="cb6"><html><body><pre class="r">library(googleAnalyticsR)
 ga_auth(email = "mark@work.com)</pre></body></html></div>
 <p>To auto-authenticate on package load, add an environment argument <code>GARGLE_EMAIL</code> via an <code>.Renviron</code> file or otherwise.</p>
 <p>e.g. in <code>.Renviron</code></p>
@@ -320,16 +355,37 @@ ga_auth(email = "mark@work.com)</pre></body></html></div>
 <p>However since Google has changed verification processes, the consent screen for the default googleAnalyticsR library may warn of ‘danger’, which you will need to trust and accept if you want to continue using the default project. It is preferred to use your own and get your own verificataion process.</p>
 <p>You can not use the default project for scheduled scripts on servers - only interactivly. The default library is only intended for users to get to know the library looking for data as quickly as possible.</p>
 <p>With the amount of API calls possible with this library via batching and walking, its more likely the default shared Google API project will hit the 50,000 calls per day quota.</p>
-<p>However, using the default project means you will not need to go through the process outlined below to create your own Google Cloud Platform credentials and you can directly authenticate using the <code><a href="../reference/ga_auth.html">ga_auth()</a></code> function and your browser as soon as the library is downloaded.</p>
+<p>However, using the default project means you will not need to go through the process outlined below to create your own Google Cloud Platform credentials and you can directly authenticate using the <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth()</a></code> function and your browser as soon as the library is downloaded.</p>
+</div>
+<div id="ga_auth_setup" class="section level3">
+<h3 class="hasAnchor">
+<a href="#ga_auth_setup" class="anchor"></a>ga_auth_setup()</h3>
+<p>A new setup function is available in versions &gt;0.7.2 - use this to launch a wizard that will help you walk through some of the more advanced authentication setups detailed below. You will need to create your own Google Cloud Project and download a client Id file to get started.</p>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
+<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth_setup.html">ga_auth_setup</a></span>()
+<span class="co">#ℹ ==Welcome to googleAnalyticsR v0.7.1.9000 setup==</span>
+<span class="co">#This wizard will scan your system for setup options and help you with any that are missing. </span>
+<span class="co">#Hit 0 or ESC to cancel. </span>
+<span class="co">#</span>
+<span class="co">#1: Setup your own client ID and secret</span>
+<span class="co">#2: Setup auto-authentication (OAuth2 email)</span>
+<span class="co">#3: Create and download JSON service account key</span>
+<span class="co">#4: Setup auto-authentication (JSON service account key)</span>
+<span class="co">#5: Add a service account email or another email to your GA account</span></pre></body></html></div>
 </div>
 <div id="professional-mode-your-own-google-project" class="section level3">
 <h3 class="hasAnchor">
 <a href="#professional-mode-your-own-google-project" class="anchor"></a>‘Professional’ mode: Your own Google Project</h3>
 <p>To mitigate all the above, use your own Google Developer Console client ID, so it is not shared across all users of this library.</p>
+<p>The easiest way to set this up is to create your own Google Cloud Platform project and then in R use the <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth_setup.html">ga_auth_setup()</a></code> function and select option 1.</p>
+<div id="setting-up-clientid-manually" class="section level4">
+<h4 class="hasAnchor">
+<a href="#setting-up-clientid-manually" class="anchor"></a>Setting up clientId manually</h4>
+<p>The setup function foes through the steps below.</p>
 <ol style="list-style-type: decimal">
 <li>Download your Google Cloud Project client JSON and place it in a location pointed to via the <code>GAR_CLIENT_JSON</code> environment argument.</li>
 </ol>
-<p>This file is found in the Google Cloud Platform under <code>APIs &amp; Services &gt; Credentials &gt; Create credentials &gt;  OAuth client ID &gt; Other</code>. For Shiny authentication, choose <code>Web application</code> instead of <code>Other</code>.</p>
+<p>This file is found in the Google Cloud Platform under <code>APIs &amp; Services &gt; Credentials &gt; Create credentials &gt;  OAuth client ID &gt; Desktop</code>. For Shiny authentication, choose <code>Web application</code> instead of <code>Desktop</code>.</p>
 <p>In the below examples the client ID file is downloaded to <code>~/dev/auth/gcp_client.json</code></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Set an environment argument to point at the location of the client ID:</li>
@@ -338,36 +394,37 @@ ga_auth(email = "mark@work.com)</pre></body></html></div>
 GAR_CLIENT_JSON=~/dev/auth/gcp_client.json</code></pre>
 <p>You can also set your clientID before the library is available via <a href="https://code.markedmondson.me/googleAuthR/reference/gar_set_client.html"><code><a href="https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html">googleAuthR::gar_set_client()</a></code></a></p>
 <ol start="3" style="list-style-type: decimal">
-<li>Once you have set the credentials for your project set these options before any call to <code><a href="../reference/ga_auth.html">ga_auth()</a></code> or other data fetching calls.</li>
+<li>Once you have set the credentials for your project set these options before any call to <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth()</a></code> or other data fetching calls.</li>
 </ol>
 <p>If set via environment argument, restart R and then load the library:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co">#Setting client.id from gar_auth_configure(path = json)</span>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co">#Setting client.id from gar_auth_configure(path = json)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
-<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span>()</pre></body></html></div>
-<p>If setting in the script via <a href="https://code.markedmondson.me/googleAuthR/reference/gar_set_client.html"><code><a href="https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html">googleAuthR::gar_set_client()</a></code></a> then it wil look like this:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="kw pkg">googleAuthR</span><span class="kw ns">::</span><span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html">gar_set_client</a></span>(<span class="st">"~/dev/auth/gcp_client.json"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
-<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span>()</pre></body></html></div>
+<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth</a></span>()</pre></body></html></div>
+<p>If setting in the script via <a href="https://code.markedmondson.me/googleAuthR/reference/gar_set_client.html"><code><a href="https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html">googleAuthR::gar_set_client()</a></code></a> then it will look like this:</p>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
+<span class="kw pkg">googleAuthR</span><span class="kw ns">::</span><span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html">gar_set_client</a></span>(<span class="st">"~/dev/auth/gcp_client.json"</span>)
+<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth</a></span>()</pre></body></html></div>
 <p>The oldest method (deprecated) - <a href="http://donalphipps.co.uk/">Donal Phipps</a> has very kindly created a screencast on how to set this up that you can find embedded below and via <a href="https://www.youtube.com/watch?v=4B88dRbwNfc">this link</a>.</p>
 <iframe width="560" height="315" src="http://www.youtube.com/embed/4B88dRbwNfc?rel=0" frameborder="0" allowfullscreen>
 </iframe>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">googleAuthR.client_id</span> <span class="kw">=</span> <span class="st">"uxxxxxxx2fd4kesu6.apps.googleusercontent.com"</span>)
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">googleAuthR.client_id</span> <span class="kw">=</span> <span class="st">"uxxxxxxx2fd4kesu6.apps.googleusercontent.com"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">googleAuthR.client_secret</span> <span class="kw">=</span> <span class="st">"3JhLa_GxxxxxCQYLe31c64"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">googleAuthR.scopes.selected</span> <span class="kw">=</span> <span class="st">"https://www.googleapis.com/auth/analytics"</span>)</pre></body></html></div>
+</div>
 </div>
 <div id="clientid-examples" class="section level3">
 <h3 class="hasAnchor">
 <a href="#clientid-examples" class="anchor"></a>clientId examples</h3>
 <p>In the next example, the scopes are also set so a user can authenticate with <a href="http://code.markedmondson.me/searchConsoleR/"><code>searchConsoleR</code></a> at the same time, which is possible as they both use <a href="http://code.markedmondson.me/googleAuthR/"><code>googleAuthR</code></a> as a backend.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r">googleAuthR::gar_set_client("~/dev/auth/gcp_client.json"
+<div class="sourceCode" id="cb12"><html><body><pre class="r">googleAuthR::gar_set_client("~/dev/auth/gcp_client.json"
             scopes = c("https://www.googleapis.com/auth/analytics",
                        "https://www.googleapis.com/auth/webmasters"))</pre></body></html></div>
 <p>If you want to use with Shiny, then you need to download web based JSON client secrets. In that case, you then set the webapp clientId/secrets (which could be the same GCP project as the “Other” credentials.)</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r">googleAuthR::gar_set_client(web_json = "~/dev/auth/gcp_web_client.json"
+<div class="sourceCode" id="cb13"><html><body><pre class="r">googleAuthR::gar_set_client(web_json = "~/dev/auth/gcp_web_client.json"
             scopes = c("https://www.googleapis.com/auth/analytics",
                        "https://www.googleapis.com/auth/webmasters"))</pre></body></html></div>
 <blockquote>
-<p>Note: With either the default or your own GCP projects using the <code><a href="../reference/ga_auth.html">ga_auth()</a></code> function, you can specify the email you will use by passing that to the <code><a href="../reference/ga_auth.html">ga_auth()</a></code> function e.g. <code>ga_auth(email="my@email.com)</code>. This will skip the interactive menu choice for authentication. This can be useful when authenticating within an Rmarkdown document in which case it is recommended to specify your email (an Rmarkdown document can change the working directory during knitting).</p>
+<p>Note: With either the default or your own GCP projects using the <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth()</a></code> function, you can specify the email you will use by passing that to the <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth()</a></code> function e.g. <code>ga_auth(email="my@email.com)</code>. This will skip the interactive menu choice for authentication. This can be useful when authenticating within an Rmarkdown document in which case it is recommended to specify your email (an Rmarkdown document can change the working directory during knitting).</p>
 </blockquote>
 </div>
 <div id="server-mode-google-cloud-service-account" class="section level3">
@@ -375,6 +432,16 @@ GAR_CLIENT_JSON=~/dev/auth/gcp_client.json</code></pre>
 <a href="#server-mode-google-cloud-service-account" class="anchor"></a>‘Server’ mode: Google Cloud service account</h3>
 <p>You can alternatively authenticate by downloading a JSON file attached to a Google Cloud service account. More details on how to do that are on the <a href="http://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#authentication-with-a-json-file-via-service-accounts"><code>googleAuthR</code> website</a>.</p>
 <p>A service authentication file then needs to be created that has edit access to the GA account. It is recommended to make a dedicated service account if you don’t need it for anything else.</p>
+<p>The easiest way is to use <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth_setup.html">ga_auth_setup()</a></code> and select option 3 to create the file for you using your own details for authorization, then option 5 to add it to the GA account you need.</p>
+<p>In your R script you can then authorize via:</p>
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
+<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth</a></span>(<span class="kw">json_file</span><span class="kw">=</span><span class="st">"service-key.json"</span>)</pre></body></html></div>
+<p>…or if you have set the environment arg <code>GA_AUTH_FILE</code> to the service key filepath, simply loading the library to enact auto-authenticataion.</p>
+<p>This is helpful for Docker contaienrs where you don’t want to usually include any authentication files, but can specify them via environment arguments when launching the container.</p>
+<div id="manual-setup" class="section level4">
+<h4 class="hasAnchor">
+<a href="#manual-setup" class="anchor"></a>Manual setup</h4>
+<p>If you want to set it up yourself, the setup wizard goes through these steps:</p>
 <ol style="list-style-type: decimal">
 <li>Create your own Google Cloud Project or use an existing one.</li>
 <li>Set your own client.id/secret via <code><a href="https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html">googleAuthR::gar_set_client()</a></code>
@@ -390,35 +457,38 @@ GAR_CLIENT_JSON=~/dev/auth/gcp_client.json</code></pre>
 </li>
 </ol>
 <p>You should now be able to use the JSON auth file to authenticate with Google Analytics API via:</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAuthR</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
-<span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_auth_service.html">gar_auth_service</a></span>(<span class="st">"your_auth_file.json"</span>)
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
+<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth</a></span>(<span class="kw">json_file</span> <span class="kw">=</span> <span class="st">"your_auth_file.json"</span>)
 
 <span class="co"># test authentication</span>
-<span class="no">al</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span>()</pre></body></html></div>
+<span class="no">al</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_account_list.html">ga_account_list</a></span>()</pre></body></html></div>
 <p>Note: A service account is a special type of account that belongs to an application rather than an individual user. If you should use this option, chances are you are already familiar with how they work. If however you wish to find out more about when and how to use service accounts, follow the link to the Google Cloud documentation page on <a href="https://cloud.google.com/iam/docs/understanding-service-accounts">Understanding Service Accounts</a></p>
+</div>
 </div>
 </div>
 <div id="optional-review-useful-auth-options" class="section level2">
 <h2 class="hasAnchor">
 <a href="#optional-review-useful-auth-options" class="anchor"></a>4 (optional): Review useful auth options</h2>
 <p>This section covers some other aspects of authentication under various scenarios of use. This information is useful especially if you work systematically with Google Analytics and possibly other Google products too.</p>
-</div>
-<div id="auto-authentication" class="section level2">
-<h2 class="hasAnchor">
-<a href="#auto-authentication" class="anchor"></a>Auto-authentication</h2>
+<div id="auto-authentication" class="section level3">
+<h3 class="hasAnchor">
+<a href="#auto-authentication" class="anchor"></a>Auto-authentication</h3>
 <p>To save authenticating and setting your GCP client each R session, you can specify the files/email in an <code>.Renviron</code> file that will be looked for each time you load <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference">library(googleAnalyticsR)</a></code></p>
 <ul>
 <li>
 <code>GAR_CLIENT_JSON</code> takes care of the GCP project client.id to authenticate under</li>
 <li>
 <code>GARGLE_EMAIL</code> lets you specify an email address that has already authenticated to skip the interactive menu. Make sure you authenticate with the right scopes and GCP project first in an interactive session.</li>
+<li>
+<code>GA_AUTH_FILE</code> is an optional argument if you have a service JSON key</li>
 </ul>
-<p>You can set environment arguments via <code><a href="https://rdrr.io/r/base/Sys.setenv.html">Sys.setenv()</a></code> but the recommend way is to use an <code>.Renviron</code> file saved in your home directory.</p>
+<p>You can set environment arguments via <code><a href="https://rdrr.io/r/base/Sys.setenv.html">Sys.setenv()</a></code> or using an <code>.Renviron</code> file saved in your home directory, but the recommended way is to use <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth_setup.html">ga_auth_setup()</a></code> and select option 2 (for OAuth2 email) or 4 (for JSON service account keys)</p>
 <pre><code># In your .Renviron
 GAR_CLIENT_JSON=~/dev/auth/gcp_client.json
-GARGLE_EMAIL=my-email@me.com</code></pre>
-<p>Restart your R session to enact the arguments created in <code>.Renviron</code></p>
+GARGLE_EMAIL=my-email@me.com
+GA_AUTH_FILE=/Users/me/dev/auth/keys/googleanalyticsr-auth-key.json</code></pre>
+<p>Restart your R session to enact the arguments created in <code>.Renviron</code> - when you load the library they will be loaded in.</p>
+</div>
 <div id="multiple-api-authentification" class="section level3">
 <h3 class="hasAnchor">
 <a href="#multiple-api-authentification" class="anchor"></a>Multiple API authentification</h3>
@@ -428,16 +498,16 @@ GARGLE_EMAIL=my-email@me.com</code></pre>
 <div id="multiple-ga-accounts" class="section level3">
 <h3 class="hasAnchor">
 <a href="#multiple-ga-accounts" class="anchor"></a>Multiple GA accounts</h3>
-<p>Using gargle means that you get a menu option to choose which email to authenticate with each time you issue <code><a href="../reference/ga_auth.html">ga_auth()</a></code>. This makes working with multiple GA accounts a lot easier to work with.</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
-<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span>(<span class="kw">email</span><span class="kw">=</span><span class="st">"mark@work.com"</span>)
-<span class="no">client_one</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id_one</span>,
+<p>Using gargle means that you get a menu option to choose which email to authenticate with each time you issue <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth()</a></code>. This makes working with multiple GA accounts a lot easier to work with.</p>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
+<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth</a></span>(<span class="kw">email</span><span class="kw">=</span><span class="st">"mark@work.com"</span>)
+<span class="no">client_one</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id_one</span>,
                                <span class="kw">date_range</span> <span class="kw">=</span> <span class="no">my_date_range</span>,
                                <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
                                <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>, <span class="st">"medium"</span>))
 
-<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span>(<span class="kw">email</span><span class="kw">=</span><span class="st">"mark@work3.com"</span>)
-<span class="no">client_one</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id_two</span>,
+<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html">ga_auth</a></span>(<span class="kw">email</span><span class="kw">=</span><span class="st">"mark@work3.com"</span>)
+<span class="no">client_one</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id_two</span>,
                                <span class="kw">date_range</span> <span class="kw">=</span> <span class="no">my_date_range</span>,
                                <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
                                <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>, <span class="st">"medium"</span>))</pre></body></html></div>

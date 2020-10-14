@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
       </span>
     </div>
 
@@ -260,7 +260,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Legacy v3 API, for more modern API use <a href='google_analytics.html'>google_analytics</a>.</p>
+    <p>Legacy v3 API, for more modern API use google_analytics.</p>
     </div>
 
     <pre class="usage"><span class='fu'>google_analytics_3</span>(
@@ -348,7 +348,7 @@ Not compatible with <code>samplingLevel="WALK"</code> or <code>max_results&gt;10
 
 <span class='co'>## Authenticate in Google OAuth2</span>
 <span class='co'>## this also sets options</span>
-<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
+<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html'>ga_auth</a></span>()
 
 <span class='co'>## if you need to re-authenticate use ga_auth(new_user=TRUE)</span>
 <span class='co'>## if you have your own Google Dev console project keys,</span>
@@ -356,32 +356,32 @@ Not compatible with <code>samplingLevel="WALK"</code> or <code>max_results&gt;10
 <span class='co'>## instead put your options here, and run googleAuthR::gar_auth()</span>
 
 <span class='co'>## get account info, including View Ids</span>
-<span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_account_list.html'>ga_account_list</a></span>()
+<span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_account_list.html'>ga_account_list</a></span>()
 <span class='no'>ga_id</span> <span class='kw'>&lt;-</span> <span class='no'>account_list</span>$<span class='no'>viewId</span>[<span class='fl'>1</span>]
 
 <span class='co'>## get a list of what metrics and dimensions you can use</span>
 
-<span class='no'>meta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_meta.html'>ga_meta</a></span>()
+<span class='no'>meta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_meta.html'>ga_meta</a></span>()
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>meta</span>)
 
 <span class='co'>## pick the account_list$viewId you want to see data for.</span>
 <span class='co'>## metrics and dimensions can have or have not "ga:" prefix</span>
 
-<span class='no'>gadata</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_3</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>ga_id</span>,
+<span class='no'>gadata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics_3.html'>google_analytics_3</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>ga_id</span>,
                            <span class='kw'>start</span><span class='kw'>=</span><span class='st'>"2015-08-01"</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='st'>"2015-08-02"</span>,
                            <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sessions"</span>, <span class='st'>"bounceRate"</span>),
                            <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"source"</span>, <span class='st'>"medium"</span>))
 
  <span class='co'>## multi accounts, pass character vector of viewIds</span>
  <span class='co'>## outputs a list of data.frames, named after the viewId</span>
- <span class='no'>multi_gadata</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_3</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"123456"</span>,<span class='st'>"9876545"</span>,<span class='st'>"765432"</span>),
+ <span class='no'>multi_gadata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics_3.html'>google_analytics_3</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"123456"</span>,<span class='st'>"9876545"</span>,<span class='st'>"765432"</span>),
                                   <span class='kw'>start</span><span class='kw'>=</span><span class='st'>"2015-08-01"</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='st'>"2015-08-02"</span>,
                                   <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sessions"</span>, <span class='st'>"bounceRate"</span>),
                                    <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"source"</span>, <span class='st'>"medium"</span>))
 
 <span class='co'>## if more than 10000 rows in results, auto batching</span>
 <span class='co'>## example is setting lots of dimensions to try and create big sampled data</span>
-<span class='no'>batch_gadata</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_3</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>ga_id</span>,
+<span class='no'>batch_gadata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics_3.html'>google_analytics_3</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>ga_id</span>,
                                  <span class='kw'>start</span><span class='kw'>=</span><span class='st'>"2014-08-01"</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='st'>"2015-08-02"</span>,
                                  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sessions"</span>, <span class='st'>"bounceRate"</span>),
                                  <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"source"</span>, <span class='st'>"medium"</span>,
@@ -391,14 +391,14 @@ Not compatible with <code>samplingLevel="WALK"</code> or <code>max_results&gt;10
 
 <span class='co'>## mitigate sampling by setting samplingLevel="WALK"</span>
 <span class='co'>## this will send lots and lots of calls to the Google API limits, beware</span>
-<span class='no'>walk_gadata</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_3</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>ga_id</span>,
+<span class='no'>walk_gadata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics_3.html'>google_analytics_3</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>ga_id</span>,
                                 <span class='kw'>start</span><span class='kw'>=</span><span class='st'>"2014-08-01"</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='st'>"2015-08-02"</span>,
                                 <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sessions"</span>, <span class='st'>"bounceRate"</span>),
                                 <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"source"</span>, <span class='st'>"medium"</span>, <span class='st'>"landingPagePath"</span>),
                                 <span class='kw'>max</span><span class='kw'>=</span><span class='fl'>99999999</span>, <span class='kw'>samplingLevel</span><span class='kw'>=</span><span class='st'>"WALK"</span>)
 
 <span class='co'>## multi-channel funnels set type="mcf"</span>
-<span class='no'>mcf_gadata</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_3</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>ga_id</span>,
+<span class='no'>mcf_gadata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics_3.html'>google_analytics_3</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>ga_id</span>,
                                <span class='kw'>start</span><span class='kw'>=</span><span class='st'>"2015-08-01"</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='st'>"2015-08-02"</span>,
                                <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"totalConversions"</span>),
                                <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sourcePath"</span>),

@@ -5,7 +5,7 @@
 #' @noRd
 management_api_parsing <- function(x, kind){
   assert_that(x$kind %in% kind)
-  myMessage("Fetching ", x$kind, level = 3)
+  myMessage("Fetching", x$kind, level = 3)
   
   if(x$totalResults == 0){
     myMessage("No results found")
@@ -13,7 +13,7 @@ management_api_parsing <- function(x, kind){
   }
   
   if(is.null(check_empty(x$items))){
-    myMessage("No ", kind, " found ", level = 3)
+    myMessage("No", kind, "found", level = 3)
     return(NULL)
   }
   
@@ -91,7 +91,7 @@ google_analytics_4_parse <- function(x){
   timelr <- NULL
   if(!is.null(x$data$dataLastRefreshed)){
     # convert timezone to locale
-    timelr <- format(timestamp_to_r(x$data$dataLastRefreshed))
+    timelr <- format(iso8601_to_r(x$data$dataLastRefreshed))
     myMessage("API data last refreshed: ",timelr, level = 3)
   }
   

@@ -133,7 +133,7 @@ check_empty <- function(x){
 #' iso8601 timestamp to R
 #' @noRd
 iso8601_to_r <- function(x){
-  as.POSIXct(gsub("\\....Z$","",x), format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
+  as.POSIXct(gsub("\\....Z$","",x), format = "%Y-%m-%dT%H:%M:%OS", tz = "UTC")
 }
 
 safe_extract <- function(x){
@@ -185,13 +185,6 @@ assert_that_ifnn <- function(x, assert_f){
 is.named <- function(x) {
   nm <- names(x)
   !is.null(nm) && all(!is.na(nm) & nm != "")
-}
-
-#' Timestamp to R date
-#' @keywords internal
-#' @noRd
-timestamp_to_r <- function(t){
-  as.POSIXct(t, format = "%Y-%m-%dT%H:%M:%S")
 }
 
 #' if argument is NULL, no line output
@@ -262,12 +255,6 @@ expect_null_or_s3_class <- function(thing, s3class){
     TRUE
   }
 }
-
-
-#' @importFrom magrittr %>%
-#' @export
-#' @keywords internal
-magrittr::`%>%`
 
 #' A helper function that tests whether an object is either NULL _or_
 #' a list of NULLs
@@ -354,12 +341,22 @@ idempotency <- function(){
 #' @details 0 = everything, 1 = debug, 2=normal, 3=important
 #' @keywords internal
 #' @noRd
+#' @import cli
 myMessage <- function(..., level = 2){
   
   compare_level <- getOption("googleAuthR.verbose")
   
   if(level >= compare_level){
-    message(Sys.time() ,"> ", ...)
+    time <- paste(Sys.time(),">")
+    mm <- paste(...)
+    if(grepl("^#", mm)){
+      cli_h1(mm)
+    } else {
+      cli_div(theme = list(span.time = list(color = "grey")))
+      cli_alert_info("{.time {time}} {mm}")
+      cli_end()
+    }
+    
   }
   
 }

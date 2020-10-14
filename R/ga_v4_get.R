@@ -242,9 +242,8 @@ make_ga_4_req <- function(viewId,
 #' By default local caching is turned on for v4 API requests.  This means that
 #'   making the same request as one this session will read from memory and not
 #'   make an API call. You can also set the cache to disk via 
-#'   the \link[googleAuthR]{gar_cache_setup} function.  This can be useful
-#'   when running RMarkdown reports using data. To empty the cache use 
-#'   \link[googleAuthR]{gar_cache_empty}.
+#'   the \link{ga_cache_call} function.  This can be useful
+#'   when running RMarkdown reports using data.
 #' 
 #' @inheritParams make_ga_4_req
 #' @param max Maximum number of rows to fetch. Defaults at 1000. Use -1 to fetch all results. Ignored when \code{anti_sample=TRUE}.
@@ -569,9 +568,12 @@ fetch_google_analytics_4_slow <- function(request_list,
                     error = function(err){
                       custom_error(err)
                     })
-    
+
     actualRows <- attr(out[[1]], "rowCount")
     npt <- attr(out[[1]], "nextPageToken")
+    if(allRows){
+      max_rows <- as.integer(actualRows)
+    }
     
     if(is.null(npt) || as.integer(npt) >= max_rows){
       do_it <- FALSE

@@ -1,6 +1,19 @@
-# googleAnalyticsR 0.7.1.9000
+# 0.8.0.9000
 
-* fix `ga_account_list()` not dowloading starred columns (#284 - thanks @hidekoji)
+* Allow authentication with service JSON keys without needing to change default client.id (#324 - thanks @adamribaudo)
+* Fix GA Adwords list parsing (#322 - thanks @millett-a)
+
+# googleAnalyticsR 0.8.0
+
+* fix `ga_account_list()` not downloading starred columns (#284 - thanks @hidekoji)
+* Allow millisecond parsing of times (#314 - thanks @VadimChernik)
+* Update to use `cli` for nicer looking user messaging
+* Change the default client.id (#311)
+* Allow authentication via a service account key directly in `ga_auth(json = "file.json")`
+* Remove `GARGLE_EMAIL` auto-auth on package load as could stop package loading under some circumstances.
+* Add `ga_auth_setup()` to help walk through some of the advanced authentication setups
+* Fix fetching all rows for `google_analytics()` when `slow_fetch=TRUE` and `max=-1` (#321 - thanks @wdwatkins)
+* Move to Cloud Build authenticated tests via `googleCloudRunner`
 
 # googleAnalyticsR 0.7.1
 

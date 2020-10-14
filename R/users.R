@@ -233,7 +233,7 @@ ga_users_delete_linkid <- function(linkId,
     if(res$status_code == 204){
       myMessage("Successfully deleted linkId: ", linkId, level = 3)
     } else {
-      stop("Problem deleting linkId: ", linkId, call. = FALSE)
+      myMessage("Problem deleting linkId: ", linkId, level = 3)
     }
   } else {
     # batched deletion
@@ -365,7 +365,7 @@ ga_users_add <- function(email,
 #' 
 #' @param linkId The linkId to update
 #' @inheritParams ga_users_list
-#' @param update_object A list that will be turned into JSON via \link[jsonlite]{toJSON} that represents the new configuration for this linkId
+#' @param update_object A list that will be turned into JSON that represents the new configuration for this linkId
 #' 
 #' 
 #' @return The new user object that has been altered.

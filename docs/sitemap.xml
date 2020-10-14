@@ -82,6 +82,9 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth_setup.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_cache_call.html</loc>
   </url>
   <url>
@@ -323,9 +326,6 @@
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/pivot_ga4_parse.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/reexports.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/segmentBuilder.html</loc>

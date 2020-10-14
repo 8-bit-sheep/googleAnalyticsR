@@ -1,0 +1,13 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args: 
+      - build
+      - -t 
+      - gcr.io/gcer-public/googleanalyticsr:$SHORT_SHA 
+      - -t 
+      - gcr.io/gcer-public/googleanalyticsr:$BRANCH_NAME 
+      - '.'
+  - name: gcr.io/cloud-builders/docker
+    args: 
+      - push 
+      - gcr.io/gcer-public/googleanalyticsr

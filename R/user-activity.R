@@ -16,6 +16,8 @@
 #' 
 #' Use \link{ga_clientid_activity_unnest} to unnest deeply nested data in the hits data.
 #' 
+#' The timestamps are available to millisecond level but you will need to set your R options to see them e.g. \code{options(digits.secs=3)}
+#' 
 #' @export
 #' 
 #' @return A list of data.frames: \code{$sessions} contains session level data. \code{$hits} contains individual activity data
@@ -193,7 +195,7 @@ parse_user_activity <- function(x){
                 function(sid){
                   setNames(sid$activities, 
                            map_chr(sid$activities, 
-                                   ~format(timestamp_to_r(.x[["activityTime"]]))
+                                   ~format(iso8601_to_r(.x[["activityTime"]]))
                                    ))
                   }),
                 map_chr(x$sessions, "sessionId"))

@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
       </span>
     </div>
 
@@ -293,10 +293,10 @@
 
     <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohort_and_lifetime_value_ltv_dimensions_and_metrics'>https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohort_and_lifetime_value_ltv_dimensions_and_metrics</a></p>
 <p>Other v4 cohort functions: 
-<code><a href='cohortGroup.html'>cohortGroup</a>()</code>,
-<code><a href='cohort_dimension_check.html'>cohort_dimension_check</a>()</code>,
-<code><a href='cohort_metric_check.html'>cohort_metric_check</a>()</code>,
-<code><a href='cohort.html'>cohort</a>()</code></p></div>
+<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/cohortGroup.html'>cohortGroup</a>()</code>,
+<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/cohort_dimension_check.html'>cohort_dimension_check</a>()</code>,
+<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/cohort_metric_check.html'>cohort_metric_check</a>()</code>,
+<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/cohort.html'>cohort</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -305,7 +305,7 @@
 
 <span class='co'>## authenticate, </span>
 <span class='co'>## or use the RStudio Addin "Google API Auth" with analytics scopes set</span>
-<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
+<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html'>ga_auth</a></span>()
 
 <span class='co'>## get your accounts</span>
 <span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_account_list</span>()
@@ -317,12 +317,12 @@
 
 <span class='co'>## first make a cohort group</span>
 
-<span class='no'>cohort4</span> <span class='kw'>&lt;-</span> <span class='fu'>make_cohort_group</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"cohort 1"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2015-08-01"</span>, <span class='st'>"2015-08-01"</span>),
+<span class='no'>cohort4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/make_cohort_group.html'>make_cohort_group</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"cohort 1"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2015-08-01"</span>, <span class='st'>"2015-08-01"</span>),
                                   <span class='st'>"cohort 2"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2015-07-01"</span>,<span class='st'>"2015-07-01"</span>)))
 
 <span class='co'>## then call cohort report.  No date_range and must include metrics and dimensions</span>
 <span class='co'>##   from the cohort list</span>
-<span class='no'>cohort_example</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>ga_id</span>,
+<span class='no'>cohort_example</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html'>google_analytics</a></span>(<span class='no'>ga_id</span>,
                                    <span class='kw'>dimensions</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'cohort'</span>),
                                    <span class='kw'>cohort</span> <span class='kw'>=</span> <span class='no'>cohort4</span>,
                                    <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'cohortTotalUsers'</span>))
@@ -335,13 +335,13 @@
 
 <span class='co'>## make a cohort group with lifetimeValue = TRUE</span>
 
-<span class='no'>cohort_ltv</span> <span class='kw'>&lt;-</span> <span class='fu'>make_cohort_group</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"cohort 1"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2018-12-01"</span>, <span class='st'>"2018-12-31"</span>),
+<span class='no'>cohort_ltv</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/make_cohort_group.html'>make_cohort_group</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"cohort 1"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2018-12-01"</span>, <span class='st'>"2018-12-31"</span>),
                                      <span class='st'>"cohort 2"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2019-01-01"</span>, <span class='st'>"2019-01-31"</span>)),
                                      <span class='kw'>lifetimeValue</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'>## call a cohort report with ltv metrics</span>
 
-<span class='no'>ltv_example</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>ga_id</span>,
+<span class='no'>ltv_example</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html'>google_analytics</a></span>(<span class='no'>ga_id</span>,
      <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'cohort'</span>, <span class='st'>"acquisitionTrafficChannel"</span>),
      <span class='kw'>cohorts</span> <span class='kw'>=</span> <span class='no'>cohort_ltv</span>,
      <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cohortGoalCompletionsPerUserWithLifetimeCriteria"</span>))

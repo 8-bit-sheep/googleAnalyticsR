@@ -4,6 +4,7 @@
 #'
 #' @param token An existing token or file location of a token to authenticate with
 #' @param email An existing cached email to authenticate with or \code{TRUE} to authenticate with only email available.  If not set then you will get an interactive prompt asking you to choose which email to authenticate with.
+#' @param json_file Authentication service key you have downloaded from your Google Project - an alternative to OAuth2 email authentication
 #' 
 #' @details
 #' 
@@ -88,7 +89,8 @@
 #' ga_auth(email = "work@mybusiness.com") 
 #' ga_account_list() # lists second set of accounts
 #' 
-#' 
+#' # or authenticate via the service key, that has been added to the GA as a user
+#' ga_auth(json_file = "service-key.json")
 #' 
 #' }
 #'
@@ -96,8 +98,15 @@
 #' @import googleAuthR
 #' @importFrom tools file_ext
 #' @export
-ga_auth <- function(token = NULL, email = NULL){
+ga_auth <- function(token = NULL, email = NULL, json_file = NULL){
   
+  if(!is.null(json_file)){
+    client_email <- jsonlite::read_json(json_file)$client_email
+    cli::cli_alert_info(paste("Authenticating using", client_email))
+    return(gar_auth_service(json_file))
+  }
+  
+  # client.id only needed for OAuth2 auth
   default_project_message()
   
   gar_auth(token = token,

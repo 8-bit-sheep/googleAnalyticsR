@@ -6,17 +6,21 @@ options(googleAuthR.scopes.selected =
             "https://www.googleapis.com/auth/analytics.edit",
             "https://www.googleapis.com/auth/analytics.manage.users",
             "https://www.googleapis.com/auth/analytics.user.deletion",
-            "https://www.googleapis.com/auth/drive"),
-        googleAuthR.httr_oauth_cache = Sys.getenv("GA_AUTH_FILE"),
-        googleAuthR.client_id = "289759286325-da3fr5kq4nl4nkhmhs2uft776kdsggbo.apps.googleusercontent.com",
-        googleAuthR.client_secret = "1mKySbffYRyWevGkjL0LMJYu")
-
-# auth cache with default project creds
-ga_auth(email = Sys.getenv("GARGLE_EMAIL"))
+            "https://www.googleapis.com/auth/drive"))
 
 # auth cache with custom project creds
-googleAuthR::gar_set_client()
-ga_auth(email = Sys.getenv("GARGLE_EMAIL"))
+if(Sys.getenv("GAR_CLIENT_JSON") != ""){
+  googleAuthR::gar_set_client()
+  dir.create("cache/")
+  ga_cache_call("cache/")
+}
+
+
+if(file.exists("/workspace/auth.json")){
+  message("Auth on Cloud Build")
+  ga_auth(json_file = "/workspace/auth.json")
+}
+
 
 accountId <- 54019251
 webPropId <- "UA-54019251-4"
@@ -26,7 +30,13 @@ accountId2 <- 47480439
 webPropId2 <- "UA-47480439-2"
 ga_id2 <- 81416156
 
-## auto auth
-local_auth <- "GA_AUTH_FILE"
-
-
+test_that("Correct authentication", {
+  skip_on_travis()
+  skip_on_cran()
+  
+  al <- ga_account_list()
+  expect_true(accountId %in% al$accountId)
+  expect_true(accountId2 %in% al$accountId)
+  expect_true(ga_id %in% al$viewId)
+  expect_true(ga_id2 %in% al$viewId)
+})

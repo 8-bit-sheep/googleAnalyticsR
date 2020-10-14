@@ -76,6 +76,7 @@ reference:
       Setting up your environment so you can connect to the API
     contents:
       - ga_auth
+      - ga_auth_setup
       - ga_cache_call
   - title: "Reporting API"
     desc: >

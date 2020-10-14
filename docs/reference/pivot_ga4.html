@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
       </span>
     </div>
 
@@ -298,7 +298,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>pivot object of class <code>pivot_ga4</code> for use in <code><a href='filter_clause_ga4.html'>filter_clause_ga4</a></code></p>
+    <p>pivot object of class <code>pivot_ga4</code> for use in <code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/filter_clause_ga4.html'>filter_clause_ga4</a></code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If maxGroupCount is set to -1 returns all groups.</p>
@@ -310,7 +310,7 @@
 
 <span class='co'>## authenticate, </span>
 <span class='co'>## or use the RStudio Addin "Google API Auth" with analytics scopes set</span>
-<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
+<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html'>ga_auth</a></span>()
 
 <span class='co'>## get your accounts</span>
 <span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_account_list</span>()
@@ -320,20 +320,20 @@
 <span class='no'>ga_id</span> <span class='kw'>&lt;-</span> <span class='no'>account_list</span>[<span class='fl'>23</span>,<span class='st'>'viewId'</span>]
 
 <span class='co'>## filter pivot results to </span>
-<span class='no'>pivot_dim_filter1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='dim_filter.html'>dim_filter</a></span>(<span class='st'>"medium"</span>,
+<span class='no'>pivot_dim_filter1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/dim_filter.html'>dim_filter</a></span>(<span class='st'>"medium"</span>,
                                 <span class='st'>"REGEXP"</span>,
                                 <span class='st'>"organic|social|email|cpc"</span>)
 
 
-<span class='no'>pivot_dim_clause</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='filter_clause_ga4.html'>filter_clause_ga4</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>pivot_dim_filter1</span>))
+<span class='no'>pivot_dim_clause</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/filter_clause_ga4.html'>filter_clause_ga4</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>pivot_dim_filter1</span>))
 
-<span class='no'>pivme</span> <span class='kw'>&lt;-</span> <span class='fu'>pivot_ga4</span>(<span class='st'>"medium"</span>,
+<span class='no'>pivme</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/pivot_ga4.html'>pivot_ga4</a></span>(<span class='st'>"medium"</span>,
                    <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sessions"</span>),
                    <span class='kw'>maxGroupCount</span> <span class='kw'>=</span> <span class='fl'>4</span>,
                   <span class='kw'>dim_filter_clause</span> <span class='kw'>=</span> <span class='no'>pivot_dim_clause</span>)
 
 
-<span class='no'>pivtest</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>ga_id</span>,
+<span class='no'>pivtest</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html'>google_analytics</a></span>(<span class='no'>ga_id</span>,
                             <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2016-01-30"</span>,<span class='st'>"2016-10-01"</span>),
                             <span class='kw'>dimensions</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'source'</span>),
                             <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'sessions'</span>),

@@ -9,6 +9,31 @@ It assumes you have R installed on your machine and access rights to one or more
 
 The rest of this guide will give you an overview of the available set up options and cover some good practices to follow under different scenarios of use.  
 
+## 0. Quickstart RStudio Cloud Project
+
+If you wish to try out the library before installation, an RStudio Cloud project is available that has the library pre-installed.
+
+[Click this link and log in to RStudio Cloud to try it out](https://rstudio.cloud/project/1125233).
+
+Once you are logged in, issue the following two R commands in the R console bottom-left:
+
+```r
+library(googleAnalyticsR)
+ga_auth()
+```
+
+Select `1: Yes` to say you wish to keep your OAuth access credentials.
+
+The library should then launch a browser window and ask you to login to Google - log in with an email that has access to your Google Analytics - it will take you to a screen with an OOB token.  Copy-paste that token back into RStudio:
+
+![](rstudio-oob.png)
+
+(The OOB token is only needed on RStudio Cloud - if you have googleAnalyticsR installed locally on your desktop it will authenticate automatically via `httpuv`)
+
+You should then be authenticated and ready to use the functions in the package.  Try `ga_account_list()` as a way to check you are authenticated correctly:
+
+![](test_ga_account_list.png)
+
 ## 1. Install 
 
 The latest stable version of `googleAnalyticsR` is available on CRAN.
@@ -30,9 +55,22 @@ remotes::install_github("MarkEdmondson1234/googleAnalyticsR")
 
 Check out the [NEWS](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md) to see whats currently available in each version.
 
+### Docker image
+
+If you know docker, then a public image is available at `gcr.io/gcer-public/googleanalyticsr`
+
+* `gcr.io/gcer-public/googleanalyticsr:master` is the latest GitHub version
+* `gcr.io/gcer-public/googleanalyticsr:CRAN` will be the last CRAN version
+
 ### Dependencies
 
 `googleAnalyticsR` requires the packages described in the [`Imports` field of the `DESCRIPTION` file](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/DESCRIPTION) to be installed first, which it will do via `install.packages("googleAnalyticsR", dependencies = TRUE)`
+
+The depedencies are roughly split into the following roles:
+
+* `googleAuthR`, `gargle` are used for authentication with Google APIs
+* `jsonlite`, `httr` work with API responses
+* Tidyverse packages such as `dplyr` and `purrr` are used to make outputs easy to use (clean data.frames rather than nested lists)
 
 Note that on linux systems, due to its reliance on [`httr`]( https://CRAN.R-project.org/package=httr ) and in turn [`curl`]( https://CRAN.R-project.org/package=curl), it may require installation of these dependencies via `apt-get` or similar: `libssl-dev` and `libcurl4-openssl-dev`.
 
@@ -75,6 +113,8 @@ You can find more code examples to query the API in  [v4 API](http://code.marked
 ## 3.  Choose authentication method
 
 ### TL;DR
+
+Use `ga_auth_setup()` to configure your own GCP project and set up auto-authentication options.
 
 Recommended long term defaults are:
 
@@ -133,14 +173,37 @@ With the amount of API calls possible with this library via batching and walking
 
 However, using the default project means you will not need to go through the process outlined below to create your own Google Cloud Platform credentials and you can directly authenticate using the `ga_auth()` function and your browser as soon as the library is downloaded.
 
+### ga_auth_setup()
+
+A new setup function is available in versions >0.7.2 - use this to launch a wizard that will help you walk through some of the more advanced authentication setups detailed below.  You will need to create your own Google Cloud Project and download a client Id file to get started.
+
+```r
+library(googleAnalyticsR)
+ga_auth_setup()
+#ℹ ==Welcome to googleAnalyticsR v0.7.1.9000 setup==
+#This wizard will scan your system for setup options and help you with any that are missing. 
+#Hit 0 or ESC to cancel. 
+#
+#1: Setup your own client ID and secret
+#2: Setup auto-authentication (OAuth2 email)
+#3: Create and download JSON service account key
+#4: Setup auto-authentication (JSON service account key)
+#5: Add a service account email or another email to your GA account
+```
 
 ### 'Professional' mode: Your own Google Project
 
 To mitigate all the above, use your own Google Developer Console client ID, so it is not shared across all users of this library.
 
+The easiest way to set this up is to create your own Google Cloud Platform project and then in R use the `ga_auth_setup()` function and select option 1.
+
+#### Setting up clientId manually
+
+The setup function goes through the steps below.
+
 1. Download your Google Cloud Project client JSON and place it in a location pointed to via the `GAR_CLIENT_JSON` environment argument.  
 
-This file is found in the Google Cloud Platform under `APIs & Services > Credentials > Create credentials >  OAuth client ID > Other`.  For Shiny authentication, choose `Web application` instead of `Other`.
+This file is found in the Google Cloud Platform under `APIs & Services > Credentials > Create credentials >  OAuth client ID > Desktop`.  For Shiny authentication, choose `Web application` instead of `Desktop`.
 
 In the below examples the client ID file is downloaded to `~/dev/auth/gcp_client.json`
 
@@ -163,11 +226,11 @@ library(googleAnalyticsR)
 ga_auth()
 ```
 
-If setting in the script via [`googleAuthR::gar_set_client()`](https://code.markedmondson.me/googleAuthR/reference/gar_set_client.html) then it wil look like this:
+If setting in the script via [`googleAuthR::gar_set_client()`](https://code.markedmondson.me/googleAuthR/reference/gar_set_client.html) then it will look like this:
 
 ```r
-googleAuthR::gar_set_client("~/dev/auth/gcp_client.json")
 library(googleAnalyticsR)
+googleAuthR::gar_set_client("~/dev/auth/gcp_client.json")
 ga_auth()
 ```
 
@@ -212,6 +275,24 @@ You can alternatively authenticate by downloading a JSON file attached to a Goog
 
 A service authentication file then needs to be created that has edit access to the GA account.  It is recommended to make a dedicated service account if you don't need it for anything else. 
 
+The easiest way is to use `ga_auth_setup()` and select option 3 to create the file for you using your own details for authorization, then option 5 to add it to the GA account you need.
+
+In your R script you can then authorize via:
+
+```r
+library(googleAnalyticsR)
+ga_auth(json_file="service-key.json")
+```
+
+...or if you have set the environment arg `GA_AUTH_FILE` to the service key filepath, simply loading the library to enact auto-authenticataion.
+
+This is helpful for Docker contaienrs where you don't want to usually include any authentication files, but can specify them via environment arguments when launching the container. 
+
+
+#### Manual setup
+
+If you want to set it up yourself, the setup wizard goes through these steps:
+
 1. Create your own Google Cloud Project or use an existing one.
 2. Set your own client.id/secret via `googleAuthR::gar_set_client()`
 3. Service accounts for your project can be created at this link: `https://console.cloud.google.com/iam-admin/serviceaccounts/create`
@@ -224,9 +305,8 @@ A service authentication file then needs to be created that has edit access to t
 You should now be able to use the JSON auth file to authenticate with Google Analytics API via:
 
 ```r
-library(googleAuthR)
 library(googleAnalyticsR)
-gar_auth_service("your_auth_file.json")
+ga_auth(json_file = "your_auth_file.json")
 
 # test authentication
 al <- ga_account_list()
@@ -245,16 +325,18 @@ To save authenticating and setting your GCP client each R session, you can speci
 
 * `GAR_CLIENT_JSON` takes care of the GCP project client.id to authenticate under
 * `GARGLE_EMAIL` lets you specify an email address that has already authenticated to skip the interactive menu. Make sure you authenticate with the right scopes and GCP project first in an interactive session.
+* `GA_AUTH_FILE` is an optional argument if you have a service JSON key
 
-You can set environment arguments via `Sys.setenv()` but the recommend way is to use an `.Renviron` file saved in your home directory.  
+You can set environment arguments via `Sys.setenv()` or using an `.Renviron` file saved in your home directory, but the recommended way is to use `ga_auth_setup()` and select option 2 (for OAuth2 email) or 4 (for JSON service account keys)
 
 ```
 # In your .Renviron
 GAR_CLIENT_JSON=~/dev/auth/gcp_client.json
 GARGLE_EMAIL=my-email@me.com
+GA_AUTH_FILE=/Users/me/dev/auth/keys/googleanalyticsr-auth-key.json
 ```
 
-Restart your R session to enact the arguments created in `.Renviron`
+Restart your R session to enact the arguments created in `.Renviron` - when you load the library they will be loaded in.
 
 ### Multiple API authentification
 

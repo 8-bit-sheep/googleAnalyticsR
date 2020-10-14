@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
       </span>
     </div>
 
@@ -314,7 +314,7 @@ must take data from result of <code>data_f</code> in first argument</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>ga_model</code> object to pass to <a href='ga_model.html'>ga_model</a></p>
+    <p>A <code>ga_model</code> object to pass to ga_model</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The passed functions should all have <code>...</code> to make them flexible
@@ -323,13 +323,13 @@ The <code>data_f</code> function result will feed to <code>model_f</code></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other GA modelling functions: 
-<code><a href='ga_model_edit.html'>ga_model_edit</a>()</code>,
-<code><a href='ga_model_example.html'>ga_model_example</a>()</code>,
-<code><a href='ga_model_load.html'>ga_model_load</a>()</code>,
-<code><a href='ga_model_save.html'>ga_model_save</a>()</code>,
-<code><a href='ga_model_tweet.html'>ga_model_tweet</a>()</code>,
-<code><a href='ga_model_write.html'>ga_model_write</a>()</code>,
-<code><a href='ga_model.html'>ga_model</a>()</code></p></div>
+<code>ga_model_edit()</code>,
+<code>ga_model_example()</code>,
+<code>ga_model_load()</code>,
+<code>ga_model_save()</code>,
+<code>ga_model_tweet()</code>,
+<code>ga_model_write()</code>,
+<code>ga_model()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -338,7 +338,7 @@ The <code>data_f</code> function result will feed to <code>model_f</code></p>
  <span class='no'>get_model_data</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>viewId</span>,
                            <span class='no'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>()- <span class='fl'>300</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>()),
                            <span class='no'>...</span>){
-   <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>viewId</span>,
+   <span class='fu'>google_analytics</span>(<span class='no'>viewId</span>,
                     <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='no'>date_range</span>,
                     <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='st'>"sessions"</span>,
                     <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
@@ -355,19 +355,19 @@ The <code>data_f</code> function result will feed to <code>model_f</code></p>
                             <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"Performs decomposition and creates plot"</span>)
 
  <span class='co'># fetches data and outputs decomposition</span>
- <span class='fu'><a href='ga_model.html'>ga_model</a></span>(<span class='fl'>81416156</span>, <span class='no'>decomp_ga</span>)
+ <span class='fu'>ga_model</span>(<span class='fl'>81416156</span>, <span class='no'>decomp_ga</span>)
 
  <span class='co'># save the model for later</span>
  <span class='no'>model_location</span> <span class='kw'>&lt;-</span> <span class='st'>"inst/models/decomp_ga.gamr"</span>
- <span class='fu'><a href='ga_model_save.html'>ga_model_save</a></span>(<span class='no'>decomp_ga</span>, <span class='kw'>filename</span> <span class='kw'>=</span> <span class='no'>model_location</span>)
+ <span class='fu'>ga_model_save</span>(<span class='no'>decomp_ga</span>, <span class='kw'>filename</span> <span class='kw'>=</span> <span class='no'>model_location</span>)
 
  <span class='co'># can load model from file</span>
- <span class='fu'><a href='ga_model.html'>ga_model</a></span>(<span class='fl'>81416156</span>, <span class='no'>model_location</span>)
+ <span class='fu'>ga_model</span>(<span class='fl'>81416156</span>, <span class='no'>model_location</span>)
 
  <span class='co'># or load model to an object and use </span>
- <span class='no'>model2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_model_load.html'>ga_model_load</a></span>(<span class='no'>model_location</span>)
+ <span class='no'>model2</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_model_load</span>(<span class='no'>model_location</span>)
 
- <span class='fu'><a href='ga_model.html'>ga_model</a></span>(<span class='fl'>81416156</span>, <span class='no'>model2</span>)
+ <span class='fu'>ga_model</span>(<span class='fl'>81416156</span>, <span class='no'>model2</span>)
 
  <span class='co'># for shiny include functions for the UI and server rendering</span>
  <span class='no'>decomp_ga</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_model_make</span>(<span class='no'>get_model_data</span>,
