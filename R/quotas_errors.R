@@ -4,6 +4,11 @@ is_default_project <- function(){
   token <- googleAuthR::gar_token()
   if(token$auth_token$secrets$type == "service_account") return(FALSE)
   
+  # if set web json then its shiny #333
+  if(getOption("googleAuthR.webapp.client_id") != ""){
+    return(FALSE)
+  }
+  
   getOption("googleAuthR.client_id") %in% c("289759286325-da3fr5kq4nl4nkhmhs2uft776kdsggbo.apps.googleusercontent.com",
                                             "289759286325-42j8nmkeq5n9v9eb1kiuj2i97v9oea1f.apps.googleusercontent.com",
                                             "201908948134-rm1ij8ursrfcbkv9koc0aqver84b04r7.apps.googleusercontent.com",

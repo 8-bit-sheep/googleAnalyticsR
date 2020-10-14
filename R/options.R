@@ -5,8 +5,6 @@
     ## default Google project
     googleAuthR.client_id = "289759286325-i5kd45j7qnoc1t8h86611b38icnfk38d.apps.googleusercontent.com",
     googleAuthR.client_secret = "RnKpRn0ZOrKbwwSPeX4Giujf",
-    googleAuthR.webapp.client_id = "289759286325-42j8nmkeq5n9v9eb1kiuj2i97v9oea1f.apps.googleusercontent.com",
-    googleAuthR.webapp.client_secret = "0zBtmZ_klTEzXUaTUTP5AkNQ",
     googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics", 
                                     "https://www.googleapis.com/auth/analytics.readonly",
                                     "https://www.googleapis.com/auth/analytics.edit",
