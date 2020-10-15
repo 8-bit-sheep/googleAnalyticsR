@@ -4,13 +4,28 @@
 \alias{ga_meta}
 \title{Get current dimensions and metrics available in GA API.}
 \usage{
-ga_meta()
+ga_meta(version = c("universal", "data"))
+}
+\arguments{
+\item{version}{The Google Analytics API metadata to fetch - "universal" for Universal and earlier versions, "data" for Google Analytics 4}
 }
 \value{
 dataframe of dimensions and metrics available to use
 }
 \description{
 Get current dimensions and metrics available in GA API.
+}
+\examples{
+
+\dontrun{
+
+# universal analytics
+ga_meta()
+
+# Google Analytics 4 metadata from the Data API
+ga_meta("data")
+
+}
 }
 \seealso{
 \url{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}

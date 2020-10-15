@@ -1,3 +1,8 @@
+version_aw <- function(){
+  "v1alpha"
+}
+
+
 #' Google Analytics for App+Web
 #'
 #' Fetches Google Analytics data for App+Web
@@ -46,7 +51,8 @@ google_analytics_aw <- function(propertyId,
                                 orderBys = NULL,
                                 limit = 100,
                                 delimiter = "/") {
-  url <- "https://analyticsdata.googleapis.com/v1alpha:batchRunReports"
+  url <- sprintf("https://analyticsdata.googleapis.com/%s:batchRunReports",
+                 version_aw())
   
   # build a filterExpression if a Filter present
   if(is.Filter(dimensionFilter)){

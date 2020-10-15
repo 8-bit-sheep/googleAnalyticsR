@@ -1,3 +1,21 @@
+#' Parse getUniversalMetadata
+#' @seealso https://developers.google.com/analytics/trusted-testing/analytics-data/rest/v1alpha/TopLevel/getUniversalMetadata
+#' @param x The response
+#' @noRd
+#' @keywords internal
+#' @importFrom dplyr bind_rows
+parse_ga_meta_aw <- function(x){
+  
+  dims <- x$dimensions
+  mets <- x$metrics
+  
+  dims$class <- "dimension"
+  mets$class <- "metric"
+  
+  bind_rows(dims, mets)
+}
+
+
 #' A common pattern for management API parsing
 #' @param x The response
 #' @param kind The kind of response
