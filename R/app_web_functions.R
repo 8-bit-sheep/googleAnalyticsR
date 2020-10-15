@@ -16,13 +16,27 @@ version_aw <- function(){
 #' @param date_range A vector of length two with start and end dates in YYYY-MM-DD format
 #' @param delimiter If combining dimensions in one column, the delimiter for the value field
 #' @importFrom googleAuthR gar_api_generator
+#' @import assertthat
 #' @family BatchRunReportsRequest functions
 #' @export
 #' @examples 
 #' 
 #' \dontrun{
 #' 
+#' # send up to 4 date ranges
+#' multi_date <- google_analytics_aw(
+#'   206670707,
+#'   metrics = c("activeUsers","sessions"),
+#'   dimensions = c("date","city","dayOfWeek"),
+#'   date_range = c("2020-03-31", "2020-04-27", "2020-04-30", "2020-05-27"),
+#'   dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
+#'   limit = 100
+#'   )
+#' 
+#' 
 #' # metric and dimension expressions
+#' 
+#' # create your own named metrics
 #' met_expression <- google_analytics_aw(
 #'   206670707,
 #'   metrics = c("activeUsers","sessions",sessionsPerUser = "sessions/activeUsers"),
@@ -32,6 +46,7 @@ version_aw <- function(){
 #'   limit = 100
 #'   )
 #'
+#' # create your own aggregation dimensions
 #' dim_expression <- google_analytics_aw(
 #'   206670707,
 #'   metrics = c("activeUsers","sessions"),
@@ -70,7 +85,7 @@ google_analytics_aw <- function(propertyId,
       RunReportRequest(
         metrics = gaw_metric(metrics),
         dimensions = gaw_dimension(dimensions, delimiter = delimiter),
-        dateRanges = date_ga4(date_range),
+        dateRanges = gaw_dates(date_range),
         limit = limit,
         dimensionFilter = dimensionFilter,
         metricFilter = metricFilter,
@@ -121,6 +136,18 @@ parse_batchrunreports <- function(x){
   attr(res, "metadata") <- if(ncol(o$metadata) > 0) o$metadata else NULL
   
   res
+}
+
+#' @import assertthat
+#' @noRd
+gaw_dates <- function(date_range){
+  # create up to 4 date ranges
+  assert_that((length(date_range) %% 2) == 0,
+              length(date_range) <= 8)
+  
+  dateRanges <- split(date_range, ceiling(seq_along(date_range)/2))
+  
+  unname(lapply(dateRanges, date_ga4))
 }
 
 gaw_metric <- function(metrics){

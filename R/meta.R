@@ -3,7 +3,7 @@
 #' @param version The Google Analytics API metadata to fetch - "universal" for Universal and earlier versions, "data" for Google Analytics 4
 #' @return dataframe of dimensions and metrics available to use
 #'
-#' @seealso \url{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}
+#' @seealso \url{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}, \url{https://developers.google.com/analytics/trusted-testing/analytics-data/rest/v1alpha/TopLevel/getUniversalMetadata}
 #' 
 #' @importFrom googleAuthR gar_api_generator
 #' 

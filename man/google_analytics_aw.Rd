@@ -45,7 +45,20 @@ Fetches Google Analytics data for App+Web
 
 \dontrun{
 
+# send up to 4 date ranges
+met_expression <- google_analytics_aw(
+  206670707,
+  metrics = c("activeUsers","sessions"),
+  dimensions = c("date","city","dayOfWeek"),
+  date_range = c("2020-03-31", "2020-04-27", "2020-04-30", "2020-05-27"),
+  dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
+  limit = 100
+  )
+
+
 # metric and dimension expressions
+
+# create your own named metrics
 met_expression <- google_analytics_aw(
   206670707,
   metrics = c("activeUsers","sessions",sessionsPerUser = "sessions/activeUsers"),
@@ -55,6 +68,7 @@ met_expression <- google_analytics_aw(
   limit = 100
   )
 
+# create your own aggregation dimensions
 dim_expression <- google_analytics_aw(
   206670707,
   metrics = c("activeUsers","sessions"),

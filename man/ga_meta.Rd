@@ -28,5 +28,5 @@ ga_meta("data")
 }
 }
 \seealso{
-\url{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}
+\url{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}, \url{https://developers.google.com/analytics/trusted-testing/analytics-data/rest/v1alpha/TopLevel/getUniversalMetadata}
 }

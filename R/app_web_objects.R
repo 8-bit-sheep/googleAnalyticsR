@@ -35,7 +35,7 @@ BatchRunReportsRequest <- function(entity, requests){
 #' @param cohortSpec Cohort group associated with this request
 #' @param metricAggregations Aggregation of metrics
 #' @param dimensions The dimensions requested and displayed
-#' @param dateRanges Date ranges of data to read
+#' @param dateRanges Date ranges of data to read, can send up to 4 date ranges (a vector of 8 dates spanning 1 year)
 #' @param keepEmptyRows If false, rows with metrics being 0 will not be returned
 #' @param dimensionFilter The filter clause of dimensions
 #' @param limit The number of rows to return

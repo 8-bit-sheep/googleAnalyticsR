@@ -38,7 +38,7 @@ RunReportRequest(
 
 \item{dimensions}{The dimensions requested and displayed}
 
-\item{dateRanges}{Date ranges of data to read}
+\item{dateRanges}{Date ranges of data to read, can send up to 4 date ranges (a vector of 8 dates spanning 1 year)}
 
 \item{keepEmptyRows}{If false, rows with metrics being 0 will not be returned}
 
