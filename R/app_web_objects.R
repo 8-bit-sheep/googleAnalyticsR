@@ -33,12 +33,12 @@ BatchRunReportsRequest <- function(entity, requests){
 #' @param orderBys Specifies how rows are ordered in the response
 #' @param metricFilter The filter clause of metrics
 #' @param cohortSpec Cohort group associated with this request
-#' @param metricAggregations Aggregation of metrics
+#' @param metricAggregations Aggregation of metrics. Aggregated metric values will be shown in rows where the dimensionValues are set to "RESERVED_(MetricAggregation)".
 #' @param dimensions The dimensions requested and displayed
 #' @param dateRanges Date ranges of data to read, can send up to 4 date ranges (a vector of 8 dates spanning 1 year)
 #' @param keepEmptyRows If false, rows with metrics being 0 will not be returned
 #' @param dimensionFilter The filter clause of dimensions
-#' @param limit The number of rows to return
+#' @param limit The number of rows to return - use -1 to return all rows
 #' @param offset The row count of the start row
 #' @param returnPropertyQuota Toggles whether to return the current state of this Analytics Property's
 #'

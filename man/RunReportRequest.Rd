@@ -34,7 +34,7 @@ RunReportRequest(
 
 \item{cohortSpec}{Cohort group associated with this request}
 
-\item{metricAggregations}{Aggregation of metrics}
+\item{metricAggregations}{Aggregation of metrics. Aggregated metric values will be shown in rows where the dimensionValues are set to "RESERVED_(MetricAggregation)".}
 
 \item{dimensions}{The dimensions requested and displayed}
 
@@ -44,7 +44,7 @@ RunReportRequest(
 
 \item{dimensionFilter}{The filter clause of dimensions}
 
-\item{limit}{The number of rows to return}
+\item{limit}{The number of rows to return - use -1 to return all rows}
 
 \item{offset}{The row count of the start row}
 

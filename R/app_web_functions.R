@@ -14,7 +14,7 @@ version_aw <- function(){
 #' @inheritParams Entity
 #' @inheritParams RunReportRequest
 #' @param date_range A vector of length two with start and end dates in YYYY-MM-DD format
-#' @param delimiter If combining dimensions in one column, the delimiter for the value field
+#' @param dimensionDelimiter If combining dimensions in one column, the delimiter for the value field
 #' @importFrom googleAuthR gar_api_generator
 #' @import assertthat
 #' @family BatchRunReportsRequest functions
@@ -62,10 +62,12 @@ google_analytics_aw <- function(propertyId,
                                 date_range,
                                 dimensions,
                                 dimensionFilter = NULL,
+                                dimensionDelimiter = "/",
                                 metricFilter = NULL,
+                                # metricAggregations = NULL,
                                 orderBys = NULL,
-                                limit = 100,
-                                delimiter = "/") {
+                                limit = 100
+                                ) {
   url <- sprintf("https://analyticsdata.googleapis.com/%s:batchRunReports",
                  version_aw())
   
@@ -79,16 +81,24 @@ google_analytics_aw <- function(propertyId,
     metricFilter <- ga_aw_filter_expr(metricFilter)
   }  
   
+  # if(!is.null(metricAggregations)){
+  #   assert_that(all(metricAggregations %in% c("TOTAL",
+  #                                              "MINIMUM",
+  #                                              "MAXIMUM",
+  #                                              "COUNT")))
+  # }
+  
   brrr <- BatchRunReportsRequest(
     entity = Entity(propertyId),
     requests = list(
       RunReportRequest(
         metrics = gaw_metric(metrics),
-        dimensions = gaw_dimension(dimensions, delimiter = delimiter),
+        dimensions = gaw_dimension(dimensions, delimiter = dimensionDelimiter),
         dateRanges = gaw_dates(date_range),
         limit = limit,
         dimensionFilter = dimensionFilter,
         metricFilter = metricFilter,
+        # metricAggregations = metricAggregations,
         orderBys = orderBys,
         keepEmptyRows = TRUE,
         returnPropertyQuota = TRUE
@@ -108,7 +118,7 @@ google_analytics_aw <- function(propertyId,
 
 parse_batchrunreports <- function(x){
   o <- x$reports
-  
+
   if(is.null(o$rows)){
     myMessage("No data found", level = 3)
     return(NULL)

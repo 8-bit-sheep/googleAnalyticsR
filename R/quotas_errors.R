@@ -2,10 +2,12 @@ is_default_project <- function(){
   
   # if no service auth then its not using default client.id #324
   token <- googleAuthR::gar_token()
-  if(token$auth_token$secrets$type == "service_account") return(FALSE)
+  if(!is.null(token$auth_token$secrets) &&
+     token$auth_token$secrets$type == "service_account") return(FALSE)
   
   # if set web json then its shiny #333
-  if(getOption("googleAuthR.webapp.client_id") != ""){
+  if(!is.null(getOption("googleAuthR.webapp.client_id")) &&
+     getOption("googleAuthR.webapp.client_id") != ""){
     return(FALSE)
   }
   

@@ -10,10 +10,10 @@ google_analytics_aw(
   date_range,
   dimensions,
   dimensionFilter = NULL,
+  dimensionDelimiter = "/",
   metricFilter = NULL,
   orderBys = NULL,
-  limit = 100,
-  delimiter = "/"
+  limit = 100
 )
 }
 \arguments{
@@ -27,13 +27,13 @@ google_analytics_aw(
 
 \item{dimensionFilter}{The filter clause of dimensions}
 
+\item{dimensionDelimiter}{If combining dimensions in one column, the delimiter for the value field}
+
 \item{metricFilter}{The filter clause of metrics}
 
 \item{orderBys}{Specifies how rows are ordered in the response}
 
-\item{limit}{The number of rows to return}
-
-\item{delimiter}{If combining dimensions in one column, the delimiter for the value field}
+\item{limit}{The number of rows to return - use -1 to return all rows}
 }
 \description{
 Fetches Google Analytics data for App+Web
@@ -46,7 +46,7 @@ Fetches Google Analytics data for App+Web
 \dontrun{
 
 # send up to 4 date ranges
-met_expression <- google_analytics_aw(
+multi_date <- google_analytics_aw(
   206670707,
   metrics = c("activeUsers","sessions"),
   dimensions = c("date","city","dayOfWeek"),
