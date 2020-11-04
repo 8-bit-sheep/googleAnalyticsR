@@ -189,10 +189,10 @@ parse_realtime <- function(x){
 
 parse_batchrunreports <- function(x){
   
-  if(no_rows(x)) return(data.frame())
-  
   o <- x$reports
-
+  
+  if(no_rows(o)) return(data.frame())
+  
   dim_names <- o$dimensionHeaders[[1]]$name
   met_names <- o$metricHeaders[[1]]$name
   
