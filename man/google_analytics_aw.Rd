@@ -2,7 +2,7 @@
 % Please edit documentation in R/app_web_functions.R
 \name{google_analytics_aw}
 \alias{google_analytics_aw}
-\title{Google Analytics for App+Web}
+\title{Google Analytics for GA4 (App+Web)}
 \usage{
 google_analytics_aw(
   propertyId,
@@ -13,7 +13,8 @@ google_analytics_aw(
   dimensionDelimiter = "/",
   metricFilter = NULL,
   orderBys = NULL,
-  limit = 100
+  limit = 100,
+  realtime = FALSE
 )
 }
 \arguments{
@@ -34,9 +35,11 @@ google_analytics_aw(
 \item{orderBys}{Specifies how rows are ordered in the response}
 
 \item{limit}{The number of rows to return - use -1 to return all rows}
+
+\item{realtime}{If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see \url{https://developers.google.com/analytics/trusted-testing/analytics-data/realtime-basics}}
 }
 \description{
-Fetches Google Analytics data for App+Web
+Fetches Google Analytics data for Google Analytics 4 (Previously App+Web)
 }
 \details{
 
@@ -77,6 +80,15 @@ dim_expression <- google_analytics_aw(
   dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
   limit = 100
   )
+  
+# run a real-time report (no date dimension allowed)
+realtime <- google_analytics_aw(
+  206670707,
+  metrics = "activeUsers",
+  dimensions = "city",
+  dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
+  limit = 100,
+  realtime = TRUE)
 
 }
 }

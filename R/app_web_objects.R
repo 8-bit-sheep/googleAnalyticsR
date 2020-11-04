@@ -1,3 +1,28 @@
+#' RunRealtimeReport object
+#' @noRd
+RunRealtimeReport <- function(dimensions = NULL,
+                              metrics = NULL,
+                              limit = NULL,
+                              dimensionFilter = NULL,
+                              metricFilter = NULL,
+                              metricAggregations = NULL,
+                              orderBys = NULL,
+                              returnPropertyQuota = NULL){
+  
+  structure(
+    rmNullObs(
+      list(dimensions = dimensions,
+           metrics = metrics,
+           limit = limit,
+           dimensionFilter = dimensionFilter,
+           metricFilter = metricFilter,
+           metricAggregations = metricAggregations,
+           orderBys = orderBys,
+           returnPropertyQuota = returnPropertyQuota)), 
+    class = c("gar_RunRealtimeReport","list"))
+}
+
+
 #' BatchRunReportsRequest Object
 #'
 #' @details
