@@ -32,7 +32,7 @@ Imports:
     memoise,
     methods,
     purrr (>= 0.2.2),
-    rlang (>= 0.1.0),
+    rlang (>= 0.4.7),
     stats,
     tibble (>= 2.0.1),
     tidyr (>= 1.0.0),

@@ -24,6 +24,9 @@ navbar:
     - text: "Reporting APIs"
       icon: fa-table
       menu:
+        - text: "GA4 Data API"
+          href: articles/reporting-ga4.html
+          icon: fa-bar-chart
         - text: "v4 API"
           href: articles/v4.html
           icon: fa-cogs
@@ -83,6 +86,7 @@ reference:
       Getting data from your Google Analytics account
     contents:
       - google_analytics
+      - google_analytics_aw
       - google_analytics_3
       - google_analytics_bq
   - title: "Reporting API v4 objects"
