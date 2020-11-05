@@ -70,7 +70,7 @@ version_aw <- function(){
 google_analytics_aw <- function(propertyId,
                                 metrics,
                                 date_range,
-                                dimensions,
+                                dimensions = NULL,
                                 dimensionFilter = NULL,
                                 dimensionDelimiter = "/",
                                 metricFilter = NULL,
@@ -208,23 +208,33 @@ no_rows <- function(o){
   FALSE
 }
 
+#' @noRd
+#' @importFrom dplyr bind_cols across mutate
 parse_rows <- function(o, dim_names, met_names){
 
-  
-  
   the_data <- lapply(o$rows, function(x){
-    o <- cbind(get_value_cols(x, type = "dimensionValues"),
-               get_value_cols(x, type = "metricValues"))
+    dds <- get_value_cols(x, type = "dimensionValues")
+    mms <- get_value_cols(x, type = "metricValues")
+    dds <- setNames(dds, dim_names)
+    mms <- setNames(mms, met_names)
+
+    if(nrow(dds) == 0){
+      o <- mms
+    } else {
+      o <- bind_cols(dds, mms)
+    }
     
-    setNames(o, c(dim_names, met_names))
+    o
+
   })
-  
+
   res <- Reduce(rbind, the_data)
   
   #type changes
-  if(!is.null(res$date)){
+  if("date" %in% names(res)){
     res$date <- as.Date(res$date, format = "%Y%m%d")
   }
+  res <- res %>% mutate(across(met_names, as.numeric))
   
   quota_messages(o)
   
@@ -232,6 +242,18 @@ parse_rows <- function(o, dim_names, met_names){
   
   res
 }
+
+#' @noRd
+#' @importFrom tibble as_tibble
+get_value_cols <- function(x, 
+                           type = c("dimensionValues", "metricValues")){
+  type <- match.arg(type)
+  as_tibble(
+    do.call(rbind, lapply(x[[type]], function(y) y[["value"]])),
+    .name_repair = "minimal")
+  
+} 
+
 
 #' @import assertthat
 #' @noRd
@@ -269,6 +291,7 @@ gaw_metric <- function(metrics){
 
 gaw_dimension <- function(dimensions, delimiter = "/"){
 
+  if(is.null(dimensions)) return(NULL)
   unnamed_dims <- dimensions[names(dimensions) == ""]
   named_dims   <- dimensions[names(dimensions) != ""]
   
@@ -514,7 +537,7 @@ make_filter_expr_list <- function(dots, type){
 }
 
 make_filter_expr <- function(dots, type){
-  myMessage("Got Filters", level = 2)
+
   assert_that_list(dots, is.Filter)
   
   if(length(dots) == 1 && type %in% c("and","or")){
@@ -554,19 +577,4 @@ construct_filter_expr <- function(a_filter,
 
 
 
-#' @noRd
-#' @importFrom tibble as_tibble
-get_value_cols <- function(x, 
-                      type = c("dimensionValues", "metricValues")){
-  type <- match.arg(type)
-  o <- as_tibble(
-    do.call(rbind, lapply(x[[type]], function(y) y[["value"]])),
-    .name_repair = "minimal")
-  
-  if(type == "metricValues"){
-    o <- lapply(o, as.numeric)
-  }
-  
-  o
-} 
 

@@ -2,9 +2,9 @@
 title: "Google Analytics Reporting API v4 in R Examples"
 ---
 
-The v4 API are where new features will appear in the future.  
+The v4 API supports Universal Analytics.  For working with Google Analytics 4 (App+Web) use the new Data API.
 
-It currently has these extras implemented over the v3 API:
+The v4 API currently has these extras implemented over the v3 API:
 
 * Cohorts
 * Multiple date ranges

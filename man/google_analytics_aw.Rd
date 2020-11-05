@@ -8,7 +8,7 @@ google_analytics_aw(
   propertyId,
   metrics,
   date_range,
-  dimensions,
+  dimensions = NULL,
   dimensionFilter = NULL,
   dimensionDelimiter = "/",
   metricFilter = NULL,
