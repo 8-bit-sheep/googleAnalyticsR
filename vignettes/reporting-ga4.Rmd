@@ -73,3 +73,20 @@ all_results <- google_analytics_aw(
     limit = -1
 )
 ```
+
+## Real Time Data
+
+Real-time data can be fetched with the same function as the regular Data API, but it is calling another endpoint.  Add the `realtime=TRUE` argument to the function.  
+
+A limited subset of [dimensions and metrics are available in the real-time API](https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-api-schema).  Date ranges are ignored.
+
+```r
+# run a real-time report 
+realtime <- google_analytics_aw(
+  206670707,
+  metrics = "activeUsers",
+  dimensions = "city",
+  dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
+  limit = 100,
+  realtime = TRUE)
+```

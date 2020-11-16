@@ -282,6 +282,20 @@
     <span class="kw">limit</span> <span class="kw">=</span> -<span class="fl">1</span>
 )</pre></body></html></div>
 </div>
+<div id="real-time-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#real-time-data" class="anchor"></a>Real Time Data</h2>
+<p>Real-time data can be fetched with the same function as the regular Data API, but it is calling another endpoint. Add the <code>realtime=TRUE</code> argument to the function.</p>
+<p>A limited subset of <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-api-schema">dimensions and metrics are available in the real-time API</a>. Date ranges are ignored.</p>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># run a real-time report </span>
+<span class="no">realtime</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics_aw.html">google_analytics_aw</a></span>(
+  <span class="fl">206670707</span>,
+  <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"activeUsers"</span>,
+  <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"city"</span>,
+  <span class="kw">dimensionFilter</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"city"</span>, <span class="st">"Copenhagen"</span>, <span class="st">"EXACT"</span>),
+  <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>,
+  <span class="kw">realtime</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
