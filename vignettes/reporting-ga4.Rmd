@@ -10,6 +10,7 @@ The Data API and Google Analytics Admin API are used with the Google Analytics 4
 * Ability to create your own custom metrics and dimensions
 * Can send in up to 4 date ranges at once
 * Easier integration with the real-time API
+* More flexible filters
 
 ## Meta data
 
@@ -73,6 +74,75 @@ all_results <- google_analytics_aw(
     limit = -1
 )
 ```
+
+## Filters
+
+Filters are simpler to create but more flexible that in Universal Analytics. 
+
+There are now only two filter functions - `ga_aw_filter()` and `ga_aw_filter_expr()`.  As was the case for `google_analytics()` , you use the filter functions to construct metric filters or dimension filters in the `dimensionFilter` or `metricFilter` parameters. Do not construct metric filters and use in the `dimensionFilter` argument or vice-versa.
+
+### Making filter elements
+
+The base object is `ga_aw_filter()` - this holds the logic for the specific metric or dimension you are using.  The function will check your filter object based on the R class of the object you are passing in as its value:
+
+* `character`: stringFilter - e.g. `"Copenhagen"`
+* `character vector`: inListFilter e.g. `c("Copenhagen","London","New York")`
+* `numeric`: NumericFilter e.g. `5`
+* `numeric 2-length vector`: BetweenFilter e.g. `c(5, 10)`
+* `logical`: TRUE will filter for NULL e.g. `TRUE`
+
+e.g. if you pass in a character of length one (`"Copenhagen"`) then it will assume to be a class `StringFilter` (all dimensions that match "Copenhagen") if you pass in a character of length greater than one `c("Copenhagen","London","New York")`, then it assume to be a class `InListFilter` (dimensions must match one in the list)
+
+Ensure the comparison operation you are using makes sense for the type of value:
+
+* string filters: `"EXACT","BEGINS_WITH","ENDS_WITH","CONTAINS","FULL_REGEXP", "PARTIAL_REGEXP"`
+* numeric filters: `"EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "GREATER_THAN", "GREATER_THAN_OR_EQUAL"`
+
+### Using filter elements
+
+All filters are made up of filter expressions using `ga_aw_filter_expr()`, but if you want just one filter, use `ga_aw_filter()` directly in your GA call.
+
+```r
+simple_filter <- google_analytics_aw(
+   206670707,
+   metrics = c("activeUsers","sessions"),
+   dimensions = c("date","city","dayOfWeek"),
+   date_range = c("2020-03-31", "2020-04-27"),
+   dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
+   limit = 100
+   )
+```
+
+If you need more complicated filters, then build them using `ga_aw_filter_expr()`.  This lets you combine `ga_aw_filter()` objects in various ways.
+
+
+```r
+simple <- ga_aw_filter_expr(ga_aw_filter("city", "Copenhagen", "EXACT"))
+
+multiple <- ga_aw_filter_expr(
+      ga_aw_filter("dayOfWeek", "4", "EXACT"),
+     ga_aw_filter("dayOfWeek", "5", "EXACT"),
+    type = "or")
+   
+# equivalent to above as uses InList filter
+multiple_or2 <- ga_aw_filter_expr(
+      ga_aw_filter("dayOfWeek", c("4","5")))
+
+# make a filter expression then pass it again with type='not' to negate it 
+negative <- ga_aw_filter_expr(multiple_or2, type = "not")
+
+# or directly - 
+clean_city <- ga_aw_filter_expr(
+  ga_aw_filter("city", "(not set)", "EXACT",), type = "not")
+```
+
+You can also recursively nest filter expressions - this lets you build up complex filters:
+
+```r
+# use previously created filter to build another filter expression:
+complex <- ga_aw_filter_expr(multiple_or2, clean_city)
+```
+
 
 ## Real Time Data
 

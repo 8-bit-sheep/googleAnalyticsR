@@ -234,6 +234,7 @@
 <li>Ability to create your own custom metrics and dimensions</li>
 <li>Can send in up to 4 date ranges at once</li>
 <li>Easier integration with the real-time API</li>
+<li>More flexible filters</li>
 </ul>
 </div>
 <div id="meta-data" class="section level2">
@@ -282,12 +283,82 @@
     <span class="kw">limit</span> <span class="kw">=</span> -<span class="fl">1</span>
 )</pre></body></html></div>
 </div>
+<div id="filters" class="section level2">
+<h2 class="hasAnchor">
+<a href="#filters" class="anchor"></a>Filters</h2>
+<p>Filters are simpler to create but more flexible that in Universal Analytics.</p>
+<p>There are now only two filter functions - <code><a href="../reference/ga_aw_filter.html">ga_aw_filter()</a></code> and <code><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr()</a></code>. As was the case for <code><a href="../reference/google_analytics.html">google_analytics()</a></code> , you use the filter functions to construct metric filters or dimension filters in the <code>dimensionFilter</code> or <code>metricFilter</code> parameters. Do not construct metric filters and use in the <code>dimensionFilter</code> argument or vice-versa.</p>
+<div id="making-filter-elements" class="section level3">
+<h3 class="hasAnchor">
+<a href="#making-filter-elements" class="anchor"></a>Making filter elements</h3>
+<p>The base object is <code><a href="../reference/ga_aw_filter.html">ga_aw_filter()</a></code> - this holds the logic for the specific metric or dimension you are using. The function will check your filter object based on the R class of the object you are passing in as its value:</p>
+<ul>
+<li>
+<code>character</code>: stringFilter - e.g. <code>"Copenhagen"</code>
+</li>
+<li>
+<code>character vector</code>: inListFilter e.g. <code><a href="https://rdrr.io/r/base/c.html">c("Copenhagen","London","New York")</a></code>
+</li>
+<li>
+<code>numeric</code>: NumericFilter e.g. <code>5</code>
+</li>
+<li>
+<code>numeric 2-length vector</code>: BetweenFilter e.g. <code><a href="https://rdrr.io/r/base/c.html">c(5, 10)</a></code>
+</li>
+<li>
+<code>logical</code>: TRUE will filter for NULL e.g. <code>TRUE</code>
+</li>
+</ul>
+<p>e.g. if you pass in a character of length one (<code>"Copenhagen"</code>) then it will assume to be a class <code>StringFilter</code> (all dimensions that match “Copenhagen”) if you pass in a character of length greater than one <code><a href="https://rdrr.io/r/base/c.html">c("Copenhagen","London","New York")</a></code>, then it assume to be a class <code>InListFilter</code> (dimensions must match one in the list)</p>
+<p>Ensure the comparison operation you are using makes sense for the type of value:</p>
+<ul>
+<li>string filters: <code>"EXACT","BEGINS_WITH","ENDS_WITH","CONTAINS","FULL_REGEXP", "PARTIAL_REGEXP"</code>
+</li>
+<li>numeric filters: <code>"EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "GREATER_THAN", "GREATER_THAN_OR_EQUAL"</code>
+</li>
+</ul>
+</div>
+<div id="using-filter-elements" class="section level3">
+<h3 class="hasAnchor">
+<a href="#using-filter-elements" class="anchor"></a>Using filter elements</h3>
+<p>All filters are made up of filter expressions using <code><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr()</a></code>, but if you want just one filter, use <code><a href="../reference/ga_aw_filter.html">ga_aw_filter()</a></code> directly in your GA call.</p>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">simple_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics_aw.html">google_analytics_aw</a></span>(
+   <span class="fl">206670707</span>,
+   <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
+   <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
+   <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
+   <span class="kw">dimensionFilter</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"city"</span>, <span class="st">"Copenhagen"</span>, <span class="st">"EXACT"</span>),
+   <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>
+   )</pre></body></html></div>
+<p>If you need more complicated filters, then build them using <code><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr()</a></code>. This lets you combine <code><a href="../reference/ga_aw_filter.html">ga_aw_filter()</a></code> objects in various ways.</p>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">simple</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr</a></span>(<span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"city"</span>, <span class="st">"Copenhagen"</span>, <span class="st">"EXACT"</span>))
+
+<span class="no">multiple</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr</a></span>(
+      <span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"dayOfWeek"</span>, <span class="st">"4"</span>, <span class="st">"EXACT"</span>),
+     <span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"dayOfWeek"</span>, <span class="st">"5"</span>, <span class="st">"EXACT"</span>),
+    <span class="kw">type</span> <span class="kw">=</span> <span class="st">"or"</span>)
+
+<span class="co"># equivalent to above as uses InList filter</span>
+<span class="no">multiple_or2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr</a></span>(
+      <span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"dayOfWeek"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"4"</span>,<span class="st">"5"</span>)))
+
+<span class="co"># make a filter expression then pass it again with type='not' to negate it </span>
+<span class="no">negative</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr</a></span>(<span class="no">multiple_or2</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"not"</span>)
+
+<span class="co"># or directly - </span>
+<span class="no">clean_city</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr</a></span>(
+  <span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"city"</span>, <span class="st">"(not set)"</span>, <span class="st">"EXACT"</span>,), <span class="kw">type</span> <span class="kw">=</span> <span class="st">"not"</span>)</pre></body></html></div>
+<p>You can also recursively nest filter expressions - this lets you build up complex filters:</p>
+<pre><code># use previously created filter to build another filter expression:
+complex &lt;- ga_aw_filter_expr(multiple_or2, clean_city)</code></pre>
+</div>
+</div>
 <div id="real-time-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#real-time-data" class="anchor"></a>Real Time Data</h2>
 <p>Real-time data can be fetched with the same function as the regular Data API, but it is calling another endpoint. Add the <code>realtime=TRUE</code> argument to the function.</p>
 <p>A limited subset of <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-api-schema">dimensions and metrics are available in the real-time API</a>. Date ranges are ignored.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># run a real-time report </span>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># run a real-time report </span>
 <span class="no">realtime</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics_aw.html">google_analytics_aw</a></span>(
   <span class="fl">206670707</span>,
   <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"activeUsers"</span>,
