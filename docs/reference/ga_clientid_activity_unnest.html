@@ -120,6 +120,13 @@ Thanks to @jimmyg3g on GitHub for help with the ecommerce parsing." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/reporting-ga4.html">
+        <span class="fa fa-bar-chart"></span>
+         
+        GA4 Data API
+      </a>
+    </li>
+    <li>
       <a href="../articles/v4.html">
         <span class="fa fa-cogs"></span>
          
@@ -288,13 +295,13 @@ Thanks to @jimmyg3g on GitHub for help with the ecommerce parsing." />
     <p>An unnested data.frame tibble for all hits that matches the column</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>A function to help expand data out of nested columns returned by ga_clientid_activity</p>
+    <p>A function to help expand data out of nested columns returned by <a href='ga_clientid_activity.html'>ga_clientid_activity</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other clientid functions: 
-<code>ga_clientid_activity()</code>,
-<code>ga_clientid_deletion()</code>,
-<code>ga_clientid_hash()</code></p></div>
+<code><a href='ga_clientid_activity.html'>ga_clientid_activity</a>()</code>,
+<code><a href='ga_clientid_deletion.html'>ga_clientid_deletion</a>()</code>,
+<code><a href='ga_clientid_hash.html'>ga_clientid_hash</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -302,17 +309,17 @@ Thanks to @jimmyg3g on GitHub for help with the ecommerce parsing." />
 <span class='co'># access clientIds for users who have transacted</span>
 <span class='no'>viewId</span> <span class='kw'>&lt;-</span> <span class='fl'>106249469</span>
 <span class='no'>date_range</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2019-01-01"</span>,<span class='st'>"2019-02-01"</span>)
-<span class='no'>cids</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics</span>(<span class='no'>viewId</span>,
+<span class='no'>cids</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>viewId</span>,
                          <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='no'>date_range</span>,
                          <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='st'>"sessions"</span>,
                          <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='st'>"clientId"</span>,
-                         <span class='kw'>met_filters</span> <span class='kw'>=</span> <span class='fu'>filter_clause_ga4</span>(
-                           <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'>met_filter</span>(<span class='st'>"transactions"</span>,
+                         <span class='kw'>met_filters</span> <span class='kw'>=</span> <span class='fu'><a href='filter_clause_ga4.html'>filter_clause_ga4</a></span>(
+                           <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='met_filter.html'>met_filter</a></span>(<span class='st'>"transactions"</span>,
                                            <span class='st'>"GREATER_THAN"</span>,
                                            <span class='fl'>0</span>)
                                 )))
 
-<span class='no'>transactors</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_clientid_activity</span>(<span class='no'>cids</span>$<span class='no'>clientId</span>,
+<span class='no'>transactors</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_clientid_activity.html'>ga_clientid_activity</a></span>(<span class='no'>cids</span>$<span class='no'>clientId</span>,
                                     <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='no'>viewId</span>,
                                     <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='no'>date_range</span>)
 

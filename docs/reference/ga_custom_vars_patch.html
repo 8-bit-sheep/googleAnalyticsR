@@ -119,6 +119,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/reporting-ga4.html">
+        <span class="fa fa-bar-chart"></span>
+         
+        GA4 Data API
+      </a>
+    </li>
+    <li>
       <a href="../articles/v4.html">
         <span class="fa fa-cogs"></span>
          
@@ -310,18 +317,18 @@
 
     <div class='dont-index'><p><a href='https://support.google.com/analytics/answer/2709828'>Custom dimensions support article</a></p>
 <p>Other custom variable functions: 
-<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_custom_vars_create.html'>ga_custom_vars_create</a>()</code>,
-<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_custom_vars_list.html'>ga_custom_vars_list</a>()</code>,
-<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_custom_vars.html'>ga_custom_vars</a>()</code></p></div>
+<code><a href='ga_custom_vars_create.html'>ga_custom_vars_create</a>()</code>,
+<code><a href='ga_custom_vars_list.html'>ga_custom_vars_list</a>()</code>,
+<code><a href='ga_custom_vars.html'>ga_custom_vars</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>googleAnalyticsR</span>)
-<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html'>ga_auth</a></span>()
+<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
 
 <span class='co'># create custom var</span>
-<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_custom_vars_create.html'>ga_custom_vars_create</a></span>(<span class='st'>"my_custom_dim"</span>,
+<span class='fu'><a href='ga_custom_vars_create.html'>ga_custom_vars_create</a></span>(<span class='st'>"my_custom_dim"</span>,
                       <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>7</span>,
                       <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='fl'>54019251</span>,
                       <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-54019251-4"</span>,
@@ -329,17 +336,17 @@
                       <span class='kw'>active</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># view custom dimension in list</span>
-<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_custom_vars_list.html'>ga_custom_vars_list</a></span>(<span class='fl'>54019251</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-54019251-4"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"customDimensions"</span>)
+<span class='fu'><a href='ga_custom_vars_list.html'>ga_custom_vars_list</a></span>(<span class='fl'>54019251</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-54019251-4"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"customDimensions"</span>)
 
 <span class='co'># change a custom dimension</span>
-<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_custom_vars_patch.html'>ga_custom_vars_patch</a></span>(<span class='st'>"ga:dimension7"</span>,
+<span class='fu'>ga_custom_vars_patch</span>(<span class='st'>"ga:dimension7"</span>,
                      <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='fl'>54019251</span>,
                      <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-54019251-4"</span>,
                      <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"my_custom_dim2"</span>,
                      <span class='kw'>active</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># view custom dimensions again to see change</span>
-<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_custom_vars_list.html'>ga_custom_vars_list</a></span>(<span class='fl'>54019251</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-54019251-4"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"customDimensions"</span>)
+<span class='fu'><a href='ga_custom_vars_list.html'>ga_custom_vars_list</a></span>(<span class='fl'>54019251</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-54019251-4"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"customDimensions"</span>)
 
 }</div></pre>
   </div>

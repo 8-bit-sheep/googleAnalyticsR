@@ -119,6 +119,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/reporting-ga4.html">
+        <span class="fa fa-bar-chart"></span>
+         
+        GA4 Data API
+      </a>
+    </li>
+    <li>
       <a href="../articles/v4.html">
         <span class="fa fa-cogs"></span>
          
@@ -260,7 +267,7 @@
     </div>
 
     <div class="ref-description">
-    <p>If you supply more than one <code>email</code>, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a <code>TRUE</code> result on successful batch, but individual entries may have failed.  Check via ga_users_list afterwards and try to add individual linkIds to get more descriptive error messages.</p>
+    <p>If you supply more than one <code>email</code>, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a <code>TRUE</code> result on successful batch, but individual entries may have failed.  Check via <a href='ga_users_list.html'>ga_users_list</a> afterwards and try to add individual linkIds to get more descriptive error messages.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ga_users_add</span>(
@@ -303,18 +310,18 @@
 
     <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management'>Google help article on user permissions</a></p>
 <p>Other User management functions: 
-<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_users_delete_linkid.html'>ga_users_delete_linkid</a>()</code>,
-<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_users_delete.html'>ga_users_delete</a>()</code>,
-<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_users_list.html'>ga_users_list</a>()</code>,
-<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_users_update.html'>ga_users_update</a>()</code></p></div>
+<code><a href='ga_users_delete_linkid.html'>ga_users_delete_linkid</a>()</code>,
+<code><a href='ga_users_delete.html'>ga_users_delete</a>()</code>,
+<code><a href='ga_users_list.html'>ga_users_list</a>()</code>,
+<code><a href='ga_users_update.html'>ga_users_update</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>googleAnalyticsR</span>)
-<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html'>ga_auth</a></span>()
+<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
 
-<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_users_add.html'>ga_users_add</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"the_email@company.com"</span>, <span class='st'>"another_email@company.com"</span>),
+<span class='fu'>ga_users_add</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"the_email@company.com"</span>, <span class='st'>"another_email@company.com"</span>),
              <span class='kw'>permissions</span> <span class='kw'>=</span> <span class='st'>"EDIT"</span>, <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='fl'>47480439</span>)
 
 }</div></pre>

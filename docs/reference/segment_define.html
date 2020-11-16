@@ -126,6 +126,13 @@ segment_element that are combined in OR lists for segment_vectors_*
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/reporting-ga4.html">
+        <span class="fa fa-bar-chart"></span>
+         
+        GA4 Data API
+      </a>
+    </li>
+    <li>
       <a href="../articles/v4.html">
         <span class="fa fa-cogs"></span>
          
@@ -271,8 +278,8 @@ segment_element that are combined in OR lists for segment_vectors_*
   which are combined together with a logical AND operation.</p>  
 <p><code>segment_define</code> is in the hierarchy of segment creation, for which you will also need:</p><ul>
 <li><p>segment_define : AND combination of segmentFilters</p></li>
-<li><p>segment_vector_simple or segment_vector_sequence</p></li>
-<li><p>segment_element that are combined in OR lists for <code>segment_vectors_*</code></p></li>
+<li><p><a href='segment_vector_simple.html'>segment_vector_simple</a> or <a href='segment_vector_sequence.html'>segment_vector_sequence</a></p></li>
+<li><p><a href='segment_element.html'>segment_element</a> that are combined in OR lists for <code>segment_vectors_*</code></p></li>
 </ul>
 
     </div>
@@ -284,7 +291,7 @@ segment_element that are combined in OR lists for segment_vectors_*
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>segment_filters</th>
-      <td><p>A list of segment_vector_simple and segment_vector_sequence</p></td>
+      <td><p>A list of <a href='segment_vector_simple.html'>segment_vector_simple</a> and <a href='segment_vector_sequence.html'>segment_vector_sequence</a></p></td>
     </tr>
     <tr>
       <th>not_vector</th>
@@ -295,14 +302,14 @@ If NULL, assumed FALSE</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>segmentDefinition object for segment_ga4</p>
+    <p>segmentDefinition object for <a href='segment_ga4.html'>segment_ga4</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other v4 segment functions: 
-<code>segment_element()</code>,
-<code>segment_ga4</code>,
-<code>segment_vector_sequence()</code>,
-<code>segment_vector_simple()</code></p></div>
+<code><a href='segment_element.html'>segment_element</a>()</code>,
+<code><a href='segment_ga4.html'>segment_ga4</a></code>,
+<code><a href='segment_vector_sequence.html'>segment_vector_sequence</a>()</code>,
+<code><a href='segment_vector_simple.html'>segment_vector_simple</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

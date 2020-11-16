@@ -73,6 +73,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/reporting-ga4.html">
+        <span class="fa fa-bar-chart"></span>
+         
+        GA4 Data API
+      </a>
+    </li>
+    <li>
       <a href="../articles/v4.html">
         <span class="fa fa-cogs"></span>
          
@@ -205,7 +212,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="models_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Statistical models and visualisations with Google Analytics data</h1>
@@ -221,13 +228,13 @@
 <p>Downloading Google Analytics data is all well and good, but the reason most users want to use the API is to then operate and act upon that data.</p>
 <p>There are several tutorials linked from the homepage that demonstrate various applications of using <code>googleAnalyticsR</code> to analyse data, but they can still be intimidating for new users of R.</p>
 <p>To make it easier to distribute these analysis, <code>googleAnalyticsR</code> now includes the <code>ga_model_*</code> functions to help end users get to insights more quickly.</p>
-<p><code>ga_model</code> objects can be saved to the new <code>.gamr</code> format. Loading these files using <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model.html">ga_model()</a></code> and specifying your own Google Analytics viewId, all the data processing, modelling and visualisation steps can be encapsulated to give you the output.</p>
+<p><code>ga_model</code> objects can be saved to the new <code>.gamr</code> format. Loading these files using <code><a href="../reference/ga_model.html">ga_model()</a></code> and specifying your own Google Analytics viewId, all the data processing, modelling and visualisation steps can be encapsulated to give you the output.</p>
 <p><code>.gamr</code> files also includes the ability to create Shiny modules which you can use to quickly create online Shiny dashboards displaying the model results, and which can switch to users own Google Analytics data using the multi-user login capabilities.</p>
 <p>The <code>.gamr</code> file format can be shared with others online or within your organisation. A new R package that includes some more advanced examples is available from <a href="https://github.com/IronistM/googleAnalyticsModelR/"><code>IronistM/googleAnalyticsModelR/</code></a></p>
-<p>As we have a standardised model structure, it makes it easier to use the output in other functions. For example, you can make a webpage suitable for embedding in Twitter tweets and upload via googleCloudStorageR using <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_tweet.html">ga_model_tweet()</a></code>:</p>
+<p>As we have a standardised model structure, it makes it easier to use the output in other functions. For example, you can make a webpage suitable for embedding in Twitter tweets and upload via googleCloudStorageR using <code><a href="../reference/ga_model_tweet.html">ga_model_tweet()</a></code>:</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleCloudStorageR</span>)
 
-<span class="fu">ga_model_tweet</span>(<span class="no">forecast_data</span>,
+<span class="fu"><a href="../reference/ga_model_tweet.html">ga_model_tweet</a></span>(<span class="no">forecast_data</span>,
                <span class="st">"@HoloMarkeD"</span>,
                <span class="kw">title</span> <span class="kw">=</span> <span class="st">"ga_model example - prophet forecasting"</span>,
                <span class="kw">bucket</span> <span class="kw">=</span> <span class="st">"mark-edmondson-public-read"</span>)</pre></body></html></div>
@@ -241,7 +248,7 @@ Still playing with embedding interactive plots in tweets. These are all made by 
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><div id="a-simple-example-loading-a-model-directly" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-simple-example-loading-a-model-directly" class="anchor"></a>A simple example loading a model directly</h2>
-<p>The above loads models within a wrapper function, but you can also load model objects yourself via <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_load.html">ga_model_load()</a></code>. Included within the package are some simple models to demonstrate its use which use <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_load.html">ga_model_load()</a></code> to load from the package examples, via <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_example.html">ga_model_example()</a></code></p>
+<p>The above loads models within a wrapper function, but you can also load model objects yourself via <code><a href="../reference/ga_model_load.html">ga_model_load()</a></code>. Included within the package are some simple models to demonstrate its use which use <code><a href="../reference/ga_model_load.html">ga_model_load()</a></code> to load from the package examples, via <code><a href="../reference/ga_model_example.html">ga_model_example()</a></code></p>
 <p>The example below performs decomposition on the sessions to your website. Behind the scenes the model downloads your data with the right columns, applies the decomposition model then plots it, returning the data plotted for you to work with later:</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)  <span class="co"># load library</span>
 
@@ -249,18 +256,18 @@ Still playing with embedding interactive plots in tweets. These are all made by 
 <span class="no">my_viewid</span> <span class="kw">&lt;-</span> <span class="fl">81416156</span>
 
 <span class="co"># load the model (equivalent to ga_model_load())</span>
-<span class="no">decomp_ga</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_example.html">ga_model_example</a></span>(<span class="st">"decomp_ga.gamr"</span>)
+<span class="no">decomp_ga</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_model_example.html">ga_model_example</a></span>(<span class="st">"decomp_ga.gamr"</span>)
 
 <span class="co"># apply model to your data</span>
-<span class="no">d1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model.html">ga_model</a></span>(<span class="no">my_viewid</span>, <span class="kw">model</span> <span class="kw">=</span> <span class="no">decomp_ga</span>)</pre></body></html></div>
+<span class="no">d1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span>(<span class="no">my_viewid</span>, <span class="kw">model</span> <span class="kw">=</span> <span class="no">decomp_ga</span>)</pre></body></html></div>
 <div class="figure">
-<img src="figure/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1"><p class="caption">plot of chunk unnamed-chunk-1</p>
+<img src="figure/unnamed-chunk-1-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-1</p>
 </div>
 <p>This model allows you to alter the date range of the data fetched:</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># change default date range to 20 days ago to yesterday</span>
-<span class="no">d2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model.html">ga_model</a></span>(<span class="no">my_viewid</span>, <span class="kw">model</span> <span class="kw">=</span> <span class="no">decomp_ga</span>, <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"20daysAgo"</span>,<span class="st">"yesterday"</span>))</pre></body></html></div>
+<span class="no">d2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span>(<span class="no">my_viewid</span>, <span class="kw">model</span> <span class="kw">=</span> <span class="no">decomp_ga</span>, <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"20daysAgo"</span>,<span class="st">"yesterday"</span>))</pre></body></html></div>
 <div class="figure">
-<img src="figure/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"><p class="caption">plot of chunk unnamed-chunk-2</p>
+<img src="figure/unnamed-chunk-2-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-2</p>
 </div>
 <p>You can examine the properties of the model and the arguments it was sent via its print method:</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">decomp_ga</span></pre></body></html></div>
@@ -286,15 +293,15 @@ Still playing with embedding interactive plots in tweets. These are all made by 
 ## Model args:   df 
 ## Output args:  x y 
 ## Packages:</code></pre>
-<p>And if you want to review the code of the model, use <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_write.html">ga_model_write()</a></code> to write the functions out to a file.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_write.html">ga_model_write</a></span>(<span class="no">decomp_ga</span>, <span class="st">"my_model.R"</span>)</pre></body></html></div>
+<p>And if you want to review the code of the model, use <code><a href="../reference/ga_model_write.html">ga_model_write()</a></code> to write the functions out to a file.</p>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_model_write.html">ga_model_write</a></span>(<span class="no">decomp_ga</span>, <span class="st">"my_model.R"</span>)</pre></body></html></div>
 </div>
 <div id="shiny-modules" class="section level2">
 <h2 class="hasAnchor">
 <a href="#shiny-modules" class="anchor"></a>Shiny modules</h2>
 <p>The model can also be used to create a Shiny app, as it creates a <a href="https://shiny.rstudio.com/articles/modules.html">Shiny module</a> of the model. It is suggested this is the easiest route to turn your local GA analysis into Shiny apps.</p>
 <p>An example is shown below, which allows whoever logs in to apply the model to their own Google Analytics data. You can run the app yourself via:</p>
-<p><code><a href="https://rdrr.io/pkg/shiny/man/runApp.html">shiny::runApp(system.file("shiny/hello-world-models", package="googleAnalyticsR"))</a></code></p>
+<p><code><a href="https://shiny.rstudio.com/reference/shiny/latest/runApp.html">shiny::runApp(system.file("shiny/hello-world-models", package="googleAnalyticsR"))</a></code></p>
 <p><img src="model-shiny-module.png"></p>
 <p>The model code is encapsulated in the Shiny module so the actual Shiny app is relatively simple:</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">shiny</span>)
@@ -305,15 +312,15 @@ Still playing with embedding interactive plots in tweets. These are all made by 
                <span class="kw">scopes</span> <span class="kw">=</span> <span class="st">"https://www.googleapis.com/auth/analytics.readonly"</span>)
 
 <span class="co"># loads a pre-existing model</span>
-<span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_example.html">ga_model_example</a></span>(<span class="st">"decomp_ga.gamr"</span>, <span class="kw">location</span> <span class="kw">=</span> <span class="st">"googleAnalyticsR"</span>)
+<span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_model_example.html">ga_model_example</a></span>(<span class="st">"decomp_ga.gamr"</span>, <span class="kw">location</span> <span class="kw">=</span> <span class="st">"googleAnalyticsR"</span>)
 
 <span class="co">## ui.R</span>
-<span class="no">ui</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"googleAnalyticsR Test Deployment"</span>,
+<span class="no">ui</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html">fluidPage</a></span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"googleAnalyticsR Test Deployment"</span>,
 
-                <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/authDropdownUI.html">authDropdownUI</a></span>(<span class="st">"auth_menu"</span>),
-                <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/builder.html">h2</a></span>(<span class="st">"Model Description"</span>),
-                <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html">textOutput</a></span>(<span class="st">"model_description"</span>),
-                <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/builder.html">h2</a></span>(<span class="st">"Model Output"</span>),
+                <span class="fu"><a href="../reference/authDropdownUI.html">authDropdownUI</a></span>(<span class="st">"auth_menu"</span>),
+                <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reexports.html">h2</a></span>(<span class="st">"Model Description"</span>),
+                <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/textOutput.html">textOutput</a></span>(<span class="st">"model_description"</span>),
+                <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reexports.html">h2</a></span>(<span class="st">"Model Output"</span>),
                 <span class="no">model</span>$<span class="no">shiny_module</span>$<span class="fu">ui</span>(<span class="st">"model1"</span>)
 
 )
@@ -323,28 +330,28 @@ Still playing with embedding interactive plots in tweets. These are all made by 
 
   <span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_auth.html">gar_shiny_auth</a></span>(<span class="no">session</span>)
 
-  <span class="no">al</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span>(<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_account_list.html">ga_account_list</a></span>())
+  <span class="no">al</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span>(<span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span>())
 
   <span class="co"># module for authentication</span>
-  <span class="no">view_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/callModule.html">callModule</a></span>(<span class="no">authDropdown</span>, <span class="st">"auth_menu"</span>, <span class="kw">ga.table</span> <span class="kw">=</span> <span class="no">al</span>)
-  <span class="no">output</span>$<span class="no">model_description</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderText.html">renderText</a></span>(<span class="no">model</span>$<span class="no">description</span>)
+  <span class="no">view_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/callModule.html">callModule</a></span>(<span class="no">authDropdown</span>, <span class="st">"auth_menu"</span>, <span class="kw">ga.table</span> <span class="kw">=</span> <span class="no">al</span>)
+  <span class="no">output</span>$<span class="no">model_description</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderText.html">renderText</a></span>(<span class="no">model</span>$<span class="no">description</span>)
 
   <span class="co"># module to display model results</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/callModule.html">callModule</a></span>(<span class="no">model</span>$<span class="no">shiny_module</span>$<span class="no">server</span>, <span class="st">"model1"</span>, <span class="kw">view_id</span> <span class="kw">=</span> <span class="no">view_id</span>)
+  <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/callModule.html">callModule</a></span>(<span class="no">model</span>$<span class="no">shiny_module</span>$<span class="no">server</span>, <span class="st">"model1"</span>, <span class="kw">view_id</span> <span class="kw">=</span> <span class="no">view_id</span>)
 
 }
 
-<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span>(<span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_ui.html">gar_shiny_ui</a></span>(<span class="no">ui</span>, <span class="kw">login_ui</span> <span class="kw">=</span> <span class="no">silent_auth</span>), <span class="no">server</span>)</pre></body></html></div>
-<p>If you want to pass reactive input objects to your model’s module, do so by wrapping them in <code><a href="https://rdrr.io/pkg/shiny/man/reactive.html">shiny::reactive()</a></code> e.g.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r">  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/callModule.html">callModule</a></span>(<span class="no">model</span>$<span class="no">shiny_module</span>$<span class="no">server</span>,
+<span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html">shinyApp</a></span>(<span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_ui.html">gar_shiny_ui</a></span>(<span class="no">ui</span>, <span class="kw">login_ui</span> <span class="kw">=</span> <span class="no">silent_auth</span>), <span class="no">server</span>)</pre></body></html></div>
+<p>If you want to pass reactive input objects to your model’s module, do so by wrapping them in <code><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">shiny::reactive()</a></code> e.g.</p>
+<div class="sourceCode" id="cb10"><html><body><pre class="r">  <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/callModule.html">callModule</a></span>(<span class="no">model</span>$<span class="no">shiny_module</span>$<span class="no">server</span>,
              <span class="st">"model1"</span>,
              <span class="kw">view_id</span> <span class="kw">=</span> <span class="no">view_id</span>,
-             <span class="kw">reactive_var</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span>(<span class="no">input</span>$<span class="no">my_option</span>))</pre></body></html></div>
+             <span class="kw">reactive_var</span> <span class="kw">=</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span>(<span class="no">input</span>$<span class="no">my_option</span>))</pre></body></html></div>
 </div>
 <div id="creating-model--gamr-objects" class="section level2">
 <h2 class="hasAnchor">
 <a href="#creating-model--gamr-objects" class="anchor"></a>Creating model <code>.gamr</code> objects</h2>
-<p>To create your own models, you need to predefine all the functions to look after the fetching, modelling and viewing of the data. You then pass those functions to the <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_make.html">ga_model_make()</a></code> function.</p>
+<p>To create your own models, you need to predefine all the functions to look after the fetching, modelling and viewing of the data. You then pass those functions to the <code><a href="../reference/ga_model_make.html">ga_model_make()</a></code> function.</p>
 <p>The functions need to follow these specifications:</p>
 <ul>
 <li>
@@ -378,7 +385,7 @@ Still playing with embedding interactive plots in tweets. These are all made by 
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">get_model_data</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">viewId</span>,
                            <span class="no">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>()- <span class="fl">300</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>()),
                            <span class="no">...</span>){
-   <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html">google_analytics</a></span>(<span class="no">viewId</span>,
+   <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">viewId</span>,
                     <span class="kw">date_range</span> <span class="kw">=</span> <span class="no">date_range</span>,
                     <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
                     <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"date"</span>,
@@ -389,13 +396,13 @@ Still playing with embedding interactive plots in tweets. These are all made by 
    <span class="fu"><a href="https://rdrr.io/r/stats/decompose.html">decompose</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span>(<span class="no">df</span>$<span class="no">sessions</span>, <span class="kw">frequency</span> <span class="kw">=</span> <span class="fl">7</span>))
  }
 
-<span class="no">decomp_ga</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_make.html">ga_model_make</a></span>(<span class="no">get_model_data</span>,
+<span class="no">decomp_ga</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_model_make.html">ga_model_make</a></span>(<span class="no">get_model_data</span>,
                            <span class="kw">required_columns</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>, <span class="st">"sessions"</span>),
                            <span class="kw">model_f</span> <span class="kw">=</span> <span class="no">decompose_sessions</span>,
                            <span class="kw">output_f</span> <span class="kw">=</span> <span class="kw pkg">graphics</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>,
                            <span class="kw">description</span> <span class="kw">=</span> <span class="st">"Performs decomposition and creates a plot"</span>,
-                           <span class="kw">outputShiny</span> <span class="kw">=</span> <span class="kw pkg">shiny</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span>,
-                           <span class="kw">renderShiny</span> <span class="kw">=</span> <span class="kw pkg">shiny</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span>)</pre></body></html></div>
+                           <span class="kw">outputShiny</span> <span class="kw">=</span> <span class="kw pkg">shiny</span><span class="kw ns">::</span><span class="no"><a href="https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html">plotOutput</a></span>,
+                           <span class="kw">renderShiny</span> <span class="kw">=</span> <span class="kw pkg">shiny</span><span class="kw ns">::</span><span class="no"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html">renderPlot</a></span>)</pre></body></html></div>
 </div>
 <div id="advanced-use" class="section level2">
 <h2 class="hasAnchor">
@@ -406,7 +413,7 @@ Still playing with embedding interactive plots in tweets. These are all made by 
                            <span class="no">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>()- <span class="fl">300</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>()),
                            <span class="no">metric</span>,
                            <span class="no">...</span>){
-   <span class="no">o</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html">google_analytics</a></span>(<span class="no">viewId</span>,
+   <span class="no">o</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">viewId</span>,
                     <span class="kw">date_range</span> <span class="kw">=</span> <span class="no">date_range</span>,
                     <span class="kw">metrics</span> <span class="kw">=</span> <span class="no">metric</span>,
                     <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"date"</span>,
@@ -422,17 +429,17 @@ Still playing with embedding interactive plots in tweets. These are all made by 
    <span class="fu"><a href="https://rdrr.io/r/stats/decompose.html">decompose</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span>(<span class="no">df</span>$<span class="no">the_metric</span>, <span class="kw">frequency</span> <span class="kw">=</span> <span class="no">frequency</span>))
  }
 
-<span class="no">decomp_ga_advanced</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_make.html">ga_model_make</a></span>(<span class="no">get_model_data</span>,
+<span class="no">decomp_ga_advanced</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_model_make.html">ga_model_make</a></span>(<span class="no">get_model_data</span>,
                            <span class="kw">required_columns</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>), <span class="co"># less restriction on column</span>
                            <span class="kw">model_f</span> <span class="kw">=</span> <span class="no">decompose_sessions</span>,
                            <span class="kw">output_f</span> <span class="kw">=</span> <span class="kw pkg">graphics</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>,
                            <span class="kw">description</span> <span class="kw">=</span> <span class="st">"Performs decomposition and creates a plot"</span>,
-                           <span class="kw">outputShiny</span> <span class="kw">=</span> <span class="kw pkg">shiny</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span>,
-                           <span class="kw">renderShiny</span> <span class="kw">=</span> <span class="kw pkg">shiny</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span>)</pre></body></html></div>
+                           <span class="kw">outputShiny</span> <span class="kw">=</span> <span class="kw pkg">shiny</span><span class="kw ns">::</span><span class="no"><a href="https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html">plotOutput</a></span>,
+                           <span class="kw">renderShiny</span> <span class="kw">=</span> <span class="kw pkg">shiny</span><span class="kw ns">::</span><span class="no"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html">renderPlot</a></span>)</pre></body></html></div>
 <p>It would then be used via:</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">result</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model.html">ga_model</a></span>(<span class="fl">81416156</span>, <span class="no">decomp_ga_advanced</span>, <span class="kw">metric</span><span class="kw">=</span><span class="st">"users"</span>, <span class="kw">frequency</span> <span class="kw">=</span> <span class="fl">30</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">result</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span>(<span class="fl">81416156</span>, <span class="no">decomp_ga_advanced</span>, <span class="kw">metric</span><span class="kw">=</span><span class="st">"users"</span>, <span class="kw">frequency</span> <span class="kw">=</span> <span class="fl">30</span>)</pre></body></html></div>
 <div class="figure">
-<img src="figure/unnamed-chunk-6-1.png" alt="plot of chunk unnamed-chunk-6"><p class="caption">plot of chunk unnamed-chunk-6</p>
+<img src="figure/unnamed-chunk-6-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-6</p>
 </div>
 <div id="working-with-the-model-object" class="section level3">
 <h3 class="hasAnchor">
@@ -448,14 +455,14 @@ Still playing with embedding interactive plots in tweets. These are all made by 
 ## Packages:</code></pre>
 <p>You can save and load model objects from a file. It is suggested to save them with the <code>.gamr</code> suffix.</p>
 <div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="co"># save model to a file</span>
-<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_save.html">ga_model_save</a></span>(<span class="no">decomp_ga_advanced</span>, <span class="kw">filename</span> <span class="kw">=</span> <span class="st">"my_model.gamr"</span>)
+<span class="fu"><a href="../reference/ga_model_save.html">ga_model_save</a></span>(<span class="no">decomp_ga_advanced</span>, <span class="kw">filename</span> <span class="kw">=</span> <span class="st">"my_model.gamr"</span>)
 
 <span class="co"># load model again</span>
-<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_load.html">ga_model_load</a></span>(<span class="st">"my_model.gamr"</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/ga_model_load.html">ga_model_load</a></span>(<span class="st">"my_model.gamr"</span>)</pre></body></html></div>
 <p>You can use models directly from the file:</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model.html">ga_model</a></span>(<span class="fl">81416156</span>, <span class="st">"my_model.gamr"</span>)</pre></body></html></div>
-<p>If you need to change parts of a model, <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_edit.html">ga_model_edit()</a></code> lets you change individual aspects:</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_edit.html">ga_model_edit</a></span>(<span class="no">decomp_ga_advanced</span>, <span class="kw">description</span> <span class="kw">=</span> <span class="st">"New description"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_model.html">ga_model</a></span>(<span class="fl">81416156</span>, <span class="st">"my_model.gamr"</span>)</pre></body></html></div>
+<p>If you need to change parts of a model, <code><a href="../reference/ga_model_edit.html">ga_model_edit()</a></code> lets you change individual aspects:</p>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_model_edit.html">ga_model_edit</a></span>(<span class="no">decomp_ga_advanced</span>, <span class="kw">description</span> <span class="kw">=</span> <span class="st">"New description"</span>)</pre></body></html></div>
 <pre><code>## ==ga_model object==
 ## Description:  New description 
 ## Data args:    viewId date_range metric 
@@ -463,8 +470,8 @@ Still playing with embedding interactive plots in tweets. These are all made by 
 ## Model args:   df frequency 
 ## Packages:</code></pre>
 <p>You can also pass it the filename, which will load, make the edit, then save the model to disk again:</p>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_edit.html">ga_model_edit</a></span>(<span class="st">"my_model.gamr"</span>, <span class="kw">description</span> <span class="kw">=</span> <span class="st">"New description"</span>)</pre></body></html></div>
-<p>If you want to examine or change the functions in a model, you can use <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_write.html">ga_model_write()</a></code> to write them to a file, or examine them directly from the model object. The structure of the model object can be examined using <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>:</p>
+<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_model_edit.html">ga_model_edit</a></span>(<span class="st">"my_model.gamr"</span>, <span class="kw">description</span> <span class="kw">=</span> <span class="st">"New description"</span>)</pre></body></html></div>
+<p>If you want to examine or change the functions in a model, you can use <code><a href="../reference/ga_model_write.html">ga_model_write()</a></code> to write them to a file, or examine them directly from the model object. The structure of the model object can be examined using <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>:</p>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">decomp_ga_advanced</span>, <span class="kw">give.attr</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
 <pre><code>## List of 7
 ##  $ data_f           :function (viewId, date_range = c(Sys.Date() - 300, Sys.Date()), metric, ...)  
@@ -501,7 +508,7 @@ Still playing with embedding interactive plots in tweets. These are all made by 
 <h2 class="hasAnchor">
 <a href="#ga-effect-with-ga_models" class="anchor"></a>GA Effect with ga_models</h2>
 <p>To make your own portable <a href="https://gallery.shinyapps.io/ga-effect/">GA Effect</a>, this model uses the CausalImpact and dygraphs libraries to make a plot of your GA data.</p>
-<p>This example model is available via <code><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_example.html">ga_model_example("ga-effect.gamr")</a></code></p>
+<p>This example model is available via <code><a href="../reference/ga_model_example.html">ga_model_example("ga-effect.gamr")</a></code></p>
 <div id="get-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#get-data" class="anchor"></a>Get data</h3>
@@ -510,7 +517,7 @@ Still playing with embedding interactive plots in tweets. These are all made by 
                         <span class="no">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>()-<span class="fl">600</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>()),
                         <span class="no">...</span>){
 
-  <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html">google_analytics</a></span>(<span class="no">viewId</span>,
+  <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">viewId</span>,
                    <span class="kw">date_range</span> <span class="kw">=</span> <span class="no">date_range</span>,
                    <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
                    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>, <span class="st">"channelGrouping"</span>),
@@ -539,7 +546,7 @@ Still playing with embedding interactive plots in tweets. These are all made by 
   <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span>(<span class="no">response</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">pivoted</span>))
 
   <span class="co">## create a time-series zoo object</span>
-  <span class="no">web_data_xts</span> <span class="kw">&lt;-</span> <span class="kw pkg">xts</span><span class="kw ns">::</span><span class="fu">xts</span>(<span class="no">pivoted</span>[-<span class="fl">1</span>], <span class="kw">order.by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="no">pivoted</span>$<span class="no">date</span>), <span class="kw">frequency</span> <span class="kw">=</span> <span class="fl">7</span>)
+  <span class="no">web_data_xts</span> <span class="kw">&lt;-</span> <span class="kw pkg">xts</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html">xts</a></span>(<span class="no">pivoted</span>[-<span class="fl">1</span>], <span class="kw">order.by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="no">pivoted</span>$<span class="no">date</span>), <span class="kw">frequency</span> <span class="kw">=</span> <span class="fl">7</span>)
 
   <span class="no">pre.period</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="no">df</span>$<span class="no">date</span>), <span class="no">event_date</span>))
   <span class="no">post.period</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">event_date</span> + <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">df</span>$<span class="no">date</span>)))
@@ -554,7 +561,7 @@ Still playing with embedding interactive plots in tweets. These are all made by 
   <span class="co"># remove any NAs</span>
   <span class="no">model_data</span>[<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">model_data</span>)] <span class="kw">&lt;-</span> <span class="fl">0</span>
 
-  <span class="kw pkg">CausalImpact</span><span class="kw ns">::</span><span class="fu">CausalImpact</span>(<span class="no">model_data</span>,  <span class="no">pre.period</span>, <span class="no">post.period</span>)
+  <span class="kw pkg">CausalImpact</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/CausalImpact/man/CausalImpact.html">CausalImpact</a></span>(<span class="no">model_data</span>,  <span class="no">pre.period</span>, <span class="no">post.period</span>)
 
 }</pre></body></html></div>
 <p>Finally the CausalImpact model is sent into Dygraphs for interactive visualisation. The event date is the same as the one sent to the modelling step, and used to indicate it on the plot:</p>
@@ -563,7 +570,7 @@ Still playing with embedding interactive plots in tweets. These are all made by 
   <span class="co">## the data for the plot is in here</span>
   <span class="no">ci</span> <span class="kw">&lt;-</span> <span class="no">impact</span>$<span class="no">series</span>
 
-  <span class="no">ci</span> <span class="kw">&lt;-</span> <span class="kw pkg">xts</span><span class="kw ns">::</span><span class="fu">xts</span>(<span class="no">ci</span>)
+  <span class="no">ci</span> <span class="kw">&lt;-</span> <span class="kw pkg">xts</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html">xts</a></span>(<span class="no">ci</span>)
 
   <span class="co">## the dygraph output</span>
   <span class="fu">dygraph</span>(<span class="kw">data</span><span class="kw">=</span><span class="no">ci</span>[,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'response'</span>,
@@ -577,14 +584,14 @@ Still playing with embedding interactive plots in tweets. These are all made by 
 <p>The main functions done, we now specify which R packages the model needs the user to load.</p>
 <div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="no">req_packs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"CausalImpact"</span>, <span class="st">"xts"</span>, <span class="st">"tidyr"</span>, <span class="st">"googleAnalyticsR"</span>, <span class="st">"assertthat"</span>, <span class="st">"dygraphs"</span>)</pre></body></html></div>
 <p>Finally we make the model, specifying which columns we expect the data to fetch, a description and specifying which Shiny functions are needed to show the dygraph if the model is used in a Shiny app.</p>
-<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="no">ci_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_make.html">ga_model_make</a></span>(<span class="no">get_ci_data</span>,
+<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="no">ci_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_model_make.html">ga_model_make</a></span>(<span class="no">get_ci_data</span>,
                           <span class="kw">required_columns</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"channelGrouping"</span>,<span class="st">"sessions"</span>),
                           <span class="kw">model_f</span> <span class="kw">=</span> <span class="no">do_ci</span>,
                           <span class="kw">output_f</span> <span class="kw">=</span> <span class="no">dygraph_plot</span>,
                           <span class="kw">required_packages</span> <span class="kw">=</span> <span class="no">req_packs</span>,
                           <span class="kw">description</span> <span class="kw">=</span> <span class="st">"Causal Impact on channelGrouping data"</span>,
-                          <span class="kw">outputShiny</span> <span class="kw">=</span> <span class="kw pkg">dygraphs</span><span class="kw ns">::</span><span class="no">dygraphOutput</span>,
-                          <span class="kw">renderShiny</span> <span class="kw">=</span> <span class="kw pkg">dygraphs</span><span class="kw ns">::</span><span class="no">renderDygraph</span>)
+                          <span class="kw">outputShiny</span> <span class="kw">=</span> <span class="kw pkg">dygraphs</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/dygraphs/man/dygraph-shiny.html">dygraphOutput</a></span>,
+                          <span class="kw">renderShiny</span> <span class="kw">=</span> <span class="kw pkg">dygraphs</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/dygraphs/man/dygraph-shiny.html">renderDygraph</a></span>)
 <span class="co"># print out model details</span>
 <span class="no">ci_model</span></pre></body></html></div>
 <pre><code>## ==ga_model object==
@@ -595,7 +602,7 @@ Still playing with embedding interactive plots in tweets. These are all made by 
 ## Output args:  impact event_date 
 ## Packages:     CausalImpact xts tidyr googleAnalyticsR assertthat dygraphs</code></pre>
 <div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="co"># save it to a file for use later</span>
-<span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_save.html">ga_model_save</a></span>(<span class="no">ci_model</span>, <span class="st">"causalImpact_model.gamr"</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/ga_model_save.html">ga_model_save</a></span>(<span class="no">ci_model</span>, <span class="st">"causalImpact_model.gamr"</span>)</pre></body></html></div>
 <p>To use and make an interactive plot:</p>
 <div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">CausalImpact</span>)
@@ -603,12 +610,12 @@ Still playing with embedding interactive plots in tweets. These are all made by 
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyr</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dygraphs</span>)
 
-<span class="no">ci</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/ga_model.html">ga_model</a></span>(<span class="fl">81416156</span>, <span class="no">ci_model</span>, <span class="kw">event_date</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2019-01-01"</span>))
+<span class="no">ci</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span>(<span class="fl">81416156</span>, <span class="no">ci_model</span>, <span class="kw">event_date</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2019-01-01"</span>))
 
 <span class="co"># print to show the plot object</span>
 <span class="no">ci</span>$<span class="no">plot</span></pre></body></html></div>
 <div class="figure">
-<img src="figure/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16"><p class="caption">plot of chunk unnamed-chunk-16</p>
+<img src="figure/unnamed-chunk-16-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-16</p>
 </div>
 <p>That can display interactively in a tweet:</p>
 <blockquote class="twitter-tweet">
@@ -618,7 +625,7 @@ An example for the documentation - CausalImpact/Dygraphs with ga_models <a href=
 — Mark Edmondson (<span class="citation">@HoloMarkeD</span>) <a href="https://twitter.com/HoloMarkeD/status/1106958249130119169?ref_src=twsrc%5Etfw">March 16, 2019</a>
 </blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><p>Similarly, you can launch this in a Shiny app by slightly modifying the Shiny example used previously.</p>
-<p>This is available within the package via <code><a href="https://rdrr.io/pkg/shiny/man/runApp.html">shiny::runApp(system.file("shiny/models-ga-effect", package="googleAnalyticsR"))</a></code></p>
+<p>This is available within the package via <code><a href="https://shiny.rstudio.com/reference/shiny/latest/runApp.html">shiny::runApp(system.file("shiny/models-ga-effect", package="googleAnalyticsR"))</a></code></p>
 <p><img src="model-ga-effect.png"></p>
 <p>Dress it up in a nice theme and add some more inputs and outputs and you are close to the finished result.</p>
 </div>

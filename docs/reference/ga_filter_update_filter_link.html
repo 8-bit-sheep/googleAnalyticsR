@@ -119,6 +119,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/reporting-ga4.html">
+        <span class="fa fa-bar-chart"></span>
+         
+        GA4 Data API
+      </a>
+    </li>
+    <li>
       <a href="../articles/v4.html">
         <span class="fa fa-cogs"></span>
          
@@ -305,12 +312,12 @@
 
     <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/profileFilterLinks'>https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/profileFilterLinks</a></p>
 <p>Other managementAPI functions: 
-<code>ga_experiment_list()</code>,
-<code>ga_experiment()</code>,
-<code>ga_filter_add()</code>,
-<code>ga_filter_apply_to_view()</code>,
-<code>ga_filter_update()</code>,
-<code>ga_segment_list()</code></p></div>
+<code><a href='ga_experiment_list.html'>ga_experiment_list</a>()</code>,
+<code><a href='ga_experiment.html'>ga_experiment</a>()</code>,
+<code><a href='ga_filter_add.html'>ga_filter_add</a>()</code>,
+<code><a href='ga_filter_apply_to_view.html'>ga_filter_apply_to_view</a>()</code>,
+<code><a href='ga_filter_update.html'>ga_filter_update</a>()</code>,
+<code><a href='ga_segment_list.html'>ga_segment_list</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -329,7 +336,7 @@
  )
 
  <span class='co'># link Filter to a View</span>
- <span class='no'>response</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_filter_add</span>(<span class='no'>Filter</span>,
+ <span class='no'>response</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_filter_add.html'>ga_filter_add</a></span>(<span class='no'>Filter</span>,
                            <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='fl'>12345</span>,
                            <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-12345-1"</span>,
                            <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>654321</span>,

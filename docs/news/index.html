@@ -118,6 +118,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/reporting-ga4.html">
+        <span class="fa fa-bar-chart"></span>
+         
+        GA4 Data API
+      </a>
+    </li>
+    <li>
       <a href="../articles/v4.html">
         <span class="fa fa-cogs"></span>
          
@@ -257,27 +264,27 @@
       <small>Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="googleanalyticsr-0-8-0" class="section level1">
+    <div id="googleanalyticsr-080" class="section level1">
 <h1 class="page-header" data-toc-text="0.8.0">
-<a href="#googleanalyticsr-0-8-0" class="anchor"></a>googleAnalyticsR 0.8.0<small> Unreleased </small>
+<a href="#googleanalyticsr-080" class="anchor"></a>googleAnalyticsR 0.8.0<small> 2020-06-24 </small>
 </h1>
 <ul>
-<li>fix <code>ga_account_list()</code> not dowloading starred columns (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/284'>#284</a> - thanks <a href='https://github.com/hidekoji'>@hidekoji</a>)</li>
+<li>fix <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> not downloading starred columns (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/284'>#284</a> - thanks <a href='https://github.com/hidekoji'>@hidekoji</a>)</li>
 <li>Allow millisecond parsing of times (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/314'>#314</a> - thanks <a href='https://github.com/VadimChernik'>@VadimChernik</a>)</li>
 <li>Update to use <code>cli</code> for nicer looking user messaging</li>
 <li>Change the default client.id (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/311'>#311</a>)</li>
-<li>Allow authentication via a service account key directly in <code>ga_auth(json = "file.json")</code>
+<li>Allow authentication via a service account key directly in <code><a href="../reference/ga_auth.html">ga_auth(json = "file.json")</a></code>
 </li>
 <li>Remove <code>GARGLE_EMAIL</code> auto-auth on package load as could stop package loading under some circumstances.</li>
-<li>Add <code>ga_auth_setup()</code> to help walk through some of the advanced authentication setups</li>
-<li>Fix fetching all rows for <code>google_analytics()</code> when <code>slow_fetch=TRUE</code> and <code>max=-1</code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/321'>#321</a> - thanks <a href='https://github.com/wdwatkins'>@wdwatkins</a>)</li>
+<li>Add <code><a href="../reference/ga_auth_setup.html">ga_auth_setup()</a></code> to help walk through some of the advanced authentication setups</li>
+<li>Fix fetching all rows for <code><a href="../reference/google_analytics.html">google_analytics()</a></code> when <code>slow_fetch=TRUE</code> and <code>max=-1</code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/321'>#321</a> - thanks <a href='https://github.com/wdwatkins'>@wdwatkins</a>)</li>
 <li>Move to Cloud Build authenticated tests via <code>googleCloudRunner</code>
 </li>
 </ul>
 </div>
-    <div id="googleanalyticsr-0-7-1" class="section level1">
+    <div id="googleanalyticsr-071" class="section level1">
 <h1 class="page-header" data-toc-text="0.7.1">
-<a href="#googleanalyticsr-0-7-1" class="anchor"></a>googleAnalyticsR 0.7.1<small> 2019-11-04 </small>
+<a href="#googleanalyticsr-071" class="anchor"></a>googleAnalyticsR 0.7.1<small> 2019-11-04 </small>
 </h1>
 <ul>
 <li>
@@ -285,14 +292,14 @@
 <li>remove trailing slash breaking v3 API calls (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/286'>#286</a> - thanks <a href='https://github.com/octaviancorlade'>@octaviancorlade</a>)</li>
 </ul>
 </div>
-    <div id="googleanalyticsr-0-7-0" class="section level1">
+    <div id="googleanalyticsr-070" class="section level1">
 <h1 class="page-header" data-toc-text="0.7.0">
-<a href="#googleanalyticsr-0-7-0" class="anchor"></a>googleAnalyticsR 0.7.0<small> 2019-09-17 </small>
+<a href="#googleanalyticsr-070" class="anchor"></a>googleAnalyticsR 0.7.0<small> 2019-09-17 </small>
 </h1>
 <ul>
 <li>Clean up error messages</li>
 <li>Fix anti_sampling breaking if using date formats “4daysAgo” etc.</li>
-<li>Removed <code>google_analytics_meta()</code> for <code>ga_meta()</code>
+<li>Removed <code>google_analytics_meta()</code> for <code><a href="../reference/ga_meta.html">ga_meta()</a></code>
 </li>
 <li>Add <code>accountId</code> to the output of Shiny module <code>authDropdown</code> when <code>viewIdOnly=FALSE</code>
 </li>
@@ -308,19 +315,19 @@
 </li>
 <li>Update docs to use <code>clientId</code> dimension in user activity API calls</li>
 <li>Update <code><a href="https://tidyr.tidyverse.org/reference/nest.html">tidyr::unnest</a></code> to use <code>cols</code> parameter (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/266'>#266</a>)</li>
-<li>Add <code>ga_custom_upload_delete()</code> - thanks <a href='https://github.com/byapprov'>@byapprov</a> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/263'>#263</a>)</li>
+<li>Add <code><a href="../reference/ga_custom_upload_delete.html">ga_custom_upload_delete()</a></code> - thanks <a href='https://github.com/byapprov'>@byapprov</a> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/263'>#263</a>)</li>
 <li>Fix sending in multiple segment definitions in a list (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/253'>#253</a>)</li>
-<li>Fix <code>ga_segment_list()</code> returning data if no custom segments created (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/259'>#259</a>)</li>
+<li>Fix <code><a href="../reference/ga_segment_list.html">ga_segment_list()</a></code> returning data if no custom segments created (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/259'>#259</a>)</li>
 <li>Fix ability to list multiple dimensions and segments (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/279'>#279</a>)</li>
 </ul>
 </div>
-    <div id="googleanalyticsr-0-6-0" class="section level1">
+    <div id="googleanalyticsr-060" class="section level1">
 <h1 class="page-header" data-toc-text="0.6.0">
-<a href="#googleanalyticsr-0-6-0" class="anchor"></a>googleAnalyticsR 0.6.0<small> 2018-12-21 </small>
+<a href="#googleanalyticsr-060" class="anchor"></a>googleAnalyticsR 0.6.0<small> 2018-12-21 </small>
 </h1>
 <ul>
 <li>Add goal management</li>
-<li>Add <code>ga_clientid_deletion()</code> function (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/168'>#168</a>) (renamed from <code>ga_user_deletion()</code>)</li>
+<li>Add <code><a href="../reference/ga_clientid_deletion.html">ga_clientid_deletion()</a></code> function (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/168'>#168</a>) (renamed from <code>ga_user_deletion()</code>)</li>
 <li>Let <code>authDropdown</code> return more than just the viewId (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/172'>#172</a>)</li>
 <li>Export segment related classes and implicitly coerce table filters and segments to their appropriate classes in order to improve integration with the ganalytics package.</li>
 <li>Add support for <code>dataLastRefreshed</code> and stop caching if its present (e.g. query includes today) (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/183'>#183</a>)</li>
@@ -337,21 +344,21 @@
 </li>
 </ul>
 </div>
-    <div id="googleanalytics-0-5-0" class="section level1">
+    <div id="googleanalytics-050" class="section level1">
 <h1 class="page-header" data-toc-text="0.5.0">
-<a href="#googleanalytics-0-5-0" class="anchor"></a>googleAnalytics 0.5.0<small> 2018-02-16 </small>
+<a href="#googleanalytics-050" class="anchor"></a>googleAnalytics 0.5.0<small> 2018-02-16 </small>
 </h1>
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#breaking-changes" class="anchor"></a>Breaking changes!</h2>
-<p>If you were using <code>google_analytics()</code> before to fetch the v3 API, this is now available via <code>google_analytics_3()</code> - replace all instances and it should work as before. However, you are encouraged to migrate to v4, which now runs when you use <code>google_analytics()</code>(and for a while still at <code>google_analytics_4()</code> too)</p>
+<p>If you were using <code><a href="../reference/google_analytics.html">google_analytics()</a></code> before to fetch the v3 API, this is now available via <code><a href="../reference/google_analytics_3.html">google_analytics_3()</a></code> - replace all instances and it should work as before. However, you are encouraged to migrate to v4, which now runs when you use <code><a href="../reference/google_analytics.html">google_analytics()</a></code>(and for a while still at <code><a href="../reference/google_analytics.html">google_analytics_4()</a></code> too)</p>
 </div>
 <div id="major-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
 <li>Add support for resource based quotas if you are on GA360 (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/127'>#127</a>)</li>
-<li>Improve support for using different auth cache files with <code>ga_auth()</code>
+<li>Improve support for using different auth cache files with <code><a href="../reference/ga_auth.html">ga_auth()</a></code>
 </li>
 <li>Changed <code>google_analytics</code> to be the v4 API, <code>google_analytics_3</code> now supports v3</li>
 <li>change default cache token name from <code>.httr-oauth</code> to <code>ga.oauth</code> to avoid clashes</li>
@@ -371,9 +378,9 @@
 </ul>
 </div>
 </div>
-    <div id="googleanalytics-0-4-2" class="section level1">
+    <div id="googleanalytics-042" class="section level1">
 <h1 class="page-header" data-toc-text="0.4.2">
-<a href="#googleanalytics-0-4-2" class="anchor"></a>googleAnalytics 0.4.2<small> 2017-10-20 </small>
+<a href="#googleanalytics-042" class="anchor"></a>googleAnalytics 0.4.2<small> 2017-10-20 </small>
 </h1>
 <div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
@@ -398,9 +405,9 @@
 </ul>
 </div>
 </div>
-    <div id="googleanalyticsr-0-4-1" class="section level1">
+    <div id="googleanalyticsr-041" class="section level1">
 <h1 class="page-header" data-toc-text="0.4.1">
-<a href="#googleanalyticsr-0-4-1" class="anchor"></a>googleAnalyticsR 0.4.1<small> 2017-06-19 </small>
+<a href="#googleanalyticsr-041" class="anchor"></a>googleAnalyticsR 0.4.1<small> 2017-06-19 </small>
 </h1>
 <div id="fixed" class="section level2">
 <h2 class="hasAnchor">
@@ -425,16 +432,16 @@
 </ul>
 </div>
 </div>
-    <div id="googleanalyticsr-0-4-0" class="section level1">
+    <div id="googleanalyticsr-040" class="section level1">
 <h1 class="page-header" data-toc-text="0.4.0">
-<a href="#googleanalyticsr-0-4-0" class="anchor"></a>googleAnalyticsR 0.4.0<small> 2017-04-01 </small>
+<a href="#googleanalyticsr-040" class="anchor"></a>googleAnalyticsR 0.4.0<small> 2017-04-01 </small>
 </h1>
 <div id="added-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#added-1" class="anchor"></a>Added</h2>
 <ul>
 <li>Deprecate <code>google_analytics_account_list</code> for <code>ga_account_list</code> to be in line with other functions</li>
-<li>Add custom data uploads via <code>ga_custom_upload_file()</code>
+<li>Add custom data uploads via <code><a href="../reference/ga_custom_upload_file.html">ga_custom_upload_file()</a></code>
 </li>
 <li>Cleaned up documentation a bit</li>
 <li>Added auto-authentication if you specify environment var <code>GA_AUTH_FILE</code>
@@ -468,9 +475,9 @@
 </ul>
 </div>
 </div>
-    <div id="googleanalyticsr-0-3-0" class="section level1">
+    <div id="googleanalyticsr-030" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.0">
-<a href="#googleanalyticsr-0-3-0" class="anchor"></a>googleAnalyticsR 0.3.0<small> 2016-08-11 </small>
+<a href="#googleanalyticsr-030" class="anchor"></a>googleAnalyticsR 0.3.0<small> 2016-08-11 </small>
 </h1>
 <div id="added-2" class="section level2">
 <h2 class="hasAnchor">
@@ -479,8 +486,8 @@
 <li>Add BigQuery asynch fetch to Google Analytics 360 exports, for over 1,000,000 rows.</li>
 <li>A GA v4 example Shiny app added that runs on <code>https://mark.shinyapps.io/googleAnalyticsRv4Demo/</code>
 </li>
-<li>New argument <code>anti_sample</code> for <code>google_analytics_4()</code> which will split up the calls into efficient batches to avoid sampling. Includes experimental sub-day hourly batching.</li>
-<li>Set argument <code>max = -1</code> in <code>google_analytics_4()</code> to fetch all results.</li>
+<li>New argument <code>anti_sample</code> for <code><a href="../reference/google_analytics.html">google_analytics_4()</a></code> which will split up the calls into efficient batches to avoid sampling. Includes experimental sub-day hourly batching.</li>
+<li>Set argument <code>max = -1</code> in <code><a href="../reference/google_analytics.html">google_analytics_4()</a></code> to fetch all results.</li>
 <li>Add fix for <code>google_analytics_account_summary</code> parsing when no views in web properties.</li>
 <li>New argument <code>anti_sample_batches</code> lets you choose batch sizes (daily is equal to <code>anti_sample_batches=1</code>)</li>
 <li>Add several management API functions:
@@ -517,15 +524,15 @@
 <a href="#fixed-2" class="anchor"></a>Fixed</h2>
 <ul>
 <li>Fix bug for calculated metrics if expression not starting with <code>ga:</code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/28'>#28</a>)</li>
-<li>Fix a parse bug if only metrics and no dimensions were used in <code>google_analytics_4()</code>
+<li>Fix a parse bug if only metrics and no dimensions were used in <code><a href="../reference/google_analytics.html">google_analytics_4()</a></code>
 </li>
 <li>Refactoring v4 batching</li>
 </ul>
 </div>
 </div>
-    <div id="googleanalyticsr-0-2-1" class="section level1">
+    <div id="googleanalyticsr-021" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.1">
-<a href="#googleanalyticsr-0-2-1" class="anchor"></a>googleAnalyticsR 0.2.1<small> 2016-06-16 </small>
+<a href="#googleanalyticsr-021" class="anchor"></a>googleAnalyticsR 0.2.1<small> 2016-06-16 </small>
 </h1>
 <div id="fixed-3" class="section level2">
 <h2 class="hasAnchor">
@@ -535,9 +542,9 @@
 </ul>
 </div>
 </div>
-    <div id="googleanalyticsr-0-2-0" class="section level1">
+    <div id="googleanalyticsr-020" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.0">
-<a href="#googleanalyticsr-0-2-0" class="anchor"></a>googleAnalyticsR 0.2.0<small> 2016-06-15 </small>
+<a href="#googleanalyticsr-020" class="anchor"></a>googleAnalyticsR 0.2.0<small> 2016-06-15 </small>
 </h1>
 <div id="added-3" class="section level2">
 <h2 class="hasAnchor">
@@ -547,7 +554,7 @@
 </li>
 <li>Local tests added</li>
 <li>Multi-account batching for v3 (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/17'>#17</a>)</li>
-<li>Add BigQuery fetching for GoogleAnalytics 360 accounts via <code>google_analytics_bq()</code>
+<li>Add BigQuery fetching for GoogleAnalytics 360 accounts via <code><a href="../reference/google_analytics_bq.html">google_analytics_bq()</a></code>
 </li>
 </ul>
 </div>
@@ -559,9 +566,9 @@
 </ul>
 </div>
 </div>
-    <div id="googleanalyticsr-0-1-1" class="section level1">
+    <div id="googleanalyticsr-011" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.1">
-<a href="#googleanalyticsr-0-1-1" class="anchor"></a>googleAnalyticsR 0.1.1<small> 2016-05-25 </small>
+<a href="#googleanalyticsr-011" class="anchor"></a>googleAnalyticsR 0.1.1<small> 2016-05-25 </small>
 </h1>
 <div id="fixed-5" class="section level2">
 <h2 class="hasAnchor">
@@ -571,9 +578,9 @@
 </ul>
 </div>
 </div>
-    <div id="googleanalyticsr-0-1-0" class="section level1">
+    <div id="googleanalyticsr-010" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.0">
-<a href="#googleanalyticsr-0-1-0" class="anchor"></a>googleAnalyticsR 0.1.0<small> 2016-05-12 </small>
+<a href="#googleanalyticsr-010" class="anchor"></a>googleAnalyticsR 0.1.0<small> 2016-05-12 </small>
 </h1>
 <div id="added-4" class="section level2">
 <h2 class="hasAnchor">

@@ -121,6 +121,13 @@ If you supply more than one linkId, then batch processing will be applied.  Batc
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/reporting-ga4.html">
+        <span class="fa fa-bar-chart"></span>
+         
+        GA4 Data API
+      </a>
+    </li>
+    <li>
       <a href="../articles/v4.html">
         <span class="fa fa-cogs"></span>
          
@@ -264,7 +271,7 @@ If you supply more than one linkId, then batch processing will be applied.  Batc
     <div class="ref-description">
     <p>The <code>linkId</code> is in the form of the accountId/webPropertyId/viewId colon separated from a link unique Id.</p>
 <p>Delete user access by supplying the linkId for that user at the level they have been given access.  It won't work to delete user links at account level if they have been assigned at web property or view level - you will need to get the linkId for that level instead. e.g. a user needs <code>permissions.local</code> to be non-NULL to be deleted at that level.  The parameter <code>check</code> will do this check before deletion and throw an error if they can not be deleted.   Set this to <code>check=FALSE</code> to suppress this behaviour.</p>
-<p>If you supply more than one <code>linkId</code>, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a <code>TRUE</code> result on successful batch, but individual <code>linkId</code>s may have failed.  Check via ga_users_list afterwards and try to delete individual linkIds to get more descriptive error messages.</p>
+<p>If you supply more than one <code>linkId</code>, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a <code>TRUE</code> result on successful batch, but individual <code>linkId</code>s may have failed.  Check via <a href='ga_users_list.html'>ga_users_list</a> afterwards and try to delete individual linkIds to get more descriptive error messages.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ga_users_delete_linkid</span>(
@@ -280,7 +287,7 @@ If you supply more than one linkId, then batch processing will be applied.  Batc
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>linkId</th>
-      <td><p>The linkId(s) that is available using ga_users_list e.g. <code>47480439:104185380183364788718</code></p></td>
+      <td><p>The linkId(s) that is available using <a href='ga_users_list.html'>ga_users_list</a> e.g. <code>47480439:104185380183364788718</code></p></td>
     </tr>
     <tr>
       <th>accountId</th>
@@ -307,30 +314,30 @@ If you supply more than one linkId, then batch processing will be applied.  Batc
 
     <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete'>Google Documentation</a></p>
 <p>Other User management functions: 
-<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_users_add.html'>ga_users_add</a>()</code>,
-<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_users_delete.html'>ga_users_delete</a>()</code>,
-<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_users_list.html'>ga_users_list</a>()</code>,
-<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_users_update.html'>ga_users_update</a>()</code></p></div>
+<code><a href='ga_users_add.html'>ga_users_add</a>()</code>,
+<code><a href='ga_users_delete.html'>ga_users_delete</a>()</code>,
+<code><a href='ga_users_list.html'>ga_users_list</a>()</code>,
+<code><a href='ga_users_update.html'>ga_users_update</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>googleAnalyticsR</span>)
-<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html'>ga_auth</a></span>()
+<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
 
 <span class='co'># get the linkId for the user you want to delete</span>
-<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_users_list.html'>ga_users_list</a></span>(<span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-47480439-2"</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>81416156</span>)
-<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_users_delete_linkid.html'>ga_users_delete_linkid</a></span>(<span class='st'>"81416156:114834495587136933146"</span>,
+<span class='fu'><a href='ga_users_list.html'>ga_users_list</a></span>(<span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-47480439-2"</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>81416156</span>)
+<span class='fu'>ga_users_delete_linkid</span>(<span class='st'>"81416156:114834495587136933146"</span>,
                        <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='fl'>47480439</span>,
                        <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-47480439-2"</span>,
                        <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>81416156</span>)
 
 <span class='co'># check its gone</span>
-<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_users_list.html'>ga_users_list</a></span>(<span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-47480439-2"</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>81416156</span>)
+<span class='fu'><a href='ga_users_list.html'>ga_users_list</a></span>(<span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-47480439-2"</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>81416156</span>)
 
 <span class='co'># can only delete at level user has access, the above deletion woud have failed if via:</span>
-<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_users_delete_linkid.html'>ga_users_delete_linkid</a></span>(<span class='st'>"47480439:114834495587136933146"</span>, <span class='fl'>47480439</span>)
+<span class='fu'>ga_users_delete_linkid</span>(<span class='st'>"47480439:114834495587136933146"</span>, <span class='fl'>47480439</span>)
 
 }</div></pre>
   </div>

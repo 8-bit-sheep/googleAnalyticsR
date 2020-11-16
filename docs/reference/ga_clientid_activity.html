@@ -119,6 +119,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/reporting-ga4.html">
+        <span class="fa fa-bar-chart"></span>
+         
+        GA4 Data API
+      </a>
+    </li>
+    <li>
       <a href="../articles/v4.html">
         <span class="fa fa-cogs"></span>
          
@@ -303,15 +310,15 @@
 
     <p>The User Activity API lets you query an individual user's movement through your website, by sending in the individual `clientId` or `userId`.</p>
 <p>Bear in mind each call will count against your API quota, so fetching a large amount of client ids will be limited by that.</p>
-<p>Use ga_clientid_activity_unnest to unnest deeply nested data in the hits data.</p>
+<p>Use <a href='ga_clientid_activity_unnest.html'>ga_clientid_activity_unnest</a> to unnest deeply nested data in the hits data.</p>
 <p>The timestamps are available to millisecond level but you will need to set your R options to see them e.g. <code><a href='https://rdrr.io/r/base/options.html'>options(digits.secs=3)</a></code></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search'>https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search</a></p>
 <p>Other clientid functions: 
-<code>ga_clientid_activity_unnest()</code>,
-<code>ga_clientid_deletion()</code>,
-<code>ga_clientid_hash()</code></p></div>
+<code><a href='ga_clientid_activity_unnest.html'>ga_clientid_activity_unnest</a>()</code>,
+<code><a href='ga_clientid_deletion.html'>ga_clientid_deletion</a>()</code>,
+<code><a href='ga_clientid_hash.html'>ga_clientid_hash</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -325,12 +332,12 @@
 <span class='co'># access clientIds for users who have transacted</span>
 <span class='no'>viewId</span> <span class='kw'>&lt;-</span> <span class='fl'>106249469</span>
 <span class='no'>date_range</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2019-01-01"</span>,<span class='st'>"2019-02-01"</span>)
-<span class='no'>cids</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics</span>(<span class='no'>viewId</span>,
+<span class='no'>cids</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>viewId</span>,
                          <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='no'>date_range</span>,
                          <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='st'>"sessions"</span>,
                          <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='st'>"clientId"</span>,
-                         <span class='kw'>met_filters</span> <span class='kw'>=</span> <span class='fu'>filter_clause_ga4</span>(
-                           <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'>met_filter</span>(<span class='st'>"transactions"</span>,
+                         <span class='kw'>met_filters</span> <span class='kw'>=</span> <span class='fu'><a href='filter_clause_ga4.html'>filter_clause_ga4</a></span>(
+                           <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='met_filter.html'>met_filter</a></span>(<span class='st'>"transactions"</span>,
                                            <span class='st'>"GREATER_THAN"</span>,
                                            <span class='fl'>0</span>)
                                 )))

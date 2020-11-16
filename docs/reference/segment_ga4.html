@@ -121,6 +121,13 @@ might be users from a particular country or city." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/reporting-ga4.html">
+        <span class="fa fa-bar-chart"></span>
+         
+        GA4 Data API
+      </a>
+    </li>
+    <li>
       <a href="../articles/v4.html">
         <span class="fa fa-cogs"></span>
          
@@ -301,18 +308,18 @@ might be users from a particular country or city.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>segment_ga4</code> is the top hierarchy of segment creation, for which you will also need:</p><ul>
-<li><p><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_define.html'>segment_define</a> : AND combination of segmentFilters</p></li>
-<li><p><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_vector_simple.html'>segment_vector_simple</a> or <a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_vector_sequence.html'>segment_vector_sequence</a></p></li>
-<li><p><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_element.html'>segment_element</a> that are combined in OR lists for <code>segment_vectors_*</code></p></li>
+<li><p><a href='segment_define.html'>segment_define</a> : AND combination of segmentFilters</p></li>
+<li><p><a href='segment_vector_simple.html'>segment_vector_simple</a> or <a href='segment_vector_sequence.html'>segment_vector_sequence</a></p></li>
+<li><p><a href='segment_element.html'>segment_element</a> that are combined in OR lists for <code>segment_vectors_*</code></p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other v4 segment functions: 
-<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_define.html'>segment_define</a>()</code>,
-<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_element.html'>segment_element</a>()</code>,
-<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_vector_sequence.html'>segment_vector_sequence</a>()</code>,
-<code><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_vector_simple.html'>segment_vector_simple</a>()</code></p></div>
+<code><a href='segment_define.html'>segment_define</a>()</code>,
+<code><a href='segment_element.html'>segment_element</a>()</code>,
+<code><a href='segment_vector_sequence.html'>segment_vector_sequence</a>()</code>,
+<code><a href='segment_vector_simple.html'>segment_vector_simple</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -321,7 +328,7 @@ might be users from a particular country or city.</p>
 
 <span class='co'>## authenticate, </span>
 <span class='co'>## or use the RStudio Addin "Google API Auth" with analytics scopes set</span>
-<span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth.html'>ga_auth</a></span>()
+<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
 
 <span class='co'>## get your accounts</span>
 <span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_account_list</span>()
@@ -332,14 +339,14 @@ might be users from a particular country or city.</p>
 
 
 <span class='co'>## make a segment element</span>
-<span class='no'>se</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_element.html'>segment_element</a></span>(<span class='st'>"sessions"</span>,
+<span class='no'>se</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='segment_element.html'>segment_element</a></span>(<span class='st'>"sessions"</span>,
                       <span class='kw'>operator</span> <span class='kw'>=</span> <span class='st'>"GREATER_THAN"</span>,
                       <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"METRIC"</span>,
                       <span class='kw'>comparisonValue</span> <span class='kw'>=</span> <span class='fl'>1</span>,
                       <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"USER"</span>)
 
 
-<span class='no'>se2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_element.html'>segment_element</a></span>(<span class='st'>"medium"</span>,
+<span class='no'>se2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='segment_element.html'>segment_element</a></span>(<span class='st'>"medium"</span>,
                        <span class='kw'>operator</span> <span class='kw'>=</span> <span class='st'>"EXACT"</span>,
                        <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"DIMENSION"</span>,
                        <span class='kw'>expressions</span> <span class='kw'>=</span> <span class='st'>"organic"</span>)
@@ -348,25 +355,25 @@ might be users from a particular country or city.</p>
 <span class='co'>## choose between segment_vector_simple or segment_vector_sequence</span>
 <span class='co'>## Elements can be combined into clauses, which can then be </span>
 <span class='co'>##    combined into OR filter clauses</span>
-<span class='no'>sv_simple</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_vector_simple.html'>segment_vector_simple</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>se</span>)))
+<span class='no'>sv_simple</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='segment_vector_simple.html'>segment_vector_simple</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>se</span>)))
 
-<span class='no'>sv_simple2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_vector_simple.html'>segment_vector_simple</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>se2</span>)))
+<span class='no'>sv_simple2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='segment_vector_simple.html'>segment_vector_simple</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>se2</span>)))
 
 <span class='co'>## Each segment vector can then be combined into a logical AND</span>
 
-<span class='no'>seg_defined</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_define.html'>segment_define</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>sv_simple</span>, <span class='no'>sv_simple2</span>))
+<span class='no'>seg_defined</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='segment_define.html'>segment_define</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>sv_simple</span>, <span class='no'>sv_simple2</span>))
 
 <span class='co'>## if only one AND definition, you can leave out wrapper list()</span>
 
-<span class='no'>seg_defined_one</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_define.html'>segment_define</a></span>(<span class='no'>sv_simple</span>)
+<span class='no'>seg_defined_one</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='segment_define.html'>segment_define</a></span>(<span class='no'>sv_simple</span>)
 
 <span class='co'>## Each segement defintion can apply to users, sessions or both.</span>
 <span class='co'>## You can pass a list of several segments</span>
 
-<span class='no'>segment4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_ga4.html'>segment_ga4</a></span>(<span class='st'>"simple"</span>, <span class='kw'>user_segment</span> <span class='kw'>=</span> <span class='no'>seg_defined</span>)
+<span class='no'>segment4</span> <span class='kw'>&lt;-</span> <span class='fu'>segment_ga4</span>(<span class='st'>"simple"</span>, <span class='kw'>user_segment</span> <span class='kw'>=</span> <span class='no'>seg_defined</span>)
 <span class='co'>## Add the segments to the segments param</span>
 
-<span class='no'>segment_example</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html'>google_analytics</a></span>(<span class='no'>ga_id</span>,
+<span class='no'>segment_example</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>ga_id</span>,
                                     <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2015-07-30"</span>,<span class='st'>"2015-10-01"</span>),
                                     <span class='kw'>dimensions</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'source'</span>,<span class='st'>'medium'</span>,<span class='st'>'segment'</span>),
                                     <span class='kw'>segments</span> <span class='kw'>=</span> <span class='no'>segment4</span>,
@@ -376,12 +383,12 @@ might be users from a particular country or city.</p>
 
 <span class='co'>## Sequence segment</span>
 
-<span class='no'>se2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_element.html'>segment_element</a></span>(<span class='st'>"medium"</span>,
+<span class='no'>se2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='segment_element.html'>segment_element</a></span>(<span class='st'>"medium"</span>,
                        <span class='kw'>operator</span> <span class='kw'>=</span> <span class='st'>"EXACT"</span>,
                        <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"DIMENSION"</span>,
                        <span class='kw'>expressions</span> <span class='kw'>=</span> <span class='st'>"organic"</span>)
 
-<span class='no'>se3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_element.html'>segment_element</a></span>(<span class='st'>"medium"</span>,
+<span class='no'>se3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='segment_element.html'>segment_element</a></span>(<span class='st'>"medium"</span>,
                        <span class='kw'>operator</span> <span class='kw'>=</span> <span class='st'>"EXACT"</span>,
                        <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"DIMENSION"</span>,
                        <span class='kw'>not</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -389,16 +396,16 @@ might be users from a particular country or city.</p>
 
 <span class='co'>## step sequence</span>
 <span class='co'>## users who arrived via organic then via referral</span>
-<span class='no'>sv_sequence</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_vector_sequence.html'>segment_vector_sequence</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>se2</span>),
+<span class='no'>sv_sequence</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='segment_vector_sequence.html'>segment_vector_sequence</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>se2</span>),
                                             <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>se3</span>)))
 
-<span class='no'>seq_defined2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_define.html'>segment_define</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>sv_sequence</span>))
+<span class='no'>seq_defined2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='segment_define.html'>segment_define</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>sv_sequence</span>))
 
-<span class='no'>segment4_seq</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/segment_ga4.html'>segment_ga4</a></span>(<span class='st'>"sequence"</span>, <span class='kw'>user_segment</span> <span class='kw'>=</span> <span class='no'>seq_defined2</span>)
+<span class='no'>segment4_seq</span> <span class='kw'>&lt;-</span> <span class='fu'>segment_ga4</span>(<span class='st'>"sequence"</span>, <span class='kw'>user_segment</span> <span class='kw'>=</span> <span class='no'>seq_defined2</span>)
 
 <span class='co'>## Add the segments to the segments param</span>
 
-<span class='no'>segment_seq_example</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics.html'>google_analytics</a></span>(<span class='no'>ga_id</span>,
+<span class='no'>segment_seq_example</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>ga_id</span>,
                                         <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2016-04-01"</span>,<span class='st'>"2016-05-01"</span>),
                                         <span class='kw'>dimensions</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'source'</span>,<span class='st'>'segment'</span>),
                                         <span class='kw'>segments</span> <span class='kw'>=</span> <span class='no'>segment4_seq</span>,

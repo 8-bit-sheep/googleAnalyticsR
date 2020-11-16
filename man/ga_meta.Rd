@@ -4,10 +4,12 @@
 \alias{ga_meta}
 \title{Get current dimensions and metrics available in GA API.}
 \usage{
-ga_meta(version = c("universal", "data"))
+ga_meta(version = c("universal", "data"), propertyId = NULL)
 }
 \arguments{
 \item{version}{The Google Analytics API metadata to fetch - "universal" for Universal and earlier versions, "data" for Google Analytics 4}
+
+\item{propertyId}{If requesting from Google Analytics 4, pass the propertyId to get metadata specific to that property.  Leaving it NULL or 0 will return universal metadata}
 }
 \value{
 dataframe of dimensions and metrics available to use
@@ -24,6 +26,9 @@ ga_meta()
 
 # Google Analytics 4 metadata from the Data API
 ga_meta("data")
+
+# Google Analytics 4 metadata for a particular Web Property
+ga_meta("data", propertyId = 206670707)
 
 }
 }

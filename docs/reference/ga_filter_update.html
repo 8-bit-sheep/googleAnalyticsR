@@ -119,6 +119,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/reporting-ga4.html">
+        <span class="fa fa-bar-chart"></span>
+         
+        GA4 Data API
+      </a>
+    </li>
+    <li>
       <a href="../articles/v4.html">
         <span class="fa fa-cogs"></span>
          
@@ -294,12 +301,12 @@ See examples from ga_filter_add()</p></td>
 
     <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/#Filters'>https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/#Filters</a></p>
 <p>Other managementAPI functions: 
-<code>ga_experiment_list()</code>,
-<code>ga_experiment()</code>,
-<code>ga_filter_add()</code>,
-<code>ga_filter_apply_to_view()</code>,
-<code>ga_filter_update_filter_link()</code>,
-<code>ga_segment_list()</code></p></div>
+<code><a href='ga_experiment_list.html'>ga_experiment_list</a>()</code>,
+<code><a href='ga_experiment.html'>ga_experiment</a>()</code>,
+<code><a href='ga_filter_add.html'>ga_filter_add</a>()</code>,
+<code><a href='ga_filter_apply_to_view.html'>ga_filter_apply_to_view</a>()</code>,
+<code><a href='ga_filter_update_filter_link.html'>ga_filter_update_filter_link</a>()</code>,
+<code><a href='ga_segment_list.html'>ga_segment_list</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -317,7 +324,7 @@ See examples from ga_filter_add()</p></td>
                       )
                  )
  <span class='co'># add a filter (but don't link to a View)               </span>
- <span class='no'>filterId</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_filter_add</span>(<span class='no'>Filter</span>,
+ <span class='no'>filterId</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_filter_add.html'>ga_filter_add</a></span>(<span class='no'>Filter</span>,
                            <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='fl'>123456</span>,
                            <span class='kw'>linkFilter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 

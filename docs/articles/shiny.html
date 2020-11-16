@@ -73,6 +73,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/reporting-ga4.html">
+        <span class="fa fa-bar-chart"></span>
+         
+        GA4 Data API
+      </a>
+    </li>
+    <li>
       <a href="../articles/v4.html">
         <span class="fa fa-cogs"></span>
          
@@ -205,7 +212,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="shiny_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Shiny Apps that call Google Analytics API data</h1>
@@ -227,12 +234,12 @@
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">shiny</span>)
 
-<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyServer.html">shinyServer</a></span>(<span class="kw">function</span>(<span class="no">input</span>, <span class="no">output</span>, <span class="no">session</span>){
+<span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyServer.html">shinyServer</a></span>(<span class="kw">function</span>(<span class="no">input</span>, <span class="no">output</span>, <span class="no">session</span>){
 
   <span class="co">## Get auth code from return URL</span>
-  <span class="no">access_token</span>  <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/callModule.html">callModule</a></span>(<span class="no">googleAuth</span>, <span class="st">"auth1"</span>)
+  <span class="no">access_token</span>  <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/callModule.html">callModule</a></span>(<span class="no">googleAuth</span>, <span class="st">"auth1"</span>)
 
-  <span class="no">gadata</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span>({
+  <span class="no">gadata</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span>({
 
     <span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/with_shiny.html">with_shiny</a></span>(<span class="no">google_analytics_3</span>,
                <span class="kw">id</span> <span class="kw">=</span> <span class="st">"222222"</span>, <span class="co">## replace with your View ID</span>
@@ -242,10 +249,10 @@
                <span class="kw">shiny_access_token</span> <span class="kw">=</span> <span class="fu">access_token</span>())
   })
 
-  <span class="no">output</span>$<span class="no">something</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span>({
+  <span class="no">output</span>$<span class="no">something</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html">renderPlot</a></span>({
 
     <span class="co">## only trigger once authenticated</span>
-    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/req.html">req</a></span>(<span class="fu">access_token</span>())
+    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/req.html">req</a></span>(<span class="fu">access_token</span>())
 
     <span class="no">gadata</span> <span class="kw">&lt;-</span> <span class="fu">gadata</span>()
 
@@ -259,10 +266,10 @@
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAuthR</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">shiny</span>)
 
-<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyUI.html">shinyUI</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span>(
+<span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyUI.html">shinyUI</a></span>(<span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html">fluidPage</a></span>(
 
   <span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/googleAuthUI.html">googleAuthUI</a></span>(<span class="st">"auth1"</span>),
-  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span>(<span class="st">"something"</span>)
+  <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html">plotOutput</a></span>(<span class="st">"something"</span>)
 
 ))</pre></body></html></div>
 <p>To aid with creating Shiny apps using this package, some <a href="http://shiny.rstudio.com/articles/modules.html">Shiny modules</a> are available.</p>
@@ -280,18 +287,18 @@ authDropdownUI("auth_menu")</pre></body></html></div>
 
 (<span class="no">...</span>)
 
-<span class="no">token</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/callModule.html">callModule</a></span>(<span class="no">googleAuth</span>, <span class="st">"login"</span>)
+<span class="no">token</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/callModule.html">callModule</a></span>(<span class="no">googleAuth</span>, <span class="st">"login"</span>)
 
-<span class="no">ga_accounts</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span>({
-  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/validate.html">validate</a></span>(
-    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/validate.html">need</a></span>(<span class="fu">token</span>(), <span class="st">"Authenticate"</span>)
+<span class="no">ga_accounts</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span>({
+  <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/validate.html">validate</a></span>(
+    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/validate.html">need</a></span>(<span class="fu">token</span>(), <span class="st">"Authenticate"</span>)
   )
 
   <span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/with_shiny.html">with_shiny</a></span>(<span class="no">ga_account_list</span>, <span class="kw">shiny_access_token</span> <span class="kw">=</span> <span class="fu">token</span>())
 
   })
 
-<span class="no">selected_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/callModule.html">callModule</a></span>(<span class="no">authDropdown</span>, <span class="st">"auth_menu"</span>, <span class="kw">ga.table</span> <span class="kw">=</span> <span class="no">ga_accounts</span>)
+<span class="no">selected_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/callModule.html">callModule</a></span>(<span class="no">authDropdown</span>, <span class="st">"auth_menu"</span>, <span class="kw">ga.table</span> <span class="kw">=</span> <span class="no">ga_accounts</span>)
 
 (<span class="no">...</span>)</pre></body></html></div>
 </div>
@@ -321,11 +328,11 @@ authDropdownUI("auth_menu")</pre></body></html></div>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">shiny</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">highcharter</span>)
 
-<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyUI.html">shinyUI</a></span>(
-  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span>(
+<span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyUI.html">shinyUI</a></span>(
+  <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html">fluidPage</a></span>(
     <span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/googleAuthUI.html">googleAuthUI</a></span>(<span class="st">"login"</span>),
-    <span class="fu"><a href="https://code.markedmondson.me/googleAnalyticsR//reference/authDropdownUI.html">authDropdownUI</a></span>(<span class="st">"auth_menu"</span>),
-    <span class="fu">highchartOutput</span>(<span class="st">"something"</span>)
+    <span class="fu"><a href="../reference/authDropdownUI.html">authDropdownUI</a></span>(<span class="st">"auth_menu"</span>),
+    <span class="fu"><a href="https://rdrr.io/pkg/highcharter/man/highchartOutput.html">highchartOutput</a></span>(<span class="st">"something"</span>)
 
   ))</pre></body></html></div>
 </div>
@@ -341,20 +348,20 @@ authDropdownUI("auth_menu")</pre></body></html></div>
 <span class="kw">function</span>(<span class="no">input</span>, <span class="no">output</span>, <span class="no">session</span>){
 
   <span class="co">## Get auth code from return URL</span>
-  <span class="no">token</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/callModule.html">callModule</a></span>(<span class="no">googleAuth</span>, <span class="st">"login"</span>)
+  <span class="no">token</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/callModule.html">callModule</a></span>(<span class="no">googleAuth</span>, <span class="st">"login"</span>)
 
-  <span class="no">ga_accounts</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span>({
-    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/req.html">req</a></span>(<span class="fu">token</span>())
+  <span class="no">ga_accounts</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span>({
+    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/req.html">req</a></span>(<span class="fu">token</span>())
 
     <span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/with_shiny.html">with_shiny</a></span>(<span class="no">ga_account_list</span>, <span class="kw">shiny_access_token</span> <span class="kw">=</span> <span class="fu">token</span>())
 
   })
 
-  <span class="no">selected_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/callModule.html">callModule</a></span>(<span class="no">authDropdown</span>, <span class="st">"auth_menu"</span>, <span class="kw">ga.table</span> <span class="kw">=</span> <span class="no">ga_accounts</span>)
+  <span class="no">selected_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/callModule.html">callModule</a></span>(<span class="no">authDropdown</span>, <span class="st">"auth_menu"</span>, <span class="kw">ga.table</span> <span class="kw">=</span> <span class="no">ga_accounts</span>)
 
-  <span class="no">gadata</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span>({
+  <span class="no">gadata</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span>({
 
-    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/req.html">req</a></span>(<span class="fu">selected_id</span>())
+    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/req.html">req</a></span>(<span class="fu">selected_id</span>())
     <span class="no">gaid</span> <span class="kw">&lt;-</span> <span class="fu">selected_id</span>()
     <span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/with_shiny.html">with_shiny</a></span>(<span class="no">google_analytics_3</span>,
                <span class="kw">id</span> <span class="kw">=</span> <span class="no">gaid</span>,
@@ -364,15 +371,15 @@ authDropdownUI("auth_menu")</pre></body></html></div>
                <span class="kw">shiny_access_token</span> <span class="kw">=</span> <span class="fu">token</span>())
   })
 
-  <span class="no">output</span>$<span class="no">something</span> <span class="kw">&lt;-</span> <span class="fu">renderHighchart</span>({
+  <span class="no">output</span>$<span class="no">something</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/highcharter/man/renderHighchart.html">renderHighchart</a></span>({
 
     <span class="co">## only trigger once authenticated</span>
-    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/req.html">req</a></span>(<span class="fu">gadata</span>())
+    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/req.html">req</a></span>(<span class="fu">gadata</span>())
 
     <span class="no">gadata</span> <span class="kw">&lt;-</span> <span class="fu">gadata</span>()
 
     <span class="co">## creates a line chart using highcharts</span>
-    <span class="fu">hchart</span>(<span class="no">gadata</span>, <span class="st">"line"</span> , <span class="fu">hcaes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">date</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">sessions</span>))
+    <span class="fu"><a href="https://rdrr.io/pkg/highcharter/man/hchart.html">hchart</a></span>(<span class="no">gadata</span>, <span class="st">"line"</span> , <span class="fu"><a href="https://rdrr.io/pkg/highcharter/man/hcaes.html">hcaes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">date</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">sessions</span>))
 
   })
 

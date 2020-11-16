@@ -13,10 +13,17 @@ The Data API and Google Analytics Admin API are used with the Google Analytics 4
 
 ## Meta data
 
-Metadata for what you can query via the Data API can be found by specifying that API in the `ga_meta()` function:
+Universal metadata for what you can query via the Data API can be found by specifying that API in the `ga_meta()` function:
 
 ```r
 metadata <- ga_meta(version = "data")
+```
+
+You may have custom dimensions and metrics setup for your web property - to get a list of those specify the web property in the meta data call:
+
+```r
+# Google Analytics 4 metadata for a particular Web Property
+ga_meta("data", propertyId = 206670707)
 ```
 
 ## Fetching data

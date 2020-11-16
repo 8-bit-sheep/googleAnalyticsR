@@ -73,6 +73,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/reporting-ga4.html">
+        <span class="fa fa-bar-chart"></span>
+         
+        GA4 Data API
+      </a>
+    </li>
+    <li>
       <a href="../articles/v4.html">
         <span class="fa fa-cogs"></span>
          
@@ -205,7 +212,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="big-query_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Big Query Exports from Google Analytics 360 to R</h1>
@@ -234,11 +241,11 @@
 
 <span class="co">## go through Google oAuth2 flow</span>
 <span class="co">## needs email that has access to the BigQuery dataset</span>
-<span class="fu">bqr_auth</span>()
+<span class="fu"><a href="https://rdrr.io/pkg/bigQueryR/man/bqr_auth.html">bqr_auth</a></span>()
 
 <span class="co">## get lists of your project and datasets</span>
-<span class="fu">bqr_list_projects</span>()
-<span class="fu">bqr_list_datasets</span>(<span class="st">"project-id"</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/pkg/bigQueryR/man/bqr_list_projects.html">bqr_list_projects</a></span>()
+<span class="fu"><a href="https://rdrr.io/pkg/bigQueryR/man/bqr_list_datasets.html">bqr_list_datasets</a></span>(<span class="st">"project-id"</span>)</pre></body></html></div>
 <p>If you want to authenticate with Google Analytics and BigQuery in the same session (or others) then its best to authenticate with <code><a href="https://code.markedmondson.me/googleAuthR//reference/gar_auth.html">googleAuthR::gar_auth()</a></code> with the appropriate scopes set. The below lets you authenticate with Google Analytics, Google Cloud Storage and BigQuery:</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">googleAuthR.scopes.selected</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"https://www.googleapis.com/auth/analytics"</span>,
                                         <span class="st">"https://www.googleapis.com/auth/cloud-platform"</span>,
@@ -290,10 +297,10 @@ FROM [87010628.ga_sessions_20160327],[87010628.ga_sessions_20160328],[87010628.g
 GROUP BY date
 ORDER BY date ASC "</span>
 
-<span class="no">bq3</span> <span class="kw">&lt;-</span> <span class="fu">google_analytics_bq</span>(<span class="st">"project-id"</span>, <span class="st">"dataset-id-ga-viewid"</span>,
+<span class="no">bq3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics_bq.html">google_analytics_bq</a></span>(<span class="st">"project-id"</span>, <span class="st">"dataset-id-ga-viewid"</span>,
                            <span class="kw">query</span> <span class="kw">=</span> <span class="no">q</span>)</pre></body></html></div>
 <p>If you pass in the parameter <code>return_query_only</code> you can output the query for use within the interface:</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">just_query</span> <span class="kw">&lt;-</span> <span class="fu">google_analytics_bq</span>(<span class="st">"project-id"</span>, <span class="st">"dataset-id-ga-viewid"</span>,
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">just_query</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics_bq.html">google_analytics_bq</a></span>(<span class="st">"project-id"</span>, <span class="st">"dataset-id-ga-viewid"</span>,
                                   <span class="kw">start</span> <span class="kw">=</span> <span class="st">"2016-01-01"</span>, <span class="kw">end</span> <span class="kw">=</span> <span class="st">"2016-02-01"</span>,
                                   <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"users"</span>,
                                   <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"source"</span>,<span class="st">"medium"</span>),
