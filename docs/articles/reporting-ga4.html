@@ -331,26 +331,73 @@
    <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>
    )</pre></body></html></div>
 <p>If you need more complicated filters, then build them using <code><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr()</a></code>. This lets you combine <code><a href="../reference/ga_aw_filter.html">ga_aw_filter()</a></code> objects in various ways.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">simple</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr</a></span>(<span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"city"</span>, <span class="st">"Copenhagen"</span>, <span class="st">"EXACT"</span>))
-
-<span class="no">multiple</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr</a></span>(
-      <span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"dayOfWeek"</span>, <span class="st">"4"</span>, <span class="st">"EXACT"</span>),
-     <span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"dayOfWeek"</span>, <span class="st">"5"</span>, <span class="st">"EXACT"</span>),
-    <span class="kw">type</span> <span class="kw">=</span> <span class="st">"or"</span>)
-
-<span class="co"># equivalent to above as uses InList filter</span>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr</a></span>(
+  <span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"city"</span>, <span class="st">"Copenhagen"</span>, <span class="st">"EXACT"</span>)
+  )</pre></body></html></div>
+<pre><code>## --GA4 Filter:  
+## --| city 
+## ----stringFilter:  
+## value:  Copenhagen | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr</a></span>(
+  <span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"dayOfWeek"</span>, <span class="st">"4"</span>, <span class="st">"EXACT"</span>),
+  <span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"dayOfWeek"</span>, <span class="st">"5"</span>, <span class="st">"EXACT"</span>),
+  <span class="kw">type</span> <span class="kw">=</span> <span class="st">"or"</span>)</pre></body></html></div>
+<pre><code>## ==orGroup:  
+## [[1]]
+## --GA4 Filter:  
+## --| dayOfWeek 
+## ----stringFilter:  
+## value:  4 | matchType:  EXACT | caseSensitive:  TRUE
+## [[2]]
+## --GA4 Filter:  
+## --| dayOfWeek 
+## ----stringFilter:  
+## value:  5 | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co"># equivalent to above as uses InList filter</span>
 <span class="no">multiple_or2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr</a></span>(
-      <span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"dayOfWeek"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"4"</span>,<span class="st">"5"</span>)))
-
-<span class="co"># make a filter expression then pass it again with type='not' to negate it </span>
-<span class="no">negative</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr</a></span>(<span class="no">multiple_or2</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"not"</span>)
-
-<span class="co"># or directly - </span>
+  <span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"dayOfWeek"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"4"</span>,<span class="st">"5"</span>))
+  )
+<span class="no">multiple_or2</span></pre></body></html></div>
+<pre><code>## --GA4 Filter:  
+## --| dayOfWeek 
+## ----inListFilter:  
+## values:  4 5 
+## caseSensitive:  TRUE</code></pre>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co"># make a filter expression then pass it again with type='not' to negate it </span>
+<span class="fu"><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr</a></span>(<span class="no">multiple_or2</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"not"</span>)</pre></body></html></div>
+<pre><code>## ==notExpression:  
+## --GA4 Filter:  
+## --| dayOfWeek 
+## ----inListFilter:  
+## values:  4 5 
+## caseSensitive:  TRUE</code></pre>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="co"># or directly - </span>
 <span class="no">clean_city</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr</a></span>(
-  <span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"city"</span>, <span class="st">"(not set)"</span>, <span class="st">"EXACT"</span>,), <span class="kw">type</span> <span class="kw">=</span> <span class="st">"not"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/ga_aw_filter.html">ga_aw_filter</a></span>(<span class="st">"city"</span>, <span class="st">"(not set)"</span>, <span class="st">"EXACT"</span>,),
+  <span class="kw">type</span> <span class="kw">=</span> <span class="st">"not"</span>)
+<span class="no">clean_city</span></pre></body></html></div>
+<pre><code>## ==notExpression:  
+## --GA4 Filter:  
+## --| city 
+## ----stringFilter:  
+## value:  (not set) | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
 <p>You can also recursively nest filter expressions - this lets you build up complex filters:</p>
-<pre><code># use previously created filter to build another filter expression:
-complex &lt;- ga_aw_filter_expr(multiple_or2, clean_city)</code></pre>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="co"># use previously created filters to build another filter expression:</span>
+<span class="fu"><a href="../reference/ga_aw_filter_expr.html">ga_aw_filter_expr</a></span>(<span class="no">multiple_or2</span>, <span class="no">clean_city</span>)</pre></body></html></div>
+<pre><code>## ==andGroup:  
+## [[1]]
+## --GA4 Filter:  
+## --| dayOfWeek 
+## ----inListFilter:  
+## values:  4 5 
+## caseSensitive:  TRUE 
+## 
+## [[2]]
+## ==notExpression:  
+## --GA4 Filter:  
+## --| city 
+## ----stringFilter:  
+## value:  (not set) | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
 </div>
 </div>
 <div id="real-time-data" class="section level2">
@@ -358,7 +405,7 @@ complex &lt;- ga_aw_filter_expr(multiple_or2, clean_city)</code></pre>
 <a href="#real-time-data" class="anchor"></a>Real Time Data</h2>
 <p>Real-time data can be fetched with the same function as the regular Data API, but it is calling another endpoint. Add the <code>realtime=TRUE</code> argument to the function.</p>
 <p>A limited subset of <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-api-schema">dimensions and metrics are available in the real-time API</a>. Date ranges are ignored.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># run a real-time report </span>
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="co"># run a real-time report </span>
 <span class="no">realtime</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics_aw.html">google_analytics_aw</a></span>(
   <span class="fl">206670707</span>,
   <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"activeUsers"</span>,

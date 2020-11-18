@@ -65,6 +65,7 @@ is.Filter <- function(x){
 #'
 #' @family FilterExpression functions
 #' @export
+#' @importFrom purrr compact
 FilterExpression <- function(andGroup = NULL,
                              filter = NULL,
                              orGroup = NULL,
@@ -80,8 +81,8 @@ FilterExpression <- function(andGroup = NULL,
   assert_that_ifnn(orGroup, is.FilterExpressionList)
   assert_that_ifnn(notExpression, is.FilterExpression)
   assert_that_ifnn(filter, is.Filter)
-  
-  structure(rmNullObs(list(andGroup = andGroup, 
+
+  structure(compact(list(andGroup = andGroup, 
                  filter = filter, 
                  orGroup = orGroup, 
                  notExpression = notExpression)),

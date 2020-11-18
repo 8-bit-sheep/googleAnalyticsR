@@ -1,61 +1,50 @@
-#' #' @export
+#' @export
 print.gar_FilterExpression <- function(x, ...){
-  cat("==GA4 Filter Expression==\n")
-  cat0("andGroup: ", lapply(x$andGroup, print))
-  cat0("filter: ", x$filter)
-  cat0("orGroup: ", lapply(x$orGroup, print))
-  cat0("notExpression: ", x$notExpression)
+
+  cat0("--GA4 Filter: ", x$filter)
+  cat0("==andGroup: ", x$andGroup$expressions)
+  cat0("==orGroup: ", x$orGroup$expressions)
+  cat0("==notExpression: ", x$notExpression)
+
 }
 
 #' @export
 print.gar_Filter <- function(x, ...){
-  cat("--GA4 Filter\n")
-  cat0("fieldName: ", x$fieldName)
-  cat0("numericFilter: ", x$numericFilter)
-  cat0("inListFilter: ", x$inListFilter)
-  cat0("nullFilter: ", x$nullFilter)
-  cat0("stringFilter: ", x$stringFilter)
-  cat0("betweenFilter: ", x$betweenFilter)
+  cat0("--|", x$fieldName)
+  cat0("----numericFilter: ", x$numericFilter)
+  cat0("----inListFilter: ", x$inListFilter)
+  cat0("----nullFilter: ", x$nullFilter)
+  cat0("----stringFilter: ", x$stringFilter)
+  cat0("----betweenFilter: ", x$betweenFilter)
 }
 
 #' @export
 print.gar_NumericFilter <- function(x, ...){
-  if(is.null(x)) return("")
-  cat("----NumericFilter\n")
-  cat0("operation: ", x$operation)
-  cat0("value:     ", x$value[[1]])
+  cat("operation: ", x$operation, 
+      "| value:     ", x$value[[1]])
 }
 
 #' @export
 print.gar_InListFilter <- function(x, ...){
-  if(is.null(x)) return("")
-  cat("----InListFilter\n")
   cat0("values: ", paste(x$values, collapse = " "))
   cat0("caseSensitive: ", x$caseSensitive)
 }
 
 #' @export
 print.gar_NullFilter <- function(x, ...){
-  if(is.null(x)) return("")
-  cat("----NullFilter\n")
-  cat("")
+  cat("NULL")
 }
 
 #' @export
 print.gar_StringFilter <- function(x, ...){
-  if(is.null(x)) return("")
-  cat("----StringFilter\n")
-  cat0("value: ", x$value[[1]])
-  cat0("matchType: ", x$matchType)
-  cat0("caseSensitive: ", x$caseSensitive)
+  cat("value: ", x$value[[1]], 
+      "| matchType: ", x$matchType, 
+      "| caseSensitive: ", x$caseSensitive)
 }
 
 #' @export
 print.gar_BetweenFilter <- function(x, ...){
-  if(is.null(x)) return("")
-  cat("----BetweenFilter\n")
-  cat0("fromValue: ", x$fromValue)
-  cat0("toValue: ", x$toValue)
+  cat("from: ", x$fromValue, " to: ", x$toValue)
 }
 
 
