@@ -192,6 +192,18 @@ is.named <- function(x) {
 #' @keywords internal
 #' @noRd
 cat0 <- function(prefix = "", x){
+  if(is.null(x)){
+    return("")
+  } 
+  
+  if(inherits(x, "list") && length(x) < 1){
+    return("")
+  }
+  
+  if(inherits(x, "list") && length(x) > 0){
+    return(print(x))
+  }
+
   if(!is.null(x)){
     cat(prefix, x, "\n")
   }
