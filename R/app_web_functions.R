@@ -7,7 +7,7 @@ version_aw <- function(){
 #'
 #' Fetches Google Analytics data for Google Analytics 4 (Previously App+Web)
 #'
-#' @seealso \href{https://developers.google.com/analytics/trusted-testing/analytics-data/}{Google Documentation}
+#' @seealso \href{https://developers.google.com/analytics/devguides/reporting/data/v1}{Google Documentation}
 #'
 #' @details
 #'
@@ -15,7 +15,7 @@ version_aw <- function(){
 #' @inheritParams RunReportRequest
 #' @param date_range A vector of length two with start and end dates in YYYY-MM-DD format
 #' @param dimensionDelimiter If combining dimensions in one column, the delimiter for the value field
-#' @param realtime If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see \url{https://developers.google.com/analytics/trusted-testing/analytics-data/realtime-basics}
+#' @param realtime If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see \url{https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics}
 #' @importFrom googleAuthR gar_api_generator
 #' @import assertthat
 #' @family BatchRunReportsRequest functions
@@ -123,22 +123,18 @@ google_analytics_aw <- function(propertyId,
     
   }
   
-  brrr <- BatchRunReportsRequest(
+  brrr <- RunReportRequest(
     entity = Entity(propertyId),
-    requests = list(
-      RunReportRequest(
-        metrics = mets,
-        dimensions = dims,
-        dateRanges = dates,
-        limit = limit,
-        dimensionFilter = dimensionFilter,
-        metricFilter = metricFilter,
-        metricAggregations = metricAggregations,
-        orderBys = orderBys,
-        keepEmptyRows = TRUE,
-        returnPropertyQuota = TRUE
-      )
-    )
+    metrics = mets,
+    dimensions = dims,
+    dateRanges = dates,
+    limit = limit,
+    dimensionFilter = dimensionFilter,
+    metricFilter = metricFilter,
+    metricAggregations = metricAggregations,
+    orderBys = orderBys,
+    keepEmptyRows = TRUE,
+    returnPropertyQuota = TRUE
   )
   
   ga_aw_report(brrr)
@@ -164,14 +160,14 @@ ga_aw_realtime <- function(property, requestObj){
 #' @noRd
 ga_aw_report <- function(requestObj){
   
-  url <- sprintf("https://analyticsdata.googleapis.com/%s:batchRunReports",
+  url <- sprintf("https://analyticsdata.googleapis.com/%s:runReport",
                  version_aw())
   
   # analyticsdata.batchRunReports
   f <- gar_api_generator(url, "POST", 
-                         data_parse_function = parse_batchrunreports)
+                         data_parse_function = parse_runreports)
   
-  stopifnot(inherits(requestObj, "gar_BatchRunReportsRequest"))
+  stopifnot(inherits(requestObj, "gar_RunReportRequest"))
   o <- f(the_body = requestObj)
   
   o
@@ -187,9 +183,7 @@ parse_realtime <- function(x){
   
 }
 
-parse_batchrunreports <- function(x){
-  
-  o <- x$reports
+parse_runreports <- function(o){
   
   if(no_rows(o)) return(data.frame())
   

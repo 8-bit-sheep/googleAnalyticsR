@@ -36,7 +36,7 @@ google_analytics_aw(
 
 \item{limit}{The number of rows to return - use -1 to return all rows}
 
-\item{realtime}{If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see \url{https://developers.google.com/analytics/trusted-testing/analytics-data/realtime-basics}}
+\item{realtime}{If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see \url{https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics}}
 }
 \description{
 Fetches Google Analytics data for Google Analytics 4 (Previously App+Web)
@@ -93,7 +93,7 @@ realtime <- google_analytics_aw(
 }
 }
 \seealso{
-\href{https://developers.google.com/analytics/trusted-testing/analytics-data/}{Google Documentation}
+\href{https://developers.google.com/analytics/devguides/reporting/data/v1}{Google Documentation}
 
 Other BatchRunReportsRequest functions: 
 \code{\link{BatchRunReportsRequest}()}

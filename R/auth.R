@@ -105,7 +105,7 @@ ga_auth <- function(token = NULL, email = NULL, json_file = NULL){
     cli::cli_alert_info(paste("Authenticating using", client_email))
     return(gar_auth_service(json_file))
   }
-  
+
   # client.id only needed for OAuth2 auth
   default_project_message()
   
