@@ -34,6 +34,8 @@ ga_meta("data", propertyId = 206670707)
 
 ## Fetching data
 
+Make sure to authenticate first using `ga_auth()` or otherwise.
+
 The primary data fetching function is `google_analytics_aw()` (name may change in future)
 
 You need your propertyId to query data, and then at least a metric and date range:

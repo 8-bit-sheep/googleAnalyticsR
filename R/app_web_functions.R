@@ -123,18 +123,22 @@ google_analytics_aw <- function(propertyId,
     
   }
   
-  brrr <- RunReportRequest(
+  brrr <- BatchRunReportsRequest(
     entity = Entity(propertyId),
-    metrics = mets,
-    dimensions = dims,
-    dateRanges = dates,
-    limit = limit,
-    dimensionFilter = dimensionFilter,
-    metricFilter = metricFilter,
-    metricAggregations = metricAggregations,
-    orderBys = orderBys,
-    keepEmptyRows = TRUE,
-    returnPropertyQuota = TRUE
+    requests = list(
+      RunReportRequest(
+        metrics = mets,
+        dimensions = dims,
+        dateRanges = dates,
+        limit = limit,
+        dimensionFilter = dimensionFilter,
+        metricFilter = metricFilter,
+        metricAggregations = metricAggregations,
+        orderBys = orderBys,
+        keepEmptyRows = TRUE,
+        returnPropertyQuota = TRUE
+      )
+    )
   )
   
   ga_aw_report(brrr)
@@ -160,14 +164,14 @@ ga_aw_realtime <- function(property, requestObj){
 #' @noRd
 ga_aw_report <- function(requestObj){
   
-  url <- sprintf("https://analyticsdata.googleapis.com/%s:runReport",
+  url <- sprintf("https://analyticsdata.googleapis.com/%s:batchRunReports",
                  version_aw())
   
   # analyticsdata.batchRunReports
   f <- gar_api_generator(url, "POST", 
-                         data_parse_function = parse_runreports)
+                         data_parse_function = parse_batchrunreports)
   
-  stopifnot(inherits(requestObj, "gar_RunReportRequest"))
+  stopifnot(inherits(requestObj, "gar_BatchRunReportsRequest"))
   o <- f(the_body = requestObj)
   
   o
@@ -183,7 +187,9 @@ parse_realtime <- function(x){
   
 }
 
-parse_runreports <- function(o){
+parse_batchrunreports <- function(x){
+  
+  o <- x$reports
   
   if(no_rows(o)) return(data.frame())
   
