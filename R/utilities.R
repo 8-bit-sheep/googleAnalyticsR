@@ -22,16 +22,6 @@ assign_list_class <- function(x, the_class){
 
 }
 
-add_class_if_list <- function(x, the_class){
-
-  if(!is.null(x) && class(x) == "list"){
-    class(x) <- the_class
-  }
-
-  x
-}
-
-
 #' assign new value if not null and check passes
 #' @noRd
 assign_new <- function(new, old, check_f = is.function){
