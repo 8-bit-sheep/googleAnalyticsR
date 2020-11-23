@@ -43,7 +43,6 @@ version_aw <- function(){
 #'   metrics = c("activeUsers","sessions",sessionsPerUser = "sessions/activeUsers"),
 #'   dimensions = c("date","city","dayOfWeek"),
 #'   date_range = c("2020-03-31", "2020-04-27"),
-#'   dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
 #'   limit = 100
 #'   )
 #'
@@ -53,7 +52,6 @@ version_aw <- function(){
 #'   metrics = c("activeUsers","sessions"),
 #'   dimensions = c("date","city","dayOfWeek", cdow = "city/dayOfWeek"),
 #'   date_range = c("2020-03-31", "2020-04-27"),
-#'   dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
 #'   limit = 100
 #'   )
 #'   
@@ -402,7 +400,6 @@ ga_aw_filter <- function(field,
                                        "GREATER_THAN",
                                        "GREATER_THAN_OR_EQUAL"),
                          caseSensitive = TRUE){
-  
   if(is.string(value)){
     assert_that(operation %in% c("EXACT",
                                  "BEGINS_WITH",
@@ -422,7 +419,7 @@ ga_aw_filter <- function(field,
                      value,
                      caseSensitive = caseSensitive
                    ))
-  } else if(is.count(value)){
+  } else if(is.numeric(value)){
     assert_that(operation %in% c("EQUAL",
                                  "LESS_THAN",
                                  "LESS_THAN_OR_EQUAL",
@@ -442,7 +439,7 @@ ga_aw_filter <- function(field,
   } else if(is.flag(value)){
     o <- Filter_aw(field, nullFilter = value)
   } else {
-    stop("Didn't know what to do with value of type: ", class(value), 
+    stop("Filter didn't know what to do with value of type: ", class(value), 
          call. = FALSE)
   }
   
@@ -500,18 +497,268 @@ ga_aw_filter_expr <- function(...,
   areFilterExpressions <- all(vapply(dots, is.FilterExpression, 
                                      FUN.VALUE = logical(1)))
   
-  if(areFilters){
-    
-    return(make_filter_expr(dots, type))
-  }
+  if(areFilters) return(make_filter_expr(dots, type))
   
-  if(areFilterExpressions){
-    return(make_filter_expr_list(dots, type))
-  }
+  if(areFilterExpressions) return(make_filter_expr_list(dots, type))
 
   stop("Inconsistent filter objects - must all be Filters or FilterExpressions", 
        call. = FALSE)
   
+}
+
+dsl_filter_expr_funcs <- list(
+  
+  # filter expression operators
+  `|` = function(e1, e2){
+    ga_aw_filter_expr(e1, e2, type = "or")
+  },
+  
+  `&` = function(e1, e2){
+    ga_aw_filter_expr(e1, e2, type = "and")
+  },
+  
+  `!` = function(x){
+    ga_aw_filter_expr(x, type = "not")
+  },
+  
+  `==` = function(e1, e2){
+
+    if(inherits(e2, "character")){
+      ga_aw_filter(e1, e2, operation = "EXACT")
+    } else if(inherits(e2, "numeric")){
+      ga_aw_filter(e1, e2, operation = "EQUAL")
+    } else {
+      stop("value for '==' is neither character or numeric class", 
+           call. = FALSE)
+    }
+  },
+  
+  # numeric only filters
+  `<` = function(e1, e2){
+    
+    if(inherits(e2, "character")){
+      stop("Can't use < (LESS_THAN) for value strings: ", e2, call. = FALSE)
+    } else if(inherits(e2, "numeric")){
+      ga_aw_filter(e1, e2, operation = "LESS_THAN")
+    } else {
+      stop("value for '<' is neither character or numeric class", 
+           call. = FALSE)
+    }
+  },
+  
+  `>` = function(e1, e2){
+    
+    if(inherits(e2, "character")){
+      stop("Can't use > (GREATER_THAN) for value strings: ", e2, call. = FALSE)
+    } else if(inherits(e2, "numeric")){
+      ga_aw_filter(e1, e2, operation = "GREATER_THAN")
+    } else {
+      stop("value for '>' is neither character or numeric class", 
+           call. = FALSE)
+    }
+  },
+  
+  `<=` = function(e1, e2){
+    
+    if(inherits(e2, "character")){
+      stop("Can't use <= (LESS_THAN_OR_EQUAL) for value strings: ", e2, call. = FALSE)
+    } else if(inherits(e2, "numeric")){
+      ga_aw_filter(e1, e2, operation = "LESS_THAN_OR_EQUAL")
+    } else {
+      stop("value for '<=' is neither character or numeric class", 
+           call. = FALSE)
+    }
+  },
+  
+  `>=` = function(e1, e2){
+    
+    if(inherits(e2, "character")){
+      stop("Can't use <= (GREATER_THAN_OR_EQUAL) for value strings: ", e2, call. = FALSE)
+    } else if(inherits(e2, "numeric")){
+      ga_aw_filter(e1, e2, operation = "GREATER_THAN_OR_EQUAL")
+    } else {
+      stop("value for '>=' is neither character or numeric class", 
+           call. = FALSE)
+    }
+  },
+  
+  # string filters
+  `%begins%` = function(e1, e2){
+    
+    if(inherits(e2, "character")){
+      ga_aw_filter(e1, e2, operation = "BEGINS_WITH")
+    } else if(inherits(e2, "numeric")){
+      stop("Can't use %begins% (BEGINS_WITH) for numerics: ", e2, call. = FALSE)
+    } else {
+      stop("value for '%begins%' is neither character or numeric class", 
+           call. = FALSE)
+    }
+  },
+  
+  # string filters
+  `%BEGINS%` = function(e1, e2){
+    
+    if(inherits(e2, "character")){
+      ga_aw_filter(e1, e2, operation = "BEGINS_WITH", caseSensitive = FALSE)
+    } else if(inherits(e2, "numeric")){
+      stop("Can't use %BEGINS% (BEGINS_WITH, case insensitive) for numerics: ", e2, call. = FALSE)
+    } else {
+      stop("value for '%BEGINS%' is neither character or numeric class", 
+           call. = FALSE)
+    }
+  },
+  
+  `%ends%` = function(e1, e2){
+    
+    if(inherits(e2, "character")){
+      ga_aw_filter(e1, e2, operation = "ENDS_WITH")
+    } else if(inherits(e2, "numeric")){
+      stop("Can't use %ends% (ENDS_WITH) for numerics: ", e2, call. = FALSE)
+    } else {
+      stop("value for '%ends%' is neither character or numeric class", 
+           call. = FALSE)
+    }
+  },
+  
+  `%ENDS%` = function(e1, e2){
+    
+    if(inherits(e2, "character")){
+      ga_aw_filter(e1, e2, operation = "ENDS_WITH", caseSensitive = FALSE)
+    } else if(inherits(e2, "numeric")){
+      stop("Can't use %ENDS% (ENDS_WITH, case insensitive) for numerics: ", e2, call. = FALSE)
+    } else {
+      stop("value for '%ENDS%' is neither character or numeric class", 
+           call. = FALSE)
+    }
+  },
+  
+  `%in%` = function(e1, e2){
+
+    if(inherits(e2, "character")){
+      ga_aw_filter(e1, e2, operation = "CONTAINS")
+    } else if(inherits(e2, "numeric")){
+      stop("Can't use %in% (CONTAINS) for numerics: ", e2, call. = FALSE)
+    } else {
+      stop("value for '%in%' is neither character or numeric class", 
+           call. = FALSE)
+    }
+  },
+  
+  `%IN%` = function(e1, e2){
+    
+    if(inherits(e2, "character")){
+      ga_aw_filter(e1, e2, operation = "CONTAINS", caseSensitive = FALSE)
+    } else if(inherits(e2, "numeric")){
+      stop("Can't use %IN% (IN) for numerics: ", e2, call. = FALSE)
+    } else {
+      stop("value for '%in%' is neither character or numeric class", 
+           call. = FALSE)
+    }
+  },
+  
+  `%regex%` = function(e1, e2){
+    
+    if(inherits(e2, "character")){
+      ga_aw_filter(e1, e2, operation = "FULL_REGEXP")
+    } else if(inherits(e2, "numeric")){
+      stop("Can't use %regex% (FULL_REGEXP) for numerics: ", e2, call. = FALSE)
+    } else {
+      stop("value for %regex% is neither character or numeric class", 
+           call. = FALSE)
+    }
+  },
+  
+  `%REGEX%` = function(e1, e2){
+    
+    if(inherits(e2, "character")){
+      ga_aw_filter(e1, e2, operation = "FULL_REGEXP", caseSensitive = FALSE)
+    } else if(inherits(e2, "numeric")){
+      stop("Can't use %REGEX% (FULL_REGEXP) for numerics: ", e2, call. = FALSE)
+    } else {
+      stop("value for '%REGEX%' is neither character or numeric class", 
+           call. = FALSE)
+    }
+  },
+  
+  `%regex_partial%` = function(e1, e2){
+    
+    if(inherits(e2, "character")){
+      ga_aw_filter(e1, e2, operation = "PARTIAL_REGEXP")
+    } else if(inherits(e2, "numeric")){
+      stop("Can't use %regex_partial% (PARTIAL_REGEXP) for numerics: ", e2, call. = FALSE)
+    } else {
+      stop("value for '%regex_partial%' is neither character or numeric class", 
+           call. = FALSE)
+    }
+  },
+  
+  `%REGEX_PARTIAL%` = function(e1, e2){
+    
+    if(inherits(e2, "character")){
+      ga_aw_filter(e1, e2, operation = "PARTIAL_REGEXP", caseSensitive = FALSE)
+    } else if(inherits(e2, "numeric")){
+      stop("Can't use %regex_partial% (PARTIAL_REGEXP) for numerics: ", e2, call. = FALSE)
+    } else {
+      stop("value for '%REGEX_PARTIAL%' is neither character or numeric class", 
+           call. = FALSE)
+    }
+  }
+)
+
+#' DSL for GA4 filters
+#' @param x DSL enabled syntax
+#' @export
+#' @importFrom rlang enquo eval_tidy
+#' @examples 
+#' 
+#' ## filter clauses
+#' # or string filter
+#' ga_filter_dsl("city"=="Copenhagen" | "city" == "London")
+#' # inlist string filter
+#' ga_filter_dsl("city"==c("Copenhagen","London"))
+#' # and string filters
+#' ga_filter_dsl("city"=="Copenhagen" & "dayOfWeek" == "5")
+#' # invert string filter
+#' ga_filter_dsl(!("city"=="Copenhagen" | "city" == "London"))
+#' 
+#' ## numeric filter types
+#' # numeric equal filter
+#' ga_filter_dsl("sessions"==5)
+#' # between numeric filter
+#' ga_filter_dsl("sessions"==c(5,6))
+#' # greater than numeric
+#' ga_filter_dsl("sessions" > 0)
+#' # great than or equal
+#' ga_filter_dsl("sessions" >= 1)
+#' # less than numeric
+#' ga_filter_dsl("sessions" < 100)
+#' # less than or equal numeric
+#' ga_filter_dsl("sessions" <= 100)
+#' 
+#' ## string filter types
+#' # begins with string
+#' ga_filter_dsl("city" %begins% "Cope")
+#' # ends with string
+#' ga_filter_dsl("city" %ends% "hagen")
+#' # contains string
+#' ga_filter_dsl("city" %in% "ope")
+#' # regex (full) string
+#' ga_filter_dsl("city" %regex% "^Cope")
+#' # regex (partial) string
+#' ga_filter_dsl("city" %regex_partial% "ope")
+#' 
+#' # by default string filters are case sensitive.  
+#' # Use UPPERCASE operator to make then case insensitive
+#' 
+#' # begins with string (case insensitive)
+#' ga_filter_dsl("city" %BEGINS% "cope")
+#' # ends with string (case insensitive)
+#' ga_filter_dsl("city" %ENDS% "Hagen")
+#' 
+#' 
+ga_filter_dsl <- function(x){
+  x <- rlang::enquo(x)
+  rlang::eval_tidy(x, data = dsl_filter_expr_funcs)
 }
 
 make_filter_expr_list <- function(dots, type){

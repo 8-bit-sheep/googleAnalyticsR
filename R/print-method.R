@@ -44,7 +44,7 @@ print.gar_StringFilter <- function(x, ...){
 
 #' @export
 print.gar_BetweenFilter <- function(x, ...){
-  cat("from: ", x$fromValue, " to: ", x$toValue)
+  cat("from: ", x$fromValue[[1]], " to: ", x$toValue[[1]])
 }
 
 

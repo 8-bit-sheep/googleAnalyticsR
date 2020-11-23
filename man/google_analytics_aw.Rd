@@ -67,7 +67,6 @@ met_expression <- google_analytics_aw(
   metrics = c("activeUsers","sessions",sessionsPerUser = "sessions/activeUsers"),
   dimensions = c("date","city","dayOfWeek"),
   date_range = c("2020-03-31", "2020-04-27"),
-  dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
   limit = 100
   )
 
@@ -77,7 +76,6 @@ dim_expression <- google_analytics_aw(
   metrics = c("activeUsers","sessions"),
   dimensions = c("date","city","dayOfWeek", cdow = "city/dayOfWeek"),
   date_range = c("2020-03-31", "2020-04-27"),
-  dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
   limit = 100
   )
   
