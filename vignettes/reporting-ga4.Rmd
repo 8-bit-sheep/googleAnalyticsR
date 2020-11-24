@@ -2,22 +2,24 @@
 title: "Data API for Google Analytics 4 (App+Web)"
 ---
 
-The Data API and Google Analytics Admin API are used with the Google Analytics 4 properties, the newest version of Google Analytics and evolution from Universal Analytics.  
+The [Data API](https://developers.google.com/analytics/devguides/reporting/data/v1) and [Google Analytics Admin API](https://developers.google.com/analytics/devguides/config/admin/v1) are used with the Google Analytics 4 properties, the newest version of Google Analytics and evolution from Universal Analytics.  
 
 ```{r include=FALSE}
 library(googleAnalyticsR)
 ```
 
 
-## Features
+## Google Analytics 4 - Data API Features
 
 * Only API to fetch data from Google Analytics 4 properties
+* No sampling
+* Fewer limits on exports, such as being able to fetch more than 1million rows
 * Ability to create your own custom metrics and dimensions
-* Can send in up to 4 date ranges at once
+* Send in up to 4 date ranges at once
 * Easier integration with the real-time API
-* More flexible filters
+* Improved filter syntax
 
-## Meta data
+## Meta data for GA4
 
 Universal metadata for what you can query via the Data API can be found by specifying that API in the `ga_meta()` function:
 
@@ -32,65 +34,165 @@ You may have custom dimensions and metrics setup for your web property - to get 
 ga_meta("data", propertyId = 206670707)
 ```
 
-## Fetching data
+## Fetching GA4 Data into R
 
 Make sure to authenticate first using `ga_auth()` or otherwise.
 
-The primary data fetching function is `google_analytics_aw()` (name may change in future)
+The primary data fetching function is `ga_data()`
 
-You need your propertyId to query data, and then at least a metric and date range:
+You need your `propertyId` to query data, and then at least a metric and date range:
 
 ```r
 # replace with your propertyId
 my_property_id <- 206670707
-basic <- google_analytics_aw(
+basic <- ga_data(
   my_property_id,
   metrics = c("activeUsers","sessions"),
   date_range = c("2020-03-31", "2020-04-27")
   )
+  
+basic
+# A tibble: 1 x 2
+#  activeUsers sessions
+#        <dbl>    <dbl>
+#1        1716     2783
 ```
 
 Dimensions can be added to split out your results:
 
 ```r
 # split out metrics by the dimensions specified
-dimensions <- google_analytics_aw(
+dimensions <- ga_data(
     my_property_id,
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek"),
     date_range = c("2020-03-31", "2020-04-27")
 )
+
+dimensions
+# A tibble: 100 x 5
+#   date       city      dayOfWeek activeUsers sessions
+#   <date>     <chr>     <chr>           <dbl>    <dbl>
+# 1 2020-04-08 (not set) 4                  18       21
+# 2 2020-04-08 Rome      4                  12       14
+# 3 2020-04-15 (not set) 4                   9       11
+# 4 2020-04-27 (not set) 2                   9       11
+# 5 2020-04-09 (not set) 5                   8       10
+# 6 2020-04-14 (not set) 3                   8        8
+# 7 2020-04-22 (not set) 4                   8        9
+# 8 2020-03-31 (not set) 3                   7       10
+# 9 2020-04-08 Bologna   4                   7        7
+#10 2020-04-07 (not set) 3                   6        7
+# … with 90 more rows
 ```
 
 By default the API returns 100 results.  Add the `limit` parameter to change the number of results returned.  To get all results, use -1
 
 ```r
-only_10 <- google_analytics_aw(
+only_5 <- ga_data(
     my_property_id,
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek"),
     date_range = c("2020-03-31", "2020-04-27"),
-    limit = 10
+    limit = 5
 )
 
-all_results <- google_analytics_aw(
+only_5
+# A tibble: 5 x 5
+#  date       city      dayOfWeek activeUsers sessions
+#  <date>     <chr>     <chr>           <dbl>    <dbl>
+#1 2020-04-08 (not set) 4                  18       21
+#2 2020-04-08 Rome      4                  12       14
+#3 2020-04-15 (not set) 4                   9       11
+#4 2020-04-27 (not set) 2                   9       11
+#5 2020-04-09 (not set) 5                   8       10
+
+all_results <- ga_data(
     my_property_id,
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek"),
     date_range = c("2020-03-31", "2020-04-27"),
     limit = -1
 )
+
+all_results
+# A tibble: 1,763 x 5
+#   date       city      dayOfWeek activeUsers sessions
+#   <date>     <chr>     <chr>           <dbl>    <dbl>
+# 1 2020-04-08 (not set) 4                  18       21
+# 2 2020-04-08 Rome      4                  12       14
+# 3 2020-04-15 (not set) 4                   9       11
+# 4 2020-04-27 (not set) 2                   9       11
+# 5 2020-04-09 (not set) 5                   8       10
+# 6 2020-04-14 (not set) 3                   8        8
+# 7 2020-04-22 (not set) 4                   8        9
+# 8 2020-03-31 (not set) 3                   7       10
+# 9 2020-04-08 Bologna   4                   7        7
+#10 2020-04-07 (not set) 3                   6        7
+# … with 1,753 more rows
+```
+
+## Date Ranges
+
+You can send in up to 4 date ranges, via a vector of dates:
+
+```r
+date_range4 <- ga_data(
+    my_property_id,
+    metrics = c("activeUsers","sessions"),
+    dimensions = c("date","city","dayOfWeek"),
+    date_range = c("2020-03-31", "2020-04-06", 
+                   "2020-04-07", "2020-04-14", 
+                   "2020-04-15", "2020-04-22", 
+                   "2020-04-23", "2020-04-30"),
+    limit = -1
+)
+```
+
+The date is output with a `dateRange` column indicating which date ranges the data belongs to:
+
+```r
+date_range4
+# A tibble: 7,948 x 6
+#   date       city            dayOfWeek dateRange    activeUsers sessions
+#   <date>     <chr>           <chr>     <chr>              <dbl>    <dbl>
+# 1 2020-04-06 Laval           2         date_range_0           1        1
+# 2 2020-04-29 Ghent           4         date_range_3           1        1
+# 3 2020-03-31 Wokingham       3         date_range_0           1        1
+# 4 2020-04-01 Zielona Gora    4         date_range_0           1        1
+# 5 2020-04-16 Charlottesville 5         date_range_2           1        1
+# 6 2020-04-25 Fulshear        7         date_range_3           1        1
+# … with 7,938 more rows
 ```
 
 ## Filters
 
-Filters are simpler to create but more flexible that in Universal Analytics. 
+Filters are simpler to create but more flexible than in Universal Analytics. 
 
-There are now only two filter functions - `ga_aw_filter()` and `ga_aw_filter_expr()`.  As was the case for `google_analytics()` , you use the filter functions to construct metric filters or dimension filters in the `dimensionFilter` or `metricFilter` parameters. Do not construct metric filters and use in the `dimensionFilter` argument or vice-versa.
+There is now only one filter function - `ga_data_filter()`.  As was the case for `google_analytics()` , you use the filter function to construct metric filters or dimension filters in the `dimensionFilter` or `metricFilter` parameters in your `ga_data()` call. 
 
 ### Making filter elements
 
-The base object is `ga_aw_filter()` - this holds the logic for the specific metric or dimension you are using.  The function will check your filter object based on the R class of the object you are passing in as its value:
+The base object is `ga_data_filter()` - this holds the logic for the specific metric or dimension you are using.  The function uses a new DSL for GA4 filters, the syntax rules are detailed below: 
+
+* A single filter, or multiple filters within a filter expression can be passed in to `ga_data()`
+* The single filter syntax is (field) (operator) (value) e.g. `"city"=="Copenhagen"`
+* (field) is a dimension or metric for your web property, which you can review via `ga_meta("data")`
+* (operator) can be one of `==, >, >=, <, <=` for metrics
+* (operator) can be one of `==, %begins%, %ends%, %contains%, %contains%, %regex%, %regex_partial%` for dimensions
+* dimension (operator) are by default case sensitive. Make them case insensitive by using UPPER case variations `%BEGINS%, %ENDS%` etc. or `%==%` for case insensitive exact matches
+* (value) can be strings (`"dim1"`), numerics (`55`), string vectors (`c("dim1", "dim2")`), numeric vectors (`c(1,2,3)`) or boolean (`TRUE`) which will correspond to different types of filters
+* Filter expressions for multiple filters when using the operators: `&, |, !` which correspond to `AND`, `OR` and `NOT` respectively. 
+
+#### Filter Fields
+
+Fields are metrics and dimensions that are available to your GA4 implementation, including custom fields.  You can see what is available by calling the `ga_meta("data")` function.
+
+Do not construct metric filters and use in the `dimensionFilter` argument or vice-versa.
+
+#### Filter Values
+
+Values are checked in the filter object based on the R class of the object you are passing in as its value:
 
 * `character`: stringFilter - e.g. `"Copenhagen"`
 * `character vector`: inListFilter e.g. `c("Copenhagen","London","New York")`
@@ -100,62 +202,153 @@ The base object is `ga_aw_filter()` - this holds the logic for the specific metr
 
 e.g. if you pass in a character of length one (`"Copenhagen"`) then it will assume to be a class `StringFilter` (all dimensions that match "Copenhagen") if you pass in a character of length greater than one `c("Copenhagen","London","New York")`, then it assume to be a class `InListFilter` (dimensions must match one in the list)
 
-Ensure the comparison operation you are using makes sense for the type of value:
+### Examples Using GA4 Filters
 
-* string filters: `"EXACT","BEGINS_WITH","ENDS_WITH","CONTAINS","FULL_REGEXP", "PARTIAL_REGEXP"`
-* numeric filters: `"EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "GREATER_THAN", "GREATER_THAN_OR_EQUAL"`
-
-### Using filter elements
-
-All filters are made up of filter expressions using `ga_aw_filter_expr()`, but if you want just one filter, use `ga_aw_filter()` directly in your GA call.
+All filters are made up of filter expressions using `ga_data_filter()`:
 
 ```r
-simple_filter <- google_analytics_aw(
+simple_filter <- ga_data(
    206670707,
    metrics = c("activeUsers","sessions"),
    dimensions = c("date","city","dayOfWeek"),
    date_range = c("2020-03-31", "2020-04-27"),
-   dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
+   dimensionFilter = ga_data_filter("city"=="Copenhagen"),
    limit = 100
    )
+
+simple_filter
+# A tibble: 17 x 5
+#   date       city       dayOfWeek activeUsers sessions
+#   <date>     <chr>      <chr>           <dbl>    <dbl>
+# 1 2020-04-16 Copenhagen 5                   3        4
+# 2 2020-04-10 Copenhagen 6                   2        2
+# 3 2020-04-15 Copenhagen 4                   2        2
+# 4 2020-04-17 Copenhagen 6                   2        2
+# ...
 ```
 
-If you need more complicated filters, then build them using `ga_aw_filter_expr()`.  This lets you combine `ga_aw_filter()` objects in various ways.
+If you need more complicated filters, then build them using the DSL syntax.  This lets you combine `ga_data_filter()` objects in various ways.
 
 
 ```{r}
-ga_aw_filter_expr(
-  ga_aw_filter("city", "Copenhagen", "EXACT")
-  )
+## filter clauses
+# OR string filter
+ga_data_filter("city"=="Copenhagen" | "city" == "London")
+# inlist string filter
+ga_data_filter("city"==c("Copenhagen","London"))
+# AND string filters
+ga_data_filter("city"=="Copenhagen" & "dayOfWeek" == "5")
+# NOT string filter
+ga_data_filter(!("city"=="Copenhagen" | "city" == "London"))
 
-ga_aw_filter_expr(
-  ga_aw_filter("dayOfWeek", "4", "EXACT"),
-  ga_aw_filter("dayOfWeek", "5", "EXACT"),
-  type = "or") 
-   
-# equivalent to above as uses InList filter
-multiple_or2 <- ga_aw_filter_expr(
-  ga_aw_filter("dayOfWeek", c("4","5"))
-  )
-multiple_or2
-
-# make a filter expression then pass it again with type='not' to negate it 
-ga_aw_filter_expr(multiple_or2, type = "not")
-
-# or directly - 
-clean_city <- ga_aw_filter_expr(
-  ga_aw_filter("city", "(not set)", "EXACT",), 
-  type = "not")
-clean_city
+# multiple filter clauses
+ga_data_filter("city"==c("Copenhagen","London","Paris","New York") &
+                 ("dayOfWeek"=="5" | "dayOfWeek"=="6"))
 ```
 
-You can also recursively nest filter expressions - this lets you build up complex filters:
+Numeric filters for use in `metricFilters`
+
+```r
+metric_filter <- ga_data(
+   206670707,
+   metrics = c("activeUsers","sessions"),
+   dimensions = c("date","city","dayOfWeek"),
+   date_range = c("2020-03-31", "2020-04-27"),
+   metricFilter = ga_data_filter("sessions">10),
+   limit = 100
+   )
+
+metric_filter
+# A tibble: 7 x 5
+#  date       city      dayOfWeek activeUsers sessions
+#  <date>     <chr>     <chr>           <dbl>    <dbl>
+#1 2020-04-08 (not set) 4                  18       21
+#2 2020-04-08 Rome      4                  12       14
+#3 2020-04-15 (not set) 4                   9       11
+#4 2020-04-27 (not set) 2                   9       11
+# ...
+```
+
+```{r}
+## numeric filter types
+# numeric equal filter
+ga_data_filter("sessions"==5)
+# between numeric filter
+ga_data_filter("sessions"==c(5,6))
+# greater than numeric
+ga_data_filter("sessions" > 0)
+# greater than or equal
+ga_data_filter("sessions" >= 1)
+# less than numeric
+ga_data_filter("sessions" < 100)
+# less than or equal numeric
+ga_data_filter("sessions" <= 100)
+```
+
+All the string filters that can be used are below:
+
+```{r}
+## string filter types
+# begins with string
+ga_data_filter("city" %begins% "Cope")
+# ends with string
+ga_data_filter("city" %ends% "hagen")
+# contains string
+ga_data_filter("city" %contains% "ope")
+# regex (full) string
+ga_data_filter("city" %regex% "^Cope")
+# regex (partial) string
+ga_data_filter("city" %regex_partial% "ope")
+
+# by default string filters are case sensitive.  
+# Use UPPERCASE operator to make then case insensitive
+
+# begins with string (case insensitive)
+ga_data_filter("city" %BEGINS% "cope")
+# ends with string (case insensitive)
+ga_data_filter("city" %ENDS% "Hagen")
+# case insensitive exact match
+ga_data_filter("city" %==% "copeNHAGen")
+```
+
+You can also recursively nest filter expressions:
 
 ```{r}
 # use previously created filters to build another filter expression:
-ga_aw_filter_expr(multiple_or2, clean_city)
+# multiple filter clauses
+f1 <- ga_data_filter("city"==c("Copenhagen","London","Paris","New York") &
+                       ("dayOfWeek"=="5" | "dayOfWeek"=="6")) 
+
+# build up complicated filters
+f2 <- ga_data_filter(f1 | "sessionSource"=="google")
+f3 <- ga_data_filter(f2 & !"sessionMedium"=="cpc")
+f3
 ```
 
+The filter above looks for visitors from Copenhagen, London, Paris or New York who arrived on day 5 or 6 of the week, from Google referrers but not including Google Ads.
+
+You can use filter expression objects above directly like so:
+
+```r
+complex_filter <- ga_data(
+   206670707,
+   metrics = c("activeUsers","sessions"),
+   dimensions = c("date","city","dayOfWeek"),
+   date_range = c("2020-03-31", "2020-04-27"),
+   dimensionFilter = f3,
+   limit = 100
+   )
+   
+complex_filter
+# A tibble: 100 x 5
+#   date       city      dayOfWeek activeUsers sessions
+#   <date>     <chr>     <chr>           <dbl>    <dbl>
+# 1 2020-04-09 London    5                   6        7
+# 2 2020-04-14 (not set) 3                   6        6
+# 3 2020-04-22 (not set) 4                   6        7
+# 4 2020-04-15 (not set) 4                   5        6
+# ...
+```
 
 ## Real Time Data
 
@@ -165,11 +358,48 @@ A limited subset of [dimensions and metrics are available in the real-time API](
 
 ```r
 # run a real-time report 
-realtime <- google_analytics_aw(
+realtime <- ga_data(
   206670707,
   metrics = "activeUsers",
   dimensions = "city",
-  dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
+  dimensionFilter = ga_data_filter("city"=="Copenhagen"),
   limit = 100,
   realtime = TRUE)
 ```
+
+## Quotas
+
+There is no sampling but there are token quotas for API fetches on a per-project basis.  Normally these are not visible until you are close to the quota limits, but you can see them if you set the googleAuthR verbose level below 3 (`options(googleAuthR.verbose=2)`))
+
+The bigger and more complex the query you make, the more tokens you use.
+
+An example taken from above:
+
+```r
+options(googleAuthR.verbose=2)
+complex_filter <- ga_data(
+     206670707,
+     metrics = c("activeUsers","sessions"),
+     dimensions = c("date","city","dayOfWeek"),
+    date_range = c("2020-03-31", "2020-04-06", 
+                   "2020-04-07", "2020-04-14", 
+                   "2020-04-15", "2020-04-22", 
+                   "2020-04-23", "2020-04-30"),
+     dimensionFilter = f3,
+     limit = 100
+)
+#>ℹ 2020-11-24 16:12:35 > Request:  https://analyticsdata.googleapis.com/v1alpha:batchRunReports/
+#>ℹ 2020-11-24 16:12:35 > Body JSON parsed to:  {"entity":{"propertyId":"206670707"},"requests":[{"metrics":[{"name":"activeUsers"},{"name":"sessions"}],"dimensions":[{"name":"date"},{"name":"city"},{"name":"dayOfWeek"}],"dateRanges":[{"startDate":"2020-03-31","endDate":"2020-04-06"},{"startDate":"2020-04-07","endDate":"2020-04-14"},{"startDate":"2020-04-15","endDate":"2020-04-22"},{"startDate":"2020-04-23","endDate":"2020-04-30"}],"keepEmptyRows":true,"dimensionFilter":{"andGroup":{"expressions":[{"orGroup":{"expressions":[{"andGroup":{"expressions":[{"filter":{"fieldName":"city","inListFilter":{"caseSensitive":true,"values":["Copenhagen","London","Paris","New York"]}}},{"orGroup":{"expressions":[{"filter":{"fieldName":"dayOfWeek","stringFilter":{"caseSensitive":true,"value":"5","matchType":"EXACT"}}},{"filter":{"fieldName":"dayOfWeek","stringFilter":{"caseSensitive":true,"value":"6","matchType":"EXACT"}}}]}}]}},{"filter":{"fieldName":"sessionSource","stringFilter":{"caseSensitive":true,"value":"google","matchType":"EXACT"}}}]}},{"notExpression":{"filter":{"fieldName":"sessionMedium","stringFilter":{"caseSensitive":true,"value":"cpc","matchType":"EXACT"}}}}]}},"limit":100,"returnPropertyQuota":true}]}
+#>ℹ 2020-11-24 16:12:36 > tokensPerDay: Query Cost [ 15 ] / Remaining [ 24847 ]
+#>ℹ 2020-11-24 16:12:36 > tokensPerHour: Query Cost [ 15 ] / Remaining [ 4967 ]
+#>ℹ 2020-11-24 16:12:36 > concurrentRequests:  10  / 10
+#>ℹ 2020-11-24 16:12:36 > serverErrorsPerProjectPerHour:  10  / 10
+```
+
+The quotas are:
+
+* `tokensPerDay` - how many tokens in 24hrs
+* `tokensPerHour` - how many tokens in 1 hr
+* `concurrentRequests` - how many API requests at once
+* `serverErrorsPerProjectPerHour` - how many bad API calls you can make per project/hr
+

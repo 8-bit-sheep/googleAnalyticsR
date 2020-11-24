@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Create a filter expression for use with App+Web Reports — ga_aw_filter_expr" />
-<meta property="og:description" content="For use with google_analytics_aw - filter expressions are built up via filters or other nested filter expressions." />
+<meta property="og:description" content="For use with ga_data - filter expressions are built up via filters or other nested filter expressions." />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
 
@@ -262,12 +262,12 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a filter expression for use with App+Web Reports</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/app_web_functions.R'><code>R/app_web_functions.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/ga_data_filter.R'><code>R/ga_data_filter.R</code></a></small>
     <div class="hidden name"><code>ga_aw_filter_expr.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>For use with <a href='google_analytics_aw.html'>google_analytics_aw</a> - filter expressions are built up via filters or other nested filter expressions.</p>
+    <p>For use with <a href='ga_data.html'>ga_data</a> - filter expressions are built up via filters or other nested filter expressions.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ga_aw_filter_expr</span>(<span class='no'>...</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"default"</span>, <span class='st'>"not"</span>, <span class='st'>"and"</span>, <span class='st'>"or"</span>))</pre>
@@ -290,31 +290,29 @@
     <p>A FilterExpression</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The fields in a FilterExpression need to be either all dimensions or all metrics. Use them in the appropriate dimensionFilter or metricFilter arguments within <a href='google_analytics_aw.html'>google_analytics_aw</a></p>
+    <p>The fields in a FilterExpression need to be either all dimensions or all metrics. Use them in the appropriate dimensionFilter or metricFilter arguments within <a href='ga_data.html'>ga_data</a></p>
 <p>You can't pass a mix of filters and filter expressions, or multiple filter expressions with type="not" as it doesn't know how to combine the filters (and/or) - make a filter expression with type = "and/or" then pass that back into the function with type="not" to negate the filter expression.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>simple</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_aw_filter_expr</span>(<span class='fu'><a href='ga_aw_filter.html'>ga_aw_filter</a></span>(<span class='st'>"city"</span>, <span class='st'>"Copenhagen"</span>, <span class='st'>"EXACT"</span>))
-
+<span class='no'>simple</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_aw_filter_expr</span>(<span class='fu'><a href='ga_aw_filter.html'>ga_aw_filter</a></span>(<span class='st'>"city"</span>, <span class='st'>"Copenhagen"</span>, <span class='st'>"EXACT"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in ga_aw_filter_expr(ga_aw_filter("city", "Copenhagen", "EXACT")): could not find function "ga_aw_filter_expr"</span></div><div class='input'>
 <span class='no'>multiple</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_aw_filter_expr</span>(
       <span class='fu'><a href='ga_aw_filter.html'>ga_aw_filter</a></span>(<span class='st'>"dayOfWeek"</span>, <span class='st'>"4"</span>, <span class='st'>"EXACT"</span>),
      <span class='fu'><a href='ga_aw_filter.html'>ga_aw_filter</a></span>(<span class='st'>"dayOfWeek"</span>, <span class='st'>"5"</span>, <span class='st'>"EXACT"</span>),
-    <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"or"</span>)
-
+    <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"or"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ga_aw_filter_expr(ga_aw_filter("dayOfWeek", "4", "EXACT"), ga_aw_filter("dayOfWeek",     "5", "EXACT"), type = "or"): could not find function "ga_aw_filter_expr"</span></div><div class='input'>
 <span class='co'># equivalent to above as uses InList filter</span>
 <span class='no'>multiple_or2</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_aw_filter_expr</span>(
-      <span class='fu'><a href='ga_aw_filter.html'>ga_aw_filter</a></span>(<span class='st'>"dayOfWeek"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"4"</span>,<span class='st'>"5"</span>)))
-
+      <span class='fu'><a href='ga_aw_filter.html'>ga_aw_filter</a></span>(<span class='st'>"dayOfWeek"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"4"</span>,<span class='st'>"5"</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in ga_aw_filter_expr(ga_aw_filter("dayOfWeek", c("4", "5"))): could not find function "ga_aw_filter_expr"</span></div><div class='input'>
 <span class='co'># make a filter expression then pass it again with type='not' to negate it </span>
-<span class='no'>negative</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_aw_filter_expr</span>(<span class='no'>multiple_or2</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"not"</span>)
-
+<span class='no'>negative</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_aw_filter_expr</span>(<span class='no'>multiple_or2</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"not"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ga_aw_filter_expr(multiple_or2, type = "not"): could not find function "ga_aw_filter_expr"</span></div><div class='input'>
 <span class='co'># or directly - </span>
 <span class='no'>clean_city</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_aw_filter_expr</span>(
-  <span class='fu'><a href='ga_aw_filter.html'>ga_aw_filter</a></span>(<span class='st'>"city"</span>, <span class='st'>"(not set)"</span>, <span class='st'>"EXACT"</span>,), <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"not"</span>)
-
+  <span class='fu'><a href='ga_aw_filter.html'>ga_aw_filter</a></span>(<span class='st'>"city"</span>, <span class='st'>"(not set)"</span>, <span class='st'>"EXACT"</span>,), <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"not"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ga_aw_filter_expr(ga_aw_filter("city", "(not set)", "EXACT",     ), type = "not"): could not find function "ga_aw_filter_expr"</span></div><div class='input'>
 <span class='co'># use previously created FilterExpressions to build up more complex filters</span>
-<span class='no'>complex</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_aw_filter_expr</span>(<span class='no'>multiple_or2</span>, <span class='no'>clean_city</span>)</div></pre>
+<span class='no'>complex</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_aw_filter_expr</span>(<span class='no'>multiple_or2</span>, <span class='no'>clean_city</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ga_aw_filter_expr(multiple_or2, clean_city): could not find function "ga_aw_filter_expr"</span></div><div class='input'>
+   
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

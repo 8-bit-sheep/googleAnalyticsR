@@ -181,6 +181,12 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_custom_vars_patch.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_data.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_data_filter.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_experiment.html</loc>
   </url>
   <url>
@@ -319,9 +325,6 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics_4_parse.html</loc>
   </url>
   <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics_aw.html</loc>
-  </url>
-  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/google_analytics_bq.html</loc>
   </url>
   <url>
@@ -383,9 +386,6 @@
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/pivot_ga4_parse.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/print.ga_model_result.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/segmentBuilder.html</loc>

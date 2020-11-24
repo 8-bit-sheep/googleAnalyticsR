@@ -1,3 +1,7 @@
+find_num_occurances <- function(x, what){
+  lengths(regmatches(x, gregexpr(what, x)))
+}
+
 assert_that_list <- function(the_list, assert_f){
   lapply(the_list, function(x) assert_that(assert_f(x)))
 }

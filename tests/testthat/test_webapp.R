@@ -2,7 +2,7 @@ context("App + Web Tests")
 
 test_that("Basic fetch", {
   
-  df <- google_analytics_aw(
+  df <- ga_data(
     206670707,
     metrics = "activeUsers",
     dimensions = c("date","city"),
@@ -51,7 +51,7 @@ test_that("Filter fetch types", {
 
   test_filter <- function(dim_filter = NULL,
                           met_filter = NULL){
-    google_analytics_aw(
+    ga_data(
       206670707,
       metrics = "activeUsers",
       dimensions = c("date","city", "dayOfWeek"),
@@ -85,5 +85,66 @@ test_that("Filter fetch types", {
   
   # what can I test this on?
   #no_nulls <- ga_aw_filter("city", TRUE)
+  
+})
+
+test_that("Filter DSL",{
+  
+  ## filter clauses
+  # or string filter
+  ga_data_filter("city"=="Copenhagen" | "city" == "London")
+  # inlist string filter
+  ga_data_filter("city"==c("Copenhagen","London"))
+  # and string filters
+  ga_data_filter("city"=="Copenhagen" & "dayOfWeek" == "5")
+  # invert string filter
+  ga_data_filter(!("city"=="Copenhagen" | "city" == "London"))
+  
+  # multiple filter clauses
+  f1 <- ga_data_filter("city"==c("Copenhagen","London","Paris","New York") &
+                         ("dayOfWeek"=="5" | "dayOfWeek"=="6")) 
+  f1
+  
+  # build up complicated filters
+  f2 <- ga_data_filter(f1 | "sessionSource"=="google")
+  f2
+  f3 <- ga_data_filter(f2 & !"sessionMedium"=="cpc")
+  f3
+  
+  ## numeric filter types
+  # numeric equal filter
+  ga_data_filter("sessions"==5)
+  # between numeric filter
+  ga_data_filter("sessions"==c(5,6))
+  # greater than numeric
+  ga_data_filter("sessions" > 0)
+  # greater than or equal
+  ga_data_filter("sessions" >= 1)
+  # less than numeric
+  ga_data_filter("sessions" < 100)
+  # less than or equal numeric
+  ga_data_filter("sessions" <= 100)
+  
+  ## string filter types
+  # begins with string
+  ga_data_filter("city" %begins% "Cope")
+  # ends with string
+  ga_data_filter("city" %ends% "hagen")
+  # contains string
+  ga_data_filter("city" %in% "ope")
+  # regex (full) string
+  ga_data_filter("city" %regex% "^Cope")
+  # regex (partial) string
+  ga_data_filter("city" %regex_partial% "ope")
+  
+  # by default string filters are case sensitive.  
+  # Use UPPERCASE operator to make then case insensitive
+  
+  # begins with string (case insensitive)
+  ga_data_filter("city" %BEGINS% "cope")
+  # ends with string (case insensitive)
+  ga_data_filter("city" %ENDS% "Hagen")
+  # case insensitive exact
+  ga_data_filter("city"%==%"coPENGhagen")
   
 })

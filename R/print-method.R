@@ -1,12 +1,22 @@
 #' @export
 print.gar_FilterExpression <- function(x, ...){
 
+  depth <- find_num_occurances(names(unlist(x)), "\\.expressions\\.")
+  bits <- paste(rep("=",max(depth)*2),collapse = "=")
+  # prints in outer nests
+  cat0(paste0(bits, "andGroup: "), x$andGroup$expressions)
+  cat0(paste0(bits, "orGroup: "), x$orGroup$expressions)
+  cat0(paste0(bits, "notExpression: "), x$notExpression)
+  
+  # inner most nesting
   cat0("--GA4 Filter: ", x$filter)
-  cat0("==andGroup: ", x$andGroup$expressions)
-  cat0("==orGroup: ", x$orGroup$expressions)
-  cat0("==notExpression: ", x$notExpression)
 
 }
+
+#' @export
+# print.gar_FilterExpressionList <- function(x, ...){
+#   cat0("--\n|")
+# }
 
 #' @export
 print.gar_Filter <- function(x, ...){
@@ -44,7 +54,7 @@ print.gar_StringFilter <- function(x, ...){
 
 #' @export
 print.gar_BetweenFilter <- function(x, ...){
-  cat("from: ", x$fromValue, " to: ", x$toValue)
+  cat("from: ", x$fromValue[[1]], " to: ", x$toValue[[1]])
 }
 
 
