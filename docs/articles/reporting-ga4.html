@@ -289,22 +289,22 @@
 <div id="filters" class="section level2">
 <h2 class="hasAnchor">
 <a href="#filters" class="anchor"></a>Filters</h2>
-<p>Filters are simpler to create but more flexible that in Universal Analytics.</p>
+<p>Filters are simpler to create but more flexible than in Universal Analytics.</p>
 <p>There is now only one filter function - <code><a href="../reference/ga_data_filter.html">ga_data_filter()</a></code>. As was the case for <code><a href="../reference/google_analytics.html">google_analytics()</a></code> , you use the filter function to construct metric filters or dimension filters in the <code>dimensionFilter</code> or <code>metricFilter</code> parameters in your <code><a href="../reference/ga_data.html">ga_data()</a></code> call.</p>
 <div id="making-filter-elements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#making-filter-elements" class="anchor"></a>Making filter elements</h3>
 <p>The base object is <code><a href="../reference/ga_data_filter.html">ga_data_filter()</a></code> - this holds the logic for the specific metric or dimension you are using. The function uses a new DSL for GA4 filters, the syntax rules are detailed below:</p>
 <ul>
-<li>Single filters, or multiple filters within a filter expression can be passed in to <code><a href="../reference/ga_data.html">ga_data()</a></code>
+<li>A single filter, or multiple filters within a filter expression can be passed in to <code><a href="../reference/ga_data.html">ga_data()</a></code>
 </li>
 <li>The single filter syntax is (field) (operator) (value) e.g. <code>"city"=="Copenhagen"</code>
 </li>
 <li>(field) is a dimension or metric for your web property, which you can review via <code><a href="../reference/ga_meta.html">ga_meta("data")</a></code>
 </li>
 <li>(operator) can be one of <code>==, &gt;, &gt;=, &lt;, &lt;=</code> for metrics</li>
-<li>(operator) can be one if <code>==, %begins%, %ends%, %contains%, %in%, %regex%, %regex_partial%</code> for dimensions</li>
-<li>dimension (operator) are by default case sensitive. Make them case insensitive by using UPPER case variations <code>%BEGINS%, %ENDS%</code> etc. or <code>===</code> for exact matches</li>
+<li>(operator) can be one of <code>==, %begins%, %ends%, %contains%, %in%, %regex%, %regex_partial%</code> for dimensions</li>
+<li>dimension (operator) are by default case sensitive. Make them case insensitive by using UPPER case variations <code>%BEGINS%, %ENDS%</code> etc. or <code>%==%</code> for case insensitive exact matches</li>
 <li>(value) can be strings (<code>"dim1"</code>), numerics (<code>55</code>), string vectors (<code><a href="https://rdrr.io/r/base/c.html">c("dim1", "dim2")</a></code>), numeric vectors (<code><a href="https://rdrr.io/r/base/c.html">c(1,2,3)</a></code>) or boolean (<code>TRUE</code>) which will correspond to different types of filters</li>
 <li>Filter expressions for multiple filters when using the operators: <code>&amp;, |, !</code> which correspond to <code>AND</code>, <code>OR</code> and <code>NOT</code> respectively.</li>
 </ul>
@@ -430,8 +430,8 @@
 <div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="co"># between numeric filter</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"sessions"</span><span class="kw">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">5</span>,<span class="fl">6</span>))</pre></body></html></div>
 <pre><code>## --| sessions 
-## ----numericFilter:  
-## operation:  EQUAL | value:      5 6</code></pre>
+## ----betweenFilter:  
+## from:  5  to:  6</code></pre>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="co"># greater than numeric</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"sessions"</span> <span class="kw">&gt;</span> <span class="fl">0</span>)</pre></body></html></div>
 <pre><code>## --| sessions 

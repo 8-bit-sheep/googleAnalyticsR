@@ -443,8 +443,8 @@
 #&gt; ----numericFilter:  
 #&gt; operation:  EQUAL | value:      5</div><div class='input'><span class='co'># between numeric filter</span>
 <span class='fu'>ga_data_filter</span>(<span class='st'>"sessions"</span><span class='kw'>==</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>,<span class='fl'>6</span>))</div><div class='output co'>#&gt; --| sessions 
-#&gt; ----numericFilter:  
-#&gt; operation:  EQUAL | value:      5 6</div><div class='input'><span class='co'># greater than numeric</span>
+#&gt; ----betweenFilter:  
+#&gt; from:  5  to:  6</div><div class='input'><span class='co'># greater than numeric</span>
 <span class='fu'>ga_data_filter</span>(<span class='st'>"sessions"</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; --| sessions 
 #&gt; ----numericFilter:  
 #&gt; operation:  GREATER_THAN | value:      0</div><div class='input'><span class='co'># greater than or equal</span>

@@ -66,7 +66,7 @@ ga_aw_filter <- function(field,
                      value,
                      caseSensitive = caseSensitive
                    ))
-  } else if(is.numeric(value)){
+  } else if(is.numeric(value) && length(value) == 1){
     assert_that(operation %in% c("EQUAL",
                                  "LESS_THAN",
                                  "LESS_THAN_OR_EQUAL",

@@ -93,7 +93,8 @@ reference:
     desc: >
       Working with the Data API (App+Web) for Google Analytics 4
     contents:
-      - begins("ga_data")
+      - ga_data
+      - ga_data_filter
   - title: "Reporting API v4 objects"
     desc: >
       Creating objects for more advanced v4 Reporting API fetches

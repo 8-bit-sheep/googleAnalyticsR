@@ -86,7 +86,7 @@ all_results <- ga_data(
 
 ## Filters
 
-Filters are simpler to create but more flexible that in Universal Analytics. 
+Filters are simpler to create but more flexible than in Universal Analytics. 
 
 There is now only one filter function - `ga_data_filter()`.  As was the case for `google_analytics()` , you use the filter function to construct metric filters or dimension filters in the `dimensionFilter` or `metricFilter` parameters in your `ga_data()` call. 
 
@@ -94,12 +94,12 @@ There is now only one filter function - `ga_data_filter()`.  As was the case for
 
 The base object is `ga_data_filter()` - this holds the logic for the specific metric or dimension you are using.  The function uses a new DSL for GA4 filters, the syntax rules are detailed below: 
 
-* Single filters, or multiple filters within a filter expression can be passed in to `ga_data()`
+* A single filter, or multiple filters within a filter expression can be passed in to `ga_data()`
 * The single filter syntax is (field) (operator) (value) e.g. `"city"=="Copenhagen"`
 * (field) is a dimension or metric for your web property, which you can review via `ga_meta("data")`
 * (operator) can be one of `==, >, >=, <, <=` for metrics
-* (operator) can be one if `==, %begins%, %ends%, %contains%, %in%, %regex%, %regex_partial%` for dimensions
-* dimension (operator) are by default case sensitive. Make them case insensitive by using UPPER case variations `%BEGINS%, %ENDS%` etc. or `===` for exact matches
+* (operator) can be one of `==, %begins%, %ends%, %contains%, %in%, %regex%, %regex_partial%` for dimensions
+* dimension (operator) are by default case sensitive. Make them case insensitive by using UPPER case variations `%BEGINS%, %ENDS%` etc. or `%==%` for case insensitive exact matches
 * (value) can be strings (`"dim1"`), numerics (`55`), string vectors (`c("dim1", "dim2")`), numeric vectors (`c(1,2,3)`) or boolean (`TRUE`) which will correspond to different types of filters
 * Filter expressions for multiple filters when using the operators: `&, |, !` which correspond to `AND`, `OR` and `NOT` respectively. 
 
