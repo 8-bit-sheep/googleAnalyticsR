@@ -32,8 +32,7 @@
 #'   
 #'   
 #' 
-#' @export
-#' @importFrom assertthat is.string is.count
+#' @importFrom assertthat is.string is.flag
 ga_aw_filter <- function(field,
                          value, 
                          operation = c("EXACT",
@@ -108,7 +107,6 @@ ga_aw_filter <- function(field,
 #' 
 #' You can't pass a mix of filters and filter expressions, or multiple filter expressions with type="not" as it doesn't know how to combine the filters (and/or) - make a filter expression with type = "and/or" then pass that back into the function with type="not" to negate the filter expression.
 #' 
-#' @export
 #' @examples 
 #' 
 #' simple <- ga_aw_filter_expr(ga_aw_filter("city", "Copenhagen", "EXACT"))
@@ -154,21 +152,31 @@ ga_aw_filter_expr <- function(...,
   
 }
 
+as_filterExpression <- function(x){
+  # build a filterExpression if a Filter present
+  if(is.Filter(x)) return(ga_aw_filter_expr(x))
+  
+  x
+}
+
 dsl_filter_expr_funcs <- list(
   
-  # filter expression operators
+  ##filter expression operators
   `|` = function(e1, e2){
-    ga_aw_filter_expr(e1, e2, type = "or")
+    ga_aw_filter_expr(as_filterExpression(e1), 
+                      as_filterExpression(e2), type = "or")
   },
   
   `&` = function(e1, e2){
-    ga_aw_filter_expr(e1, e2, type = "and")
+    ga_aw_filter_expr(as_filterExpression(e1), 
+                      as_filterExpression(e2), type = "and")
   },
   
   `!` = function(x){
-    ga_aw_filter_expr(x, type = "not")
+    ga_aw_filter_expr(as_filterExpression(x), type = "not")
   },
   
+  ## filter operators
   `==` = function(e1, e2){
     
     if(inherits(e2, "character")){
@@ -177,6 +185,18 @@ dsl_filter_expr_funcs <- list(
       ga_aw_filter(e1, e2, operation = "EQUAL")
     } else {
       stop("value for '==' is neither character or numeric class", 
+           call. = FALSE)
+    }
+  },
+  
+  `%==%` = function(e1, e2){
+    
+    if(inherits(e2, "character")){
+      ga_aw_filter(e1, e2, operation = "EXACT", caseSensitive = FALSE)
+    } else if(inherits(e2, "numeric")){
+      ga_aw_filter(e1, e2, operation = "EQUAL")
+    } else {
+      stop("value for '===' is neither character or numeric class", 
            call. = FALSE)
     }
   },
@@ -353,21 +373,59 @@ dsl_filter_expr_funcs <- list(
   }
 )
 
-#' DSL for GA4 filters
-#' @param x DSL enabled syntax
+#' Filter DSL for GA4 filters
+#' 
+#' Use with \link{ga_data} to create filters
+#' 
+#' @param x Filter DSL enabled syntax or the output of a previous call to this function - see examples
+#' 
+#' @details 
+#' 
+#' This uses a specific filter DSL syntax to create GA4 filters that can be passed to \link{ga_data} arguments \code{dimensionFilter} or \link{metricFilter}. Ensure that the fields you use are either all metrics or all dimensions.
+#' 
+#' The syntax uses operators and the class of the value you are setting (string, numeric or logical) to construct the filter expression object.
+#' 
+#' The DSL rules are:
+#' 
+#' 
+#' \itemize{
+#'   \item{}{ Single filters can be used without wrapping in filter expressions}
+#'   \item{}{ A single filter syntax is \code{(field) (operator) (value)}}
+#'   \item{}{ (field) is a dimension or metric for your web property, which you can review via \link{ga_meta}}
+#'   \item{}{ (operator) for metrics can be one of: \code{==, >, >=, <, <=}} 
+#'   \item{}{ (operator) for dimensions can be one of: \code{==, \%begins\%, \%ends\%, \%contains\%, \%in\%, \%regex\%, \%regex_partial\%} for dimensions}
+#'   \item{}{ dimension (operator) are by default case sensitive.  Make them case insensitive by using UPPER case variations \code{\%BEGINS\%, \%ENDS\%, ...} or \code{===} for exact matches}
+#'   \item{} {(value) can be strings (\code{"dim1"}), numerics (\code{55}), string vectors (\code{c("dim1", "dim2")}), numeric vectors (\code{c(1,2,3)}) or boolean (\code{TRUE}) - the type will created different types of filters - see examples}
+#'   \item{}{Create filter expressions for multiple filters when using the operators: \code{&, |, !} for logical combinations of AND, OR and NOT respectively. }
+#' }
+#' 
+#' 
+#' 
+#' @return A \link{FilterExpression} object suitable for use in \link{ga_data}
 #' @export
 #' @importFrom rlang enquo eval_tidy
 #' @examples 
 #' 
 #' ## filter clauses
-#' # or string filter
+#' # OR string filter
 #' ga_data_filter("city"=="Copenhagen" | "city" == "London")
 #' # inlist string filter
 #' ga_data_filter("city"==c("Copenhagen","London"))
-#' # and string filters
+#' # AND string filters
 #' ga_data_filter("city"=="Copenhagen" & "dayOfWeek" == "5")
-#' # invert string filter
+#' # ! - invert string filter
 #' ga_data_filter(!("city"=="Copenhagen" | "city" == "London"))
+#' 
+#' # multiple filter clauses
+#' f1 <- ga_data_filter("city"==c("Copenhagen","London","Paris","New York") &
+#'                ("dayOfWeek"=="5" | "dayOfWeek"=="6")) 
+#' f1
+#'                
+#' # build up complicated filters
+#' f2 <- ga_data_filter(f1 | "sessionSource"=="google")
+#' f2
+#' f3 <- ga_data_filter(f2 & !"sessionMedium"=="cpc")
+#' f3
 #' 
 #' ## numeric filter types
 #' # numeric equal filter
@@ -402,12 +460,16 @@ dsl_filter_expr_funcs <- list(
 #' ga_data_filter("city" %BEGINS% "cope")
 #' # ends with string (case insensitive)
 #' ga_data_filter("city" %ENDS% "Hagen")
+#' # case insensitive exact
+#' ga_data_filter("city"%==%"coPENGhagen")
 #' 
 #' 
 ga_data_filter <- function(x){
   x <- rlang::enquo(x)
   rlang::eval_tidy(x, data = dsl_filter_expr_funcs)
 }
+
+
 
 make_filter_expr_list <- function(dots, type){
   myMessage("Got FilterExpressions", level = 2)

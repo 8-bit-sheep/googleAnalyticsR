@@ -77,15 +77,10 @@ ga_data <- function(propertyId,
                     limit = 100,
                     realtime=FALSE) {
   
-  # build a filterExpression if a Filter present
-  if(is.Filter(dimensionFilter)){
-    dimensionFilter <- ga_aw_filter_expr(dimensionFilter)
-  }
-  
-  # build a filterExpression if a Filter present
-  if(is.Filter(metricFilter)){
-    metricFilter <- ga_aw_filter_expr(metricFilter)
-  }  
+  # in case someone passes in a filter instead of an expression
+  dimensionFilter <- as_filterExpression(dimensionFilter)
+  metricFilter <- as_filterExpression(metricFilter)
+ 
   
   # if(!is.null(metricAggregations)){
   #   assert_that(all(metricAggregations %in% c("TOTAL",

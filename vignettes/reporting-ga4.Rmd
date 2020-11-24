@@ -88,11 +88,30 @@ all_results <- ga_data(
 
 Filters are simpler to create but more flexible that in Universal Analytics. 
 
-There are now only two filter functions - `ga_aw_filter()` and `ga_aw_filter_expr()`.  As was the case for `google_analytics()` , you use the filter functions to construct metric filters or dimension filters in the `dimensionFilter` or `metricFilter` parameters. Do not construct metric filters and use in the `dimensionFilter` argument or vice-versa.
+There is now only one filter function - `ga_data_filter()`.  As was the case for `google_analytics()` , you use the filter function to construct metric filters or dimension filters in the `dimensionFilter` or `metricFilter` parameters in your `ga_data()` call. 
 
 ### Making filter elements
 
-The base object is `ga_aw_filter()` - this holds the logic for the specific metric or dimension you are using.  The function will check your filter object based on the R class of the object you are passing in as its value:
+The base object is `ga_data_filter()` - this holds the logic for the specific metric or dimension you are using.  The function uses a new DSL for GA4 filters, the syntax rules are detailed below: 
+
+* Single filters, or multiple filters within a filter expression can be passed in to `ga_data()`
+* The single filter syntax is (field) (operator) (value) e.g. `"city"=="Copenhagen"`
+* (field) is a dimension or metric for your web property, which you can review via `ga_meta("data")`
+* (operator) can be one of `==, >, >=, <, <=` for metrics
+* (operator) can be one if `==, %begins%, %ends%, %contains%, %in%, %regex%, %regex_partial%` for dimensions
+* dimension (operator) are by default case sensitive. Make them case insensitive by using UPPER case variations `%BEGINS%, %ENDS%` etc. or `===` for exact matches
+* (value) can be strings (`"dim1"`), numerics (`55`), string vectors (`c("dim1", "dim2")`), numeric vectors (`c(1,2,3)`) or boolean (`TRUE`) which will correspond to different types of filters
+* Filter expressions for multiple filters when using the operators: `&, |, !` which correspond to `AND`, `OR` and `NOT` respectively. 
+
+#### Fields
+
+Fields are metrics and dimensions that are available to your GA4 implementation, including custom fields.  You can see what is available by calling the `ga_meta("data")` function.
+
+Do not construct metric filters and use in the `dimensionFilter` argument or vice-versa.
+
+#### Values
+
+Values are checked in the filter object based on the R class of the object you are passing in as its value:
 
 * `character`: stringFilter - e.g. `"Copenhagen"`
 * `character vector`: inListFilter e.g. `c("Copenhagen","London","New York")`
@@ -102,14 +121,9 @@ The base object is `ga_aw_filter()` - this holds the logic for the specific metr
 
 e.g. if you pass in a character of length one (`"Copenhagen"`) then it will assume to be a class `StringFilter` (all dimensions that match "Copenhagen") if you pass in a character of length greater than one `c("Copenhagen","London","New York")`, then it assume to be a class `InListFilter` (dimensions must match one in the list)
 
-Ensure the comparison operation you are using makes sense for the type of value:
+### Examples Using filter elements
 
-* string filters: `"EXACT","BEGINS_WITH","ENDS_WITH","CONTAINS","FULL_REGEXP", "PARTIAL_REGEXP"`
-* numeric filters: `"EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "GREATER_THAN", "GREATER_THAN_OR_EQUAL"`
-
-### Using filter elements
-
-All filters are made up of filter expressions using `ga_aw_filter_expr()`, but if you want just one filter, use `ga_aw_filter()` directly in your GA call.
+All filters are made up of filter expressions using `ga_data_filter()`:
 
 ```r
 simple_filter <- ga_data(
@@ -117,45 +131,80 @@ simple_filter <- ga_data(
    metrics = c("activeUsers","sessions"),
    dimensions = c("date","city","dayOfWeek"),
    date_range = c("2020-03-31", "2020-04-27"),
-   dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
+   dimensionFilter = ga_data_filter("city"=="Copenhagen"),
    limit = 100
    )
 ```
 
-If you need more complicated filters, then build them using `ga_aw_filter_expr()`.  This lets you combine `ga_aw_filter()` objects in various ways.
+If you need more complicated filters, then build them using the DSL syntax.  This lets you combine `ga_data_filter()` objects in various ways.
 
 
 ```{r}
-ga_aw_filter_expr(
-  ga_aw_filter("city", "Copenhagen", "EXACT")
-  )
+## filter clauses
+# or string filter
+ga_data_filter("city"=="Copenhagen" | "city" == "London")
+# inlist string filter
+ga_data_filter("city"==c("Copenhagen","London"))
+# and string filters
+ga_data_filter("city"=="Copenhagen" & "dayOfWeek" == "5")
+# invert string filter
+ga_data_filter(!("city"=="Copenhagen" | "city" == "London"))
 
-ga_aw_filter_expr(
-  ga_aw_filter("dayOfWeek", "4", "EXACT"),
-  ga_aw_filter("dayOfWeek", "5", "EXACT"),
-  type = "or") 
-   
-# equivalent to above as uses InList filter
-multiple_or2 <- ga_aw_filter_expr(
-  ga_aw_filter("dayOfWeek", c("4","5"))
-  )
-multiple_or2
+# multiple filter clauses
+ga_data_filter("city"==c("Copenhagen","London","Paris","New York") &
+                       ("dayOfWeek"=="5" | "dayOfWeek"=="6"))
 
-# make a filter expression then pass it again with type='not' to negate it 
-ga_aw_filter_expr(multiple_or2, type = "not")
+## numeric filter types
+# numeric equal filter
+ga_data_filter("sessions"==5)
+# between numeric filter
+ga_data_filter("sessions"==c(5,6))
+# greater than numeric
+ga_data_filter("sessions" > 0)
+# greater than or equal
+ga_data_filter("sessions" >= 1)
+# less than numeric
+ga_data_filter("sessions" < 100)
+# less than or equal numeric
+ga_data_filter("sessions" <= 100)
 
-# or directly - 
-clean_city <- ga_aw_filter_expr(
-  ga_aw_filter("city", "(not set)", "EXACT",), 
-  type = "not")
-clean_city
+## string filter types
+# begins with string
+ga_data_filter("city" %begins% "Cope")
+# ends with string
+ga_data_filter("city" %ends% "hagen")
+# contains string
+ga_data_filter("city" %in% "ope")
+# regex (full) string
+ga_data_filter("city" %regex% "^Cope")
+# regex (partial) string
+ga_data_filter("city" %regex_partial% "ope")
+
+# by default string filters are case sensitive.  
+# Use UPPERCASE operator to make then case insensitive
+
+# begins with string (case insensitive)
+ga_data_filter("city" %BEGINS% "cope")
+# ends with string (case insensitive)
+ga_data_filter("city" %ENDS% "Hagen")
+# case insensitive exact match
+ga_data_filter("city" %==% "copeNHAGen")
 ```
 
 You can also recursively nest filter expressions - this lets you build up complex filters:
 
 ```{r}
 # use previously created filters to build another filter expression:
-ga_aw_filter_expr(multiple_or2, clean_city)
+# multiple filter clauses
+f1 <- ga_data_filter("city"==c("Copenhagen","London","Paris","New York") &
+                       ("dayOfWeek"=="5" | "dayOfWeek"=="6")) 
+f1
+
+# build up complicated filters
+f2 <- ga_data_filter(f1 | "sessionSource"=="google")
+f2
+f3 <- ga_data_filter(f2 & !"sessionMedium"=="cpc")
+f3
 ```
 
 
@@ -171,7 +220,7 @@ realtime <- ga_data(
   206670707,
   metrics = "activeUsers",
   dimensions = "city",
-  dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
+  dimensionFilter = ga_data_filter("city"=="Copenhagen"),
   limit = 100,
   realtime = TRUE)
 ```

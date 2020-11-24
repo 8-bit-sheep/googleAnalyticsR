@@ -23,6 +23,6 @@ The batch request containing multiple report requests.
 }
 \seealso{
 Other BatchRunReportsRequest functions: 
-\code{\link{google_analytics_aw}()}
+\code{\link{ga_data}()}
 }
 \concept{BatchRunReportsRequest functions}

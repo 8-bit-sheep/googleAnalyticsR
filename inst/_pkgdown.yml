@@ -86,9 +86,14 @@ reference:
       Getting data from your Google Analytics account
     contents:
       - google_analytics
-      - google_analytics_aw
+      - ga_data
       - google_analytics_3
       - google_analytics_bq
+  - title: "Data API - Google Analytics 4"
+    desc: >
+      Working with the Data API (App+Web) for Google Analytics 4
+    contents:
+      - begins("ga_data")
   - title: "Reporting API v4 objects"
     desc: >
       Creating objects for more advanced v4 Reporting API fetches
