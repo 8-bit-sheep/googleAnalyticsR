@@ -300,26 +300,26 @@ dsl_filter_expr_funcs <- list(
     }
   },
   
-  `%in%` = function(e1, e2){
+  `%contains%` = function(e1, e2){
     
     if(inherits(e2, "character")){
       ga_aw_filter(e1, e2, operation = "CONTAINS")
     } else if(inherits(e2, "numeric")){
-      stop("Can't use %in% (CONTAINS) for numerics: ", e2, call. = FALSE)
+      stop("Can't use %contains% (CONTAINS) for numerics: ", e2, call. = FALSE)
     } else {
-      stop("value for '%in%' is neither character or numeric class", 
+      stop("value for '%contains%' is neither character or numeric class", 
            call. = FALSE)
     }
   },
   
-  `%IN%` = function(e1, e2){
+  `%CONTAINS%` = function(e1, e2){
     
     if(inherits(e2, "character")){
       ga_aw_filter(e1, e2, operation = "CONTAINS", caseSensitive = FALSE)
     } else if(inherits(e2, "numeric")){
-      stop("Can't use %IN% (IN) for numerics: ", e2, call. = FALSE)
+      stop("Can't use %CONTAINS% (CONTAINS, not case sensitive) for numerics: ", e2, call. = FALSE)
     } else {
-      stop("value for '%in%' is neither character or numeric class", 
+      stop("value for '%CONTAINS%' is neither character or numeric class", 
            call. = FALSE)
     }
   },
@@ -447,7 +447,7 @@ dsl_filter_expr_funcs <- list(
 #' # ends with string
 #' ga_data_filter("city" %ends% "hagen")
 #' # contains string
-#' ga_data_filter("city" %in% "ope")
+#' ga_data_filter("city" %contains% "ope")
 #' # regex (full) string
 #' ga_data_filter("city" %regex% "^Cope")
 #' # regex (partial) string

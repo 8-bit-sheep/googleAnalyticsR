@@ -349,7 +349,7 @@
   <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"activeUsers"</span>,<span class='st'>"sessions"</span>),
   <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"date"</span>,<span class='st'>"city"</span>,<span class='st'>"dayOfWeek"</span>),
   <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2020-03-31"</span>, <span class='st'>"2020-04-27"</span>, <span class='st'>"2020-04-30"</span>, <span class='st'>"2020-05-27"</span>),
-  <span class='kw'>dimensionFilter</span> <span class='kw'>=</span> <span class='fu'><a href='ga_aw_filter.html'>ga_aw_filter</a></span>(<span class='st'>"city"</span>, <span class='st'>"Copenhagen"</span>, <span class='st'>"EXACT"</span>),
+  <span class='kw'>dimensionFilter</span> <span class='kw'>=</span> <span class='fu'><a href='ga_data_filter.html'>ga_data_filter</a></span>(<span class='st'>"city"</span><span class='kw'>==</span><span class='st'>"Copenhagen"</span>),
   <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>100</span>
   )
 
@@ -379,7 +379,7 @@
   <span class='fl'>206670707</span>,
   <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='st'>"activeUsers"</span>,
   <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='st'>"city"</span>,
-  <span class='kw'>dimensionFilter</span> <span class='kw'>=</span> <span class='fu'><a href='ga_aw_filter.html'>ga_aw_filter</a></span>(<span class='st'>"city"</span>, <span class='st'>"Copenhagen"</span>, <span class='st'>"EXACT"</span>),
+  <span class='kw'>dimensionFilter</span> <span class='kw'>=</span> <span class='fu'><a href='ga_data_filter.html'>ga_data_filter</a></span>(<span class='st'>"city"</span><span class='kw'>==</span><span class='st'>"Copenhagen"</span>),
   <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>100</span>,
   <span class='kw'>realtime</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 

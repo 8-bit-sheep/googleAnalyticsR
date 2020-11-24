@@ -77,7 +77,7 @@ ga_data_filter("city" \%begins\% "Cope")
 # ends with string
 ga_data_filter("city" \%ends\% "hagen")
 # contains string
-ga_data_filter("city" \%in\% "ope")
+ga_data_filter("city" \%contains\% "ope")
 # regex (full) string
 ga_data_filter("city" \%regex\% "^Cope")
 # regex (partial) string

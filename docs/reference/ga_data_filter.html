@@ -465,7 +465,7 @@
 <span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span> <span class='kw'>%ends%</span> <span class='st'>"hagen"</span>)</div><div class='output co'>#&gt; --| city 
 #&gt; ----stringFilter:  
 #&gt; value:  hagen | matchType:  ENDS_WITH | caseSensitive:  TRUE</div><div class='input'><span class='co'># contains string</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span> <span class='kw'>%in%</span> <span class='st'>"ope"</span>)</div><div class='output co'>#&gt; --| city 
+<span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span> <span class='kw'>%contains%</span> <span class='st'>"ope"</span>)</div><div class='output co'>#&gt; --| city 
 #&gt; ----stringFilter:  
 #&gt; value:  ope | matchType:  CONTAINS | caseSensitive:  TRUE</div><div class='input'><span class='co'># regex (full) string</span>
 <span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span> <span class='kw'>%regex%</span> <span class='st'>"^Cope"</span>)</div><div class='output co'>#&gt; --| city 

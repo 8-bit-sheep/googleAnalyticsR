@@ -303,7 +303,7 @@
 <li>(field) is a dimension or metric for your web property, which you can review via <code><a href="../reference/ga_meta.html">ga_meta("data")</a></code>
 </li>
 <li>(operator) can be one of <code>==, &gt;, &gt;=, &lt;, &lt;=</code> for metrics</li>
-<li>(operator) can be one of <code>==, %begins%, %ends%, %contains%, %in%, %regex%, %regex_partial%</code> for dimensions</li>
+<li>(operator) can be one of <code>==, %begins%, %ends%, %contains%, %contains%, %regex%, %regex_partial%</code> for dimensions</li>
 <li>dimension (operator) are by default case sensitive. Make them case insensitive by using UPPER case variations <code>%BEGINS%, %ENDS%</code> etc. or <code>%==%</code> for case insensitive exact matches</li>
 <li>(value) can be strings (<code>"dim1"</code>), numerics (<code>55</code>), string vectors (<code><a href="https://rdrr.io/r/base/c.html">c("dim1", "dim2")</a></code>), numeric vectors (<code><a href="https://rdrr.io/r/base/c.html">c(1,2,3)</a></code>) or boolean (<code>TRUE</code>) which will correspond to different types of filters</li>
 <li>Filter expressions for multiple filters when using the operators: <code>&amp;, |, !</code> which correspond to <code>AND</code>, <code>OR</code> and <code>NOT</code> respectively.</li>
@@ -421,64 +421,74 @@
 ## --| dayOfWeek 
 ## ----stringFilter:  
 ## value:  6 | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="co">## numeric filter types</span>
+<p>Numeric filters for use in <code>metricFilters</code></p>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">metric_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
+   <span class="fl">206670707</span>,
+   <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
+   <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
+   <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
+   <span class="kw">metricFilter</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"sessions"</span><span class="kw">&gt;</span><span class="fl">10</span>),
+   <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>
+   )</pre></body></html></div>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="co">## numeric filter types</span>
 <span class="co"># numeric equal filter</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"sessions"</span><span class="kw">==</span><span class="fl">5</span>)</pre></body></html></div>
 <pre><code>## --| sessions 
 ## ----numericFilter:  
 ## operation:  EQUAL | value:      5</code></pre>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="co"># between numeric filter</span>
+<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="co"># between numeric filter</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"sessions"</span><span class="kw">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">5</span>,<span class="fl">6</span>))</pre></body></html></div>
 <pre><code>## --| sessions 
 ## ----betweenFilter:  
 ## from:  5  to:  6</code></pre>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="co"># greater than numeric</span>
+<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="co"># greater than numeric</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"sessions"</span> <span class="kw">&gt;</span> <span class="fl">0</span>)</pre></body></html></div>
 <pre><code>## --| sessions 
 ## ----numericFilter:  
 ## operation:  GREATER_THAN | value:      0</code></pre>
-<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="co"># greater than or equal</span>
+<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="co"># greater than or equal</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"sessions"</span> <span class="kw">&gt;=</span> <span class="fl">1</span>)</pre></body></html></div>
 <pre><code>## --| sessions 
 ## ----numericFilter:  
 ## operation:  GREATER_THAN_OR_EQUAL | value:      1</code></pre>
-<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="co"># less than numeric</span>
+<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="co"># less than numeric</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"sessions"</span> <span class="kw">&lt;</span> <span class="fl">100</span>)</pre></body></html></div>
 <pre><code>## --| sessions 
 ## ----numericFilter:  
 ## operation:  LESS_THAN | value:      100</code></pre>
-<div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="co"># less than or equal numeric</span>
+<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="co"># less than or equal numeric</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"sessions"</span> <span class="kw">&lt;=</span> <span class="fl">100</span>)</pre></body></html></div>
 <pre><code>## --| sessions 
 ## ----numericFilter:  
 ## operation:  LESS_THAN_OR_EQUAL | value:      100</code></pre>
-<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="co">## string filter types</span>
+<p>All the string filters:</p>
+<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="co">## string filter types</span>
 <span class="co"># begins with string</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"city"</span> <span class="kw">%begins%</span> <span class="st">"Cope"</span>)</pre></body></html></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  Cope | matchType:  BEGINS_WITH | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="co"># ends with string</span>
+<div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="co"># ends with string</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"city"</span> <span class="kw">%ends%</span> <span class="st">"hagen"</span>)</pre></body></html></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  hagen | matchType:  ENDS_WITH | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="co"># contains string</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"city"</span> <span class="kw">%in%</span> <span class="st">"ope"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="co"># contains string</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"city"</span> <span class="kw">%contains%</span> <span class="st">"ope"</span>)</pre></body></html></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  ope | matchType:  CONTAINS | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="co"># regex (full) string</span>
+<div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="co"># regex (full) string</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"city"</span> <span class="kw">%regex%</span> <span class="st">"^Cope"</span>)</pre></body></html></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  ^Cope | matchType:  FULL_REGEXP | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="co"># regex (partial) string</span>
+<div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="co"># regex (partial) string</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"city"</span> <span class="kw">%regex_partial%</span> <span class="st">"ope"</span>)</pre></body></html></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  ope | matchType:  PARTIAL_REGEXP | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="co"># by default string filters are case sensitive.  </span>
+<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="co"># by default string filters are case sensitive.  </span>
 <span class="co"># Use UPPERCASE operator to make then case insensitive</span>
 
 <span class="co"># begins with string (case insensitive)</span>
@@ -486,75 +496,25 @@
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  cope | matchType:  BEGINS_WITH | caseSensitive:  FALSE</code></pre>
-<div class="sourceCode" id="cb41"><html><body><pre class="r"><span class="co"># ends with string (case insensitive)</span>
+<div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="co"># ends with string (case insensitive)</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"city"</span> <span class="kw">%ENDS%</span> <span class="st">"Hagen"</span>)</pre></body></html></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  Hagen | matchType:  ENDS_WITH | caseSensitive:  FALSE</code></pre>
-<div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="co"># case insensitive exact match</span>
+<div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="co"># case insensitive exact match</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"city"</span> <span class="kw">%==%</span> <span class="st">"copeNHAGen"</span>)</pre></body></html></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  copeNHAGen | matchType:  EXACT | caseSensitive:  FALSE</code></pre>
 <p>You can also recursively nest filter expressions - this lets you build up complex filters:</p>
-<div class="sourceCode" id="cb45"><html><body><pre class="r"><span class="co"># use previously created filters to build another filter expression:</span>
+<div class="sourceCode" id="cb46"><html><body><pre class="r"><span class="co"># use previously created filters to build another filter expression:</span>
 <span class="co"># multiple filter clauses</span>
 <span class="no">f1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"city"</span><span class="kw">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Copenhagen"</span>,<span class="st">"London"</span>,<span class="st">"Paris"</span>,<span class="st">"New York"</span>) <span class="kw">&amp;</span>
                        (<span class="st">"dayOfWeek"</span><span class="kw">==</span><span class="st">"5"</span> <span class="kw">|</span> <span class="st">"dayOfWeek"</span><span class="kw">==</span><span class="st">"6"</span>))
-<span class="no">f1</span></pre></body></html></div>
-<pre><code>## =======andGroup:  
-## [[1]]
-## --GA4 Filter:  
-## --| city 
-## ----inListFilter:  
-## values:  Copenhagen London Paris New York 
-## caseSensitive:  TRUE 
-## 
-## [[2]]
-## ===orGroup:  
-## [[1]]
-## --GA4 Filter:  
-## --| dayOfWeek 
-## ----stringFilter:  
-## value:  5 | matchType:  EXACT | caseSensitive:  TRUE
-## [[2]]
-## --GA4 Filter:  
-## --| dayOfWeek 
-## ----stringFilter:  
-## value:  6 | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb47"><html><body><pre class="r"><span class="co"># build up complicated filters</span>
+
+<span class="co"># build up complicated filters</span>
 <span class="no">f2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">f1</span> <span class="kw">|</span> <span class="st">"sessionSource"</span><span class="kw">==</span><span class="st">"google"</span>)
-<span class="no">f2</span></pre></body></html></div>
-<pre><code>## ===========orGroup:  
-## [[1]]
-## =======andGroup:  
-## [[1]]
-## --GA4 Filter:  
-## --| city 
-## ----inListFilter:  
-## values:  Copenhagen London Paris New York 
-## caseSensitive:  TRUE 
-## 
-## [[2]]
-## ===orGroup:  
-## [[1]]
-## --GA4 Filter:  
-## --| dayOfWeek 
-## ----stringFilter:  
-## value:  5 | matchType:  EXACT | caseSensitive:  TRUE
-## [[2]]
-## --GA4 Filter:  
-## --| dayOfWeek 
-## ----stringFilter:  
-## value:  6 | matchType:  EXACT | caseSensitive:  TRUE
-## 
-## 
-## [[2]]
-## --GA4 Filter:  
-## --| sessionSource 
-## ----stringFilter:  
-## value:  google | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb49"><html><body><pre class="r"><span class="no">f3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">f2</span> <span class="kw">&amp;</span> !<span class="st">"sessionMedium"</span><span class="kw">==</span><span class="st">"cpc"</span>)
+<span class="no">f3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">f2</span> <span class="kw">&amp;</span> !<span class="st">"sessionMedium"</span><span class="kw">==</span><span class="st">"cpc"</span>)
 <span class="no">f3</span></pre></body></html></div>
 <pre><code>## ===============andGroup:  
 ## [[1]]
@@ -594,6 +554,16 @@
 ## --| sessionMedium 
 ## ----stringFilter:  
 ## value:  cpc | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
+<p>The filter above looks for visitors from Copenhagen, London, Paris or New York who arrived on day 5 or 6 of the week, from Google referrers but not including Google Ads.</p>
+<p>You can use filter expression objects above directly like so:</p>
+<div class="sourceCode" id="cb48"><html><body><pre class="r"><span class="no">complex_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
+   <span class="fl">206670707</span>,
+   <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
+   <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
+   <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
+   <span class="kw">dimensionFilter</span> <span class="kw">=</span> <span class="no">f3</span>,
+   <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>
+   )</pre></body></html></div>
 </div>
 </div>
 <div id="real-time-data" class="section level2">
@@ -601,7 +571,7 @@
 <a href="#real-time-data" class="anchor"></a>Real Time Data</h2>
 <p>Real-time data can be fetched with the same function as the regular Data API, but it is calling another endpoint. Add the <code>realtime=TRUE</code> argument to the function.</p>
 <p>A limited subset of <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-api-schema">dimensions and metrics are available in the real-time API</a>. Date ranges are ignored.</p>
-<div class="sourceCode" id="cb51"><html><body><pre class="r"><span class="co"># run a real-time report </span>
+<div class="sourceCode" id="cb49"><html><body><pre class="r"><span class="co"># run a real-time report </span>
 <span class="no">realtime</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
   <span class="fl">206670707</span>,
   <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"activeUsers"</span>,
@@ -609,6 +579,39 @@
   <span class="kw">dimensionFilter</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"city"</span><span class="kw">==</span><span class="st">"Copenhagen"</span>),
   <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>,
   <span class="kw">realtime</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+</div>
+<div id="quotas" class="section level2">
+<h2 class="hasAnchor">
+<a href="#quotas" class="anchor"></a>Quotas</h2>
+<p>There is no sampling but there are token quotas for API fetches on a per-project basis. Normally these are not visible until you are close to the quota limits, but you can see them if you set the googleAuthR verbose level below 3 (<code><a href="https://rdrr.io/r/base/options.html">options(googleAuthR.verbose=2)</a></code>))</p>
+<p>The bigger and more complex the query you make, the more tokens you use.</p>
+<p>An example from the query above:</p>
+<div class="sourceCode" id="cb50"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">googleAuthR.verbose</span><span class="kw">=</span><span class="fl">2</span>)
+<span class="no">complex_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
+     <span class="fl">206670707</span>,
+     <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
+     <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
+     <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
+     <span class="kw">dimensionFilter</span> <span class="kw">=</span> <span class="no">f3</span>,
+     <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>
+)
+<span class="co">#&gt;ℹ 2020-11-24 16:12:35 &gt; Request:  https://analyticsdata.googleapis.com/v1alpha:batchRunReports/</span>
+<span class="co">#&gt;ℹ 2020-11-24 16:12:35 &gt; Body JSON parsed to:  #&gt;{"entity":{"propertyId":"206670707"},"requests":[{"metrics":[{"name":"activeUsers"},{"name":"sessions"}],"dimensions":[{"name":"date"},{"name":"city"},{"name":"dayOfWeek"}],"dateRanges":[{"startDate":"2020-03-31","endDate":"2020-04-27"}],"keepEmptyRows":true,"dimensionFilter":{"andGroup":{"expressions":[{"orGroup":{"expressions":[{"andGroup":{"expressions":[{"filter":{"fieldName":"city","inListFilter":{"caseSensitive":true,"values":["Copenhagen","London","Paris","New York"]}}},{"orGroup":{"expressions":[{"filter":{"fieldName":"dayOfWeek","stringFilter":{"caseSensitive":true,"value":"5","matchType":"EXACT"}}},{"filter":{"fieldName":"dayOfWeek","stringFilter":{"caseSensitive":true,"value":"6","matchType":"EXACT"}}}]}}]}},{"filter":{"fieldName":"sessionSource","stringFilter":{"caseSensitive":true,"value":"google","matchType":"EXACT"}}}]}},{"notExpression":{"filter":{"fieldName":"sessionMedium","stringFilter":{"caseSensitive":true,"value":"cpc","matchType":"EXACT"}}}}]}},"limit":100,"returnPropertyQuota":true}]}</span>
+<span class="co">#&gt;ℹ 2020-11-24 16:12:36 &gt; tokensPerDay: Query Cost [ 11 ] / Remaining [ 24847 ]</span>
+<span class="co">#&gt;ℹ 2020-11-24 16:12:36 &gt; tokensPerHour: Query Cost [ 11 ] / Remaining [ 4967 ]</span>
+<span class="co">#&gt;ℹ 2020-11-24 16:12:36 &gt; concurrentRequests:  10  / 10</span>
+<span class="co">#&gt;ℹ 2020-11-24 16:12:36 &gt; serverErrorsPerProjectPerHour:  10  / 10</span></pre></body></html></div>
+<p>The quotas are:</p>
+<ul>
+<li>
+<code>tokensPerDay</code> - how many tokens in 24hrs</li>
+<li>
+<code>tokensPerHour</code> - how many tokens in 1 hr</li>
+<li>
+<code>concurrentRequests</code> - how many API requests at once</li>
+<li>
+<code>serverErrorsPerProjectPerHour</code> - how many bad API calls you can make per project/hr</li>
+</ul>
 </div>
   </div>
 

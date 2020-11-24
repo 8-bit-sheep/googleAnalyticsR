@@ -98,7 +98,7 @@ The base object is `ga_data_filter()` - this holds the logic for the specific me
 * The single filter syntax is (field) (operator) (value) e.g. `"city"=="Copenhagen"`
 * (field) is a dimension or metric for your web property, which you can review via `ga_meta("data")`
 * (operator) can be one of `==, >, >=, <, <=` for metrics
-* (operator) can be one of `==, %begins%, %ends%, %contains%, %in%, %regex%, %regex_partial%` for dimensions
+* (operator) can be one of `==, %begins%, %ends%, %contains%, %contains%, %regex%, %regex_partial%` for dimensions
 * dimension (operator) are by default case sensitive. Make them case insensitive by using UPPER case variations `%BEGINS%, %ENDS%` etc. or `%==%` for case insensitive exact matches
 * (value) can be strings (`"dim1"`), numerics (`55`), string vectors (`c("dim1", "dim2")`), numeric vectors (`c(1,2,3)`) or boolean (`TRUE`) which will correspond to different types of filters
 * Filter expressions for multiple filters when using the operators: `&, |, !` which correspond to `AND`, `OR` and `NOT` respectively. 
@@ -153,7 +153,22 @@ ga_data_filter(!("city"=="Copenhagen" | "city" == "London"))
 # multiple filter clauses
 ga_data_filter("city"==c("Copenhagen","London","Paris","New York") &
                        ("dayOfWeek"=="5" | "dayOfWeek"=="6"))
+```
 
+Numeric filters for use in `metricFilters`
+
+```r
+metric_filter <- ga_data(
+   206670707,
+   metrics = c("activeUsers","sessions"),
+   dimensions = c("date","city","dayOfWeek"),
+   date_range = c("2020-03-31", "2020-04-27"),
+   metricFilter = ga_data_filter("sessions">10),
+   limit = 100
+   )
+```
+
+```{r}
 ## numeric filter types
 # numeric equal filter
 ga_data_filter("sessions"==5)
@@ -167,14 +182,18 @@ ga_data_filter("sessions" >= 1)
 ga_data_filter("sessions" < 100)
 # less than or equal numeric
 ga_data_filter("sessions" <= 100)
+```
 
+All the string filters:
+
+```{r}
 ## string filter types
 # begins with string
 ga_data_filter("city" %begins% "Cope")
 # ends with string
 ga_data_filter("city" %ends% "hagen")
 # contains string
-ga_data_filter("city" %in% "ope")
+ga_data_filter("city" %contains% "ope")
 # regex (full) string
 ga_data_filter("city" %regex% "^Cope")
 # regex (partial) string
@@ -198,15 +217,27 @@ You can also recursively nest filter expressions - this lets you build up comple
 # multiple filter clauses
 f1 <- ga_data_filter("city"==c("Copenhagen","London","Paris","New York") &
                        ("dayOfWeek"=="5" | "dayOfWeek"=="6")) 
-f1
 
 # build up complicated filters
 f2 <- ga_data_filter(f1 | "sessionSource"=="google")
-f2
 f3 <- ga_data_filter(f2 & !"sessionMedium"=="cpc")
 f3
 ```
 
+The filter above looks for visitors from Copenhagen, London, Paris or New York who arrived on day 5 or 6 of the week, from Google referrers but not including Google Ads.
+
+You can use filter expression objects above directly like so:
+
+```r
+complex_filter <- ga_data(
+   206670707,
+   metrics = c("activeUsers","sessions"),
+   dimensions = c("date","city","dayOfWeek"),
+   date_range = c("2020-03-31", "2020-04-27"),
+   dimensionFilter = f3,
+   limit = 100
+   )
+```
 
 ## Real Time Data
 
@@ -224,3 +255,37 @@ realtime <- ga_data(
   limit = 100,
   realtime = TRUE)
 ```
+
+## Quotas
+
+There is no sampling but there are token quotas for API fetches on a per-project basis.  Normally these are not visible until you are close to the quota limits, but you can see them if you set the googleAuthR verbose level below 3 (`options(googleAuthR.verbose=2)`))
+
+The bigger and more complex the query you make, the more tokens you use.
+
+An example from the query above:
+
+```r
+options(googleAuthR.verbose=2)
+complex_filter <- ga_data(
+     206670707,
+     metrics = c("activeUsers","sessions"),
+     dimensions = c("date","city","dayOfWeek"),
+     date_range = c("2020-03-31", "2020-04-27"),
+     dimensionFilter = f3,
+     limit = 100
+)
+#>ℹ 2020-11-24 16:12:35 > Request:  https://analyticsdata.googleapis.com/v1alpha:batchRunReports/
+#>ℹ 2020-11-24 16:12:35 > Body JSON parsed to:  #>{"entity":{"propertyId":"206670707"},"requests":[{"metrics":[{"name":"activeUsers"},{"name":"sessions"}],"dimensions":[{"name":"date"},{"name":"city"},{"name":"dayOfWeek"}],"dateRanges":[{"startDate":"2020-03-31","endDate":"2020-04-27"}],"keepEmptyRows":true,"dimensionFilter":{"andGroup":{"expressions":[{"orGroup":{"expressions":[{"andGroup":{"expressions":[{"filter":{"fieldName":"city","inListFilter":{"caseSensitive":true,"values":["Copenhagen","London","Paris","New York"]}}},{"orGroup":{"expressions":[{"filter":{"fieldName":"dayOfWeek","stringFilter":{"caseSensitive":true,"value":"5","matchType":"EXACT"}}},{"filter":{"fieldName":"dayOfWeek","stringFilter":{"caseSensitive":true,"value":"6","matchType":"EXACT"}}}]}}]}},{"filter":{"fieldName":"sessionSource","stringFilter":{"caseSensitive":true,"value":"google","matchType":"EXACT"}}}]}},{"notExpression":{"filter":{"fieldName":"sessionMedium","stringFilter":{"caseSensitive":true,"value":"cpc","matchType":"EXACT"}}}}]}},"limit":100,"returnPropertyQuota":true}]}
+#>ℹ 2020-11-24 16:12:36 > tokensPerDay: Query Cost [ 11 ] / Remaining [ 24847 ]
+#>ℹ 2020-11-24 16:12:36 > tokensPerHour: Query Cost [ 11 ] / Remaining [ 4967 ]
+#>ℹ 2020-11-24 16:12:36 > concurrentRequests:  10  / 10
+#>ℹ 2020-11-24 16:12:36 > serverErrorsPerProjectPerHour:  10  / 10
+```
+
+The quotas are:
+
+* `tokensPerDay` - how many tokens in 24hrs
+* `tokensPerHour` - how many tokens in 1 hr
+* `concurrentRequests` - how many API requests at once
+* `serverErrorsPerProjectPerHour` - how many bad API calls you can make per project/hr
+
