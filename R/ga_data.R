@@ -30,7 +30,7 @@ version_aw <- function(){
 #'   metrics = c("activeUsers","sessions"),
 #'   dimensions = c("date","city","dayOfWeek"),
 #'   date_range = c("2020-03-31", "2020-04-27", "2020-04-30", "2020-05-27"),
-#'   dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
+#'   dimensionFilter = ga_data_filter("city"=="Copenhagen"),
 #'   limit = 100
 #'   )
 #' 
@@ -60,7 +60,7 @@ version_aw <- function(){
 #'   206670707,
 #'   metrics = "activeUsers",
 #'   dimensions = "city",
-#'   dimensionFilter = ga_aw_filter("city", "Copenhagen", "EXACT"),
+#'   dimensionFilter = ga_data_filter("city"=="Copenhagen"),
 #'   limit = 100,
 #'   realtime = TRUE)
 #' 
