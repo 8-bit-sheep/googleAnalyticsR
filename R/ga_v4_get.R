@@ -336,8 +336,8 @@ google_analytics <- function(viewId,
   segments <- assign_list_class(segments, "segment_ga4")
   
   # 279
-  dim_filters <- add_class_if_list(dim_filters, ".filter_clauses_ga4")
-  met_filters <- add_class_if_list(met_filters, ".filter_clauses_ga4")
+  dim_filters <- assign_list_class(dim_filters, ".filter_clauses_ga4")
+  met_filters <- assign_list_class(met_filters, ".filter_clauses_ga4")
   
   if(!is.null(filtersExpression)){
     filtersExpression <- as(filtersExpression, "character")

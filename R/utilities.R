@@ -8,12 +8,13 @@ assert_that_list <- function(the_list, assert_f){
 
 #' when we need a list of objs of class x to also be class x
 #' @noRd
+#' @importFrom methods is
 assign_list_class <- function(x, the_class){
   if(!is.null(x)){
     # fix 253
     # make sure its a list of segment_ga4 objects
     if(class(x) == "list" &&
-       all(unlist(lapply(x, function(y) inherits(y, the_class))))){
+       all(unlist(lapply(x, function(y) is(y, the_class))))){
       class(x) <- the_class
     } else {
       x <- as(x, the_class)
@@ -25,16 +26,6 @@ assign_list_class <- function(x, the_class){
   x
 
 }
-
-add_class_if_list <- function(x, the_class){
-
-  if(!is.null(x) && class(x) == "list"){
-    class(x) <- the_class
-  }
-
-  x
-}
-
 
 #' assign new value if not null and check passes
 #' @noRd
