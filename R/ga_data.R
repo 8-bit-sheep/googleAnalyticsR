@@ -67,7 +67,7 @@ version_aw <- function(){
 #' }
 ga_data <- function(propertyId,
                     metrics,
-                    date_range,
+                    date_range = NULL,
                     dimensions = NULL,
                     dimensionFilter = NULL,
                     dimensionDelimiter = "/",
@@ -91,7 +91,6 @@ ga_data <- function(propertyId,
   #TODO
   metricAggregations <- NULL
   
-  dates <- gaw_dates(date_range)
   dims <- gaw_dimension(dimensions, delimiter = dimensionDelimiter)
   mets <- gaw_metric(metrics)
   
@@ -114,6 +113,9 @@ ga_data <- function(propertyId,
     return(res)
     
   }
+  
+  # here as not needed for real-time but needed for brrr
+  dates <- gaw_dates(date_range)
   
   brrr <- BatchRunReportsRequest(
     entity = Entity(propertyId),

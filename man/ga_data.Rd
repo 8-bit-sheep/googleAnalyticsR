@@ -7,7 +7,7 @@
 ga_data(
   propertyId,
   metrics,
-  date_range,
+  date_range = NULL,
   dimensions = NULL,
   dimensionFilter = NULL,
   dimensionDelimiter = "/",
