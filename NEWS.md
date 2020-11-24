@@ -3,6 +3,7 @@
 * Allow authentication with service JSON keys without needing to change default client.id (#324 - thanks @adamribaudo)
 * Fix GA Adwords list parsing (#322 - thanks @millett-a)
 * Add getUniversalMetadata API fetch to `ga_meta(version="data")` (#335)
+* Support new Google Analytics 4 APIs (#335) via `ga_data()`
 
 # googleAnalyticsR 0.8.0
 

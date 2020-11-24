@@ -12,10 +12,12 @@ library(googleAnalyticsR)
 ## Features
 
 * Only API to fetch data from Google Analytics 4 properties
+* No sampling
+* Fewer limits on exports, such as being able to fetch more than 1million rows
 * Ability to create your own custom metrics and dimensions
-* Can send in up to 4 date ranges at once
+* Send in up to 4 date ranges at once
 * Easier integration with the real-time API
-* More flexible filters
+* Improved filter syntax
 
 ## Meta data
 
@@ -36,14 +38,14 @@ ga_meta("data", propertyId = 206670707)
 
 Make sure to authenticate first using `ga_auth()` or otherwise.
 
-The primary data fetching function is `google_analytics_aw()` (name may change in future)
+The primary data fetching function is `ga_data()`
 
 You need your propertyId to query data, and then at least a metric and date range:
 
 ```r
 # replace with your propertyId
 my_property_id <- 206670707
-basic <- google_analytics_aw(
+basic <- ga_data(
   my_property_id,
   metrics = c("activeUsers","sessions"),
   date_range = c("2020-03-31", "2020-04-27")
@@ -54,7 +56,7 @@ Dimensions can be added to split out your results:
 
 ```r
 # split out metrics by the dimensions specified
-dimensions <- google_analytics_aw(
+dimensions <- ga_data(
     my_property_id,
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek"),
@@ -65,7 +67,7 @@ dimensions <- google_analytics_aw(
 By default the API returns 100 results.  Add the `limit` parameter to change the number of results returned.  To get all results, use -1
 
 ```r
-only_10 <- google_analytics_aw(
+only_10 <- ga_data(
     my_property_id,
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek"),
@@ -73,7 +75,7 @@ only_10 <- google_analytics_aw(
     limit = 10
 )
 
-all_results <- google_analytics_aw(
+all_results <- ga_data(
     my_property_id,
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek"),
@@ -110,7 +112,7 @@ Ensure the comparison operation you are using makes sense for the type of value:
 All filters are made up of filter expressions using `ga_aw_filter_expr()`, but if you want just one filter, use `ga_aw_filter()` directly in your GA call.
 
 ```r
-simple_filter <- google_analytics_aw(
+simple_filter <- ga_data(
    206670707,
    metrics = c("activeUsers","sessions"),
    dimensions = c("date","city","dayOfWeek"),
@@ -165,7 +167,7 @@ A limited subset of [dimensions and metrics are available in the real-time API](
 
 ```r
 # run a real-time report 
-realtime <- google_analytics_aw(
+realtime <- ga_data(
   206670707,
   metrics = "activeUsers",
   dimensions = "city",

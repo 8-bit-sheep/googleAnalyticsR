@@ -2,7 +2,7 @@ context("App + Web Tests")
 
 test_that("Basic fetch", {
   
-  df <- google_analytics_aw(
+  df <- ga_data(
     206670707,
     metrics = "activeUsers",
     dimensions = c("date","city"),
@@ -51,7 +51,7 @@ test_that("Filter fetch types", {
 
   test_filter <- function(dim_filter = NULL,
                           met_filter = NULL){
-    google_analytics_aw(
+    ga_data(
       206670707,
       metrics = "activeUsers",
       dimensions = c("date","city", "dayOfWeek"),
