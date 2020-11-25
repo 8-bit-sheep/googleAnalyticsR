@@ -362,8 +362,8 @@ f1 <- ga_data_filter(city==c("Copenhagen","London","Paris","New York") &
                        (dayOfWeek=="5" | dayOfWeek=="6")) 
 
 # build up complicated filters
-f2 <- ga_data_filter(f1 | "sessionSource"=="google")
-f3 <- ga_data_filter(f2 & !"sessionMedium"=="cpc")
+f2 <- ga_data_filter(f1 | sessionSource=="google")
+f3 <- ga_data_filter(f2 & !sessionMedium=="cpc")
 f3
 ```
 
@@ -402,7 +402,7 @@ realtime <- ga_data(
   206670707,
   metrics = "activeUsers",
   dimensions = "city",
-  dimensionFilter = ga_data_filter("city"=="Copenhagen"),
+  dimensionFilter = ga_data_filter(city=="Copenhagen"),
   limit = 100,
   realtime = TRUE)
 ```

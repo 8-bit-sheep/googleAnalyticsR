@@ -651,8 +651,8 @@
                        (<span class="no">dayOfWeek</span><span class="kw">==</span><span class="st">"5"</span> <span class="kw">|</span> <span class="no">dayOfWeek</span><span class="kw">==</span><span class="st">"6"</span>))
 
 <span class="co"># build up complicated filters</span>
-<span class="no">f2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">f1</span> <span class="kw">|</span> <span class="st">"sessionSource"</span><span class="kw">==</span><span class="st">"google"</span>)
-<span class="no">f3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">f2</span> <span class="kw">&amp;</span> !<span class="st">"sessionMedium"</span><span class="kw">==</span><span class="st">"cpc"</span>)
+<span class="no">f2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">f1</span> <span class="kw">|</span> <span class="no">sessionSource</span><span class="kw">==</span><span class="st">"google"</span>)
+<span class="no">f3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">f2</span> <span class="kw">&amp;</span> !<span class="no">sessionMedium</span><span class="kw">==</span><span class="st">"cpc"</span>)
 <span class="no">f3</span></pre></body></html></div>
 <pre><code>## ===============andGroup:  
 ## [[1]]
@@ -724,7 +724,7 @@
   <span class="fl">206670707</span>,
   <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"activeUsers"</span>,
   <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"city"</span>,
-  <span class="kw">dimensionFilter</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"city"</span><span class="kw">==</span><span class="st">"Copenhagen"</span>),
+  <span class="kw">dimensionFilter</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span><span class="kw">==</span><span class="st">"Copenhagen"</span>),
   <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>,
   <span class="kw">realtime</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 </div>
