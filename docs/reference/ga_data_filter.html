@@ -270,7 +270,7 @@
     <p>Use with <a href='ga_data.html'>ga_data</a> to create filters</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_data_filter</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>ga_data_filter</span>(<span class='no'>x</span>, <span class='kw'>validate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -278,6 +278,10 @@
     <tr>
       <th>x</th>
       <td><p>Filter DSL enabled syntax or the output of a previous call to this function - see examples</p></td>
+    </tr>
+    <tr>
+      <th>validate</th>
+      <td><p>Whether to validate the field names via an API call to <a href='ga_meta.html'>ga_meta</a>.  Call <code><a href='ga_meta.html'>ga_meta("data", propertyId = 12345)</a></code> with your propertyId to validate your custom fields.</p></td>
     </tr>
     </table>
 
@@ -288,12 +292,14 @@
 
     <p>This uses a specific filter DSL syntax to create GA4 filters that can be passed to <a href='ga_data.html'>ga_data</a> arguments <code>dimensionFilter</code> or metricFilter. Ensure that the fields you use are either all metrics or all dimensions.</p>
 <p>The syntax uses operators and the class of the value you are setting (string, numeric or logical) to construct the filter expression object.</p>
+<p>Fields including custom fields for your propertyId can be imported if you fetch them via ga_meta("data", propertyId = 12345) before you construct a filter.  If you do not want filters to be validated, then set the <code>validate=FALSE</code> which will not call the API, or use quotes around fields to keep them as strings.</p>
 <p>The DSL rules are:</p>
 
 <ul>
 <li><p>Single filters can be used without wrapping in filter expressions</p></li>
 <li><p>A single filter syntax is <code>(field) (operator) (value)</code></p></li>
 <li><p>(field) is a dimension or metric for your web property, which you can review via <a href='ga_meta.html'>ga_meta</a></p></li>
+<li><p>(field) can be validated if you fetch metadata before you construct the filter.  If you do this, you can call the fields without quote strings e.g. <code>city</code> and not <code>"city"</code></p></li>
 <li><p>(operator) for metrics can be one of: <code>==, &gt;, &gt;=, &lt;, &lt;=</code></p></li>
 <li><p>(operator) for dimensions can be one of: <code>==, %begins%, %ends%, %contains%, %in%, %regex%, %regex_partial%</code> for dimensions</p></li>
 <li><p>dimension (operator) are by default case sensitive.  Make them case insensitive by using UPPER case variations <code>%BEGINS%, %ENDS%, ...</code> or <code>===</code> for exact matches</p></li>
@@ -304,9 +310,18 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
+<span class='co'># start by calling ga_meta("data") to put valid field names in your environment</span>
+<span class='fu'><a href='ga_meta.html'>ga_meta</a></span>(<span class='st'>"data"</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Non-interactive session and no authentication email selected.</span>
+#&gt; <span class='error'>         </span>
+#&gt; <span class='error'>Setup JSON service email auth or specify email in gar_auth(email='me@preauthenticated.com')</span></div><div class='input'>
+<span class='co'># if you have custom fields, supply your propertyId to ga_meta()</span>
+<span class='fu'><a href='ga_meta.html'>ga_meta</a></span>(<span class='st'>"data"</span>, <span class='kw'>propertyId</span> <span class='kw'>=</span> <span class='fl'>123456</span>)</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #555555;'>2020-11-25 22:27:58 &gt;</span><span> Metadata for propertyId 123456</span></div><div class='output co'>#&gt; <span class='error'>Error: Non-interactive session and no authentication email selected.</span>
+#&gt; <span class='error'>         </span>
+#&gt; <span class='error'>Setup JSON service email auth or specify email in gar_auth(email='me@preauthenticated.com')</span></div><div class='input'>
+
 <span class='co'>## filter clauses</span>
 <span class='co'># OR string filter</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span><span class='kw'>==</span><span class='st'>"Copenhagen"</span> <span class='kw'>|</span> <span class='st'>"city"</span> <span class='kw'>==</span> <span class='st'>"London"</span>)</div><div class='output co'>#&gt; ===orGroup:  
+<span class='fu'>ga_data_filter</span>(<span class='no'>city</span><span class='kw'>==</span><span class='st'>"Copenhagen"</span> <span class='kw'>|</span> <span class='no'>city</span> <span class='kw'>==</span> <span class='st'>"London"</span>)</div><div class='output co'>#&gt; ===orGroup:  
 #&gt; [[1]]
 #&gt; --GA4 Filter:  
 #&gt; --| city 
@@ -317,11 +332,11 @@
 #&gt; --| city 
 #&gt; ----stringFilter:  
 #&gt; value:  London | matchType:  EXACT | caseSensitive:  TRUE</div><div class='input'><span class='co'># inlist string filter</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span><span class='kw'>==</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Copenhagen"</span>,<span class='st'>"London"</span>))</div><div class='output co'>#&gt; --| city 
+<span class='fu'>ga_data_filter</span>(<span class='no'>city</span><span class='kw'>==</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Copenhagen"</span>,<span class='st'>"London"</span>))</div><div class='output co'>#&gt; --| city 
 #&gt; ----inListFilter:  
 #&gt; values:  Copenhagen London 
 #&gt; caseSensitive:  TRUE </div><div class='input'><span class='co'># AND string filters</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span><span class='kw'>==</span><span class='st'>"Copenhagen"</span> <span class='kw'>&amp;</span> <span class='st'>"dayOfWeek"</span> <span class='kw'>==</span> <span class='st'>"5"</span>)</div><div class='output co'>#&gt; ===andGroup:  
+<span class='fu'>ga_data_filter</span>(<span class='no'>city</span><span class='kw'>==</span><span class='st'>"Copenhagen"</span> <span class='kw'>&amp;</span> <span class='no'>dayOfWeek</span> <span class='kw'>==</span> <span class='st'>"5"</span>)</div><div class='output co'>#&gt; ===andGroup:  
 #&gt; [[1]]
 #&gt; --GA4 Filter:  
 #&gt; --| city 
@@ -332,7 +347,7 @@
 #&gt; --| dayOfWeek 
 #&gt; ----stringFilter:  
 #&gt; value:  5 | matchType:  EXACT | caseSensitive:  TRUE</div><div class='input'><span class='co'># ! - invert string filter</span>
-<span class='fu'>ga_data_filter</span>(!(<span class='st'>"city"</span><span class='kw'>==</span><span class='st'>"Copenhagen"</span> <span class='kw'>|</span> <span class='st'>"city"</span> <span class='kw'>==</span> <span class='st'>"London"</span>))</div><div class='output co'>#&gt; ===notExpression:  
+<span class='fu'>ga_data_filter</span>(!(<span class='no'>city</span><span class='kw'>==</span><span class='st'>"Copenhagen"</span> <span class='kw'>|</span> <span class='no'>city</span> <span class='kw'>==</span> <span class='st'>"London"</span>))</div><div class='output co'>#&gt; ===notExpression:  
 #&gt; ===orGroup:  
 #&gt; [[1]]
 #&gt; --GA4 Filter:  
@@ -345,60 +360,12 @@
 #&gt; ----stringFilter:  
 #&gt; value:  London | matchType:  EXACT | caseSensitive:  TRUE</div><div class='input'>
 <span class='co'># multiple filter clauses</span>
-<span class='no'>f1</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span><span class='kw'>==</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Copenhagen"</span>,<span class='st'>"London"</span>,<span class='st'>"Paris"</span>,<span class='st'>"New York"</span>) <span class='kw'>&amp;</span>
-               (<span class='st'>"dayOfWeek"</span><span class='kw'>==</span><span class='st'>"5"</span> <span class='kw'>|</span> <span class='st'>"dayOfWeek"</span><span class='kw'>==</span><span class='st'>"6"</span>))
-<span class='no'>f1</span></div><div class='output co'>#&gt; =======andGroup:  
-#&gt; [[1]]
-#&gt; --GA4 Filter:  
-#&gt; --| city 
-#&gt; ----inListFilter:  
-#&gt; values:  Copenhagen London Paris New York 
-#&gt; caseSensitive:  TRUE 
-#&gt; 
-#&gt; [[2]]
-#&gt; ===orGroup:  
-#&gt; [[1]]
-#&gt; --GA4 Filter:  
-#&gt; --| dayOfWeek 
-#&gt; ----stringFilter:  
-#&gt; value:  5 | matchType:  EXACT | caseSensitive:  TRUE
-#&gt; [[2]]
-#&gt; --GA4 Filter:  
-#&gt; --| dayOfWeek 
-#&gt; ----stringFilter:  
-#&gt; value:  6 | matchType:  EXACT | caseSensitive:  TRUE
-#&gt; </div><div class='input'>
+<span class='no'>f1</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data_filter</span>(<span class='no'>city</span><span class='kw'>==</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Copenhagen"</span>,<span class='st'>"London"</span>,<span class='st'>"Paris"</span>,<span class='st'>"New York"</span>) <span class='kw'>&amp;</span>
+               (<span class='no'>dayOfWeek</span><span class='kw'>==</span><span class='st'>"5"</span> <span class='kw'>|</span> <span class='no'>dayOfWeek</span><span class='kw'>==</span><span class='st'>"6"</span>))
+
 <span class='co'># build up complicated filters</span>
-<span class='no'>f2</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data_filter</span>(<span class='no'>f1</span> <span class='kw'>|</span> <span class='st'>"sessionSource"</span><span class='kw'>==</span><span class='st'>"google"</span>)
-<span class='no'>f2</span></div><div class='output co'>#&gt; ===========orGroup:  
-#&gt; [[1]]
-#&gt; =======andGroup:  
-#&gt; [[1]]
-#&gt; --GA4 Filter:  
-#&gt; --| city 
-#&gt; ----inListFilter:  
-#&gt; values:  Copenhagen London Paris New York 
-#&gt; caseSensitive:  TRUE 
-#&gt; 
-#&gt; [[2]]
-#&gt; ===orGroup:  
-#&gt; [[1]]
-#&gt; --GA4 Filter:  
-#&gt; --| dayOfWeek 
-#&gt; ----stringFilter:  
-#&gt; value:  5 | matchType:  EXACT | caseSensitive:  TRUE
-#&gt; [[2]]
-#&gt; --GA4 Filter:  
-#&gt; --| dayOfWeek 
-#&gt; ----stringFilter:  
-#&gt; value:  6 | matchType:  EXACT | caseSensitive:  TRUE
-#&gt; 
-#&gt; 
-#&gt; [[2]]
-#&gt; --GA4 Filter:  
-#&gt; --| sessionSource 
-#&gt; ----stringFilter:  
-#&gt; value:  google | matchType:  EXACT | caseSensitive:  TRUE</div><div class='input'><span class='no'>f3</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data_filter</span>(<span class='no'>f2</span> <span class='kw'>&amp;</span> !<span class='st'>"sessionMedium"</span><span class='kw'>==</span><span class='st'>"cpc"</span>)
+<span class='no'>f2</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data_filter</span>(<span class='no'>f1</span> <span class='kw'>|</span> <span class='no'>sessionSource</span><span class='kw'>==</span><span class='st'>"google"</span>)
+<span class='no'>f3</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data_filter</span>(<span class='no'>f2</span> <span class='kw'>&amp;</span> !<span class='no'>sessionMedium</span><span class='kw'>==</span><span class='st'>"cpc"</span>)
 <span class='no'>f3</span></div><div class='output co'>#&gt; ===============andGroup:  
 #&gt; [[1]]
 #&gt; ===========orGroup:  
@@ -439,56 +406,60 @@
 #&gt; value:  cpc | matchType:  EXACT | caseSensitive:  TRUE</div><div class='input'>
 <span class='co'>## numeric filter types</span>
 <span class='co'># numeric equal filter</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"sessions"</span><span class='kw'>==</span><span class='fl'>5</span>)</div><div class='output co'>#&gt; --| sessions 
+<span class='fu'>ga_data_filter</span>(<span class='no'>sessions</span><span class='kw'>==</span><span class='fl'>5</span>)</div><div class='output co'>#&gt; --| sessions 
 #&gt; ----numericFilter:  
 #&gt; operation:  EQUAL | value:      5</div><div class='input'><span class='co'># between numeric filter</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"sessions"</span><span class='kw'>==</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>,<span class='fl'>6</span>))</div><div class='output co'>#&gt; --| sessions 
+<span class='fu'>ga_data_filter</span>(<span class='no'>sessions</span><span class='kw'>==</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>,<span class='fl'>6</span>))</div><div class='output co'>#&gt; --| sessions 
 #&gt; ----betweenFilter:  
 #&gt; from:  5  to:  6</div><div class='input'><span class='co'># greater than numeric</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"sessions"</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; --| sessions 
+<span class='fu'>ga_data_filter</span>(<span class='no'>sessions</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; --| sessions 
 #&gt; ----numericFilter:  
 #&gt; operation:  GREATER_THAN | value:      0</div><div class='input'><span class='co'># greater than or equal</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"sessions"</span> <span class='kw'>&gt;=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; --| sessions 
+<span class='fu'>ga_data_filter</span>(<span class='no'>sessions</span> <span class='kw'>&gt;=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; --| sessions 
 #&gt; ----numericFilter:  
 #&gt; operation:  GREATER_THAN_OR_EQUAL | value:      1</div><div class='input'><span class='co'># less than numeric</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"sessions"</span> <span class='kw'>&lt;</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; --| sessions 
+<span class='fu'>ga_data_filter</span>(<span class='no'>sessions</span> <span class='kw'>&lt;</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; --| sessions 
 #&gt; ----numericFilter:  
 #&gt; operation:  LESS_THAN | value:      100</div><div class='input'><span class='co'># less than or equal numeric</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"sessions"</span> <span class='kw'>&lt;=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; --| sessions 
+<span class='fu'>ga_data_filter</span>(<span class='no'>sessions</span> <span class='kw'>&lt;=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; --| sessions 
 #&gt; ----numericFilter:  
 #&gt; operation:  LESS_THAN_OR_EQUAL | value:      100</div><div class='input'>
 <span class='co'>## string filter types</span>
 <span class='co'># begins with string</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span> <span class='kw'>%begins%</span> <span class='st'>"Cope"</span>)</div><div class='output co'>#&gt; --| city 
+<span class='fu'>ga_data_filter</span>(<span class='no'>city</span> <span class='kw'>%begins%</span> <span class='st'>"Cope"</span>)</div><div class='output co'>#&gt; --| city 
 #&gt; ----stringFilter:  
 #&gt; value:  Cope | matchType:  BEGINS_WITH | caseSensitive:  TRUE</div><div class='input'><span class='co'># ends with string</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span> <span class='kw'>%ends%</span> <span class='st'>"hagen"</span>)</div><div class='output co'>#&gt; --| city 
+<span class='fu'>ga_data_filter</span>(<span class='no'>city</span> <span class='kw'>%ends%</span> <span class='st'>"hagen"</span>)</div><div class='output co'>#&gt; --| city 
 #&gt; ----stringFilter:  
 #&gt; value:  hagen | matchType:  ENDS_WITH | caseSensitive:  TRUE</div><div class='input'><span class='co'># contains string</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span> <span class='kw'>%contains%</span> <span class='st'>"ope"</span>)</div><div class='output co'>#&gt; --| city 
+<span class='fu'>ga_data_filter</span>(<span class='no'>city</span> <span class='kw'>%contains%</span> <span class='st'>"ope"</span>)</div><div class='output co'>#&gt; --| city 
 #&gt; ----stringFilter:  
 #&gt; value:  ope | matchType:  CONTAINS | caseSensitive:  TRUE</div><div class='input'><span class='co'># regex (full) string</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span> <span class='kw'>%regex%</span> <span class='st'>"^Cope"</span>)</div><div class='output co'>#&gt; --| city 
+<span class='fu'>ga_data_filter</span>(<span class='no'>city</span> <span class='kw'>%regex%</span> <span class='st'>"^Cope"</span>)</div><div class='output co'>#&gt; --| city 
 #&gt; ----stringFilter:  
 #&gt; value:  ^Cope | matchType:  FULL_REGEXP | caseSensitive:  TRUE</div><div class='input'><span class='co'># regex (partial) string</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span> <span class='kw'>%regex_partial%</span> <span class='st'>"ope"</span>)</div><div class='output co'>#&gt; --| city 
+<span class='fu'>ga_data_filter</span>(<span class='no'>city</span> <span class='kw'>%regex_partial%</span> <span class='st'>"ope"</span>)</div><div class='output co'>#&gt; --| city 
 #&gt; ----stringFilter:  
 #&gt; value:  ope | matchType:  PARTIAL_REGEXP | caseSensitive:  TRUE</div><div class='input'>
 <span class='co'># by default string filters are case sensitive.  </span>
 <span class='co'># Use UPPERCASE operator to make then case insensitive</span>
 
 <span class='co'># begins with string (case insensitive)</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span> <span class='kw'>%BEGINS%</span> <span class='st'>"cope"</span>)</div><div class='output co'>#&gt; --| city 
+<span class='fu'>ga_data_filter</span>(<span class='no'>city</span> <span class='kw'>%BEGINS%</span> <span class='st'>"cope"</span>)</div><div class='output co'>#&gt; --| city 
 #&gt; ----stringFilter:  
 #&gt; value:  cope | matchType:  BEGINS_WITH | caseSensitive:  FALSE</div><div class='input'><span class='co'># ends with string (case insensitive)</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span> <span class='kw'>%ENDS%</span> <span class='st'>"Hagen"</span>)</div><div class='output co'>#&gt; --| city 
+<span class='fu'>ga_data_filter</span>(<span class='no'>city</span> <span class='kw'>%ENDS%</span> <span class='st'>"Hagen"</span>)</div><div class='output co'>#&gt; --| city 
 #&gt; ----stringFilter:  
 #&gt; value:  Hagen | matchType:  ENDS_WITH | caseSensitive:  FALSE</div><div class='input'><span class='co'># case insensitive exact</span>
-<span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span><span class='kw'>%==%</span><span class='st'>"coPENGhagen"</span>)</div><div class='output co'>#&gt; --| city 
+<span class='fu'>ga_data_filter</span>(<span class='no'>city</span> <span class='kw'>%==%</span><span class='st'>"coPENGhagen"</span>)</div><div class='output co'>#&gt; --| city 
+#&gt; ----stringFilter:  
+#&gt; value:  coPENGhagen | matchType:  EXACT | caseSensitive:  FALSE</div><div class='input'>
+<span class='co'># avoid validation by making fields strings</span>
+<span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span> <span class='kw'>%==%</span><span class='st'>"coPENGhagen"</span>)</div><div class='output co'>#&gt; --| city 
 #&gt; ----stringFilter:  
 #&gt; value:  coPENGhagen | matchType:  EXACT | caseSensitive:  FALSE</div><div class='input'>
 
-</div></pre>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

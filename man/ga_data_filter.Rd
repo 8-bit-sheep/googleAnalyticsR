@@ -4,10 +4,12 @@
 \alias{ga_data_filter}
 \title{Filter DSL for GA4 filters}
 \usage{
-ga_data_filter(x)
+ga_data_filter(x, validate = TRUE)
 }
 \arguments{
 \item{x}{Filter DSL enabled syntax or the output of a previous call to this function - see examples}
+
+\item{validate}{Whether to validate the field names via an API call to \link{ga_meta}.  Call \code{ga_meta("data", propertyId = 12345)} with your propertyId to validate your custom fields.}
 }
 \value{
 A \link{FilterExpression} object suitable for use in \link{ga_data}
@@ -20,6 +22,8 @@ This uses a specific filter DSL syntax to create GA4 filters that can be passed 
 
 The syntax uses operators and the class of the value you are setting (string, numeric or logical) to construct the filter expression object.
 
+Fields including custom fields for your propertyId can be imported if you fetch them via \link{ga_meta("data", propertyId = 12345)} before you construct a filter.  If you do not want filters to be validated, then set the \code{validate=FALSE} which will not call the API, or use quotes around fields to keep them as strings.
+
 The DSL rules are:
 
 
@@ -27,6 +31,7 @@ The DSL rules are:
   \item{}{ Single filters can be used without wrapping in filter expressions}
   \item{}{ A single filter syntax is \code{(field) (operator) (value)}}
   \item{}{ (field) is a dimension or metric for your web property, which you can review via \link{ga_meta}}
+  \item{}{ (field) can be validated if you fetch metadata before you construct the filter.  If you do this, you can call the fields without quote strings e.g. \code{city} and not \code{"city"}}
   \item{}{ (operator) for metrics can be one of: \code{==, >, >=, <, <=}} 
   \item{}{ (operator) for dimensions can be one of: \code{==, \%begins\%, \%ends\%, \%contains\%, \%in\%, \%regex\%, \%regex_partial\%} for dimensions}
   \item{}{ dimension (operator) are by default case sensitive.  Make them case insensitive by using UPPER case variations \code{\%BEGINS\%, \%ENDS\%, ...} or \code{===} for exact matches}
@@ -36,62 +41,70 @@ The DSL rules are:
 }
 \examples{
 
+# start by calling ga_meta("data") to put valid field names in your environment
+ga_meta("data")
+
+# if you have custom fields, supply your propertyId to ga_meta()
+ga_meta("data", propertyId = 123456)
+
+
 ## filter clauses
 # OR string filter
-ga_data_filter("city"=="Copenhagen" | "city" == "London")
+ga_data_filter(city=="Copenhagen" | city == "London")
 # inlist string filter
-ga_data_filter("city"==c("Copenhagen","London"))
+ga_data_filter(city==c("Copenhagen","London"))
 # AND string filters
-ga_data_filter("city"=="Copenhagen" & "dayOfWeek" == "5")
+ga_data_filter(city=="Copenhagen" & dayOfWeek == "5")
 # ! - invert string filter
-ga_data_filter(!("city"=="Copenhagen" | "city" == "London"))
+ga_data_filter(!(city=="Copenhagen" | city == "London"))
 
 # multiple filter clauses
-f1 <- ga_data_filter("city"==c("Copenhagen","London","Paris","New York") &
-               ("dayOfWeek"=="5" | "dayOfWeek"=="6")) 
-f1
+f1 <- ga_data_filter(city==c("Copenhagen","London","Paris","New York") &
+               (dayOfWeek=="5" | dayOfWeek=="6")) 
                
 # build up complicated filters
-f2 <- ga_data_filter(f1 | "sessionSource"=="google")
-f2
-f3 <- ga_data_filter(f2 & !"sessionMedium"=="cpc")
+f2 <- ga_data_filter(f1 | sessionSource=="google")
+f3 <- ga_data_filter(f2 & !sessionMedium=="cpc")
 f3
 
 ## numeric filter types
 # numeric equal filter
-ga_data_filter("sessions"==5)
+ga_data_filter(sessions==5)
 # between numeric filter
-ga_data_filter("sessions"==c(5,6))
+ga_data_filter(sessions==c(5,6))
 # greater than numeric
-ga_data_filter("sessions" > 0)
+ga_data_filter(sessions > 0)
 # greater than or equal
-ga_data_filter("sessions" >= 1)
+ga_data_filter(sessions >= 1)
 # less than numeric
-ga_data_filter("sessions" < 100)
+ga_data_filter(sessions < 100)
 # less than or equal numeric
-ga_data_filter("sessions" <= 100)
+ga_data_filter(sessions <= 100)
 
 ## string filter types
 # begins with string
-ga_data_filter("city" \%begins\% "Cope")
+ga_data_filter(city \%begins\% "Cope")
 # ends with string
-ga_data_filter("city" \%ends\% "hagen")
+ga_data_filter(city \%ends\% "hagen")
 # contains string
-ga_data_filter("city" \%contains\% "ope")
+ga_data_filter(city \%contains\% "ope")
 # regex (full) string
-ga_data_filter("city" \%regex\% "^Cope")
+ga_data_filter(city \%regex\% "^Cope")
 # regex (partial) string
-ga_data_filter("city" \%regex_partial\% "ope")
+ga_data_filter(city \%regex_partial\% "ope")
 
 # by default string filters are case sensitive.  
 # Use UPPERCASE operator to make then case insensitive
 
 # begins with string (case insensitive)
-ga_data_filter("city" \%BEGINS\% "cope")
+ga_data_filter(city \%BEGINS\% "cope")
 # ends with string (case insensitive)
-ga_data_filter("city" \%ENDS\% "Hagen")
+ga_data_filter(city \%ENDS\% "Hagen")
 # case insensitive exact
-ga_data_filter("city"\%==\%"coPENGhagen")
+ga_data_filter(city \%==\%"coPENGhagen")
+
+# avoid validation by making fields strings
+ga_data_filter("city" \%==\%"coPENGhagen")
 
 
 }

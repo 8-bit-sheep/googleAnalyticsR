@@ -2,6 +2,7 @@
 #'
 #' @param version The Google Analytics API metadata to fetch - "universal" for Universal and earlier versions, "data" for Google Analytics 4
 #' @param propertyId If requesting from Google Analytics 4, pass the propertyId to get metadata specific to that property.  Leaving it NULL or 0 will return universal metadata
+#' @param cached Whether to use a cached version or to use the API to fetch the results again
 #' @return dataframe of dimensions and metrics available to use
 #'
 #' @seealso \url{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}, \url{https://developers.google.com/analytics/trusted-testing/analytics-data/rest/v1alpha/TopLevel/getUniversalMetadata}
@@ -24,7 +25,8 @@
 #' 
 #' }
 ga_meta <- function(version = c("universal","data"),
-                    propertyId = NULL){
+                    propertyId = NULL,
+                    cached = TRUE){
   
   version <- match.arg(version)
   
@@ -36,7 +38,14 @@ ga_meta <- function(version = c("universal","data"),
                               data_parse_function = parse_google_analytics_meta )
     o <- meta()
   } else if(version == "data"){
-    o <- ga_meta_aw(propertyId)
+    if(cached && 
+       !is.null(.ga_meta_env$meta) 
+       && !is.null(propertyId)
+       && attr(.ga_meta_env$meta, "propertyId") == propertyId){
+      myMessage("Cached meta data ", level = 2)
+      return(.ga_meta_env$meta)
+    }
+    o <- ga_meta_data(propertyId)
   }
 
   o
@@ -44,7 +53,10 @@ ga_meta <- function(version = c("universal","data"),
   
 }
 
-ga_meta_aw <- function(propertyId){
+.ga_meta_env <- new.env(parent = globalenv())
+.ga_meta_env$meta <- NULL
+
+ga_meta_data <- function(propertyId){
   
   pid <- 0
   if(!is.null(propertyId)){
@@ -57,7 +69,12 @@ ga_meta_aw <- function(propertyId){
   meta <- gar_api_generator(the_url, "GET",
                             data_parse_function = parse_ga_meta_aw)
   
-  meta()
+  o <- meta()
+  attr(o, "propertyId") <- pid
+  myMessage("Caching new meta data", level = 3)
+  .ga_meta_env$meta <- o
+  
+  o
   
 }
 

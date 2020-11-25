@@ -176,8 +176,10 @@ There is now only one filter function - `ga_data_filter()`.  As was the case for
 The base object is `ga_data_filter()` - this holds the logic for the specific metric or dimension you are using.  The function uses a new DSL for GA4 filters, the syntax rules are detailed below: 
 
 * A single filter, or multiple filters within a filter expression can be passed in to `ga_data()`
-* The single filter syntax is (field) (operator) (value) e.g. `"city"=="Copenhagen"`
+* The single filter syntax is (field) (operator) (value) e.g. `city=="Copenhagen"`
 * (field) is a dimension or metric for your web property, which you can review via `ga_meta("data")`
+* (field) can be quoted (`"city"`, `"session"`), or unquoted ( `city` or `session`) if you want to use validation.
+* (field) validation for unquoted fields is available if using default metadata (e.g. `city` or `session`), or you have fetched your custom fields via `ga_meta("data", propertyId=123456)`
 * (operator) can be one of `==, >, >=, <, <=` for metrics
 * (operator) can be one of `==, %begins%, %ends%, %contains%, %contains%, %regex%, %regex_partial%` for dimensions
 * dimension (operator) are by default case sensitive. Make them case insensitive by using UPPER case variations `%BEGINS%, %ENDS%` etc. or `%==%` for case insensitive exact matches
@@ -189,6 +191,10 @@ The base object is `ga_data_filter()` - this holds the logic for the specific me
 Fields are metrics and dimensions that are available to your GA4 implementation, including custom fields.  You can see what is available by calling the `ga_meta("data")` function.
 
 Do not construct metric filters and use in the `dimensionFilter` argument or vice-versa.
+
+You can use quoted (`"city"`, `"session"`) or unquoted fields ( `city` or `session`) which will check the field is valid before you send it to the API.  
+
+If you want to use custom fields from your property, do a call to `ga_meta("data", propertyId=1234546)` replacing your propertyId for the GA4 property that has the custom fields.  Once fetched, they will be placed in your local environment for all future calls to `ga_data_filter()`
 
 #### Filter Values
 
@@ -212,7 +218,7 @@ simple_filter <- ga_data(
    metrics = c("activeUsers","sessions"),
    dimensions = c("date","city","dayOfWeek"),
    date_range = c("2020-03-31", "2020-04-27"),
-   dimensionFilter = ga_data_filter("city"=="Copenhagen"),
+   dimensionFilter = ga_data_filter(city=="Copenhagen"),
    limit = 100
    )
 
@@ -233,20 +239,49 @@ If you need more complicated filters, then build them using the DSL syntax.  Thi
 ```{r}
 ## filter clauses
 # OR string filter
-ga_data_filter("city"=="Copenhagen" | "city" == "London")
+ga_data_filter(city=="Copenhagen" | city == "London")
 # inlist string filter
-ga_data_filter("city"==c("Copenhagen","London"))
+ga_data_filter(city==c("Copenhagen","London"))
 # AND string filters
-ga_data_filter("city"=="Copenhagen" & "dayOfWeek" == "5")
+ga_data_filter(city=="Copenhagen" & dayOfWeek == "5")
 # NOT string filter
-ga_data_filter(!("city"=="Copenhagen" | "city" == "London"))
+ga_data_filter(!(city=="Copenhagen" | city == "London"))
 
 # multiple filter clauses
-ga_data_filter("city"==c("Copenhagen","London","Paris","New York") &
-                 ("dayOfWeek"=="5" | "dayOfWeek"=="6"))
+ga_data_filter(city==c("Copenhagen","London","Paris","New York") &
+                 (dayOfWeek=="5" | dayOfWeek=="6"))
 ```
 
-Numeric filters for use in `metricFilters`
+#### Filter field validation
+
+Validation is carried out if the field is unquoted.  If you don't want validation use quotes.  
+
+```{r}
+# validation of fields - correct
+ga_data_filter(city=="Copenhagen")
+
+# validation of fields - error
+tryCatch(ga_data_filter(cittty=="Copenhagen"), 
+         error = function(err) err$message)
+
+# avoid validation by quoting
+ga_data_filter("cittty"=="Copenhagen")
+```
+
+For custom fields use `ga_meta("data", propertyId=12345)` first to fetch them.
+
+```r
+# fetch your own custom fields to use them in later filers
+ga_meta("data", propertyId = 206670707)
+# ℹ 2020-11-25 22:24:46 > Caching new meta data
+
+# custom field
+ga_data_filter(custom1=="blahblah")
+```
+
+#### Numeric filters for use in `metricFilters`
+
+An example of metric filters are below:
 
 ```r
 metric_filter <- ga_data(
@@ -254,7 +289,7 @@ metric_filter <- ga_data(
    metrics = c("activeUsers","sessions"),
    dimensions = c("date","city","dayOfWeek"),
    date_range = c("2020-03-31", "2020-04-27"),
-   metricFilter = ga_data_filter("sessions">10),
+   metricFilter = ga_data_filter(sessions>10),
    limit = 100
    )
 
@@ -272,60 +307,65 @@ metric_filter
 ```{r}
 ## numeric filter types
 # numeric equal filter
-ga_data_filter("sessions"==5)
+ga_data_filter(sessions==5)
 # between numeric filter
-ga_data_filter("sessions"==c(5,6))
+ga_data_filter(sessions==c(5,6))
 # greater than numeric
-ga_data_filter("sessions" > 0)
+ga_data_filter(sessions > 0)
 # greater than or equal
-ga_data_filter("sessions" >= 1)
+ga_data_filter(sessions >= 1)
 # less than numeric
-ga_data_filter("sessions" < 100)
+ga_data_filter(sessions < 100)
 # less than or equal numeric
-ga_data_filter("sessions" <= 100)
+ga_data_filter(sessions <= 100)
 ```
+
+#### Dimension filters for use in `dimensionFilters`
 
 All the string filters that can be used are below:
 
 ```{r}
 ## string filter types
 # begins with string
-ga_data_filter("city" %begins% "Cope")
+ga_data_filter(city %begins% "Cope")
 # ends with string
-ga_data_filter("city" %ends% "hagen")
+ga_data_filter(city %ends% "hagen")
 # contains string
-ga_data_filter("city" %contains% "ope")
+ga_data_filter(city %contains% "ope")
 # regex (full) string
-ga_data_filter("city" %regex% "^Cope")
+ga_data_filter(city %regex% "^Cope")
 # regex (partial) string
-ga_data_filter("city" %regex_partial% "ope")
-
-# by default string filters are case sensitive.  
-# Use UPPERCASE operator to make then case insensitive
-
-# begins with string (case insensitive)
-ga_data_filter("city" %BEGINS% "cope")
-# ends with string (case insensitive)
-ga_data_filter("city" %ENDS% "Hagen")
-# case insensitive exact match
-ga_data_filter("city" %==% "copeNHAGen")
+ga_data_filter(city %regex_partial% "ope")
 ```
 
-You can also recursively nest filter expressions:
+By default string filters are case sensitive.  Use UPPERCASE operator to make then case insensitive
+
+```{r}
+# begins with string (case insensitive)
+ga_data_filter(city %BEGINS% "cope")
+# ends with string (case insensitive)
+ga_data_filter(city %ENDS% "Hagen")
+# case insensitive exact match
+ga_data_filter(city %==% "copeNHAGen")
+```
+
+#### Complex filters
+
+You can also recursively nest filter expressions to make more complicated ones.  
+
+The filter below looks for visitors from Copenhagen, London, Paris or New York who arrived on day 5 or 6 of the week, from Google referrers but not including Google Ads.
 
 ```{r}
 # use previously created filters to build another filter expression:
 # multiple filter clauses
-f1 <- ga_data_filter("city"==c("Copenhagen","London","Paris","New York") &
-                       ("dayOfWeek"=="5" | "dayOfWeek"=="6")) 
+f1 <- ga_data_filter(city==c("Copenhagen","London","Paris","New York") &
+                       (dayOfWeek=="5" | dayOfWeek=="6")) 
 
 # build up complicated filters
 f2 <- ga_data_filter(f1 | "sessionSource"=="google")
 f3 <- ga_data_filter(f2 & !"sessionMedium"=="cpc")
 f3
 ```
-
-The filter above looks for visitors from Copenhagen, London, Paris or New York who arrived on day 5 or 6 of the week, from Google referrers but not including Google Ads.
 
 You can use filter expression objects above directly like so:
 

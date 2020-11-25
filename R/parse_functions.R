@@ -5,7 +5,7 @@
 #' @keywords internal
 #' @importFrom dplyr bind_rows
 parse_ga_meta_aw <- function(x){
-  
+
   dims <- x$dimensions
   mets <- x$metrics
   
