@@ -4,12 +4,10 @@
 \alias{ga_data_filter}
 \title{Filter DSL for GA4 filters}
 \usage{
-ga_data_filter(x, validate = TRUE)
+ga_data_filter(x)
 }
 \arguments{
 \item{x}{Filter DSL enabled syntax or the output of a previous call to this function - see examples}
-
-\item{validate}{Whether to validate the field names via an API call to \link{ga_meta}.  Call \code{ga_meta("data", propertyId = 12345)} with your propertyId to validate your custom fields.}
 }
 \value{
 A \link{FilterExpression} object suitable for use in \link{ga_data}
@@ -22,7 +20,7 @@ This uses a specific filter DSL syntax to create GA4 filters that can be passed 
 
 The syntax uses operators and the class of the value you are setting (string, numeric or logical) to construct the filter expression object.
 
-Fields including custom fields for your propertyId can be imported if you fetch them via \link{ga_meta("data", propertyId = 12345)} before you construct a filter.  If you do not want filters to be validated, then set the \code{validate=FALSE} which will not call the API, or use quotes around fields to keep them as strings.
+Fields including custom fields for your propertyId can be imported if you fetch them via \link{ga_meta("data", propertyId = 12345)} before you construct a filter.  If you do not want filters to be validated, then send them in as strings ("field").
 
 The DSL rules are:
 

@@ -378,7 +378,6 @@ dsl_filter_expr_funcs <- list(
 #' Use with \link{ga_data} to create filters
 #' 
 #' @param x Filter DSL enabled syntax or the output of a previous call to this function - see examples
-#' @param validate Whether to validate the field names via an API call to \link{ga_meta}.  Call \code{ga_meta("data", propertyId = 12345)} with your propertyId to validate your custom fields.
 #' 
 #' @details 
 #' 
@@ -386,7 +385,7 @@ dsl_filter_expr_funcs <- list(
 #' 
 #' The syntax uses operators and the class of the value you are setting (string, numeric or logical) to construct the filter expression object.
 #' 
-#' Fields including custom fields for your propertyId can be imported if you fetch them via \link{ga_meta("data", propertyId = 12345)} before you construct a filter.  If you do not want filters to be validated, then set the \code{validate=FALSE} which will not call the API, or use quotes around fields to keep them as strings.
+#' Fields including custom fields for your propertyId can be imported if you fetch them via \link{ga_meta("data", propertyId = 12345)} before you construct a filter.  If you do not want filters to be validated, then send them in as strings ("field").
 #' 
 #' The DSL rules are:
 #' 
@@ -476,13 +475,11 @@ dsl_filter_expr_funcs <- list(
 #' ga_data_filter("city" %==%"coPENGhagen")
 #' 
 #' 
-ga_data_filter <- function(x, validate = TRUE){
+ga_data_filter <- function(x){
   x <- rlang::enquo(x)
   
-  mask_data <- dsl_filter_expr_funcs
-  if(validate){
-    mask_data <- c(mask_data, filter_validation_meta())
-  }
+  mask_data <- c(dsl_filter_expr_funcs, 
+                 filter_validation_meta())
   
   rlang::eval_tidy(x, data = mask_data)
 }
