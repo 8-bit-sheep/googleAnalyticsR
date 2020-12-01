@@ -492,8 +492,11 @@ filter_validation_meta <- function(){
     fields <- .ga_meta_env$meta
   }
   
+  # user friendly custom names
+  the_names <- gsub("^customEvent:", "", fields$apiName)
+  
   # the field names
-  setNames(lapply(fields$apiName, function(x) x), fields$apiName)
+  setNames(lapply(fields$apiName, function(x) x), the_names)
 }
 
 
