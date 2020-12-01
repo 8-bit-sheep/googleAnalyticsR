@@ -27,12 +27,14 @@ Universal metadata for what you can query via the Data API can be found by speci
 metadata <- ga_meta(version = "data")
 ```
 
-You may have custom dimensions and metrics setup for your web property - to get a list of those specify the web property in the meta data call:
+You may have custom dimensions and metrics set up for your web property - to get a list of those specify the web property in the meta data call:
 
 ```r
 # Google Analytics 4 metadata for a particular Web Property
 ga_meta("data", propertyId = 206670707)
 ```
+
+Custom events and user scoped custom dimensions have names starting with `customEvent:` and `customUser:` respectively.  Include them in your reports with the prefix.
 
 ## Fetching GA4 Data into R
 
@@ -86,6 +88,8 @@ dimensions
 # … with 90 more rows
 ```
 
+### Row limits
+
 By default the API returns 100 results.  Add the `limit` parameter to change the number of results returned.  To get all results, use -1
 
 ```r
@@ -130,6 +134,23 @@ all_results
 # 9 2020-04-08 Bologna   4                   7        7
 #10 2020-04-07 (not set) 3                   6        7
 # … with 1,753 more rows
+```
+
+### Custom definitions
+
+When fetching custom dimensions and metrics, specify the prefix as you read it in the meta data table.  See this [Google article on custom definitions](https://developers.google.com/analytics/devguides/reporting/data/v1/advanced#listing_custom_definitions_and_creating_reports) for details.
+
+```r
+# will include your custom data
+my_meta <- ga_meta("data", propertyId = 206670707)
+
+custom <- ga_data(
+    my_property_id,
+    metrics = c("customEvent:credits_spent"),
+    dimensions = c("date","customUser:last_level","customEvent:achievement_id"),
+    date_range = c("2020-03-31", "2020-04-27"),
+    limit = -1
+)
 ```
 
 ## Date Ranges
