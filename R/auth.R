@@ -95,7 +95,7 @@
 #' }
 #'
 #' @return Invisibly, the token that has been saved to the session
-#' @import googleAuthR
+#' @importFrom googleAuthR gar_auth_service gar_auth
 #' @importFrom tools file_ext
 #' @export
 ga_auth <- function(token = NULL, email = NULL, json_file = NULL){
@@ -108,6 +108,11 @@ ga_auth <- function(token = NULL, email = NULL, json_file = NULL){
 
   # client.id only needed for OAuth2 auth
   default_project_message()
+  
+  if(nzchar(Sys.getenv("GARGLE_EMAIL"))){
+    email <- Sys.getenv("GARGLE_EMAIL")
+    myMessage("Using email from GARGLE_EMAIL env var:", email, level = 3)
+  }
   
   gar_auth(token = token,
            email = email,

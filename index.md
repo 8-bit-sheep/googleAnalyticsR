@@ -77,6 +77,9 @@ If you have used the package and published online then get in touch and I'll lis
 * Mayo shows how to [visualise geographical data from your Google Analytics data](https://www.mayoracek.com/r-programming/visualize-geographical-data-help-google-analytics-r/)
 * Habr.com show how to get data from [Google Analytics into Microsoft SQL Server](https://habr.com/en/post/466589/) via googleAnalyticsR
 * Ruben has a [beginners guide to googleAnalyticsR](https://www.rubenvezzoli.online/googleanalyticsr-beginners-guide/)
+* Adam Ribaudo has some nice resources on analysis with `googleAnalyticsR` including posts on [market basket analysis (MBA) with Google Analytics data](https://www.noisetosignal.io/2020/05/market-basket-analysis-using-google-analytics-data/) and [viewing Google Analytics segment overlap](https://www.noisetosignal.io/2020/05/viewing-google-analytics-segment-overlap-in-r/)
+* Chloe writes on how to use googleAnalyticsR to [detect spam traffic in your Google Analytics data](https://medium.com/@the.numerist/detecting-spam-traffic-in-google-analytics-data-with-googleanalyticsr-d2a97b83e926)
+* Carl from RStudio writes about the process of [creating custom Google Analytics dashboards with R](https://blog.rstudio.com/2020/11/27/google-analytics-part1/).
 
 ## My website
 

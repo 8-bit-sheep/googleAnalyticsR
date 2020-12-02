@@ -4,17 +4,19 @@ title: "RMarkdown reports with Google Analytics API data"
 
 `googleAnalyticsR` can be used to generate reports in RMarkdown documents.
 
+The default clientId that comes with the package can not be used for non-interactive use such as server scripts or RMarkdown.  This is due to abuse of the free quota that used up the quota for everyone.  This means you will need to set up your own clientId.
+
+See [setting up your own Google Project](http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#professional-mode-your-own-google-project) - the easiest method is to use `ga_auth_setup()`.
+
 ## RMarkdown Authentication
 
-To authenticate in a non-interactive R environment such as rendering RMarkdown, you are required to setup your own Google Cloud Project with clientId/secret.  See [setting up your own Google Project](http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#professional-mode-your-own-google-project)
+### Using your cached email
 
-Once that is done, you need to create the email cache details at least once outside of the RMarkdown file - this is a global cache for all projects.
+If you are building Rmd's in the same environment as you use interactively, then the Rmd can reuse that.
 
-You need to avoid the interactive menu though when using RMarkdown - so specify the email you have authenticated with to skip it e.g. `ga_auth(email="me@work.com")`
+You need to avoid the interactive menu when using RMarkdown - so you will need your own clientId and to specify the email you have authenticated with that clientId to skip it e.g. `ga_auth(email="me@work.com")`
 
-Alternatively you can use the JSON service account method - see ["server" mode of authentication help](https://code.markedmondson.me/googleAnalyticsR/articles/setup.html#server-mode-google-cloud-service-account) for details.
-
-### Example
+### Example using an email cached on your computer
 
 <pre class="markdown"><code>
 ---
@@ -31,55 +33,57 @@ library(googleAnalyticsR)
 ## specify an email you have already authenticated with once outside of Rmd
 ga_auth(email="me@work.com")
 
-ga_data <- google_analytics(viewId = 12345, 
-                            dateRange = c(Sys.Date()-30, Sys.Date()), 
-                            metrics = "sessions",
-                            dimensions = "medium")
+...perform API actions...
 &#96;&#96;&#96;
-
-....use ga_data to generate plots/tables later in the document....
-
 
 </code></pre>
 
-Alternatively, you can use `googleAuthR::gar_auth_service()` and use the authentication JSON downloaded from the Google console.
+### Using Rmd outside of your interactive environment
+
+Two files are usually needed when authenticating in a server:
+
+* Client ID JSON file - this is useful for interactive use anyhow as specifies your own GCP project and will take you off the default GCP project that comes with the package
+* Service key files - these are authentication files, linked to the clientId for your project.
+
+The recommended workflow for authentication in RMarkdown is:
+
+1. Use `ga_auth_setup()` option 1 to help you find and download a clientId file.  Put this safe in a global location that you can use for general use with the package, including interactive use
+2. Run `ga_auth_setup()` option 3 to generate a service key file from the clientId file you created in step 1.  Put this is a safe location out of your project folder.  Note the email you created for your service key file - it will look like `{the_name}@{your-project-id}.iam.gserviceaccount.com`
+3. Run `ga_auth_setup()` option 5 to add the service email from step 2 (`{the_name}@{your-project-id}.iam.gserviceaccount.com`) as a user for your Google Analytics account.
+4. Create your Rmd report using `ga_auth(json_file="auth_file.json")`
+
+
+### Example using a service auth key
+
+Use `ga_auth_setup()` to create a client.id and then a auth service key.
+
+Use the service key file location via `ga_auth(json_file="your_key.json")` to authenticate instead of an email.
 
 <pre class="markdown"><code>
 
 &#96;&#96;&#96;{r}
 knitr::opts_chunk$set(echo = TRUE)
-library(googleAuthR)
 library(googleAnalyticsR)
 
-## service JSON download from your own GCP project
-ga_auth_service("your-creds.json)
-
+# we don't need to set the client.id as it now takes it from the service key
 # service JSON email needs to be added as a user of the viewId to work
-ga_data <- google_analytics(viewId = 12345, 
-                            dateRange = c(Sys.Date()-30, Sys.Date()), 
-                            metrics = "sessions",
-                            dimensions = "medium")
-&#96;&#96;&#96;
+ga_auth(json_file="auth_key.json")
 
-....use ga_data to generate plots/tables later in the document....
+...perform API actions...
+
+&#96;&#96;&#96;
 
 </code></pre>
 
-## Multi-user authentication
-
-Using `googleAuthR` is authentication from within RMarkdown using javascript authentication instead of Shiny.  A demo of using this with G+ is here: 
-https://mark.shinyapps.io/googleAuthRMarkdown/
-
-Similar code can be adapted to use with Google Analytics data.  You will still need to host the RMarkdown document on a Shiny server though, such as http://shinyapps.io
 
 ## Uploading RMarkdown files to Shinyapps.io/Shiny Server
 
 To see the reports online, you can upload RMarkdown documents to Shiny servers or shinyapps.io.  
+The recommend method for authentication is to use service accounts and `ga_auth(json_file="your_key.json")` since this is easier and more secure in the long run. 
 
-The recommend method for authenticaation is to use service accounts and `googleAuthR::gar_auth_service()` since this is easier and more secure in the long run. 
-However, if you want to continue using `ga_auth()` you need to ensure that the authentication cache file is present when uploaded.  This can be specified in the meta data via `resource_files`
+However, if you want to continue using your email cached credentials, you need to ensure that the authentication cache file is present when uploaded.  This can be specified in the meta data via `resource_files` in the Rmd yaml.
 
-Since the token is not usually saved at a project level since `googleAnalyticsR 0.7.0` you will need to move or specify the cache folder for the tokens.  The cache folder is usually at the global location `~/.R/gargle/gargle-oauth`.  Via `gargle` options, this needs to be changed for a project folder via:
+Since the token is not saved at a project level since `v0.7.0` you will need to move or specify the cache folder for the tokens.  The cache folder is usually at the global location `~/.R/gargle/gargle-oauth`.  Via `gargle` options, this needs to be changed for a project folder via:
 
 `options(gargle_oauth_cache = ".secrets")`
 
@@ -102,4 +106,5 @@ Then when you upload to Shiny Server or shinyapps.io, you should see the file in
 
 See details on [`gargle` vignette](https://cran.r-project.org/web/packages/gargle/vignettes/non-interactive-auth.html)
 
-However, the recommend method is to use service accounts and `googleAuthR::gar_auth_service()` when using a server since this is easier and more secure in the long run.  Upload the JSON file instead of the cache folder.
+However, the recommend method is to use service accounts and `ga_auth(json_file="auth_key.json")` when using a server since this is easier and more secure in the long run.  Upload the JSON file instead of the cache folder.
+
