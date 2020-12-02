@@ -281,7 +281,7 @@ ga_auth(email="me@work.com")
 <div id="example-using-a-service-auth-key" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-using-a-service-auth-key" class="anchor"></a>Example using a service auth key</h3>
-<p>Use <code><a href="../reference/ga_auth_setup.html">ga_auth_setup()</a></code> to create a client.id and then a auth service key.</p>
+<p>Use <code><a href="../reference/ga_auth_setup.html">ga_auth_setup()</a></code> to create a client.id and auth service key.</p>
 <p>Use the service key file location via <code><a href="../reference/ga_auth.html">ga_auth(json_file="your_key.json")</a></code> to authenticate instead of an email.</p>
 <pre class="markdown"><code>
 
@@ -289,7 +289,7 @@ ga_auth(email="me@work.com")
 knitr::opts_chunk$set(echo = TRUE)
 library(googleAnalyticsR)
 
-# we don't need to set the client.id as it now takes it from the service key
+# we don't need to set the client.id as it takes it from the service key
 # service JSON email needs to be added as a user of the viewId to work
 ga_auth(json_file="auth_key.json")
 
@@ -303,8 +303,8 @@ ga_auth(json_file="auth_key.json")
 <div id="uploading-rmarkdown-files-to-shinyapps-ioshiny-server" class="section level2">
 <h2 class="hasAnchor">
 <a href="#uploading-rmarkdown-files-to-shinyapps-ioshiny-server" class="anchor"></a>Uploading RMarkdown files to Shinyapps.io/Shiny Server</h2>
-<p>To see the reports online, you can upload RMarkdown documents to Shiny servers or shinyapps.io.<br>
-The recommend method for authentication is to use service accounts and <code><a href="../reference/ga_auth.html">ga_auth(json_file="your_key.json")</a></code> since this is easier and more secure in the long run.</p>
+<p>To see the reports online, you can upload RMarkdown documents to Shiny servers or shinyapps.io, to perhaps run on a schedule.</p>
+<p>The recommend method for authentication is to use service accounts and <code><a href="../reference/ga_auth.html">ga_auth(json_file="your_key.json")</a></code> since this is easier and more secure in the long run.</p>
 <p>However, if you want to continue using your email cached credentials, you need to ensure that the authentication cache file is present when uploaded. This can be specified in the meta data via <code>resource_files</code> in the Rmd yaml.</p>
 <p>Since the token is not saved at a project level since <code>v0.7.0</code> you will need to move or specify the cache folder for the tokens. The cache folder is usually at the global location <code>~/.R/gargle/gargle-oauth</code>. Via <code>gargle</code> options, this needs to be changed for a project folder via:</p>
 <p><code><a href="https://rdrr.io/r/base/options.html">options(gargle_oauth_cache = ".secrets")</a></code></p>
@@ -322,7 +322,7 @@ resource_files:
 <p>Then when you upload to Shiny Server or shinyapps.io, you should see the file in your upload choices:</p>
 <p><img src="auth_token_markdown.png"></p>
 <p>See details on <a href="https://cran.r-project.org/web/packages/gargle/vignettes/non-interactive-auth.html"><code>gargle</code> vignette</a></p>
-<p>However, the recommend method is to use service accounts and <code><a href="../reference/ga_auth.html">ga_auth(json_file="auth_key.json")</a></code> when using a server since this is easier and more secure in the long run. Upload the JSON file instead of the cache folder.</p>
+<p>However, the recommend method is to use service accounts and <code><a href="../reference/ga_auth.html">ga_auth(json_file="auth_key.json")</a></code> when using a server since this is easier and more secure in the long run. Upload the service JSON file instead of the cache folder.</p>
 </div>
   </div>
 

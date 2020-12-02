@@ -55,7 +55,7 @@ The recommended workflow for authentication in RMarkdown is:
 
 ### Example using a service auth key
 
-Use `ga_auth_setup()` to create a client.id and then a auth service key.
+Use `ga_auth_setup()` to create a client.id and auth service key.
 
 Use the service key file location via `ga_auth(json_file="your_key.json")` to authenticate instead of an email.
 
@@ -65,7 +65,7 @@ Use the service key file location via `ga_auth(json_file="your_key.json")` to au
 knitr::opts_chunk$set(echo = TRUE)
 library(googleAnalyticsR)
 
-# we don't need to set the client.id as it now takes it from the service key
+# we don't need to set the client.id as it takes it from the service key
 # service JSON email needs to be added as a user of the viewId to work
 ga_auth(json_file="auth_key.json")
 
@@ -78,7 +78,8 @@ ga_auth(json_file="auth_key.json")
 
 ## Uploading RMarkdown files to Shinyapps.io/Shiny Server
 
-To see the reports online, you can upload RMarkdown documents to Shiny servers or shinyapps.io.  
+To see the reports online, you can upload RMarkdown documents to Shiny servers or shinyapps.io, to perhaps run on a schedule.
+
 The recommend method for authentication is to use service accounts and `ga_auth(json_file="your_key.json")` since this is easier and more secure in the long run. 
 
 However, if you want to continue using your email cached credentials, you need to ensure that the authentication cache file is present when uploaded.  This can be specified in the meta data via `resource_files` in the Rmd yaml.
@@ -106,5 +107,5 @@ Then when you upload to Shiny Server or shinyapps.io, you should see the file in
 
 See details on [`gargle` vignette](https://cran.r-project.org/web/packages/gargle/vignettes/non-interactive-auth.html)
 
-However, the recommend method is to use service accounts and `ga_auth(json_file="auth_key.json")` when using a server since this is easier and more secure in the long run.  Upload the JSON file instead of the cache folder.
+However, the recommend method is to use service accounts and `ga_auth(json_file="auth_key.json")` when using a server since this is easier and more secure in the long run.  Upload the service JSON file instead of the cache folder.
 
