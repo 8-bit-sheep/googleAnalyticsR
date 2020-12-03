@@ -78,7 +78,7 @@ ga_data <- function(propertyId,
   
   # in case someone passes in a filter instead of an expression
   dimensionFilter <- as_filterExpression(dimensionFilter)
-  metricFilter <- as_filterExpression(metricFilter)
+  metricFilter    <- as_filterExpression(metricFilter)
  
   
   # if(!is.null(metricAggregations)){
@@ -87,7 +87,7 @@ ga_data <- function(propertyId,
   #                                              "MAXIMUM",
   #                                              "COUNT")))
   # }
-  #TODO
+ 
   metricAggregations <- NULL
   
   dims <- gaw_dimension(dimensions, delimiter = dimensionDelimiter)
@@ -213,7 +213,7 @@ parse_realtime <- function(x){
 }
 
 parse_runreport <- function(o){
-  
+
   if(no_rows(o)) return(data.frame())
   
   dim_names <- o$dimensionHeaders$name
@@ -260,7 +260,15 @@ parse_rows <- function(o, dim_names, met_names){
   dds <- lapply(o$rows$dimensionValues, function(x) setNames(x$value, dim_names))
   mms <- lapply(o$rows$metricValues, function(x) setNames(x$value, met_names))
     
-  res <- bind_cols(bind_rows(dds), bind_rows(mms))
+  dds <- bind_rows(dds)
+  mms <- bind_rows(mms)
+  
+  # bind_cols returns 0rows if first df has 0
+  if(nrow(dds) == 0){
+    res <- bind_rows(mms)
+  } else {
+    res <- bind_cols(dds, mms)
+  }
   
   res <- row_types(res, met_names = met_names)
 
@@ -282,6 +290,7 @@ parse_batch_rows <- function(o, dim_names, met_names){
     dds <- setNames(dds, dim_names)
     mms <- setNames(mms, met_names)
     
+    # bind_cols returns 0rows if first df has 0
     if(nrow(dds) == 0){
       o <- mms
     } else {

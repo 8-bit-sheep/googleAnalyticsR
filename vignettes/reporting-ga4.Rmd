@@ -456,8 +456,6 @@ complex_filter <- ga_data(
      dimensionFilter = f3,
      limit = 100
 )
-#>ℹ 2020-11-24 16:12:35 > Request:  https://analyticsdata.googleapis.com/v1alpha:batchRunReports/
-#>ℹ 2020-11-24 16:12:35 > Body JSON parsed to:  {"entity":{"propertyId":"206670707"},"requests":[{"metrics":[{"name":"activeUsers"},{"name":"sessions"}],"dimensions":[{"name":"date"},{"name":"city"},{"name":"dayOfWeek"}],"dateRanges":[{"startDate":"2020-03-31","endDate":"2020-04-06"},{"startDate":"2020-04-07","endDate":"2020-04-14"},{"startDate":"2020-04-15","endDate":"2020-04-22"},{"startDate":"2020-04-23","endDate":"2020-04-30"}],"keepEmptyRows":true,"dimensionFilter":{"andGroup":{"expressions":[{"orGroup":{"expressions":[{"andGroup":{"expressions":[{"filter":{"fieldName":"city","inListFilter":{"caseSensitive":true,"values":["Copenhagen","London","Paris","New York"]}}},{"orGroup":{"expressions":[{"filter":{"fieldName":"dayOfWeek","stringFilter":{"caseSensitive":true,"value":"5","matchType":"EXACT"}}},{"filter":{"fieldName":"dayOfWeek","stringFilter":{"caseSensitive":true,"value":"6","matchType":"EXACT"}}}]}}]}},{"filter":{"fieldName":"sessionSource","stringFilter":{"caseSensitive":true,"value":"google","matchType":"EXACT"}}}]}},{"notExpression":{"filter":{"fieldName":"sessionMedium","stringFilter":{"caseSensitive":true,"value":"cpc","matchType":"EXACT"}}}}]}},"limit":100,"returnPropertyQuota":true}]}
 #>ℹ 2020-11-24 16:12:36 > tokensPerDay: Query Cost [ 15 ] / Remaining [ 24847 ]
 #>ℹ 2020-11-24 16:12:36 > tokensPerHour: Query Cost [ 15 ] / Remaining [ 4967 ]
 #>ℹ 2020-11-24 16:12:36 > concurrentRequests:  10  / 10
