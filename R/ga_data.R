@@ -18,7 +18,7 @@ version_aw <- function(){
 #' @param realtime If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see \url{https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics}
 #' @importFrom googleAuthR gar_api_generator
 #' @import assertthat
-#' @family BatchRunReportsRequest functions
+#' @family GA4 functions
 #' @export
 #' @examples 
 #' 
@@ -59,8 +59,7 @@ version_aw <- function(){
 #' realtime <- ga_data(
 #'   206670707,
 #'   metrics = "activeUsers",
-#'   dimensions = "city",
-#'   dimensionFilter = ga_data_filter("city"=="Copenhagen"),
+#'   dimensions = c("city","unifiedScreenName"),
 #'   limit = 100,
 #'   realtime = TRUE)
 #' 
@@ -117,10 +116,27 @@ ga_data <- function(propertyId,
   # here as not needed for real-time but needed for brrr
   dates <- gaw_dates(date_range)
   
-  brrr <- BatchRunReportsRequest(
-    entity = Entity(propertyId),
-    requests = list(
-      RunReportRequest(
+  # brrr <- BatchRunReportsRequest(
+  #   entity = Entity(propertyId),
+  #   requests = list(
+  #     RunReportRequest(
+  #       entity = Entity(propertyId),
+  #       metrics = mets,
+  #       dimensions = dims,
+  #       dateRanges = dates,
+  #       limit = limit,
+  #       dimensionFilter = dimensionFilter,
+  #       metricFilter = metricFilter,
+  #       metricAggregations = metricAggregations,
+  #       orderBys = orderBys,
+  #       keepEmptyRows = TRUE,
+  #       returnPropertyQuota = TRUE
+  #     )
+  #   )
+  # )
+  
+  brrr <- RunReportRequest(
+        entity = Entity(propertyId),
         metrics = mets,
         dimensions = dims,
         dateRanges = dates,
@@ -132,8 +148,6 @@ ga_data <- function(propertyId,
         keepEmptyRows = TRUE,
         returnPropertyQuota = TRUE
       )
-    )
-  )
   
   ga_aw_report(brrr)
 }
@@ -158,6 +172,23 @@ ga_aw_realtime <- function(property, requestObj){
 #' @noRd
 ga_aw_report <- function(requestObj){
   
+  url <- sprintf("https://analyticsdata.googleapis.com/%s:runReport",
+                 version_aw())
+  
+  # analyticsdata.batchRunReports
+  f <- gar_api_generator(url, "POST", 
+                         data_parse_function = parse_runreport)
+  
+  stopifnot(inherits(requestObj, "gar_RunReportRequest"))
+  o <- f(the_body = requestObj)
+  
+  o
+}
+
+#' Batched Reporting API
+#' @noRd
+ga_batch_report <- function(requestObj){
+  
   url <- sprintf("https://analyticsdata.googleapis.com/%s:batchRunReports",
                  version_aw())
   
@@ -181,8 +212,18 @@ parse_realtime <- function(x){
   
 }
 
-parse_batchrunreports <- function(x){
+parse_runreport <- function(o){
   
+  if(no_rows(o)) return(data.frame())
+  
+  dim_names <- o$dimensionHeaders$name
+  met_names <- o$metricHeaders$name
+  
+  parse_rows(o, dim_names, met_names)
+}
+
+parse_batchrunreports <- function(x){
+
   o <- x$reports
   
   if(no_rows(o)) return(data.frame())
@@ -190,7 +231,7 @@ parse_batchrunreports <- function(x){
   dim_names <- o$dimensionHeaders[[1]]$name
   met_names <- o$metricHeaders[[1]]$name
   
-  parse_rows(o, dim_names, met_names)
+  parse_batch_rows(o, dim_names, met_names)
 }
 
 no_rows <- function(o){
@@ -202,9 +243,38 @@ no_rows <- function(o){
   FALSE
 }
 
+row_types <- function(res, met_names){
+  #type changes
+  if("date" %in% names(res)){
+    res$date <- as.Date(res$date, format = "%Y%m%d")
+  }
+  res %>% mutate(across(met_names, as.numeric))
+}
+
+#' @noRd
+#' @importFrom dplyr bind_cols bind_rows across mutate
+parse_rows <- function(o, dim_names, met_names){
+
+  quota_messages(o)
+  
+  dds <- lapply(o$rows$dimensionValues, function(x) setNames(x$value, dim_names))
+  mms <- lapply(o$rows$metricValues, function(x) setNames(x$value, met_names))
+    
+  res <- bind_cols(bind_rows(dds), bind_rows(mms))
+  
+  res <- row_types(res, met_names = met_names)
+
+  attr(res, "metadata") <- o$metadata
+  
+  res
+  
+}
+
+
 #' @noRd
 #' @importFrom dplyr bind_cols across mutate
-parse_rows <- function(o, dim_names, met_names){
+parse_batch_rows <- function(o, dim_names, met_names){
+  quota_messages(o)
   
   the_data <- lapply(o$rows, function(x){
     dds <- get_value_cols(x, type = "dimensionValues")
@@ -222,17 +292,12 @@ parse_rows <- function(o, dim_names, met_names){
     
   })
   
-  res <- Reduce(rbind, the_data)
+  res <- bind_cols(the_data)
   
   #type changes
-  if("date" %in% names(res)){
-    res$date <- as.Date(res$date, format = "%Y%m%d")
-  }
-  res <- res %>% mutate(across(met_names, as.numeric))
-  
-  quota_messages(o)
-  
-  attr(res, "metadata") <- if(ncol(o$metadata) > 0) o$metadata else NULL
+  res <- row_types(res, met_names = met_names)
+
+  attr(res, "metadata") <- o$metadata
   
   res
 }

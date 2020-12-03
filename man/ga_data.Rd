@@ -83,8 +83,7 @@ dim_expression <- ga_data(
 realtime <- ga_data(
   206670707,
   metrics = "activeUsers",
-  dimensions = "city",
-  dimensionFilter = ga_data_filter("city"=="Copenhagen"),
+  dimensions = c("city","unifiedScreenName"),
   limit = 100,
   realtime = TRUE)
 
@@ -93,7 +92,7 @@ realtime <- ga_data(
 \seealso{
 \href{https://developers.google.com/analytics/devguides/reporting/data/v1}{Google Documentation}
 
-Other BatchRunReportsRequest functions: 
-\code{\link{BatchRunReportsRequest}()}
+Other GA4 functions: 
+\code{\link{ga_data_filter}()}
 }
-\concept{BatchRunReportsRequest functions}
+\concept{GA4 functions}

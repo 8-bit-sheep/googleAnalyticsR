@@ -104,5 +104,9 @@ ga_data_filter(city \%==\%"coPENGhagen")
 # avoid validation by making fields strings
 ga_data_filter("city" \%==\%"coPENGhagen")
 
-
 }
+\seealso{
+Other GA4 functions: 
+\code{\link{ga_data}()}
+}
+\concept{GA4 functions}

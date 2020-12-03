@@ -17,7 +17,7 @@ Authors@R: c(person("Mark", "Edmondson", email = "m@sunholo.com",
            person("Jas", "Sohi", email = "contact@jassohi.com", role = "ctb"),
            person("Zoran", "Selinger", email = "zselinger@gmail.com", role = "ctb"),
            person("Octavian", "Corlade", email = "octavian.corlade@gmail.com", role = "ctb"))
-URL: http://code.markedmondson.me/googleAnalyticsR/
+URL: https://code.markedmondson.me/googleAnalyticsR/
 BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
 Depends:
     R (>= 3.3.0)
@@ -25,7 +25,7 @@ Imports:
     assertthat (>= 0.2.0),
     cli (>= 2.0.2),
     dplyr (>= 0.8.0),
-    googleAuthR (>= 1.3.0),
+    googleAuthR (>= 1.3.1),
     httr (>= 1.3.1),
     jsonlite (>= 1.5),
     magrittr (>= 1.5),

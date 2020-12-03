@@ -1,3 +1,114 @@
+#' Filter DSL for GA4 filters
+#' 
+#' Use with \link{ga_data} to create filters
+#' 
+#' @param x Filter DSL enabled syntax or the output of a previous call to this function - see examples
+#' 
+#' @details 
+#' 
+#' This uses a specific filter DSL syntax to create GA4 filters that can be passed to \link{ga_data} arguments \code{dimensionFilter} or \link{metricFilter}. Ensure that the fields you use are either all metrics or all dimensions.
+#' 
+#' The syntax uses operators and the class of the value you are setting (string, numeric or logical) to construct the filter expression object.
+#' 
+#' Fields including custom fields for your propertyId can be imported if you fetch them via \link{ga_meta("data", propertyId = 12345)} before you construct a filter.  If you do not want filters to be validated, then send them in as strings ("field").
+#' 
+#' The DSL rules are:
+#' 
+#' 
+#' \itemize{
+#'   \item{}{ Single filters can be used without wrapping in filter expressions}
+#'   \item{}{ A single filter syntax is \code{(field) (operator) (value)}}
+#'   \item{}{ (field) is a dimension or metric for your web property, which you can review via \link{ga_meta}}
+#'   \item{}{ (field) can be validated if you fetch metadata before you construct the filter.  If you do this, you can call the fields without quote strings e.g. \code{city} and not \code{"city"}}
+#'   \item{}{ (operator) for metrics can be one of: \code{==, >, >=, <, <=}} 
+#'   \item{}{ (operator) for dimensions can be one of: \code{==, \%begins\%, \%ends\%, \%contains\%, \%in\%, \%regex\%, \%regex_partial\%} for dimensions}
+#'   \item{}{ dimension (operator) are by default case sensitive.  Make them case insensitive by using UPPER case variations \code{\%BEGINS\%, \%ENDS\%, ...} or \code{===} for exact matches}
+#'   \item{} {(value) can be strings (\code{"dim1"}), numerics (\code{55}), string vectors (\code{c("dim1", "dim2")}), numeric vectors (\code{c(1,2,3)}) or boolean (\code{TRUE}) - the type will created different types of filters - see examples}
+#'   \item{}{Create filter expressions for multiple filters when using the operators: \code{&, |, !} for logical combinations of AND, OR and NOT respectively. }
+#' }
+#' 
+#' 
+#' 
+#' @return A \link{FilterExpression} object suitable for use in \link{ga_data}
+#' @export
+#' @importFrom rlang enquo eval_tidy
+#' @examples 
+#' 
+#' # start by calling ga_meta("data") to put valid field names in your environment
+#' ga_meta("data")
+#' 
+#' # if you have custom fields, supply your propertyId to ga_meta()
+#' ga_meta("data", propertyId = 123456)
+#' 
+#' 
+#' ## filter clauses
+#' # OR string filter
+#' ga_data_filter(city=="Copenhagen" | city == "London")
+#' # inlist string filter
+#' ga_data_filter(city==c("Copenhagen","London"))
+#' # AND string filters
+#' ga_data_filter(city=="Copenhagen" & dayOfWeek == "5")
+#' # ! - invert string filter
+#' ga_data_filter(!(city=="Copenhagen" | city == "London"))
+#' 
+#' # multiple filter clauses
+#' f1 <- ga_data_filter(city==c("Copenhagen","London","Paris","New York") &
+#'                (dayOfWeek=="5" | dayOfWeek=="6")) 
+#'                
+#' # build up complicated filters
+#' f2 <- ga_data_filter(f1 | sessionSource=="google")
+#' f3 <- ga_data_filter(f2 & !sessionMedium=="cpc")
+#' f3
+#' 
+#' ## numeric filter types
+#' # numeric equal filter
+#' ga_data_filter(sessions==5)
+#' # between numeric filter
+#' ga_data_filter(sessions==c(5,6))
+#' # greater than numeric
+#' ga_data_filter(sessions > 0)
+#' # greater than or equal
+#' ga_data_filter(sessions >= 1)
+#' # less than numeric
+#' ga_data_filter(sessions < 100)
+#' # less than or equal numeric
+#' ga_data_filter(sessions <= 100)
+#' 
+#' ## string filter types
+#' # begins with string
+#' ga_data_filter(city %begins% "Cope")
+#' # ends with string
+#' ga_data_filter(city %ends% "hagen")
+#' # contains string
+#' ga_data_filter(city %contains% "ope")
+#' # regex (full) string
+#' ga_data_filter(city %regex% "^Cope")
+#' # regex (partial) string
+#' ga_data_filter(city %regex_partial% "ope")
+#' 
+#' # by default string filters are case sensitive.  
+#' # Use UPPERCASE operator to make then case insensitive
+#' 
+#' # begins with string (case insensitive)
+#' ga_data_filter(city %BEGINS% "cope")
+#' # ends with string (case insensitive)
+#' ga_data_filter(city %ENDS% "Hagen")
+#' # case insensitive exact
+#' ga_data_filter(city %==%"coPENGhagen")
+#' 
+#' # avoid validation by making fields strings
+#' ga_data_filter("city" %==%"coPENGhagen")
+#' 
+#' @family GA4 functions
+ga_data_filter <- function(x){
+  x <- rlang::enquo(x)
+  
+  mask_data <- c(dsl_filter_expr_funcs, 
+                 filter_validation_meta())
+  
+  rlang::eval_tidy(x, data = mask_data)
+}
+
 #' Create a filter for use within App+Web filter expressions
 #' 
 #' Used within \link{ga_aw_filter_expr}
@@ -32,7 +143,8 @@
 #'   
 #'   
 #' 
-#' @importFrom assertthat is.string is.flag
+#' @importFrom assertthat is.string is.flag assert_that
+#' @noRd
 ga_aw_filter <- function(field,
                          value, 
                          operation = c("EXACT",
@@ -132,7 +244,7 @@ ga_aw_filter <- function(field,
 #' complex <- ga_aw_filter_expr(multiple_or2, clean_city)
 #' 
 #'    
-#' 
+#' @noRd
 ga_aw_filter_expr <- function(..., 
                               type = c("default","not","and","or")){
   type <- match.arg(type)
@@ -373,116 +485,7 @@ dsl_filter_expr_funcs <- list(
   }
 )
 
-#' Filter DSL for GA4 filters
-#' 
-#' Use with \link{ga_data} to create filters
-#' 
-#' @param x Filter DSL enabled syntax or the output of a previous call to this function - see examples
-#' 
-#' @details 
-#' 
-#' This uses a specific filter DSL syntax to create GA4 filters that can be passed to \link{ga_data} arguments \code{dimensionFilter} or \link{metricFilter}. Ensure that the fields you use are either all metrics or all dimensions.
-#' 
-#' The syntax uses operators and the class of the value you are setting (string, numeric or logical) to construct the filter expression object.
-#' 
-#' Fields including custom fields for your propertyId can be imported if you fetch them via \link{ga_meta("data", propertyId = 12345)} before you construct a filter.  If you do not want filters to be validated, then send them in as strings ("field").
-#' 
-#' The DSL rules are:
-#' 
-#' 
-#' \itemize{
-#'   \item{}{ Single filters can be used without wrapping in filter expressions}
-#'   \item{}{ A single filter syntax is \code{(field) (operator) (value)}}
-#'   \item{}{ (field) is a dimension or metric for your web property, which you can review via \link{ga_meta}}
-#'   \item{}{ (field) can be validated if you fetch metadata before you construct the filter.  If you do this, you can call the fields without quote strings e.g. \code{city} and not \code{"city"}}
-#'   \item{}{ (operator) for metrics can be one of: \code{==, >, >=, <, <=}} 
-#'   \item{}{ (operator) for dimensions can be one of: \code{==, \%begins\%, \%ends\%, \%contains\%, \%in\%, \%regex\%, \%regex_partial\%} for dimensions}
-#'   \item{}{ dimension (operator) are by default case sensitive.  Make them case insensitive by using UPPER case variations \code{\%BEGINS\%, \%ENDS\%, ...} or \code{===} for exact matches}
-#'   \item{} {(value) can be strings (\code{"dim1"}), numerics (\code{55}), string vectors (\code{c("dim1", "dim2")}), numeric vectors (\code{c(1,2,3)}) or boolean (\code{TRUE}) - the type will created different types of filters - see examples}
-#'   \item{}{Create filter expressions for multiple filters when using the operators: \code{&, |, !} for logical combinations of AND, OR and NOT respectively. }
-#' }
-#' 
-#' 
-#' 
-#' @return A \link{FilterExpression} object suitable for use in \link{ga_data}
-#' @export
-#' @importFrom rlang enquo eval_tidy
-#' @examples 
-#' 
-#' # start by calling ga_meta("data") to put valid field names in your environment
-#' ga_meta("data")
-#' 
-#' # if you have custom fields, supply your propertyId to ga_meta()
-#' ga_meta("data", propertyId = 123456)
-#' 
-#' 
-#' ## filter clauses
-#' # OR string filter
-#' ga_data_filter(city=="Copenhagen" | city == "London")
-#' # inlist string filter
-#' ga_data_filter(city==c("Copenhagen","London"))
-#' # AND string filters
-#' ga_data_filter(city=="Copenhagen" & dayOfWeek == "5")
-#' # ! - invert string filter
-#' ga_data_filter(!(city=="Copenhagen" | city == "London"))
-#' 
-#' # multiple filter clauses
-#' f1 <- ga_data_filter(city==c("Copenhagen","London","Paris","New York") &
-#'                (dayOfWeek=="5" | dayOfWeek=="6")) 
-#'                
-#' # build up complicated filters
-#' f2 <- ga_data_filter(f1 | sessionSource=="google")
-#' f3 <- ga_data_filter(f2 & !sessionMedium=="cpc")
-#' f3
-#' 
-#' ## numeric filter types
-#' # numeric equal filter
-#' ga_data_filter(sessions==5)
-#' # between numeric filter
-#' ga_data_filter(sessions==c(5,6))
-#' # greater than numeric
-#' ga_data_filter(sessions > 0)
-#' # greater than or equal
-#' ga_data_filter(sessions >= 1)
-#' # less than numeric
-#' ga_data_filter(sessions < 100)
-#' # less than or equal numeric
-#' ga_data_filter(sessions <= 100)
-#' 
-#' ## string filter types
-#' # begins with string
-#' ga_data_filter(city %begins% "Cope")
-#' # ends with string
-#' ga_data_filter(city %ends% "hagen")
-#' # contains string
-#' ga_data_filter(city %contains% "ope")
-#' # regex (full) string
-#' ga_data_filter(city %regex% "^Cope")
-#' # regex (partial) string
-#' ga_data_filter(city %regex_partial% "ope")
-#' 
-#' # by default string filters are case sensitive.  
-#' # Use UPPERCASE operator to make then case insensitive
-#' 
-#' # begins with string (case insensitive)
-#' ga_data_filter(city %BEGINS% "cope")
-#' # ends with string (case insensitive)
-#' ga_data_filter(city %ENDS% "Hagen")
-#' # case insensitive exact
-#' ga_data_filter(city %==%"coPENGhagen")
-#' 
-#' # avoid validation by making fields strings
-#' ga_data_filter("city" %==%"coPENGhagen")
-#' 
-#' 
-ga_data_filter <- function(x){
-  x <- rlang::enquo(x)
-  
-  mask_data <- c(dsl_filter_expr_funcs, 
-                 filter_validation_meta())
-  
-  rlang::eval_tidy(x, data = mask_data)
-}
+
 
 filter_validation_meta <- function(){
   # use default dims
