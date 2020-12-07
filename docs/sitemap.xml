@@ -133,12 +133,6 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_auth_setup.html</loc>
   </url>
   <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_aw_filter.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_aw_filter_expr.html</loc>
-  </url>
-  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_cache_call.html</loc>
   </url>
   <url>
@@ -182,6 +176,9 @@
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_data.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_data_aggregations.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_data_filter.html</loc>

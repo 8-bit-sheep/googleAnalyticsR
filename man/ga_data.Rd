@@ -38,6 +38,9 @@ ga_data(
 
 \item{realtime}{If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see \url{https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics}}
 }
+\value{
+A data.frame tibble, including attributes metadata, metricAggregations and rowCount.  Use \link{ga_data_aggregations} to extract the data.frames of metricAggregations
+}
 \description{
 Fetches Google Analytics from the Data API for Google Analytics 4 (Previously App+Web)
 }
@@ -87,6 +90,8 @@ realtime <- ga_data(
   limit = 100,
   realtime = TRUE)
 
+# extract meta data from the table
+ga_data_aggregations(realtime)
 }
 }
 \seealso{

@@ -303,6 +303,10 @@
 <li><p>Create filter expressions for multiple filters when using the operators: <code>&amp;, |, !</code> for logical combinations of AND, OR and NOT respectively.</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other GA4 functions: 
+<code><a href='ga_data.html'>ga_data</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -311,7 +315,7 @@
 #&gt; <span class='error'>         </span>
 #&gt; <span class='error'>Setup JSON service email auth or specify email in gar_auth(email='me@preauthenticated.com')</span></div><div class='input'>
 <span class='co'># if you have custom fields, supply your propertyId to ga_meta()</span>
-<span class='fu'><a href='ga_meta.html'>ga_meta</a></span>(<span class='st'>"data"</span>, <span class='kw'>propertyId</span> <span class='kw'>=</span> <span class='fl'>123456</span>)</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #555555;'>2020-12-02 08:42:05 &gt;</span><span> Metadata for propertyId 123456</span></div><div class='output co'>#&gt; <span class='error'>Error: Non-interactive session and no authentication email selected.</span>
+<span class='fu'><a href='ga_meta.html'>ga_meta</a></span>(<span class='st'>"data"</span>, <span class='kw'>propertyId</span> <span class='kw'>=</span> <span class='fl'>123456</span>)</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #555555;'>2020-12-07 15:46:44 &gt;</span><span> Metadata for propertyId 123456</span></div><div class='output co'>#&gt; <span class='error'>Error: Non-interactive session and no authentication email selected.</span>
 #&gt; <span class='error'>         </span>
 #&gt; <span class='error'>Setup JSON service email auth or specify email in gar_auth(email='me@preauthenticated.com')</span></div><div class='input'>
 
@@ -454,7 +458,6 @@
 <span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span> <span class='kw'>%==%</span><span class='st'>"coPENGhagen"</span>)</div><div class='output co'>#&gt; --| city 
 #&gt; ----stringFilter:  
 #&gt; value:  coPENGhagen | matchType:  EXACT | caseSensitive:  FALSE</div><div class='input'>
-
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -47,7 +47,8 @@
 
 
 <meta property="og:title" content="DimensionOrderBy Object — DimensionOrderBy" />
-<meta property="og:description" content="DimensionOrderBy Object" />
+<meta property="og:description" content="DimensionOrderBy Object
+DimensionOrderBy Object" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
 
@@ -262,15 +263,21 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>DimensionOrderBy Object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/app_web_objects.R'><code>R/app_web_objects.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/app_web_objects.R'><code>R/app_web_objects.R</code></a>, <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/ga4_data_objects.R'><code>R/ga4_data_objects.R</code></a></small>
     <div class="hidden name"><code>DimensionOrderBy.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>DimensionOrderBy Object</p>
+<p>DimensionOrderBy Object</p>
     </div>
 
     <pre class="usage"><span class='fu'>DimensionOrderBy</span>(
+  <span class='no'>dimensionName</span>,
+  <span class='kw'>orderType</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ALPHANUMERIC"</span>, <span class='st'>"CASE_INSENSITIVE_ALPHANUMERIC"</span>, <span class='st'>"NUMERIC"</span>)
+)
+
+<span class='fu'>DimensionOrderBy</span>(
   <span class='no'>dimensionName</span>,
   <span class='kw'>orderType</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ALPHANUMERIC"</span>, <span class='st'>"CASE_INSENSITIVE_ALPHANUMERIC"</span>, <span class='st'>"NUMERIC"</span>)
 )</pre>
@@ -291,9 +298,15 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>DimensionOrderBy object</p>
+<p>DimensionOrderBy object</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Sorts by dimension values.</p>
+<p><code>orderType</code> has values:</p>
+<p>Alphanumeric sort by Unicode code point. For example, "2" &lt; "A" &lt; "X" &lt; "b" &lt; "z".</p>
+<p>Case insensitive alphanumeric sort by lower case Unicode code point. For example, "2" &lt; "A" &lt; "b" &lt; "X" &lt; "z".</p>
+<p>Numeric: Dimension values are converted to numbers before sorting. For example in NUMERIC sort, "25" &lt; "100", and in ALPHANUMERIC sort, "100" &lt; "25". Non-numeric dimension values all have equal ordering value below all numeric values.</p>
+<p>Sorts by dimension values.</p>
 <p><code>orderType</code> has values:</p>
 <p>Alphanumeric sort by Unicode code point. For example, "2" &lt; "A" &lt; "X" &lt; "b" &lt; "z".</p>
 <p>Case insensitive alphanumeric sort by lower case Unicode code point. For example, "2" &lt; "A" &lt; "b" &lt; "X" &lt; "z".</p>

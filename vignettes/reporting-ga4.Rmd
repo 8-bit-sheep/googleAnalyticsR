@@ -186,6 +186,35 @@ date_range4
 # … with 7,938 more rows
 ```
 
+You can send in dates as strings in YYYY-MM-DD format; as R Dates (e.g. `Sys.Date()` or via the API keywords "today", "yesterday", or "NdaysAgo")
+
+
+```r
+# use R to make useful date vectors
+dates <- rev(seq(Sys.Date(), by = -7, length.out = 8))
+dates
+#[1] "2020-10-19" "2020-10-26" "2020-11-02" "2020-11-09" "2020-11-16" "2020-11-23" "2020-11-30" "2020-12-07"
+
+# r dates
+ga_data(
+    my_property_id,
+    metrics = c("activeUsers","sessions"),
+    dimensions = c("date","city","dayOfWeek"),
+    date_range = dates,
+    limit = -1
+)
+
+
+# text dates
+ga_data(
+    my_property_id,
+    metrics = c("activeUsers","sessions"),
+    dimensions = c("date","city","dayOfWeek"),
+    date_range = c("yesterday","today","3daysAgo","2daysAgo"),
+    limit = -1)
+```
+
+
 ## Filters
 
 Filters are simpler to create but more flexible than in Universal Analytics. 
@@ -433,6 +462,79 @@ realtime <- ga_data(
   dimensionFilter = ga_data_filter(city=="Copenhagen"),
   limit = 100,
   realtime = TRUE)
+```
+
+## Metric Aggregations
+
+Each API call includes the TOTAL, MAXIMUM and MINIMUM metric aggregations in the returned data.frame's metadata.  You can access this data using base R's `attr()` function or use `ga_data_aggregations()` to extract the data.frames:
+
+```r
+aggs <- ga_data(
+      206670707, 
+      date_range = c(Sys.Date() - 4, Sys.Date() - 1),
+      metrics = "activeUsers",
+      dimensions = c("city","unifiedScreenName"),
+      limit = 100)
+      
+all_aggs <- ga_data_aggregations(aggs, type = "all")
+all_aggs
+#$totals
+## A tibble: 1 x 4
+#  city           unifiedScreenName dateRange    activeUsers
+#  <chr>          <chr>             <chr>              <dbl>
+#1 RESERVED_TOTAL RESERVED_TOTAL    date_range_0         250
+#
+#$maximums
+## A tibble: 1 x 4
+#  city         unifiedScreenName dateRange    activeUsers
+#  <chr>        <chr>             <chr>              <dbl>
+#1 RESERVED_MAX RESERVED_MAX      date_range_0           4
+#
+#$minimums
+## A tibble: 1 x 4
+#  city         unifiedScreenName dateRange    activeUsers
+#  <chr>        <chr>             <chr>              <dbl>
+#1 RESERVED_MIN RESERVED_MIN      date_range_0           0
+
+# now in a list
+all_aggs$totals
+## A tibble: 1 x 4
+#  city           unifiedScreenName dateRange    activeUsers
+#  <chr>          <chr>             <chr>              <dbl>
+#1 RESERVED_TOTAL RESERVED_TOTAL    date_range_0         250
+
+# extract individual aggregations individually
+maxes <- ga_data_aggregations(aggs, type = "maximums")
+maxes
+## A tibble: 1 x 4
+#  city         unifiedScreenName dateRange    activeUsers
+#  <chr>        <chr>             <chr>              <dbl>
+#1 RESERVED_MAX RESERVED_MAX      date_range_0           4
+```
+
+If you request more than one date range, the aggregations will be calculated for each one:
+
+```r
+# use R to generate some dates
+dates <- rev(seq(Sys.Date(), by = -7, length.out = 8))
+dates
+#[1] "2020-10-19" "2020-10-26" "2020-11-02" "2020-11-09" "2020-11-16" "2020-11-23" "2020-11-30" "2020-12-07"
+
+aggs <- ga_data(
+    206670707, date_range = dates,
+    metrics = "activeUsers",
+    dimensions = c("city","unifiedScreenName"),
+    limit = 100)
+    
+# get the totals
+ga_data_aggregations(aggs, type = "totals")
+## A tibble: 4 x 4
+#  city           unifiedScreenName dateRange    activeUsers
+#  <chr>          <chr>             <chr>              <dbl>
+#1 RESERVED_TOTAL RESERVED_TOTAL    date_range_0         200
+#2 RESERVED_TOTAL RESERVED_TOTAL    date_range_1           4
+#3 RESERVED_TOTAL RESERVED_TOTAL    date_range_2           2
+#4 RESERVED_TOTAL RESERVED_TOTAL    date_range_3         399
 ```
 
 ## Quotas

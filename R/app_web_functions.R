@@ -1,6 +1,10 @@
 #' @import assertthat
 #' @noRd
 gaw_dates <- function(date_range){
+  
+  if(is.null(date_range)){
+    stop("No date_range supplied", call. = FALSE)
+  }
   # create up to 4 date ranges
   assert_that((length(date_range) %% 2) == 0,
               length(date_range) <= 8)
