@@ -186,7 +186,7 @@ date_range4
 # … with 7,938 more rows
 ```
 
-You can send in dates as strings in YYYY-MM-DD format; as R Dates (e.g. `Sys.Date()` or via the API keywords "today", "yesterday", or "NdaysAgo")
+You can send in dates as strings in YYYY-MM-DD format; as R Dates (e.g. `Sys.Date()`) or via the API keywords "today", "yesterday", or "NdaysAgo")
 
 
 ```r
@@ -521,7 +521,8 @@ dates
 #[1] "2020-10-19" "2020-10-26" "2020-11-02" "2020-11-09" "2020-11-16" "2020-11-23" "2020-11-30" "2020-12-07"
 
 aggs <- ga_data(
-    206670707, date_range = dates,
+    206670707, 
+    date_range = dates,
     metrics = "activeUsers",
     dimensions = c("city","unifiedScreenName"),
     limit = 100)

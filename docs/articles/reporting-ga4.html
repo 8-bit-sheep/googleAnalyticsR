@@ -380,7 +380,7 @@
 <span class="co"># 5 2020-04-16 Charlottesville 5         date_range_2           1        1</span>
 <span class="co"># 6 2020-04-25 Fulshear        7         date_range_3           1        1</span>
 <span class="co"># … with 7,938 more rows</span></pre></body></html></div>
-<p>You can send in dates as strings in YYYY-MM-DD format; as R Dates (e.g. <code><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date()</a></code> or via the API keywords “today”, “yesterday”, or “NdaysAgo”)</p>
+<p>You can send in dates as strings in YYYY-MM-DD format; as R Dates (e.g. <code><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date()</a></code>) or via the API keywords “today”, “yesterday”, or “NdaysAgo”)</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># use R to make useful date vectors</span>
 <span class="no">dates</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>(), <span class="kw">by</span> <span class="kw">=</span> -<span class="fl">7</span>, <span class="kw">length.out</span> <span class="kw">=</span> <span class="fl">8</span>))
 <span class="no">dates</span>
@@ -787,6 +787,7 @@
       <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>)
 
 <span class="no">all_aggs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_aggregations.html">ga_data_aggregations</a></span>(<span class="no">aggs</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"all"</span>)
+<span class="no">all_aggs</span>
 <span class="co">#$totals</span>
 <span class="co">## A tibble: 1 x 4</span>
 <span class="co">#  city           unifiedScreenName dateRange    activeUsers</span>
@@ -826,7 +827,8 @@
 <span class="co">#[1] "2020-10-19" "2020-10-26" "2020-11-02" "2020-11-09" "2020-11-16" "2020-11-23" "2020-11-30" "2020-12-07"</span>
 
 <span class="no">aggs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-    <span class="fl">206670707</span>, <span class="kw">date_range</span> <span class="kw">=</span> <span class="no">dates</span>,
+    <span class="fl">206670707</span>,
+    <span class="kw">date_range</span> <span class="kw">=</span> <span class="no">dates</span>,
     <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"activeUsers"</span>,
     <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"city"</span>,<span class="st">"unifiedScreenName"</span>),
     <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>)
