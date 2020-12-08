@@ -426,7 +426,7 @@
 <li>(operator) can be one of <code>==, &gt;, &gt;=, &lt;, &lt;=</code> for metrics</li>
 <li>(operator) can be one of <code>==, %begins%, %ends%, %contains%, %contains%, %regex%, %regex_partial%</code> for dimensions</li>
 <li>dimension (operator) are by default case sensitive. Make them case insensitive by using UPPER case variations <code>%BEGINS%, %ENDS%</code> etc. or <code>%==%</code> for case insensitive exact matches</li>
-<li>(value) can be strings (<code>"dim1"</code>), numerics (<code>55</code>), string vectors (<code><a href="https://rdrr.io/r/base/c.html">c("dim1", "dim2")</a></code>), numeric vectors (<code><a href="https://rdrr.io/r/base/c.html">c(1,2,3)</a></code>) or boolean (<code>TRUE</code>) which will correspond to different types of filters</li>
+<li>(value) can be strings (<code>"dim1"</code>), numerics (<code>55</code>), string vectors (<code><a href="https://rdrr.io/r/base/c.html">c("dim1", "dim2")</a></code>), numeric vectors (<code><a href="https://rdrr.io/r/base/c.html">c(1,2,3)</a></code>) or NULL (<code>NULL</code>) which will correspond to different types of filters</li>
 <li>Filter expressions for multiple filters when using the operators: <code>&amp;, |, !</code> which correspond to <code>AND</code>, <code>OR</code> and <code>NOT</code> respectively.</li>
 </ul>
 <div id="filter-fields" class="section level4">
@@ -460,8 +460,7 @@
 <code>numeric 2-length vector</code>: BetweenFilter e.g. <code><a href="https://rdrr.io/r/base/c.html">c(5, 10)</a></code>
 </li>
 <li>
-<code>logical</code>: TRUE will filter for NULL e.g. <code>TRUE</code>
-</li>
+<code>NULL</code>: Will filter for NULL e.g. <code>city==NULL</code> - often used with <code>!</code> (not NULL)</li>
 </ul>
 <p>e.g. if you pass in a character of length one (<code>"Copenhagen"</code>) then it will assume to be a class <code>StringFilter</code> (all dimensions that match “Copenhagen”) if you pass in a character of length greater than one <code><a href="https://rdrr.io/r/base/c.html">c("Copenhagen","London","New York")</a></code>, then it assume to be a class <code>InListFilter</code> (dimensions must match one in the list)</p>
 </div>
@@ -503,7 +502,7 @@
 ## --| city 
 ## ----stringFilter:  
 ## value:  London | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co"># inlist string filter</span>
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co"># inlist string filter - equivalent to above</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span><span class="kw">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Copenhagen"</span>,<span class="st">"London"</span>))</pre></body></html></div>
 <pre><code>## --| city 
 ## ----inListFilter:  
@@ -670,18 +669,24 @@
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  ope | matchType:  PARTIAL_REGEXP | caseSensitive:  TRUE</code></pre>
+<div class="sourceCode" id="cb52"><html><body><pre class="r"><span class="co"># NULL filters</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(!<span class="no">city</span><span class="kw">==</span><span class="kw">NULL</span>)</pre></body></html></div>
+<pre><code>## notExpression:  
+## --GA4 Filter:  
+## --| city 
+## ----nullFilter:  TRUE</code></pre>
 <p>By default string filters are case sensitive. Use UPPERCASE operator to make then case insensitive</p>
-<div class="sourceCode" id="cb52"><html><body><pre class="r"><span class="co"># begins with string (case insensitive)</span>
+<div class="sourceCode" id="cb54"><html><body><pre class="r"><span class="co"># begins with string (case insensitive)</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span> <span class="kw">%BEGINS%</span> <span class="st">"cope"</span>)</pre></body></html></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  cope | matchType:  BEGINS_WITH | caseSensitive:  FALSE</code></pre>
-<div class="sourceCode" id="cb54"><html><body><pre class="r"><span class="co"># ends with string (case insensitive)</span>
+<div class="sourceCode" id="cb56"><html><body><pre class="r"><span class="co"># ends with string (case insensitive)</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span> <span class="kw">%ENDS%</span> <span class="st">"Hagen"</span>)</pre></body></html></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  Hagen | matchType:  ENDS_WITH | caseSensitive:  FALSE</code></pre>
-<div class="sourceCode" id="cb56"><html><body><pre class="r"><span class="co"># case insensitive exact match</span>
+<div class="sourceCode" id="cb58"><html><body><pre class="r"><span class="co"># case insensitive exact match</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span> <span class="kw">%==%</span> <span class="st">"copeNHAGen"</span>)</pre></body></html></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
@@ -691,14 +696,14 @@
 <h4 class="hasAnchor">
 <a href="#complex-filters" class="anchor"></a>Complex filters</h4>
 <p>You can also recursively nest filter expressions to make more complicated ones.</p>
-<p>The filter below looks for visitors from Copenhagen, London, Paris or New York who arrived on day 5 or 6 of the week, from Google referrers but not including Google Ads.</p>
-<div class="sourceCode" id="cb58"><html><body><pre class="r"><span class="co"># use previously created filters to build another filter expression:</span>
+<p>The filter below looks for visitors from Copenhagen, London, Paris or New York who arrived on day 5 or 6 of the week, or from Google referrers but not including Google Ads.</p>
+<div class="sourceCode" id="cb60"><html><body><pre class="r"><span class="co"># use previously created filters to build another filter expression:</span>
 <span class="co"># multiple filter clauses</span>
 <span class="no">f1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span><span class="kw">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Copenhagen"</span>,<span class="st">"London"</span>,<span class="st">"Paris"</span>,<span class="st">"New York"</span>) <span class="kw">&amp;</span>
                        (<span class="no">dayOfWeek</span><span class="kw">==</span><span class="st">"5"</span> <span class="kw">|</span> <span class="no">dayOfWeek</span><span class="kw">==</span><span class="st">"6"</span>))
 
 <span class="co"># build up complicated filters</span>
-<span class="no">f2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">f1</span> <span class="kw">|</span> <span class="no">sessionSource</span><span class="kw">==</span><span class="st">"google"</span>)
+<span class="no">f2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">f1</span> <span class="kw">|</span> <span class="no">sessionSource</span><span class="kw">==</span><span class="st">"google"</span> <span class="kw">&amp;</span> !<span class="no">city</span><span class="kw">==</span><span class="st">"(not set)"</span>)
 <span class="no">f3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">f2</span> <span class="kw">&amp;</span> !<span class="no">sessionMedium</span><span class="kw">==</span><span class="st">"cpc"</span>)
 <span class="no">f3</span></pre></body></html></div>
 <pre><code>## ===============andGroup:  
@@ -728,10 +733,19 @@
 ## 
 ## 
 ## [[2]]
+## ===andGroup:  
+## [[1]]
 ## --GA4 Filter:  
 ## --| sessionSource 
 ## ----stringFilter:  
 ## value:  google | matchType:  EXACT | caseSensitive:  TRUE
+## [[2]]
+## notExpression:  
+## --GA4 Filter:  
+## --| city 
+## ----stringFilter:  
+## value:  (not set) | matchType:  EXACT | caseSensitive:  TRUE
+## 
 ## 
 ## [[2]]
 ## notExpression:  
@@ -740,7 +754,7 @@
 ## ----stringFilter:  
 ## value:  cpc | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
 <p>You can use filter expression objects above directly like so:</p>
-<div class="sourceCode" id="cb60"><html><body><pre class="r"><span class="no">complex_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
+<div class="sourceCode" id="cb62"><html><body><pre class="r"><span class="no">complex_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
    <span class="fl">206670707</span>,
    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
@@ -750,13 +764,13 @@
    )
 
 <span class="no">complex_filter</span>
-<span class="co"># A tibble: 100 x 5</span>
+<span class="co">## A tibble: 100 x 5</span>
 <span class="co">#   date       city      dayOfWeek activeUsers sessions</span>
 <span class="co">#   &lt;date&gt;     &lt;chr&gt;     &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co"># 1 2020-04-09 London    5                   6        7</span>
-<span class="co"># 2 2020-04-14 (not set) 3                   6        6</span>
-<span class="co"># 3 2020-04-22 (not set) 4                   6        7</span>
-<span class="co"># 4 2020-04-15 (not set) 4                   5        6</span>
+<span class="co"># 1 2020-04-27 Melbourne 2                   3        4</span>
+<span class="co"># 2 2020-04-10 Eindhoven 6                   2        3</span>
+<span class="co"># 3 2020-04-07 Bristol   3                   2        2</span>
+<span class="co"># 4 2020-04-01 Reston    4                   2        2</span>
 <span class="co"># ...</span></pre></body></html></div>
 </div>
 </div>
@@ -766,7 +780,7 @@
 <a href="#real-time-data" class="anchor"></a>Real Time Data</h2>
 <p>Real-time data can be fetched with the same function as the regular Data API, but it is calling another endpoint. Add the <code>realtime=TRUE</code> argument to the function.</p>
 <p>A limited subset of <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-api-schema">dimensions and metrics are available in the real-time API</a>. Date ranges are ignored.</p>
-<div class="sourceCode" id="cb61"><html><body><pre class="r"><span class="co"># run a real-time report </span>
+<div class="sourceCode" id="cb63"><html><body><pre class="r"><span class="co"># run a real-time report </span>
 <span class="no">realtime</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
   <span class="fl">206670707</span>,
   <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"activeUsers"</span>,
@@ -779,7 +793,7 @@
 <h2 class="hasAnchor">
 <a href="#metric-aggregations" class="anchor"></a>Metric Aggregations</h2>
 <p>Each API call includes the TOTAL, MAXIMUM and MINIMUM metric aggregations in the returned data.frame’s metadata. You can access this data using base R’s <code><a href="https://rdrr.io/r/base/attr.html">attr()</a></code> function or use <code><a href="../reference/ga_data_aggregations.html">ga_data_aggregations()</a></code> to extract the data.frames:</p>
-<div class="sourceCode" id="cb62"><html><body><pre class="r"><span class="no">aggs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
+<div class="sourceCode" id="cb64"><html><body><pre class="r"><span class="no">aggs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
       <span class="fl">206670707</span>,
       <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>() - <span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>() - <span class="fl">1</span>),
       <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"activeUsers"</span>,
@@ -821,7 +835,7 @@
 <span class="co">#  &lt;chr&gt;        &lt;chr&gt;             &lt;chr&gt;              &lt;dbl&gt;</span>
 <span class="co">#1 RESERVED_MAX RESERVED_MAX      date_range_0           4</span></pre></body></html></div>
 <p>If you request more than one date range, the aggregations will be calculated for each one:</p>
-<div class="sourceCode" id="cb63"><html><body><pre class="r"><span class="co"># use R to generate some dates</span>
+<div class="sourceCode" id="cb65"><html><body><pre class="r"><span class="co"># use R to generate some dates</span>
 <span class="no">dates</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>(), <span class="kw">by</span> <span class="kw">=</span> -<span class="fl">7</span>, <span class="kw">length.out</span> <span class="kw">=</span> <span class="fl">8</span>))
 <span class="no">dates</span>
 <span class="co">#[1] "2020-10-19" "2020-10-26" "2020-11-02" "2020-11-09" "2020-11-16" "2020-11-23" "2020-11-30" "2020-12-07"</span>
@@ -849,7 +863,7 @@
 <p>There is no sampling but there are token quotas for API fetches on a per-project basis. Normally these are not visible until you are close to the quota limits, but you can see them if you set the googleAuthR verbose level below 3 (<code><a href="https://rdrr.io/r/base/options.html">options(googleAuthR.verbose=2)</a></code>))</p>
 <p>The bigger and more complex the query you make, the more tokens you use.</p>
 <p>An example taken from above:</p>
-<div class="sourceCode" id="cb64"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">googleAuthR.verbose</span><span class="kw">=</span><span class="fl">2</span>)
+<div class="sourceCode" id="cb66"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">googleAuthR.verbose</span><span class="kw">=</span><span class="fl">2</span>)
 <span class="no">complex_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
      <span class="fl">206670707</span>,
      <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),

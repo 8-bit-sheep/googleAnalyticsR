@@ -233,7 +233,7 @@ The base object is `ga_data_filter()` - this holds the logic for the specific me
 * (operator) can be one of `==, >, >=, <, <=` for metrics
 * (operator) can be one of `==, %begins%, %ends%, %contains%, %contains%, %regex%, %regex_partial%` for dimensions
 * dimension (operator) are by default case sensitive. Make them case insensitive by using UPPER case variations `%BEGINS%, %ENDS%` etc. or `%==%` for case insensitive exact matches
-* (value) can be strings (`"dim1"`), numerics (`55`), string vectors (`c("dim1", "dim2")`), numeric vectors (`c(1,2,3)`) or boolean (`TRUE`) which will correspond to different types of filters
+* (value) can be strings (`"dim1"`), numerics (`55`), string vectors (`c("dim1", "dim2")`), numeric vectors (`c(1,2,3)`) or NULL (`NULL`) which will correspond to different types of filters
 * Filter expressions for multiple filters when using the operators: `&, |, !` which correspond to `AND`, `OR` and `NOT` respectively. 
 
 #### Filter Fields
@@ -262,7 +262,7 @@ Values are checked in the filter object based on the R class of the object you a
 * `character vector`: inListFilter e.g. `c("Copenhagen","London","New York")`
 * `numeric`: NumericFilter e.g. `5`
 * `numeric 2-length vector`: BetweenFilter e.g. `c(5, 10)`
-* `logical`: TRUE will filter for NULL e.g. `TRUE`
+* `NULL`: Will filter for NULL e.g. `city==NULL` - often used with `!` (not NULL)
 
 e.g. if you pass in a character of length one (`"Copenhagen"`) then it will assume to be a class `StringFilter` (all dimensions that match "Copenhagen") if you pass in a character of length greater than one `c("Copenhagen","London","New York")`, then it assume to be a class `InListFilter` (dimensions must match one in the list)
 
@@ -298,7 +298,7 @@ If you need more complicated filters, then build them using the DSL syntax.  Thi
 ## filter clauses
 # OR string filter
 ga_data_filter(city=="Copenhagen" | city == "London")
-# inlist string filter
+# inlist string filter - equivalent to above
 ga_data_filter(city==c("Copenhagen","London"))
 # AND string filters
 ga_data_filter(city=="Copenhagen" & dayOfWeek == "5")
@@ -393,6 +393,8 @@ ga_data_filter(city %contains% "ope")
 ga_data_filter(city %regex% "^Cope")
 # regex (partial) string
 ga_data_filter(city %regex_partial% "ope")
+# NULL filters
+ga_data_filter(!city==NULL)
 ```
 
 By default string filters are case sensitive.  Use UPPERCASE operator to make then case insensitive
@@ -410,7 +412,7 @@ ga_data_filter(city %==% "copeNHAGen")
 
 You can also recursively nest filter expressions to make more complicated ones.  
 
-The filter below looks for visitors from Copenhagen, London, Paris or New York who arrived on day 5 or 6 of the week, from Google referrers but not including Google Ads.
+The filter below looks for visitors from Copenhagen, London, Paris or New York who arrived on day 5 or 6 of the week, or from Google referrers but not including Google Ads.
 
 ```{r}
 # use previously created filters to build another filter expression:
@@ -419,7 +421,7 @@ f1 <- ga_data_filter(city==c("Copenhagen","London","Paris","New York") &
                        (dayOfWeek=="5" | dayOfWeek=="6")) 
 
 # build up complicated filters
-f2 <- ga_data_filter(f1 | sessionSource=="google")
+f2 <- ga_data_filter(f1 | sessionSource=="google" & !city=="(not set)")
 f3 <- ga_data_filter(f2 & !sessionMedium=="cpc")
 f3
 ```
@@ -437,13 +439,13 @@ complex_filter <- ga_data(
    )
    
 complex_filter
-# A tibble: 100 x 5
+## A tibble: 100 x 5
 #   date       city      dayOfWeek activeUsers sessions
 #   <date>     <chr>     <chr>           <dbl>    <dbl>
-# 1 2020-04-09 London    5                   6        7
-# 2 2020-04-14 (not set) 3                   6        6
-# 3 2020-04-22 (not set) 4                   6        7
-# 4 2020-04-15 (not set) 4                   5        6
+# 1 2020-04-27 Melbourne 2                   3        4
+# 2 2020-04-10 Eindhoven 6                   2        3
+# 3 2020-04-07 Bristol   3                   2        2
+# 4 2020-04-01 Reston    4                   2        2
 # ...
 ```
 
