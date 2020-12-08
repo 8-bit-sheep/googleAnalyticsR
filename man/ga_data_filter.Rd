@@ -107,6 +107,7 @@ ga_data_filter("city" \%==\%"coPENGhagen")
 }
 \seealso{
 Other GA4 functions: 
+\code{\link{ga_data_order}()},
 \code{\link{ga_data}()}
 }
 \concept{GA4 functions}

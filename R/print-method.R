@@ -1,4 +1,13 @@
 #' @export
+print.gar_OrderBy <- function(x, ...){
+  cat("==GA4 OrderBy==\n")
+  cat0("Dimension:    ", x$dimension$dimensionName)
+  cat0("OrderType:    ", x$dimension$orderType)
+  cat0("Metric:       ", x$metric$metricName)
+  cat0("Descending:   ", x$desc)
+}
+
+#' @export
 print.gar_FilterExpression <- function(x, ...){
 
   depth <- find_num_occurances(names(unlist(x)), "\\.expressions\\.")

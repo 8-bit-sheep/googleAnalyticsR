@@ -55,7 +55,7 @@ ga_data_aggregations <- function(df,
 #'
 #' Fetches Google Analytics from the Data API for Google Analytics 4 (Previously App+Web)
 #'
-#' @seealso \href{https://developers.google.com/analytics/devguides/reporting/data/v1}{Google Documentation}
+#' @seealso \href{https://developers.google.com/analytics/devguides/reporting/data/v1}{Documentation on Data API}
 #'
 #' @details
 #'
@@ -63,7 +63,7 @@ ga_data_aggregations <- function(df,
 #' @inheritParams RunReportRequest
 #' @param date_range A vector of length two with start and end dates in YYYY-MM-DD format
 #' @param dimensionDelimiter If combining dimensions in one column, the delimiter for the value field
-#' @param realtime If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see \url{https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics}
+#' @param realtime If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see \href{https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics}{valid real-time dimensions}
 #' @importFrom googleAuthR gar_api_generator
 #' @import assertthat
 #' @family GA4 functions

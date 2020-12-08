@@ -26,17 +26,17 @@ ga_data(
 
 \item{dimensions}{The dimensions requested and displayed}
 
-\item{dimensionFilter}{The filter clause of dimensions}
+\item{dimensionFilter}{The filter clause of dimensions - see \link{ga_data_filter}}
 
 \item{dimensionDelimiter}{If combining dimensions in one column, the delimiter for the value field}
 
-\item{metricFilter}{The filter clause of metrics}
+\item{metricFilter}{The filter clause of metrics - see \link{ga_data_filter}}
 
-\item{orderBys}{Specifies how rows are ordered in the response}
+\item{orderBys}{Specifies how rows are ordered in the response - see \link{ga_data_order}}
 
 \item{limit}{The number of rows to return - use -1 to return all rows}
 
-\item{realtime}{If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see \url{https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics}}
+\item{realtime}{If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see \href{https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics}{valid real-time dimensions}}
 }
 \value{
 A data.frame tibble, including attributes metadata, metricAggregations and rowCount.  Use \link{ga_data_aggregations} to extract the data.frames of metricAggregations
@@ -95,9 +95,10 @@ ga_data_aggregations(realtime)
 }
 }
 \seealso{
-\href{https://developers.google.com/analytics/devguides/reporting/data/v1}{Google Documentation}
+\href{https://developers.google.com/analytics/devguides/reporting/data/v1}{Documentation on Data API}
 
 Other GA4 functions: 
-\code{\link{ga_data_filter}()}
+\code{\link{ga_data_filter}()},
+\code{\link{ga_data_order}()}
 }
 \concept{GA4 functions}

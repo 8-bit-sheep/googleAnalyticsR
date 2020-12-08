@@ -45,9 +45,9 @@ RunReportRequest(
 
 \item{currencyCode}{A currency code in ISO4217 format, such as 'AED', 'USD', 'JPY'}
 
-\item{orderBys}{Specifies how rows are ordered in the response}
+\item{orderBys}{Specifies how rows are ordered in the response - see \link{ga_data_order}}
 
-\item{metricFilter}{The filter clause of metrics}
+\item{metricFilter}{The filter clause of metrics - see \link{ga_data_filter}}
 
 \item{cohortSpec}{Cohort group associated with this request}
 
@@ -59,7 +59,7 @@ RunReportRequest(
 
 \item{keepEmptyRows}{If false, rows with metrics being 0 will not be returned}
 
-\item{dimensionFilter}{The filter clause of dimensions}
+\item{dimensionFilter}{The filter clause of dimensions - see \link{ga_data_filter}}
 
 \item{limit}{The number of rows to return - use -1 to return all rows}
 
