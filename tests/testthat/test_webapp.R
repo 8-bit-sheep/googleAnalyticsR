@@ -1,7 +1,8 @@
 context("App + Web Tests")
 
 test_that("Basic fetch", {
-  
+  skip_on_cran()
+  ga_auth()
   df <- ga_data(
     206670707,
     metrics = "activeUsers",
@@ -12,15 +13,15 @@ test_that("Basic fetch", {
   
   expect_s3_class(df, "data.frame")
   expect_equal(names(df), c("date","city","activeUsers"))
-  expect_s3_class(df$activeUsers, "numeric")
-  expect_s3_class(df$date, "Date")
-  expect_s3_class(df$city, "character")
+  expect_true(inherits(df$activeUsers, "numeric"))
+  expect_true(inherits(df$date, "Date"))
+  expect_true(inherits(df$city, "character"))
 })
 
 context("App + Web Filters")
 
 test_that("Filter objects", {
-  
+
   string_f <- ga_aw_filter("city","Copenhagen","EXACT", caseSensitive = FALSE)
   in_list_f <- ga_aw_filter("city",c("Copenhagen","London"))
   numeric_f <- ga_aw_filter("activeUsers", 1L, "GREATER_THAN")
@@ -48,7 +49,7 @@ test_that("Filter objects", {
 })
 
 test_that("Filter fetch types", {
-
+  skip_on_cran()
   test_filter <- function(dim_filter = NULL,
                           met_filter = NULL){
     ga_data(
@@ -69,7 +70,7 @@ test_that("Filter fetch types", {
   
   in_list_f <- ga_aw_filter("city",c("Copenhagen","London"))
   in_list_data <- test_filter(in_list_f)
-  expect_equal(unique(in_list_data$city), c("London", "Copenhagen"))
+  expect_true(all(unique(in_list_data$city) %in% c("London", "Copenhagen")))
   
   # metric filters
   numeric_f <- ga_aw_filter("activeUsers", 2L, "GREATER_THAN")

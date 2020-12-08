@@ -127,7 +127,7 @@ ga_data_filter <- function(x){
 #'   \item{character vector: in list filter}
 #'   \item{numeric: Numeric filter}
 #'   \item{numeric 2-length vector: between filter}
-#'   \item{logical: TRUE will filter for NULLs}
+#'   \item{NULL: Will filter for NULLs}
 #'  }
 #' 
 #' For numerics also make sure to specify integer or float for metrics e.g.
@@ -195,8 +195,8 @@ ga_aw_filter <- function(field,
                      fromValue = value[[1]],
                      toValue = value[[2]]
                    ))
-  } else if(is.flag(value)){
-    o <- Filter_aw(field, nullFilter = value)
+  } else if(is.null(value)){
+    o <- Filter_aw(field, nullFilter = TRUE)
   } else {
     stop("Filter didn't know what to do with value of type: ", class(value), 
          call. = FALSE)
@@ -295,8 +295,10 @@ dsl_filter_expr_funcs <- list(
       ga_aw_filter(e1, e2, operation = "EXACT")
     } else if(inherits(e2, "numeric")){
       ga_aw_filter(e1, e2, operation = "EQUAL")
+    } else if(is.null(e2)){
+      ga_aw_filter(e1, e2)
     } else {
-      stop("value for '==' is neither character or numeric class", 
+      stop("value for '==' is neither character, numeric or NULL", 
            call. = FALSE)
     }
   },

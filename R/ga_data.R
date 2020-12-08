@@ -160,25 +160,6 @@ ga_data <- function(propertyId,
   # here as not needed for real-time but needed for brrr
   dates <- gaw_dates(date_range)
   
-  # brrr <- BatchRunReportsRequest(
-  #   entity = Entity(propertyId),
-  #   requests = list(
-  #     RunReportRequest(
-  #       entity = Entity(propertyId),
-  #       metrics = mets,
-  #       dimensions = dims,
-  #       dateRanges = dates,
-  #       limit = limit,
-  #       dimensionFilter = dimensionFilter,
-  #       metricFilter = metricFilter,
-  #       metricAggregations = metricAggregations,
-  #       orderBys = orderBys,
-  #       keepEmptyRows = TRUE,
-  #       returnPropertyQuota = TRUE
-  #     )
-  #   )
-  # )
-  
   brrr <- RunReportRequest(
         entity = Entity(propertyId),
         metrics = mets,
@@ -220,7 +201,7 @@ ga_aw_report <- function(requestObj){
   url <- sprintf("https://analyticsdata.googleapis.com/%s:runReport",
                  version_aw())
   
-  # analyticsdata.batchRunReports
+  # analyticsdata.runReport
   f <- gar_api_generator(url, "POST", 
                          data_parse_function = parse_runreport)
   
@@ -296,22 +277,28 @@ row_types <- function(res, met_names){
   res %>% mutate(across(met_names, as.numeric))
 }
 
+get_field_values <- function(x, name){
+  o <- lapply(x, function(y) setNames(y$value, name))
+  bind_rows(o)
+}
+
+my_bind_cols <- function(x, y){
+  # bind_cols returns 0rows if first df has 0
+  if(nrow(x) == 0){
+    return(y)
+  }
+  
+  bind_cols(x, y)
+}
+
 #' @noRd
 #' @importFrom dplyr bind_cols bind_rows across mutate
 parse_aggregations <- function(agg, dim_names, met_names){
   
-  dds <- lapply(agg$dimensionValues, function(x) setNames(x$value, dim_names))
-  mms <- lapply(agg$metricValues, function(x) setNames(x$value, met_names))
+  dds <- get_field_values(agg$dimensionValues, name = dim_names)
+  mms <- get_field_values(agg$metricValues, name = met_names)  
   
-  dds <- bind_rows(dds)
-  mms <- bind_rows(mms)
-  
-  # bind_cols returns 0rows if first df has 0
-  if(nrow(dds) == 0){
-    res <- mms
-  } else {
-    res <- bind_cols(dds, mms)
-  }
+  res <- my_bind_cols(dds, mms)
   
   res <- row_types(res, met_names)
   
@@ -324,18 +311,10 @@ parse_rows <- function(o, dim_names, met_names){
 
   quota_messages(o)
   
-  dds <- lapply(o$rows$dimensionValues, function(x) setNames(x$value, dim_names))
-  mms <- lapply(o$rows$metricValues, function(x) setNames(x$value, met_names))
-    
-  dds <- bind_rows(dds)
-  mms <- bind_rows(mms)
+  dds <- get_field_values(o$rows$dimensionValues, name = dim_names)
+  mms <- get_field_values(o$rows$metricValues, name = met_names)
   
-  # bind_cols returns 0rows if first df has 0
-  if(nrow(dds) == 0){
-    res <- mms
-  } else {
-    res <- bind_cols(dds, mms)
-  }
+  res <- my_bind_cols(dds, mms)
   
   res <- row_types(res, met_names = met_names)
   
@@ -363,45 +342,45 @@ parse_rows <- function(o, dim_names, met_names){
 }
 
 
-#' @noRd
-#' @importFrom dplyr bind_cols across mutate
-parse_batch_rows <- function(o, dim_names, met_names){
-  quota_messages(o)
-  
-  the_data <- lapply(o$rows, function(x){
-    dds <- get_value_cols(x, type = "dimensionValues")
-    mms <- get_value_cols(x, type = "metricValues")
-    dds <- setNames(dds, dim_names)
-    mms <- setNames(mms, met_names)
-    
-    # bind_cols returns 0rows if first df has 0
-    if(nrow(dds) == 0){
-      o <- mms
-    } else {
-      o <- bind_cols(dds, mms)
-    }
-    
-    o
-    
-  })
-  
-  res <- bind_cols(the_data)
-  
-  #type changes
-  res <- row_types(res, met_names = met_names)
-
-  attr(res, "metadata") <- o$metadata
-  
-  res
-}
-
-#' @noRd
-#' @importFrom tibble as_tibble
-get_value_cols <- function(x, 
-                           type = c("dimensionValues", "metricValues")){
-  type <- match.arg(type)
-  as_tibble(
-    do.call(rbind, lapply(x[[type]], function(y) y[["value"]])),
-    .name_repair = "minimal")
-  
-} 
+#' #' @noRd
+#' #' @importFrom dplyr bind_cols across mutate
+#' parse_batch_rows <- function(o, dim_names, met_names){
+#'   quota_messages(o)
+#'   
+#'   the_data <- lapply(o$rows, function(x){
+#'     dds <- get_value_cols(x, type = "dimensionValues")
+#'     mms <- get_value_cols(x, type = "metricValues")
+#'     dds <- setNames(dds, dim_names)
+#'     mms <- setNames(mms, met_names)
+#'     
+#'     # bind_cols returns 0rows if first df has 0
+#'     if(nrow(dds) == 0){
+#'       o <- mms
+#'     } else {
+#'       o <- bind_cols(dds, mms)
+#'     }
+#'     
+#'     o
+#'     
+#'   })
+#'   
+#'   res <- bind_cols(the_data)
+#'   
+#'   #type changes
+#'   res <- row_types(res, met_names = met_names)
+#' 
+#'   attr(res, "metadata") <- o$metadata
+#'   
+#'   res
+#' }
+#' 
+#' #' @noRd
+#' #' @importFrom tibble as_tibble
+#' get_value_cols <- function(x, 
+#'                            type = c("dimensionValues", "metricValues")){
+#'   type <- match.arg(type)
+#'   as_tibble(
+#'     do.call(rbind, lapply(x[[type]], function(y) y[["value"]])),
+#'     .name_repair = "minimal")
+#'   
+#' } 
