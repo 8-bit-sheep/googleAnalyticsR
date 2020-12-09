@@ -13,6 +13,7 @@ ga_data(
   dimensionDelimiter = "/",
   metricFilter = NULL,
   orderBys = NULL,
+  metricAggregations = NULL,
   limit = 100,
   realtime = FALSE
 )
@@ -33,6 +34,8 @@ ga_data(
 \item{metricFilter}{The filter clause of metrics - see \link{ga_data_filter}}
 
 \item{orderBys}{Specifies how rows are ordered in the response - see \link{ga_data_order}}
+
+\item{metricAggregations}{Aggregation of metrics. Aggregated metric values will be shown in rows where the dimensionValues are set to "RESERVED_(MetricAggregation)".}
 
 \item{limit}{The number of rows to return - use -1 to return all rows}
 
@@ -87,11 +90,24 @@ realtime <- ga_data(
   206670707,
   metrics = "activeUsers",
   dimensions = c("city","unifiedScreenName"),
+  metricAggregations = c("TOTAL", "MINIMUM", "MAXIMUM")
   limit = 100,
   realtime = TRUE)
 
 # extract meta data from the table
 ga_data_aggregations(realtime)
+
+# add ordering
+a <- ga_data_order(-sessions)
+b <- ga_data_order(-dayOfWeek, type = "NUMERIC")
+
+ga_data(
+  206670707,
+  metrics = c("activeUsers","sessions"),
+  dimensions = c("date","city","dayOfWeek"),
+  date_range = c("2020-03-31", "2020-04-27"),
+  orderBys = c(a, b)
+  )
 }
 }
 \seealso{

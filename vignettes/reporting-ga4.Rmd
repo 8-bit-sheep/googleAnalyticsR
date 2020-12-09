@@ -153,6 +153,46 @@ custom <- ga_data(
 )
 ```
 
+#### Calculated fields
+
+You can also create custom metrics and dimensions on the fly with calculated metrics.  These let you send in combinations of metrics or dimensions:
+
+```r
+# metric and dimension expressions
+ 
+# create your own named metrics
+ga_data(
+   206670707,
+   metrics = c("activeUsers","sessions",sessionsPerUser = "sessions/activeUsers"),
+   dimensions = c("date","city","dayOfWeek"),
+   date_range = c("2020-03-31", "2020-04-27"),
+   limit = 100
+   )
+## A tibble: 100 x 6
+#   date       city        dayOfWeek activeUsers sessions sessionsPerUser
+#   <date>     <chr>       <chr>           <dbl>    <dbl>           <dbl>
+# 1 2020-04-03 Kaliningrad 6                   3        3            1   
+# 2 2020-04-19 Munich      1                   3        4            1.33
+# 3 2020-04-27 Hamburg     2                   3        3            1   
+# 4 2020-04-16 London      5                   5        6            1.2 
+#...
+
+# create your own aggregation dimensions
+ga_data(
+   206670707,
+   metrics = c("activeUsers","sessions"),
+   dimensions = c("date","city","dayOfWeek", cdow = "city/dayOfWeek"),
+   date_range = c("2020-03-31", "2020-04-27"),
+   limit = 100
+   )
+## A tibble: 100 x 6
+#   date       city      dayOfWeek cdow        activeUsers sessions
+#   <date>     <chr>     <chr>     <chr>             <dbl>    <dbl>
+# 1 2020-04-18 (not set) 7         (not set)/7           5        6
+# 2 2020-04-14 Madrid    3         Madrid/3              5        6
+# 3 2020-04-17 London    6         London/6              5        6
+```
+
 ## Date Ranges
 
 You can send in up to 4 date ranges, via a vector of dates:
@@ -213,7 +253,6 @@ ga_data(
     date_range = c("yesterday","today","3daysAgo","2daysAgo"),
     limit = -1)
 ```
-
 
 ## Filters
 
@@ -449,6 +488,95 @@ complex_filter
 # ...
 ```
 
+## Ordering
+
+You can order or sort results using a new DSL via the function `ga_data_order()` that operate on the fields (dimensions/metrics) in your returned data.
+
+The DSL will validate the fields you are sending in are valid.  You then prefix the field with a `+` for ascending order or `-` for descending order like so:
+
+```{r}
+# session in descending order
+ga_data_order(-sessions)
+
+# city dimension in ascending alphanumeric order
+ga_data_order(+city)
+```
+
+You can have multiple orders - add the -/+{field} after the former without commas:
+
+```{r}
+# as above plus sessions in descending order
+ga_data_order(+city -sessions)
+
+# as above plus activeUsers in ascending order
+ga_data_order(+city -sessions +activeUsers)
+```
+
+For dimensions, you have a choice on what type of sort is available:
+
+* `ALPHANUMERIC` - For example, "2" < "A" < "X" < "b" < "z"
+* `CASE_INSENSITIVE_ALPHANUMERIC` - Case insensitive alphanumeric sort by lower case Unicode code point. For example, "2" < "A" < "b" < "X" < "z"
+* `NUMERIC` - Dimension values are converted to numbers before sorting. For example in NUMERIC sort, "25" < "100", and in ALPHANUMERIC sort, "100" < "25". Non-numeric dimension values all have equal ordering value below all numeric values
+
+Use `ga_data_order()` objects in the `orderBys` argument:
+
+```r
+ga_data(
+  206670707,
+  metrics = c("activeUsers","sessions"),
+  dimensions = c("date","city","dayOfWeek"),
+  date_range = c("2020-03-31", "2020-04-27"),
+  orderBys = ga_data_order(-sessions -dayOfWeek)
+  )
+## A tibble: 100 x 5
+#   date       city           dayOfWeek activeUsers sessions
+#   <date>     <chr>          <chr>           <dbl>    <dbl>
+# 1 2020-04-08 (not set)      4                  18       21
+# 2 2020-04-08 Rome           4                  12       14
+# 3 2020-04-20 London         2                   6       14
+# 4 2020-04-09 Warsaw         5                   5       11
+# 5 2020-04-15 (not set)      4                   9       11
+# 6 2020-04-21 Amsterdam      3                   3       11
+# 7 2020-04-27 (not set)      2                   9       11
+# ...
+```
+
+You can also combine `ga_data_order()` objects with `c()`
+
+```r
+a <- ga_data_order(-sessions)
+b <- ga_data_order(-dayOfWeek, type = "NUMERIC")
+
+ga_data(
+    206670707,
+    metrics = c("activeUsers","sessions"),
+    dimensions = c("date","city","dayOfWeek"),
+    date_range = c("2020-03-31", "2020-04-27"),
+    orderBys = c(a, b),
+    limit = 100
+)
+## A tibble: 100 x 5
+#   date       city           dayOfWeek activeUsers sessions
+#   <date>     <chr>          <chr>           <dbl>    <dbl>
+# 1 2020-04-08 (not set)      4                  18       21
+# 2 2020-04-08 Rome           4                  12       14
+# 3 2020-04-20 London         2                   6       14
+# 4 2020-04-09 Warsaw         5                   5       11
+# 5 2020-04-15 (not set)      4                   9       11
+# 6 2020-04-21 Amsterdam      3                   3       11
+# 7 2020-04-27 (not set)      2                   9       11
+# ...
+```
+
+#### Order Fields
+
+Fields are metrics and dimensions that are available to your GA4 implementation, including custom fields.  You can see what is available by calling the `ga_meta("data")` function.
+
+You can use quoted (`"city"`, `"session"`) or unquoted fields ( `city` or `session`) which will check the field is valid before you send it to the API.  
+
+If you want to use custom fields from your property, do a call to `ga_meta("data", propertyId=1234546)` similar to the filter fields explained above.
+
+
 ## Real Time Data
 
 Real-time data can be fetched with the same function as the regular Data API, but it is calling another endpoint.  Add the `realtime=TRUE` argument to the function.
@@ -468,13 +596,14 @@ realtime <- ga_data(
 
 ## Metric Aggregations
 
-Each API call includes the TOTAL, MAXIMUM and MINIMUM metric aggregations in the returned data.frame's metadata.  You can access this data using base R's `attr()` function or use `ga_data_aggregations()` to extract the data.frames:
+Each API call can include the TOTAL, MAXIMUM and MINIMUM metric aggregations in the returned data.frame's metadata.  You can access this data using base R's `attr()` function or use `ga_data_aggregations()` to extract the data.frames:
 
 ```r
 aggs <- ga_data(
       206670707, 
       date_range = c(Sys.Date() - 4, Sys.Date() - 1),
       metrics = "activeUsers",
+      metricAggregations = c("TOTAL","MINIMUM","MAXIMUM"),
       dimensions = c("city","unifiedScreenName"),
       limit = 100)
       

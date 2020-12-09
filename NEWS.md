@@ -5,7 +5,7 @@
 * Add getUniversalMetadata API fetch to `ga_meta(version="data")` (#335)
 * Fix for passing `ganalytics`-style expressions for dimension and metric filters/segments (#339 and #305), which also resolves #279 (and improves on #253) for continued support of combining expressions (for filters and segments) using `list()`.
 * Support new Google Analytics 4 APIs via `ga_data()` (#335) 
-* Add `ga_data_aggregation()` and `ga_data_filter()` for working with `ga_data()` (#335)
+* Add `ga_data_aggregation()`, `ga_data_filter()`, `ga_data_order()` for working with `ga_data()` (#335)
 
 # googleAnalyticsR 0.8.0
 

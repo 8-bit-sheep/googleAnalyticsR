@@ -279,6 +279,7 @@
   <span class='kw'>dimensionDelimiter</span> <span class='kw'>=</span> <span class='st'>"/"</span>,
   <span class='kw'>metricFilter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>orderBys</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>metricAggregations</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>100</span>,
   <span class='kw'>realtime</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
@@ -304,7 +305,7 @@
     </tr>
     <tr>
       <th>dimensionFilter</th>
-      <td><p>The filter clause of dimensions</p></td>
+      <td><p>The filter clause of dimensions - see <a href='ga_data_filter.html'>ga_data_filter</a></p></td>
     </tr>
     <tr>
       <th>dimensionDelimiter</th>
@@ -312,11 +313,15 @@
     </tr>
     <tr>
       <th>metricFilter</th>
-      <td><p>The filter clause of metrics</p></td>
+      <td><p>The filter clause of metrics - see <a href='ga_data_filter.html'>ga_data_filter</a></p></td>
     </tr>
     <tr>
       <th>orderBys</th>
-      <td><p>Specifies how rows are ordered in the response</p></td>
+      <td><p>Specifies how rows are ordered in the response - see <a href='ga_data_order.html'>ga_data_order</a></p></td>
+    </tr>
+    <tr>
+      <th>metricAggregations</th>
+      <td><p>Aggregation of metrics. Aggregated metric values will be shown in rows where the dimensionValues are set to "RESERVED_(MetricAggregation)".</p></td>
     </tr>
     <tr>
       <th>limit</th>
@@ -324,7 +329,7 @@
     </tr>
     <tr>
       <th>realtime</th>
-      <td><p>If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics'>https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics</a></p></td>
+      <td><p>If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics'>valid real-time dimensions</a></p></td>
     </tr>
     </table>
 
@@ -338,56 +343,13 @@
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/reporting/data/v1'>Google Documentation</a></p>
+    <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/reporting/data/v1'>Documentation on Data API</a></p>
 <p>Other GA4 functions: 
-<code><a href='ga_data_filter.html'>ga_data_filter</a>()</code></p></div>
+<code><a href='ga_data_filter.html'>ga_data_filter</a>()</code>,
+<code><a href='ga_data_order.html'>ga_data_order</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-
-<span class='co'># send up to 4 date ranges</span>
-<span class='no'>multi_date</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data</span>(
-  <span class='fl'>206670707</span>,
-  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"activeUsers"</span>,<span class='st'>"sessions"</span>),
-  <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"date"</span>,<span class='st'>"city"</span>,<span class='st'>"dayOfWeek"</span>),
-  <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2020-03-31"</span>, <span class='st'>"2020-04-27"</span>, <span class='st'>"2020-04-30"</span>, <span class='st'>"2020-05-27"</span>),
-  <span class='kw'>dimensionFilter</span> <span class='kw'>=</span> <span class='fu'><a href='ga_data_filter.html'>ga_data_filter</a></span>(<span class='st'>"city"</span><span class='kw'>==</span><span class='st'>"Copenhagen"</span>),
-  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>100</span>
-  )
-
-
-<span class='co'># metric and dimension expressions</span>
-
-<span class='co'># create your own named metrics</span>
-<span class='no'>met_expression</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data</span>(
-  <span class='fl'>206670707</span>,
-  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"activeUsers"</span>,<span class='st'>"sessions"</span>,<span class='kw'>sessionsPerUser</span> <span class='kw'>=</span> <span class='st'>"sessions/activeUsers"</span>),
-  <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"date"</span>,<span class='st'>"city"</span>,<span class='st'>"dayOfWeek"</span>),
-  <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2020-03-31"</span>, <span class='st'>"2020-04-27"</span>),
-  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>100</span>
-  )
-
-<span class='co'># create your own aggregation dimensions</span>
-<span class='no'>dim_expression</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data</span>(
-  <span class='fl'>206670707</span>,
-  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"activeUsers"</span>,<span class='st'>"sessions"</span>),
-  <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"date"</span>,<span class='st'>"city"</span>,<span class='st'>"dayOfWeek"</span>, <span class='kw'>cdow</span> <span class='kw'>=</span> <span class='st'>"city/dayOfWeek"</span>),
-  <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2020-03-31"</span>, <span class='st'>"2020-04-27"</span>),
-  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>100</span>
-  )
-
-<span class='co'># run a real-time report (no date dimension allowed)</span>
-<span class='no'>realtime</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data</span>(
-  <span class='fl'>206670707</span>,
-  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='st'>"activeUsers"</span>,
-  <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"city"</span>,<span class='st'>"unifiedScreenName"</span>),
-  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>realtime</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='co'># extract meta data from the table</span>
-<span class='fu'><a href='ga_data_aggregations.html'>ga_data_aggregations</a></span>(<span class='no'>realtime</span>)
-}</div></pre>
+    <pre class="examples"></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

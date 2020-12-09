@@ -1,24 +1,34 @@
 #' Order DSL for GA4 OrderBy
 #' 
-#' Use with \link{ga_data} to create filters
+#' Use with \link{ga_data} to create orderBys
 #' 
-#' @param x Order DSL enabled syntax or the output of a previous call to this function - see examples
-#' @param type Order Type - see details
+#' @param x Order DSL enabled syntax
+#' @param type Order Type
 #' 
 #' @details 
 #' 
-#' 
 #' The DSL rules are:
 #' 
+#' \itemize{
+#'   \item{}{Fields can be quoted or unquoted.  If unquoted they will be validated}
+#'   \item{}{Use + as a prefix to indicate ascending order e.g. \code{+sessions}}
+#'   \item{}{Use - as a prefix to indicate decreasing order e.g. \code{-sessions}}
+#'   \item{}{Combine order fields without commas e.g. \code{+sessions -city}}
+#'   \item{}{Ordering of dimensions can also specify a type of ordering: ALPHANUMERIC, CASE_INSENSITIVE_ALPHANUMERIC, NUMERIC}
+#' }
+#' 
+#' The dimension ordering have these effects:
 #' 
 #' \itemize{
-#'   \item{}{ Single filters can be used without wrapping in filter expressions}
+#'   \item{ALPHANUMERIC}{ For example, "2" < "A" < "X" < "b" < "z"}
+#'   \item{CASE_INSENSITIVE_ALPHANUMERIC}{ Case insensitive alphanumeric sort by lower case Unicode code point. For example, "2" < "A" < "b" < "X" < "z"}
+#'   \item{NUMERIC}{ Dimension values are converted to numbers before sorting. For example in NUMERIC sort, "25" < "100", and in ALPHANUMERIC sort, "100" < "25". Non-numeric dimension values all have equal ordering value below all numeric values}
 #' }
 #' 
 #' 
-#' 
-#' @return A \link{FilterExpression} object suitable for use in \link{ga_data}
+#' @return A list of \link{OrderBy} objects suitable for use in \link{ga_data}
 #' @export
+#' @seealso \url{https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1alpha/OrderBy}
 #' @importFrom rlang enquo eval_tidy
 #' @examples 
 #' 
@@ -37,6 +47,24 @@
 #' 
 #' # dayOfWeek dimension in ascending numeric order
 #' ga_data_order(+dayOfWeek, type = "NUMERIC")
+#' 
+#' # you can also combine them with c()
+#' a <- ga_data_order(-sessions)
+#' b <- ga_data_order(-dayOfWeek, type = "NUMERIC")
+#' c(a, b)
+#' 
+#' \dontrun{
+#' # example of use
+#' ga_data(
+#'   206670707,
+#'   metrics = c("activeUsers","sessions"),
+#'   dimensions = c("date","city","dayOfWeek"),
+#'   date_range = c("2020-03-31", "2020-04-27"),
+#'   orderBys = ga_data_order(-sessions -dayOfWeek)
+#'   )
+#' 
+#' 
+#' }
 #' 
 #' 
 #' @family GA4 functions

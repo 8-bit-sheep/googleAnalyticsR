@@ -110,11 +110,24 @@ ga_data_aggregations <- function(df,
 #'   206670707,
 #'   metrics = "activeUsers",
 #'   dimensions = c("city","unifiedScreenName"),
+#'   metricAggregations = c("TOTAL", "MINIMUM", "MAXIMUM")
 #'   limit = 100,
 #'   realtime = TRUE)
 #' 
 #' # extract meta data from the table
 #' ga_data_aggregations(realtime)
+#' 
+#' # add ordering
+#' a <- ga_data_order(-sessions)
+#' b <- ga_data_order(-dayOfWeek, type = "NUMERIC")
+#' 
+#' ga_data(
+#'   206670707,
+#'   metrics = c("activeUsers","sessions"),
+#'   dimensions = c("date","city","dayOfWeek"),
+#'   date_range = c("2020-03-31", "2020-04-27"),
+#'   orderBys = c(a, b)
+#'   )
 #' }
 ga_data <- function(propertyId,
                     metrics,
@@ -124,6 +137,7 @@ ga_data <- function(propertyId,
                     dimensionDelimiter = "/",
                     metricFilter = NULL,
                     orderBys = NULL,
+                    metricAggregations = NULL,
                     limit = 100,
                     realtime=FALSE) {
   
@@ -131,8 +145,8 @@ ga_data <- function(propertyId,
   dimensionFilter <- as_filterExpression(dimensionFilter)
   metricFilter    <- as_filterExpression(metricFilter)
  
-  # we always get these 3 - COUNT is not available unless pivot?
-  metricAggregations <- c("TOTAL","MAXIMUM","MINIMUM")
+  # # we always get these 3 - COUNT is not available unless pivot?
+  # metricAggregations <- c("TOTAL","MAXIMUM","MINIMUM")
   
   dims <- gaw_dimension(dimensions, delimiter = dimensionDelimiter)
   mets <- gaw_metric(metrics)
@@ -295,6 +309,8 @@ my_bind_cols <- function(x, y){
 #' @importFrom dplyr bind_cols bind_rows across mutate
 parse_aggregations <- function(agg, dim_names, met_names){
   
+  if(is.null(agg)) return(NULL)
+  
   dds <- get_field_values(agg$dimensionValues, name = dim_names)
   mms <- get_field_values(agg$metricValues, name = met_names)  
   
@@ -310,7 +326,7 @@ parse_aggregations <- function(agg, dim_names, met_names){
 parse_rows <- function(o, dim_names, met_names){
 
   quota_messages(o)
-  
+
   dds <- get_field_values(o$rows$dimensionValues, name = dim_names)
   mms <- get_field_values(o$rows$metricValues, name = met_names)
   
@@ -332,7 +348,7 @@ parse_rows <- function(o, dim_names, met_names){
   attr(res, "rowCount") <- o$rowCount
   
   ## remove dateRange column if only one unique value
-  if(!is.null(res$dateRange) &&
+  if(!is.null(res[["dateRange"]]) &&
      all(unique(res$dateRange) == "date_range_0")){
     res$dateRange <- NULL
   }
