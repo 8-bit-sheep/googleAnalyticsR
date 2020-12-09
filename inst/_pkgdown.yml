@@ -95,6 +95,8 @@ reference:
     contents:
       - ga_data
       - ga_data_filter
+      - ga_data_aggregations
+      - ga_data_order
   - title: "Reporting API v4 objects"
     desc: >
       Creating objects for more advanced v4 Reporting API fetches
