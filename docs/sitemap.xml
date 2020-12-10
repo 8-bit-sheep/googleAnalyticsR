@@ -43,6 +43,9 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/OrderBy.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/PivotObject.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/PivotOrderBy.html</loc>
   </url>
   <url>
@@ -185,6 +188,9 @@
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_data_order.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_data_pivot.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_experiment.html</loc>

@@ -28,7 +28,7 @@ test_that("Filter objects", {
   # need to create metric expressions that are floats
   #float_f <- ga_aw_filter("")
   numeric_list_f <- ga_aw_filter("activeUsers", c(1L,3L))
-  no_nulls <- ga_aw_filter("city", TRUE)
+  no_nulls <- ga_aw_filter("city", NULL)
   
   expect_s3_class(string_f, "gar_Filter")
   expect_s3_class(string_f$stringFilter, "gar_StringFilter")

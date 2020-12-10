@@ -683,12 +683,16 @@ complex_filter <- ga_data(
      206670707,
      metrics = c("activeUsers","sessions"),
      dimensions = c("date","city","dayOfWeek"),
-    date_range = c("2020-03-31", "2020-04-06", 
-                   "2020-04-07", "2020-04-14", 
-                   "2020-04-15", "2020-04-22", 
-                   "2020-04-23", "2020-04-30"),
-     dimensionFilter = f3,
-     limit = 100
+     date_range = c("2020-03-31", "2020-04-06", 
+                    "2020-04-07", "2020-04-14", 
+                    "2020-04-15", "2020-04-22", 
+                    "2020-04-23", "2020-04-30"),
+     metricAggregations = c("TOTAL","MINIMUM","MAXIMUM"),
+     orderBys = ga_data_order(-sessions +city),
+     dimensionFilter = ga_data_filter(
+              city==c("Copenhagen","London","Paris","New York") &
+              (dayOfWeek=="5" | dayOfWeek=="6")),
+     limit = -1
 )
 #>ℹ 2020-11-24 16:12:36 > tokensPerDay: Query Cost [ 15 ] / Remaining [ 24847 ]
 #>ℹ 2020-11-24 16:12:36 > tokensPerHour: Query Cost [ 15 ] / Remaining [ 4967 ]

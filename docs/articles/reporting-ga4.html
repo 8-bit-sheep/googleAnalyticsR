@@ -1014,12 +1014,16 @@
      <span class="fl">206670707</span>,
      <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
      <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
-    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-06"</span>,
-                   <span class="st">"2020-04-07"</span>, <span class="st">"2020-04-14"</span>,
-                   <span class="st">"2020-04-15"</span>, <span class="st">"2020-04-22"</span>,
-                   <span class="st">"2020-04-23"</span>, <span class="st">"2020-04-30"</span>),
-     <span class="kw">dimensionFilter</span> <span class="kw">=</span> <span class="no">f3</span>,
-     <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>
+     <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-06"</span>,
+                    <span class="st">"2020-04-07"</span>, <span class="st">"2020-04-14"</span>,
+                    <span class="st">"2020-04-15"</span>, <span class="st">"2020-04-22"</span>,
+                    <span class="st">"2020-04-23"</span>, <span class="st">"2020-04-30"</span>),
+     <span class="kw">metricAggregations</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"TOTAL"</span>,<span class="st">"MINIMUM"</span>,<span class="st">"MAXIMUM"</span>),
+     <span class="kw">orderBys</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span>(-<span class="no">sessions</span> +<span class="no">city</span>),
+     <span class="kw">dimensionFilter</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(
+              <span class="no">city</span><span class="kw">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Copenhagen"</span>,<span class="st">"London"</span>,<span class="st">"Paris"</span>,<span class="st">"New York"</span>) <span class="kw">&amp;</span>
+              (<span class="no">dayOfWeek</span><span class="kw">==</span><span class="st">"5"</span> <span class="kw">|</span> <span class="no">dayOfWeek</span><span class="kw">==</span><span class="st">"6"</span>)),
+     <span class="kw">limit</span> <span class="kw">=</span> -<span class="fl">1</span>
 )
 <span class="co">#&gt;ℹ 2020-11-24 16:12:36 &gt; tokensPerDay: Query Cost [ 15 ] / Remaining [ 24847 ]</span>
 <span class="co">#&gt;ℹ 2020-11-24 16:12:36 &gt; tokensPerHour: Query Cost [ 15 ] / Remaining [ 4967 ]</span>
