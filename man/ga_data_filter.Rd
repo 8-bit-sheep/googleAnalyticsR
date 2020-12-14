@@ -20,7 +20,7 @@ This uses a specific filter DSL syntax to create GA4 filters that can be passed 
 
 The syntax uses operators and the class of the value you are setting (string, numeric or logical) to construct the filter expression object.
 
-Fields including custom fields for your propertyId can be imported if you fetch them via \link{ga_meta("data", propertyId = 12345)} before you construct a filter.  If you do not want filters to be validated, then send them in as strings ("field").
+Fields including custom fields for your propertyId can be imported if you fetch them via \code{ga_meta("data", propertyId = 12345)} before you construct a filter.  If you do not want filters to be validated, then send them in as strings ("field").
 
 The DSL rules are:
 
@@ -43,7 +43,7 @@ The DSL rules are:
 ga_meta("data")
 
 # if you have custom fields, supply your propertyId to ga_meta()
-ga_meta("data", propertyId = 123456)
+ga_meta("data", propertyId = 206670707)
 
 
 ## filter clauses

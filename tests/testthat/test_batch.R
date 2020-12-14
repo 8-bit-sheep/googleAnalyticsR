@@ -21,17 +21,17 @@ source("setup.R")
     skip_on_cran()
     skip_on_travis()
 
-    multi <- google_analytics_3(c(ga_id2, ga_id),
+    multi2 <- google_analytics_3(c(ga_id2, ga_id),
                               start = "2015-07-30", end = "2015-10-01",
                               dimensions=c('medium'),
                               metrics = c('sessions'),
                               sort = "ga:sessions",
                               multi_account_batching = TRUE)
 
-    expect_length(multi, 2)
+    expect_length(multi2, 2)
 
-    expect_s3_class(multi[[1]], "data.frame")
-    expect_s3_class(multi[[2]], "data.frame")
+    expect_s3_class(multi2[[1]], "data.frame")
+    expect_s3_class(multi2[[2]], "data.frame")
 
   })
   

@@ -48,7 +48,7 @@ A data.frame tibble, including attributes metadata, metricAggregations and rowCo
 Fetches Google Analytics from the Data API for Google Analytics 4 (Previously App+Web)
 }
 \details{
-
+This is the main function to call the Google Analytics 4 Data API.
 }
 \examples{
 
