@@ -52,20 +52,20 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li>
   <a href="../articles/setup.html">
-    <span class="fa fa-wrench"></span>
+    <span class="fas fa-wrench"></span>
      
     Setup
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-table"></span>
+    <span class="fas fa-table"></span>
      
     Reporting APIs
      
@@ -74,42 +74,42 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/reporting-ga4.html">
-        <span class="fa fa-bar-chart"></span>
+        <span class="fas fa-bar-chart"></span>
          
         GA4 Data API
       </a>
     </li>
     <li>
       <a href="../articles/v4.html">
-        <span class="fa fa-cogs"></span>
+        <span class="fas fa-cogs"></span>
          
         v4 API
       </a>
     </li>
     <li>
       <a href="../articles/user-activity.html">
-        <span class="fa fa-user"></span>
+        <span class="fas fa-user"></span>
          
         User Activity API
       </a>
     </li>
     <li>
       <a href="../articles/v3.html">
-        <span class="fa fa-cog"></span>
+        <span class="fas fa-cog"></span>
          
         v3 API
       </a>
     </li>
     <li>
       <a href="../articles/big-query.html">
-        <span class="fa fa-search"></span>
+        <span class="fas fa-search"></span>
          
         BigQuery
       </a>
     </li>
     <li>
       <a href="../articles/ganalytics.html">
-        <span class="fa fa-bullseye"></span>
+        <span class="fas fa-bullseye"></span>
          
         ganalytics
       </a>
@@ -118,14 +118,14 @@
 </li>
 <li>
   <a href="../articles/management.html">
-    <span class="fa fa-briefcase"></span>
+    <span class="fas fa-briefcase"></span>
      
     Management API
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-file"></span>
+    <span class="fas fa-file"></span>
      
     Publishing
      
@@ -134,14 +134,14 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/shiny.html">
-        <span class="fa fa-cloud-upload"></span>
+        <span class="fas fa-cloud-upload"></span>
          
         Shiny
       </a>
     </li>
     <li>
       <a href="../articles/rmarkdown.html">
-        <span class="fa fa-pencil-square"></span>
+        <span class="fas fa-pencil-square"></span>
          
         RMarkdown
       </a>
@@ -150,14 +150,14 @@
 </li>
 <li>
   <a href="../articles/models.html">
-    <span class="fa fa-calculator"></span>
+    <span class="fas fa-calculator"></span>
      
     Models
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Help
      
@@ -166,28 +166,28 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../reference/index.html">
-        <span class="fa fa-book-reader"></span>
+        <span class="fas fa-book-reader"></span>
          
         Function Reference
       </a>
     </li>
     <li>
       <a href="../news/index.html">
-        <span class="fa fa-newspaper"></span>
+        <span class="fas fa-newspaper"></span>
          
         News
       </a>
     </li>
     <li>
       <a href="../articles/faq.html">
-        <span class="fa fa-glasses"></span>
+        <span class="fas fa-glasses"></span>
          
         FAQs
       </a>
     </li>
     <li>
       <a href="../articles/practical-tips.html">
-        <span class="fa fa-bicycle"></span>
+        <span class="fas fa-bicycle"></span>
          
         Practical tips
       </a>
@@ -198,7 +198,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -212,7 +212,7 @@
 
       
 
-      </header><script src="management_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Management API</h1>
@@ -817,7 +817,7 @@
 <span class="no">goal_one</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_goal.html">ga_goal</a></span>(<span class="no">source_account</span>$<span class="no">accountId</span>, <span class="no">source_account</span>$<span class="no">webPropertyId</span>, <span class="no">source_account</span>$<span class="no">viewId</span>,
                     <span class="kw">goalId</span> <span class="kw">=</span> <span class="fl">1</span>) <span class="kw">%&gt;%</span>
   <span class="co"># Strip out instance-specific metadata (property, profile, view data and original creation dates)</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/rlist/man/list.remove.html">list.remove</a></span>( <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"accountId"</span>, <span class="st">"webPropertyId"</span>, <span class="st">"selfLink"</span>, <span class="st">"internalWebPropertyId"</span>, <span class="st">"profileId"</span>, <span class="st">"parentLink"</span>, <span class="st">"created"</span>, <span class="st">"updated"</span>))</pre></body></html></div>
+  <span class="fu">list.remove</span>( <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"accountId"</span>, <span class="st">"webPropertyId"</span>, <span class="st">"selfLink"</span>, <span class="st">"internalWebPropertyId"</span>, <span class="st">"profileId"</span>, <span class="st">"parentLink"</span>, <span class="st">"created"</span>, <span class="st">"updated"</span>))</pre></body></html></div>
 <pre><code>## Error in list.remove(., c("accountId", "webPropertyId", "selfLink", "internalWebPropertyId", : could not find function "list.remove"</code></pre>
 <div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="no">goal_one</span></pre></body></html></div>
 <pre><code>## Error in eval(expr, envir, enclos): object 'goal_one' not found</code></pre>
@@ -840,7 +840,7 @@
 <div class="sourceCode" id="cb46"><html><body><pre class="r"><span class="co"># Takes a goal ID, source account information &amp; dest account information, copies goal over</span>
 <span class="no">copy_goal</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">goal_id</span>, <span class="no">source_df</span>, <span class="no">dest_df</span>) {
   <span class="no">source_goal</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_goal.html">ga_goal</a></span>(<span class="no">source_df</span>$<span class="no">accountId</span>, <span class="no">source_df</span>$<span class="no">webPropertyId</span>, <span class="no">source_df</span>$<span class="no">viewId</span>, <span class="no">goal_id</span>) <span class="kw">%&gt;%</span>
-    <span class="fu"><a href="https://rdrr.io/pkg/rlist/man/list.remove.html">list.remove</a></span>( <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"accountId"</span>, <span class="st">"webPropertyId"</span>, <span class="st">"selfLink"</span>, <span class="st">"internalWebPropertyId"</span>, <span class="st">"profileId"</span>, <span class="st">"parentLink"</span>, <span class="st">"created"</span>, <span class="st">"updated"</span>))
+    <span class="fu">list.remove</span>( <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"accountId"</span>, <span class="st">"webPropertyId"</span>, <span class="st">"selfLink"</span>, <span class="st">"internalWebPropertyId"</span>, <span class="st">"profileId"</span>, <span class="st">"parentLink"</span>, <span class="st">"created"</span>, <span class="st">"updated"</span>))
   <span class="fu"><a href="../reference/ga_goal_add.html">ga_goal_add</a></span>(<span class="no">source_goal</span>, <span class="no">dest_df</span>$<span class="no">accountId</span>, <span class="no">dest_df</span>$<span class="no">webPropertyId</span>, <span class="no">dest_df</span>$<span class="no">viewId</span>)
 }</pre></body></html></div>
 <p>Having our goal-copying function defined, it is a simple step to apply it across all goal IDs from the source view.</p>

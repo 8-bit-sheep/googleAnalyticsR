@@ -52,20 +52,20 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li>
   <a href="../articles/setup.html">
-    <span class="fa fa-wrench"></span>
+    <span class="fas fa-wrench"></span>
      
     Setup
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-table"></span>
+    <span class="fas fa-table"></span>
      
     Reporting APIs
      
@@ -74,42 +74,42 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/reporting-ga4.html">
-        <span class="fa fa-bar-chart"></span>
+        <span class="fas fa-bar-chart"></span>
          
         GA4 Data API
       </a>
     </li>
     <li>
       <a href="../articles/v4.html">
-        <span class="fa fa-cogs"></span>
+        <span class="fas fa-cogs"></span>
          
         v4 API
       </a>
     </li>
     <li>
       <a href="../articles/user-activity.html">
-        <span class="fa fa-user"></span>
+        <span class="fas fa-user"></span>
          
         User Activity API
       </a>
     </li>
     <li>
       <a href="../articles/v3.html">
-        <span class="fa fa-cog"></span>
+        <span class="fas fa-cog"></span>
          
         v3 API
       </a>
     </li>
     <li>
       <a href="../articles/big-query.html">
-        <span class="fa fa-search"></span>
+        <span class="fas fa-search"></span>
          
         BigQuery
       </a>
     </li>
     <li>
       <a href="../articles/ganalytics.html">
-        <span class="fa fa-bullseye"></span>
+        <span class="fas fa-bullseye"></span>
          
         ganalytics
       </a>
@@ -118,14 +118,14 @@
 </li>
 <li>
   <a href="../articles/management.html">
-    <span class="fa fa-briefcase"></span>
+    <span class="fas fa-briefcase"></span>
      
     Management API
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-file"></span>
+    <span class="fas fa-file"></span>
      
     Publishing
      
@@ -134,14 +134,14 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/shiny.html">
-        <span class="fa fa-cloud-upload"></span>
+        <span class="fas fa-cloud-upload"></span>
          
         Shiny
       </a>
     </li>
     <li>
       <a href="../articles/rmarkdown.html">
-        <span class="fa fa-pencil-square"></span>
+        <span class="fas fa-pencil-square"></span>
          
         RMarkdown
       </a>
@@ -150,14 +150,14 @@
 </li>
 <li>
   <a href="../articles/models.html">
-    <span class="fa fa-calculator"></span>
+    <span class="fas fa-calculator"></span>
      
     Models
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Help
      
@@ -166,28 +166,28 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../reference/index.html">
-        <span class="fa fa-book-reader"></span>
+        <span class="fas fa-book-reader"></span>
          
         Function Reference
       </a>
     </li>
     <li>
       <a href="../news/index.html">
-        <span class="fa fa-newspaper"></span>
+        <span class="fas fa-newspaper"></span>
          
         News
       </a>
     </li>
     <li>
       <a href="../articles/faq.html">
-        <span class="fa fa-glasses"></span>
+        <span class="fas fa-glasses"></span>
          
         FAQs
       </a>
     </li>
     <li>
       <a href="../articles/practical-tips.html">
-        <span class="fa fa-bicycle"></span>
+        <span class="fas fa-bicycle"></span>
          
         Practical tips
       </a>
@@ -198,7 +198,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -212,7 +212,7 @@
 
       
 
-      </header><script src="reporting-ga4_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Data API for Google Analytics 4 (App+Web)</h1>
@@ -418,7 +418,7 @@
 <span class="co"># 5 2020-04-16 Charlottesville 5         date_range_2           1        1</span>
 <span class="co"># 6 2020-04-25 Fulshear        7         date_range_3           1        1</span>
 <span class="co"># … with 7,938 more rows</span></pre></body></html></div>
-<p>You can send in dates as strings in YYYY-MM-DD format; as R Dates (e.g. <code><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date()</a></code>) or via the API keywords “today”, “yesterday”, or “NdaysAgo”)</p>
+<p>You can send in dates as strings in YYYY-MM-DD format; as R Dates (e.g. <code><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date()</a></code>) or via the API keywords “today”, “yesterday”, or “NdaysAgo”)</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co"># use R to make useful date vectors</span>
 <span class="no">dates</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>(), <span class="kw">by</span> <span class="kw">=</span> -<span class="fl">7</span>, <span class="kw">length.out</span> <span class="kw">=</span> <span class="fl">8</span>))
 <span class="no">dates</span>
@@ -454,12 +454,12 @@
 <ul>
 <li>A single filter, or multiple filters within a filter expression can be passed in to <code><a href="../reference/ga_data.html">ga_data()</a></code>
 </li>
-<li>The single filter syntax is (field) (operator) (value) e.g. <code>city=="Copenhagen"</code>
+<li>The single filter syntax is (field) (operator) (value) e.g. <code>city=="Copenhagen"</code>
 </li>
 <li>(field) is a dimension or metric for your web property, which you can review via <code><a href="../reference/ga_meta.html">ga_meta("data")</a></code>
 </li>
 <li>(field) can be quoted (<code>"city"</code>, <code>"session"</code>), or unquoted ( <code>city</code> or <code>session</code>) if you want to use validation.</li>
-<li>(field) validation for unquoted fields is available if using default metadata (e.g. <code>city</code> or <code>session</code>), or you have fetched your custom fields via <code><a href="../reference/ga_meta.html">ga_meta("data", propertyId=123456)</a></code>
+<li>(field) validation for unquoted fields is available if using default metadata (e.g. <code>city</code> or <code>session</code>), or you have fetched your custom fields via <code><a href="../reference/ga_meta.html">ga_meta("data", propertyId=123456)</a></code>
 </li>
 <li>(operator) can be one of <code>==, &gt;, &gt;=, &lt;, &lt;=</code> for metrics</li>
 <li>(operator) can be one of <code>==, %begins%, %ends%, %contains%, %contains%, %regex%, %regex_partial%</code> for dimensions</li>
@@ -486,19 +486,19 @@
 <p>Values are checked in the filter object based on the R class of the object you are passing in as its value:</p>
 <ul>
 <li>
-<code>character</code>: stringFilter - e.g. <code>"Copenhagen"</code>
+<code>character</code>: stringFilter - e.g. <code>"Copenhagen"</code>
 </li>
 <li>
-<code>character vector</code>: inListFilter e.g. <code><a href="https://rdrr.io/r/base/c.html">c("Copenhagen","London","New York")</a></code>
+<code>character vector</code>: inListFilter e.g. <code><a href="https://rdrr.io/r/base/c.html">c("Copenhagen","London","New York")</a></code>
 </li>
 <li>
-<code>numeric</code>: NumericFilter e.g. <code>5</code>
+<code>numeric</code>: NumericFilter e.g. <code>5</code>
 </li>
 <li>
-<code>numeric 2-length vector</code>: BetweenFilter e.g. <code><a href="https://rdrr.io/r/base/c.html">c(5, 10)</a></code>
+<code>numeric 2-length vector</code>: BetweenFilter e.g. <code><a href="https://rdrr.io/r/base/c.html">c(5, 10)</a></code>
 </li>
 <li>
-<code>NULL</code>: Will filter for NULL e.g. <code>city==NULL</code> - often used with <code>!</code> (not NULL)</li>
+<code>NULL</code>: Will filter for NULL e.g. <code>city==NULL</code> - often used with <code>!</code> (not NULL)</li>
 </ul>
 <p>e.g. if you pass in a character of length one (<code>"Copenhagen"</code>) then it will assume to be a class <code>StringFilter</code> (all dimensions that match “Copenhagen”) if you pass in a character of length greater than one <code><a href="https://rdrr.io/r/base/c.html">c("Copenhagen","London","New York")</a></code>, then it assume to be a class <code>InListFilter</code> (dimensions must match one in the list)</p>
 </div>

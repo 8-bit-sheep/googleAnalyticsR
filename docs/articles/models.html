@@ -52,20 +52,20 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li>
   <a href="../articles/setup.html">
-    <span class="fa fa-wrench"></span>
+    <span class="fas fa-wrench"></span>
      
     Setup
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-table"></span>
+    <span class="fas fa-table"></span>
      
     Reporting APIs
      
@@ -74,42 +74,42 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/reporting-ga4.html">
-        <span class="fa fa-bar-chart"></span>
+        <span class="fas fa-bar-chart"></span>
          
         GA4 Data API
       </a>
     </li>
     <li>
       <a href="../articles/v4.html">
-        <span class="fa fa-cogs"></span>
+        <span class="fas fa-cogs"></span>
          
         v4 API
       </a>
     </li>
     <li>
       <a href="../articles/user-activity.html">
-        <span class="fa fa-user"></span>
+        <span class="fas fa-user"></span>
          
         User Activity API
       </a>
     </li>
     <li>
       <a href="../articles/v3.html">
-        <span class="fa fa-cog"></span>
+        <span class="fas fa-cog"></span>
          
         v3 API
       </a>
     </li>
     <li>
       <a href="../articles/big-query.html">
-        <span class="fa fa-search"></span>
+        <span class="fas fa-search"></span>
          
         BigQuery
       </a>
     </li>
     <li>
       <a href="../articles/ganalytics.html">
-        <span class="fa fa-bullseye"></span>
+        <span class="fas fa-bullseye"></span>
          
         ganalytics
       </a>
@@ -118,14 +118,14 @@
 </li>
 <li>
   <a href="../articles/management.html">
-    <span class="fa fa-briefcase"></span>
+    <span class="fas fa-briefcase"></span>
      
     Management API
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-file"></span>
+    <span class="fas fa-file"></span>
      
     Publishing
      
@@ -134,14 +134,14 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/shiny.html">
-        <span class="fa fa-cloud-upload"></span>
+        <span class="fas fa-cloud-upload"></span>
          
         Shiny
       </a>
     </li>
     <li>
       <a href="../articles/rmarkdown.html">
-        <span class="fa fa-pencil-square"></span>
+        <span class="fas fa-pencil-square"></span>
          
         RMarkdown
       </a>
@@ -150,14 +150,14 @@
 </li>
 <li>
   <a href="../articles/models.html">
-    <span class="fa fa-calculator"></span>
+    <span class="fas fa-calculator"></span>
      
     Models
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Help
      
@@ -166,28 +166,28 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../reference/index.html">
-        <span class="fa fa-book-reader"></span>
+        <span class="fas fa-book-reader"></span>
          
         Function Reference
       </a>
     </li>
     <li>
       <a href="../news/index.html">
-        <span class="fa fa-newspaper"></span>
+        <span class="fas fa-newspaper"></span>
          
         News
       </a>
     </li>
     <li>
       <a href="../articles/faq.html">
-        <span class="fa fa-glasses"></span>
+        <span class="fas fa-glasses"></span>
          
         FAQs
       </a>
     </li>
     <li>
       <a href="../articles/practical-tips.html">
-        <span class="fa fa-bicycle"></span>
+        <span class="fas fa-bicycle"></span>
          
         Practical tips
       </a>
@@ -198,7 +198,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -212,7 +212,7 @@
 
       
 
-      </header><script src="models_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Statistical models and visualisations with Google Analytics data</h1>
@@ -261,13 +261,13 @@ Still playing with embedding interactive plots in tweets. These are all made by 
 <span class="co"># apply model to your data</span>
 <span class="no">d1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span>(<span class="no">my_viewid</span>, <span class="kw">model</span> <span class="kw">=</span> <span class="no">decomp_ga</span>)</pre></body></html></div>
 <div class="figure">
-<img src="figure/unnamed-chunk-1-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-1</p>
+<img src="figure/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1"><p class="caption">plot of chunk unnamed-chunk-1</p>
 </div>
 <p>This model allows you to alter the date range of the data fetched:</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># change default date range to 20 days ago to yesterday</span>
 <span class="no">d2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span>(<span class="no">my_viewid</span>, <span class="kw">model</span> <span class="kw">=</span> <span class="no">decomp_ga</span>, <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"20daysAgo"</span>,<span class="st">"yesterday"</span>))</pre></body></html></div>
 <div class="figure">
-<img src="figure/unnamed-chunk-2-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-2</p>
+<img src="figure/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"><p class="caption">plot of chunk unnamed-chunk-2</p>
 </div>
 <p>You can examine the properties of the model and the arguments it was sent via its print method:</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">decomp_ga</span></pre></body></html></div>
@@ -439,7 +439,7 @@ Still playing with embedding interactive plots in tweets. These are all made by 
 <p>It would then be used via:</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">result</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span>(<span class="fl">81416156</span>, <span class="no">decomp_ga_advanced</span>, <span class="kw">metric</span><span class="kw">=</span><span class="st">"users"</span>, <span class="kw">frequency</span> <span class="kw">=</span> <span class="fl">30</span>)</pre></body></html></div>
 <div class="figure">
-<img src="figure/unnamed-chunk-6-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-6</p>
+<img src="figure/unnamed-chunk-6-1.png" alt="plot of chunk unnamed-chunk-6"><p class="caption">plot of chunk unnamed-chunk-6</p>
 </div>
 <div id="working-with-the-model-object" class="section level3">
 <h3 class="hasAnchor">
@@ -546,7 +546,7 @@ Still playing with embedding interactive plots in tweets. These are all made by 
   <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span>(<span class="no">response</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">pivoted</span>))
 
   <span class="co">## create a time-series zoo object</span>
-  <span class="no">web_data_xts</span> <span class="kw">&lt;-</span> <span class="kw pkg">xts</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html">xts</a></span>(<span class="no">pivoted</span>[-<span class="fl">1</span>], <span class="kw">order.by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="no">pivoted</span>$<span class="no">date</span>), <span class="kw">frequency</span> <span class="kw">=</span> <span class="fl">7</span>)
+  <span class="no">web_data_xts</span> <span class="kw">&lt;-</span> <span class="kw pkg">xts</span><span class="kw ns">::</span><span class="fu">xts</span>(<span class="no">pivoted</span>[-<span class="fl">1</span>], <span class="kw">order.by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="no">pivoted</span>$<span class="no">date</span>), <span class="kw">frequency</span> <span class="kw">=</span> <span class="fl">7</span>)
 
   <span class="no">pre.period</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="no">df</span>$<span class="no">date</span>), <span class="no">event_date</span>))
   <span class="no">post.period</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">event_date</span> + <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">df</span>$<span class="no">date</span>)))
@@ -561,7 +561,7 @@ Still playing with embedding interactive plots in tweets. These are all made by 
   <span class="co"># remove any NAs</span>
   <span class="no">model_data</span>[<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">model_data</span>)] <span class="kw">&lt;-</span> <span class="fl">0</span>
 
-  <span class="kw pkg">CausalImpact</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/CausalImpact/man/CausalImpact.html">CausalImpact</a></span>(<span class="no">model_data</span>,  <span class="no">pre.period</span>, <span class="no">post.period</span>)
+  <span class="kw pkg">CausalImpact</span><span class="kw ns">::</span><span class="fu">CausalImpact</span>(<span class="no">model_data</span>,  <span class="no">pre.period</span>, <span class="no">post.period</span>)
 
 }</pre></body></html></div>
 <p>Finally the CausalImpact model is sent into Dygraphs for interactive visualisation. The event date is the same as the one sent to the modelling step, and used to indicate it on the plot:</p>
@@ -570,7 +570,7 @@ Still playing with embedding interactive plots in tweets. These are all made by 
   <span class="co">## the data for the plot is in here</span>
   <span class="no">ci</span> <span class="kw">&lt;-</span> <span class="no">impact</span>$<span class="no">series</span>
 
-  <span class="no">ci</span> <span class="kw">&lt;-</span> <span class="kw pkg">xts</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html">xts</a></span>(<span class="no">ci</span>)
+  <span class="no">ci</span> <span class="kw">&lt;-</span> <span class="kw pkg">xts</span><span class="kw ns">::</span><span class="fu">xts</span>(<span class="no">ci</span>)
 
   <span class="co">## the dygraph output</span>
   <span class="fu">dygraph</span>(<span class="kw">data</span><span class="kw">=</span><span class="no">ci</span>[,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'response'</span>,
@@ -590,8 +590,8 @@ Still playing with embedding interactive plots in tweets. These are all made by 
                           <span class="kw">output_f</span> <span class="kw">=</span> <span class="no">dygraph_plot</span>,
                           <span class="kw">required_packages</span> <span class="kw">=</span> <span class="no">req_packs</span>,
                           <span class="kw">description</span> <span class="kw">=</span> <span class="st">"Causal Impact on channelGrouping data"</span>,
-                          <span class="kw">outputShiny</span> <span class="kw">=</span> <span class="kw pkg">dygraphs</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/dygraphs/man/dygraph-shiny.html">dygraphOutput</a></span>,
-                          <span class="kw">renderShiny</span> <span class="kw">=</span> <span class="kw pkg">dygraphs</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/dygraphs/man/dygraph-shiny.html">renderDygraph</a></span>)
+                          <span class="kw">outputShiny</span> <span class="kw">=</span> <span class="kw pkg">dygraphs</span><span class="kw ns">::</span><span class="no">dygraphOutput</span>,
+                          <span class="kw">renderShiny</span> <span class="kw">=</span> <span class="kw pkg">dygraphs</span><span class="kw ns">::</span><span class="no">renderDygraph</span>)
 <span class="co"># print out model details</span>
 <span class="no">ci_model</span></pre></body></html></div>
 <pre><code>## ==ga_model object==
@@ -615,7 +615,7 @@ Still playing with embedding interactive plots in tweets. These are all made by 
 <span class="co"># print to show the plot object</span>
 <span class="no">ci</span>$<span class="no">plot</span></pre></body></html></div>
 <div class="figure">
-<img src="figure/unnamed-chunk-16-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-16</p>
+<img src="figure/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16"><p class="caption">plot of chunk unnamed-chunk-16</p>
 </div>
 <p>That can display interactively in a tweet:</p>
 <blockquote class="twitter-tweet">

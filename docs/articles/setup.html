@@ -52,20 +52,20 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li>
   <a href="../articles/setup.html">
-    <span class="fa fa-wrench"></span>
+    <span class="fas fa-wrench"></span>
      
     Setup
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-table"></span>
+    <span class="fas fa-table"></span>
      
     Reporting APIs
      
@@ -74,42 +74,42 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/reporting-ga4.html">
-        <span class="fa fa-bar-chart"></span>
+        <span class="fas fa-bar-chart"></span>
          
         GA4 Data API
       </a>
     </li>
     <li>
       <a href="../articles/v4.html">
-        <span class="fa fa-cogs"></span>
+        <span class="fas fa-cogs"></span>
          
         v4 API
       </a>
     </li>
     <li>
       <a href="../articles/user-activity.html">
-        <span class="fa fa-user"></span>
+        <span class="fas fa-user"></span>
          
         User Activity API
       </a>
     </li>
     <li>
       <a href="../articles/v3.html">
-        <span class="fa fa-cog"></span>
+        <span class="fas fa-cog"></span>
          
         v3 API
       </a>
     </li>
     <li>
       <a href="../articles/big-query.html">
-        <span class="fa fa-search"></span>
+        <span class="fas fa-search"></span>
          
         BigQuery
       </a>
     </li>
     <li>
       <a href="../articles/ganalytics.html">
-        <span class="fa fa-bullseye"></span>
+        <span class="fas fa-bullseye"></span>
          
         ganalytics
       </a>
@@ -118,14 +118,14 @@
 </li>
 <li>
   <a href="../articles/management.html">
-    <span class="fa fa-briefcase"></span>
+    <span class="fas fa-briefcase"></span>
      
     Management API
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-file"></span>
+    <span class="fas fa-file"></span>
      
     Publishing
      
@@ -134,14 +134,14 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/shiny.html">
-        <span class="fa fa-cloud-upload"></span>
+        <span class="fas fa-cloud-upload"></span>
          
         Shiny
       </a>
     </li>
     <li>
       <a href="../articles/rmarkdown.html">
-        <span class="fa fa-pencil-square"></span>
+        <span class="fas fa-pencil-square"></span>
          
         RMarkdown
       </a>
@@ -150,14 +150,14 @@
 </li>
 <li>
   <a href="../articles/models.html">
-    <span class="fa fa-calculator"></span>
+    <span class="fas fa-calculator"></span>
      
     Models
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Help
      
@@ -166,28 +166,28 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../reference/index.html">
-        <span class="fa fa-book-reader"></span>
+        <span class="fas fa-book-reader"></span>
          
         Function Reference
       </a>
     </li>
     <li>
       <a href="../news/index.html">
-        <span class="fa fa-newspaper"></span>
+        <span class="fas fa-newspaper"></span>
          
         News
       </a>
     </li>
     <li>
       <a href="../articles/faq.html">
-        <span class="fa fa-glasses"></span>
+        <span class="fas fa-glasses"></span>
          
         FAQs
       </a>
     </li>
     <li>
       <a href="../articles/practical-tips.html">
-        <span class="fa fa-bicycle"></span>
+        <span class="fas fa-bicycle"></span>
          
         Practical tips
       </a>
@@ -198,7 +198,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -212,7 +212,7 @@
 
       
 
-      </header><script src="setup_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Setting up Google Analytics API downloads to R</h1>
@@ -321,10 +321,10 @@
 <p>Use <code><a href="../reference/ga_auth_setup.html">ga_auth_setup()</a></code> to configure your own GCP project and set up auto-authentication options.</p>
 <p>Recommended long term defaults are:</p>
 <ol style="list-style-type: decimal">
-<li>Create your own GCP project, download the client JSON and save to a global location, which you point to via a environment argument <code>GAR_CLIENT_JSON</code> in an <code>.Renviron</code> file e.g. <code>GAR_CLIENT_JSON=~/dev/auth/client.json</code>
+<li>Create your own GCP project, download the client JSON and save to a global location, which you point to via a environment argument <code>GAR_CLIENT_JSON</code> in an <code>.Renviron</code> file e.g. <code>GAR_CLIENT_JSON=~/dev/auth/client.json</code>
 </li>
 <li>Authenticate with <code><a href="../reference/ga_auth.html">ga_auth(email="your@email.com")</a></code> to create an authentication token cache, and repeat the <code><a href="../reference/ga_auth.html">ga_auth(email="your@email.com")</a></code> call to default to that email in future API calls</li>
-<li>Set an environment argument <code>GARGLE_EMAIL</code> in the same <code>.Renviron</code> file to your email to auto-authenticate on package load e.g. <code>GARGLE_EMAIL=your@email.com</code>
+<li>Set an environment argument <code>GARGLE_EMAIL</code> in the same <code>.Renviron</code> file to your email to auto-authenticate on package load e.g. <code>GARGLE_EMAIL=your@email.com</code>
 </li>
 </ol>
 </div>
@@ -431,7 +431,7 @@ GAR_CLIENT_JSON=~/dev/auth/gcp_client.json</code></pre>
             scopes = c("https://www.googleapis.com/auth/analytics",
                        "https://www.googleapis.com/auth/webmasters"))</pre></body></html></div>
 <blockquote>
-<p>Note: With either the default or your own GCP projects using the <code><a href="../reference/ga_auth.html">ga_auth()</a></code> function, you can specify the email you will use by passing that to the <code><a href="../reference/ga_auth.html">ga_auth()</a></code> function e.g. <code>ga_auth(email="my@email.com)</code>. This will skip the interactive menu choice for authentication. This can be useful when authenticating within an Rmarkdown document in which case it is recommended to specify your email (an Rmarkdown document can change the working directory during knitting).</p>
+<p>Note: With either the default or your own GCP projects using the <code><a href="../reference/ga_auth.html">ga_auth()</a></code> function, you can specify the email you will use by passing that to the <code><a href="../reference/ga_auth.html">ga_auth()</a></code> function e.g. <code>ga_auth(email="my@email.com)</code>. This will skip the interactive menu choice for authentication. This can be useful when authenticating within an Rmarkdown document in which case it is recommended to specify your email (an Rmarkdown document can change the working directory during knitting).</p>
 </blockquote>
 </div>
 <div id="server-mode-google-cloud-service-account" class="section level3">
@@ -457,7 +457,7 @@ GAR_CLIENT_JSON=~/dev/auth/gcp_client.json</code></pre>
 </li>
 <li>The service account does not need any GCP account permissions (we do that in next step when we add to GA)</li>
 <li>After you can see your service account in the list, create a JSON key for that service account and download it somewhere safe</li>
-<li>Copy the service email e.g. <code>ga-access@your-project.iam.gserviceaccount.com</code>
+<li>Copy the service email e.g. <code>ga-access@your-project.iam.gserviceaccount.com</code>
 </li>
 <li>Login to Google Analytics and add the email to your account at the level of permissions you want. If you want to upload data or update filters etc. then it needs at least edit permissions, if it just needs to read data then Viewer access is fine.</li>
 <li>Make sure the GCP project the service key is for has both the Analytics API and the Analytics Reporting API access enabled. You can reach this via the Google API &amp; Services dashboard URL: <code>https://console.developers.google.com/apis/dashboard</code>
