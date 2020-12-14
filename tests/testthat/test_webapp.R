@@ -2,7 +2,8 @@ context("App + Web Tests")
 
 test_that("Basic fetch", {
   skip_on_cran()
-
+  skip_on_travis()
+  
   df <- ga_data(
     206670707,
     metrics = "activeUsers",
@@ -50,6 +51,8 @@ test_that("Filter objects", {
 
 test_that("Filter fetch types", {
   skip_on_cran()
+  skip_on_travis()
+  
   test_filter <- function(dim_filter = NULL,
                           met_filter = NULL){
     ga_data(

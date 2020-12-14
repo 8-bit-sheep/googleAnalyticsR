@@ -2,55 +2,6 @@ version_aw <- function(){
   "v1alpha"
 }
 
-#' Extract metric aggregations from a \link{ga_data} result
-#' 
-#' Metric aggregations are available in each \link{ga_data} result.  This function lets you easily access the data.frames
-#' 
-#' @param df A data.frame result from \link{ga_data}
-#' @param type totals, maximums, minimums, counts (if available) or all
-#' 
-#' @export
-#' @examples 
-#' 
-#' \dontrun{
-#' #' # send up to 4 date ranges
-#' multi_date <- ga_data(
-#'   206670707,
-#'   metrics = c("activeUsers","sessions"),
-#'   dimensions = c("date","city","dayOfWeek"),
-#'   date_range = c("2020-03-31", "2020-04-27", "2020-04-30", "2020-05-27"),
-#'   dimensionFilter = ga_data_filter("city"=="Copenhagen"),
-#'   limit = 100
-#'   )
-#'
-#' # metric aggregations for each date range
-#' ga_data_aggregations(multi_date, type = "all")
-#' 
-#' # specify type
-#' ga_data_aggregations(multi_date, type = "maximums")
-#' 
-#' }
-ga_data_aggregations <- function(df, 
-                                 type = c("all","totals",
-                                          "maximums","minimums",
-                                          "count")){
-  type <- match.arg(type)
-  if(is.null(attr(df, "metricAggregations"))){
-    stop("No aggregations found.  Is the data.frame from ga_data()?", 
-         call. = FALSE)
-  }
-  
-  ma <- attr(df, "metricAggregations")
-  
-  if(type == "all"){
-    return(ma)
-  }
-  
-  ma[[type]]
-  
-}
-
-
 #' Google Analytics Data for GA4 (App+Web)
 #'
 #' Fetches Google Analytics from the Data API for Google Analytics 4 (Previously App+Web)
@@ -148,8 +99,9 @@ ga_data <- function(propertyId,
   metricFilter    <- as_filterExpression(metricFilter)
  
   # # we always get these 3 - COUNT is not available unless pivot?
-  assert_that_ifnn(all(metricAggregations %in% c("TOTAL","MAXIMUM","MINIMUM")))
-  
+  if(!is.null(metricAggregations)){
+    assert_that(all(metricAggregations %in% c("TOTAL","MAXIMUM","MINIMUM")))
+  }
   dims <- gaw_dimension(dimensions, delimiter = dimensionDelimiter)
   mets <- gaw_metric(metrics)
   
@@ -228,21 +180,6 @@ ga_aw_report <- function(requestObj){
 }
 
 
-#' ga_batch_report <- function(requestObj){
-#'   
-#'   url <- sprintf("https://analyticsdata.googleapis.com/%s:batchRunReports",
-#'                  version_aw())
-#'   
-#'   # analyticsdata.batchRunReports
-#'   f <- gar_api_generator(url, "POST", 
-#'                          data_parse_function = parse_batchrunreports)
-#'   
-#'   stopifnot(inherits(requestObj, "gar_BatchRunReportsRequest"))
-#'   o <- f(the_body = requestObj)
-#'   
-#'   o
-#' }
-
 parse_realtime <- function(x){
   if(no_rows(x)) return(data.frame())
   
@@ -253,6 +190,7 @@ parse_realtime <- function(x){
   
 }
 
+#' @noRd
 parse_runreport <- function(o){
 
   if(no_rows(o)) return(data.frame())
@@ -262,18 +200,6 @@ parse_runreport <- function(o){
   
   parse_rows(o, dim_names, met_names)
 }
-
-# parse_batchrunreports <- function(x){
-# 
-#   o <- x$reports
-#   
-#   if(no_rows(o)) return(data.frame())
-#   
-#   dim_names <- o$dimensionHeaders[[1]]$name
-#   met_names <- o$metricHeaders[[1]]$name
-#   
-#   parse_batch_rows(o, dim_names, met_names)
-# }
 
 no_rows <- function(o){
   if(is.null(o$rows)){
@@ -358,45 +284,50 @@ parse_rows <- function(o, dim_names, met_names){
   
 }
 
-
-
-#' parse_batch_rows <- function(o, dim_names, met_names){
-#'   quota_messages(o)
-#'   
-#'   the_data <- lapply(o$rows, function(x){
-#'     dds <- get_value_cols(x, type = "dimensionValues")
-#'     mms <- get_value_cols(x, type = "metricValues")
-#'     dds <- setNames(dds, dim_names)
-#'     mms <- setNames(mms, met_names)
-#'     
-#'     # bind_cols returns 0rows if first df has 0
-#'     if(nrow(dds) == 0){
-#'       o <- mms
-#'     } else {
-#'       o <- bind_cols(dds, mms)
-#'     }
-#'     
-#'     o
-#'     
-#'   })
-#'   
-#'   res <- bind_cols(the_data)
-#'   
-#'   #type changes
-#'   res <- row_types(res, met_names = met_names)
+#' Extract metric aggregations from a \link{ga_data} result
 #' 
-#'   attr(res, "metadata") <- o$metadata
-#'   
-#'   res
+#' Metric aggregations are available in each \link{ga_data} result.  This function lets you easily access the data.frames
+#' 
+#' @param df A data.frame result from \link{ga_data}
+#' @param type totals, maximums, minimums, counts (if available) or all
+#' 
+#' @export
+#' @examples 
+#' 
+#' \dontrun{
+#' #' # send up to 4 date ranges
+#' multi_date <- ga_data(
+#'   206670707,
+#'   metrics = c("activeUsers","sessions"),
+#'   dimensions = c("date","city","dayOfWeek"),
+#'   date_range = c("2020-03-31", "2020-04-27", "2020-04-30", "2020-05-27"),
+#'   dimensionFilter = ga_data_filter("city"=="Copenhagen"),
+#'   limit = 100
+#'   )
+#'
+#' # metric aggregations for each date range
+#' ga_data_aggregations(multi_date, type = "all")
+#' 
+#' # specify type
+#' ga_data_aggregations(multi_date, type = "maximums")
+#' 
 #' }
-#' 
-
-
-#' get_value_cols <- function(x, 
-#'                            type = c("dimensionValues", "metricValues")){
-#'   type <- match.arg(type)
-#'   as_tibble(
-#'     do.call(rbind, lapply(x[[type]], function(y) y[["value"]])),
-#'     .name_repair = "minimal")
-#'   
-#' } 
+ga_data_aggregations <- function(df, 
+                                 type = c("all","totals",
+                                          "maximums","minimums",
+                                          "count")){
+  type <- match.arg(type)
+  if(is.null(attr(df, "metricAggregations"))){
+    stop("No aggregations found.  Is the data.frame from ga_data()?", 
+         call. = FALSE)
+  }
+  
+  ma <- attr(df, "metricAggregations")
+  
+  if(type == "all"){
+    return(ma)
+  }
+  
+  ma[[type]]
+  
+}
