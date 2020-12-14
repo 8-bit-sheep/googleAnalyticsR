@@ -190,9 +190,6 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_data_order.html</loc>
   </url>
   <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_data_pivot.html</loc>
-  </url>
-  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_experiment.html</loc>
   </url>
   <url>
@@ -389,6 +386,9 @@
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/parse_ga_account_summary.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/parse_realtime.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/pivot_ga4.html</loc>

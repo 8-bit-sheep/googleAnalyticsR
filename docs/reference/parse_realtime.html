@@ -6,7 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PivotOrderBy Object — PivotOrderBy • googleAnalyticsR</title>
+<title>ga_batch_report &lt;- function(requestObj)
+  
+  url &lt;- sprintf("https://analyticsdata.googleapis.com/<!-- %s:batchRunReports", -->
+                 version_aw())
+  
+  # analyticsdata.batchRunReports
+  f &lt;- gar_api_generator(url, "POST", 
+                         data_parse_function = parse_batchrunreports)
+  
+  stopifnot(inherits(requestObj, "gar_BatchRunReportsRequest"))
+  o &lt;- f(the_body = requestObj)
+  
+  o — parse_realtime • googleAnalyticsR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +58,24 @@
 
 
 
-<meta property="og:title" content="PivotOrderBy Object — PivotOrderBy" />
-<meta property="og:description" content="PivotOrderBy Object" />
+<meta property="og:title" content="ga_batch_report &lt;- function(requestObj)
+  
+  url &lt;- sprintf("https://analyticsdata.googleapis.com/<!-- %s:batchRunReports", -->
+                 version_aw())
+  
+  # analyticsdata.batchRunReports
+  f &lt;- gar_api_generator(url, "POST", 
+                         data_parse_function = parse_batchrunreports)
+  
+  stopifnot(inherits(requestObj, "gar_BatchRunReportsRequest"))
+  o &lt;- f(the_body = requestObj)
+  
+  o — parse_realtime" />
+<meta property="og:description" content="ga_batch_report &amp;lt;- function(requestObj)  url &amp;lt;- sprintf(&quot;https://analyticsdata.googleapis.com/
+                 version_aw())  # analyticsdata.batchRunReports
+  f &amp;lt;- gar_api_generator(url, &quot;POST&quot;, 
+                         data_parse_function = parse_batchrunreports)  stopifnot(inherits(requestObj, &quot;gar_BatchRunReportsRequest&quot;))
+  o &amp;lt;- f(the_body = requestObj)  o" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
 
@@ -261,42 +289,34 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>PivotOrderBy Object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/ga_data_order.R'><code>R/ga_data_order.R</code></a>, <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/ga_data_pivot.R'><code>R/ga_data_pivot.R</code></a></small>
-    <div class="hidden name"><code>PivotOrderBy.Rd</code></div>
+    <h1>ga_batch_report &lt;- function(requestObj)
+  
+  url &lt;- sprintf("https://analyticsdata.googleapis.com/<!-- %s:batchRunReports", -->
+                 version_aw())
+  
+  # analyticsdata.batchRunReports
+  f &lt;- gar_api_generator(url, "POST", 
+                         data_parse_function = parse_batchrunreports)
+  
+  stopifnot(inherits(requestObj, "gar_BatchRunReportsRequest"))
+  o &lt;- f(the_body = requestObj)
+  
+  o</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/ga_data.R'><code>R/ga_data.R</code></a></small>
+    <div class="hidden name"><code>parse_realtime.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>PivotOrderBy Object</p>
+    <p>ga_batch_report &lt;- function(requestObj)  url &lt;- sprintf("https://analyticsdata.googleapis.com/<!-- %s:batchRunReports", -->
+                 version_aw())  # analyticsdata.batchRunReports
+  f &lt;- gar_api_generator(url, "POST", 
+                         data_parse_function = parse_batchrunreports)  stopifnot(inherits(requestObj, "gar_BatchRunReportsRequest"))
+  o &lt;- f(the_body = requestObj)  o</p>
     </div>
 
-    <pre class="usage"><span class='fu'>PivotOrderBy</span>(<span class='kw'>pivotSelections</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>metricName</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>parse_realtime</span>(<span class='no'>x</span>)</pre>
 
-<span class='fu'>PivotOrderBy</span>(<span class='kw'>pivotSelections</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>metricName</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>pivotSelections</th>
-      <td><p>Used to select a dimension name and value pivot</p></td>
-    </tr>
-    <tr>
-      <th>metricName</th>
-      <td><p>In the response to order by, order rows by this column</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>PivotOrderBy object</p>
-<p>PivotOrderBy object</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Autogenerated via <code><a href='https://code.markedmondson.me/googleAuthR//reference/gar_create_api_objects.html'>gar_create_api_objects</a></code>
-Sorts by a pivot column group.</p>
-<p>Autogenerated via <code><a href='https://code.markedmondson.me/googleAuthR//reference/gar_create_api_objects.html'>gar_create_api_objects</a></code>
-Sorts by a pivot column group.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
