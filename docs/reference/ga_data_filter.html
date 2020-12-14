@@ -98,20 +98,20 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li>
   <a href="../articles/setup.html">
-    <span class="fa fa-wrench"></span>
+    <span class="fas fa-wrench"></span>
      
     Setup
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-table"></span>
+    <span class="fas fa-table"></span>
      
     Reporting APIs
      
@@ -120,42 +120,42 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/reporting-ga4.html">
-        <span class="fa fa-bar-chart"></span>
+        <span class="fas fa-bar-chart"></span>
          
         GA4 Data API
       </a>
     </li>
     <li>
       <a href="../articles/v4.html">
-        <span class="fa fa-cogs"></span>
+        <span class="fas fa-cogs"></span>
          
         v4 API
       </a>
     </li>
     <li>
       <a href="../articles/user-activity.html">
-        <span class="fa fa-user"></span>
+        <span class="fas fa-user"></span>
          
         User Activity API
       </a>
     </li>
     <li>
       <a href="../articles/v3.html">
-        <span class="fa fa-cog"></span>
+        <span class="fas fa-cog"></span>
          
         v3 API
       </a>
     </li>
     <li>
       <a href="../articles/big-query.html">
-        <span class="fa fa-search"></span>
+        <span class="fas fa-search"></span>
          
         BigQuery
       </a>
     </li>
     <li>
       <a href="../articles/ganalytics.html">
-        <span class="fa fa-bullseye"></span>
+        <span class="fas fa-bullseye"></span>
          
         ganalytics
       </a>
@@ -164,14 +164,14 @@
 </li>
 <li>
   <a href="../articles/management.html">
-    <span class="fa fa-briefcase"></span>
+    <span class="fas fa-briefcase"></span>
      
     Management API
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-file"></span>
+    <span class="fas fa-file"></span>
      
     Publishing
      
@@ -180,14 +180,14 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/shiny.html">
-        <span class="fa fa-cloud-upload"></span>
+        <span class="fas fa-cloud-upload"></span>
          
         Shiny
       </a>
     </li>
     <li>
       <a href="../articles/rmarkdown.html">
-        <span class="fa fa-pencil-square"></span>
+        <span class="fas fa-pencil-square"></span>
          
         RMarkdown
       </a>
@@ -196,14 +196,14 @@
 </li>
 <li>
   <a href="../articles/models.html">
-    <span class="fa fa-calculator"></span>
+    <span class="fas fa-calculator"></span>
      
     Models
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Help
      
@@ -212,28 +212,28 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../reference/index.html">
-        <span class="fa fa-book-reader"></span>
+        <span class="fas fa-book-reader"></span>
          
         Function Reference
       </a>
     </li>
     <li>
       <a href="../news/index.html">
-        <span class="fa fa-newspaper"></span>
+        <span class="fas fa-newspaper"></span>
          
         News
       </a>
     </li>
     <li>
       <a href="../articles/faq.html">
-        <span class="fa fa-glasses"></span>
+        <span class="fas fa-glasses"></span>
          
         FAQs
       </a>
     </li>
     <li>
       <a href="../articles/practical-tips.html">
-        <span class="fa fa-bicycle"></span>
+        <span class="fas fa-bicycle"></span>
          
         Practical tips
       </a>
@@ -244,7 +244,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -288,7 +288,7 @@
 
     <p>This uses a specific filter DSL syntax to create GA4 filters that can be passed to <a href='ga_data.html'>ga_data</a> arguments <code>dimensionFilter</code> or metricFilter. Ensure that the fields you use are either all metrics or all dimensions.</p>
 <p>The syntax uses operators and the class of the value you are setting (string, numeric or logical) to construct the filter expression object.</p>
-<p>Fields including custom fields for your propertyId can be imported if you fetch them via ga_meta("data", propertyId = 12345) before you construct a filter.  If you do not want filters to be validated, then send them in as strings ("field").</p>
+<p>Fields including custom fields for your propertyId can be imported if you fetch them via <code><a href='ga_meta.html'>ga_meta("data", propertyId = 12345)</a></code> before you construct a filter.  If you do not want filters to be validated, then send them in as strings ("field").</p>
 <p>The DSL rules are:</p>
 
 <ul>
@@ -312,13 +312,811 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># start by calling ga_meta("data") to put valid field names in your environment</span>
-<span class='fu'><a href='ga_meta.html'>ga_meta</a></span>(<span class='st'>"data"</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Non-interactive session and no authentication email selected.</span>
-#&gt; <span class='error'>         </span>
-#&gt; <span class='error'>Setup JSON service email auth or specify email in gar_auth(email='me@preauthenticated.com')</span></div><div class='input'>
+<span class='fu'><a href='ga_meta.html'>ga_meta</a></span>(<span class='st'>"data"</span>)</div><div class='output co'>#&gt; <span class='message'>ℹ 2020-12-14 22:08:44 &gt; Caching new meta data</span></div><div class='output co'>#&gt;                                apiName
+#&gt; 1                           appVersion
+#&gt; 2                           audienceId
+#&gt; 3                         audienceName
+#&gt; 4                     brandingInterest
+#&gt; 5                              browser
+#&gt; 6                                 city
+#&gt; 7                               cityId
+#&gt; 8                               cohort
+#&gt; 9                         cohortNthDay
+#&gt; 10                      cohortNthMonth
+#&gt; 11                       cohortNthWeek
+#&gt; 12                        contentGroup
+#&gt; 13                           contentId
+#&gt; 14                         contentType
+#&gt; 15                             country
+#&gt; 16                           countryId
+#&gt; 17                                date
+#&gt; 18                                 day
+#&gt; 19                           dayOfWeek
+#&gt; 20                      deviceCategory
+#&gt; 21                         deviceModel
+#&gt; 22                           eventName
+#&gt; 23                      firstTouchDate
+#&gt; 24                 firstUserCampaignId
+#&gt; 25               firstUserCampaignName
+#&gt; 26                 firstUserCreativeId
+#&gt; 27         firstUserGoogleAdsAdGroupId
+#&gt; 28       firstUserGoogleAdsAdGroupName
+#&gt; 29     firstUserGoogleAdsAdNetworkType
+#&gt; 30                     firstUserMedium
+#&gt; 31                     firstUserSource
+#&gt; 32                            hostName
+#&gt; 33                   isConversionEvent
+#&gt; 34                            language
+#&gt; 35                        languageCode
+#&gt; 36                mobileDeviceBranding
+#&gt; 37           mobileDeviceMarketingName
+#&gt; 38                   mobileDeviceModel
+#&gt; 39                               month
+#&gt; 40                              nthDay
+#&gt; 41                            nthMonth
+#&gt; 42                             nthWeek
+#&gt; 43                     operatingSystem
+#&gt; 44              operatingSystemVersion
+#&gt; 45          operatingSystemWithVersion
+#&gt; 46                            pagePath
+#&gt; 47                           pageTitle
+#&gt; 48                            platform
+#&gt; 49                              region
+#&gt; 50                    screenResolution
+#&gt; 51                   sessionCampaignId
+#&gt; 52                 sessionCampaignName
+#&gt; 53       sessionDefaultChannelGrouping
+#&gt; 54         sessionGoogleAdsAccountName
+#&gt; 55           sessionGoogleAdsAdGroupId
+#&gt; 56         sessionGoogleAdsAdGroupName
+#&gt; 57       sessionGoogleAdsAdNetworkType
+#&gt; 58             sessionGoogleAdsKeyword
+#&gt; 59               sessionGoogleAdsQuery
+#&gt; 60                       sessionMedium
+#&gt; 61                       sessionSource
+#&gt; 62                sessionTrafficOrigin
+#&gt; 63                  signedInWithUserId
+#&gt; 64                            streamId
+#&gt; 65                          streamName
+#&gt; 66                   unifiedPageScreen
+#&gt; 67                  unifiedScreenClass
+#&gt; 68                   unifiedScreenName
+#&gt; 69                      userAgeBracket
+#&gt; 70                          userGender
+#&gt; 71                                week
+#&gt; 72                                year
+#&gt; 73                     active1DayUsers
+#&gt; 74                    active28DayUsers
+#&gt; 75                     active7DayUsers
+#&gt; 76                         activeUsers
+#&gt; 77              averagePurchaseRevenue
+#&gt; 78 averagePurchaseRevenuePerPayingUser
+#&gt; 79               averageRevenuePerUser
+#&gt; 80                   cohortActiveUsers
+#&gt; 81                    cohortTotalUsers
+#&gt; 82                         conversions
+#&gt; 83                     engagedSessions
+#&gt; 84                      engagementRate
+#&gt; 85                          eventCount
+#&gt; 86                   eventCountPerUser
+#&gt; 87                        eventRevenue
+#&gt; 88                    eventsPerSession
+#&gt; 89                          eventValue
+#&gt; 90                            newUsers
+#&gt; 91                     purchaseRevenue
+#&gt; 92                     screenPageViews
+#&gt; 93                            sessions
+#&gt; 94                     sessionsPerUser
+#&gt; 95                      totalAdRevenue
+#&gt; 96                        totalRevenue
+#&gt; 97                          totalUsers
+#&gt; 98                        transactions
+#&gt; 99              userEngagementDuration
+#&gt;                                         uiName
+#&gt; 1                                  App version
+#&gt; 2                                  Audience ID
+#&gt; 3                                Audience name
+#&gt; 4                                    Interests
+#&gt; 5                                      Browser
+#&gt; 6                                         City
+#&gt; 7                                      City ID
+#&gt; 8                                       Cohort
+#&gt; 9                                 Daily cohort
+#&gt; 10                              Monthly cohort
+#&gt; 11                               Weekly cohort
+#&gt; 12                               Content group
+#&gt; 13                                  Content ID
+#&gt; 14                                Content type
+#&gt; 15                                     Country
+#&gt; 16                                  Country ID
+#&gt; 17                                        Date
+#&gt; 18                                         Day
+#&gt; 19                                 Day of week
+#&gt; 20                             Device category
+#&gt; 21                                Device model
+#&gt; 22                                  Event name
+#&gt; 23                            First touch date
+#&gt; 24                   User acquired campaign ID
+#&gt; 25                      User acquired campaign
+#&gt; 26                   User acquired creative ID
+#&gt; 27                   User acquired ad group ID
+#&gt; 28                 User acquired ad group name
+#&gt; 29               User acquired ad network type
+#&gt; 30               User acquired campaign medium
+#&gt; 31               User acquired campaign source
+#&gt; 32                                    Hostname
+#&gt; 33                         Is conversion event
+#&gt; 34                                    Language
+#&gt; 35                               Language code
+#&gt; 36                                Device brand
+#&gt; 37                                      Device
+#&gt; 38                                Mobile model
+#&gt; 39                                       Month
+#&gt; 40                                     Nth day
+#&gt; 41                                   Nth month
+#&gt; 42                                    Nth week
+#&gt; 43                            Operating system
+#&gt; 44                                  OS version
+#&gt; 45               Operating system with version
+#&gt; 46                                   Page path
+#&gt; 47                                  Page title
+#&gt; 48                                    Platform
+#&gt; 49                                      Region
+#&gt; 50                           Screen resolution
+#&gt; 51              Last click session campaign ID
+#&gt; 52                 Last click session campaign
+#&gt; 53         Last click session campaign channel
+#&gt; 54          Last click session ad account name
+#&gt; 55     Last click session campaign ad group ID
+#&gt; 56   Last click session campaign ad group name
+#&gt; 57 Last click session campaign ad network type
+#&gt; 58             Last click session keyword text
+#&gt; 59           Last click session campaign query
+#&gt; 60          Last click session campaign medium
+#&gt; 61          Last click session campaign source
+#&gt; 62           Last click session traffic origin
+#&gt; 63                      Signed in with user ID
+#&gt; 64                                   Stream ID
+#&gt; 65                                 Stream name
+#&gt; 66                  Page path and screen class
+#&gt; 67                 Page title and screen class
+#&gt; 68                  Page title and screen name
+#&gt; 69                                         Age
+#&gt; 70                                      Gender
+#&gt; 71                                        Week
+#&gt; 72                                        Year
+#&gt; 73                          1-day active users
+#&gt; 74                         28-day active users
+#&gt; 75                          7-day active users
+#&gt; 76                                Active users
+#&gt; 77                    Average purchase revenue
+#&gt; 78                                       ARPPU
+#&gt; 79                                        ARPU
+#&gt; 80                         Cohort active users
+#&gt; 81                          Cohort total users
+#&gt; 82                                 Conversions
+#&gt; 83                            Engaged sessions
+#&gt; 84                             Engagement rate
+#&gt; 85                                 Event count
+#&gt; 86                        Event count per user
+#&gt; 87                               Event revenue
+#&gt; 88                          Events per session
+#&gt; 89                                 Event value
+#&gt; 90                                   New users
+#&gt; 91                            Purchase revenue
+#&gt; 92                                       Views
+#&gt; 93                                    Sessions
+#&gt; 94                           Sessions per user
+#&gt; 95                            Total ad revenue
+#&gt; 96                               Total revenue
+#&gt; 97                                 Total users
+#&gt; 98                                Transactions
+#&gt; 99                             User engagement
+#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       description
+#&gt; 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  The app's versionName (Android) or short bundle version (iOS).
+#&gt; 2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              The numeric identifier of an Audience. Users are reported in the audiences to which they belonged during the report's date range. Current user behavior does not affect historical audience membership in reports.
+#&gt; 3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      The given name of an Audience. Users are reported in the audiences to which they belonged during the report's date range. Current user behavior does not affect historical audience membership in reports.
+#&gt; 4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Interests demonstrated by users who are higher in the shopping funnel. Users can be counted in multiple interest categories. For example, 'Shoppers', 'Lifestyles &amp; Hobbies/Pet Lovers', or 'Travel/Travel Buffs/Beachbound Travelers'.
+#&gt; 5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         The browsers used to view your website.
+#&gt; 6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               The city from which the user activity originated.
+#&gt; 7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           The geographic ID of the city from which the user activity originated, derived from their IP address.
+#&gt; 8                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    The cohort's name in the request. A cohort is a set of users who started using your website or app in any consecutive group of days. If a cohort name is not specified in the request, cohorts are named by their zero based index: cohort_0, cohort_1, etc.
+#&gt; 9                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 Day offset relative to the firstTouchDate for the users in the cohort. For example, if a cohort is selected with the start and end date of 2020-03-01, then for the date 2020-03-02, cohortNthDay will be 0001.
+#&gt; 10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  Month offset relative to the firstTouchDate for the users in the cohort. Month boundaries align with calendar month boundaries. For example, if a cohort is selected with the start and end date in March 2020, then for any date in April 2020, cohortNthMonth will be 0001.
+#&gt; 11                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Week offset relative to the firstTouchDate for the users in the cohort. Weeks start on Sunday and end on Saturday. For example, if a cohort is selected with the start and end date in the range 2020-11-08 to 2020-11-14, then for the dates in the range 2020-11-15 to 2020-11-21, cohortNthWeek will be 0001.
+#&gt; 12                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         A category that applies to items of published content.
+#&gt; 13                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        The identifier of the selected content.
+#&gt; 14                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          The category of the selected content.
+#&gt; 15                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           The country from which the user activity originated.
+#&gt; 16                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   The geographic ID of the country from which the user activity originated, derived from their IP address. Formatted according to ISO 3166-1 alpha-2 standard.
+#&gt; 17                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  The date of the event, formatted as YYYYMMDD.
+#&gt; 18                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        The day of the month, a two-digit number from 01 to 31.
+#&gt; 19                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            The day of the week. It returns values in the range [1,7] with Sunday as the first day of the week.
+#&gt; 20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                The type of device: Desktop, Tablet, or Mobile.
+#&gt; 21                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                The mobile device model (example: iPhone 10,6).
+#&gt; 22                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         The name of the event.
+#&gt; 23                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         The date the user's first interaction occurred, formatted as YYYYMMDD.
+#&gt; 24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Identifier of the marketing campaign that first acquired the user. Includes Google Ads Campaigns.
+#&gt; 25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Name of the marketing campaign that first acquired the user. Includes Google Ads and Manual Campaigns.
+#&gt; 26                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         The campaign creative ID that first acquired the user.
+#&gt; 27                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    The Ad Group Id in Google Ads that first acquired the user.
+#&gt; 28                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  The Ad Group Name in Google Ads that first acquired the user.
+#&gt; 29                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   The advertising network that first acquired the user. An enumeration which includes 'Google search', 'Search partners', 'Google Display Network', 'Youtube Search', 'Youtube Videos', 'Cross-network', 'Social', and '(universal campaign)'.
+#&gt; 30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                The medium that first acquired the user to your website or app.
+#&gt; 31                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                The source that first acquired the user to your website or app.
+#&gt; 32                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Includes the subdomain and domain names of a URL; for example, the Host Name of www.example.com/contact.html is www.example.com.
+#&gt; 33                                                                                                                                                                                                                                                                                                                                                                                                     The string 'true' if the event is a conversion. Events are marked as conversions at collection time; changes to an event's conversion marking apply going forward. You can mark any event as a conversion in Google Analytics, and some events (i.e. first_open, purchase) are marked as conversions by default. To learn more, see &lt;https://support.google.com/analytics/answer/9267568&gt;.
+#&gt; 34                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             The language setting of the user's browser or device. e.g. English
+#&gt; 35                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   The language setting (ISO 639) of the user's browser or device. e.g. 'en-us'
+#&gt; 36                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Manufacturer or branded name (examples: Samsung, HTC, Verizon, T-Mobile).
+#&gt; 37                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     The branded device name (examples: Galaxy S10 or P30 Pro).
+#&gt; 38                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 The mobile device model name (examples: iPhone X or SM-G950F).
+#&gt; 39                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     The month of the event, a two digit integer from 01 to 12.
+#&gt; 40                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          The number of days since the start of the date range.
+#&gt; 41                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              The number of months since the start of a date range. The starting month is 0000.
+#&gt; 42                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     A number representing the number of weeks since the start of a date range.
+#&gt; 43                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      The operating systems used by visitors to your app or website. Includes desktop and mobile operating systems such as Windows and Android.
+#&gt; 44                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            The operating system versions used by visitors to your website or app. For example, Android 10's version is 10, and iOS 13.5.1's version is 13.5.1.
+#&gt; 45                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        The operating system and version. For example, Android 10 or Windows 7.
+#&gt; 46                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         The web pages visited, listed by URI. The URI is the portion of a page's URL following the domain name; for example, the URI portion of www.example.com/contact.html is /contact.html.
+#&gt; 47                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         The web page titles used on your site.
+#&gt; 48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    The platform on which your app or website ran; for example, web, iOS, or Android. To determine a stream's type in a report, use both platform and streamId.
+#&gt; 49                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  The geographic region from which the user activity originated, derived from their IP address.
+#&gt; 50                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           The screen resolution of the user's monitor. For example, 1920x1080.
+#&gt; 51                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        The marketing campaign id for a session. Includes Google Ads Campaigns.
+#&gt; 52                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           The marketing campaign name for a session. Includes Google Ads and Manual Campaigns.
+#&gt; 53                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           The session's default channel grouping is based primarily on source and medium. An enumeration which includes 'Direct', 'Organic Search', 'Paid Social', 'Organic Social', 'Email', 'Affiliates', 'Referral', 'Paid Search', 'Video', and 'Display'.
+#&gt; 54                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  A customer's descriptive name in Google Ads. Corresponding to customer.descriptive_name in Google Ads API v5.
+#&gt; 55                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   The Ad Group Id in Google Ads for a session.
+#&gt; 56                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 The Ad Group Name in Google Ads for a session.
+#&gt; 57                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        The advertising network that led to the session. An enumeration which includes 'Google search', 'Search partners', 'Google Display Network', 'Youtube Search', 'Youtube Videos', 'Cross-network', 'Social', and '(universal campaign)'.
+#&gt; 58                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           The matched keyword that led to the session. Keywords are words or phrases describing your product or service that you choose to get your ad in front of the right customers. To learn more about Keywords, see &lt;https://support.google.com/google-ads/answer/6323&gt;.
+#&gt; 59                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      The search query that led to the session.
+#&gt; 60                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    The medium that initiated a session on your website or app.
+#&gt; 61                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    The source that initiated a session on your website or app.
+#&gt; 62                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           The traffic origin of the session's campaign. An enumeration which includes 'Google Ads', 'Manual', and '(not set)'.
+#&gt; 63                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       The string 'yes' if the user signed in with the User-ID feature. To learn more about User-ID, see &lt;https://support.google.com/analytics/answer/9213390&gt;.
+#&gt; 64                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    The numeric data stream identifier for your app or website.
+#&gt; 65                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  The data stream name for your app or website.
+#&gt; 66                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       The page path (web) or screen class (app) on which the event was logged.
+#&gt; 67                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      The page title (web) or screen class (app) on which the event was logged.
+#&gt; 68                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       The page title (web) or screen name (app) on which the event was logged.
+#&gt; 69                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             User age brackets.
+#&gt; 70                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   User gender.
+#&gt; 71                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               The week of the event, a two-digit number from 00 to 53. Each week starts on Sunday. Dates prior to the first Sunday of the year are in week 00.
+#&gt; 72                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    The four-digit year of the event e.g. 2020.
+#&gt; 73                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      The number of distinct active users on your site or app within a 1 day period. The 1 day period includes the last day in the report's date range. Note: this is the same as Active Users.
+#&gt; 74                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            The number of distinct active users on your site or app within a 28 day period. The 28 day period includes the last day in the report's date range.
+#&gt; 75                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              The number of distinct active users on your site or app within a 7 day period. The 7 day period includes the last day in the report's date range.
+#&gt; 76                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     The number of distinct users who visited your site or app.
+#&gt; 77                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               The average purchase revenue in the transaction group of events.
+#&gt; 78                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Average revenue per paying user (ARPPU) is the total purchase revenue per active user that logged a purchase event. The summary metric is for the time period selected.
+#&gt; 79                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Average revenue per active user (ARPU). The summary metric is for the time period selected. ARPU includes AdMob estimated earnings.
+#&gt; 80                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           The number of users in the cohort who are active in the time window corresponding to the cohort nth day/week/month. For example for the row where cohortNthWeek = 0001, this metric is the number of users (in the cohort) who are active in week 1.
+#&gt; 81 The total number of users in the cohort. This metric is the same value in every row of the report for each cohort. Because cohorts are defined by a shared acquisition date, cohortTotalUsers is the same as cohortActiveUsers for the cohort's selection date range. For report rows later than the ochort's selection range, it is typical for cohortActiveUsers to be smaller than cohortTotalUsers. This difference represents users from the cohort that were not active for the later date. cohortTotalUsers is commonly used in the metric expression cohortActiveUsers/cohortTotalUsers to compute a user retention fraction for the cohort. The relationship between activeUsers and totalUsers is not equivalent to the relationship between cohortActiveUsers and cohortTotalUsers.
+#&gt; 82                                                                                                                                                                                                                                                                                                                                                                                                                     The count of conversion events. Events are marked as conversions at collection time; changes to an event's conversion marking apply going forward. You can mark any event as a conversion in Google Analytics, and some events (i.e. first_open, purchase) are marked as conversions by default. To learn more, see &lt;https://support.google.com/analytics/answer/9267568&gt;.
+#&gt; 83                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           The number of sessions that lasted longer than 10 seconds, or had a conversion event, or had 2 or more screen views.
+#&gt; 84                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     The percentage of engaged sessions (Engaged sessions divided by Sessions).
+#&gt; 85                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           The count of events.
+#&gt; 86                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   The average number of events per user (Event count divided by Active users).
+#&gt; 87                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       The sum of Purchase Revenue and virtual currency events.
+#&gt; 88                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    The average number of events per session (Event count divided by Sessions).
+#&gt; 89                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  The sum of the event parameter named 'value'.
+#&gt; 90                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        The number of users who interacted with your site or launched your app for the first time (event triggered: first_open or first_visit).
+#&gt; 91                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               The sum of revenue from purchases made in your app or site (events triggered: in_app_purchase, ecommerce_purchase and purchase).
+#&gt; 92                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             The number of app screens or web pages your users viewed. Repeated views of a single page or screen are counted. (screen_view + page_view events).
+#&gt; 93                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        The number of sessions that began on your site or app (event triggered: session_start).
+#&gt; 94                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    The average number of sessions per user (Sessions divided by Active Users).
+#&gt; 95                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         The total advertising revenue from both Admob and third-party sources.
+#&gt; 96                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                The sum of revenue from purchases, subscriptions, and advertising (Purchase revenue plus Subscription revenue plus Ad revenue).
+#&gt; 97                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  The number of distinct users who have logged at least one event, regardless of whether the site or app was in use when that event was logged.
+#&gt; 98                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         The count of transaction events with purchase revenue. Transaction events are in_app_purchase, ecommerce_purchase, purchase, app_store_subscription_renew, app_store_subscription_convert, and refund.
+#&gt; 99                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             The total amount of time (in seconds) your website or app was in the foreground of users' devices.
+#&gt;    deprecatedApiNames     class          type
+#&gt; 1                NULL dimension          &lt;NA&gt;
+#&gt; 2                NULL dimension          &lt;NA&gt;
+#&gt; 3                NULL dimension          &lt;NA&gt;
+#&gt; 4                NULL dimension          &lt;NA&gt;
+#&gt; 5                NULL dimension          &lt;NA&gt;
+#&gt; 6                NULL dimension          &lt;NA&gt;
+#&gt; 7                NULL dimension          &lt;NA&gt;
+#&gt; 8                NULL dimension          &lt;NA&gt;
+#&gt; 9                NULL dimension          &lt;NA&gt;
+#&gt; 10               NULL dimension          &lt;NA&gt;
+#&gt; 11               NULL dimension          &lt;NA&gt;
+#&gt; 12               NULL dimension          &lt;NA&gt;
+#&gt; 13               NULL dimension          &lt;NA&gt;
+#&gt; 14               NULL dimension          &lt;NA&gt;
+#&gt; 15               NULL dimension          &lt;NA&gt;
+#&gt; 16     countryIsoCode dimension          &lt;NA&gt;
+#&gt; 17               NULL dimension          &lt;NA&gt;
+#&gt; 18               NULL dimension          &lt;NA&gt;
+#&gt; 19               NULL dimension          &lt;NA&gt;
+#&gt; 20               NULL dimension          &lt;NA&gt;
+#&gt; 21               NULL dimension          &lt;NA&gt;
+#&gt; 22               NULL dimension          &lt;NA&gt;
+#&gt; 23               NULL dimension          &lt;NA&gt;
+#&gt; 24               NULL dimension          &lt;NA&gt;
+#&gt; 25               NULL dimension          &lt;NA&gt;
+#&gt; 26               NULL dimension          &lt;NA&gt;
+#&gt; 27               NULL dimension          &lt;NA&gt;
+#&gt; 28               NULL dimension          &lt;NA&gt;
+#&gt; 29               NULL dimension          &lt;NA&gt;
+#&gt; 30               NULL dimension          &lt;NA&gt;
+#&gt; 31               NULL dimension          &lt;NA&gt;
+#&gt; 32               NULL dimension          &lt;NA&gt;
+#&gt; 33               NULL dimension          &lt;NA&gt;
+#&gt; 34               NULL dimension          &lt;NA&gt;
+#&gt; 35               NULL dimension          &lt;NA&gt;
+#&gt; 36               NULL dimension          &lt;NA&gt;
+#&gt; 37               NULL dimension          &lt;NA&gt;
+#&gt; 38               NULL dimension          &lt;NA&gt;
+#&gt; 39               NULL dimension          &lt;NA&gt;
+#&gt; 40               NULL dimension          &lt;NA&gt;
+#&gt; 41               NULL dimension          &lt;NA&gt;
+#&gt; 42               NULL dimension          &lt;NA&gt;
+#&gt; 43               NULL dimension          &lt;NA&gt;
+#&gt; 44               NULL dimension          &lt;NA&gt;
+#&gt; 45               NULL dimension          &lt;NA&gt;
+#&gt; 46               NULL dimension          &lt;NA&gt;
+#&gt; 47               NULL dimension          &lt;NA&gt;
+#&gt; 48               NULL dimension          &lt;NA&gt;
+#&gt; 49               NULL dimension          &lt;NA&gt;
+#&gt; 50               NULL dimension          &lt;NA&gt;
+#&gt; 51               NULL dimension          &lt;NA&gt;
+#&gt; 52               NULL dimension          &lt;NA&gt;
+#&gt; 53               NULL dimension          &lt;NA&gt;
+#&gt; 54               NULL dimension          &lt;NA&gt;
+#&gt; 55               NULL dimension          &lt;NA&gt;
+#&gt; 56               NULL dimension          &lt;NA&gt;
+#&gt; 57               NULL dimension          &lt;NA&gt;
+#&gt; 58               NULL dimension          &lt;NA&gt;
+#&gt; 59               NULL dimension          &lt;NA&gt;
+#&gt; 60               NULL dimension          &lt;NA&gt;
+#&gt; 61               NULL dimension          &lt;NA&gt;
+#&gt; 62               NULL dimension          &lt;NA&gt;
+#&gt; 63               NULL dimension          &lt;NA&gt;
+#&gt; 64               NULL dimension          &lt;NA&gt;
+#&gt; 65               NULL dimension          &lt;NA&gt;
+#&gt; 66               NULL dimension          &lt;NA&gt;
+#&gt; 67               NULL dimension          &lt;NA&gt;
+#&gt; 68               NULL dimension          &lt;NA&gt;
+#&gt; 69               NULL dimension          &lt;NA&gt;
+#&gt; 70               NULL dimension          &lt;NA&gt;
+#&gt; 71               NULL dimension          &lt;NA&gt;
+#&gt; 72               NULL dimension          &lt;NA&gt;
+#&gt; 73               NULL    metric  TYPE_INTEGER
+#&gt; 74               NULL    metric  TYPE_INTEGER
+#&gt; 75               NULL    metric  TYPE_INTEGER
+#&gt; 76               NULL    metric  TYPE_INTEGER
+#&gt; 77               NULL    metric TYPE_CURRENCY
+#&gt; 78               NULL    metric TYPE_CURRENCY
+#&gt; 79               NULL    metric TYPE_CURRENCY
+#&gt; 80               NULL    metric  TYPE_INTEGER
+#&gt; 81               NULL    metric  TYPE_INTEGER
+#&gt; 82               NULL    metric  TYPE_INTEGER
+#&gt; 83               NULL    metric  TYPE_INTEGER
+#&gt; 84               NULL    metric    TYPE_FLOAT
+#&gt; 85               NULL    metric  TYPE_INTEGER
+#&gt; 86               NULL    metric    TYPE_FLOAT
+#&gt; 87               NULL    metric TYPE_CURRENCY
+#&gt; 88               NULL    metric    TYPE_FLOAT
+#&gt; 89               NULL    metric    TYPE_FLOAT
+#&gt; 90               NULL    metric  TYPE_INTEGER
+#&gt; 91               NULL    metric TYPE_CURRENCY
+#&gt; 92               NULL    metric  TYPE_INTEGER
+#&gt; 93               NULL    metric  TYPE_INTEGER
+#&gt; 94               NULL    metric    TYPE_FLOAT
+#&gt; 95               NULL    metric TYPE_CURRENCY
+#&gt; 96               NULL    metric TYPE_CURRENCY
+#&gt; 97               NULL    metric  TYPE_INTEGER
+#&gt; 98               NULL    metric  TYPE_INTEGER
+#&gt; 99               NULL    metric  TYPE_SECONDS</div><div class='input'>
 <span class='co'># if you have custom fields, supply your propertyId to ga_meta()</span>
-<span class='fu'><a href='ga_meta.html'>ga_meta</a></span>(<span class='st'>"data"</span>, <span class='kw'>propertyId</span> <span class='kw'>=</span> <span class='fl'>123456</span>)</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #555555;'>2020-12-10 16:59:46 &gt;</span><span> Metadata for propertyId 123456</span></div><div class='output co'>#&gt; <span class='error'>Error: Non-interactive session and no authentication email selected.</span>
-#&gt; <span class='error'>         </span>
-#&gt; <span class='error'>Setup JSON service email auth or specify email in gar_auth(email='me@preauthenticated.com')</span></div><div class='input'>
+<span class='fu'><a href='ga_meta.html'>ga_meta</a></span>(<span class='st'>"data"</span>, <span class='kw'>propertyId</span> <span class='kw'>=</span> <span class='fl'>206670707</span>)</div><div class='output co'>#&gt; <span class='message'>ℹ 2020-12-14 22:08:44 &gt; Metadata for propertyId 206670707</span></div><div class='output co'>#&gt; <span class='message'>ℹ 2020-12-14 22:08:45 &gt; Caching new meta data</span></div><div class='output co'>#&gt;                                 apiName
+#&gt; 1                            appVersion
+#&gt; 2                            audienceId
+#&gt; 3                          audienceName
+#&gt; 4                      brandingInterest
+#&gt; 5                               browser
+#&gt; 6                                  city
+#&gt; 7                                cityId
+#&gt; 8                                cohort
+#&gt; 9                          cohortNthDay
+#&gt; 10                       cohortNthMonth
+#&gt; 11                        cohortNthWeek
+#&gt; 12                         contentGroup
+#&gt; 13                            contentId
+#&gt; 14                          contentType
+#&gt; 15                              country
+#&gt; 16                            countryId
+#&gt; 17                                 date
+#&gt; 18                                  day
+#&gt; 19                            dayOfWeek
+#&gt; 20                       deviceCategory
+#&gt; 21                          deviceModel
+#&gt; 22                            eventName
+#&gt; 23                       firstTouchDate
+#&gt; 24                  firstUserCampaignId
+#&gt; 25                firstUserCampaignName
+#&gt; 26                  firstUserCreativeId
+#&gt; 27          firstUserGoogleAdsAdGroupId
+#&gt; 28        firstUserGoogleAdsAdGroupName
+#&gt; 29      firstUserGoogleAdsAdNetworkType
+#&gt; 30                      firstUserMedium
+#&gt; 31                      firstUserSource
+#&gt; 32                             hostName
+#&gt; 33                    isConversionEvent
+#&gt; 34                             language
+#&gt; 35                         languageCode
+#&gt; 36                 mobileDeviceBranding
+#&gt; 37            mobileDeviceMarketingName
+#&gt; 38                    mobileDeviceModel
+#&gt; 39                                month
+#&gt; 40                               nthDay
+#&gt; 41                             nthMonth
+#&gt; 42                              nthWeek
+#&gt; 43                      operatingSystem
+#&gt; 44               operatingSystemVersion
+#&gt; 45           operatingSystemWithVersion
+#&gt; 46                             pagePath
+#&gt; 47                            pageTitle
+#&gt; 48                             platform
+#&gt; 49                               region
+#&gt; 50                     screenResolution
+#&gt; 51                    sessionCampaignId
+#&gt; 52                  sessionCampaignName
+#&gt; 53        sessionDefaultChannelGrouping
+#&gt; 54          sessionGoogleAdsAccountName
+#&gt; 55            sessionGoogleAdsAdGroupId
+#&gt; 56          sessionGoogleAdsAdGroupName
+#&gt; 57        sessionGoogleAdsAdNetworkType
+#&gt; 58              sessionGoogleAdsKeyword
+#&gt; 59                sessionGoogleAdsQuery
+#&gt; 60                        sessionMedium
+#&gt; 61                        sessionSource
+#&gt; 62                 sessionTrafficOrigin
+#&gt; 63                   signedInWithUserId
+#&gt; 64                             streamId
+#&gt; 65                           streamName
+#&gt; 66                    unifiedPageScreen
+#&gt; 67                   unifiedScreenClass
+#&gt; 68                    unifiedScreenName
+#&gt; 69                       userAgeBracket
+#&gt; 70                           userGender
+#&gt; 71                                 week
+#&gt; 72                                 year
+#&gt; 73                 customEvent:test_dim
+#&gt; 74                      active1DayUsers
+#&gt; 75                     active28DayUsers
+#&gt; 76                      active7DayUsers
+#&gt; 77                          activeUsers
+#&gt; 78               averagePurchaseRevenue
+#&gt; 79  averagePurchaseRevenuePerPayingUser
+#&gt; 80                averageRevenuePerUser
+#&gt; 81                    cohortActiveUsers
+#&gt; 82                     cohortTotalUsers
+#&gt; 83                          conversions
+#&gt; 84                      engagedSessions
+#&gt; 85                       engagementRate
+#&gt; 86                           eventCount
+#&gt; 87                    eventCountPerUser
+#&gt; 88                         eventRevenue
+#&gt; 89                     eventsPerSession
+#&gt; 90                           eventValue
+#&gt; 91                             newUsers
+#&gt; 92                      purchaseRevenue
+#&gt; 93                      screenPageViews
+#&gt; 94                             sessions
+#&gt; 95                      sessionsPerUser
+#&gt; 96                       totalAdRevenue
+#&gt; 97                         totalRevenue
+#&gt; 98                           totalUsers
+#&gt; 99                         transactions
+#&gt; 100              userEngagementDuration
+#&gt;                                          uiName
+#&gt; 1                                   App version
+#&gt; 2                                   Audience ID
+#&gt; 3                                 Audience name
+#&gt; 4                                     Interests
+#&gt; 5                                       Browser
+#&gt; 6                                          City
+#&gt; 7                                       City ID
+#&gt; 8                                        Cohort
+#&gt; 9                                  Daily cohort
+#&gt; 10                               Monthly cohort
+#&gt; 11                                Weekly cohort
+#&gt; 12                                Content group
+#&gt; 13                                   Content ID
+#&gt; 14                                 Content type
+#&gt; 15                                      Country
+#&gt; 16                                   Country ID
+#&gt; 17                                         Date
+#&gt; 18                                          Day
+#&gt; 19                                  Day of week
+#&gt; 20                              Device category
+#&gt; 21                                 Device model
+#&gt; 22                                   Event name
+#&gt; 23                             First touch date
+#&gt; 24                    User acquired campaign ID
+#&gt; 25                       User acquired campaign
+#&gt; 26                    User acquired creative ID
+#&gt; 27                    User acquired ad group ID
+#&gt; 28                  User acquired ad group name
+#&gt; 29                User acquired ad network type
+#&gt; 30                User acquired campaign medium
+#&gt; 31                User acquired campaign source
+#&gt; 32                                     Hostname
+#&gt; 33                          Is conversion event
+#&gt; 34                                     Language
+#&gt; 35                                Language code
+#&gt; 36                                 Device brand
+#&gt; 37                                       Device
+#&gt; 38                                 Mobile model
+#&gt; 39                                        Month
+#&gt; 40                                      Nth day
+#&gt; 41                                    Nth month
+#&gt; 42                                     Nth week
+#&gt; 43                             Operating system
+#&gt; 44                                   OS version
+#&gt; 45                Operating system with version
+#&gt; 46                                    Page path
+#&gt; 47                                   Page title
+#&gt; 48                                     Platform
+#&gt; 49                                       Region
+#&gt; 50                            Screen resolution
+#&gt; 51               Last click session campaign ID
+#&gt; 52                  Last click session campaign
+#&gt; 53          Last click session campaign channel
+#&gt; 54           Last click session ad account name
+#&gt; 55      Last click session campaign ad group ID
+#&gt; 56    Last click session campaign ad group name
+#&gt; 57  Last click session campaign ad network type
+#&gt; 58              Last click session keyword text
+#&gt; 59            Last click session campaign query
+#&gt; 60           Last click session campaign medium
+#&gt; 61           Last click session campaign source
+#&gt; 62            Last click session traffic origin
+#&gt; 63                       Signed in with user ID
+#&gt; 64                                    Stream ID
+#&gt; 65                                  Stream name
+#&gt; 66                   Page path and screen class
+#&gt; 67                  Page title and screen class
+#&gt; 68                   Page title and screen name
+#&gt; 69                                          Age
+#&gt; 70                                       Gender
+#&gt; 71                                         Week
+#&gt; 72                                         Year
+#&gt; 73                                     test_dim
+#&gt; 74                           1-day active users
+#&gt; 75                          28-day active users
+#&gt; 76                           7-day active users
+#&gt; 77                                 Active users
+#&gt; 78                     Average purchase revenue
+#&gt; 79                                        ARPPU
+#&gt; 80                                         ARPU
+#&gt; 81                          Cohort active users
+#&gt; 82                           Cohort total users
+#&gt; 83                                  Conversions
+#&gt; 84                             Engaged sessions
+#&gt; 85                              Engagement rate
+#&gt; 86                                  Event count
+#&gt; 87                         Event count per user
+#&gt; 88                                Event revenue
+#&gt; 89                           Events per session
+#&gt; 90                                  Event value
+#&gt; 91                                    New users
+#&gt; 92                             Purchase revenue
+#&gt; 93                                        Views
+#&gt; 94                                     Sessions
+#&gt; 95                            Sessions per user
+#&gt; 96                             Total ad revenue
+#&gt; 97                                Total revenue
+#&gt; 98                                  Total users
+#&gt; 99                                 Transactions
+#&gt; 100                             User engagement
+#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        description
+#&gt; 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   The app's versionName (Android) or short bundle version (iOS).
+#&gt; 2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               The numeric identifier of an Audience. Users are reported in the audiences to which they belonged during the report's date range. Current user behavior does not affect historical audience membership in reports.
+#&gt; 3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       The given name of an Audience. Users are reported in the audiences to which they belonged during the report's date range. Current user behavior does not affect historical audience membership in reports.
+#&gt; 4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Interests demonstrated by users who are higher in the shopping funnel. Users can be counted in multiple interest categories. For example, 'Shoppers', 'Lifestyles &amp; Hobbies/Pet Lovers', or 'Travel/Travel Buffs/Beachbound Travelers'.
+#&gt; 5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          The browsers used to view your website.
+#&gt; 6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                The city from which the user activity originated.
+#&gt; 7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            The geographic ID of the city from which the user activity originated, derived from their IP address.
+#&gt; 8                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     The cohort's name in the request. A cohort is a set of users who started using your website or app in any consecutive group of days. If a cohort name is not specified in the request, cohorts are named by their zero based index: cohort_0, cohort_1, etc.
+#&gt; 9                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  Day offset relative to the firstTouchDate for the users in the cohort. For example, if a cohort is selected with the start and end date of 2020-03-01, then for the date 2020-03-02, cohortNthDay will be 0001.
+#&gt; 10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Month offset relative to the firstTouchDate for the users in the cohort. Month boundaries align with calendar month boundaries. For example, if a cohort is selected with the start and end date in March 2020, then for any date in April 2020, cohortNthMonth will be 0001.
+#&gt; 11                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Week offset relative to the firstTouchDate for the users in the cohort. Weeks start on Sunday and end on Saturday. For example, if a cohort is selected with the start and end date in the range 2020-11-08 to 2020-11-14, then for the dates in the range 2020-11-15 to 2020-11-21, cohortNthWeek will be 0001.
+#&gt; 12                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          A category that applies to items of published content.
+#&gt; 13                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         The identifier of the selected content.
+#&gt; 14                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           The category of the selected content.
+#&gt; 15                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            The country from which the user activity originated.
+#&gt; 16                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    The geographic ID of the country from which the user activity originated, derived from their IP address. Formatted according to ISO 3166-1 alpha-2 standard.
+#&gt; 17                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   The date of the event, formatted as YYYYMMDD.
+#&gt; 18                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         The day of the month, a two-digit number from 01 to 31.
+#&gt; 19                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             The day of the week. It returns values in the range [1,7] with Sunday as the first day of the week.
+#&gt; 20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 The type of device: Desktop, Tablet, or Mobile.
+#&gt; 21                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 The mobile device model (example: iPhone 10,6).
+#&gt; 22                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          The name of the event.
+#&gt; 23                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          The date the user's first interaction occurred, formatted as YYYYMMDD.
+#&gt; 24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Identifier of the marketing campaign that first acquired the user. Includes Google Ads Campaigns.
+#&gt; 25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Name of the marketing campaign that first acquired the user. Includes Google Ads and Manual Campaigns.
+#&gt; 26                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          The campaign creative ID that first acquired the user.
+#&gt; 27                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     The Ad Group Id in Google Ads that first acquired the user.
+#&gt; 28                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   The Ad Group Name in Google Ads that first acquired the user.
+#&gt; 29                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    The advertising network that first acquired the user. An enumeration which includes 'Google search', 'Search partners', 'Google Display Network', 'Youtube Search', 'Youtube Videos', 'Cross-network', 'Social', and '(universal campaign)'.
+#&gt; 30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 The medium that first acquired the user to your website or app.
+#&gt; 31                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 The source that first acquired the user to your website or app.
+#&gt; 32                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Includes the subdomain and domain names of a URL; for example, the Host Name of www.example.com/contact.html is www.example.com.
+#&gt; 33                                                                                                                                                                                                                                                                                                                                                                                                      The string 'true' if the event is a conversion. Events are marked as conversions at collection time; changes to an event's conversion marking apply going forward. You can mark any event as a conversion in Google Analytics, and some events (i.e. first_open, purchase) are marked as conversions by default. To learn more, see &lt;https://support.google.com/analytics/answer/9267568&gt;.
+#&gt; 34                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              The language setting of the user's browser or device. e.g. English
+#&gt; 35                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    The language setting (ISO 639) of the user's browser or device. e.g. 'en-us'
+#&gt; 36                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Manufacturer or branded name (examples: Samsung, HTC, Verizon, T-Mobile).
+#&gt; 37                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      The branded device name (examples: Galaxy S10 or P30 Pro).
+#&gt; 38                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  The mobile device model name (examples: iPhone X or SM-G950F).
+#&gt; 39                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      The month of the event, a two digit integer from 01 to 12.
+#&gt; 40                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           The number of days since the start of the date range.
+#&gt; 41                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               The number of months since the start of a date range. The starting month is 0000.
+#&gt; 42                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      A number representing the number of weeks since the start of a date range.
+#&gt; 43                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       The operating systems used by visitors to your app or website. Includes desktop and mobile operating systems such as Windows and Android.
+#&gt; 44                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             The operating system versions used by visitors to your website or app. For example, Android 10's version is 10, and iOS 13.5.1's version is 13.5.1.
+#&gt; 45                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         The operating system and version. For example, Android 10 or Windows 7.
+#&gt; 46                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          The web pages visited, listed by URI. The URI is the portion of a page's URL following the domain name; for example, the URI portion of www.example.com/contact.html is /contact.html.
+#&gt; 47                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          The web page titles used on your site.
+#&gt; 48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     The platform on which your app or website ran; for example, web, iOS, or Android. To determine a stream's type in a report, use both platform and streamId.
+#&gt; 49                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   The geographic region from which the user activity originated, derived from their IP address.
+#&gt; 50                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            The screen resolution of the user's monitor. For example, 1920x1080.
+#&gt; 51                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         The marketing campaign id for a session. Includes Google Ads Campaigns.
+#&gt; 52                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            The marketing campaign name for a session. Includes Google Ads and Manual Campaigns.
+#&gt; 53                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            The session's default channel grouping is based primarily on source and medium. An enumeration which includes 'Direct', 'Organic Search', 'Paid Social', 'Organic Social', 'Email', 'Affiliates', 'Referral', 'Paid Search', 'Video', and 'Display'.
+#&gt; 54                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   A customer's descriptive name in Google Ads. Corresponding to customer.descriptive_name in Google Ads API v5.
+#&gt; 55                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    The Ad Group Id in Google Ads for a session.
+#&gt; 56                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  The Ad Group Name in Google Ads for a session.
+#&gt; 57                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         The advertising network that led to the session. An enumeration which includes 'Google search', 'Search partners', 'Google Display Network', 'Youtube Search', 'Youtube Videos', 'Cross-network', 'Social', and '(universal campaign)'.
+#&gt; 58                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            The matched keyword that led to the session. Keywords are words or phrases describing your product or service that you choose to get your ad in front of the right customers. To learn more about Keywords, see &lt;https://support.google.com/google-ads/answer/6323&gt;.
+#&gt; 59                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       The search query that led to the session.
+#&gt; 60                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     The medium that initiated a session on your website or app.
+#&gt; 61                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     The source that initiated a session on your website or app.
+#&gt; 62                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            The traffic origin of the session's campaign. An enumeration which includes 'Google Ads', 'Manual', and '(not set)'.
+#&gt; 63                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        The string 'yes' if the user signed in with the User-ID feature. To learn more about User-ID, see &lt;https://support.google.com/analytics/answer/9213390&gt;.
+#&gt; 64                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     The numeric data stream identifier for your app or website.
+#&gt; 65                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   The data stream name for your app or website.
+#&gt; 66                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        The page path (web) or screen class (app) on which the event was logged.
+#&gt; 67                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       The page title (web) or screen class (app) on which the event was logged.
+#&gt; 68                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        The page title (web) or screen name (app) on which the event was logged.
+#&gt; 69                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              User age brackets.
+#&gt; 70                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    User gender.
+#&gt; 71                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                The week of the event, a two-digit number from 00 to 53. Each week starts on Sunday. Dates prior to the first Sunday of the year are in week 00.
+#&gt; 72                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     The four-digit year of the event e.g. 2020.
+#&gt; 73                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   An event scoped custom dimension for your Analytics property.
+#&gt; 74                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       The number of distinct active users on your site or app within a 1 day period. The 1 day period includes the last day in the report's date range. Note: this is the same as Active Users.
+#&gt; 75                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             The number of distinct active users on your site or app within a 28 day period. The 28 day period includes the last day in the report's date range.
+#&gt; 76                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               The number of distinct active users on your site or app within a 7 day period. The 7 day period includes the last day in the report's date range.
+#&gt; 77                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      The number of distinct users who visited your site or app.
+#&gt; 78                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                The average purchase revenue in the transaction group of events.
+#&gt; 79                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Average revenue per paying user (ARPPU) is the total purchase revenue per active user that logged a purchase event. The summary metric is for the time period selected.
+#&gt; 80                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Average revenue per active user (ARPU). The summary metric is for the time period selected. ARPU includes AdMob estimated earnings.
+#&gt; 81                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            The number of users in the cohort who are active in the time window corresponding to the cohort nth day/week/month. For example for the row where cohortNthWeek = 0001, this metric is the number of users (in the cohort) who are active in week 1.
+#&gt; 82  The total number of users in the cohort. This metric is the same value in every row of the report for each cohort. Because cohorts are defined by a shared acquisition date, cohortTotalUsers is the same as cohortActiveUsers for the cohort's selection date range. For report rows later than the ochort's selection range, it is typical for cohortActiveUsers to be smaller than cohortTotalUsers. This difference represents users from the cohort that were not active for the later date. cohortTotalUsers is commonly used in the metric expression cohortActiveUsers/cohortTotalUsers to compute a user retention fraction for the cohort. The relationship between activeUsers and totalUsers is not equivalent to the relationship between cohortActiveUsers and cohortTotalUsers.
+#&gt; 83                                                                                                                                                                                                                                                                                                                                                                                                                      The count of conversion events. Events are marked as conversions at collection time; changes to an event's conversion marking apply going forward. You can mark any event as a conversion in Google Analytics, and some events (i.e. first_open, purchase) are marked as conversions by default. To learn more, see &lt;https://support.google.com/analytics/answer/9267568&gt;.
+#&gt; 84                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            The number of sessions that lasted longer than 10 seconds, or had a conversion event, or had 2 or more screen views.
+#&gt; 85                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      The percentage of engaged sessions (Engaged sessions divided by Sessions).
+#&gt; 86                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            The count of events.
+#&gt; 87                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    The average number of events per user (Event count divided by Active users).
+#&gt; 88                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        The sum of Purchase Revenue and virtual currency events.
+#&gt; 89                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     The average number of events per session (Event count divided by Sessions).
+#&gt; 90                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   The sum of the event parameter named 'value'.
+#&gt; 91                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         The number of users who interacted with your site or launched your app for the first time (event triggered: first_open or first_visit).
+#&gt; 92                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                The sum of revenue from purchases made in your app or site (events triggered: in_app_purchase, ecommerce_purchase and purchase).
+#&gt; 93                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              The number of app screens or web pages your users viewed. Repeated views of a single page or screen are counted. (screen_view + page_view events).
+#&gt; 94                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         The number of sessions that began on your site or app (event triggered: session_start).
+#&gt; 95                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     The average number of sessions per user (Sessions divided by Active Users).
+#&gt; 96                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          The total advertising revenue from both Admob and third-party sources.
+#&gt; 97                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 The sum of revenue from purchases, subscriptions, and advertising (Purchase revenue plus Subscription revenue plus Ad revenue).
+#&gt; 98                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   The number of distinct users who have logged at least one event, regardless of whether the site or app was in use when that event was logged.
+#&gt; 99                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          The count of transaction events with purchase revenue. Transaction events are in_app_purchase, ecommerce_purchase, purchase, app_store_subscription_renew, app_store_subscription_convert, and refund.
+#&gt; 100                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             The total amount of time (in seconds) your website or app was in the foreground of users' devices.
+#&gt;     deprecatedApiNames customDefinition     class          type
+#&gt; 1                 NULL               NA dimension          &lt;NA&gt;
+#&gt; 2                 NULL               NA dimension          &lt;NA&gt;
+#&gt; 3                 NULL               NA dimension          &lt;NA&gt;
+#&gt; 4                 NULL               NA dimension          &lt;NA&gt;
+#&gt; 5                 NULL               NA dimension          &lt;NA&gt;
+#&gt; 6                 NULL               NA dimension          &lt;NA&gt;
+#&gt; 7                 NULL               NA dimension          &lt;NA&gt;
+#&gt; 8                 NULL               NA dimension          &lt;NA&gt;
+#&gt; 9                 NULL               NA dimension          &lt;NA&gt;
+#&gt; 10                NULL               NA dimension          &lt;NA&gt;
+#&gt; 11                NULL               NA dimension          &lt;NA&gt;
+#&gt; 12                NULL               NA dimension          &lt;NA&gt;
+#&gt; 13                NULL               NA dimension          &lt;NA&gt;
+#&gt; 14                NULL               NA dimension          &lt;NA&gt;
+#&gt; 15                NULL               NA dimension          &lt;NA&gt;
+#&gt; 16      countryIsoCode               NA dimension          &lt;NA&gt;
+#&gt; 17                NULL               NA dimension          &lt;NA&gt;
+#&gt; 18                NULL               NA dimension          &lt;NA&gt;
+#&gt; 19                NULL               NA dimension          &lt;NA&gt;
+#&gt; 20                NULL               NA dimension          &lt;NA&gt;
+#&gt; 21                NULL               NA dimension          &lt;NA&gt;
+#&gt; 22                NULL               NA dimension          &lt;NA&gt;
+#&gt; 23                NULL               NA dimension          &lt;NA&gt;
+#&gt; 24                NULL               NA dimension          &lt;NA&gt;
+#&gt; 25                NULL               NA dimension          &lt;NA&gt;
+#&gt; 26                NULL               NA dimension          &lt;NA&gt;
+#&gt; 27                NULL               NA dimension          &lt;NA&gt;
+#&gt; 28                NULL               NA dimension          &lt;NA&gt;
+#&gt; 29                NULL               NA dimension          &lt;NA&gt;
+#&gt; 30                NULL               NA dimension          &lt;NA&gt;
+#&gt; 31                NULL               NA dimension          &lt;NA&gt;
+#&gt; 32                NULL               NA dimension          &lt;NA&gt;
+#&gt; 33                NULL               NA dimension          &lt;NA&gt;
+#&gt; 34                NULL               NA dimension          &lt;NA&gt;
+#&gt; 35                NULL               NA dimension          &lt;NA&gt;
+#&gt; 36                NULL               NA dimension          &lt;NA&gt;
+#&gt; 37                NULL               NA dimension          &lt;NA&gt;
+#&gt; 38                NULL               NA dimension          &lt;NA&gt;
+#&gt; 39                NULL               NA dimension          &lt;NA&gt;
+#&gt; 40                NULL               NA dimension          &lt;NA&gt;
+#&gt; 41                NULL               NA dimension          &lt;NA&gt;
+#&gt; 42                NULL               NA dimension          &lt;NA&gt;
+#&gt; 43                NULL               NA dimension          &lt;NA&gt;
+#&gt; 44                NULL               NA dimension          &lt;NA&gt;
+#&gt; 45                NULL               NA dimension          &lt;NA&gt;
+#&gt; 46                NULL               NA dimension          &lt;NA&gt;
+#&gt; 47                NULL               NA dimension          &lt;NA&gt;
+#&gt; 48                NULL               NA dimension          &lt;NA&gt;
+#&gt; 49                NULL               NA dimension          &lt;NA&gt;
+#&gt; 50                NULL               NA dimension          &lt;NA&gt;
+#&gt; 51                NULL               NA dimension          &lt;NA&gt;
+#&gt; 52                NULL               NA dimension          &lt;NA&gt;
+#&gt; 53                NULL               NA dimension          &lt;NA&gt;
+#&gt; 54                NULL               NA dimension          &lt;NA&gt;
+#&gt; 55                NULL               NA dimension          &lt;NA&gt;
+#&gt; 56                NULL               NA dimension          &lt;NA&gt;
+#&gt; 57                NULL               NA dimension          &lt;NA&gt;
+#&gt; 58                NULL               NA dimension          &lt;NA&gt;
+#&gt; 59                NULL               NA dimension          &lt;NA&gt;
+#&gt; 60                NULL               NA dimension          &lt;NA&gt;
+#&gt; 61                NULL               NA dimension          &lt;NA&gt;
+#&gt; 62                NULL               NA dimension          &lt;NA&gt;
+#&gt; 63                NULL               NA dimension          &lt;NA&gt;
+#&gt; 64                NULL               NA dimension          &lt;NA&gt;
+#&gt; 65                NULL               NA dimension          &lt;NA&gt;
+#&gt; 66                NULL               NA dimension          &lt;NA&gt;
+#&gt; 67                NULL               NA dimension          &lt;NA&gt;
+#&gt; 68                NULL               NA dimension          &lt;NA&gt;
+#&gt; 69                NULL               NA dimension          &lt;NA&gt;
+#&gt; 70                NULL               NA dimension          &lt;NA&gt;
+#&gt; 71                NULL               NA dimension          &lt;NA&gt;
+#&gt; 72                NULL               NA dimension          &lt;NA&gt;
+#&gt; 73                NULL             TRUE dimension          &lt;NA&gt;
+#&gt; 74                NULL               NA    metric  TYPE_INTEGER
+#&gt; 75                NULL               NA    metric  TYPE_INTEGER
+#&gt; 76                NULL               NA    metric  TYPE_INTEGER
+#&gt; 77                NULL               NA    metric  TYPE_INTEGER
+#&gt; 78                NULL               NA    metric TYPE_CURRENCY
+#&gt; 79                NULL               NA    metric TYPE_CURRENCY
+#&gt; 80                NULL               NA    metric TYPE_CURRENCY
+#&gt; 81                NULL               NA    metric  TYPE_INTEGER
+#&gt; 82                NULL               NA    metric  TYPE_INTEGER
+#&gt; 83                NULL               NA    metric  TYPE_INTEGER
+#&gt; 84                NULL               NA    metric  TYPE_INTEGER
+#&gt; 85                NULL               NA    metric    TYPE_FLOAT
+#&gt; 86                NULL               NA    metric  TYPE_INTEGER
+#&gt; 87                NULL               NA    metric    TYPE_FLOAT
+#&gt; 88                NULL               NA    metric TYPE_CURRENCY
+#&gt; 89                NULL               NA    metric    TYPE_FLOAT
+#&gt; 90                NULL               NA    metric    TYPE_FLOAT
+#&gt; 91                NULL               NA    metric  TYPE_INTEGER
+#&gt; 92                NULL               NA    metric TYPE_CURRENCY
+#&gt; 93                NULL               NA    metric  TYPE_INTEGER
+#&gt; 94                NULL               NA    metric  TYPE_INTEGER
+#&gt; 95                NULL               NA    metric    TYPE_FLOAT
+#&gt; 96                NULL               NA    metric TYPE_CURRENCY
+#&gt; 97                NULL               NA    metric TYPE_CURRENCY
+#&gt; 98                NULL               NA    metric  TYPE_INTEGER
+#&gt; 99                NULL               NA    metric  TYPE_INTEGER
+#&gt; 100               NULL               NA    metric  TYPE_SECONDS</div><div class='input'>
 
 <span class='co'>## filter clauses</span>
 <span class='co'># OR string filter</span>
@@ -459,7 +1257,7 @@
 <span class='fu'>ga_data_filter</span>(<span class='st'>"city"</span> <span class='kw'>%==%</span><span class='st'>"coPENGhagen"</span>)</div><div class='output co'>#&gt; --| city 
 #&gt; ----stringFilter:  
 #&gt; value:  coPENGhagen | matchType:  EXACT | caseSensitive:  FALSE</div><div class='input'>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
