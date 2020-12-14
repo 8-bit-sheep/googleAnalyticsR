@@ -1,14 +1,7 @@
 source("setup.R")
-
-context("Batch API Mocking")
-
-
-context("v3 API")
-
-
   
   test_that("v3 multi account batching without flag", {
-
+    context("Batch API Mocking")
     skip_on_cran()
     skip_on_travis()
     multi <- google_analytics_3(c(ga_id, ga_id2),

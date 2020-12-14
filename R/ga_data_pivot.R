@@ -1,6 +1,7 @@
 #' Create a GA4 Pivot object for the Data API
 #' 
-#' @export
+#' 
+## #' @export
 #' @import assertthat
 ga_data_pivot <- function(fields,
                           orderBys = NULL,

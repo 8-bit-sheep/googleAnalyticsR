@@ -142,7 +142,7 @@ dsl_order_expr_funcs <- function(orderType){
 lookup_field_class <- function(field){
   # use default dims
   if(is.null(.ga_meta_env$meta)){
-    fields <- meta4
+    fields <- googleAnalyticsR::meta4
   } else {
     fields <- .ga_meta_env$meta
   }

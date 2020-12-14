@@ -2,7 +2,7 @@ context("App + Web Tests")
 
 test_that("Basic fetch", {
   skip_on_cran()
-  ga_auth()
+
   df <- ga_data(
     206670707,
     metrics = "activeUsers",

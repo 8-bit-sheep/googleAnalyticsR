@@ -11,7 +11,7 @@ options(googleAuthR.scopes.selected =
 # auth cache with custom project creds
 if(Sys.getenv("GAR_CLIENT_JSON") != ""){
   googleAuthR::gar_set_client()
-  dir.create("cache/")
+  dir.create("cache/", showWarnings = FALSE)
   ga_cache_call("cache/")
 }
 

@@ -57,7 +57,9 @@ ga_data_aggregations <- function(df,
 #'
 #' @seealso \href{https://developers.google.com/analytics/devguides/reporting/data/v1}{Documentation on Data API}
 #'
-#' @details
+#' @details 
+#' 
+#' This is the main function to call the Google Analytics 4 Data API.  
 #'
 #' @inheritParams Entity
 #' @inheritParams RunReportRequest

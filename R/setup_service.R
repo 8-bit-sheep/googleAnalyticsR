@@ -1,7 +1,7 @@
 #' Setup wizard for authentication options
 #' 
 #' @export
-#' @importFrom googleAuthR gar_setup_clientid
+#' @import googleAuthR
 ga_auth_setup <- function(){
   
   op <- gar_setup_menu(
