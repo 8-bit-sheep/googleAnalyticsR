@@ -16,7 +16,7 @@ A \link{FilterExpression} object suitable for use in \link{ga_data}
 Use with \link{ga_data} to create filters
 }
 \details{
-This uses a specific filter DSL syntax to create GA4 filters that can be passed to \link{ga_data} arguments \code{dimensionFilter} or \link{metricFilter}. Ensure that the fields you use are either all metrics or all dimensions.
+This uses a specific filter DSL syntax to create GA4 filters that can be passed to \link{ga_data} arguments \code{dimensionFilter} or \code{metricFilter}. Ensure that the fields you use are either all metrics or all dimensions.
 
 The syntax uses operators and the class of the value you are setting (string, numeric or logical) to construct the filter expression object.
 
@@ -43,8 +43,8 @@ The DSL rules are:
 ga_meta("data")
 
 # if you have custom fields, supply your propertyId to ga_meta()
-ga_meta("data", propertyId = 206670707)
-
+custom_meta <- ga_meta("data", propertyId = 206670707)
+custom_meta[grepl("^customEvent", custom_meta$apiName),]
 
 ## filter clauses
 # OR string filter

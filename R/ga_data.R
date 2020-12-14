@@ -148,7 +148,7 @@ ga_data <- function(propertyId,
   metricFilter    <- as_filterExpression(metricFilter)
  
   # # we always get these 3 - COUNT is not available unless pivot?
-  # metricAggregations <- c("TOTAL","MAXIMUM","MINIMUM")
+  assert_that_ifnn(all(metricAggregations %in% c("TOTAL","MAXIMUM","MINIMUM")))
   
   dims <- gaw_dimension(dimensions, delimiter = dimensionDelimiter)
   mets <- gaw_metric(metrics)
@@ -227,22 +227,21 @@ ga_aw_report <- function(requestObj){
   o
 }
 
-#' Batched Reporting API
-#' @noRd
-ga_batch_report <- function(requestObj){
-  
-  url <- sprintf("https://analyticsdata.googleapis.com/%s:batchRunReports",
-                 version_aw())
-  
-  # analyticsdata.batchRunReports
-  f <- gar_api_generator(url, "POST", 
-                         data_parse_function = parse_batchrunreports)
-  
-  stopifnot(inherits(requestObj, "gar_BatchRunReportsRequest"))
-  o <- f(the_body = requestObj)
-  
-  o
-}
+
+#' ga_batch_report <- function(requestObj){
+#'   
+#'   url <- sprintf("https://analyticsdata.googleapis.com/%s:batchRunReports",
+#'                  version_aw())
+#'   
+#'   # analyticsdata.batchRunReports
+#'   f <- gar_api_generator(url, "POST", 
+#'                          data_parse_function = parse_batchrunreports)
+#'   
+#'   stopifnot(inherits(requestObj, "gar_BatchRunReportsRequest"))
+#'   o <- f(the_body = requestObj)
+#'   
+#'   o
+#' }
 
 parse_realtime <- function(x){
   if(no_rows(x)) return(data.frame())
@@ -264,17 +263,17 @@ parse_runreport <- function(o){
   parse_rows(o, dim_names, met_names)
 }
 
-parse_batchrunreports <- function(x){
-
-  o <- x$reports
-  
-  if(no_rows(o)) return(data.frame())
-  
-  dim_names <- o$dimensionHeaders[[1]]$name
-  met_names <- o$metricHeaders[[1]]$name
-  
-  parse_batch_rows(o, dim_names, met_names)
-}
+# parse_batchrunreports <- function(x){
+# 
+#   o <- x$reports
+#   
+#   if(no_rows(o)) return(data.frame())
+#   
+#   dim_names <- o$dimensionHeaders[[1]]$name
+#   met_names <- o$metricHeaders[[1]]$name
+#   
+#   parse_batch_rows(o, dim_names, met_names)
+# }
 
 no_rows <- function(o){
   if(is.null(o$rows)){
@@ -360,8 +359,7 @@ parse_rows <- function(o, dim_names, met_names){
 }
 
 
-#' #' @noRd
-#' #' @importFrom dplyr bind_cols across mutate
+
 #' parse_batch_rows <- function(o, dim_names, met_names){
 #'   quota_messages(o)
 #'   
@@ -392,8 +390,8 @@ parse_rows <- function(o, dim_names, met_names){
 #'   res
 #' }
 #' 
-#' #' @noRd
-#' #' @importFrom tibble as_tibble
+
+
 #' get_value_cols <- function(x, 
 #'                            type = c("dimensionValues", "metricValues")){
 #'   type <- match.arg(type)

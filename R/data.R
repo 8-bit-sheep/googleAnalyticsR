@@ -14,7 +14,7 @@
 
 #' Google Analytics API metadata
 #' 
-#' This is a local copy of the data provided by \link{ga_meta("data")}
+#' This is a local copy of the data provided by \code{ga_meta("data")}
 #' 
 #' Running your own call will be more up to date, but this is here in case.
 #' 

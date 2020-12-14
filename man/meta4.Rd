@@ -15,7 +15,7 @@ A data frame containing metric and dimensions that
 meta4
 }
 \description{
-This is a local copy of the data provided by \link{ga_meta("data")}
+This is a local copy of the data provided by \code{ga_meta("data")}
 }
 \details{
 Running your own call will be more up to date, but this is here in case.

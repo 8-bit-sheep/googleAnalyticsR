@@ -260,6 +260,25 @@ Filters are simpler to create but more flexible than in Universal Analytics.
 
 There is now only one filter function - `ga_data_filter()`.  As was the case for `google_analytics()` , you use the filter function to construct metric filters or dimension filters in the `dimensionFilter` or `metricFilter` parameters in your `ga_data()` call. 
 
+```r
+ga_data(
+   206670707,
+   metrics = c("activeUsers","sessions"),
+   dimensions = c("date","city","dayOfWeek"),
+   date_range = c("2020-03-31", "2020-04-27"),
+   dimensionFilter = ga_data_filter(city=="Copenhagen"),
+   limit = 100
+   )
+# A tibble: 17 x 5
+#   date       city       dayOfWeek activeUsers sessions
+#   <date>     <chr>      <chr>           <dbl>    <dbl>
+# 1 2020-04-16 Copenhagen 5                   3        4
+# 2 2020-04-10 Copenhagen 6                   2        2
+# 3 2020-04-15 Copenhagen 4                   2        2
+# 4 2020-04-17 Copenhagen 6                   2        2
+# ...
+```
+
 ### Making filter elements
 
 The base object is `ga_data_filter()` - this holds the logic for the specific metric or dimension you are using.  The function uses a new DSL for GA4 filters, the syntax rules are detailed below: 

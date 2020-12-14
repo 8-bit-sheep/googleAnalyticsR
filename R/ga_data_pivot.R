@@ -2,15 +2,14 @@
 #' 
 #' 
 ## #' @export
-#' @import assertthat
-ga_data_pivot <- function(fields,
-                          orderBys = NULL,
-                          offset = 0,
-                          limit = 10,
-                          metricAggregations = NULL){
-  
-  
-}
+# ga_data_pivot <- function(fields,
+#                           orderBys = NULL,
+#                           offset = 0,
+#                           limit = 10,
+#                           metricAggregations = NULL){
+#   
+#   
+# }
 
 #' PivotOrderBy Object
 #'
