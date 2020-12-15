@@ -6,6 +6,8 @@
 * Fix for passing `ganalytics`-style expressions for dimension and metric filters/segments (#339 and #305), which also resolves #279 (and improves on #253) for continued support of combining expressions (for filters and segments) using `list()`.
 * Support new Google Analytics 4 APIs via `ga_data()` (#335) 
 * Add `ga_data_aggregation()`, `ga_data_filter()`, `ga_data_order()` for working with `ga_data()` (#335)
+* Remove support for API v3 multi-account batching (#347)
+* Deprecate `google_analytics_3()` - support will be removed in next release (#347)
 
 # googleAnalyticsR 0.8.0
 

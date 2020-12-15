@@ -35,7 +35,7 @@
 #' @examples 
 #' 
 #' # start by calling ga_meta("data") to put valid field names in your environment
-#' ga_meta("data")
+#' meta <- ga_meta("data")
 #' 
 #' # if you have custom fields, supply your propertyId to ga_meta()
 #' custom_meta <- ga_meta("data", propertyId = 206670707)

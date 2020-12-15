@@ -750,7 +750,7 @@ The defaults are 10,000 rows per call (50,000 per batch) and `slow_fetch = FALSE
 
 Whilst the [v3 multi account batching feature](http://code.markedmondson.me/googleAnalyticsR/v3.html) isn't available for multi-accounts in v4, by using [`future.apply`](https://github.com/HenrikBengtsson/future.apply) you can launch multiple R sessions that will fetch the API in parallel.  An example is shown below, that fetches from three View IDs at once.
 
-The limiting factor willl then be the v4 [API limits](https://developers.google.com/analytics/devguides/reporting/core/v4/limits-quotas), which are currently 1000 requests per 100 seconds per user, per Google API project (e.g. you will probably want to setup your own Google project if making a lot of requests)
+The limiting factor will then be the v4 [API limits](https://developers.google.com/analytics/devguides/reporting/core/v4/limits-quotas), which are currently 1000 requests per 100 seconds per user, per Google API project (e.g. you will probably want to setup your own Google project if making a lot of requests)
 
 ```r
 library(googleAnalyticsR)

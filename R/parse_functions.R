@@ -258,7 +258,7 @@ parse_ga_account_summary <- function(x){
 }
 
 
-parse_google_analytics <- function(x){
+parse_google_analytics3 <- function(x){
 
   myMessage("Request to profileId: ", x$profileInfo$profileId,
           #     " accountId: ", x$profileInfo$accountId,
@@ -273,7 +273,7 @@ parse_google_analytics <- function(x){
   if(!is.null(x$containsSampledData)){
     if(x$containsSampledData) {
       samplePercent <- round(100 * (as.numeric(x$sampleSize) / as.numeric(x$sampleSpace)), 2)
-      myMessage("Data is sampled, based on ", samplePercent, "% of visits. Use samplingLevel='WALK' to mitigate it.", level = 3 )
+      myMessage("Data is sampled, based on ", samplePercent, "% of visits.", level = 3 )
     }
   }
 
@@ -293,6 +293,7 @@ parse_google_analytics <- function(x){
   attr(gadata, "profileInfo") <- x$profileInfo
   attr(gadata, "dateRange") <- list(startDate = x$query$`start-date`, endDate = x$query$`end-date`)
   attr(gadata, "totalResults") <- x$totalResults
+  attr(gadata, "nextLink") <- x$nextLink
 
   gadata
 }

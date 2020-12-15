@@ -13,9 +13,8 @@ google_analytics_3(
   sort = NULL,
   filters = NULL,
   segment = NULL,
-  samplingLevel = c("DEFAULT", "FASTER", "HIGHER_PRECISION", "WALK"),
+  samplingLevel = c("DEFAULT", "FASTER", "HIGHER_PRECISION"),
   max_results = 100,
-  multi_account_batching = FALSE,
   type = c("ga", "mcf")
 )
 }
@@ -40,14 +39,10 @@ google_analytics_3(
 
 \item{max_results}{Default 100. If greater than 10,000 then will batch GA calls.}
 
-\item{multi_account_batching}{If TRUE then multiple id's are fetched together.
-Not compatible with \code{samplingLevel="WALK"} or \code{max_results>10000}}
-
 \item{type}{ga = Google Analytics v3; mcf = Multi-Channel Funels.}
 }
 \value{
-For one id a data.frame of data, with meta-data in attributes.  
-  For multiple id's, a list of dataframes.
+For one id a data.frame of data, with meta-data in attributes.
 }
 \description{
 Legacy v3 API, for more modern API use \link{google_analytics}.
@@ -84,12 +79,6 @@ gadata <- google_analytics_3(id = ga_id,
                            metrics = c("sessions", "bounceRate"),
                            dimensions = c("source", "medium"))
                        
- ## multi accounts, pass character vector of viewIds
- ## outputs a list of data.frames, named after the viewId
- multi_gadata <- google_analytics_3(id = c("123456","9876545","765432"),
-                                  start="2015-08-01", end="2015-08-02",
-                                  metrics = c("sessions", "bounceRate"),
-                                   dimensions = c("source", "medium"))
                                 
 ## if more than 10000 rows in results, auto batching
 ## example is setting lots of dimensions to try and create big sampled data

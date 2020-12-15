@@ -41,7 +41,7 @@ The API returns a User Deletion Request Resource with \code{deletionRequestTime}
 
 # make sure you are authenticated with user deletion scopes
 options(googleAuthR.scopes.selected = "https://www.googleapis.com/auth/analytics.user.deletion")
-ga_auth(new_user = TRUE)
+ga_auth()
 
 # a vector of ids
 ids <- c("1489547420.1526330722", "1138076389.1526568883")

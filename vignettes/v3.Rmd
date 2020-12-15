@@ -36,13 +36,6 @@ gadata <- google_analytics_3(id = ga_id,
                            metrics = c("sessions", "bounceRate"), 
                            dimensions = c("source", "medium"))
 
-## multi accounts, pass character vector of viewIds
-## outputs a list of data.frames, named after the viewId
-## This fetches 10 accounts per API call. 
-multi_gadata <- google_analytics_3(id = c("123456","9876545","765432"), 
-                                 start="2015-08-01", end="2015-08-02", 
-                                 metrics = c("sessions", "bounceRate"), 
-                                 dimensions = c("source", "medium"))
 
 ## if more than 10000 rows in results, auto batching
 ## example is setting lots of dimensions to try and create big sampled data
