@@ -101,8 +101,6 @@ google_analytics_3 <- function(id,
                                max_results=100,
                                type = c("ga", "mcf")) {
   
-  .Deprecated("google_analytics", package = "googleAnalyticsR")
-  
   samplingLevel <- match.arg(samplingLevel)
   start <- as.character(start)
   end <- as.character(end)
