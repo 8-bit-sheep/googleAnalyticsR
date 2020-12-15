@@ -34,13 +34,14 @@
 #' @importFrom rlang enquo eval_tidy
 #' @examples 
 #' 
+#' \dontrun{
 #' # start by calling ga_meta("data") to put valid field names in your environment
 #' meta <- ga_meta("data")
 #' 
 #' # if you have custom fields, supply your propertyId to ga_meta()
 #' custom_meta <- ga_meta("data", propertyId = 206670707)
 #' custom_meta[grepl("^customEvent", custom_meta$apiName),]
-#' 
+#' }
 #' ## filter clauses
 #' # OR string filter
 #' ga_data_filter(city=="Copenhagen" | city == "London")
