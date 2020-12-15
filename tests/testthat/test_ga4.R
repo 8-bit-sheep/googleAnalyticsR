@@ -5,6 +5,7 @@ source("setup.R")
   test_that("Vanilla test data fetch", {
     skip_on_cran()
     skip_on_travis()
+    options(googleAuthR.verbose = 2)
     t11 <-   google_analytics(ga_id, 
                                 date_range = c("2015-07-30","2015-10-01"),
                                 dimensions=c('medium'), 
@@ -81,7 +82,7 @@ source("setup.R")
     skip_on_cran()
     skip_on_travis()
     as <-   google_analytics(ga_id,
-                              date_range = c("2015-07-30","2016-10-01"),
+                              date_range = c("2015-07-30","2018-10-01"),
                               dimensions=c('minute','hour','landingPagePath','medium','eventLabel','campaign'),
                               metrics = c('sessions'),
                               anti_sample = TRUE)
@@ -279,7 +280,7 @@ source("setup.R")
     ## Each segment vector can then be combined into a logical AND
     seg_defined <- segment_define(list(sv_simple, sv_simple2))
     
-    ## Each segement defintion can apply to users, sessions or both.
+    ## Each segment definition can apply to users, sessions or both.
     ## You can pass a list of several segments
     segment4 <- segment_ga4("simple", user_segment = seg_defined)
     

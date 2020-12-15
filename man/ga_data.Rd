@@ -90,7 +90,7 @@ realtime <- ga_data(
   206670707,
   metrics = "activeUsers",
   dimensions = c("city","unifiedScreenName"),
-  metricAggregations = c("TOTAL", "MINIMUM", "MAXIMUM")
+  metricAggregations = c("TOTAL", "MINIMUM", "MAXIMUM"),
   limit = 100,
   realtime = TRUE)
 
