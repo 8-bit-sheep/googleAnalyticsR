@@ -1,4 +1,4 @@
-context("App + Web Tests")
+context("GA4 Tests")
 
 test_that("Basic fetch", {
   skip_on_cran()
@@ -20,6 +20,8 @@ test_that("Basic fetch", {
 })
 
 test_that("Meta Data API",{
+  skip_on_cran()
+  skip_on_travis()
   
   meta44 <- ga_meta("data", propertyId =206670707)
   expect_equal(meta44[meta44$apiName == "customEvent:test_dim","uiName"],
@@ -68,7 +70,7 @@ test_that("Metric Aggregations", {
   ex1 <- ga_data_aggregations(ma, type = "maximums")
   
   expect_true(!is.null(attr(ma, "metricAggregations")$totals))
-  expect_equal(names(extract) == c("totals","maximums","minimums"))
+  expect_equal(names(extract), c("totals","maximums","minimums"))
   expect_true(is.data.frame(ex1))
   
 })
@@ -183,28 +185,22 @@ test_that("Filter fetch types", {
   }
   
   #dimension filter
-  string_f <- ga_aw_filter("city","Copenhagen","EXACT", caseSensitive = FALSE)
+  string_f <- ga_data_filter(city=="Copenhagen")
   string_data <- test_filter(string_f)
   expect_equal(unique(string_data$city), "Copenhagen")
   
-  in_list_f <- ga_aw_filter("city",c("Copenhagen","London"))
+  in_list_f <- ga_data_filter(city==c("Copenhagen","London"))
   in_list_data <- test_filter(in_list_f)
   expect_true(all(unique(in_list_data$city) %in% c("London", "Copenhagen")))
   
   # metric filters
-  numeric_f <- ga_aw_filter("activeUsers", 2L, "GREATER_THAN")
+  numeric_f <- ga_data_filter(activeUsers>2)
   numeric_data <- test_filter(met_filter = numeric_f)
   expect_true(all(numeric_data$activeUsers >2))
   
-  numeric_list_f <- ga_aw_filter("activeUsers", c(2L,6L))
+  numeric_list_f <- ga_data_filter(activeUsers==c(2,6))
   numeric_list_data <- test_filter(met_filter = numeric_list_f)
   expect_true(all(numeric_list_data$activeUsers %in% 2:6))
-  
-  # need to create metric expressions that are floats
-  #float_f <- ga_aw_filter("")
-  
-  # what can I test this on?
-  #no_nulls <- ga_aw_filter("city", TRUE)
   
 })
 
