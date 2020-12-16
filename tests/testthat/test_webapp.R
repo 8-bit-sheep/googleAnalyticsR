@@ -68,7 +68,7 @@ test_that("Metric Aggregations", {
   ex1 <- ga_data_aggregations(ma, type = "maximums")
   
   expect_true(!is.null(attr(ma, "metricAggregations")$totals))
-  expect_true(names(extract) == c("totals","maximums","minimums"))
+  expect_equal(names(extract) == c("totals","maximums","minimums"))
   expect_true(is.data.frame(ex1))
   
 })
@@ -128,7 +128,7 @@ test_that("Ordering DSL objects", {
   o6 <- c(o1, o2)
   expect_s3_class(o6[[1]], "gar_OrderBy")
   expect_true(o6[[1]]$metric$metricName == "sessions")
-  expect_false(o6[[1]]$desc)
+  expect_true(o6[[1]]$desc)
   expect_true(o6[[2]]$dimension$dimensionName == "city")
   expect_false(o6[[2]]$desc)
   
