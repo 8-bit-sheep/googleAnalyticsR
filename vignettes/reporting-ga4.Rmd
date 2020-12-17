@@ -19,6 +19,16 @@ library(googleAnalyticsR)
 * Easier integration with the real-time API
 * Improved filter syntax
 
+## GA4 enabled properties
+
+You can see the GA4 accounts you have access to under your authentication via `ga_account_list("ga4")`
+
+```r
+library(googleAnalyticsR)
+ga_auth(email="my@email.com")
+ga_account_list("ga4")
+```
+
 ## Meta data for GA4
 
 Universal metadata for what you can query via the Data API can be found by specifying that API in the `ga_meta()` function:

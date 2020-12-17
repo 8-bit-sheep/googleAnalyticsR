@@ -3,6 +3,8 @@
 #' Get a summary of all your accounts, web properties and views your authenticated user can see.
 #'
 #' @seealso https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountSummaries/list
+#' 
+#' @param type Whether to get account summary from universal analytics of GA4 (App_Web) properties
 #'
 #' @return a dataframe of all account, webproperty and view data
 #' @importFrom googleAuthR gar_api_generator
@@ -22,8 +24,16 @@
 #' ga_auth()
 #' al <- ga_account_list()
 #' al$viewId
+#' 
+#' ## get account summary of GA4 properties
+#' ga_account_list("ga4")
 #' }
-ga_account_list <- function(){
+ga_account_list <- function(type = c("universal","ga4")){
+  type <- match.arg(type)
+  
+  if(type == "ga4"){
+    return(ga_admin_account_summary())
+  }
   
   url <- "https://www.googleapis.com/analytics/v3/management/accountSummaries"
   acc_sum <- gar_api_generator(url,

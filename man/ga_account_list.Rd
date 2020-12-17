@@ -4,7 +4,10 @@
 \alias{ga_account_list}
 \title{Account summary for all accounts available to your user}
 \usage{
-ga_account_list()
+ga_account_list(type = c("universal", "ga4"))
+}
+\arguments{
+\item{type}{Whether to get account summary from universal analytics of GA4 (App_Web) properties}
 }
 \value{
 a dataframe of all account, webproperty and view data
@@ -23,6 +26,9 @@ library(googleAnalyticsR)
 ga_auth()
 al <- ga_account_list()
 al$viewId
+
+## get account summary of GA4 properties
+ga_account_list("ga4")
 }
 }
 \seealso{

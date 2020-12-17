@@ -8,6 +8,7 @@
 * Add `ga_data_aggregation()`, `ga_data_filter()`, `ga_data_order()` for working with `ga_data()` (#335)
 * Remove support for API v3 multi-account batching (#347)
 * Deprecate `google_analytics_3()` - support will be removed in next release (#347)
+* Add Admin API to `ga_account_list("ga4")` (#350)
 
 # googleAnalyticsR 0.8.0
 

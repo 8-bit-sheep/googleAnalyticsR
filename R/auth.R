@@ -109,7 +109,7 @@ ga_auth <- function(token = NULL, email = NULL, json_file = NULL){
   # client.id only needed for OAuth2 auth
   default_project_message()
   
-  if(nzchar(Sys.getenv("GARGLE_EMAIL"))){
+  if(is.null(email) && nzchar(Sys.getenv("GARGLE_EMAIL"))){
     email <- Sys.getenv("GARGLE_EMAIL")
     myMessage("Using email from GARGLE_EMAIL env var:", email, level = 3)
   }
