@@ -279,9 +279,8 @@
   <span class='kw'>sort</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>filters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>segment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>samplingLevel</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"DEFAULT"</span>, <span class='st'>"FASTER"</span>, <span class='st'>"HIGHER_PRECISION"</span>, <span class='st'>"WALK"</span>),
+  <span class='kw'>samplingLevel</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"DEFAULT"</span>, <span class='st'>"FASTER"</span>, <span class='st'>"HIGHER_PRECISION"</span>),
   <span class='kw'>max_results</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>multi_account_batching</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ga"</span>, <span class='st'>"mcf"</span>)
 )</pre>
 
@@ -329,11 +328,6 @@
       <td><p>Default 100. If greater than 10,000 then will batch GA calls.</p></td>
     </tr>
     <tr>
-      <th>multi_account_batching</th>
-      <td><p>If TRUE then multiple id's are fetched together.
-Not compatible with <code>samplingLevel="WALK"</code> or <code>max_results&gt;10000</code></p></td>
-    </tr>
-    <tr>
       <th>type</th>
       <td><p>ga = Google Analytics v3; mcf = Multi-Channel Funels.</p></td>
     </tr>
@@ -341,8 +335,7 @@ Not compatible with <code>samplingLevel="WALK"</code> or <code>max_results&gt;10
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>For one id a data.frame of data, with meta-data in attributes.  
-  For multiple id's, a list of dataframes.</p>
+    <p>For one id a data.frame of data, with meta-data in attributes.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>https://developers.google.com/analytics/devguides/reporting/core/v3/</p></div>
@@ -379,12 +372,6 @@ Not compatible with <code>samplingLevel="WALK"</code> or <code>max_results&gt;10
                            <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sessions"</span>, <span class='st'>"bounceRate"</span>),
                            <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"source"</span>, <span class='st'>"medium"</span>))
 
- <span class='co'>## multi accounts, pass character vector of viewIds</span>
- <span class='co'>## outputs a list of data.frames, named after the viewId</span>
- <span class='no'>multi_gadata</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_3</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"123456"</span>,<span class='st'>"9876545"</span>,<span class='st'>"765432"</span>),
-                                  <span class='kw'>start</span><span class='kw'>=</span><span class='st'>"2015-08-01"</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='st'>"2015-08-02"</span>,
-                                  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sessions"</span>, <span class='st'>"bounceRate"</span>),
-                                   <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"source"</span>, <span class='st'>"medium"</span>))
 
 <span class='co'>## if more than 10000 rows in results, auto batching</span>
 <span class='co'>## example is setting lots of dimensions to try and create big sampled data</span>

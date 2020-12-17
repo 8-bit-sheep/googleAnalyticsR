@@ -347,7 +347,64 @@
 <code><a href='ga_data_order.html'>ga_data_order</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+
+<span class='co'># send up to 4 date ranges</span>
+<span class='no'>multi_date</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data</span>(
+  <span class='fl'>206670707</span>,
+  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"activeUsers"</span>,<span class='st'>"sessions"</span>),
+  <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"date"</span>,<span class='st'>"city"</span>,<span class='st'>"dayOfWeek"</span>),
+  <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2020-03-31"</span>, <span class='st'>"2020-04-27"</span>, <span class='st'>"2020-04-30"</span>, <span class='st'>"2020-05-27"</span>),
+  <span class='kw'>dimensionFilter</span> <span class='kw'>=</span> <span class='fu'><a href='ga_data_filter.html'>ga_data_filter</a></span>(<span class='st'>"city"</span><span class='kw'>==</span><span class='st'>"Copenhagen"</span>),
+  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>100</span>
+  )
+
+
+<span class='co'># metric and dimension expressions</span>
+
+<span class='co'># create your own named metrics</span>
+<span class='no'>met_expression</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data</span>(
+  <span class='fl'>206670707</span>,
+  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"activeUsers"</span>,<span class='st'>"sessions"</span>,<span class='kw'>sessionsPerUser</span> <span class='kw'>=</span> <span class='st'>"sessions/activeUsers"</span>),
+  <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"date"</span>,<span class='st'>"city"</span>,<span class='st'>"dayOfWeek"</span>),
+  <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2020-03-31"</span>, <span class='st'>"2020-04-27"</span>),
+  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>100</span>
+  )
+
+<span class='co'># create your own aggregation dimensions</span>
+<span class='no'>dim_expression</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data</span>(
+  <span class='fl'>206670707</span>,
+  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"activeUsers"</span>,<span class='st'>"sessions"</span>),
+  <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"date"</span>,<span class='st'>"city"</span>,<span class='st'>"dayOfWeek"</span>, <span class='kw'>cdow</span> <span class='kw'>=</span> <span class='st'>"city/dayOfWeek"</span>),
+  <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2020-03-31"</span>, <span class='st'>"2020-04-27"</span>),
+  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>100</span>
+  )
+
+<span class='co'># run a real-time report (no date dimension allowed)</span>
+<span class='no'>realtime</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data</span>(
+  <span class='fl'>206670707</span>,
+  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='st'>"activeUsers"</span>,
+  <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"city"</span>,<span class='st'>"unifiedScreenName"</span>),
+  <span class='kw'>metricAggregations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"TOTAL"</span>, <span class='st'>"MINIMUM"</span>, <span class='st'>"MAXIMUM"</span>),
+  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>realtime</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># extract meta data from the table</span>
+<span class='fu'><a href='ga_data_aggregations.html'>ga_data_aggregations</a></span>(<span class='no'>realtime</span>)
+
+<span class='co'># add ordering</span>
+<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_data_order.html'>ga_data_order</a></span>(-<span class='no'>sessions</span>)
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_data_order.html'>ga_data_order</a></span>(-<span class='no'>dayOfWeek</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"NUMERIC"</span>)
+
+<span class='fu'>ga_data</span>(
+  <span class='fl'>206670707</span>,
+  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"activeUsers"</span>,<span class='st'>"sessions"</span>),
+  <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"date"</span>,<span class='st'>"city"</span>,<span class='st'>"dayOfWeek"</span>),
+  <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2020-03-31"</span>, <span class='st'>"2020-04-27"</span>),
+  <span class='kw'>orderBys</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>a</span>, <span class='no'>b</span>)
+  )
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

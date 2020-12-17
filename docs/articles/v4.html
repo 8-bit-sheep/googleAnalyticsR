@@ -887,7 +887,7 @@ segment_seq_example
 <h2 class="hasAnchor">
 <a href="#fetching-from-multiple-views" class="anchor"></a>Fetching from multiple views</h2>
 <p>Whilst the <a href="http://code.markedmondson.me/googleAnalyticsR/v3.html">v3 multi account batching feature</a> isn’t available for multi-accounts in v4, by using <a href="https://github.com/HenrikBengtsson/future.apply"><code>future.apply</code></a> you can launch multiple R sessions that will fetch the API in parallel. An example is shown below, that fetches from three View IDs at once.</p>
-<p>The limiting factor willl then be the v4 <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/limits-quotas">API limits</a>, which are currently 1000 requests per 100 seconds per user, per Google API project (e.g. you will probably want to setup your own Google project if making a lot of requests)</p>
+<p>The limiting factor will then be the v4 <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/limits-quotas">API limits</a>, which are currently 1000 requests per 100 seconds per user, per Google API project (e.g. you will probably want to setup your own Google project if making a lot of requests)</p>
 <div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">future.apply</span>)
 
