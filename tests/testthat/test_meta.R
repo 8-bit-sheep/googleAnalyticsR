@@ -31,6 +31,11 @@ test_that("Get the account summary list", {
   al <- ga_account_list()
   expect_s3_class(al, "data.frame")
   
+  ga4 <- ga_account_list("ga4")
+  expect_s3_class(ga4, "data.frame")
+  expect_equal(names(ga4), 
+               c("account_name","accountId","property_name","propertyId"))
+  
 })
 
 

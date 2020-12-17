@@ -6,7 +6,7 @@
 #' @details 
 #' 
 #' @importFrom googleAuthR gar_api_generator
-#' @export
+#' @noRd
 ga_admin_account_summary <- function(){
   
   url <- "https://analyticsadmin.googleapis.com/v1alpha/accountSummaries"
