@@ -12,14 +12,11 @@ Get more examples and tutorials at the [googleAnalyticsR website](https://code.m
 
 ## Install
 
-You also need `googleAuthR`
-
 ```r
-install.packages("googleAuthR")
 install.packages("googleAnalyticsR")
 ```
 
-### Development version off github
+### Development version off GitHub
 
 ```r
 remotes::install_github("MarkEdmondson1234/googleAnalyticsR")

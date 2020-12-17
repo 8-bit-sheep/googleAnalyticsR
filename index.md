@@ -62,12 +62,9 @@ If you have used the package and published online then get in touch and I'll lis
 * Mario Martinez has a guide on using [googleAnalyticsR in Spanish](http://www.doctormetrics.com/2017/01/03/nueva-version-de-la-api-de-google-analytics-r-statistics/#.WLVOWhAvpBI)
 * Vincent has a tutorial on using [Twitters AnomalyDetection package with googleAnalyticsR](https://data-seo.fr/2016/05/02/detecter-vos-marronniers-avec-r/) in French
 * Tom Alby uses `googleAnalyticsR` to do some [clustering market basket analysis](https://tom.alby.de/clustering-mit-google-analytics-und-r/) in German.
-* Bert uses `googleAnalyticsR` to [detect bot traffic](http://node1.com/examine-real-website-visitor-data/)
 * Anita makes some [pie and bar charts](https://rpubs.com/anitaowens/googleapi) from channel data 
 * Creating [Google Analytics non-sampled scheduled reports](https://2steps.pro/google-anslytics-data-without-sampling-scheduler.html) [Russian]
-* Fredrik [forecasts sales from Google Analytics and sends it to your own Slack bot](http://www.insightworks.se/forecast-google-analytics-r-slack/) [Swedish]
-* Omar shows some [heatmaps and ggplot2 using googleAnalyticsR](http://omargonzalesdiaz.com/blog/googleanalytics-ggplot2.html) in Spanish
-* Mararoff.com shows how to [compare your CRM data with Google Analytics](http://makaroff.org/ga-data-upload/) in Russian
+* Fredrik [forecasts sales from Google Analytics and sends it to your own Slack bot](https://www.linkedin.com/pulse/prognostisera-data-fr%C3%A5n-google-analytics-med-r-fredrik-cederl%C3%B6f/) [Swedish]
 * Fredrik [analyses time between bookings and events](https://medium.com/@fredrikcederlof/analyzing-time-between-bookings-and-events-with-r-google-analytics-293f6c334d73) with lots of detail on interpreting the data.
 * Becky West at Lunametrics shows how to use some of the management API functions to [audit your GA configurations](https://www.lunametrics.com/blog/2018/03/08/google-analytics-check-r-management-api/)
 * Pierre has a [guide in French](https://www.anakeyn.com/2018/03/01/googleanalyticsr-import-google-analytics-r/) on how to setup googleAnalyticsR and start pulling out data.
@@ -80,6 +77,7 @@ If you have used the package and published online then get in touch and I'll lis
 * Adam Ribaudo has some nice resources on analysis with `googleAnalyticsR` including posts on [market basket analysis (MBA) with Google Analytics data](https://www.noisetosignal.io/2020/05/market-basket-analysis-using-google-analytics-data/) and [viewing Google Analytics segment overlap](https://www.noisetosignal.io/2020/05/viewing-google-analytics-segment-overlap-in-r/)
 * Chloe writes on how to use googleAnalyticsR to [detect spam traffic in your Google Analytics data](https://medium.com/@the.numerist/detecting-spam-traffic-in-google-analytics-data-with-googleanalyticsr-d2a97b83e926)
 * Carl from RStudio writes about the process of [creating custom Google Analytics dashboards with R](https://blog.rstudio.com/2020/11/27/google-analytics-part1/).
+* Antonine writes a nice in-depth post on [analysis you can do with your blog traffic in R](https://www.statsandr.com/blog/track-blog-performance-in-r/)
 
 ## My website
 
