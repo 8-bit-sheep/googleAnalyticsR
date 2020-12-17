@@ -77,7 +77,7 @@ If you have used the package and published online then get in touch and I'll lis
 * Adam Ribaudo has some nice resources on analysis with `googleAnalyticsR` including posts on [market basket analysis (MBA) with Google Analytics data](https://www.noisetosignal.io/2020/05/market-basket-analysis-using-google-analytics-data/) and [viewing Google Analytics segment overlap](https://www.noisetosignal.io/2020/05/viewing-google-analytics-segment-overlap-in-r/)
 * Chloe writes on how to use googleAnalyticsR to [detect spam traffic in your Google Analytics data](https://medium.com/@the.numerist/detecting-spam-traffic-in-google-analytics-data-with-googleanalyticsr-d2a97b83e926)
 * Carl from RStudio writes about the process of [creating custom Google Analytics dashboards with R](https://blog.rstudio.com/2020/11/27/google-analytics-part1/).
-* Antonine writes a nice in-depth post on [analysis you can do with your blog traffic in R](https://www.statsandr.com/blog/track-blog-performance-in-r/)
+* Antoine writes a nice in-depth post on [analysis you can do with your blog traffic in R](https://www.statsandr.com/blog/track-blog-performance-in-r/)
 
 ## My website
 
