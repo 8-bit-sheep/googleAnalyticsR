@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Account summary for all accounts available to your user — ga_account_list • googleAnalyticsR</title>
+<title>Returns summaries of all accounts accessible by the caller. — ga_admin_account_summary • googleAnalyticsR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Account summary for all accounts available to your user — ga_account_list" />
-<meta property="og:description" content="This is the recommended way to get all your account details for your user, including the web property and View IDs.  The $viewId column contains the ID you need for the data fetching functions such as google_analytics." />
+<meta property="og:title" content="Returns summaries of all accounts accessible by the caller. — ga_admin_account_summary" />
+<meta property="og:description" content="Returns summaries of all accounts accessible by the caller." />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
 
@@ -261,54 +261,27 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Account summary for all accounts available to your user</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/accounts.R'><code>R/accounts.R</code></a></small>
-    <div class="hidden name"><code>ga_account_list.Rd</code></div>
+    <h1>Returns summaries of all accounts accessible by the caller.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/analytics_admin.R'><code>R/analytics_admin.R</code></a></small>
+    <div class="hidden name"><code>ga_admin_account_summary.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This is the recommended way to get all your account details for your user, including the web property and View IDs.  The <code>$viewId</code> column contains the ID you need for the data fetching functions such as <a href='google_analytics.html'>google_analytics</a>.</p>
+    <p>Returns summaries of all accounts accessible by the caller.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_account_list</span>(<span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"universal"</span>, <span class='st'>"ga4"</span>))</pre>
+    <pre class="usage"><span class='fu'>ga_admin_account_summary</span>()</pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>type</th>
-      <td><p>Whether to get account summary from universal analytics of GA4 (App_Web) properties</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>a dataframe of all account, webproperty and view data</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Get a summary of all your accounts, web properties and views your authenticated user can see.</p>
+    
+
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountSummaries/list</p>
-<p>Other account structure functions: 
-<code><a href='ga_accounts.html'>ga_accounts</a>()</code>,
-<code><a href='ga_view_list.html'>ga_view_list</a>()</code>,
-<code><a href='ga_view.html'>ga_view</a>()</code>,
-<code><a href='ga_webproperty_list.html'>ga_webproperty_list</a>()</code>,
-<code><a href='ga_webproperty.html'>ga_webproperty</a>()</code></p></div>
+    <div class='dont-index'><p><a href='http://code.google.com/apis/analytics/docs/mgmt/home.html'>Google Documentation</a></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>googleAnalyticsR</span>)
-<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
-<span class='no'>al</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_account_list</span>()
-<span class='no'>al</span>$<span class='no'>viewId</span>
-
-<span class='co'>## get account summary of GA4 properties</span>
-<span class='fu'>ga_account_list</span>(<span class='st'>"ga4"</span>)
-}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
