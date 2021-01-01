@@ -497,12 +497,12 @@
 <p>Fields are metrics and dimensions that are available to your GA4 implementation, including custom fields. You can see what is available by calling the <code><a href="../reference/ga_meta.html">ga_meta("data")</a></code> function.</p>
 <p>Do not construct metric filters and use in the <code>dimensionFilter</code> argument or vice-versa.</p>
 <p>You can use quoted (<code>"city"</code>, <code>"session"</code>) or unquoted fields ( <code>city</code> or <code>session</code>) which will check the field is valid before you send it to the API.</p>
-<p>If you want to use custom fields from your property, do a call to <code><a href="../reference/ga_meta.html">ga_meta("data", propertyId=1234546)</a></code> replacing your propertyId for the GA4 property that has the custom fields. Once fetched, they will be placed in your local environment for all future calls to <code><a href="../reference/ga_data_filter.html">ga_data_filter()</a></code> - use the custom events without the <code>customEvent:</code> prefix e.g.</p>
+<p>If you want to use custom fields from your property, do a call to <code><a href="../reference/ga_meta.html">ga_meta("data", propertyId=1234546)</a></code> replacing your propertyId for the GA4 property that has the custom fields. Once fetched, they will be placed in your local environment for all future calls to <code><a href="../reference/ga_data_filter.html">ga_data_filter()</a></code> - use the custom events with a <code>cust_</code> prefix e.g.</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co"># gets fields including custom event field "customEvent:test_dim"</span>
 <span class="no">my_meta</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span>(<span class="st">"data"</span>, <span class="kw">propertyId</span> <span class="kw">=</span> <span class="fl">206670707</span>)
 
 <span class="co"># use the custom event in a filter</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">test_dim</span> <span class="kw">==</span> <span class="st">"test"</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">cust_test_dim</span> <span class="kw">==</span> <span class="st">"test"</span>)</pre></body></html></div>
 </div>
 <div id="filter-values" class="section level4">
 <h4 class="hasAnchor">
@@ -643,7 +643,7 @@
 <span class="no">my_meta</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span>(<span class="st">"data"</span>, <span class="kw">propertyId</span> <span class="kw">=</span> <span class="fl">206670707</span>)
 
 <span class="co"># use the custom event in a filter</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">test_dim</span> <span class="kw">==</span> <span class="st">"test"</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">cust_test_dim</span> <span class="kw">==</span> <span class="st">"test"</span>)</pre></body></html></div>
 </div>
 <div id="numeric-filters-for-use-in-metricfilters" class="section level4">
 <h4 class="hasAnchor">
@@ -941,7 +941,7 @@
 <a href="#order-fields" class="anchor"></a>Order Fields</h4>
 <p>Fields are metrics and dimensions that are available to your GA4 implementation, including custom fields. You can see what is available by calling the <code><a href="../reference/ga_meta.html">ga_meta("data")</a></code> function.</p>
 <p>You can use quoted (<code>"city"</code>, <code>"session"</code>) or unquoted fields ( <code>city</code> or <code>session</code>) which will check the field is valid before you send it to the API.</p>
-<p>If you want to use custom fields from your property, do a call to <code><a href="../reference/ga_meta.html">ga_meta("data", propertyId=1234546)</a></code> similar to the filter fields explained above.</p>
+<p>If you want to use custom fields from your property, do a call to <code><a href="../reference/ga_meta.html">ga_meta("data", propertyId=1234546)</a></code> similar to the filter fields explained above, and prefix the custom field with <code>cust_</code></p>
 </div>
 </div>
 <div id="real-time-data" class="section level2">
