@@ -312,14 +312,14 @@ Do not construct metric filters and use in the `dimensionFilter` argument or vic
 
 You can use quoted (`"city"`, `"session"`) or unquoted fields ( `city` or `session`) which will check the field is valid before you send it to the API.  
 
-If you want to use custom fields from your property, do a call to `ga_meta("data", propertyId=1234546)` replacing your propertyId for the GA4 property that has the custom fields.  Once fetched, they will be placed in your local environment for all future calls to `ga_data_filter()` - use the custom events without the `customEvent:` prefix e.g.
+If you want to use custom fields from your property, do a call to `ga_meta("data", propertyId=1234546)` replacing your propertyId for the GA4 property that has the custom fields.  Once fetched, they will be placed in your local environment for all future calls to `ga_data_filter()` - use the custom events with a `cust_` prefix e.g.
 
 ```r
 # gets fields including custom event field "customEvent:test_dim"
 my_meta <- ga_meta("data", propertyId = 206670707)
 
 # use the custom event in a filter
-ga_data_filter(test_dim == "test")
+ga_data_filter(cust_test_dim == "test")
 ```
 
 #### Filter Values
@@ -401,7 +401,7 @@ For custom fields use `ga_meta("data", propertyId=12345)` first to fetch them.
 my_meta <- ga_meta("data", propertyId = 206670707)
 
 # use the custom event in a filter
-ga_data_filter(test_dim == "test")
+ga_data_filter(cust_test_dim == "test")
 ```
 
 #### Numeric filters for use in `metricFilters`
@@ -603,7 +603,7 @@ Fields are metrics and dimensions that are available to your GA4 implementation,
 
 You can use quoted (`"city"`, `"session"`) or unquoted fields ( `city` or `session`) which will check the field is valid before you send it to the API.  
 
-If you want to use custom fields from your property, do a call to `ga_meta("data", propertyId=1234546)` similar to the filter fields explained above.
+If you want to use custom fields from your property, do a call to `ga_meta("data", propertyId=1234546)` similar to the filter fields explained above, and prefix the custom field with `cust_`
 
 
 ## Real Time Data

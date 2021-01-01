@@ -76,7 +76,7 @@ ga_data_order <- function(x, type = c("ALPHANUMERIC",
   
   mask_data <- c(dsl_order_expr_funcs(type), 
                  filter_validation_meta())
-  
+
   rlang::eval_tidy(x, data = mask_data)
 }
 

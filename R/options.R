@@ -5,7 +5,7 @@
     ## default Google project
     googleAuthR.client_id = "289759286325-i5kd45j7qnoc1t8h86611b38icnfk38d.apps.googleusercontent.com",
     googleAuthR.client_secret = "RnKpRn0ZOrKbwwSPeX4Giujf",
-    googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics", 
+    googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
                                     "https://www.googleapis.com/auth/analytics.readonly",
                                     "https://www.googleapis.com/auth/analytics.edit",
                                     "https://www.googleapis.com/auth/analytics.manage.users",
@@ -45,13 +45,13 @@
 
   googleAuthR::gar_cache_setup(invalid_func = f)
   
-  invisible()
+  invisible(NULL)
   
 }
 
 .onAttach <- function(libname, pkgname){
   
-  if(Sys.getenv("GAR_CLIENT_JSON") != ""){
+  if(nzchar(Sys.getenv("GAR_CLIENT_JSON"))){
     googleAuthR::gar_set_client(json = Sys.getenv("GAR_CLIENT_JSON"))
   }
   
@@ -65,7 +65,7 @@
   googleAuthR::gar_attach_auto_auth(needed, 
                                     environment_var = "GA_AUTH_FILE")
   
-  invisible()
+  invisible(NULL)
   
 }
 

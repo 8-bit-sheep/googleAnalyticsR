@@ -106,7 +106,7 @@ ga_data_filter <- function(x){
   
   mask_data <- c(dsl_filter_expr_funcs, 
                  filter_validation_meta())
-  
+
   rlang::eval_tidy(x, data = mask_data)
 }
 
@@ -499,7 +499,7 @@ filter_validation_meta <- function(){
   }
   
   # user friendly custom names
-  the_names <- gsub("^custom(Event|User):", "", fields$apiName)
+  the_names <- gsub("^custom(Event|User):", "cust_", fields$apiName)
   
   # the field names
   setNames(lapply(fields$apiName, function(x) x), the_names)
