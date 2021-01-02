@@ -28,7 +28,9 @@ NULL
 ## horrible hack https://github.com/tidyverse/magrittr/issues/29
 if(getRversion() >= "2.15.1"){
   utils::globalVariables(c(".",
+                           "account",
                            "accountName",
+                           "account_name",
                            "accountId",
                            "activityType",
                            "ecommerce",
@@ -42,6 +44,7 @@ if(getRversion() >= "2.15.1"){
                            "activityTime",
                            "cd_value",
                            "cd_index",
+                           "displayName",
                            "hit_data",
                            "has_goal",
                            "goals",
@@ -62,6 +65,9 @@ if(getRversion() >= "2.15.1"){
                            "parentLink.href",
                            "parentLink.type",
                            "permissions.local",
+                           "property",
+                           "propertyId",
+                           "property_name",
                            "selfLink",
                            "startTime",
                            "updated",

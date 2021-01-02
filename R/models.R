@@ -295,12 +295,13 @@ ga_model_edit <- function(model,
       model_f           = model_f2,
       required_packages = required_packages2,
       description       = description2,
+      output_f          = output_f2,
       shiny_module      = shiny_module
     ), 
     class = "ga_model"
   )
   
-  if(save_me != "") ga_model_save(model, filename = save_me)
+  if(nzchar(save_me)) ga_model_save(model, filename = save_me)
   
   model
 }
