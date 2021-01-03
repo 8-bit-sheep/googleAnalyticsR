@@ -26,7 +26,6 @@ Other GA modelling functions:
 \code{\link{ga_model_load}()},
 \code{\link{ga_model_make}()},
 \code{\link{ga_model_save}()},
-\code{\link{ga_model_tweet}()},
 \code{\link{ga_model_write}()}
 }
 \concept{GA modelling functions}

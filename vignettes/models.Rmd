@@ -2,9 +2,6 @@
 title: "Statistical models and visualisations with Google Analytics data"
 ---
 
-
-
-
 Downloading Google Analytics data is all well and good, but the reason most users want to use the API is to then operate and act upon that data.
 
 There are several tutorials linked from the homepage that demonstrate various applications of using `googleAnalyticsR` to analyse data, but they can still be intimidating for new users of R.
@@ -16,23 +13,6 @@ To make it easier to distribute these analysis, `googleAnalyticsR` now includes 
 `.gamr` files also includes the ability to create Shiny modules which you can use to quickly create online Shiny dashboards displaying the model results, and which can switch to users own Google Analytics data using the multi-user login capabilities.
 
 The `.gamr` file format can be shared with others online or within your organisation.  A new R package that includes some more advanced examples is available from [`IronistM/googleAnalyticsModelR/`](https://github.com/IronistM/googleAnalyticsModelR/)
-
-As we have a standardised model structure, it makes it easier to use the output in other functions.  For example, you can make a webpage suitable for embedding in Twitter tweets and upload via googleCloudStorageR using `ga_model_tweet()`:
-
-
-```r
-library(googleCloudStorageR)
-
-ga_model_tweet(forecast_data, 
-               "@HoloMarkeD", 
-               title = "ga_model example - prophet forecasting",
-               bucket = "mark-edmondson-public-read")
-
-```
-
-Which embeds in a tweet (you have to click the play icon to activate the visualisation):
-
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Still playing with embedding interactive plots in tweets. These are all made by one R function, googleAnalyticsR::ga_model_tweet : <a href="https://t.co/pos14U9x7j">https://t.co/pos14U9x7j</a> - this is the prophet forecasting example requested by <a href="https://twitter.com/VincentTerrasi?ref_src=twsrc%5Etfw">@VincentTerrasi</a></p>&mdash; Mark Edmondson (@HoloMarkeD) <a href="https://twitter.com/HoloMarkeD/status/1106948306515709954?ref_src=twsrc%5Etfw">March 16, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
 
 ## A simple example loading a model directly
