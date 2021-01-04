@@ -190,26 +190,7 @@ ga_model_make <- function(data_f,
                           outputShiny = shiny::plotOutput,
                           renderShiny = shiny::renderPlot){
   
-  assert_that(
-    is.function(data_f),
-    is.character(required_columns),
-    is.function(model_f)
-  )
-  
-  if(!any(function_args(data_f, TRUE) == "...")){
-    stop("data_f() arguments need to include ...", call.=FALSE)
-  }
-  
-  if(!any(function_args(model_f, TRUE) == "...")){
-    stop("model_f() arguments need to include ...", call.=FALSE)
-  }
-  
-  if(!is.null(output_f) && !any(function_args(output_f, TRUE) == "...")){
-    stop("output_f() arguments need to include ...", call.=FALSE)
-  }
-  
-  structure(
-    list(
+  Model(
       data_f            = data_f,
       required_columns  = required_columns,
       model_f           = model_f,
@@ -221,9 +202,7 @@ ga_model_make <- function(data_f,
                                                output_f = output_f,
                                                outputShiny = outputShiny,
                                                renderShiny = renderShiny)
-    ), 
-    class = "ga_model"
-  )
+    )
   
 }
 
@@ -265,10 +244,10 @@ ga_model_edit <- function(model,
   shiny_module_ui2     <- model$shiny_module$ui
   shiny_module_server2 <- model$shiny_module$server
   
-  data_f2            <- assign_new(data_f, data_f2)
+  data_f2            <- assign_new(data_f, data_f2, is.function)
   required_columns2  <- assign_new(required_columns, required_columns2, is.character)
-  model_f2           <- assign_new(model_f, model_f2)
-  output_f2          <- assign_new(output_f, output_f2)
+  model_f2           <- assign_new(model_f, model_f2, is.function)
+  output_f2          <- assign_new(output_f, output_f2, is.function)
   required_packages2 <- assign_new(required_packages, required_packages2, is.character)
   description2       <- assign_new(description, description2, assertthat::is.string)
   
@@ -288,8 +267,7 @@ ga_model_edit <- function(model,
                                             renderShiny = shiny_module_server2)
 
 
-  model <- structure(
-    list(
+  model <- Model(
       data_f            = data_f2,
       required_columns  = required_columns2,
       model_f           = model_f2,
@@ -297,15 +275,53 @@ ga_model_edit <- function(model,
       description       = description2,
       output_f          = output_f2,
       shiny_module      = shiny_module
-    ), 
-    class = "ga_model"
-  )
+    )
   
   if(nzchar(save_me)) ga_model_save(model, filename = save_me)
   
   model
 }
 
+#' @noRd
+Model <- function(data_f,
+                  required_columns  = NULL,
+                  model_f           = NULL,
+                  required_packages = NULL,
+                  description       = NULL,
+                  output_f          = NULL,
+                  shiny_module      = NULL){
+
+  assert_that(
+    is.function(data_f),
+    is.character(required_columns),
+    is.function(model_f)
+  )
+  
+  if(!any(function_args(data_f, TRUE) == "...")){
+    stop("data_f() arguments need to include ...", call.=FALSE)
+  }
+  
+  if(!any(function_args(model_f, TRUE) == "...")){
+    stop("model_f() arguments need to include ...", call.=FALSE)
+  }
+  
+  if(!is.null(output_f) && !any(function_args(output_f, TRUE) == "...")){
+    stop("output_f() arguments need to include ...", call.=FALSE)
+  }
+  
+  structure(
+    list(
+      data_f            = data_f,
+      required_columns  = required_columns,
+      model_f           = model_f,
+      required_packages = required_packages,
+      description       = description,
+      output_f          = output_f,
+      shiny_module      = shiny_module
+    ), 
+    class = "ga_model"
+  )
+}
 
 
 is.ga_model <- function(x){
@@ -344,41 +360,44 @@ create_shiny_module_funcs <- function(data_f,
     
   }
   
-  server <- function(input, output, session, view_id, ...){
-    
-    dots <- list(...)
-    
-    gadata <- shiny::reactive({
-
-      myMessage("Fetching data", level = 3)
-      do.call(data_f, 
-              args = c(list(viewId = view_id()), 
-                       eval_input_list(dots)))
-      
-    })
-    
-    model_output <- shiny::reactive({
-      shiny::validate(shiny::need(gadata(), 
-                                  message = "Waiting for data"))
-      myMessage("Modelling data", level = 3)
-
-      do.call(model_f, 
-              args = c(list(gadata()), 
-                       eval_input_list(dots)))
-      
-    })
-    
-    output$ui_out <- renderShiny({
-      shiny::validate(shiny::need(model_output(), 
-                                  message = "Waiting for model output"))
-      
-      myMessage("Rendering model output", level = 3)
-      do.call(output_f,
-              args = c(list(model_output()), eval_input_list(dots)))
-      
-    })
-    
-    return(model_output)
+  server <- function(id, view_id, ...){
+  
+    shiny::moduleServer(
+      id,
+      function(input, output, session){
+        dots <- list(...)
+        gadata <- shiny::reactive({
+          
+          myMessage("Fetching data", level = 3)
+          do.call(data_f, 
+                  args = c(list(viewId = view_id()), 
+                           eval_input_list(dots)))
+          
+        })
+        
+        model_output <- shiny::reactive({
+          shiny::validate(shiny::need(gadata(), 
+                                      message = "Waiting for data"))
+          myMessage("Modelling data", level = 3)
+          
+          do.call(model_f, 
+                  args = c(list(gadata()), 
+                           eval_input_list(dots)))
+          
+        })
+        
+        output$ui_out <- renderShiny({
+          shiny::validate(shiny::need(model_output(), 
+                                      message = "Waiting for model output"))
+          
+          myMessage("Rendering model output", level = 3)
+          do.call(output_f,
+                  args = c(list(model_output()), eval_input_list(dots)))
+          
+        })
+        
+        return(model_output)
+      })
   }
   
   list(
@@ -430,5 +449,70 @@ write_f <- function(name, f){
     "}")
 }
 
+#' Get a Shiny template file
+#' 
+#' Gets a pre-created template from the googleAnalyticsR samples
+#' 
+#' @param name the template name
+#' 
+#' @export
+ga_model_shiny_template <- function(name){
+  system.file("models","shiny",paste0(name,".R"), 
+              package = "googleAnalyticsR")
+}
 
+
+#' Create a Shiny app from a ga_model file
+#' 
+#' @param model_location The \link{ga_model} file location ("my_model.gamr")
+#' @param template The template file for the Shiny app
+#' @param web_json The client.id json file for Web
+#' @param scopes The scope the API requests will be under
+#' @param title The title of the Shiny app
+#' @param local_file If not empty, will not launch Shiny app but write code to the file location you put here
+#' @param ... Extra variables the template may support
+#' 
+#' @export
+#' @importFrom assertthat is.readable
+#' @importFrom whisker whisker.render
+ga_model_shiny <- function(model_location,
+                           template = ga_model_shiny_template("template1"),
+                           title = paste(basename(model_location),
+                                         "ga_model","googleAnalyticsR"),
+                           web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"),
+                           scopes = "https://www.googleapis.com/auth/analytics.readonly",
+                           local_file = "",
+                           ...){
+  
+  assert_that(is.readable(model_location),
+              is.readable(template),
+              nzchar(web_json),
+              nzchar(scopes))
+  
+  # get absolute file path
+  model_location <- normalizePath(model_location)
+  
+  txt <- readLines(template)
+  values <- c(list(...),
+              web_json = web_json,
+              scopes = scopes,
+              ga_model = model_location,
+              shiny_title = title,
+              ga_model_name = "model1")
+
+  
+  render <- whisker.render(txt, values)
+  
+  if(nzchar(local_file)){
+    writeLines(render, local_file)
+    return(render)
+  }
+  
+  tmp <- tempfile(fileext = ".R")
+  on.exit(unlink(tmp))
+  
+  writeLines(render, tmp)
+  myMessage("Launching Shiny app from ", tmp, level = 3)
+  shiny::runApp(tmp)
+}
 

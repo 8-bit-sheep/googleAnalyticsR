@@ -48,7 +48,8 @@ Suggests:
     miniUI (>= 0.1.1),
     rmarkdown,
     shiny (>= 0.13.2),
-    testthat
+    testthat,
+    whisker
 License: MIT + file LICENSE
 LazyData: TRUE
 RoxygenNote: 7.1.0

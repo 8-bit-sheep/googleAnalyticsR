@@ -93,70 +93,61 @@ And if you want to review the code of the model, use `ga_model_write()` to write
 ga_model_write(decomp_ga, "my_model.R")
 ```
 
-## Shiny modules
+## Shiny templates for ga_model objects
 
-The model can also be used to create a Shiny app, as it creates a [Shiny module](https://shiny.rstudio.com/articles/modules.html) of the model.  It is suggested this is the easiest route to turn your local GA analysis into Shiny apps. 
+There are Shiny templates available that can be used with model objects to quickly create Shiny apps for users.  For example:
 
-An example is shown below, which allows whoever logs in to apply the model to their own Google Analytics data.  You can run the app yourself via:
+```r
+ga_model_shiny("inst/models/decomp_ga.gamr", template = ga_model_shiny_template("template1"))
+```
 
-`shiny::runApp(system.file("shiny/hello-world-models", package="googleAnalyticsR"))`
-
-![](model-shiny-module.png)
-
-The model code is encapsulated in the Shiny module so the actual Shiny app is relatively simple:
+Templates can be created and parsed via `{{ var }}` templating rules:
 
 ```r
 library(shiny)
 library(googleAuthR)
-library(googleAnalyticsR) 
+library(googleAnalyticsR)
 
-gar_set_client(web_json = "ga-web-client.json",
-               scopes = "https://www.googleapis.com/auth/analytics.readonly")
+gar_set_client(web_json = "{{ web_json }}",
+               scopes = "{{ scopes }}")
 
 # loads a pre-existing model
-model <- ga_model_example("decomp_ga.gamr", location = "googleAnalyticsR")
+model <- ga_model_load("{{ ga_model }}")
+
+modelUi <- model$shiny_module$ui
+modelServer <- model$shiny_module$server
 
 ## ui.R
-ui <- fluidPage(title = "googleAnalyticsR Test Deployment",
-                
+ui <- fluidPage(title = "{{ shiny_title }}",
                 authDropdownUI("auth_menu"),
                 h2("Model Description"),
                 textOutput("model_description"),
                 h2("Model Output"),
-                model$shiny_module$ui("model1")
+                modelUi("{{ ga_model_name }}")
                 
 )
 
 ## server.R
 server <- function(input, output, session){
   
-  gar_shiny_auth(session)
+  token <- gar_shiny_auth(session)
   
-  al <- reactive(ga_account_list())
+  al <- reactive({
+    req(token)
+    ga_account_list()
+  })
   
   # module for authentication
   view_id <- callModule(authDropdown, "auth_menu", ga.table = al)
   output$model_description <- renderText(model$description)
   
   # module to display model results
-  callModule(model$shiny_module$server, "model1", view_id = view_id)
+  modelServer("{{ ga_model_name }}", view_id = view_id)
   
 }
 
 shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)
-
 ```
-
-If you want to pass reactive input objects to your model's module, do so by wrapping them in `shiny::reactive()` e.g.
-
-```r
-  callModule(model$shiny_module$server,
-             "model1",
-             view_id = view_id,
-             reactive_var = reactive(input$my_option))
-```
-
-
 
 ## Creating model `.gamr` objects
 
