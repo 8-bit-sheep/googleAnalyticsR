@@ -256,6 +256,12 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_save.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_shiny.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_shiny_template.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_write.html</loc>
   </url>
   <url>

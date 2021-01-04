@@ -282,57 +282,55 @@
 <p>And if you want to review the code of the model, use <code><a href="../reference/ga_model_write.html">ga_model_write()</a></code> to write the functions out to a file.</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_model_write.html">ga_model_write</a></span>(<span class="no">decomp_ga</span>, <span class="st">"my_model.R"</span>)</pre></body></html></div>
 </div>
-<div id="shiny-modules" class="section level2">
+<div id="shiny-templates-for-ga_model-objects" class="section level2">
 <h2 class="hasAnchor">
-<a href="#shiny-modules" class="anchor"></a>Shiny modules</h2>
-<p>The model can also be used to create a Shiny app, as it creates a <a href="https://shiny.rstudio.com/articles/modules.html">Shiny module</a> of the model. It is suggested this is the easiest route to turn your local GA analysis into Shiny apps.</p>
-<p>An example is shown below, which allows whoever logs in to apply the model to their own Google Analytics data. You can run the app yourself via:</p>
-<p><code><a href="https://shiny.rstudio.com/reference/shiny/latest/runApp.html">shiny::runApp(system.file("shiny/hello-world-models", package="googleAnalyticsR"))</a></code></p>
-<p><img src="model-shiny-module.png"></p>
-<p>The model code is encapsulated in the Shiny module so the actual Shiny app is relatively simple:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">shiny</span>)
+<a href="#shiny-templates-for-ga_model-objects" class="anchor"></a>Shiny templates for ga_model objects</h2>
+<p>There are Shiny templates available that can be used with model objects to quickly create Shiny apps for users. For example:</p>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_model_shiny.html">ga_model_shiny</a></span>(<span class="st">"inst/models/decomp_ga.gamr"</span>, <span class="kw">template</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_model_shiny_template.html">ga_model_shiny_template</a></span>(<span class="st">"template1"</span>))</pre></body></html></div>
+<p>Templates can be created and parsed via <code>{{ var }}</code> templating rules:</p>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">shiny</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAuthR</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
 
-<span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html">gar_set_client</a></span>(<span class="kw">web_json</span> <span class="kw">=</span> <span class="st">"ga-web-client.json"</span>,
-               <span class="kw">scopes</span> <span class="kw">=</span> <span class="st">"https://www.googleapis.com/auth/analytics.readonly"</span>)
+<span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html">gar_set_client</a></span>(<span class="kw">web_json</span> <span class="kw">=</span> <span class="st">"{{ web_json }}"</span>,
+               <span class="kw">scopes</span> <span class="kw">=</span> <span class="st">"{{ scopes }}"</span>)
 
 <span class="co"># loads a pre-existing model</span>
-<span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_model_example.html">ga_model_example</a></span>(<span class="st">"decomp_ga.gamr"</span>, <span class="kw">location</span> <span class="kw">=</span> <span class="st">"googleAnalyticsR"</span>)
+<span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_model_load.html">ga_model_load</a></span>(<span class="st">"{{ ga_model }}"</span>)
+
+<span class="no">modelUi</span> <span class="kw">&lt;-</span> <span class="no">model</span>$<span class="no">shiny_module</span>$<span class="no">ui</span>
+<span class="no">modelServer</span> <span class="kw">&lt;-</span> <span class="no">model</span>$<span class="no">shiny_module</span>$<span class="no">server</span>
 
 <span class="co">## ui.R</span>
-<span class="no">ui</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html">fluidPage</a></span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"googleAnalyticsR Test Deployment"</span>,
-
+<span class="no">ui</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html">fluidPage</a></span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"{{ shiny_title }}"</span>,
                 <span class="fu"><a href="../reference/authDropdownUI.html">authDropdownUI</a></span>(<span class="st">"auth_menu"</span>),
                 <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reexports.html">h2</a></span>(<span class="st">"Model Description"</span>),
                 <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/textOutput.html">textOutput</a></span>(<span class="st">"model_description"</span>),
                 <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reexports.html">h2</a></span>(<span class="st">"Model Output"</span>),
-                <span class="no">model</span>$<span class="no">shiny_module</span>$<span class="fu">ui</span>(<span class="st">"model1"</span>)
+                <span class="fu">modelUi</span>(<span class="st">"{{ ga_model_name }}"</span>)
 
 )
 
 <span class="co">## server.R</span>
 <span class="no">server</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">input</span>, <span class="no">output</span>, <span class="no">session</span>){
 
-  <span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_auth.html">gar_shiny_auth</a></span>(<span class="no">session</span>)
+  <span class="no">token</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_auth.html">gar_shiny_auth</a></span>(<span class="no">session</span>)
 
-  <span class="no">al</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span>(<span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span>())
+  <span class="no">al</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span>({
+    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/req.html">req</a></span>(<span class="no">token</span>)
+    <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span>()
+  })
 
   <span class="co"># module for authentication</span>
   <span class="no">view_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/callModule.html">callModule</a></span>(<span class="no">authDropdown</span>, <span class="st">"auth_menu"</span>, <span class="kw">ga.table</span> <span class="kw">=</span> <span class="no">al</span>)
   <span class="no">output</span>$<span class="no">model_description</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderText.html">renderText</a></span>(<span class="no">model</span>$<span class="no">description</span>)
 
   <span class="co"># module to display model results</span>
-  <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/callModule.html">callModule</a></span>(<span class="no">model</span>$<span class="no">shiny_module</span>$<span class="no">server</span>, <span class="st">"model1"</span>, <span class="kw">view_id</span> <span class="kw">=</span> <span class="no">view_id</span>)
+  <span class="fu">modelServer</span>(<span class="st">"{{ ga_model_name }}"</span>, <span class="kw">view_id</span> <span class="kw">=</span> <span class="no">view_id</span>)
 
 }
 
 <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html">shinyApp</a></span>(<span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_ui.html">gar_shiny_ui</a></span>(<span class="no">ui</span>, <span class="kw">login_ui</span> <span class="kw">=</span> <span class="no">silent_auth</span>), <span class="no">server</span>)</pre></body></html></div>
-<p>If you want to pass reactive input objects to your model’s module, do so by wrapping them in <code><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">shiny::reactive()</a></code> e.g.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r">  <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/callModule.html">callModule</a></span>(<span class="no">model</span>$<span class="no">shiny_module</span>$<span class="no">server</span>,
-             <span class="st">"model1"</span>,
-             <span class="kw">view_id</span> <span class="kw">=</span> <span class="no">view_id</span>,
-             <span class="kw">reactive_var</span> <span class="kw">=</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span>(<span class="no">input</span>$<span class="no">my_option</span>))</pre></body></html></div>
 </div>
 <div id="creating-model--gamr-objects" class="section level2">
 <h2 class="hasAnchor">
