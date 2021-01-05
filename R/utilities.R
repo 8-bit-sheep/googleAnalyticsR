@@ -359,11 +359,11 @@ myMessage <- function(..., level = 2){
     time <- paste(Sys.time(),">")
     mm <- paste(...)
     if(grepl("^#", mm)){
-      cli_h1(mm)
+      cli::cli_h1(mm)
     } else {
-      cli_div(theme = list(span.time = list(color = "grey")))
-      cli_alert_info("{.time {time}} {mm}")
-      cli_end()
+      cli::cli_div(theme = list(span.time = list(color = "grey")))
+      cli::cli_alert_info("{.time {time}} {mm}")
+      cli::cli_end()
     }
     
   }

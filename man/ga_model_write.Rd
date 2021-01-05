@@ -7,7 +7,7 @@
 ga_model_write(model, filepath = "ga_model.R")
 }
 \arguments{
-\item{model}{The \code{ga_model} object to extract functions from to write}
+\item{model}{The \code{ga_model} object to extract functions from to write, or a filepath to a model}
 
 \item{filepath}{The filepath to write the functions to}
 }

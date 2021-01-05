@@ -87,7 +87,7 @@ ga_model_load <- function(filename = "my-model.gamr"){
   model <- readRDS(filename)
   
   assert_that(is.ga_model(model))
-  
+  myMessage("Loaded model from ", filename, level = 3)
   model
   
 }
@@ -309,6 +309,16 @@ Model <- function(data_f,
     stop("output_f() arguments need to include ...", call.=FALSE)
   }
   
+  # using id breaks shiny modules
+  if("id" %in% c(function_args(data_f), function_args(model_f), function_args(output_f))){
+    stop("Don't use 'id' in function arguments - it clashes with Shiny module's arg: id", call.=FALSE)
+  }
+  
+  # data_f must include view_id as first argument
+  if(function_args(data_f)[[1]] != "view_id"){
+    stop("Must have 'view_id' as first argument of data_f", call.=FALSE)
+  }
+  
   structure(
     list(
       data_f            = data_f,
@@ -366,23 +376,27 @@ create_shiny_module_funcs <- function(data_f,
       id,
       function(input, output, session){
         dots <- list(...)
+        myMessage("shiny args passed: ", 
+                  paste(names(dots),"=", dots, collapse = ","),
+                  level = 2)
         gadata <- shiny::reactive({
+          req(view_id())
           
-          myMessage("Fetching data", level = 3)
-          do.call(data_f, 
-                  args = c(list(viewId = view_id()), 
-                           eval_input_list(dots)))
+          myMessage("Fetching data for view_id:",view_id(), level = 3)
+          execute_model_function(data_f,
+                                 dependency = list(view_id = view_id()),
+                                 dots = dots)
           
         })
         
         model_output <- shiny::reactive({
           shiny::validate(shiny::need(gadata(), 
                                       message = "Waiting for data"))
-          myMessage("Modelling data", level = 3)
           
-          do.call(model_f, 
-                  args = c(list(gadata()), 
-                           eval_input_list(dots)))
+          myMessage("Modelling data", level = 3)
+          execute_model_function(model_f,
+                                 dependency = list(gadata()),
+                                 dots = dots)
           
         })
         
@@ -391,8 +405,9 @@ create_shiny_module_funcs <- function(data_f,
                                       message = "Waiting for model output"))
           
           myMessage("Rendering model output", level = 3)
-          do.call(output_f,
-                  args = c(list(model_output()), eval_input_list(dots)))
+          execute_model_function(output_f,
+                                 dependency = list(model_output()),
+                                 dots = dots)
           
         })
         
@@ -405,6 +420,14 @@ create_shiny_module_funcs <- function(data_f,
     server = server
   )
   
+}
+
+execute_model_function <- function(f, dependency, dots){
+  assert_that(is.function(f), is.list(dependency))
+  tryCatch(do.call(f, args = c(dependency, eval_input_list(dots))),
+           error = function(err){
+             stop("Problem executing model function - ", err$message, call. = FALSE)
+           })
 }
 
 # force evaluation to reactive inputs update
@@ -421,13 +444,17 @@ eval_input_list <- function(dots){
 
 #' Write the ga_model functions to a file
 #' 
-#' @param model The \code{ga_model} object to extract functions from to write
+#' @param model The \code{ga_model} object to extract functions from to write, or a filepath to a model
 #' @param filepath The filepath to write the functions to
 #' 
 #' @export
 #' @family GA modelling functions
 #' @import assertthat
 ga_model_write <- function(model, filepath = "ga_model.R"){
+  
+  if(is.character(model)){
+    model <- ga_model_load(model)
+  }
   
   assert_that(is.ga_model(model))
   
@@ -436,11 +463,13 @@ ga_model_write <- function(model, filepath = "ga_model.R"){
       paste0("library(",model$required_packages,")"),
       write_f("\n# fetch data\ndata_f", model$data_f),
       write_f("\n# model data\nmodel_f", model$model_f),
-      write_f("\n# output data\noutput_f", model$output_f))
+      write_f("\n# output data\noutput_f\n", model$output_f))
   
   writeLines(the_text, con = filepath)
   suppressMessages(formatR::tidy_file(filepath, width.cutoff = 80))
   myMessage("Written model to ", filepath, level = 3)
+  
+  model
 }
 
 write_f <- function(name, f){
@@ -464,7 +493,7 @@ ga_model_shiny_template <- function(name){
 
 #' Create a Shiny app from a ga_model file
 #' 
-#' @param model_location The \link{ga_model} file location ("my_model.gamr")
+#' @param model The \link{ga_model} file location ("my_model.gamr") or a \link{ga_model} object
 #' @param template The template file for the Shiny app
 #' @param web_json The client.id json file for Web
 #' @param scopes The scope the API requests will be under
@@ -475,17 +504,23 @@ ga_model_shiny_template <- function(name){
 #' @export
 #' @importFrom assertthat is.readable
 #' @importFrom whisker whisker.render
-ga_model_shiny <- function(model_location,
+ga_model_shiny <- function(model,
                            template = ga_model_shiny_template("template1"),
-                           title = paste(basename(model_location),
-                                         "ga_model","googleAnalyticsR"),
+                           title = "Generated be googleAnalyticsR::ga_model_shiny",
                            web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"),
                            scopes = "https://www.googleapis.com/auth/analytics.readonly",
                            local_file = "",
                            ...){
   
-  assert_that(is.readable(model_location),
-              is.readable(template),
+  if(is.ga_model(model)){
+    tmp_model <- tempfile(fileext = ".gamr")
+    ga_model_save(model, filename = tmp_model)
+    model_location <- tmp_model
+  } else {
+    assert_that(is.readable(model_location))
+  }
+  
+  assert_that(is.readable(template),
               nzchar(web_json),
               nzchar(scopes))
   

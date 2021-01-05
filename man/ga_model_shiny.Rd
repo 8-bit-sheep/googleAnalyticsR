@@ -5,9 +5,9 @@
 \title{Create a Shiny app from a ga_model file}
 \usage{
 ga_model_shiny(
-  model_location,
+  model,
   template = ga_model_shiny_template("template1"),
-  title = paste(basename(model_location), "ga_model", "googleAnalyticsR"),
+  title = "Generated be googleAnalyticsR::ga_model_shiny",
   web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"),
   scopes = "https://www.googleapis.com/auth/analytics.readonly",
   local_file = "",
@@ -15,7 +15,7 @@ ga_model_shiny(
 )
 }
 \arguments{
-\item{model_location}{The \link{ga_model} file location ("my_model.gamr")}
+\item{model}{The \link{ga_model} file location ("my_model.gamr") or a \link{ga_model} object}
 
 \item{template}{The template file for the Shiny app}
 

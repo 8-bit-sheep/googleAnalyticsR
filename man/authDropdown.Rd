@@ -30,6 +30,8 @@ Call via \code{shiny::callModule(authDropdown, "your_id")}
 }
 \seealso{
 Other Shiny modules: 
+\code{\link{accountPickerUI}()},
+\code{\link{accountPicker}()},
 \code{\link{authDropdownUI}()},
 \code{\link{multi_selectUI}()},
 \code{\link{multi_select}()}
