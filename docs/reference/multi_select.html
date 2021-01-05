@@ -47,7 +47,8 @@
 
 
 <meta property="og:title" content="multi_select [Shiny Module] — multi_select" />
-<meta property="og:description" content="Shiny Module for use with multi_selectUI" />
+<meta property="og:description" content="Shiny Module for use with multi_selectUI
+Shiny Module for use with multi_selectUI" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
 
@@ -262,15 +263,25 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>multi_select [Shiny Module]</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/shiny-modules.R'><code>R/shiny-modules.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/shiny-modules-new.R'><code>R/shiny-modules-new.R</code></a>, <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/shiny-modules.R'><code>R/shiny-modules.R</code></a></small>
     <div class="hidden name"><code>multi_select.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Shiny Module for use with <a href='multi_selectUI.html'>multi_selectUI</a></p>
+<p>Shiny Module for use with <a href='multi_selectUI.html'>multi_selectUI</a></p>
     </div>
 
     <pre class="usage"><span class='fu'>multi_select</span>(
+  <span class='no'>input</span>,
+  <span class='no'>output</span>,
+  <span class='no'>session</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"METRIC"</span>, <span class='st'>"DIMENSION"</span>),
+  <span class='kw'>subType</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"segment"</span>, <span class='st'>"cohort"</span>),
+  <span class='kw'>default</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
+
+<span class='fu'>multi_select</span>(
   <span class='no'>input</span>,
   <span class='no'>output</span>,
   <span class='no'>session</span>,
@@ -311,12 +322,20 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>the selected variable</p>
+<p>the selected variable</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Call via <code><a href='https://shiny.rstudio.com/reference/shiny/latest/callModule.html'>shiny::callModule(multi_select, "your_id")</a></code></p>
+<p>Call via <code><a href='https://shiny.rstudio.com/reference/shiny/latest/callModule.html'>shiny::callModule(multi_select, "your_id")</a></code></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Shiny modules: 
+<code><a href='accountPicker.html'>accountPickerUI</a>()</code>,
+<code><a href='authDropdownUI.html'>authDropdownUI</a>()</code>,
+<code><a href='authDropdown.html'>authDropdown</a>()</code>,
+<code><a href='multi_selectUI.html'>multi_selectUI</a>()</code></p>
+<p>Other Shiny modules: 
+<code><a href='accountPicker.html'>accountPickerUI</a>()</code>,
 <code><a href='authDropdownUI.html'>authDropdownUI</a>()</code>,
 <code><a href='authDropdown.html'>authDropdown</a>()</code>,
 <code><a href='multi_selectUI.html'>multi_selectUI</a>()</code></p></div>

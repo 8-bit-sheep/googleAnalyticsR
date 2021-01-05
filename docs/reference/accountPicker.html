@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write the ga_model functions to a file — ga_model_write • googleAnalyticsR</title>
+<title>accountPicker UI [Shiny Module] - pick GA4 accounts/webProperties in Shiny — accountPickerUI • googleAnalyticsR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,9 @@
 
 
 
-<meta property="og:title" content="Write the ga_model functions to a file — ga_model_write" />
-<meta property="og:description" content="Write the ga_model functions to a file" />
+<meta property="og:title" content="accountPicker UI [Shiny Module] - pick GA4 accounts/webProperties in Shiny — accountPickerUI" />
+<meta property="og:description" content="Makes a dropdown row for use for authentication with GA4 web properties.
+Shiny Module for use with accountPickerUI" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
 
@@ -261,40 +262,77 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write the ga_model functions to a file</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/models.R'><code>R/models.R</code></a></small>
-    <div class="hidden name"><code>ga_model_write.Rd</code></div>
+    <h1>accountPicker UI [Shiny Module] - pick GA4 accounts/webProperties in Shiny</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/shiny-modules-new.R'><code>R/shiny-modules-new.R</code></a></small>
+    <div class="hidden name"><code>accountPicker.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Write the ga_model functions to a file</p>
+    <p>Makes a dropdown row for use for authentication with GA4 web properties.</p>
+<p>Shiny Module for use with accountPickerUI</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_model_write</span>(<span class='no'>model</span>, <span class='kw'>filepath</span> <span class='kw'>=</span> <span class='st'>"ga_model.R"</span>)</pre>
+    <pre class="usage"><span class='fu'>accountPickerUI</span>(<span class='no'>id</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inColumns</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>accountPicker</span>(<span class='no'>id</span>, <span class='no'>ga_table</span>, <span class='kw'>id_only</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>model</th>
-      <td><p>The <code>ga_model</code> object to extract functions from to write, or a filepath to a model</p></td>
+      <th>id</th>
+      <td><p>Shiny id</p></td>
     </tr>
     <tr>
-      <th>filepath</th>
-      <td><p>The filepath to write the functions to</p></td>
+      <th>width</th>
+      <td><p>The width of the input</p></td>
+    </tr>
+    <tr>
+      <th>inColumns</th>
+      <td><p>Whether to wrap selectInputs in width=4 columns</p></td>
+    </tr>
+    <tr>
+      <th>ga_table</th>
+      <td><p>A table GA4 accounts/web properties from <code>ga_account_summary("ga4")</code></p></td>
+    </tr>
+    <tr>
+      <th>id_only</th>
+      <td><p>Whether to return just the id, not the row</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>If id_only=FALSE, the row of ga_table for the selected GA4 web property e.g. use <code>ga_table$propertyId</code> to send to <a href='ga_data.html'>ga_data</a> calls.  If id_only=TRUE, just the propertyId</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other GA modelling functions: 
-<code><a href='ga_model_edit.html'>ga_model_edit</a>()</code>,
-<code><a href='ga_model_example.html'>ga_model_example</a>()</code>,
-<code><a href='ga_model_load.html'>ga_model_load</a>()</code>,
-<code><a href='ga_model_make.html'>ga_model_make</a>()</code>,
-<code><a href='ga_model_save.html'>ga_model_save</a>()</code>,
-<code><a href='ga_model.html'>ga_model</a>()</code></p></div>
+    <div class='dont-index'><p>Other Shiny modules: 
+<code><a href='authDropdownUI.html'>authDropdownUI</a>()</code>,
+<code><a href='authDropdown.html'>authDropdown</a>()</code>,
+<code><a href='multi_selectUI.html'>multi_selectUI</a>()</code>,
+<code><a href='multi_select.html'>multi_select</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+
+<span class='no'>ui</span> <span class='kw'>&lt;-</span> <span class='fu'>fluidPage</span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Shiny App"</span>,
+                 <span class='fu'>accountPickerUI</span>(<span class='st'>"auth_menu"</span>, <span class='kw'>inColumns</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
+<span class='no'>server</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>input</span>, <span class='no'>output</span>, <span class='no'>session</span>){
+  <span class='no'>token</span> <span class='kw'>&lt;-</span> <span class='fu'>gar_shiny_auth</span>(<span class='no'>session</span>)
+
+  <span class='no'>accs</span> <span class='kw'>&lt;-</span> <span class='fu'>reactive</span>({
+    <span class='fu'>req</span>(<span class='no'>token</span>)
+    <span class='fu'><a href='ga_account_list.html'>ga_account_list</a></span>(<span class='st'>"ga4"</span>)
+   })
+
+  <span class='co'># module for authentication</span>
+  <span class='no'>property_id</span> <span class='kw'>&lt;-</span> <span class='fu'>accountPicker</span>(<span class='st'>"auth_menu"</span>, <span class='kw'>ga_table</span> <span class='kw'>=</span> <span class='no'>accs</span>, <span class='kw'>id_only</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+ }
+
+ <span class='fu'>shinyApp</span>(<span class='fu'>gar_shiny_ui</span>(<span class='no'>ui</span>, <span class='kw'>login_ui</span> <span class='kw'>=</span> <span class='no'>silent_auth</span>), <span class='no'>server</span>)
+
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -302,6 +302,31 @@ authDropdownUI("auth_menu")</pre></body></html></div>
 
 (<span class="no">...</span>)</pre></body></html></div>
 </div>
+<div id="google-analytics-4-account-picker" class="section level2">
+<h2 class="hasAnchor">
+<a href="#google-analytics-4-account-picker" class="anchor"></a>Google Analytics 4 Account Picker</h2>
+<p>GA4 has different data model and account structure, so it has its own account picker module at <code><a href="../reference/accountPicker.html">accountPicker()</a></code> - this also uses the more modern Shiny module style. GA4 only has accounts and web propertyId, not viewIds.</p>
+<p>A minimal example on how to use it is shown below:</p>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">shiny</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>) <span class="co"># for accountPicker</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAuthR</span>)      <span class="co"># for gar_shiny_ui</span>
+
+<span class="no">ui</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html">fluidPage</a></span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"Shiny App"</span>,
+                <span class="fu"><a href="../reference/accountPicker.html">accountPickerUI</a></span>(<span class="st">"auth_menu"</span>, <span class="kw">inColumns</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
+<span class="no">server</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">input</span>, <span class="no">output</span>, <span class="no">session</span>){
+  <span class="no">token</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_auth.html">gar_shiny_auth</a></span>(<span class="no">session</span>)
+
+  <span class="no">accs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span>({
+    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/req.html">req</a></span>(<span class="no">token</span>)
+    <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span>(<span class="st">"ga4"</span>)
+  })
+
+  <span class="co"># module for authentication</span>
+  <span class="no">property_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/accountPicker.html">accountPicker</a></span>(<span class="st">"auth_menu"</span>, <span class="kw">ga_table</span> <span class="kw">=</span> <span class="no">accs</span>, <span class="kw">id_only</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+}
+
+<span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html">shinyApp</a></span>(<span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_ui.html">gar_shiny_ui</a></span>(<span class="no">ui</span>, <span class="kw">login_ui</span> <span class="kw">=</span> <span class="no">silent_auth</span>), <span class="no">server</span>)</pre></body></html></div>
+</div>
 <div id="parameter-selects" class="section level2">
 <h2 class="hasAnchor">
 <a href="#parameter-selects" class="anchor"></a>Parameter selects</h2>
@@ -322,7 +347,7 @@ authDropdownUI("auth_menu")</pre></body></html></div>
 <div id="ui-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ui-r" class="anchor"></a>ui.R</h3>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co">## ui.R</span>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co">## ui.R</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAuthR</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">shiny</span>)
@@ -339,7 +364,7 @@ authDropdownUI("auth_menu")</pre></body></html></div>
 <div id="server-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#server-r" class="anchor"></a>server.R</h3>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co">## in server.R</span>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co">## in server.R</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAuthR</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">shiny</span>)
