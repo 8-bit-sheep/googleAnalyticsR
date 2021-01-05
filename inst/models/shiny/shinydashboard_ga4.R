@@ -17,7 +17,9 @@ header <- dashboardHeader(
 )
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    menuItem("Dashboard")
+    menuItem("Refresh Google Login", href = "/"),
+    dateRangeInput("dates", label = "Dates", 
+                   start = Sys.Date()-366, end = Sys.Date()-1)
   )
 )
 body <- dashboardBody(
@@ -33,8 +35,11 @@ body <- dashboardBody(
   )
 )
 
+skin <- "{{ skin }}"
+if(!nzchar(skin)) skin <- "blue"
+
 ## ui.R
-ui <- dashboardPage(header, sidebar, body, skin = "{{ skin }}")
+ui <- dashboardPage(header, sidebar, body, skin = skin)
 
 ## server.R
 server <- function(input, output, session){
@@ -51,7 +56,8 @@ server <- function(input, output, session){
   output$model_description <- renderText(model$description)
 
   # module to display model results
-  modelServer("{{ ga_model_name }}", view_id = property_id)
+  modelServer("{{ ga_model_name }}", view_id = property_id, 
+              date_range = reactive(input$dates))
   
 }
 

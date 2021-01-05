@@ -424,9 +424,13 @@ create_shiny_module_funcs <- function(data_f,
 
 execute_model_function <- function(f, dependency, dots){
   assert_that(is.function(f), is.list(dependency))
+  
+  myMessage("function_vars: ", paste(function_args(f), collapse = ", "))
+  
   tryCatch(do.call(f, args = c(dependency, eval_input_list(dots))),
            error = function(err){
-             stop("Problem executing model function - ", err$message, call. = FALSE)
+             stop("Problem executing model function - ", err$message, 
+                  call. = FALSE)
            })
 }
 
