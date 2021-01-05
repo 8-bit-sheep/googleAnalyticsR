@@ -53,14 +53,12 @@ Call via \code{shiny::callModule(multi_select, "your_id")}
 \seealso{
 Other Shiny modules: 
 \code{\link{accountPickerUI}()},
-\code{\link{accountPicker}()},
 \code{\link{authDropdownUI}()},
 \code{\link{authDropdown}()},
 \code{\link{multi_selectUI}()}
 
 Other Shiny modules: 
 \code{\link{accountPickerUI}()},
-\code{\link{accountPicker}()},
 \code{\link{authDropdownUI}()},
 \code{\link{authDropdown}()},
 \code{\link{multi_selectUI}()}

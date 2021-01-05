@@ -96,6 +96,35 @@ selected_id <- callModule(authDropdown, "auth_menu", ga.table = ga_accounts)
 
 ```
 
+## Google Analytics 4 Account Picker
+
+GA4 has different data model and account structure, so it has its own account picker module at `accountPicker()` - this also uses the more modern Shiny module style.  GA4 only has accounts and web propertyId, not viewIds.
+
+A minimal example on how to use it is shown below:
+
+```r
+library(shiny)
+library(googleAnalyticsR) # for accountPicker
+library(googleAuthR)      # for gar_shiny_ui
+
+ui <- fluidPage(title = "Shiny App",
+                accountPickerUI("auth_menu", inColumns = TRUE))
+server <- function(input, output, session){
+  token <- gar_shiny_auth(session)
+  
+  accs <- reactive({
+    req(token)
+    ga_account_list("ga4")
+  })
+  
+  # module for authentication
+  property_id <- accountPicker("auth_menu", ga_table = accs, id_only = TRUE)
+}
+
+shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)
+
+```
+
 ## Parameter selects
 
 `multiSelect` and `multiSelectUI` create select dropdowns with the GA API parameters filled in, taken from the meta API.

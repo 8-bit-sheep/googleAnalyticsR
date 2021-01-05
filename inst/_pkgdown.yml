@@ -127,6 +127,7 @@ reference:
     desc: >
       Using Google Analytics with Shiny
     contents:
+      - accountPicker
       - authDropdown
       - authDropdownUI
       - multi_select

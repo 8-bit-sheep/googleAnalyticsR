@@ -9,6 +9,9 @@
 * Remove support for API v3 multi-account batching (#347)
 * Deprecate `google_analytics_3()` - support will be removed in next release (#347)
 * Add Admin API to `ga_account_list("ga4")` (#350)
+* Remove `ga_model_tweet()`
+* Add new Shiny module for GA4 web properties - `accountPicker()` #357
+* All generation of Shiny apps from models using template files `ga_model_shiny()` #358
 
 # googleAnalyticsR 0.8.0
 

@@ -1,18 +1,14 @@
 #' accountPicker UI [Shiny Module] - pick GA4 accounts/webProperties in Shiny
 #' 
-#' @description Makes a dropdown row for use for authentication.
+#' @description Makes a dropdown row for use for authentication with GA4 web properties.
 #' 
-#' @param id Shiny id.
+#' @param id Shiny id
 #' @param width The width of the input
-#' @param inColumns whether to wrap selectInputs in width=4 columns.
-#'   
-#'   Shiny Module for use with \link{authDropdown}.
+#' @param inColumns Whether to wrap selectInputs in width=4 columns
 #'   
 #'   
-#' @return Shiny UI
-#' @family Shiny modules
 #' @export
-#' 
+#' @rdname accountPicker
 accountPickerUI <- function(id, width = NULL, inColumns = FALSE){
   
   ns <- shiny::NS(id)
@@ -47,8 +43,6 @@ is.ga4_table <- function(df){
 #'
 #' Shiny Module for use with \link{accountPickerUI}
 #'
-#' Call via \code{accountPicker("your_id", ga_table)}
-#'
 #' @param ga_table A table GA4 accounts/web properties from \code{ga_account_summary("ga4")}
 #' @param id_only Whether to return just the id, not the row
 #'
@@ -57,6 +51,28 @@ is.ga4_table <- function(df){
 #' @family Shiny modules
 #' @importFrom dplyr select filter pull
 #' @export
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' ui <- fluidPage(title = "Shiny App",
+#'                  accountPickerUI("auth_menu", inColumns = TRUE))
+#' server <- function(input, output, session){
+#'   token <- gar_shiny_auth(session)
+#'   
+#'   accs <- reactive({
+#'     req(token)
+#'     ga_account_list("ga4")
+#'    })
+#'    
+#'   # module for authentication
+#'   property_id <- accountPicker("auth_menu", ga_table = accs, id_only = TRUE)
+#'  }
+#'  
+#'  shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)
+#' 
+#' }
 accountPicker <- function(id, ga_table, id_only = TRUE){
   shiny::moduleServer(
     id,
