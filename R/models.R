@@ -486,8 +486,13 @@ write_f <- function(name, f){
 #' 
 #' @export
 ga_model_shiny_template <- function(name){
-  system.file("models","shiny",paste0(name,".R"), 
+  f <- system.file("models","shiny",paste0(name,".R"), 
               package = "googleAnalyticsR")
+  if(!nzchar(f)){
+    stop("Couldn't find template named", name, call. = FALSE)
+  }
+  
+  f
 }
 
 
@@ -551,3 +556,16 @@ ga_model_shiny <- function(model,
   shiny::runApp(tmp)
 }
 
+# this seems to be needed for Shiny mods?
+ga_model_refresh <- function(model){
+  ga_model_make(
+    data_f = model$data_f,
+    required_columns = model$required_columns,
+    model_f = model$model_f,
+    output_f = model$output_f,
+    required_packages = model$required_packages,
+    description = model$description,
+    outputShiny = model$outputShiny,
+    renderShiny = model$renderShiny
+  )
+}
