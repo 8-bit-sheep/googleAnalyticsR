@@ -4,7 +4,7 @@
 \alias{ga_account_list}
 \title{Account summary for all accounts available to your user}
 \usage{
-ga_account_list(type = c("universal", "ga4"))
+ga_account_list(type = c("universal", "ga4", "data"))
 }
 \arguments{
 \item{type}{Whether to get account summary from universal analytics of GA4 (App_Web) properties}

@@ -46,7 +46,6 @@ Shiny Module for use with GA4 metric and dimension fields fetched via \code{ga_m
 # ui.R
 metricDimensionSelect("mets1")
 metricDimensionSelect("dims1")
-metricDimensionSelect("dims_custom")
 
 #server.R
 metrics <- metricDimensionSelect("mets1", "metric")
@@ -68,15 +67,19 @@ server <- function(input, output, session){
     ga_account_list("ga4")
    })
    
+  # no custom data
+  metrics <- metricDimensionSelect("mets1")
+   
   # module for authentication
   property_id <- accountPicker("auth_menu", ga_table = accs, id_only = TRUE)
   
-    meta <- reactive({
+  meta <- reactive({
       req(property_id())
       ga_meta("data", propertyId = property_id())
-    })
-    
-  metrics <- metricDimensionSelect("mets1")
+  })
+ 
+  
+  # custom data
   dims_custom <- metricDimensionSelect("dims_custom", 
                                        type = "dimension", 
                                        custom_meta = meta())

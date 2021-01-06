@@ -28,10 +28,10 @@
 #' ## get account summary of GA4 properties
 #' ga_account_list("ga4")
 #' }
-ga_account_list <- function(type = c("universal","ga4")){
+ga_account_list <- function(type = c("universal","ga4", "data")){
   type <- match.arg(type)
   
-  if(type == "ga4"){
+  if(type %in% c("ga4","data")){
     return(ga_admin_account_summary())
   }
   

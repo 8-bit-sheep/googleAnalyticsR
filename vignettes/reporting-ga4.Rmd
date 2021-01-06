@@ -700,9 +700,11 @@ ga_data_aggregations(aggs, type = "totals")
 
 ## Quotas
 
-There is no sampling but there are token quotas for API fetches on a per-project basis.  Normally these are not visible until you are close to the quota limits, but you can see them if you set the googleAuthR verbose level below 3 (`options(googleAuthR.verbose=2)`))
+There is no sampling but there are token quotas for API fetches on a per-project basis.  Normally these are not visible until you are close to the quota limits, but you can see them if you set the googleAuthR verbose level below 3 (`options(googleAuthR.verbose=2)`)) or if the API call costs more than 50 units.
 
 The bigger and more complex the query you make, the more tokens you use.
+
+See this [Google guide on how API quotas are assigned](https://developers.google.com/analytics/devguides/reporting/data/v1/quotas).  The quotas are on a per GCP project and Ga4 web property level, and you get more if on GA360.
 
 An example taken from above:
 

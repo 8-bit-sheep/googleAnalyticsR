@@ -69,20 +69,31 @@ gaw_dimension <- function(dimensions, delimiter = "/"){
 quota_messages <- function(o){
   pq <- o$propertyQuota
   care_factor <- 0.5
-  verbose <- getOption("googleAuthR.verbose") < 3
+  verbose <- getOption("googleAuthR.verbose") < 3 || 
+    pq$tokensPerDay$consumed > 50
+  
 
+  tpd_remaining <- pq$tokensPerDay$remaining
+  if(is.null(tpd_remaining)){
+    tpd_remaining <- 0
+  }
   # quota messages
-  if(pq$tokensPerDay$consumed > (care_factor*pq$tokensPerDay$remaining) ||
+  if(pq$tokensPerDay$consumed > (care_factor*tpd_remaining) ||
      verbose){
     myMessage("tokensPerDay: Query Cost [", pq$tokensPerDay$consumed, 
-              "] / Remaining [", pq$tokensPerDay$remaining,"]",
+              "] / Remaining [", tpd_remaining,"]",
               level = 3)
   }
   
-  if(pq$tokensPerHour$consumed > (care_factor*pq$tokensPerHour$remaining) ||
+  tph_remaining <- pq$tokensPerHour$remaining
+  if(is.null(tph_remaining)){
+    tph_remaining <- 0
+  }
+  
+  if(pq$tokensPerHour$consumed > (care_factor*tph_remaining) ||
      verbose){
     myMessage("tokensPerHour: Query Cost [", pq$tokensPerHour$consumed, 
-              "] / Remaining [", pq$tokensPerHour$remaining,"]",
+              "] / Remaining [", tph_remaining,"]",
               level = 3)
   }
   
