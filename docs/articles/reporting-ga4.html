@@ -1030,8 +1030,9 @@
 <div id="quotas" class="section level2">
 <h2 class="hasAnchor">
 <a href="#quotas" class="anchor"></a>Quotas</h2>
-<p>There is no sampling but there are token quotas for API fetches on a per-project basis. Normally these are not visible until you are close to the quota limits, but you can see them if you set the googleAuthR verbose level below 3 (<code><a href="https://rdrr.io/r/base/options.html">options(googleAuthR.verbose=2)</a></code>))</p>
+<p>There is no sampling but there are token quotas for API fetches on a per-project basis. Normally these are not visible until you are close to the quota limits, but you can see them if you set the googleAuthR verbose level below 3 (<code><a href="https://rdrr.io/r/base/options.html">options(googleAuthR.verbose=2)</a></code>)) or if the API call costs more than 50 units.</p>
 <p>The bigger and more complex the query you make, the more tokens you use.</p>
+<p>See this <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/quotas">Google guide on how API quotas are assigned</a>. The quotas are on a per GCP project and Ga4 web property level, and you get more if on GA360.</p>
 <p>An example taken from above:</p>
 <div class="sourceCode" id="cb79"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">googleAuthR.verbose</span><span class="kw">=</span><span class="fl">2</span>)
 <span class="no">complex_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
