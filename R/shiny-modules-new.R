@@ -163,8 +163,8 @@ metricDimensionSelectUI <- function(
 #' Shiny Module for use with GA4 metric and dimension fields fetched via \code{ga_meta("ga4")}
 #' 
 #' @param id The Shiny id
-#' @param type metric or dimension
-#' @param propertyId Pass the propertyId to get custom fields from GA4 (reactive)
+#' @param field_type metric or dimension
+#' @param custom_meta Pass a meta field table from \code{ga_meta("ga4")} to get custom fields from GA4 (reactive)
 #' @param default The default selected choice. First element if NULL
 #'
 #' @return the selected variable

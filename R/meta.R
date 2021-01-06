@@ -40,7 +40,7 @@ ga_meta <- function(version = c("universal","data"),
                               data_parse_function = parse_google_analytics_meta )
     o <- meta()
   } else if(version == "data"){
-    if(!no_api) return(googleAnalyticsR::meta4)
+    if(no_api) return(googleAnalyticsR::meta4)
     
     if(cached && 
        !is.null(.ga_meta_env$meta) 

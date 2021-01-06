@@ -31,6 +31,8 @@ test_that("Get the account summary list", {
   al <- ga_account_list()
   expect_s3_class(al, "data.frame")
   
+  cat("\nScopes:", getOption("googleAuthR.scopes.selected"))
+  
   ga4 <- ga_account_list("ga4")
   expect_s3_class(ga4, "data.frame")
   expect_equal(names(ga4), 

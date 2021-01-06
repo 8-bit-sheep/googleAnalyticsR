@@ -23,11 +23,11 @@ metricDimensionSelect(
 
 \item{width}{width of select}
 
+\item{field_type}{metric or dimension}
+
+\item{custom_meta}{Pass a meta field table from \code{ga_meta("ga4")} to get custom fields from GA4 (reactive)}
+
 \item{default}{The default selected choice. First element if NULL}
-
-\item{type}{metric or dimension}
-
-\item{propertyId}{Pass the propertyId to get custom fields from GA4 (reactive)}
 }
 \value{
 Shiny UI
