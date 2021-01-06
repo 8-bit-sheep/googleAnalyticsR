@@ -270,7 +270,12 @@
     <p>Get current dimensions and metrics available in GA API.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_meta</span>(<span class='kw'>version</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"universal"</span>, <span class='st'>"data"</span>), <span class='kw'>propertyId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cached</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>ga_meta</span>(
+  <span class='kw'>version</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"universal"</span>, <span class='st'>"data"</span>),
+  <span class='kw'>propertyId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cached</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>no_api</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -286,6 +291,10 @@
     <tr>
       <th>cached</th>
       <td><p>Whether to use a cached version or to use the API to fetch the results again</p></td>
+    </tr>
+    <tr>
+      <th>no_api</th>
+      <td><p>Don't call the API, just return <code><a href='meta4.html'>googleAnalyticsR::meta4</a></code></p></td>
     </tr>
     </table>
 

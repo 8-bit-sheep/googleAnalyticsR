@@ -330,8 +330,73 @@ authDropdownUI("auth_menu")</pre></body></html></div>
 <div id="parameter-selects" class="section level2">
 <h2 class="hasAnchor">
 <a href="#parameter-selects" class="anchor"></a>Parameter selects</h2>
+<div id="universal-analytics" class="section level3">
+<h3 class="hasAnchor">
+<a href="#universal-analytics" class="anchor"></a>Universal Analytics</h3>
 <p><code>multiSelect</code> and <code>multiSelectUI</code> create select dropdowns with the GA API parameters filled in, taken from the meta API.</p>
-<p><img src="metricDropdown.png"><img src="dimDropdown.png"></p>
+<p><img src="metricDropdown.png"><img src="dimDropdown.png"> ### GA4</p>
+<p>Google Analytics 4 allows you to download your custom events, so needs a new metric/dimension field picker, available as <code><a href="../reference/metricDimensionSelect.html">metricDimensionSelect()</a></code></p>
+<p>To use custom fields, you need to pass in meta data from <code><a href="../reference/ga_meta.html">ga_meta("data")</a></code> with your propertyId.</p>
+<p>An example of its use with and without custom fields is shown below:</p>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">shiny</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAuthR</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
+
+<span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html">gar_set_client</a></span>(
+  <span class="kw">web_json</span> <span class="kw">=</span> <span class="st">"/Users/mark/dev/auth/mark-edmondson-gde-web-client.json"</span>,
+  <span class="kw">scopes</span> <span class="kw">=</span> <span class="st">"https://www.googleapis.com/auth/analytics.readonly"</span>)
+
+<span class="co"># loads a pre-existing model</span>
+<span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_model_load.html">ga_model_load</a></span>(
+  <span class="st">"/Users/mark/dev/R/_packages/googleAnalyticsR/inst/models/ga4-trend.gamr"</span>)
+
+<span class="no">modelUi</span> <span class="kw">&lt;-</span> <span class="no">model</span>$<span class="no">shiny_module</span>$<span class="no">ui</span>
+<span class="no">modelServer</span> <span class="kw">&lt;-</span> <span class="no">model</span>$<span class="no">shiny_module</span>$<span class="no">server</span>
+
+<span class="co">## ui.R</span>
+<span class="no">ui</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html">fluidPage</a></span>(
+  <span class="kw">title</span> <span class="kw">=</span> <span class="st">"GA4 Shiny"</span>,
+  <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reexports.html">h1</a></span>(<span class="st">"GA4 Shiny App"</span>),
+  <span class="fu"><a href="../reference/accountPicker.html">accountPickerUI</a></span>(<span class="st">"auth_menu"</span>, <span class="kw">inColumns</span> <span class="kw">=</span> <span class="fl">TRUE</span>),
+  <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reexports.html">h2</a></span>(<span class="st">"Pick metrics and dimensions"</span>),
+  <span class="fu"><a href="../reference/metricDimensionSelect.html">metricDimensionSelectUI</a></span>(<span class="st">"mets1"</span>),
+  <span class="fu"><a href="../reference/metricDimensionSelect.html">metricDimensionSelectUI</a></span>(<span class="st">"dims_custom"</span>, <span class="st">"Dimensions"</span>),
+  <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reexports.html">h2</a></span>(<span class="st">"Model results"</span>),
+  <span class="fu">modelUi</span>(<span class="st">"model1"</span>)
+)
+
+<span class="co">## server.R</span>
+<span class="no">server</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">input</span>, <span class="no">output</span>, <span class="no">session</span>){
+
+  <span class="no">token</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_auth.html">gar_shiny_auth</a></span>(<span class="no">session</span>)
+
+  <span class="no">ga_accounts</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span>({
+    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/req.html">req</a></span>(<span class="no">token</span>)
+    <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span>(<span class="st">"ga4"</span>)
+  })
+
+  <span class="no">property_id</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/accountPicker.html">accountPicker</a></span>(<span class="st">"auth_menu"</span>,
+                               <span class="kw">ga_table</span> <span class="kw">=</span> <span class="no">ga_accounts</span>,
+                               <span class="kw">id_only</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+
+  <span class="no">meta</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span>({
+    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/req.html">req</a></span>(<span class="fu">property_id</span>())
+
+    <span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span>(<span class="st">"data"</span>, <span class="kw">propertyId</span> <span class="kw">=</span> <span class="fu">property_id</span>())
+  })
+
+  <span class="no">metrics</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/metricDimensionSelect.html">metricDimensionSelect</a></span>(<span class="st">"mets1"</span>, <span class="kw">default</span> <span class="kw">=</span> <span class="st">"sessions"</span>)
+  <span class="no">dims_custom</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/metricDimensionSelect.html">metricDimensionSelect</a></span>(<span class="st">"dims_custom"</span>,
+                                       <span class="kw">field_type</span> <span class="kw">=</span> <span class="st">"dimension"</span>,
+                                       <span class="kw">custom_meta</span> <span class="kw">=</span> <span class="fu"><a href="../reference/meta.html">meta</a></span>())
+
+  <span class="co"># module to display model results</span>
+  <span class="fu">modelServer</span>(<span class="st">"model1"</span>, <span class="kw">view_id</span> <span class="kw">=</span> <span class="no">property_id</span>, <span class="kw">metrics</span> <span class="kw">=</span> <span class="no">metrics</span>)
+
+}
+
+<span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html">shinyApp</a></span>(<span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_ui.html">gar_shiny_ui</a></span>(<span class="no">ui</span>), <span class="no">server</span>)</pre></body></html></div>
+</div>
 </div>
 <div id="segment-helper" class="section level2">
 <h2 class="hasAnchor">
@@ -347,7 +412,7 @@ authDropdownUI("auth_menu")</pre></body></html></div>
 <div id="ui-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ui-r" class="anchor"></a>ui.R</h3>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co">## ui.R</span>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co">## ui.R</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAuthR</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">shiny</span>)
@@ -364,7 +429,7 @@ authDropdownUI("auth_menu")</pre></body></html></div>
 <div id="server-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#server-r" class="anchor"></a>server.R</h3>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co">## in server.R</span>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co">## in server.R</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAuthR</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">shiny</span>)

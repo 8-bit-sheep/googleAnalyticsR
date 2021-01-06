@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>multi_select UI [Shiny Module] — multi_selectUI • googleAnalyticsR</title>
+<title>metricDimensionSelectUI - GA4 [Shiny Module] — metricDimensionSelectUI • googleAnalyticsR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,9 @@
 
 
 
-<meta property="og:title" content="multi_select UI [Shiny Module] — multi_selectUI" />
-<meta property="og:description" content="Shiny Module for use with multi_select" />
+<meta property="og:title" content="metricDimensionSelectUI - GA4 [Shiny Module] — metricDimensionSelectUI" />
+<meta property="og:description" content="Create a Google Analytics variable selector
+Shiny Module for use with GA4 metric and dimension fields fetched via ga_meta(&quot;ga4&quot;)" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
 
@@ -261,23 +262,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>multi_select UI [Shiny Module]</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/shiny-modules.R'><code>R/shiny-modules.R</code></a></small>
-    <div class="hidden name"><code>multi_selectUI.Rd</code></div>
+    <h1>metricDimensionSelectUI - GA4 [Shiny Module]</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/shiny-modules-new.R'><code>R/shiny-modules-new.R</code></a></small>
+    <div class="hidden name"><code>metricDimensionSelect.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Shiny Module for use with <a href='multi_select.html'>multi_select</a></p>
+    <p>Create a Google Analytics variable selector</p>
+<p>Shiny Module for use with GA4 metric and dimension fields fetched via <code><a href='ga_meta.html'>ga_meta("ga4")</a></code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>multi_selectUI</span>(<span class='no'>id</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Metric"</span>, <span class='kw'>multiple</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>metricDimensionSelectUI</span>(<span class='no'>id</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Metric"</span>, <span class='kw'>multiple</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>metricDimensionSelect</span>(
+  <span class='no'>id</span>,
+  <span class='kw'>field_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"metric"</span>, <span class='st'>"dimension"</span>),
+  <span class='kw'>custom_meta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>default</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>id</th>
-      <td><p>Shiny id</p></td>
+      <td><p>The Shiny id</p></td>
     </tr>
     <tr>
       <th>label</th>
@@ -291,23 +300,35 @@
       <th>width</th>
       <td><p>width of select</p></td>
     </tr>
+    <tr>
+      <th>default</th>
+      <td><p>The default selected choice. First element if NULL</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>metric or dimension</p></td>
+    </tr>
+    <tr>
+      <th>propertyId</th>
+      <td><p>Pass the propertyId to get custom fields from GA4 (reactive)</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Shiny UI</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Create a Google Analytics variable selector</p>
+<p>the selected variable</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Shiny modules: 
 <code><a href='accountPicker.html'>accountPickerUI</a>()</code>,
 <code><a href='authDropdownUI.html'>authDropdownUI</a>()</code>,
 <code><a href='authDropdown.html'>authDropdown</a>()</code>,
-<code><a href='metricDimensionSelect.html'>metricDimensionSelectUI</a>()</code>,
+<code><a href='multi_selectUI.html'>multi_selectUI</a>()</code>,
 <code><a href='multi_select.html'>multi_select</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
