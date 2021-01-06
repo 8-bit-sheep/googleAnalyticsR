@@ -380,7 +380,7 @@ create_shiny_module_funcs <- function(data_f,
                   paste(names(dots),"=", dots, collapse = ","),
                   level = 2)
         gadata <- shiny::reactive({
-          req(view_id())
+          shiny::req(view_id())
           
           myMessage("Fetching data for view_id:",view_id(), level = 3)
           execute_model_function(data_f,
@@ -515,7 +515,7 @@ ga_model_shiny_template <- function(name){
 #' @importFrom whisker whisker.render
 ga_model_shiny <- function(model,
                            template = ga_model_shiny_template("template1"),
-                           title = "Generated be googleAnalyticsR::ga_model_shiny",
+                           title = "ga_model_shiny",
                            web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"),
                            scopes = "https://www.googleapis.com/auth/analytics.readonly",
                            local_file = "",

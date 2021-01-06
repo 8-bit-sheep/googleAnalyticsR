@@ -101,7 +101,7 @@ There are Shiny templates available that can be used with model objects to quick
 ga_model_shiny("inst/models/decomp_ga.gamr", template = ga_model_shiny_template("template1"))
 ```
 
-Templates can be created and parsed via `{{ var }}` templating rules:
+Templates can be created and parsed via `{{ var }}` templating rules.  The default variables used in all templates are `web_json`, `scopes` (for Google auth), and `title`.  You can pass other template specific ones via the `...` argument.  The `ga_model` argument is used to load the previously created `ga_model` object into the Shiny app. 
 
 ```r
 library(shiny)
@@ -148,6 +148,23 @@ server <- function(input, output, session){
 
 shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)
 ```
+
+### Models and Templates included with googleAnalyticsR
+
+There are some pre-created models and templates to help inspire your own.  At the moment these are:
+
+*Models - accessed via `ga_model_example()`*
+
+* `"ga4-trend"` - Fetch GA4 time-series, display via Dygraphs
+* `"ga-effect"` - Fetch UA time-series and use with CausalImpact
+* `"decomp_ga"` - Fetch UA time-series and perform decomposition on them.
+
+*Templates - accessed via `ga_model_shiny_template()`*
+
+* `"template_ga4"` - A basic Shiny dashboard with an account selector for GA4
+* `"template_ua"` - A basic Shiny dashboard with an account selector for UA
+* `"shinydashboard_ga4"` - Account selector for GA4 plus date picker using `library(shinydashboard)` styling.
+
 
 ## Creating model `.gamr` objects
 

@@ -54,6 +54,7 @@ server <- function(input, output, session){
 Other Shiny modules: 
 \code{\link{authDropdownUI}()},
 \code{\link{authDropdown}()},
+\code{\link{metricDimensionSelectUI}()},
 \code{\link{multi_selectUI}()},
 \code{\link{multi_select}()}
 }

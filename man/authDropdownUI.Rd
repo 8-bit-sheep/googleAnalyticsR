@@ -25,6 +25,7 @@ Makes a dropdown row for use for authentication.
 Other Shiny modules: 
 \code{\link{accountPickerUI}()},
 \code{\link{authDropdown}()},
+\code{\link{metricDimensionSelectUI}()},
 \code{\link{multi_selectUI}()},
 \code{\link{multi_select}()}
 }

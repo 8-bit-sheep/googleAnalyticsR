@@ -7,7 +7,7 @@
 ga_model_shiny(
   model,
   template = ga_model_shiny_template("template1"),
-  title = "Generated be googleAnalyticsR::ga_model_shiny",
+  title = "ga_model_shiny",
   web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"),
   scopes = "https://www.googleapis.com/auth/analytics.readonly",
   local_file = "",

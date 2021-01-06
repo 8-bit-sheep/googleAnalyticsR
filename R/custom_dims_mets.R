@@ -38,7 +38,7 @@ allowed_metric_dim <- function(type = c("METRIC", "DIMENSION"),
                         segment = meta[grepl("true",meta$allowedInSegments),],
                         cohort = meta[grepl("Lifetime Value and Cohort", meta$group),])
   
-  ## only public (not deprecated) varaibles
+  ## only public (not deprecated) variables
   filtered_md <- filtered_md[filtered_md$type == type & 
                                filtered_md$status == "PUBLIC",]
   

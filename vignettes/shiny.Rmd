@@ -127,10 +127,81 @@ shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)
 
 ## Parameter selects
 
+### Universal Analytics
+
 `multiSelect` and `multiSelectUI` create select dropdowns with the GA API parameters filled in, taken from the meta API.
 
 ![](metricDropdown.png)
 ![](dimDropdown.png)
+### GA4
+
+Google Analytics 4 allows you to download your custom events, so needs a new metric/dimension field picker, available as `metricDimensionSelect()`
+
+To use custom fields, you need to pass in meta data from `ga_meta("data")` with your propertyId.
+
+An example of its use with and without custom fields is shown below:
+
+```r
+library(shiny)
+library(googleAuthR)
+library(googleAnalyticsR)
+
+gar_set_client(
+  web_json = "/Users/mark/dev/auth/mark-edmondson-gde-web-client.json",
+  scopes = "https://www.googleapis.com/auth/analytics.readonly")
+
+# loads a pre-existing model
+model <- ga_model_load(
+  "/Users/mark/dev/R/_packages/googleAnalyticsR/inst/models/ga4-trend.gamr")
+
+modelUi <- model$shiny_module$ui
+modelServer <- model$shiny_module$server
+
+## ui.R
+ui <- fluidPage(
+  title = "GA4 Shiny",
+  h1("GA4 Shiny App"),
+  accountPickerUI("auth_menu", inColumns = TRUE),
+  h2("Pick metrics and dimensions"),
+  metricDimensionSelectUI("mets1"),
+  metricDimensionSelectUI("dims_custom", "Dimensions"),
+  h2("Model results"),
+  modelUi("model1")
+)
+
+## server.R
+server <- function(input, output, session){
+  
+  token <- gar_shiny_auth(session)
+  
+  ga_accounts <- reactive({
+    req(token)
+    ga_account_list("ga4")
+  })
+  
+  property_id <- accountPicker("auth_menu",
+                               ga_table = ga_accounts,
+                               id_only = TRUE)
+
+  meta <- reactive({
+    req(property_id())
+    
+    ga_meta("data", propertyId = property_id())
+  })
+
+  metrics <- metricDimensionSelect("mets1", default = "sessions")
+  dims_custom <- metricDimensionSelect("dims_custom",
+                                       field_type = "dimension",
+                                       custom_meta = meta())  
+  
+  # module to display model results
+  modelServer("model1", view_id = property_id, metrics = metrics)
+  
+}
+
+shinyApp(gar_shiny_ui(ui), server)
+```
+
 
 ## Segment helper
 

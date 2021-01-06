@@ -11,6 +11,7 @@
 * Add Admin API to `ga_account_list("ga4")` (#350)
 * Remove `ga_model_tweet()`
 * Add new Shiny module for GA4 web properties - `accountPicker()` #357
+* Add new Shiny module for GA4 fields - `metricDimensionSelect()` #357
 * All generation of Shiny apps from models using template files `ga_model_shiny()` #358
 
 # googleAnalyticsR 0.8.0

@@ -12,13 +12,16 @@ modelUi <- model$shiny_module$ui
 modelServer <- model$shiny_module$server
 
 ## ui.R
-ui <- fluidPage(title = "{{ shiny_title }}",
-                accountPickerUI("auth_menu", inColumns = TRUE),
-                h2("Model Description"),
-                textOutput("model_description"),
-                h2("Model Output"),
-                modelUi("{{ ga_model_name }}")
-                
+ui <- fluidPage(
+  title = "{{ shiny_title }}",
+  accountPickerUI("auth_menu", inColumns = TRUE),
+  h2("Pick metrics and dimensions"),
+  metricDimensionSelectUI("mets1"),
+  h2("Model Description"),
+  textOutput("model_description"),
+  h2("Model Output"),
+  modelUi("{{ ga_model_name }}")
+  
 )
 
 ## server.R
@@ -33,10 +36,22 @@ server <- function(input, output, session){
   
   # module for authentication
   property_id <- accountPicker("auth_menu", ga_table = accs, id_only = TRUE)
+  
+  meta <- reactive({
+    req(property_id())
+    
+    ga_meta("data", propertyId = property_id())
+  })
+  
+  metrics <- metricDimensionSelect(
+    "mets1", 
+    default = "sessions",
+    custom_meta = meta())
+
   output$model_description <- renderText(model$description)
 
   # module to display model results
-  modelServer("{{ ga_model_name }}", view_id = property_id)
+  modelServer("{{ ga_model_name }}", view_id = property_id, metrics = metrics)
   
 }
 

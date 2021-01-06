@@ -130,9 +130,7 @@ accountPicker <- function(id, ga_table, id_only = TRUE){
   
 }
 
-#' multi_select UI [Shiny Module]
-#'
-#' Shiny Module for use with \link{multi_select}
+#' metricDimensionSelectUI - GA4 [Shiny Module]
 #' 
 #' Create a Google Analytics variable selector
 #' 
@@ -142,12 +140,13 @@ accountPicker <- function(id, ga_table, id_only = TRUE){
 #' @param width width of select
 #'
 #' @return Shiny UI
-#' @family Shiny modules
+#' @rdname metricDimensionSelect
 #' @export
-multi_selectUI <- function(id, 
-                           label = "Metric",
-                           multiple = TRUE,
-                           width = NULL){
+metricDimensionSelectUI <- function(
+  id, 
+  label = "Metric",
+  multiple = TRUE,
+  width = NULL){
   
   ns <- shiny::NS(id)
   
@@ -159,53 +158,109 @@ multi_selectUI <- function(id,
   
 }
 
-#' multi_select [Shiny Module]
+#' metricDimensionSelect - GA4 [Shiny Module]
 #'
-#' Shiny Module for use with \link{multi_selectUI}
-#'
-#' Call via \code{shiny::callModule(multi_select, "your_id")}
-#'
-#' @param input shiny input
-#' @param output shiny output
-#' @param session shiny session
+#' Shiny Module for use with GA4 metric and dimension fields fetched via \code{ga_meta("ga4")}
+#' 
+#' @param id The Shiny id
 #' @param type metric or dimension
-#' @param subType Limit selections to those relevant
+#' @param propertyId Pass the propertyId to get custom fields from GA4 (reactive)
 #' @param default The default selected choice. First element if NULL
 #'
 #' @return the selected variable
 #' @family Shiny modules
 #' @export
-multi_select <- function(input, output, session, 
-                         type = c("METRIC","DIMENSION"),
-                         subType = c("all","segment","cohort"),
-                         default = NULL){
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' # ui.R
+#' metricDimensionSelect("mets1")
+#' metricDimensionSelect("dims1")
+#' 
+#' #server.R
+#' metrics <- metricDimensionSelect("mets1", "metric")
+#' dims <- metricDimensionSelect("dims1", "dimension")
+#' 
+#' 
+#' 
+#' # use in app with custom fields
+#' #' ui <- fluidPage(title = "Shiny App",
+#'                  accountPickerUI("auth_menu", inColumns = TRUE),
+#'                  metricDimensionSelectUI("mets1"),
+#'                  metricDimensionSelectUI("dims_custom")
+#'                  )
+#' server <- function(input, output, session){
+#'   token <- gar_shiny_auth(session)
+#'   
+#'   accs <- reactive({
+#'     req(token)
+#'     ga_account_list("ga4")
+#'    })
+#'    
+#'   # no custom data
+#'   metrics <- metricDimensionSelect("mets1")
+#'    
+#'   # module for authentication
+#'   property_id <- accountPicker("auth_menu", ga_table = accs, id_only = TRUE)
+#'   
+#'   meta <- reactive({
+#'       req(property_id())
+#'       ga_meta("data", propertyId = property_id())
+#'   })
+#'  
+#'   
+#'   # custom data
+#'   dims_custom <- metricDimensionSelect("dims_custom", 
+#'                                        type = "dimension", 
+#'                                        custom_meta = meta())
+#'  }
+#'  
+#'  shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)
+#'  
+#' 
+#' 
+#' }
+metricDimensionSelect <- function(
+  id, 
+  field_type = c("metric","dimension"),
+  custom_meta = NULL,
+  default = NULL){
   
-  type <- match.arg(type)
+  field_type <- match.arg(field_type)
   
-  ## update select from meta
-  shiny::observe({
-    
-    choice <- allowed_metric_dim(type = type, subType = subType)
+  shiny::moduleServer(
+    id,
+    function(input, output, session){
+      
+      ## update select from meta
+      shiny::observe({
 
-    s <- choice[1]
-    
-    if(!is.null(default)){
-      
-      default <- checkPrefix(default)
-      
-      if(all(default %in% choice)){
-        s <- default
-      } else {
-        warning("default '", default, "' not in choice")
-      }
+        if(!is.null(custom_meta)){
+          fields <- custom_meta
+        } else {
+          fields <- googleAnalyticsR::meta4
+        }
+        
+        types <- fields %>% dplyr::filter(class == field_type)
+        choice <- types %>% dplyr::pull(apiName)
+        names(choice) <- types %>% pull(uiName)
+
+        s <- choice[1]
+
+        if(!is.null(default) && all(default %in% choice)){
+            s <- default
+        }
+
+        shiny::updateSelectInput(session,
+                                 "multi_select",
+                                 choices = choice,
+                                 selected = s)
+      })
+
+      return(shiny::reactive(input$multi_select))
     }
-    
-    shiny::updateSelectInput(session,
-                      "multi_select",
-                      choices = choice,
-                      selected = s)
-  })
-  
-  return(shiny::reactive(input$multi_select))
+  )
   
 }

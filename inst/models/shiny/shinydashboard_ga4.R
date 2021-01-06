@@ -13,13 +13,16 @@ modelUi <- model$shiny_module$ui
 modelServer <- model$shiny_module$server
 
 header <- dashboardHeader(
-  title = "{{ shiny_title }}"
+  title = "{{ shiny_title }}",
+  titleWidth = 250
 )
 sidebar <- dashboardSidebar(
+  width = 250,
   sidebarMenu(
-    menuItem("Refresh Google Login", href = "/"),
+    menuItem("Logout", href = "/"),
     dateRangeInput("dates", label = "Dates", 
-                   start = Sys.Date()-366, end = Sys.Date()-1)
+                   start = Sys.Date()-366, end = Sys.Date()-1),
+    metricDimensionSelectUI("mets1")
   )
 )
 body <- dashboardBody(
@@ -53,11 +56,25 @@ server <- function(input, output, session){
   
   # module for authentication
   property_id <- accountPicker("auth_menu", ga_table = accs, id_only = TRUE)
+  
+  meta <- reactive({
+    req(property_id())
+    
+    ga_meta("data", propertyId = property_id())
+  })
+  
+  metrics <- metricDimensionSelect(
+    "mets1", 
+    default = "sessions",
+    custom_meta = meta())
+  
   output$model_description <- renderText(model$description)
 
   # module to display model results
-  modelServer("{{ ga_model_name }}", view_id = property_id, 
-              date_range = reactive(input$dates))
+  modelServer("{{ ga_model_name }}", 
+              view_id = property_id, 
+              date_range = reactive(input$dates),
+              metrics = metrics)
   
 }
 
