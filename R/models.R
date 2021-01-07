@@ -95,7 +95,6 @@ ga_model_load <- function(filename = "my-model.gamr"){
 #' Load an example model
 #' 
 #' @param name name of the model - set to "list" to show available files
-#' @param location location of model
 #' @export
 #' @import assertthat
 #' @family GA modelling functions

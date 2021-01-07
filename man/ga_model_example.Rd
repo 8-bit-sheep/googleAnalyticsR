@@ -8,8 +8,6 @@ ga_model_example(name = "list")
 }
 \arguments{
 \item{name}{name of the model - set to "list" to show available files}
-
-\item{location}{location of model}
 }
 \description{
 Load an example model
