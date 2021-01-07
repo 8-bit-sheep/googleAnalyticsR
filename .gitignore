@@ -18,3 +18,4 @@ gar_parse_error.rds
 *.dcf
 test.oauth
 .Renviron
+tests/testthat/cache

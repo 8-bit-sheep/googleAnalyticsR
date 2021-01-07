@@ -40,6 +40,8 @@ accountId2 <- 47480439
 webPropId2 <- "UA-47480439-2"
 ga_id2 <- 81416156
 
+ga4_propertyId <- 206670707
+
 test_that("Correct authentication", {
   skip_on_travis()
   skip_on_cran()

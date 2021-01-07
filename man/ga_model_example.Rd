@@ -4,10 +4,10 @@
 \alias{ga_model_example}
 \title{Load an example model}
 \usage{
-ga_model_example(name, location = "googleAnalyticsR")
+ga_model_example(name = "list")
 }
 \arguments{
-\item{name}{name of the model}
+\item{name}{name of the model - set to "list" to show available files}
 
 \item{location}{location of model}
 }

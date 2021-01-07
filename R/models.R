@@ -94,14 +94,20 @@ ga_model_load <- function(filename = "my-model.gamr"){
 
 #' Load an example model
 #' 
-#' @param name name of the model
+#' @param name name of the model - set to "list" to show available files
 #' @param location location of model
 #' @export
 #' @import assertthat
 #' @family GA modelling functions
-ga_model_example <- function(name, location = "googleAnalyticsR"){
+ga_model_example <- function(name = "list"){
+  
+  if(name == "list"){
+    list.files(system.file("models", package = "googleAnalyticsR"), 
+               include.dirs = FALSE)
+  }
+  
   # this will fetch from more places such as other packages and GCS eventually
-  filename <- system.file("models", name, package = location)
+  filename <- system.file("models", name, package = "googleAnalyticsR")
   
   ga_model_load(filename)
 }
@@ -462,12 +468,19 @@ ga_model_write <- function(model, filepath = "ga_model.R"){
   
   assert_that(is.ga_model(model))
   
+  if(!is.null(model$required_packages)){
+    libs <- paste0("library(",model$required_packages,")")
+  } else {
+    libs <- "# no libraries needed"
+  }
+  
   the_text <- 
     c(sprintf("# ga_model: %s\n", model$description),
-      paste0("library(",model$required_packages,")"),
-      write_f("\n# fetch data\ndata_f", model$data_f),
-      write_f("\n# model data\nmodel_f", model$model_f),
-      write_f("\n# output data\noutput_f\n", model$output_f))
+      libs,
+      write_f("\n# fetch data\ndata_f <-", model$data_f),
+      write_f("\n# model data\nmodel_f <-", model$model_f),
+      write_f("\n# output data\noutput_f <-", model$output_f),
+      "\n# use via ga_model_make()")
   
   writeLines(the_text, con = filepath)
   suppressMessages(formatR::tidy_file(filepath, width.cutoff = 80))
@@ -477,9 +490,7 @@ ga_model_write <- function(model, filepath = "ga_model.R"){
 }
 
 write_f <- function(name, f){
-  c(sprintf("%s <- function(%s)", name, paste(names(formals(f)), collapse = ",\n")),
-    sprintf("%s\n", as.character(body(f))),
-    "}")
+  c(name, deparse(f))
 }
 
 #' Get a Shiny template file

@@ -1,3 +1,5 @@
+source("setup.R")
+
 context("GA4 Tests")
 
 test_that("Basic fetch", {
@@ -5,7 +7,7 @@ test_that("Basic fetch", {
   skip_on_travis()
   
   df <- ga_data(
-    206670707,
+    ga4_propertyId,
     metrics = "activeUsers",
     dimensions = c("date","city"),
     date_range = c("2020-03-31", "2020-04-27"),
@@ -23,7 +25,7 @@ test_that("Meta Data API",{
   skip_on_cran()
   skip_on_travis()
   
-  meta44 <- ga_meta("data", propertyId =206670707)
+  meta44 <- ga_meta("data", propertyId =ga4_propertyId)
   expect_equal(meta44[meta44$apiName == "customEvent:test_dim","uiName"],
                "test_dim")
 })
@@ -58,7 +60,7 @@ test_that("Metric Aggregations", {
   skip_on_cran()
   skip_on_travis()
   ma <- ga_data(
-    206670707,
+    ga4_propertyId,
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek"),
     date_range = c("2020-03-31", "2020-04-27","2020-04-28", "2020-05-27"),
@@ -80,7 +82,7 @@ test_that("Custom data", {
   skip_on_travis()
   # create your own named metrics
   met_expression <- ga_data(
-    206670707,
+    ga4_propertyId,
     metrics = c("activeUsers","sessions",sessionsPerUser = "sessions/activeUsers"),
     dimensions = c("date","city","dayOfWeek"),
     date_range = c("2020-03-31", "2020-04-27"),
@@ -91,7 +93,7 @@ test_that("Custom data", {
   
   # create your own aggregation dimensions
   dim_expression <- ga_data(
-    206670707,
+    ga4_propertyId,
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek", cdow = "city/dayOfWeek"),
     date_range = c("2020-03-31", "2020-04-27"),
@@ -142,7 +144,7 @@ test_that("Order API fetch", {
   skip_on_travis()
   
   order<- ga_data(
-    206670707,
+    ga4_propertyId,
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek"),
     date_range = c("2020-03-31", "2020-04-27"),
@@ -157,7 +159,7 @@ test_that("Realtime", {
   skip_on_cran()
   skip_on_travis()
   realtime <- ga_data(
-    206670707,
+    ga4_propertyId,
     metrics = "activeUsers",
     dimensions = c("city","unifiedScreenName"),
     limit = 100,
@@ -174,7 +176,7 @@ test_that("Filter fetch types", {
   test_filter <- function(dim_filter = NULL,
                           met_filter = NULL){
     ga_data(
-      206670707,
+      ga4_propertyId,
       metrics = "activeUsers",
       dimensions = c("date","city", "dayOfWeek"),
       date_range = c("2020-03-31", "2020-04-27"),
