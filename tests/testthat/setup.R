@@ -4,6 +4,7 @@ library(googleAnalyticsR)
 options(googleAuthR.scopes.selected = 
           c("https://www.googleapis.com/auth/analytics",
             "https://www.googleapis.com/auth/analytics.edit",
+            "https://www.googleapis.com/auth/analytics.readonly",
             "https://www.googleapis.com/auth/analytics.manage.users",
             "https://www.googleapis.com/auth/analytics.user.deletion",
             "https://www.googleapis.com/auth/drive"))
@@ -19,6 +20,15 @@ if(Sys.getenv("GAR_CLIENT_JSON") != ""){
 if(file.exists("/workspace/auth.json")){
   message("Auth on Cloud Build")
   ga_auth(json_file = "/workspace/auth.json")
+} else {
+  message("Local auth with same test key")
+  # change to googleanalyticsr-tests@ key
+  local_auth <- Sys.getenv("GA_TEST_AUTH")
+  if(nzchar(local_auth) && file.exists(local_auth)){
+    ga_auth(json_file = local_auth)
+  } else {
+    message("No local auth - set GA_TEST_AUTH")
+  }
 }
 
 

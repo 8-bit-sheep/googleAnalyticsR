@@ -13,13 +13,16 @@ ga_admin_account_summary <- function(){
   # analyticsadmin.accountSummaries.list
   pars = list(pageSize = 50, pageToken = "")
   
-  f <- gar_api_generator(url, "GET", pars_args = rmNullObs(pars), 
-                         data_parse_function = parse_admin_account_summary)
+  f <- gar_api_generator(
+    url, "GET", 
+    pars_args = rmNullObs(pars), 
+    data_parse_function = parse_admin_account_summary)
   
-  pages <- gar_api_page(f,
-                        page_f = function(x) attr(x, "nextPageToken"),
-                        page_method = "param",
-                        page_arg = "pageToken")
+  pages <- gar_api_page(
+    f,
+    page_f = function(x) attr(x, "nextPageToken"),
+    page_method = "param",
+    page_arg = "pageToken")
   
   Reduce(bind_rows, pages)
 }
