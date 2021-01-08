@@ -276,6 +276,7 @@
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"ga_model_shiny"</span>,
   <span class='kw'>web_json</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span>(<span class='st'>"GAR_CLIENT_WEB_JSON"</span>),
   <span class='kw'>scopes</span> <span class='kw'>=</span> <span class='st'>"https://www.googleapis.com/auth/analytics.readonly"</span>,
+  <span class='kw'>deployed_url</span> <span class='kw'>=</span> <span class='st'>""</span>,
   <span class='kw'>local_file</span> <span class='kw'>=</span> <span class='st'>""</span>,
   <span class='no'>...</span>
 )</pre>
@@ -302,6 +303,10 @@
     <tr>
       <th>scopes</th>
       <td><p>The scope the API requests will be under</p></td>
+    </tr>
+    <tr>
+      <th>deployed_url</th>
+      <td><p>If deploying Shiny app to a server, put the URL of the deployed app here so the authentication will redirect to the correct place</p></td>
     </tr>
     <tr>
       <th>local_file</th>

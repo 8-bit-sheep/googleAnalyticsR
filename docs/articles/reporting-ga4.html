@@ -1066,6 +1066,39 @@
 <code>serverErrorsPerProjectPerHour</code> - how many bad API calls you can make per project/hr</li>
 </ul>
 </div>
+<div id="debugging-and-raw-json-requests" class="section level2">
+<h2 class="hasAnchor">
+<a href="#debugging-and-raw-json-requests" class="anchor"></a>Debugging and Raw JSON requests</h2>
+<p>If you ever need to inspect the API request, set <code><a href="https://rdrr.io/r/base/options.html">options(googleAuthR.verbose=2)</a></code> to see the request JSON. This is helpful in bug reports.</p>
+<p>If you use the <code>raw_json</code> argument only in <code><a href="../reference/ga_data.html">ga_data()</a></code> to send in a string of the JSON as specified by the <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1alpha/TopLevel/runReport"><code>runReport</code> object</a>, this can be used to fetch unimplemented API features or buggy requests to help debugging.</p>
+<div class="sourceCode" id="cb80"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(<span class="kw">raw_json</span> <span class="kw">=</span> <span class="st">'{"entity":{"propertyId":"206670707"},"metrics":[{"name":"sessions"}],"orderBys":[{"dimension":{"orderType":"ALPHANUMERIC","dimensionName":"date"},"desc":false}],"dimensions":[{"name":"date"}],"dateRanges":[{"startDate":"2020-01-08","endDate":"2021-01-07"}],"keepEmptyRows":true,"limit":-1,"returnPropertyQuota":true}'</span>)
+<span class="co">#ℹ 2021-01-08 09:27:04 &gt; Making API request with raw JSON:  {"entity":{"propertyId":"206670707"},"metrics":[{"name":"sessions"}],"orderBys":[{"dimension":{"orderType":"ALPHANUMERIC","dimensionName":"date"},"desc":false}],"dimensions":[{"name":"date"}],"dateRanges":[{"startDate":"2020-01-08","endDate":"2021-01-07"}],"keepEmptyRows":true,"limit":-1,"returnPropertyQuota":true}</span>
+<span class="co">#ℹ 2021-01-08 09:27:04 &gt; Request:  https://analyticsdata.googleapis.com/v1alpha:runReport/</span>
+<span class="co">#ℹ 2021-01-08 09:27:06 &gt; Body JSON parsed to:  "{\"entity\":{\"propertyId\":\"206670707\"},\"metrics\":[{\"name\":\"sessions\"}],\"orderBys\":[{\"dimension\":{\"orderType\":\"ALPHANUMERIC\",\"dimensionName\":\"date\"},\"desc\":false}],\"dimensions\":[{\"name\":\"date\"}],\"dateRanges\":[{\"startDate\":\"2020-01-08\",\"endDate\":\"2021-01-07\"}],\"keepEmptyRows\":true,\"limit\":-1,\"returnPropertyQuota\":true}"</span>
+<span class="co">#Auto-refreshing stale OAuth token.</span>
+<span class="co">#ℹ 2021-01-08 09:27:08 &gt; tokensPerDay: Query Cost [ 37 ] / Remaining [ 24827 ]</span>
+<span class="co">#ℹ 2021-01-08 09:27:08 &gt; tokensPerHour: Query Cost [ 37 ] / Remaining [ 4827 ]</span>
+<span class="co">#ℹ 2021-01-08 09:27:08 &gt; concurrentRequests:  10  / 10</span>
+<span class="co">#ℹ 2021-01-08 09:27:08 &gt; serverErrorsPerProjectPerHour:  10  / 10</span>
+<span class="co">## A tibble: 340 x 2</span>
+<span class="co">#   date       sessions</span>
+<span class="co">#   &lt;date&gt;        &lt;dbl&gt;</span>
+<span class="co"># 1 2020-01-08      134</span>
+<span class="co"># 2 2020-01-09      131</span>
+<span class="co"># 3 2020-01-10      124</span>
+<span class="co"># 4 2020-01-11       34</span>
+<span class="co"># ...</span></pre></body></html></div>
+<p>Pass in the propertyId as well when querying the realtime API:</p>
+<div class="sourceCode" id="cb81"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
+    <span class="kw">propertyId</span> <span class="kw">=</span> <span class="no">ga4_propertyId</span>,
+    <span class="kw">raw_json</span> <span class="kw">=</span> <span class="st">'{"metrics":[{"name":"activeUsers"}],"limit":100,"returnPropertyQuota":true}'</span>,
+    <span class="kw">realtime</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="co">## A tibble: 1 x 1</span>
+<span class="co">#  activeUsers</span>
+<span class="co">#        &lt;dbl&gt;</span>
+<span class="co">#1           2</span></pre></body></html></div>
+<p>You can also pass in an R list that will be converted into JSON via <code><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">jsonlite::fromJSON()</a></code></p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -281,7 +281,8 @@
   <span class='kw'>orderBys</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>metricAggregations</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>realtime</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>realtime</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>raw_json</span> <span class='kw'>=</span> <span class='st'>""</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -330,6 +331,10 @@
     <tr>
       <th>realtime</th>
       <td><p>If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics'>valid real-time dimensions</a></p></td>
+    </tr>
+    <tr>
+      <th>raw_json</th>
+      <td><p>You can send in the raw JSON string for a Data API request which will skip all checks</p></td>
     </tr>
     </table>
 
