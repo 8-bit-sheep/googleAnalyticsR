@@ -186,17 +186,18 @@ ga_model_example <- function(name = "list"){
 #'                             renderShiny = shiny::renderPlot)
 #'
 #' }
-ga_model_make <- function(data_f,
-                          required_columns,
-                          model_f,
-                          output_f = graphics::plot,
-                          required_packages = NULL,
-                          description = NULL,
-                          outputShiny = shiny::plotOutput,
-                          renderShiny = shiny::renderPlot){
+ga_model_make <- function(
+  data_f,
+  required_columns,
+  model_f,
+  output_f = graphics::plot,
+  required_packages = NULL,
+  description = NULL,
+  outputShiny = shiny::plotOutput,
+  renderShiny = shiny::renderPlot){
   
   Model(
-      data_f            = data_f,
+    data_f            = data_f,
       required_columns  = required_columns,
       model_f           = model_f,
       output_f          = output_f,
@@ -222,15 +223,16 @@ ga_model_make <- function(data_f,
 #' 
 #' @export
 #' @family GA modelling functions
-ga_model_edit <- function(model,
-                          data_f = NULL,
-                          required_columns = NULL,
-                          model_f = NULL,
-                          required_packages = NULL,
-                          description = NULL,
-                          outputShiny = NULL,
-                          renderShiny = NULL,
-                          output_f = NULL){
+ga_model_edit <- function(
+  model,
+  data_f = NULL,
+  required_columns = NULL,
+  model_f = NULL,
+  required_packages = NULL,
+  description = NULL,
+  outputShiny = NULL,
+  renderShiny = NULL,
+  output_f = NULL){
   
   save_me <- ""
   if(is.character(model)){
@@ -518,28 +520,32 @@ ga_model_shiny_template <- function(name){
 #' @param scopes The scope the API requests will be under
 #' @param title The title of the Shiny app
 #' @param local_file If not empty, will not launch Shiny app but write code to the file location you put here
+#' @param deployed_url If deploying Shiny app to a server, put the URL of the deployed app here so the authentication will redirect to the correct place
 #' @param ... Extra variables the template may support
 #' 
 #' @export
 #' @importFrom assertthat is.readable
 #' @importFrom whisker whisker.render
-ga_model_shiny <- function(model,
-                           template = ga_model_shiny_template("template1"),
-                           title = "ga_model_shiny",
-                           web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"),
-                           scopes = "https://www.googleapis.com/auth/analytics.readonly",
-                           local_file = "",
-                           ...){
+ga_model_shiny <- function(
+  model,
+  template = ga_model_shiny_template("template1"),
+  title = "ga_model_shiny",
+  web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"),
+  scopes = "https://www.googleapis.com/auth/analytics.readonly",
+  deployed_url = "",
+  local_file = "",
+  ...){
   
   if(is.ga_model(model)){
     tmp_model <- tempfile(fileext = ".gamr")
     ga_model_save(model, filename = tmp_model)
     model_location <- tmp_model
   } else {
-    assert_that(is.readable(model_location))
+    model_location <- model
   }
   
-  assert_that(is.readable(template),
+  assert_that(is.readable(model_location),
+              is.readable(template),
               nzchar(web_json),
               nzchar(scopes))
   
@@ -570,16 +576,3 @@ ga_model_shiny <- function(model,
   shiny::runApp(tmp)
 }
 
-# this seems to be needed for Shiny mods?
-ga_model_refresh <- function(model){
-  ga_model_make(
-    data_f = model$data_f,
-    required_columns = model$required_columns,
-    model_f = model$model_f,
-    output_f = model$output_f,
-    required_packages = model$required_packages,
-    description = model$description,
-    outputShiny = model$outputShiny,
-    renderShiny = model$renderShiny
-  )
-}

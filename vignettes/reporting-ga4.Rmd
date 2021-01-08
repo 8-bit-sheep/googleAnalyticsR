@@ -738,3 +738,43 @@ The quotas are:
 * `concurrentRequests` - how many API requests at once
 * `serverErrorsPerProjectPerHour` - how many bad API calls you can make per project/hr
 
+## Debugging and Raw JSON requests
+
+If you ever need to inspect the API request, set `options(googleAuthR.verbose=2)` to see the request JSON.  This is helpful in bug reports.
+
+If you use the `raw_json` argument only in `ga_data()` to send in a string of the JSON as specified by the [`runReport` object](https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1alpha/TopLevel/runReport), this can be used to fetch unimplemented API features or buggy requests to help debugging.
+
+```r
+ga_data(raw_json = '{"entity":{"propertyId":"206670707"},"metrics":[{"name":"sessions"}],"orderBys":[{"dimension":{"orderType":"ALPHANUMERIC","dimensionName":"date"},"desc":false}],"dimensions":[{"name":"date"}],"dateRanges":[{"startDate":"2020-01-08","endDate":"2021-01-07"}],"keepEmptyRows":true,"limit":-1,"returnPropertyQuota":true}')
+#ℹ 2021-01-08 09:27:04 > Making API request with raw JSON:  {"entity":{"propertyId":"206670707"},"metrics":[{"name":"sessions"}],"orderBys":[{"dimension":{"orderType":"ALPHANUMERIC","dimensionName":"date"},"desc":false}],"dimensions":[{"name":"date"}],"dateRanges":[{"startDate":"2020-01-08","endDate":"2021-01-07"}],"keepEmptyRows":true,"limit":-1,"returnPropertyQuota":true}
+#ℹ 2021-01-08 09:27:04 > Request:  https://analyticsdata.googleapis.com/v1alpha:runReport/
+#ℹ 2021-01-08 09:27:06 > Body JSON parsed to:  "{\"entity\":{\"propertyId\":\"206670707\"},\"metrics\":[{\"name\":\"sessions\"}],\"orderBys\":[{\"dimension\":{\"orderType\":\"ALPHANUMERIC\",\"dimensionName\":\"date\"},\"desc\":false}],\"dimensions\":[{\"name\":\"date\"}],\"dateRanges\":[{\"startDate\":\"2020-01-08\",\"endDate\":\"2021-01-07\"}],\"keepEmptyRows\":true,\"limit\":-1,\"returnPropertyQuota\":true}"
+#Auto-refreshing stale OAuth token.
+#ℹ 2021-01-08 09:27:08 > tokensPerDay: Query Cost [ 37 ] / Remaining [ 24827 ]
+#ℹ 2021-01-08 09:27:08 > tokensPerHour: Query Cost [ 37 ] / Remaining [ 4827 ]
+#ℹ 2021-01-08 09:27:08 > concurrentRequests:  10  / 10
+#ℹ 2021-01-08 09:27:08 > serverErrorsPerProjectPerHour:  10  / 10
+## A tibble: 340 x 2
+#   date       sessions
+#   <date>        <dbl>
+# 1 2020-01-08      134
+# 2 2020-01-09      131
+# 3 2020-01-10      124
+# 4 2020-01-11       34
+# ...
+```
+
+Pass in the propertyId as well when querying the realtime API:
+
+```r
+ga_data(
+    propertyId = ga4_propertyId, 
+    raw_json = '{"metrics":[{"name":"activeUsers"}],"limit":100,"returnPropertyQuota":true}',
+    realtime = TRUE)
+## A tibble: 1 x 1
+#  activeUsers
+#        <dbl>
+#1           2
+```
+
+You can also pass in an R list that will be converted into JSON via `jsonlite::fromJSON()`

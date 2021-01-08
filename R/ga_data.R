@@ -17,6 +17,7 @@ version_aw <- function(){
 #' @param date_range A vector of length two with start and end dates in YYYY-MM-DD format
 #' @param dimensionDelimiter If combining dimensions in one column, the delimiter for the value field
 #' @param realtime If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see \href{https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics}{valid real-time dimensions}
+#' @param raw_json You can send in the raw JSON string for a Data API request which will skip all checks
 #' @importFrom googleAuthR gar_api_generator
 #' @import assertthat
 #' @family GA4 functions
@@ -92,7 +93,16 @@ ga_data <- function(propertyId,
                     orderBys = NULL,
                     metricAggregations = NULL,
                     limit = 100,
-                    realtime=FALSE) {
+                    realtime=FALSE,
+                    raw_json = "") {
+  
+  if(nzchar(raw_json)){
+    myMessage("Making API request with raw JSON: ", raw_json, level = 3)
+    
+    if(realtime) return(ga_aw_realtime(propertyId, raw_json))
+    
+    return(ga_aw_report(raw_json))
+  }
   
   # in case someone passes in a filter instead of an expression
   dimensionFilter <- as_filterExpression(dimensionFilter)
@@ -156,7 +166,6 @@ ga_aw_realtime <- function(property, requestObj){
   f <- gar_api_generator(url, "POST", 
                          data_parse_function = parse_realtime)
   
-  stopifnot(inherits(requestObj, "gar_RunRealtimeReport"))
   o <- f(the_body = requestObj)
   
   o
@@ -173,7 +182,6 @@ ga_aw_report <- function(requestObj){
   f <- gar_api_generator(url, "POST", 
                          data_parse_function = parse_runreport)
   
-  stopifnot(inherits(requestObj, "gar_RunReportRequest"))
   o <- f(the_body = requestObj)
   
   o
@@ -227,6 +235,10 @@ my_bind_cols <- function(x, y){
   # bind_cols returns 0rows if first df has 0
   if(nrow(x) == 0){
     return(y)
+  }
+  
+  if(nrow(y) == 0){
+    return(x)
   }
   
   bind_cols(x, y)

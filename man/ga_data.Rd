@@ -15,7 +15,8 @@ ga_data(
   orderBys = NULL,
   metricAggregations = NULL,
   limit = 100,
-  realtime = FALSE
+  realtime = FALSE,
+  raw_json = ""
 )
 }
 \arguments{
@@ -40,6 +41,8 @@ ga_data(
 \item{limit}{The number of rows to return - use -1 to return all rows}
 
 \item{realtime}{If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see \href{https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics}{valid real-time dimensions}}
+
+\item{raw_json}{You can send in the raw JSON string for a Data API request which will skip all checks}
 }
 \value{
 A data.frame tibble, including attributes metadata, metricAggregations and rowCount.  Use \link{ga_data_aggregations} to extract the data.frames of metricAggregations

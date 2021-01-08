@@ -5,6 +5,8 @@ library(googleAnalyticsR)
 gar_set_client(web_json = "{{ web_json }}",
                scopes = "{{ scopes }}")
 
+options(googleAuthR.redirect = "{{ deployed_url }}")
+
 # loads a pre-existing model
 model <- ga_model_load("{{ ga_model }}")
 

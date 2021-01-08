@@ -10,6 +10,7 @@ ga_model_shiny(
   title = "ga_model_shiny",
   web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"),
   scopes = "https://www.googleapis.com/auth/analytics.readonly",
+  deployed_url = "",
   local_file = "",
   ...
 )
@@ -24,6 +25,8 @@ ga_model_shiny(
 \item{web_json}{The client.id json file for Web}
 
 \item{scopes}{The scope the API requests will be under}
+
+\item{deployed_url}{If deploying Shiny app to a server, put the URL of the deployed app here so the authentication will redirect to the correct place}
 
 \item{local_file}{If not empty, will not launch Shiny app but write code to the file location you put here}
 

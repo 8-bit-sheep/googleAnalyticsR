@@ -19,6 +19,25 @@ test_that("Basic fetch", {
   expect_true(inherits(df$activeUsers, "numeric"))
   expect_true(inherits(df$date, "Date"))
   expect_true(inherits(df$city, "character"))
+  
+})
+
+test_that("Raw Data fetch", {
+  
+  the_json <- '{"entity":{"propertyId":"206670707"},"metrics":[{"name":"sessions"}],"orderBys":[{"dimension":{"orderType":"ALPHANUMERIC","dimensionName":"date"},"desc":false}],"dimensions":[{"name":"date"}],"dateRanges":[{"startDate":"2020-01-08","endDate":"2021-01-07"}],"keepEmptyRows":true,"limit":-1,"returnPropertyQuota":true}'
+  
+  raw <- ga_data(raw_json = the_json)
+  expect_s3_class(raw, "data.frame")
+  
+  raw_2 <- ga_data(raw_json = jsonlite::fromJSON(the_json))
+  expect_s3_class(raw_2, "data.frame")
+  
+  raw_rt <- ga_data(
+    propertyId = ga4_propertyId, 
+    raw_json = '{"metrics":[{"name":"activeUsers"}],"limit":100,"returnPropertyQuota":true}',
+    realtime = TRUE)
+  expect_s3_class(raw_rt, "data.frame")
+  
 })
 
 test_that("Meta Data API",{
