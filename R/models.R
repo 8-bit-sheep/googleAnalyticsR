@@ -1,4 +1,4 @@
-#' Use a model function created by ga_model_make
+#' Use a model function created by \link{ga_model_make}
 #'
 #' @param viewId The GA viewId to operate on
 #' @param model A file location of a model object or a model object
@@ -87,7 +87,7 @@ ga_model_load <- function(filename = "my-model.gamr"){
   model <- readRDS(filename)
   
   assert_that(is.ga_model(model))
-  myMessage("Loaded model from ", filename, level = 3)
+  myMessage("Loaded model from ", filename, level = 2)
   model
   
 }
@@ -101,8 +101,8 @@ ga_model_load <- function(filename = "my-model.gamr"){
 ga_model_example <- function(name = "list"){
   
   if(name == "list"){
-    list.files(system.file("models", package = "googleAnalyticsR"), 
-               include.dirs = FALSE)
+    return(list.files(system.file("models", package = "googleAnalyticsR"), 
+               include.dirs = FALSE))
   }
   
   # this will fetch from more places such as other packages and GCS eventually
@@ -198,17 +198,18 @@ ga_model_make <- function(
   
   Model(
     data_f            = data_f,
-      required_columns  = required_columns,
-      model_f           = model_f,
-      output_f          = output_f,
-      required_packages = required_packages,
-      description       = description,
-      shiny_module = create_shiny_module_funcs(data_f = data_f,
-                                               model_f = model_f,
-                                               output_f = output_f,
-                                               outputShiny = outputShiny,
-                                               renderShiny = renderShiny)
-    )
+    required_columns  = required_columns,
+    model_f           = model_f,
+    output_f          = output_f,
+    required_packages = required_packages,
+    description       = description,
+    shiny_module = create_shiny_module_funcs(
+      data_f = data_f,
+      model_f = model_f,
+      output_f = output_f,
+      outputShiny = outputShiny,
+      renderShiny = renderShiny)
+  )
   
 }
 
@@ -267,13 +268,14 @@ ga_model_edit <- function(
     shiny_module_server2 <- assign_new(renderShiny, shiny_module_server2)
   }
   
-  shiny_module <- create_shiny_module_funcs(data_f = data_f2,
-                                            model_f = model_f2,
-                                            output_f = output_f2,
-                                            outputShiny = shiny_module_ui2,
-                                            renderShiny = shiny_module_server2)
-
-
+  shiny_module <- create_shiny_module_funcs(
+    data_f = data_f2,
+    model_f = model_f2,
+    output_f = output_f2,
+    outputShiny = shiny_module_ui2,
+    renderShiny = shiny_module_server2)
+  
+  
   model <- Model(
       data_f            = data_f2,
       required_columns  = required_columns2,
@@ -290,14 +292,15 @@ ga_model_edit <- function(
 }
 
 #' @noRd
-Model <- function(data_f,
-                  required_columns  = NULL,
-                  model_f           = NULL,
-                  required_packages = NULL,
-                  description       = NULL,
-                  output_f          = NULL,
-                  shiny_module      = NULL){
-
+Model <- function(
+  data_f,
+  required_columns  = NULL,
+  model_f           = NULL,
+  required_packages = NULL,
+  description       = NULL,
+  output_f          = NULL,
+  shiny_module      = NULL){
+  
   assert_that(
     is.function(data_f),
     is.character(required_columns),
@@ -343,6 +346,10 @@ Model <- function(data_f,
 
 is.ga_model <- function(x){
   inherits(x, "ga_model")
+}
+
+is.ga_model_list <- function(x){
+  all(lapply(x, is.ga_model))
 }
 
 
@@ -501,8 +508,14 @@ write_f <- function(name, f){
 #' @param name the template name
 #' 
 #' @export
-ga_model_shiny_template <- function(name){
-  f <- system.file("models","shiny",paste0(name,".R"), 
+ga_model_shiny_template <- function(name = "list"){
+  
+  if(name == "list"){
+    return(list.files(system.file("models","shiny", 
+                       package = "googleAnalyticsR")))
+  }
+  
+  f <- system.file("models","shiny",name, 
               package = "googleAnalyticsR")
   if(!nzchar(f)){
     stop("Couldn't find template named", name, call. = FALSE)
@@ -514,7 +527,7 @@ ga_model_shiny_template <- function(name){
 
 #' Create a Shiny app from a ga_model file
 #' 
-#' @param model The \link{ga_model} file location ("my_model.gamr") or a \link{ga_model} object
+#' @param models The \link{ga_model} file location ("my_model.gamr") or a \link{ga_model} object - can pass in multiple as a list
 #' @param template The template file for the Shiny app
 #' @param web_json The client.id json file for Web
 #' @param scopes The scope the API requests will be under
@@ -526,8 +539,18 @@ ga_model_shiny_template <- function(name){
 #' @export
 #' @importFrom assertthat is.readable
 #' @importFrom whisker whisker.render
+#' 
+#' @examples
+#' 
+#' \dontrun{
+#' 
+#' ga_model_shiny(
+#'   ga_model_example("decomp_ga.gamr"), 
+#'   template = ga_model_shiny_template("template_ua.R"))
+#' 
+#' }
 ga_model_shiny <- function(
-  model,
+  models,
   template = ga_model_shiny_template("template1"),
   title = "ga_model_shiny",
   web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"),
@@ -536,31 +559,28 @@ ga_model_shiny <- function(
   local_file = "",
   ...){
   
-  if(is.ga_model(model)){
-    tmp_model <- tempfile(fileext = ".gamr")
-    ga_model_save(model, filename = tmp_model)
-    model_location <- tmp_model
-  } else {
-    model_location <- model
+  if(is.ga_model(models)){
+    models <- list(models)
   }
   
-  assert_that(is.readable(model_location),
-              is.readable(template),
+  model_locations <- lapply(models, model_path)
+  # model1, model2, etc.
+  names(model_locations) <- paste0("model", seq_along(models))
+  
+  assert_that(is.readable(template),
               nzchar(web_json),
               nzchar(scopes))
   
-  # get absolute file path
-  model_location <- normalizePath(model_location)
-  
   txt <- readLines(template)
   values <- c(list(...),
+              model_locations,
               web_json = web_json,
               scopes = scopes,
-              ga_model = model_location,
-              shiny_title = title,
-              ga_model_name = "model1")
+              shiny_title = title)
+  myMessage("passed template values:\n", 
+            paste(names(values),"=",values, collapse = "\n"),
+            level = 3)
 
-  
   render <- whisker.render(txt, values)
   
   if(nzchar(local_file)){
@@ -574,5 +594,19 @@ ga_model_shiny <- function(
   writeLines(render, tmp)
   myMessage("Launching Shiny app from ", tmp, level = 3)
   shiny::runApp(tmp)
+}
+
+model_path <- function(m){
+  if(is.ga_model(m)){
+    tmp_model <- tempfile(fileext = ".gamr")
+    ga_model_save(m, filename = tmp_model)
+    model_location <- tmp_model
+  } else {
+    model_location <- m
+  }
+  
+  assert_that(is.readable(model_location))
+  
+  normalizePath(model_location)
 }
 

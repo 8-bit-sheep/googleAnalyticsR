@@ -8,7 +8,7 @@ gar_set_client(web_json = "{{ web_json }}",
 options(googleAuthR.redirect = "{{ deployed_url }}")
 
 # loads a pre-existing model
-model <- ga_model_load("{{ ga_model }}")
+model <- ga_model_load("{{ model1 }}")
 modelUi <- model$shiny_module$ui
 modelServer <- model$shiny_module$server
 
@@ -33,7 +33,7 @@ body <- dashboardBody(
     ),
   fluidRow(
     box(width=12,
-        modelUi("{{ ga_model_name }}")
+        modelUi("model1")
         )
   )
 )
@@ -71,7 +71,7 @@ server <- function(input, output, session){
   output$model_description <- renderText(model$description)
 
   # module to display model results
-  modelServer("{{ ga_model_name }}", 
+  modelServer("model1", 
               view_id = property_id, 
               date_range = reactive(input$dates),
               metrics = metrics)

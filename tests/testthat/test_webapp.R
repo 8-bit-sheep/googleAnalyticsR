@@ -23,6 +23,8 @@ test_that("Basic fetch", {
 })
 
 test_that("Raw Data fetch", {
+  skip_on_cran()
+  skip_on_travis()
   
   the_json <- '{"entity":{"propertyId":"206670707"},"metrics":[{"name":"sessions"}],"orderBys":[{"dimension":{"orderType":"ALPHANUMERIC","dimensionName":"date"},"desc":false}],"dimensions":[{"name":"date"}],"dateRanges":[{"startDate":"2020-01-08","endDate":"2021-01-07"}],"keepEmptyRows":true,"limit":-1,"returnPropertyQuota":true}'
   

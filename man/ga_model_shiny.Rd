@@ -5,7 +5,7 @@
 \title{Create a Shiny app from a ga_model file}
 \usage{
 ga_model_shiny(
-  model,
+  models,
   template = ga_model_shiny_template("template1"),
   title = "ga_model_shiny",
   web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"),
@@ -16,7 +16,7 @@ ga_model_shiny(
 )
 }
 \arguments{
-\item{model}{The \link{ga_model} file location ("my_model.gamr") or a \link{ga_model} object}
+\item{models}{The \link{ga_model} file location ("my_model.gamr") or a \link{ga_model} object - can pass in multiple as a list}
 
 \item{template}{The template file for the Shiny app}
 
@@ -34,4 +34,14 @@ ga_model_shiny(
 }
 \description{
 Create a Shiny app from a ga_model file
+}
+\examples{
+
+\dontrun{
+
+ga_model_shiny(
+  ga_model_example("decomp_ga.gamr"), 
+  template = ga_model_shiny_template("template_ua.R"))
+
+}
 }

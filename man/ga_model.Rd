@@ -2,7 +2,7 @@
 % Please edit documentation in R/models.R
 \name{ga_model}
 \alias{ga_model}
-\title{Use a model function created by ga_model_make}
+\title{Use a model function created by \link{ga_model_make}}
 \usage{
 ga_model(viewId, model, load_libs = TRUE, ...)
 }
@@ -17,7 +17,7 @@ created by \link{ga_model_make}}
 \item{...}{Other arguments to pass into the model as needed}
 }
 \description{
-Use a model function created by ga_model_make
+Use a model function created by \link{ga_model_make}
 }
 \seealso{
 Other GA modelling functions: 

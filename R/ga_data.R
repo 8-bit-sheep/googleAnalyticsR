@@ -83,20 +83,21 @@ version_aw <- function(){
 #'   orderBys = c(a, b)
 #'   )
 #' }
-ga_data <- function(propertyId,
-                    metrics,
-                    date_range = NULL,
-                    dimensions = NULL,
-                    dimensionFilter = NULL,
-                    dimensionDelimiter = "/",
-                    metricFilter = NULL,
-                    orderBys = NULL,
-                    metricAggregations = NULL,
-                    limit = 100,
-                    realtime=FALSE,
-                    raw_json = "") {
+ga_data <- function(
+  propertyId,
+  metrics,
+  date_range = NULL,
+  dimensions = NULL,
+  dimensionFilter = NULL,
+  dimensionDelimiter = "/",
+  metricFilter = NULL,
+  orderBys = NULL,
+  metricAggregations = NULL,
+  limit = 100,
+  realtime = FALSE,
+  raw_json = NULL) {
   
-  if(nzchar(raw_json)){
+  if(!is.null(raw_json)){
     myMessage("Making API request with raw JSON: ", raw_json, level = 3)
     
     if(realtime) return(ga_aw_realtime(propertyId, raw_json))
@@ -219,9 +220,14 @@ no_rows <- function(o){
 }
 
 row_types <- function(res, met_names){
+  
   #type changes
   if("date" %in% names(res)){
     res$date <- as.Date(res$date, format = "%Y%m%d")
+  }
+  
+  if("firstTouchDate" %in% names(res)){
+    res$firstTouchDate <- as.Date(res$firstTouchDate, format = "%Y%m%d")
   }
   res %>% mutate(across(met_names, as.numeric))
 }

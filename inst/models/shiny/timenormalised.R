@@ -15,7 +15,7 @@ gar_set_client(web_json = "{{ web_json }}",
 
 options(googleAuthR.redirect = "{{ deployed_url }}")
 
-model <- ga_model_load(filename = "{{ ga_model }}")
+model <- ga_model_load(filename = "{{ model1 }}")
 modelUi <- model$shiny_module$ui
 modelServer <- model$shiny_module$server
 
@@ -35,7 +35,7 @@ ui <- gentelellaPage(
                                           value = 60, min = 10, max = 400)),
            column(width = 6, textInput("page_regex", label = "Page filter regex", value = ".*"))),
   h3("Time Normalised pages"),
-  modelUi("{{ ga_model_name }}"),
+  modelUi("model1"),
   br()
 
 )
@@ -54,7 +54,7 @@ server <- function(input, output, session) {
   # module for authentication
   view_id <- callModule(authDropdown, "auth_dropdown", ga.table = al)
 
-  modelServer("{{ ga_model_name }}",
+  modelServer("model1",
              view_id = view_id,
              first_day_pageviews_min = reactive(input$first_day),
              total_unique_pageviews_cutoff = reactive(input$total_min_cutoff),

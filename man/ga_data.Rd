@@ -16,7 +16,7 @@ ga_data(
   metricAggregations = NULL,
   limit = 100,
   realtime = FALSE,
-  raw_json = ""
+  raw_json = NULL
 )
 }
 \arguments{

@@ -4,7 +4,7 @@
 \alias{ga_model_shiny_template}
 \title{Get a Shiny template file}
 \usage{
-ga_model_shiny_template(name)
+ga_model_shiny_template(name = "list")
 }
 \arguments{
 \item{name}{the template name}
