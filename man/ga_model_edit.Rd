@@ -13,6 +13,7 @@ ga_model_edit(
   description = NULL,
   outputShiny = NULL,
   renderShiny = NULL,
+  inputShiny = NULL,
   output_f = NULL
 )
 }
@@ -34,6 +35,8 @@ must take data from result of \code{data_f} in first argument}
 \item{outputShiny}{A shiny UI output function that will display the results \code{renderShiny}}
 
 \item{renderShiny}{A shiny render function that will create the output for \code{outputShiny} from \code{output_f}}
+
+\item{inputShiny}{An optional input shiny function that can be used with the model}
 
 \item{output_f}{A function that inputs the output from \code{model_f}, outputs a visualisation}
 }

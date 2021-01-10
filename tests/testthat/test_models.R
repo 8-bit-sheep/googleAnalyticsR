@@ -83,8 +83,8 @@ test_that("Run a model online",{
   ga_model_write(model, "test_model_write.R")
   expect_true(file.exists("test_model_write.R"))
 
-  on.exit(unlink("test_model_write.R"))
-  on.exit(unlink("test.gamr"))
+  unlink("test_model_write.R")
+  unlink("test.gamr")
 
 })
 

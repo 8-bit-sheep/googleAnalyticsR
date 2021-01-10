@@ -125,6 +125,7 @@ ga_model_example <- function(name = "list"){
 #' @param description An optional description of what the model does
 #' @param renderShiny A shiny render function that will create the output for \code{outputShiny} from \code{output_f}
 #' @param outputShiny A shiny UI output function that will display the results \code{renderShiny}
+#' @param inputShiny Optional input shiny functions (like \code{dateInput()}) that will be used within the model's Shiny module.  The id should be exactly the same as one of the variables in the model functions.
 #'
 #' @details 
 #' 
@@ -194,7 +195,8 @@ ga_model_make <- function(
   required_packages = NULL,
   description = NULL,
   outputShiny = shiny::plotOutput,
-  renderShiny = shiny::renderPlot){
+  renderShiny = shiny::renderPlot,
+  inputShiny = NULL){
   
   Model(
     data_f            = data_f,
@@ -208,7 +210,8 @@ ga_model_make <- function(
       model_f = model_f,
       output_f = output_f,
       outputShiny = outputShiny,
-      renderShiny = renderShiny)
+      renderShiny = renderShiny,
+      inputShiny = inputShiny)
   )
   
 }
@@ -233,6 +236,7 @@ ga_model_edit <- function(
   description = NULL,
   outputShiny = NULL,
   renderShiny = NULL,
+  inputShiny = NULL,
   output_f = NULL){
   
   save_me <- ""
@@ -251,6 +255,7 @@ ga_model_edit <- function(
   description2         <- model$description
   shiny_module_ui2     <- model$shiny_module$ui
   shiny_module_server2 <- model$shiny_module$server
+  shiny_module_uiInput2 <- model$shiny_module$uiInput
   
   data_f2            <- assign_new(data_f, data_f2, is.function)
   required_columns2  <- assign_new(required_columns, required_columns2, is.character)
@@ -258,14 +263,13 @@ ga_model_edit <- function(
   output_f2          <- assign_new(output_f, output_f2, is.function)
   required_packages2 <- assign_new(required_packages, required_packages2, is.character)
   description2       <- assign_new(description, description2, assertthat::is.string)
-  
-  if(any(!is.null(outputShiny), !is.null(renderShiny))){
-    assert_that(
-      !is.null(outputShiny),
-      !is.null(renderShiny)
-    )
+
+  # only do this bit if a shiny module is present
+  if(any(!is.null(outputShiny), !is.null(renderShiny), !is.null(inputShiny))){
+
     shiny_module_ui2     <- assign_new(outputShiny, shiny_module_ui2)
     shiny_module_server2 <- assign_new(renderShiny, shiny_module_server2)
+    shiny_module_uiInput2 <- assign_new(inputShiny, shiny_module_uiInput2, is.inputShiny)
   }
   
   shiny_module <- create_shiny_module_funcs(
@@ -273,7 +277,8 @@ ga_model_edit <- function(
     model_f = model_f2,
     output_f = output_f2,
     outputShiny = shiny_module_ui2,
-    renderShiny = shiny_module_server2)
+    renderShiny = shiny_module_server2,
+    inputShiny = shiny_module_uiInput2)
   
   
   model <- Model(
@@ -289,6 +294,10 @@ ga_model_edit <- function(
   if(nzchar(save_me)) ga_model_save(model, filename = save_me)
   
   model
+}
+
+is.inputShiny <- function(x){
+  inherits(x, "shiny.tag") || inherits(x, "shiny.tag.list")
 }
 
 #' @noRd
@@ -360,9 +369,10 @@ create_shiny_module_funcs <- function(data_f,
                                       model_f,
                                       output_f,
                                       outputShiny,
-                                      renderShiny
+                                      renderShiny,
+                                      inputShiny = NULL
                                       ){
-  
+  myMessage("Creating Shiny modules", level = 3)
   if(any(is.null(output_f), is.null(outputShiny), is.null(renderShiny))){
     myMessage("Can't create Shiny module as necessary functions are NULL", 
               level = 3)
@@ -377,11 +387,22 @@ create_shiny_module_funcs <- function(data_f,
     is.function(output_f)
   )
   
+  assert_that_ifnn(inputShiny, is.inputShiny)
+  if(is.null(inputShiny)){
+    inputShiny <- function() shiny::tagList()
+  }
+  
+  input_id <- inputShiny$attribs$id
+  
   ui <- function(id, ...){
     ns <- shiny::NS(id)
-    
-    outputShiny(outputId = ns("ui_out"), ...)
-    
+    if(!is.null(input_id)){
+      inputShiny$attribs$id <- ns(input_id)
+    } 
+    shiny::tagList(
+      inputShiny,
+      outputShiny(outputId = ns("ui_out"), ...)
+    )
   }
   
   server <- function(id, view_id, ...){
@@ -390,12 +411,16 @@ create_shiny_module_funcs <- function(data_f,
       id,
       function(input, output, session){
         dots <- list(...)
+
         myMessage("shiny args passed: ", 
                   paste(names(dots),"=", dots, collapse = ","),
                   level = 2)
+
+        
         gadata <- shiny::reactive({
           shiny::req(view_id())
-          
+
+          dots[[input_id]] <- input[[input_id]]
           myMessage("Fetching data for view_id:",view_id(), level = 3)
           execute_model_function(data_f,
                                  dependency = list(view_id = view_id()),
@@ -406,7 +431,7 @@ create_shiny_module_funcs <- function(data_f,
         model_output <- shiny::reactive({
           shiny::validate(shiny::need(gadata(), 
                                       message = "Waiting for data"))
-          
+          dots[[input_id]] <- input[[input_id]]
           myMessage("Modelling data", level = 3)
           execute_model_function(model_f,
                                  dependency = list(gadata()),
@@ -417,7 +442,7 @@ create_shiny_module_funcs <- function(data_f,
         output$ui_out <- renderShiny({
           shiny::validate(shiny::need(model_output(), 
                                       message = "Waiting for model output"))
-          
+          dots[[input_id]] <- input[[input_id]]
           myMessage("Rendering model output", level = 3)
           execute_model_function(output_f,
                                  dependency = list(model_output()),
@@ -431,7 +456,8 @@ create_shiny_module_funcs <- function(data_f,
   
   list(
     ui = ui,
-    server = server
+    server = server,
+    uiInput = inputShiny
   )
   
 }
@@ -488,6 +514,7 @@ ga_model_write <- function(model, filepath = "ga_model.R"){
       write_f("\n# fetch data\ndata_f <-", model$data_f),
       write_f("\n# model data\nmodel_f <-", model$model_f),
       write_f("\n# output data\noutput_f <-", model$output_f),
+      write_f("\n# shiny input function\nuiInput <-", model$shiny_module$uiInput),
       "\n# use via ga_model_make()")
   
   writeLines(the_text, con = filepath)
@@ -498,6 +525,7 @@ ga_model_write <- function(model, filepath = "ga_model.R"){
 }
 
 write_f <- function(name, f){
+  if(is.null(f)) return("function(){NULL}")
   c(name, deparse(f))
 }
 

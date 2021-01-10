@@ -12,7 +12,8 @@ ga_model_make(
   required_packages = NULL,
   description = NULL,
   outputShiny = shiny::plotOutput,
-  renderShiny = shiny::renderPlot
+  renderShiny = shiny::renderPlot,
+  inputShiny = NULL
 )
 }
 \arguments{
@@ -32,6 +33,8 @@ must take data from result of \code{data_f} in first argument}
 \item{outputShiny}{A shiny UI output function that will display the results \code{renderShiny}}
 
 \item{renderShiny}{A shiny render function that will create the output for \code{outputShiny} from \code{output_f}}
+
+\item{inputShiny}{An optional input shiny function that can be used with the model}
 }
 \value{
 A \code{ga_model} object to pass to \link{ga_model}
