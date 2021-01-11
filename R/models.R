@@ -389,15 +389,15 @@ create_shiny_module_funcs <- function(data_f,
   
   assert_that_ifnn(inputShiny, is.inputShiny)
   if(is.null(inputShiny)){
-    inputShiny <- function() shiny::tagList()
+    inputShiny <- shiny::tagList()
   }
   
-  input_id <- inputShiny$attribs$id
+  input_id <- extract_from_list(inputShiny, id_regex = "id$")
   
   ui <- function(id, ...){
     ns <- shiny::NS(id)
     if(!is.null(input_id)){
-      inputShiny$attribs$id <- ns(input_id)
+      inputShiny <- replace_in_list(inputShiny, input_id, ns(input_id))
     } 
     shiny::tagList(
       inputShiny,

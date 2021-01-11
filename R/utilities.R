@@ -1,3 +1,16 @@
+replace_in_list <- function(a_list, id = "id", change_id = "my_id2"){
+  rapply(a_list, function(x){
+    if(x == id){
+      change_id
+    } else {x}}, how = "replace", classes = "character")
+}
+
+extract_from_list <- function(a_list, id_regex = "id$"){
+  chrs <- rapply(a_list, function(x) if(is.character(x)){x})
+  unique(unname(chrs[grepl(id_regex,chrs)]))
+}
+
+
 find_num_occurances <- function(x, what){
   lengths(regmatches(x, gregexpr(what, x)))
 }
