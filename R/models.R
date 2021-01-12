@@ -368,6 +368,9 @@ is.shinyTagList <- function(x){
 extract_ids <- function(inputShiny){
   if(is.shinyTagList(inputShiny)){
     input_ids <- lapply(inputShiny, extract_from_list, id_regex="id$")
+    if(any(lapply(input_ids, length) > 1)){
+      stop("inputShiny must be only one level deep of nesting e.g. tagList(xxxInput(), yyyInput()), not tagList(tagList(xxxInput(), yyyInput()), zzzInput())", call. = FALSE)
+    }
   } else {
     input_ids <- list(extract_from_list(inputShiny, id_regex = "id$"))
   }
@@ -414,7 +417,7 @@ create_shiny_module_funcs <- function(data_f,
                                       renderShiny,
                                       inputShiny = NULL
                                       ){
-  myMessage("Creating Shiny modules", level = 3)
+  myMessage("Creating Shiny modules", level = 2)
   if(any(is.null(output_f), is.null(outputShiny), is.null(renderShiny))){
     myMessage("Can't create Shiny module as necessary functions are NULL", 
               level = 3)

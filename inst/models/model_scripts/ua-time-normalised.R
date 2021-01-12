@@ -50,7 +50,7 @@ model_f <- function(
                                         0, 
                                         uniquePageviews)) %>% 
         mutate(cumulative_uniquePageviews = cumsum(uniquePageviews)) %>% 
-        select(page, days_live, uniquePageviews, cumulative_uniquePageviews)
+        dplyr::select(page, days_live, uniquePageviews, cumulative_uniquePageviews)
     }
     
     pages_list <- ga_data %>% 

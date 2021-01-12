@@ -132,5 +132,35 @@ test_that("Model Shiny unit tests",{
   expect_equal(t4[[1]][[2]], t2[[1]])
   expect_equal(t4[[1]][[3]], t3[[1]])
   
+  is <- shiny::tagList(
+    shiny::fluidRow(
+      shiny::column(
+        width = 6, 
+        shiny::numericInput("first_day", "First day minimum pageviews",
+                            value = 2, min=0, max=100)),
+      shiny::column(
+        width=6, 
+        shiny::numericInput("total_min_cutoff", "Minimum Total pageviews",
+                            value = 500, min = 0, max = 1000)),
+      shiny::column(width = 6, 
+                    shiny::numericInput("days_live", label = "Days Live",
+                                        value = 60, min = 10, max = 400)),
+      shiny::column(width = 6, shiny::textInput("page_regex", label = "Page filter regex", value = ".*")))
+  )
+  
+  input_ids <- extract_ids(is)
+  expect_equal(is[[1]], "first_day")
+  expect_equal(is[[2]], "total_min_cutoff")
+  expect_equal(is[[3]], "days_live")
+  expect_equal(is[[4]], "page_regex")
+  mod_ui <- create_shiny_module_ui(plotly::plotlyOutput, is, input_ids)
+  new_ui <- mod_ui("my_ns")
+  new_ids <- extract_ids(new_ui[[1]])[[1]]
+  expect_equal(new_ids[[1]], "my_ns-first_day")
+  expect_equal(new_ids[[2]], "my_ns-total_min_cutoff")
+  expect_equal(new_ids[[3]], "my_ns-days_live")
+  expect_equal(new_ids[[4]], "my_ns-page_regex")
+  
+  
 })
 
