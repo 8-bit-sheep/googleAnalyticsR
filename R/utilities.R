@@ -6,8 +6,11 @@ replace_in_list <- function(a_list, id = "id", change_id = "my_id2"){
 }
 
 extract_from_list <- function(a_list, id_regex = "id$"){
+  if(is.null(a_list)) return(NULL)
   chrs <- rapply(a_list, function(x) if(is.character(x)){x})
-  unique(unname(chrs[grepl(id_regex,chrs)]))
+  o <- unique(unname(chrs[grepl(id_regex,names(chrs))]))
+  if(identical(o, character(0))) return(NULL)
+  o
 }
 
 

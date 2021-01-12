@@ -34,7 +34,7 @@ must take data from result of \code{data_f} in first argument}
 
 \item{renderShiny}{A shiny render function that will create the output for \code{outputShiny} from \code{output_f}}
 
-\item{inputShiny}{An optional input shiny function that can be used with the model}
+\item{inputShiny}{Optional input shiny functions (like \code{dateInput()}) that will be used within the model's Shiny module.  The id should be exactly the same as one of the variables in the model functions.}
 }
 \value{
 A \code{ga_model} object to pass to \link{ga_model}

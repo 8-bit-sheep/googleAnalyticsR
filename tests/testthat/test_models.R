@@ -88,3 +88,37 @@ test_that("Run a model online",{
 
 })
 
+test_that("Model Shiny unit tests",{
+  
+  inputShiny1 <- shiny::dateInput("test_id1","Date")
+  inputShiny2 <- shiny::checkboxInput("test_id2", "Checkbox")
+  inputShiny3 <- shiny::selectInput("test_id3","Select",choices = c(1,2,3))
+  
+  outputShiny1 <- shiny::plotOutput
+  outputShiny2 <- shiny::textOutput
+  outputShiny3 <- shiny::uiOutput
+  
+  input_id <- extract_from_list(inputShiny1, id_regex = "id$")
+  test1 <- create_shiny_module_ui(outputShiny1, inputShiny1, input_id)
+  t1 <- test1("my_ns")
+  expect_equal(t1[[1]]$attribs$id, "my_ns-test_id1")
+  expect_equal(t1[[2]]$attribs$id, "my_ns-ui_out")
+
+  input_id <- extract_from_list(inputShiny2, id_regex = "id$")
+  test2 <- create_shiny_module_ui(outputShiny2, inputShiny2, input_id)
+  
+  t2 <- test2("my_ns")
+  expect_equal(t2[[1]]$children[[1]]$children[[1]]$children[[1]]$attribs$id, 
+               "my_ns-test_id2")
+  expect_equal(t2[[2]]$attribs$id, "my_ns-ui_out")
+  
+  input_id <- extract_from_list(inputShiny3, id_regex = "id$")
+  test3 <- create_shiny_module_ui(outputShiny3, inputShiny3, input_id)
+  
+  t3 <- test3("my_ns")
+  expect_equal(t3[[1]]$children[[1]]$attribs[["for"]], "my_ns-test_id3")
+  expect_equal(t3[[1]]$children[[2]]$children[[1]]$attribs$id, "my_ns-test_id3")  
+  expect_equal(t3[[2]]$attribs$id, "my_ns-ui_out")
+  
+})
+

@@ -362,6 +362,28 @@ is.ga_model_list <- function(x){
 }
 
 
+create_shiny_module_ui <- function(outputShiny,inputShiny, input_id){
+  assert_that_ifnn(inputShiny, is.inputShiny)
+  assert_that(is.function(outputShiny))
+  
+  if(is.null(inputShiny)){
+    inputShiny <- shiny::tagList()
+  }
+  
+  input_id <- extract_from_list(inputShiny, id_regex = "id$")
+  
+  function(id, ...){
+    ns <- shiny::NS(id)
+    if(!is.null(input_id)){
+      inputShiny <- replace_in_list(inputShiny, input_id, ns(input_id))
+    } 
+    shiny::tagList(
+      inputShiny,
+      outputShiny(outputId = ns("ui_out"), ...)
+    )
+  }
+}
+
 
 #' @noRd
 #' @import assertthat
@@ -387,23 +409,9 @@ create_shiny_module_funcs <- function(data_f,
     is.function(output_f)
   )
   
-  assert_that_ifnn(inputShiny, is.inputShiny)
-  if(is.null(inputShiny)){
-    inputShiny <- shiny::tagList()
-  }
-  
   input_id <- extract_from_list(inputShiny, id_regex = "id$")
   
-  ui <- function(id, ...){
-    ns <- shiny::NS(id)
-    if(!is.null(input_id)){
-      inputShiny <- replace_in_list(inputShiny, input_id, ns(input_id))
-    } 
-    shiny::tagList(
-      inputShiny,
-      outputShiny(outputId = ns("ui_out"), ...)
-    )
-  }
+  ui <- create_shiny_module_ui(outputShiny, inputShiny, input_id)
   
   server <- function(id, view_id, ...){
   
