@@ -1,4 +1,5 @@
 replace_in_list <- function(a_list, id = "id", change_id = "my_id2"){
+  if(is.null(a_list)) return(NULL)
   rapply(a_list, function(x){
     if(x == id){
       change_id

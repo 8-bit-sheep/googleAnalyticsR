@@ -120,5 +120,17 @@ test_that("Model Shiny unit tests",{
   expect_equal(t3[[1]]$children[[2]]$children[[1]]$attribs$id, "my_ns-test_id3")  
   expect_equal(t3[[2]]$attribs$id, "my_ns-ui_out")
   
+  # multiple model inputs for one model output
+  multiModelsInput <- shiny::tagList(inputShiny1, inputShiny2, inputShiny3)
+  input_ids <- extract_ids(multiModelsInput)
+  ui <- create_shiny_module_ui(outputShiny1, multiModelsInput, input_ids)
+  
+  t4 <- ui("my_ns")
+  expect_equal(t1[[2]]$attribs$id, t4[[2]]$attribs$id)
+  expect_equal(t4[[2]]$attribs$id, "my_ns-ui_out")
+  expect_equal(t4[[1]][[1]], t1[[1]])
+  expect_equal(t4[[1]][[2]], t2[[1]])
+  expect_equal(t4[[1]][[3]], t3[[1]])
+  
 })
 

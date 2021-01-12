@@ -361,21 +361,41 @@ is.ga_model_list <- function(x){
   all(lapply(x, is.ga_model))
 }
 
+is.shinyTagList <- function(x){
+  inherits(x, "shiny.tag.list")
+}
 
-create_shiny_module_ui <- function(outputShiny,inputShiny, input_id){
+extract_ids <- function(inputShiny){
+  if(is.shinyTagList(inputShiny)){
+    input_ids <- lapply(inputShiny, extract_from_list, id_regex="id$")
+  } else {
+    input_ids <- list(extract_from_list(inputShiny, id_regex = "id$"))
+  }
+  input_ids
+}
+
+replace_ids <- function(inputShiny, ids, ns){
+  f <- function(x, ids, ns){
+    replace_in_list(x, ids, ns(ids))
+  }
+  if(is.shinyTagList(inputShiny)){
+    inputs <- mapply(f, inputShiny, ids, 
+                     MoreArgs = list(ns = ns),
+                     SIMPLIFY = FALSE, USE.NAMES = FALSE)
+  } else {
+    inputs <- f(inputShiny, ids[[1]], ns)
+  }
+  inputs
+}
+
+create_shiny_module_ui <- function(outputShiny,inputShiny, input_ids){
   assert_that_ifnn(inputShiny, is.inputShiny)
   assert_that(is.function(outputShiny))
   
-  if(is.null(inputShiny)){
-    inputShiny <- shiny::tagList()
-  }
-  
-  input_id <- extract_from_list(inputShiny, id_regex = "id$")
-  
   function(id, ...){
     ns <- shiny::NS(id)
-    if(!is.null(input_id)){
-      inputShiny <- replace_in_list(inputShiny, input_id, ns(input_id))
+    if(!is.null(input_ids)){
+      inputShiny <- replace_ids(inputShiny, input_ids, ns)
     } 
     shiny::tagList(
       inputShiny,
@@ -409,9 +429,9 @@ create_shiny_module_funcs <- function(data_f,
     is.function(output_f)
   )
   
-  input_id <- extract_from_list(inputShiny, id_regex = "id$")
+  input_ids <- extract_ids(inputShiny)
   
-  ui <- create_shiny_module_ui(outputShiny, inputShiny, input_id)
+  ui <- create_shiny_module_ui(outputShiny, inputShiny, input_ids)
   
   server <- function(id, view_id, ...){
   
@@ -423,12 +443,17 @@ create_shiny_module_funcs <- function(data_f,
         myMessage("shiny args passed: ", 
                   paste(names(dots),"=", dots, collapse = ","),
                   level = 2)
-
         
+        copy_input_ids <- function(input_ids, input, dots){
+          new <- lapply(input_ids, function(x){dots[[x]] <- input[[x]]})
+          modifyList(dots, setNames(new, input_ids))
+        }
+
         gadata <- shiny::reactive({
           shiny::req(view_id())
 
-          dots[[input_id]] <- input[[input_id]]
+          dots <- copy_input_ids(input_ids, input, dots)
+          
           myMessage("Fetching data for view_id:",view_id(), level = 3)
           execute_model_function(data_f,
                                  dependency = list(view_id = view_id()),
@@ -439,7 +464,7 @@ create_shiny_module_funcs <- function(data_f,
         model_output <- shiny::reactive({
           shiny::validate(shiny::need(gadata(), 
                                       message = "Waiting for data"))
-          dots[[input_id]] <- input[[input_id]]
+          dots <- copy_input_ids(input_ids, input, dots)
           myMessage("Modelling data", level = 3)
           execute_model_function(model_f,
                                  dependency = list(gadata()),
@@ -450,7 +475,7 @@ create_shiny_module_funcs <- function(data_f,
         output$ui_out <- renderShiny({
           shiny::validate(shiny::need(model_output(), 
                                       message = "Waiting for model output"))
-          dots[[input_id]] <- input[[input_id]]
+          dots <- copy_input_ids(input_ids, input, dots)
           myMessage("Rendering model output", level = 3)
           execute_model_function(output_f,
                                  dependency = list(model_output()),
