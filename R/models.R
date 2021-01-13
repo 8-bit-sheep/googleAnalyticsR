@@ -181,7 +181,7 @@ ga_model_example <- function(name = "list"){
 #'  decomp_ga <- ga_model_make(get_model_data,
 #'                             required_columns = c("date", "sessions"),
 #'                             model_f = decompose_sessions,
-#'                             output_f = graphics::plot,
+#'                             output_f = function(df, ...){plot(df)},
 #'                             description = "Performs decomposition and creates a plot",
 #'                             outputShiny = shiny::plotOutput,
 #'                             renderShiny = shiny::renderPlot)
@@ -191,7 +191,7 @@ ga_model_make <- function(
   data_f,
   required_columns,
   model_f,
-  output_f = graphics::plot,
+  output_f = function(df, ...){plot(df)},
   required_packages = NULL,
   description = NULL,
   outputShiny = shiny::plotOutput,
@@ -246,6 +246,7 @@ ga_model_edit <- function(
   }
   
   assert_that(is.ga_model(model))
+  myMessage("Editing model: ", model$description, level = 3)
   
   data_f2              <- model$data_f
   required_columns2    <- model$required_columns
@@ -658,6 +659,32 @@ ga_model_shiny <- function(
   writeLines(render, tmp)
   myMessage("Launching Shiny app from ", tmp, level = 3)
   shiny::runApp(tmp)
+}
+
+#' Load one model into a Shiny template
+#' 
+#' @param model_n The templated name of a model e.g. 'model1'
+#' @param ... Other arguments passed from shiny server
+#' @export
+ga_model_shiny_load <- function(model_n, ...){
+  model <- tryCatch(
+    ga_model_load(model_n),
+    error = function(err){
+      NULL
+    })
+  if(is.null(model)){
+    modelUi <- function(...) NULL
+    modelServer <- function(...) NULL
+  } else {
+    modelUi <- model$shiny_module$ui
+    modelServer <- model$shiny_module$server
+  }
+    
+  list(
+    ui = modelUi,
+    server = modelServer,
+    model = model
+  )
 }
 
 model_path <- function(m){

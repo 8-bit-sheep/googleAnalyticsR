@@ -8,7 +8,7 @@ ga_model_make(
   data_f,
   required_columns,
   model_f,
-  output_f = graphics::plot,
+  output_f = function(df, ...) {     plot(df) },
   required_packages = NULL,
   description = NULL,
   outputShiny = shiny::plotOutput,
@@ -89,7 +89,7 @@ The \code{data_f} function result will feed to \code{model_f}
  decomp_ga <- ga_model_make(get_model_data,
                             required_columns = c("date", "sessions"),
                             model_f = decompose_sessions,
-                            output_f = graphics::plot,
+                            output_f = function(df, ...){plot(df)},
                             description = "Performs decomposition and creates a plot",
                             outputShiny = shiny::plotOutput,
                             renderShiny = shiny::renderPlot)

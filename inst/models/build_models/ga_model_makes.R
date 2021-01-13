@@ -10,11 +10,25 @@ ga_model_edit("inst/models/ga4-trend.gamr",
               outputShiny = dygraphs::dygraphOutput, 
               renderShiny = dygraphs::renderDygraph, inputShiny = uiInput)
 
+date_input <- shiny::dateRangeInput("date_range", "Dates", 
+                                    start = Sys.Date()-300, end = Sys.Date()-1)
 source("inst/models/model_scripts/ua-decomp.R")
 ga_model_edit("inst/models/decomp_ga.gamr",
               data_f = data_f, model_f = model_f, output_f = output_f, 
               outputShiny = shiny::plotOutput, 
-              renderShiny = shiny::renderPlot)
+              renderShiny = shiny::renderPlot,
+              inputShiny = date_input)
+
+freq_input <- shiny::selectInput("frequency", "Periodic Frequency",
+                                 choices = c(7,28,365))
+metric_input <- shiny::selectInput("metric", "Metric", 
+                                   choices = c("sessions","users","pageviews"))
+source("inst/models/model_scripts/decomp_advanced.R")
+ga_model_edit("inst/models/decomp_ga_advanced.gamr", 
+              description = "Performs decomposition (Advanced)",
+              data_f = data_f, model_f = model_f, output_f = output_f, 
+              outputShiny = shiny::plotOutput, renderShiny = shiny::renderPlot,
+              inputShiny = shiny::tagList(date_input, freq_input))
 
 source("inst/models/model_scripts/ua-time-normalised.R")
 
