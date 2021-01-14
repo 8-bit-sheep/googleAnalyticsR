@@ -19,6 +19,8 @@ ga_model_edit("inst/models/decomp_ga.gamr",
               renderShiny = shiny::renderPlot,
               inputShiny = date_input)
 
+date_input <- shiny::dateRangeInput("date_range", "Dates", 
+                                    start = Sys.Date()-300, end = Sys.Date()-1)
 freq_input <- shiny::selectInput("frequency", "Periodic Frequency",
                                  choices = c(7,28,365))
 metric_input <- shiny::selectInput("metric", "Metric", 

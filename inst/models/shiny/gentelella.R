@@ -2,11 +2,6 @@ library(shiny)             # R webapps
 library(gentelellaShiny)   # ui theme
 library(googleAuthR)       # auth login
 library(googleAnalyticsR) # get google analytics
-library(dplyr)
-library(plotly)
-library(scales)
-library(ggplot2)
-library(purrr)
 
 # takes JSON client secrets from GAR_CLIENT_WEB_JSON
 # set before calls to googleAnalyticsR to make sure it doesn't use default project.
@@ -15,9 +10,12 @@ gar_set_client(web_json = "{{ web_json }}",
 
 options(googleAuthR.redirect = "{{ deployed_url }}")
 
-model <- ga_model_load(filename = "{{ model1 }}")
-modelUi <- model$shiny_module$ui
-modelServer <- model$shiny_module$server
+# loads a pre-existing models, or NULL if they aren't present
+model1 <- ga_model_shiny_load("{{ model1 }}")
+model2 <- ga_model_shiny_load("{{ model2 }}")
+model3 <- ga_model_shiny_load("{{ model3 }}")
+model4 <- ga_model_shiny_load("{{ model4 }}")
+model5 <- ga_model_shiny_load("{{ model5 }}")
 
 ui <- gentelellaPage(
   menuItems = sideBarElement(a("Start Again", href="/")),
@@ -26,8 +24,14 @@ ui <- gentelellaPage(
   footer = "Made with googleAnalyticsR::ga_model_shiny()",
 
   # shiny UI elements
+  h3("Choose GA account"),
+  authDropdownUI("auth_dropdown", inColumns = TRUE),
   h3("Time Normalised pages"),
-  modelUi("model1"),
+  model1$ui("model1"),
+  model2$ui("model2"),
+  model3$ui("model3"),
+  model4$ui("model4"),
+  model5$ui("model5"),
   br()
 
 )
@@ -44,7 +48,12 @@ server <- function(input, output, session) {
   # module for authentication
   view_id <- callModule(authDropdown, "auth_dropdown", ga.table = al)
 
-  modelServer("model1", view_id = view_id)
+  # module to display model results
+  model1$server("model1", view_id = view_id)
+  model2$server("model2", view_id = view_id)
+  model3$server("model3", view_id = view_id)
+  model4$server("model4", view_id = view_id)
+  model5$server("model5", view_id = view_id)
 
 }
 # Run the application
