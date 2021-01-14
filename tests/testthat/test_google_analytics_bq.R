@@ -1,5 +1,3 @@
-context("BigQuery")
-
 test_that("Can make SQL correctly", {
  
   expected <- "SELECT trafficSource.source as source, SUM(totals.visits) as sessions FROM (TABLE_DATE_RANGE([foo.ga_sessions_], TIMESTAMP('2017-01-01'), TIMESTAMP('2017-02-01'))) GROUP BY source  LIMIT 100"

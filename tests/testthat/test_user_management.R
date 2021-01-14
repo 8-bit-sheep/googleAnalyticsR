@@ -1,7 +1,5 @@
 source("setup.R")
 
-context("User Management")
-
 test_that("Can perform user management", {
   skip_on_cran()
   skip_on_travis()

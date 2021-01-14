@@ -1,7 +1,5 @@
 source("setup.R")
 
-context("User Activity")
-
 test_that("Can fetch user activity", {
   skip_on_cran()
   skip_on_travis()

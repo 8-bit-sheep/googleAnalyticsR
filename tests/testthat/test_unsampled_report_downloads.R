@@ -1,5 +1,3 @@
-context("Unsampled Download tests")
-
 test_that("Scope set correctly for Google Drive tests", {
   scopes <- getOption("googleAuthR.scopes.selected")
   

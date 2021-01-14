@@ -1,7 +1,5 @@
 source("setup.R")
 
-context("GA4 Tests")
-
 test_that("Basic fetch", {
   skip_on_cran()
   skip_on_travis()

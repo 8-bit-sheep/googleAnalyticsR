@@ -1,7 +1,5 @@
 source("setup.R")
 
-context("Models")
-
 test_that("Read a model", {
   skip_on_cran()
   skip_on_travis()
@@ -133,26 +131,20 @@ test_that("Model Shiny unit tests",{
   expect_equal(t4[[1]][[3]], t3[[1]])
   
   is <- shiny::tagList(
-    shiny::fluidRow(
-      shiny::column(
-        width = 6, 
         shiny::numericInput("first_day", "First day minimum pageviews",
-                            value = 2, min=0, max=100)),
-      shiny::column(
-        width=6, 
+                            value = 2, min=0, max=100),
         shiny::numericInput("total_min_cutoff", "Minimum Total pageviews",
-                            value = 500, min = 0, max = 1000)),
-      shiny::column(width = 6, 
-                    shiny::numericInput("days_live", label = "Days Live",
-                                        value = 60, min = 10, max = 400)),
-      shiny::column(width = 6, shiny::textInput("page_regex", label = "Page filter regex", value = ".*")))
+                            value = 500, min = 0, max = 1000),
+        shiny::numericInput("days_live", label = "Days Live",
+                                        value = 60, min = 10, max = 400),
+        shiny::textInput("page_regex", label = "Page filter regex", value = ".*")
   )
   
   input_ids <- extract_ids(is)
-  expect_equal(is[[1]], "first_day")
-  expect_equal(is[[2]], "total_min_cutoff")
-  expect_equal(is[[3]], "days_live")
-  expect_equal(is[[4]], "page_regex")
+  expect_equal(input_ids[[1]], "first_day")
+  expect_equal(input_ids[[2]], "total_min_cutoff")
+  expect_equal(input_ids[[3]], "days_live")
+  expect_equal(input_ids[[4]], "page_regex")
   mod_ui <- create_shiny_module_ui(plotly::plotlyOutput, is, input_ids)
   new_ui <- mod_ui("my_ns")
   new_ids <- extract_ids(new_ui[[1]])[[1]]

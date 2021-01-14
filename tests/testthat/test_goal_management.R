@@ -1,7 +1,5 @@
 source("setup.R")
 
-context("Goal management")
-
 test_that("Get Goal list for view", {
   skip_on_cran()
   skip_on_travis()

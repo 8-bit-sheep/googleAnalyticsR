@@ -55,3 +55,5 @@ LazyData: TRUE
 RoxygenNote: 7.1.0
 Remotes:
    MarkEdmondson1234/googleAuthR
+Config/testthat/edition: 3
+Config/testthat/parallel: true

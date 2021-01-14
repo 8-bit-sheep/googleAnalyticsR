@@ -98,7 +98,12 @@ ga_data <- function(
   raw_json = NULL) {
   
   if(!is.null(raw_json)){
-    myMessage("Making API request with raw JSON: ", raw_json, level = 3)
+    if(is.list(raw_json)){
+      raw_json_txt <- jsonlite::toJSON(raw_json)
+    } else {
+      raw_json_txt <- raw_json
+    }
+    myMessage("Making API request with raw JSON: ", raw_json_txt, level = 3)
     
     if(realtime) return(ga_aw_realtime(propertyId, raw_json))
     
