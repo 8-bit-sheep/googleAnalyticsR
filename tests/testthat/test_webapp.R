@@ -17,6 +17,7 @@ test_that("Basic fetch", {
   expect_true(inherits(df$activeUsers, "numeric"))
   expect_true(inherits(df$date, "Date"))
   expect_true(inherits(df$city, "character"))
+  expect_snapshot_output(df)
   
 })
 
@@ -28,9 +29,11 @@ test_that("Raw Data fetch", {
   
   raw <- ga_data(raw_json = the_json)
   expect_s3_class(raw, "data.frame")
+  expect_snapshot_output(raw)
   
   raw_2 <- ga_data(raw_json = jsonlite::fromJSON(the_json))
   expect_s3_class(raw_2, "data.frame")
+  expect_snapshot_output(raw_2)
   
   raw_rt <- ga_data(
     propertyId = ga4_propertyId, 
@@ -47,6 +50,7 @@ test_that("Meta Data API",{
   meta44 <- ga_meta("data", propertyId =ga4_propertyId)
   expect_equal(meta44[meta44$apiName == "customEvent:test_dim","uiName"],
                "test_dim")
+  expect_s3_class(meta44, "data.frame")
 })
 
 test_that("Filter objects", {
@@ -59,19 +63,23 @@ test_that("Filter objects", {
   
   expect_s3_class(string_f, "gar_Filter")
   expect_s3_class(string_f$stringFilter, "gar_StringFilter")
+  expect_snapshot_output(string_f)
   
   expect_s3_class(in_list_f, "gar_Filter")
   expect_s3_class(in_list_f$inListFilter, "gar_InListFilter")
+  expect_snapshot_output(in_list_f)
   
   expect_s3_class(numeric_f, "gar_Filter")
   expect_s3_class(numeric_f$numericFilter, "gar_NumericFilter")
+  expect_snapshot_output(numeric_f)
   
   expect_s3_class(numeric_list_f, "gar_Filter")
   expect_s3_class(numeric_list_f$betweenFilter, "gar_BetweenFilter")
+  expect_snapshot_output(numeric_list_f)
   
   expect_s3_class(no_nulls, "gar_Filter")
   expect_true(no_nulls$nullFilter)
-  
+  expect_snapshot_output(no_nulls)
   
 })
 
@@ -91,8 +99,14 @@ test_that("Metric Aggregations", {
   ex1 <- ga_data_aggregations(ma, type = "maximums")
   
   expect_true(!is.null(attr(ma, "metricAggregations")$totals))
+  # not guaranteed order of results, can't order due to API bug
+  # expect_snapshot_output(ma) 
+  
   expect_equal(names(extract), c("totals","maximums","minimums"))
+  # expect_snapshot_output(extract)
+  
   expect_true(is.data.frame(ex1))
+  # expect_snapshot_output(ex1)
   
 })
 
@@ -109,6 +123,7 @@ test_that("Custom data", {
   )
   
   expect_true("sessionsPerUser" %in% names(met_expression))
+  expect_snapshot_output(met_expression)
   
   # create your own aggregation dimensions
   dim_expression <- ga_data(
@@ -120,7 +135,7 @@ test_that("Custom data", {
   )
   
   expect_true("cdow" %in% names(dim_expression))
-  
+  expect_snapshot_output(dim_expression)
 })
 
 test_that("Ordering DSL objects", {
@@ -129,24 +144,29 @@ test_that("Ordering DSL objects", {
   expect_s3_class(o1[[1]], "gar_OrderBy")
   expect_true(o1[[1]]$metric$metricName == "sessions")
   expect_true(o1[[1]]$desc)
+  expect_snapshot_output(o1)
   
   o2 <- ga_data_order(+city)
   expect_true(o2[[1]]$dimension$dimensionName == "city")
   expect_false(o2[[1]]$desc)
+  expect_snapshot_output(o2)
   
   o3 <- ga_data_order(+city -sessions)
   expect_true(o3[[1]]$dimension$dimensionName == "city")
   expect_false(o3[[1]]$desc)
   expect_true(o3[[2]]$metric$metricName == "sessions")
   expect_true(o3[[2]]$desc)
+  expect_snapshot_output(o3)
   
   o4 <- ga_data_order(+city -sessions +activeUsers)
   expect_true(o4[[3]]$metric$metricName == "activeUsers")
   expect_false(o4[[3]]$desc)
+  expect_snapshot_output(o4)
 
   o5 <- ga_data_order(+dayOfWeek, type = "NUMERIC")
   expect_true(o5[[1]]$dimension$dimensionName == "dayOfWeek")
   expect_false(o5[[1]]$desc)
+  expect_snapshot_output(o5)
   
   o6 <- c(o1, o2)
   expect_s3_class(o6[[1]], "gar_OrderBy")
@@ -154,6 +174,7 @@ test_that("Ordering DSL objects", {
   expect_true(o6[[1]]$desc)
   expect_true(o6[[2]]$dimension$dimensionName == "city")
   expect_false(o6[[2]]$desc)
+  expect_snapshot_output(o6)
   
   
 })
@@ -172,6 +193,7 @@ test_that("Order API fetch", {
   
   expect_true(is.data.frame(order))
   expect_true(order$sessions[[1]] > order$sessions[[2]])
+  expect_snapshot_output(order)
 })
 
 test_that("Realtime", {
@@ -209,19 +231,23 @@ test_that("Filter fetch types", {
   string_f <- ga_data_filter(city=="Copenhagen")
   string_data <- test_filter(string_f)
   expect_equal(unique(string_data$city), "Copenhagen")
+  expect_snapshot_output(string_data)
   
   in_list_f <- ga_data_filter(city==c("Copenhagen","London"))
   in_list_data <- test_filter(in_list_f)
   expect_true(all(unique(in_list_data$city) %in% c("London", "Copenhagen")))
+  expect_snapshot_output(in_list_data)
   
   # metric filters
   numeric_f <- ga_data_filter(activeUsers>2)
   numeric_data <- test_filter(met_filter = numeric_f)
   expect_true(all(numeric_data$activeUsers >2))
+  expect_snapshot_output(numeric_data)
   
   numeric_list_f <- ga_data_filter(activeUsers==c(2,6))
   numeric_list_data <- test_filter(met_filter = numeric_list_f)
   expect_true(all(numeric_list_data$activeUsers %in% 2:6))
+  expect_snapshot_output(numeric_list_data)
   
 })
 
