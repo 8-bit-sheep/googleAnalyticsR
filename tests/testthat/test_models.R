@@ -136,8 +136,9 @@ test_that("Model Shiny unit tests",{
         shiny::numericInput("total_min_cutoff", "Minimum Total pageviews",
                             value = 500, min = 0, max = 1000),
         shiny::numericInput("days_live", label = "Days Live",
-                                        value = 60, min = 10, max = 400),
-        shiny::textInput("page_regex", label = "Page filter regex", value = ".*")
+                            value = 60, min = 10, max = 400),
+        shiny::textInput("page_regex", label = "Page filter regex", 
+                         value = ".*")
   )
   
   input_ids <- extract_ids(is)
@@ -145,7 +146,7 @@ test_that("Model Shiny unit tests",{
   expect_equal(input_ids[[2]], "total_min_cutoff")
   expect_equal(input_ids[[3]], "days_live")
   expect_equal(input_ids[[4]], "page_regex")
-  mod_ui <- create_shiny_module_ui(plotly::plotlyOutput, is, input_ids)
+  mod_ui <- create_shiny_module_ui(shiny::plotOutput, is, input_ids)
   new_ui <- mod_ui("my_ns")
   new_ids <- extract_ids(new_ui[[1]])[[1]]
   expect_equal(new_ids[[1]], "my_ns-first_day")
