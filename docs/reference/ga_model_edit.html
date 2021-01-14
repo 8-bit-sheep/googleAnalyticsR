@@ -279,6 +279,7 @@
   <span class='kw'>description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>outputShiny</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>renderShiny</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>inputShiny</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>output_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
@@ -318,6 +319,10 @@ must take data from result of <code>data_f</code> in first argument</p></td>
     <tr>
       <th>renderShiny</th>
       <td><p>A shiny render function that will create the output for <code>outputShiny</code> from <code>output_f</code></p></td>
+    </tr>
+    <tr>
+      <th>inputShiny</th>
+      <td><p>Optional input shiny functions (like <code>dateInput()</code>) that will be used within the model's Shiny module.  The id should be exactly the same as one of the variables in the model functions.</p></td>
     </tr>
     <tr>
       <th>output_f</th>

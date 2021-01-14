@@ -274,11 +274,12 @@
   <span class='no'>data_f</span>,
   <span class='no'>required_columns</span>,
   <span class='no'>model_f</span>,
-  <span class='kw'>output_f</span> <span class='kw'>=</span> <span class='kw pkg'>graphics</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>,
+  <span class='kw'>output_f</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>df</span>, <span class='no'>...</span>) {     <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>df</span>) },
   <span class='kw'>required_packages</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>outputShiny</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='no'><a href='https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html'>plotOutput</a></span>,
-  <span class='kw'>renderShiny</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='no'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html'>renderPlot</a></span>
+  <span class='kw'>renderShiny</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='no'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html'>renderPlot</a></span>,
+  <span class='kw'>inputShiny</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -316,6 +317,10 @@ must take data from result of <code>data_f</code> in first argument</p></td>
     <tr>
       <th>renderShiny</th>
       <td><p>A shiny render function that will create the output for <code>outputShiny</code> from <code>output_f</code></p></td>
+    </tr>
+    <tr>
+      <th>inputShiny</th>
+      <td><p>Optional input shiny functions (like <code>dateInput()</code>) that will be used within the model's Shiny module.  The id should be exactly the same as one of the variables in the model functions.</p></td>
     </tr>
     </table>
 
@@ -379,7 +384,7 @@ The <code>data_f</code> function result will feed to <code>model_f</code></p>
  <span class='no'>decomp_ga</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_model_make</span>(<span class='no'>get_model_data</span>,
                             <span class='kw'>required_columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"date"</span>, <span class='st'>"sessions"</span>),
                             <span class='kw'>model_f</span> <span class='kw'>=</span> <span class='no'>decompose_sessions</span>,
-                            <span class='kw'>output_f</span> <span class='kw'>=</span> <span class='kw pkg'>graphics</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>,
+                            <span class='kw'>output_f</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>df</span>, <span class='no'>...</span>){<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>df</span>)},
                             <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"Performs decomposition and creates a plot"</span>,
                             <span class='kw'>outputShiny</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='no'><a href='https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html'>plotOutput</a></span>,
                             <span class='kw'>renderShiny</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='no'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html'>renderPlot</a></span>)

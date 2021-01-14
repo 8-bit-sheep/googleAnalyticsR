@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get a Shiny template file — ga_model_shiny_template • googleAnalyticsR</title>
+<title>Load one model into a Shiny template — ga_model_shiny_load • googleAnalyticsR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Get a Shiny template file — ga_model_shiny_template" />
-<meta property="og:description" content="Gets a pre-created template from the googleAnalyticsR samples" />
+<meta property="og:title" content="Load one model into a Shiny template — ga_model_shiny_load" />
+<meta property="og:description" content="Load one model into a Shiny template" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
 
@@ -261,23 +261,27 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get a Shiny template file</h1>
+    <h1>Load one model into a Shiny template</h1>
     <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/models.R'><code>R/models.R</code></a></small>
-    <div class="hidden name"><code>ga_model_shiny_template.Rd</code></div>
+    <div class="hidden name"><code>ga_model_shiny_load.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Gets a pre-created template from the googleAnalyticsR samples</p>
+    <p>Load one model into a Shiny template</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_model_shiny_template</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"list"</span>)</pre>
+    <pre class="usage"><span class='fu'>ga_model_shiny_load</span>(<span class='no'>model_n</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>name</th>
-      <td><p>the template name</p></td>
+      <th>model_n</th>
+      <td><p>The templated name of a model e.g. 'model1'</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other arguments passed from shiny server</p></td>
     </tr>
     </table>
 
