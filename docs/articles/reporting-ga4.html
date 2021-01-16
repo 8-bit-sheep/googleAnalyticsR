@@ -368,7 +368,7 @@
 
 <span class="co"># create your own named metrics</span>
 <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-   <span class="fl">206670707</span>,
+   <span class="no">my_property_id</span>,
    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>,<span class="kw">sessionsPerUser</span> <span class="kw">=</span> <span class="st">"sessions/activeUsers"</span>),
    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
@@ -385,7 +385,7 @@
 
 <span class="co"># create your own aggregation dimensions</span>
 <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-   <span class="fl">206670707</span>,
+   <span class="no">my_property_id</span>,
    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>, <span class="kw">cdow</span> <span class="kw">=</span> <span class="st">"city/dayOfWeek"</span>),
    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
@@ -396,7 +396,22 @@
 <span class="co">#   &lt;date&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;</span>
 <span class="co"># 1 2020-04-18 (not set) 7         (not set)/7           5        6</span>
 <span class="co"># 2 2020-04-14 Madrid    3         Madrid/3              5        6</span>
-<span class="co"># 3 2020-04-17 London    6         London/6              5        6</span></pre></body></html></div>
+<span class="co"># 3 2020-04-17 London    6         London/6              5        6</span>
+
+<span class="co"># useful for creating referral data</span>
+<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
+    <span class="no">my_property_id</span>,
+    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
+    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>, <span class="kw">sessionMediumSource</span> <span class="kw">=</span> <span class="st">"sessionMedium/sessionSource"</span>),
+    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
+    <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>
+)
+<span class="co">## A tibble: 100 x 4</span>
+<span class="co">#   date       sessionMediumSource     activeUsers sessions</span>
+<span class="co">#   &lt;date&gt;     &lt;chr&gt;                         &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co"># 1 2020-04-27 organic/google                   80       93</span>
+<span class="co"># 2 2020-04-15 organic/google                   79      101</span>
+<span class="co"># 3 2020-04-07 organic/google                   72       87</span></pre></body></html></div>
 </div>
 </div>
 </div>

@@ -274,6 +274,7 @@
   <span class='no'>models</span>,
   <span class='kw'>template</span> <span class='kw'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span>(<span class='st'>"template1"</span>),
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"ga_model_shiny"</span>,
+  <span class='kw'>auth_dropdown</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ga4"</span>, <span class='st'>"universal"</span>, <span class='st'>"none"</span>),
   <span class='kw'>web_json</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span>(<span class='st'>"GAR_CLIENT_WEB_JSON"</span>),
   <span class='kw'>scopes</span> <span class='kw'>=</span> <span class='st'>"https://www.googleapis.com/auth/analytics.readonly"</span>,
   <span class='kw'>deployed_url</span> <span class='kw'>=</span> <span class='st'>""</span>,
@@ -295,6 +296,10 @@
     <tr>
       <th>title</th>
       <td><p>The title of the Shiny app</p></td>
+    </tr>
+    <tr>
+      <th>auth_dropdown</th>
+      <td><p>What type of account picker to include</p></td>
     </tr>
     <tr>
       <th>web_json</th>
