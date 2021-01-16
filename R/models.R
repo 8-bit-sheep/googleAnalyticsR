@@ -594,6 +594,7 @@ ga_model_shiny_template <- function(name = "list"){
 #' 
 #' @param models The \link{ga_model} file location ("my_model.gamr") or a \link{ga_model} object - can pass in multiple as a list
 #' @param template The template file for the Shiny app
+#' @param auth_dropdown What type of account picker to include
 #' @param web_json The client.id json file for Web
 #' @param scopes The scope the API requests will be under
 #' @param title The title of the Shiny app
@@ -618,12 +619,14 @@ ga_model_shiny <- function(
   models,
   template = ga_model_shiny_template("template1"),
   title = "ga_model_shiny",
+  auth_dropdown = c("ga4","universal","none"),
   web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"),
   scopes = "https://www.googleapis.com/auth/analytics.readonly",
   deployed_url = "",
   local_file = "",
   ...){
   
+  auth_dropdown <- match.arg(auth_dropdown)
   if(is.ga_model(models)){
     models <- list(models)
   }
@@ -638,7 +641,10 @@ ga_model_shiny <- function(
   
   txt <- readLines(template)
   values <- c(list(...),
+              make_auth_dropdown(auth_dropdown), 
               model_locations,
+              make_model_template(model_locations),
+              make_model_libraries(models),
               web_json = web_json,
               scopes = scopes,
               shiny_title = title)
@@ -659,6 +665,44 @@ ga_model_shiny <- function(
   writeLines(render, tmp)
   myMessage("Launching Shiny app from ", tmp, level = 3)
   shiny::runApp(tmp)
+}
+
+make_model_libraries <- function(models){
+  the_libs <- unique(unlist(lapply(models, function(x) x$required_packages)))
+  list(
+    model_libraries = paste(sprintf("library(%s)", the_libs), collapse = "\n")
+  )
+}
+
+make_model_template <- function(model_locations){
+  list(
+    model_load = paste(
+      sprintf("%s <- ga_model_shiny_load('%s')", 
+              names(model_locations), model_locations), 
+      collapse = "\n"),
+    model_ui = paste(
+      sprintf("%s$ui('%s')", 
+              names(model_locations), names(model_locations)), 
+      collapse = ",\n"),
+    model_server = paste(
+      sprintf("%s$server('%s', view_id = view_id)", 
+              names(model_locations), names(model_locations)), 
+      collapse = "\n")
+  )
+}
+
+make_auth_dropdown <- function(type){
+  switch(type,
+    none = NULL,
+    universal = list(
+      auth_ui = "authDropdownUI('auth_menu', inColumns = TRUE)",
+      auth_server = "callModule(authDropdown, 'auth_menu', ga.table = al)",
+      auth_accounts = "al <- reactive({req(token);ga_account_list()})"),
+    ga4 = list(
+      auth_ui = "accountPickerUI('auth_menu', inColumns = TRUE)",
+      auth_server = "accountPicker('auth_menu', ga_table = al, id_only = TRUE)",
+      auth_accounts = "al <- reactive({req(token);ga_account_list('ga4')})"
+    ))
 }
 
 #' Load one model into a Shiny template

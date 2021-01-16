@@ -1,6 +1,9 @@
 source("setup.R")
 
 test_that("ganalytics filters", {
+  skip_on_cran()
+  skip_on_travis()
+  
   library(ganalytics)
   # Device category is desktop or tablet - a dimension filter using an OR condition.
   desktop_or_mobile <- Expr(~deviceCategory == "desktop") | Expr(~deviceCategory == "tablet")
@@ -26,6 +29,9 @@ test_that("ganalytics filters", {
 })
 
 test_that("ganalytics segments", {
+  skip_on_cran()
+  skip_on_travis()
+  
   library(ganalytics)
   bounces <- Expr(~bounces != 0)
   mobile_or_tablet <- Expr(~deviceCategory %in% c("mobile", "tablet"))

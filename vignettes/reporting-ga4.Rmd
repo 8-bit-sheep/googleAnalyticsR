@@ -172,7 +172,7 @@ You can also create custom metrics and dimensions on the fly with calculated met
  
 # create your own named metrics
 ga_data(
-   206670707,
+   my_property_id,
    metrics = c("activeUsers","sessions",sessionsPerUser = "sessions/activeUsers"),
    dimensions = c("date","city","dayOfWeek"),
    date_range = c("2020-03-31", "2020-04-27"),
@@ -189,7 +189,7 @@ ga_data(
 
 # create your own aggregation dimensions
 ga_data(
-   206670707,
+   my_property_id,
    metrics = c("activeUsers","sessions"),
    dimensions = c("date","city","dayOfWeek", cdow = "city/dayOfWeek"),
    date_range = c("2020-03-31", "2020-04-27"),
@@ -201,6 +201,21 @@ ga_data(
 # 1 2020-04-18 (not set) 7         (not set)/7           5        6
 # 2 2020-04-14 Madrid    3         Madrid/3              5        6
 # 3 2020-04-17 London    6         London/6              5        6
+
+# useful for creating referral data
+ga_data(
+    my_property_id,
+    metrics = c("activeUsers","sessions"),
+    dimensions = c("date", sessionMediumSource = "sessionMedium/sessionSource"),
+    date_range = c("2020-03-31", "2020-04-27"),
+    limit = 100
+)
+## A tibble: 100 x 4
+#   date       sessionMediumSource     activeUsers sessions
+#   <date>     <chr>                         <dbl>    <dbl>
+# 1 2020-04-27 organic/google                   80       93
+# 2 2020-04-15 organic/google                   79      101
+# 3 2020-04-07 organic/google                   72       87
 ```
 
 ## Date Ranges

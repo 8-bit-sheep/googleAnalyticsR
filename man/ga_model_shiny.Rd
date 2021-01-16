@@ -8,6 +8,7 @@ ga_model_shiny(
   models,
   template = ga_model_shiny_template("template1"),
   title = "ga_model_shiny",
+  auth_dropdown = c("ga4", "universal", "none"),
   web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"),
   scopes = "https://www.googleapis.com/auth/analytics.readonly",
   deployed_url = "",
@@ -21,6 +22,8 @@ ga_model_shiny(
 \item{template}{The template file for the Shiny app}
 
 \item{title}{The title of the Shiny app}
+
+\item{auth_dropdown}{What type of account picker to include}
 
 \item{web_json}{The client.id json file for Web}
 

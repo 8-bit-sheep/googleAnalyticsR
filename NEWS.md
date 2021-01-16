@@ -12,7 +12,7 @@
 * Remove `ga_model_tweet()`
 * Add new Shiny module for GA4 web properties - `accountPicker()` #357
 * Add new Shiny module for GA4 fields - `metricDimensionSelect()` #357
-* Enable generation of Shiny apps from ga_models using template files `ga_model_shiny()` #358
+* Enable generation of Shiny apps from `ga_model()` objects using template files `ga_model_shiny()` #358
 
 # googleAnalyticsR 0.8.0
 
