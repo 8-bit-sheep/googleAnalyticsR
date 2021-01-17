@@ -600,7 +600,7 @@ ga_model_shiny_template <- function(name = "list"){
 #' @param title The title of the Shiny app
 #' @param local_file If not empty, will not launch Shiny app but write code to the file location you put here
 #' @param deployed_url If deploying Shiny app to a server, put the URL of the deployed app here so the authentication will redirect to the correct place
-#' @param ... Extra variables the template may support
+#' @param ... Extra variables the template may support, a named list with the name being a template variable
 #' 
 #' @export
 #' @importFrom assertthat is.readable
@@ -610,10 +610,18 @@ ga_model_shiny_template <- function(name = "list"){
 #' 
 #' \dontrun{
 #' 
+#' # a universal analytics model
 #' ga_model_shiny(
-#'   ga_model_example("decomp_ga.gamr"), 
+#'   ga_model_example("decomp_ga.gamr"), auth_dropdown = "universal",
 #'   template = ga_model_shiny_template("template_ua.R"))
 #' 
+#' # multiple models
+#' m3 <- ga_model_example("time-normalised.gamr")
+#' m4 <- ga_model_example("ga-effect.gamr")
+#' 
+#' # launch in gentelella template
+#' ga_model_shiny(list(m4, m3), auth_dropdown = "universal",
+#'               template = ga_model_shiny_template("gentelella.R"))
 #' }
 ga_model_shiny <- function(
   models,
