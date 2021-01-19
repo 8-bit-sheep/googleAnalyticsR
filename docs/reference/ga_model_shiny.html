@@ -319,7 +319,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Extra variables the template may support</p></td>
+      <td><p>Extra variables the template may support, a named list with the name being a template variable</p></td>
     </tr>
     </table>
 
@@ -328,10 +328,18 @@
     <pre class="examples"><div class='input'>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 
+<span class='co'># a universal analytics model</span>
 <span class='fu'>ga_model_shiny</span>(
-  <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span>(<span class='st'>"decomp_ga.gamr"</span>),
+  <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span>(<span class='st'>"decomp_ga.gamr"</span>), <span class='kw'>auth_dropdown</span> <span class='kw'>=</span> <span class='st'>"universal"</span>,
   <span class='kw'>template</span> <span class='kw'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span>(<span class='st'>"template_ua.R"</span>))
 
+<span class='co'># multiple models</span>
+<span class='no'>m3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span>(<span class='st'>"time-normalised.gamr"</span>)
+<span class='no'>m4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span>(<span class='st'>"ga-effect.gamr"</span>)
+
+<span class='co'># launch in gentelella template</span>
+<span class='fu'>ga_model_shiny</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>m4</span>, <span class='no'>m3</span>), <span class='kw'>auth_dropdown</span> <span class='kw'>=</span> <span class='st'>"universal"</span>,
+              <span class='kw'>template</span> <span class='kw'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span>(<span class='st'>"gentelella.R"</span>))
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
