@@ -98,6 +98,61 @@ dimensions
 # … with 90 more rows
 ```
 
+### Event counts and names
+
+Some of the most useful dimensions and metrics to fetch are `eventName` and `eventCount`, which is effectively the most granular report given the new GA4 data model.  Combined with filters (see below) this can get you to useful conversion events.
+
+```r
+# if you set metrics=NULL you will get only the distinct events
+ga_data(
+    my_property_id, 
+    metrics = NULL,
+    dimensions = "eventName",
+    date_range = c("2020-03-31", "2020-04-27")
+)
+## A tibble: 9 x 1
+#  eventName      
+#  <chr>          
+#1 click          
+#2 first_visit    
+#3 page_view      
+#4 scroll         
+#5 session_start  
+#6 user_engagement
+#7 video_complete 
+#8 video_progress 
+#9 video_start 
+
+# eventsCounts per eventName 
+events <- ga_data(
+    my_property_id,
+    metrics = c("eventCount"),
+    dimensions = c("date","eventName"),
+    date_range = c("2020-03-31", "2020-04-27")
+)
+events
+## A tibble: 100 x 3
+#   date       eventName       eventCount
+#   <date>     <chr>                <dbl>
+# 1 2020-04-08 page_view              239
+# 2 2020-04-08 session_start          207
+# 3 2020-04-09 page_view              203
+# ...
+
+# filter to one event
+ga_data(
+    my_property_id, 
+    metrics = "eventCount",
+    dimensions = "eventName",
+    date_range = c("2020-03-31", "2020-04-27"),
+    dimensionFilter = ga_data_filter(eventName=="video_start")
+)
+## A tibble: 1 x 2
+#  eventName   eventCount
+#  <chr>            <dbl>
+#1 video_start          4
+```
+
 ### Row limits
 
 By default the API returns 100 results.  Add the `limit` parameter to change the number of results returned.  To get all results, use -1
