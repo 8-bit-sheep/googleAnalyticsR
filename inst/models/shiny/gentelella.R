@@ -23,6 +23,7 @@ ui <- gentelellaPage(
   # shiny UI elements
   h3("Choose GA account"),
   {{ auth_ui }},
+  {{{ date_range }}},
   h3("Time Normalised pages"),
   {{{ model_ui }}},
   br()

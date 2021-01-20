@@ -18,19 +18,20 @@ header <- dashboardHeader(
 sidebar <- dashboardSidebar(
   width = 250,
   sidebarMenu(
-    menuItem("Logout", href = "/")
+    menuItem("Logout", href = "/"),
+    # custom macro for shiny dashboard
+    {{{ model_tabs }}}
   )
 )
 body <- dashboardBody(
   fluidRow(
     box(width=12,
-        {{ auth_ui }}
+        {{ auth_ui }},
+        {{{ date_range }}}
         )
     ),
-  fluidRow(
-    box(width=12,
-        {{{ model_ui }}}
-        )
+  tabItems(
+    {{{ model_ui }}}
   )
 )
 
