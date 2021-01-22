@@ -25,13 +25,15 @@ ga_cache_call <- function(cache_location){
   
   f <- function(req){
     
-    stuff <- tryCatch(req$content$reports, error = function(x) NULL)
+    ga4 <- tryCatch(req$content$reports, error = function(x) NULL)
+    data <-tryCatch(req$content$rows, error = function(x) NULL)
     
-    if(!is.null(stuff)){
-      return(TRUE)
-    } else {
-      return(FALSE)
-    }}
+    if(!is.null(ga4) || !is.null(data)) return(TRUE)
+    
+    myMessage("No caching", level = 2)
+    FALSE
+    
+    }
   
   
   gar_cache_setup(mcache = memoise::cache_filesystem(cache_location),

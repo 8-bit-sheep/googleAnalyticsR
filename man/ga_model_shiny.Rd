@@ -50,8 +50,7 @@ Create a Shiny app from a ga_model file
 
 # a universal analytics model
 ga_model_shiny(
-  ga_model_example("decomp_ga.gamr"), auth_dropdown = "universal",
-  template = ga_model_shiny_template("template_ua.R"))
+  ga_model_example("decomp_ga.gamr"), auth_dropdown = "universal")
 
 # multiple models
 m3 <- ga_model_example("time-normalised.gamr")
