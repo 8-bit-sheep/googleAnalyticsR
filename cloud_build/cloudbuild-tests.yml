@@ -10,7 +10,7 @@ steps:
       - -c
       - gcloud secrets versions access latest --secret=mark-edmondson-gde-clientid
         > /workspace/client.json
-  - name: gcr.io/gcer-public/packagetools:master
+  - name: gcr.io/gcer-public/packagetools
     args:
       - Rscript
       - -e
