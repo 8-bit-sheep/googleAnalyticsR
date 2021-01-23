@@ -53,8 +53,6 @@ steps:
       - Rscript
       - -e
       - |-
-        remotes::install_deps(dependencies = TRUE)
-        remotes::install_local()
         pkgdown::build_site()
     id: build pkgdown
     dir: repo
