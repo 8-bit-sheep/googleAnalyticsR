@@ -1,15 +1,4 @@
-library(shiny)
 library(shinydashboard)
-library(googleAuthR)
-library(googleAnalyticsR)
-{{{ model_libraries }}}
-
-gar_set_client(web_json = "{{ web_json }}",
-               scopes = "{{ scopes }}")
-options(googleAuthR.redirect = "{{ deployed_url }}")
-
-# loads a pre-existing model
-{{{ model_load }}}
 
 header <- dashboardHeader(
   title = "{{ shiny_title }}",
@@ -40,20 +29,3 @@ if(!nzchar(skin)) skin <- "blue"
 
 ## ui.R
 ui <- dashboardPage(header, sidebar, body, skin = skin)
-
-## server.R
-server <- function(input, output, session){
-  
-  token <- gar_shiny_auth(session)
-  
-  {{{ auth_accounts }}}
-  
-  # module for authentication
-  view_id <- {{ auth_server }}
-  
-  # module to display model results
-  {{{ model_server }}}
-  
-}
-
-shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)

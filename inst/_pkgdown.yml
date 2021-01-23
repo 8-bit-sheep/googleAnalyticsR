@@ -129,11 +129,9 @@ reference:
     contents:
       - accountPicker
       - authDropdown
-      - authDropdownUI
       - multi_select
-      - multi_selectUI
+      - metricDimensionSelect
       - segmentBuilder
-      - segmentBuilderUI
   - title: "Advanced fetching options"
     desc: >
       Building your own Google Analytics API requests
@@ -145,14 +143,7 @@ reference:
     desc: >
       Functions to create and use models with your Google Analytics data
     contents:
-      - ga_model
-      - ga_model_example
-      - ga_model_load
-      - ga_model_make
-      - ga_model_edit
-      - ga_model_save
-      - ga_model_write
-      - ga_model_tweet
+      - matches("ga_model")
   - title: "Account structure"
     desc: >
       Viewing the account > webproperty > view structure

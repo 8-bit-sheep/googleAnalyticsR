@@ -4,10 +4,12 @@
 \alias{ga_model_shiny_template}
 \title{Get a Shiny template file}
 \usage{
-ga_model_shiny_template(name = "list")
+ga_model_shiny_template(name = "list", read_lines = FALSE)
 }
 \arguments{
 \item{name}{the template name}
+
+\item{read_lines}{If TRUE will use \code{readLines()} to print out the template contents}
 }
 \description{
 Gets a pre-created template from the googleAnalyticsR samples

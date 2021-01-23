@@ -6,7 +6,8 @@
 \usage{
 ga_model_shiny(
   models,
-  template = ga_model_shiny_template("template1"),
+  template = ga_model_shiny_template("template1.R"),
+  template_type = c("ui-only", "ui-header", "full"),
   title = "ga_model_shiny",
   auth_dropdown = c("ga4", "universal", "none"),
   web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"),
@@ -22,6 +23,8 @@ ga_model_shiny(
 \item{models}{The \link{ga_model} file location ("my_model.gamr") or a \link{ga_model} object - can pass in multiple as a list}
 
 \item{template}{The template file for the Shiny app}
+
+\item{template_type}{Shiny app templates can hold only the ui of an app, which means the server and/or the header section will be loaded via the standard boilerplate from \code{"server_boilerplate.R"} and/or \code{"header_boilerplate.R"}. Select \code{"full"} if the template holds everything including header, ui and server code}
 
 \item{title}{The title of the Shiny app}
 
@@ -44,11 +47,45 @@ ga_model_shiny(
 \description{
 Create a Shiny app from a ga_model file
 }
+\details{
+As \link{ga_model} objects have standardised code, they can be used to build standard templated Shiny apps.  Templates are made using the \link[whisker]{whisker.render} function
+
+Templates hold macro variables indicated via \code{ \{\{ macro_name \}\} } in the Shiny app template code. See \code{ga_model_shiny_template("template_full.R", TRUE)} for an example showing a minimal viable app.
+
+Template contain code to allow multi-user login via Google OAuth2.
+
+As the header and server parts of the Shiny code are generic, they can also be templated leaving you only needing to create the UI part of the Shiny code.  This is the default of \code{template_type = "ui-only"}.  Use the other template_type's if your Shiny template does include header or server code.
+
+Some templates are included with the package, seen via \code{ga_model_shiny_template("list")}
+}
+\section{Template macro variables}{
+
+
+\itemize{
+ \item{\code{\{\{\{ model_libraries \}\}\}}}{- Adds \code{library()} calls based on models$required_packages}
+ \item{\code{\{\{\{ web_json \}\}\}}}{- Adds Google OAuth2 client for web applications}
+ \item{\code{\{\{\{ scopes \}\}\}}}{- Adds Google Oauth2 scopes for the API calls}
+ \item{\code{\{\{\{ deployed_url \}\}\}}}{- Adds \code{option(googleAuthR.redirect)} option for deployed Shiny apps}
+ \item{\code{\{\{\{ model_load \}\}\}}}{- Adds \link{ga_model_load} calls loading all models in the list passed to this function's \code{models} argument}
+ \item{\code{\{\{\{ shiny_title \}\}\}}}{- Adds the title to the Shiny app}
+ \item{\code{\{\{\{ auth_ui \}\}\}}}{- Adds the correct dropdown Shiny module for picking a GA4 or Universal Analytics properties}
+ \item{\code{\{\{\{ date_range \}\}\}}}{- Adds a \code{shiny::dateInput()} date selector with id "date_range" for use in model's data fetching functions}
+ \item{\code{\{\{\{ model_ui \}\}\}}}{- Adds the models UI elements as configured in the \link{ga_model} object}
+ \item{\code{\{\{\{ auth_server \}\}\}}}{- Adds the authentication module's server side function}
+ \item{\code{\{\{\{ auth_accounts \}\}\}}}{- Adds a call to \link{ga_account_list} for the appropriate GA account type (GA4 or Universal)}
+ \item{\code{\{\{\{ model_server \}\}\}}}{- Adds the server side module for the models as configured in the \link{ga_model} configuration}
+ \item{\code{\{\{\{ your_argument \}\}\}}}{- You can pass in your own custom variables to the template via the \code{...} argument of this function if they are named the same as the template macro variable}
+}
+}
+
 \examples{
+
+# see Shiny templates included with the package
+ga_model_shiny_template("list")
 
 \dontrun{
 
-# a universal analytics model
+# a universal analytics model using default template "template1.R"
 ga_model_shiny(
   ga_model_example("decomp_ga.gamr"), auth_dropdown = "universal")
 
