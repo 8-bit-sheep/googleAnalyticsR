@@ -270,7 +270,7 @@
     <p>List Unsampled Reports</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_unsampled_list</span>(<span class='no'>accountId</span>, <span class='no'>webPropertyId</span>, <span class='no'>profileId</span>)</pre>
+    <pre class="usage"><span class='fu'>ga_unsampled_list</span><span class='op'>(</span><span class='va'>accountId</span>, <span class='va'>webPropertyId</span>, <span class='va'>profileId</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -300,30 +300,34 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 
     <span class='co'># get data.frame of unsampled reports you have available</span>
-    <span class='no'>unsample_list</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_unsampled_list</span>(<span class='kw'>accountId</span> <span class='kw'>=</span> <span class='st'>"12345"</span>,
-                                       <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-12345-4"</span>,
-                                       <span class='kw'>profileId</span> <span class='kw'>=</span> <span class='st'>"129371234"</span>)
-
+    <span class='va'>unsample_list</span> <span class='op'>&lt;-</span> <span class='fu'>ga_unsampled_list</span><span class='op'>(</span>accountId <span class='op'>=</span> <span class='st'>"12345"</span>, 
+                                       webPropertyId <span class='op'>=</span> <span class='st'>"UA-12345-4"</span>, 
+                                       profileId <span class='op'>=</span> <span class='st'>"129371234"</span><span class='op'>)</span>
+                                       
     <span class='co'># loop through unsampled reports and download as a list of data.frames</span>
-    <span class='no'>dl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>unsample_list</span>$<span class='no'>title</span>, <span class='no'>ga_unsampled_download</span>,
-                 <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='st'>"12345"</span>,
-                 <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-12345-4"</span>,
-                 <span class='kw'>profileId</span> <span class='kw'>=</span> <span class='st'>"129371234"</span>,
-                 <span class='kw'>downloadFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
+    <span class='va'>dl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>unsample_list</span><span class='op'>$</span><span class='va'>title</span>, <span class='va'>ga_unsampled_download</span>, 
+                 accountId <span class='op'>=</span> <span class='st'>"12345"</span>, 
+                 webPropertyId <span class='op'>=</span> <span class='st'>"UA-12345-4"</span>, 
+                 profileId <span class='op'>=</span> <span class='st'>"129371234"</span>, 
+                 downloadFile <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+                 
     <span class='co'># inspect first data.frame</span>
-    <span class='no'>dl</span><span class='kw'>[[</span><span class='fl'>1</span>]]
-
+    <span class='va'>dl</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+    
     <span class='co'># download unsampled report to csv file</span>
-    <span class='fu'><a href='ga_unsampled_download.html'>ga_unsampled_download</a></span>(<span class='st'>"my_report_title"</span>,
-                          <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='st'>"12345"</span>,
-                          <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-12345-4"</span>,
-                          <span class='kw'>profileId</span> <span class='kw'>=</span> <span class='st'>"129371234"</span>)
+    <span class='fu'><a href='ga_unsampled_download.html'>ga_unsampled_download</a></span><span class='op'>(</span><span class='st'>"my_report_title"</span>, 
+                          accountId <span class='op'>=</span> <span class='st'>"12345"</span>, 
+                          webPropertyId <span class='op'>=</span> <span class='st'>"UA-12345-4"</span>, 
+                          profileId <span class='op'>=</span> <span class='st'>"129371234"</span><span class='op'>)</span>
 
-}</div></pre>
+<span class='op'>}</span>
+
+
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -339,7 +343,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

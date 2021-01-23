@@ -270,17 +270,17 @@
     <p>Create ga_model objects for easy application of models to data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_model_make</span>(
-  <span class='no'>data_f</span>,
-  <span class='no'>required_columns</span>,
-  <span class='no'>model_f</span>,
-  <span class='kw'>output_f</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>df</span>, <span class='no'>...</span>) {     <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>df</span>) },
-  <span class='kw'>required_packages</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>outputShiny</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='no'><a href='https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html'>plotOutput</a></span>,
-  <span class='kw'>renderShiny</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='no'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html'>renderPlot</a></span>,
-  <span class='kw'>inputShiny</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>ga_model_make</span><span class='op'>(</span>
+  <span class='va'>data_f</span>,
+  <span class='va'>required_columns</span>,
+  <span class='va'>model_f</span>,
+  output_f <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span>     <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='op'>}</span>,
+  required_packages <span class='op'>=</span> <span class='cn'>NULL</span>,
+  description <span class='op'>=</span> <span class='cn'>NULL</span>,
+  outputShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html'>plotOutput</a></span>,
+  renderShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html'>renderPlot</a></span>,
+  inputShiny <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -339,57 +339,61 @@ The <code>data_f</code> function result will feed to <code>model_f</code></p>
 <code><a href='ga_model_example.html'>ga_model_example</a>()</code>,
 <code><a href='ga_model_load.html'>ga_model_load</a>()</code>,
 <code><a href='ga_model_save.html'>ga_model_save</a>()</code>,
+<code><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a>()</code>,
+<code><a href='ga_model_shiny_ui.html'>ga_model_shiny_ui</a>()</code>,
+<code><a href='ga_model_shiny.html'>ga_model_shiny</a>()</code>,
 <code><a href='ga_model_write.html'>ga_model_write</a>()</code>,
 <code><a href='ga_model.html'>ga_model</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 
- <span class='no'>get_model_data</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>viewId</span>,
-                           <span class='no'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>()- <span class='fl'>300</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>()),
-                           <span class='no'>...</span>){
-   <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>viewId</span>,
-                    <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='no'>date_range</span>,
-                    <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='st'>"sessions"</span>,
-                    <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
-                    <span class='kw'>max</span> <span class='kw'>=</span> -<span class='fl'>1</span>)
- }
+ <span class='va'>get_model_data</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>viewId</span>,
+                           <span class='va'>date_range</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>-</span> <span class='fl'>300</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>,
+                           <span class='va'>...</span><span class='op'>)</span><span class='op'>{</span>
+   <span class='fu'><a href='google_analytics.html'>google_analytics</a></span><span class='op'>(</span><span class='va'>viewId</span>,
+                    date_range <span class='op'>=</span> <span class='va'>date_range</span>,
+                    metrics <span class='op'>=</span> <span class='st'>"sessions"</span>,
+                    dimensions <span class='op'>=</span> <span class='st'>"date"</span>,
+                    max <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span>
+ <span class='op'>}</span>
 
- <span class='no'>decompose_sessions</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>df</span>, <span class='no'>...</span>){
-   <span class='fu'><a href='https://rdrr.io/r/stats/decompose.html'>decompose</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span>(<span class='no'>df</span>$<span class='no'>sessions</span>, <span class='kw'>frequency</span> <span class='kw'>=</span> <span class='fl'>7</span>))
- }
+ <span class='va'>decompose_sessions</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>...</span><span class='op'>)</span><span class='op'>{</span>
+   <span class='fu'><a href='https://rdrr.io/r/stats/decompose.html'>decompose</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>sessions</span>, frequency <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span>
+ <span class='op'>}</span>
 
- <span class='no'>decomp_ga</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_model_make</span>(<span class='no'>get_model_data</span>,
-                            <span class='kw'>required_columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"date"</span>, <span class='st'>"sessions"</span>),
-                            <span class='kw'>model_f</span> <span class='kw'>=</span> <span class='no'>decompose_sessions</span>,
-                            <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"Performs decomposition and creates plot"</span>)
+ <span class='va'>decomp_ga</span> <span class='op'>&lt;-</span> <span class='fu'>ga_model_make</span><span class='op'>(</span><span class='va'>get_model_data</span>,
+                            required_columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"date"</span>, <span class='st'>"sessions"</span><span class='op'>)</span>,
+                            model_f <span class='op'>=</span> <span class='va'>decompose_sessions</span>,
+                            description <span class='op'>=</span> <span class='st'>"Performs decomposition and creates plot"</span><span class='op'>)</span>
 
  <span class='co'># fetches data and outputs decomposition</span>
- <span class='fu'><a href='ga_model.html'>ga_model</a></span>(<span class='fl'>81416156</span>, <span class='no'>decomp_ga</span>)
+ <span class='fu'><a href='ga_model.html'>ga_model</a></span><span class='op'>(</span><span class='fl'>81416156</span>, <span class='va'>decomp_ga</span><span class='op'>)</span>
 
  <span class='co'># save the model for later</span>
- <span class='no'>model_location</span> <span class='kw'>&lt;-</span> <span class='st'>"inst/models/decomp_ga.gamr"</span>
- <span class='fu'><a href='ga_model_save.html'>ga_model_save</a></span>(<span class='no'>decomp_ga</span>, <span class='kw'>filename</span> <span class='kw'>=</span> <span class='no'>model_location</span>)
+ <span class='va'>model_location</span> <span class='op'>&lt;-</span> <span class='st'>"inst/models/decomp_ga.gamr"</span>
+ <span class='fu'><a href='ga_model_save.html'>ga_model_save</a></span><span class='op'>(</span><span class='va'>decomp_ga</span>, filename <span class='op'>=</span> <span class='va'>model_location</span><span class='op'>)</span>
 
  <span class='co'># can load model from file</span>
- <span class='fu'><a href='ga_model.html'>ga_model</a></span>(<span class='fl'>81416156</span>, <span class='no'>model_location</span>)
+ <span class='fu'><a href='ga_model.html'>ga_model</a></span><span class='op'>(</span><span class='fl'>81416156</span>, <span class='va'>model_location</span><span class='op'>)</span>
 
  <span class='co'># or load model to an object and use </span>
- <span class='no'>model2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_model_load.html'>ga_model_load</a></span>(<span class='no'>model_location</span>)
+ <span class='va'>model2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_model_load.html'>ga_model_load</a></span><span class='op'>(</span><span class='va'>model_location</span><span class='op'>)</span>
 
- <span class='fu'><a href='ga_model.html'>ga_model</a></span>(<span class='fl'>81416156</span>, <span class='no'>model2</span>)
-
+ <span class='fu'><a href='ga_model.html'>ga_model</a></span><span class='op'>(</span><span class='fl'>81416156</span>, <span class='va'>model2</span><span class='op'>)</span>
+ 
  <span class='co'># for shiny include functions for the UI and server rendering</span>
- <span class='no'>decomp_ga</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_model_make</span>(<span class='no'>get_model_data</span>,
-                            <span class='kw'>required_columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"date"</span>, <span class='st'>"sessions"</span>),
-                            <span class='kw'>model_f</span> <span class='kw'>=</span> <span class='no'>decompose_sessions</span>,
-                            <span class='kw'>output_f</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>df</span>, <span class='no'>...</span>){<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>df</span>)},
-                            <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"Performs decomposition and creates a plot"</span>,
-                            <span class='kw'>outputShiny</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='no'><a href='https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html'>plotOutput</a></span>,
-                            <span class='kw'>renderShiny</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='no'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html'>renderPlot</a></span>)
+ <span class='va'>decomp_ga</span> <span class='op'>&lt;-</span> <span class='fu'>ga_model_make</span><span class='op'>(</span><span class='va'>get_model_data</span>,
+                            required_columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"date"</span>, <span class='st'>"sessions"</span><span class='op'>)</span>,
+                            model_f <span class='op'>=</span> <span class='va'>decompose_sessions</span>,
+                            output_f <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>...</span><span class='op'>)</span><span class='op'>{</span><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>}</span>,
+                            description <span class='op'>=</span> <span class='st'>"Performs decomposition and creates a plot"</span>,
+                            outputShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html'>plotOutput</a></span>,
+                            renderShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html'>renderPlot</a></span><span class='op'>)</span>
 
-}</div></pre>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -405,7 +409,7 @@ The <code>data_f</code> function result will feed to <code>model_f</code></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

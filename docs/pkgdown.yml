@@ -1,5 +1,5 @@
-pandoc: 2.3.1
-pkgdown: 1.5.1
+pandoc: 2.7.3
+pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   big-query: big-query.html
@@ -15,7 +15,7 @@ articles:
   user-activity: user-activity.html
   v3: v3.html
   v4: v4.html
-last_built: 2021-01-19T15:54Z
+last_built: 2021-01-23T18:45Z
 urls:
   reference: https://code.markedmondson.me/googleAnalyticsR//reference
   article: https://code.markedmondson.me/googleAnalyticsR//articles

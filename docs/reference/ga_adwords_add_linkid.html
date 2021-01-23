@@ -270,7 +270,7 @@
     <p>Creates a link between and Adwords (Google ads) account and a Google Analytics property so that Adwords data can be accessed via Google Analytics and vice versa.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_adwords_add_linkid</span>(<span class='no'>adwordsAccountId</span>, <span class='no'>linkName</span>, <span class='no'>accountId</span>, <span class='no'>webPropertyId</span>)</pre>
+    <pre class="usage"><span class='fu'>ga_adwords_add_linkid</span><span class='op'>(</span><span class='va'>adwordsAccountId</span>, <span class='va'>linkName</span>, <span class='va'>accountId</span>, <span class='va'>webPropertyId</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -306,12 +306,14 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>googleAnalyticsR</span>)
-<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://code.markedmondson.me/googleAnalyticsR/'>googleAnalyticsR</a></span><span class='op'>)</span>
+<span class='fu'><a href='ga_auth.html'>ga_auth</a></span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'>ga_adwords_add_linkid</span>(<span class='st'>"280-234-7592"</span>, <span class='st'>"Google Ads Link"</span>, <span class='st'>"65973592"</span>, <span class='st'>"UA-65973592-1"</span>)
-}</div></pre>
+<span class='fu'>ga_adwords_add_linkid</span><span class='op'>(</span><span class='st'>"280-234-7592"</span>, <span class='st'>"Google Ads Link"</span>, <span class='st'>"65973592"</span>, <span class='st'>"UA-65973592-1"</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -327,7 +329,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

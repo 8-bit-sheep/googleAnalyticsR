@@ -272,14 +272,14 @@ Shiny Module for use with GA4 metric and dimension fields fetched via ga_meta(&q
 <p>Shiny Module for use with GA4 metric and dimension fields fetched via <code><a href='ga_meta.html'>ga_meta("ga4")</a></code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>metricDimensionSelectUI</span>(<span class='no'>id</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Metric"</span>, <span class='kw'>multiple</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>metricDimensionSelectUI</span><span class='op'>(</span><span class='va'>id</span>, label <span class='op'>=</span> <span class='st'>"Metric"</span>, multiple <span class='op'>=</span> <span class='cn'>TRUE</span>, width <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>metricDimensionSelect</span>(
-  <span class='no'>id</span>,
-  <span class='kw'>field_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"metric"</span>, <span class='st'>"dimension"</span>),
-  <span class='kw'>custom_meta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>default</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+<span class='fu'>metricDimensionSelect</span><span class='op'>(</span>
+  <span class='va'>id</span>,
+  field_type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"metric"</span>, <span class='st'>"dimension"</span><span class='op'>)</span>,
+  custom_meta <span class='op'>=</span> <span class='cn'>NULL</span>,
+  default <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -321,7 +321,7 @@ Shiny Module for use with GA4 metric and dimension fields fetched via ga_meta(&q
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Shiny modules: 
-<code><a href='accountPicker.html'>accountPickerUI</a>()</code>,
+<code><a href='accountPickerUI.html'>accountPickerUI</a>()</code>,
 <code><a href='authDropdownUI.html'>authDropdownUI</a>()</code>,
 <code><a href='authDropdown.html'>authDropdown</a>()</code>,
 <code><a href='multi_selectUI.html'>multi_selectUI</a>()</code>,
@@ -344,7 +344,7 @@ Shiny Module for use with GA4 metric and dimension fields fetched via ga_meta(&q
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

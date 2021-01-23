@@ -270,15 +270,15 @@
     <p>Modify existing custom dimensions</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_custom_vars_patch</span>(
-  <span class='no'>id</span>,
-  <span class='no'>accountId</span>,
-  <span class='no'>webPropertyId</span>,
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>active</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scope</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ignoreCustomDataSourceLinks</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>ga_custom_vars_patch</span><span class='op'>(</span>
+  <span class='va'>id</span>,
+  <span class='va'>accountId</span>,
+  <span class='va'>webPropertyId</span>,
+  name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  active <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scope <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ignoreCustomDataSourceLinks <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -323,32 +323,33 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>googleAnalyticsR</span>)
-<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://code.markedmondson.me/googleAnalyticsR/'>googleAnalyticsR</a></span><span class='op'>)</span>
+<span class='fu'><a href='ga_auth.html'>ga_auth</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># create custom var</span>
-<span class='fu'><a href='ga_custom_vars_create.html'>ga_custom_vars_create</a></span>(<span class='st'>"my_custom_dim"</span>,
-                      <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>7</span>,
-                      <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='fl'>54019251</span>,
-                      <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-54019251-4"</span>,
-                      <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"HIT"</span>,
-                      <span class='kw'>active</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'><a href='ga_custom_vars_create.html'>ga_custom_vars_create</a></span><span class='op'>(</span><span class='st'>"my_custom_dim"</span>,
+                      index <span class='op'>=</span> <span class='fl'>7</span>,
+                      accountId <span class='op'>=</span> <span class='fl'>54019251</span>,
+                      webPropertyId <span class='op'>=</span> <span class='st'>"UA-54019251-4"</span>,
+                      scope <span class='op'>=</span> <span class='st'>"HIT"</span>,
+                      active <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># view custom dimension in list</span>
-<span class='fu'><a href='ga_custom_vars_list.html'>ga_custom_vars_list</a></span>(<span class='fl'>54019251</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-54019251-4"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"customDimensions"</span>)
+<span class='fu'><a href='ga_custom_vars_list.html'>ga_custom_vars_list</a></span><span class='op'>(</span><span class='fl'>54019251</span>, webPropertyId <span class='op'>=</span> <span class='st'>"UA-54019251-4"</span>, type <span class='op'>=</span> <span class='st'>"customDimensions"</span><span class='op'>)</span>
 
 <span class='co'># change a custom dimension</span>
-<span class='fu'>ga_custom_vars_patch</span>(<span class='st'>"ga:dimension7"</span>,
-                     <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='fl'>54019251</span>,
-                     <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-54019251-4"</span>,
-                     <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"my_custom_dim2"</span>,
-                     <span class='kw'>active</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+<span class='fu'>ga_custom_vars_patch</span><span class='op'>(</span><span class='st'>"ga:dimension7"</span>,
+                     accountId <span class='op'>=</span> <span class='fl'>54019251</span>,
+                     webPropertyId <span class='op'>=</span> <span class='st'>"UA-54019251-4"</span>,
+                     name <span class='op'>=</span> <span class='st'>"my_custom_dim2"</span>,
+                     active <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+                     
 <span class='co'># view custom dimensions again to see change</span>
-<span class='fu'><a href='ga_custom_vars_list.html'>ga_custom_vars_list</a></span>(<span class='fl'>54019251</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-54019251-4"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"customDimensions"</span>)
+<span class='fu'><a href='ga_custom_vars_list.html'>ga_custom_vars_list</a></span><span class='op'>(</span><span class='fl'>54019251</span>, webPropertyId <span class='op'>=</span> <span class='st'>"UA-54019251-4"</span>, type <span class='op'>=</span> <span class='st'>"customDimensions"</span><span class='op'>)</span>
 
-}</div></pre>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -364,7 +365,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

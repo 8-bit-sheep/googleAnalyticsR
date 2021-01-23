@@ -212,7 +212,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="reporting-ga4_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Data API for Google Analytics 4 (App+Web)</h1>
@@ -243,18 +243,21 @@
 <h2 class="hasAnchor">
 <a href="#ga4-enabled-properties" class="anchor"></a>GA4 enabled properties</h2>
 <p>You can see the GA4 accounts you have access to under your authentication via <code><a href="../reference/ga_account_list.html">ga_account_list("ga4")</a></code></p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
-<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span>(<span class="kw">email</span><span class="kw">=</span><span class="st">"my@email.com"</span>)
-<span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span>(<span class="st">"ga4"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
+<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span><span class="op">(</span>email<span class="op">=</span><span class="st">"my@email.com"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span><span class="op">(</span><span class="st">"ga4"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="meta-data-for-ga4" class="section level2">
 <h2 class="hasAnchor">
 <a href="#meta-data-for-ga4" class="anchor"></a>Meta data for GA4</h2>
 <p>Universal metadata for what you can query via the Data API can be found by specifying that API in the <code><a href="../reference/ga_meta.html">ga_meta()</a></code> function:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">metadata</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span>(<span class="kw">version</span> <span class="kw">=</span> <span class="st">"data"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span><span class="op">(</span>version <span class="op">=</span> <span class="st">"data"</span><span class="op">)</span></code></pre></div>
 <p>You may have custom dimensions and metrics set up for your web property - to get a list of those specify the web property in the meta data call:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># Google Analytics 4 metadata for a particular Web Property</span>
-<span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span>(<span class="st">"data"</span>, <span class="kw">propertyId</span> <span class="kw">=</span> <span class="fl">206670707</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Google Analytics 4 metadata for a particular Web Property</span>
+<span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span><span class="op">(</span><span class="st">"data"</span>, propertyId <span class="op">=</span> <span class="fl">206670707</span><span class="op">)</span></code></pre></div>
 <p>Custom events and user scoped custom dimensions have names starting with <code>customEvent:</code> and <code>customUser:</code> respectively. Include them in your reports with the prefix.</p>
 </div>
 <div id="fetching-ga4-data-into-r" class="section level2">
@@ -263,29 +266,31 @@
 <p>Make sure to authenticate first using <code><a href="../reference/ga_auth.html">ga_auth()</a></code> or otherwise.</p>
 <p>The primary data fetching function is <code><a href="../reference/ga_data.html">ga_data()</a></code></p>
 <p>You need your <code>propertyId</code> to query data, and then at least a metric and date range:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co"># replace with your propertyId</span>
-<span class="no">my_property_id</span> <span class="kw">&lt;-</span> <span class="fl">206670707</span>
-<span class="no">basic</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-  <span class="no">my_property_id</span>,
-  <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-  <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>)
-  )
-
-<span class="no">basic</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># replace with your propertyId</span>
+<span class="va">my_property_id</span> <span class="op">&lt;-</span> <span class="fl">206670707</span>
+<span class="va">basic</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+  <span class="va">my_property_id</span>,
+  metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+  date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>
+  <span class="op">)</span>
+  
+<span class="va">basic</span>
 <span class="co"># A tibble: 1 x 2</span>
 <span class="co">#  activeUsers sessions</span>
 <span class="co">#        &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#1        1716     2783</span></pre></body></html></div>
+<span class="co">#1        1716     2783</span></code></pre></div>
 <p>Dimensions can be added to split out your results:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># split out metrics by the dimensions specified</span>
-<span class="no">dimensions</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-    <span class="no">my_property_id</span>,
-    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
-    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>)
-)
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># split out metrics by the dimensions specified</span>
+<span class="va">dimensions</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+    <span class="va">my_property_id</span>,
+    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
+    date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>
+<span class="op">)</span>
 
-<span class="no">dimensions</span>
+<span class="va">dimensions</span>
 <span class="co"># A tibble: 100 x 5</span>
 <span class="co">#   date       city      dayOfWeek activeUsers sessions</span>
 <span class="co">#   &lt;date&gt;     &lt;chr&gt;     &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;</span>
@@ -299,18 +304,19 @@
 <span class="co"># 8 2020-03-31 (not set) 3                   7       10</span>
 <span class="co"># 9 2020-04-08 Bologna   4                   7        7</span>
 <span class="co">#10 2020-04-07 (not set) 3                   6        7</span>
-<span class="co"># … with 90 more rows</span></pre></body></html></div>
+<span class="co"># … with 90 more rows</span></code></pre></div>
 <div id="event-counts-and-names" class="section level3">
 <h3 class="hasAnchor">
 <a href="#event-counts-and-names" class="anchor"></a>Event counts and names</h3>
 <p>Some of the most useful dimensions and metrics to fetch are <code>eventName</code> and <code>eventCount</code>, which is effectively the most granular report given the new GA4 data model. Combined with filters (see below) this can get you to useful conversion events.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># if you set metrics=NULL you will get only the distinct events</span>
-<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-    <span class="no">my_property_id</span>,
-    <span class="kw">metrics</span> <span class="kw">=</span> <span class="kw">NULL</span>,
-    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"eventName"</span>,
-    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>)
-)
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># if you set metrics=NULL you will get only the distinct events</span>
+<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+    <span class="va">my_property_id</span>, 
+    metrics <span class="op">=</span> <span class="cn">NULL</span>,
+    dimensions <span class="op">=</span> <span class="st">"eventName"</span>,
+    date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>
+<span class="op">)</span>
 <span class="co">## A tibble: 9 x 1</span>
 <span class="co">#  eventName      </span>
 <span class="co">#  &lt;chr&gt;          </span>
@@ -325,13 +331,13 @@
 <span class="co">#9 video_start </span>
 
 <span class="co"># eventsCounts per eventName </span>
-<span class="no">events</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-    <span class="no">my_property_id</span>,
-    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"eventCount"</span>),
-    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"eventName"</span>),
-    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>)
-)
-<span class="no">events</span>
+<span class="va">events</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+    <span class="va">my_property_id</span>,
+    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"eventCount"</span><span class="op">)</span>,
+    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"eventName"</span><span class="op">)</span>,
+    date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>
+<span class="op">)</span>
+<span class="va">events</span>
 <span class="co">## A tibble: 100 x 3</span>
 <span class="co">#   date       eventName       eventCount</span>
 <span class="co">#   &lt;date&gt;     &lt;chr&gt;                &lt;dbl&gt;</span>
@@ -341,31 +347,32 @@
 <span class="co"># ...</span>
 
 <span class="co"># filter to one event</span>
-<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-    <span class="no">my_property_id</span>,
-    <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"eventCount"</span>,
-    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"eventName"</span>,
-    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
-    <span class="kw">dimensionFilter</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">eventName</span><span class="kw">==</span><span class="st">"video_start"</span>)
-)
+<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+    <span class="va">my_property_id</span>, 
+    metrics <span class="op">=</span> <span class="st">"eventCount"</span>,
+    dimensions <span class="op">=</span> <span class="st">"eventName"</span>,
+    date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
+    dimensionFilter <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">eventName</span><span class="op">==</span><span class="st">"video_start"</span><span class="op">)</span>
+<span class="op">)</span>
 <span class="co">## A tibble: 1 x 2</span>
 <span class="co">#  eventName   eventCount</span>
 <span class="co">#  &lt;chr&gt;            &lt;dbl&gt;</span>
-<span class="co">#1 video_start          4</span></pre></body></html></div>
+<span class="co">#1 video_start          4</span></code></pre></div>
 </div>
 <div id="row-limits" class="section level3">
 <h3 class="hasAnchor">
 <a href="#row-limits" class="anchor"></a>Row limits</h3>
 <p>By default the API returns 100 results. Add the <code>limit</code> parameter to change the number of results returned. To get all results, use -1</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">only_5</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-    <span class="no">my_property_id</span>,
-    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
-    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
-    <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">5</span>
-)
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">only_5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+    <span class="va">my_property_id</span>,
+    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
+    date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
+    limit <span class="op">=</span> <span class="fl">5</span>
+<span class="op">)</span>
 
-<span class="no">only_5</span>
+<span class="va">only_5</span>
 <span class="co"># A tibble: 5 x 5</span>
 <span class="co">#  date       city      dayOfWeek activeUsers sessions</span>
 <span class="co">#  &lt;date&gt;     &lt;chr&gt;     &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;</span>
@@ -375,15 +382,15 @@
 <span class="co">#4 2020-04-27 (not set) 2                   9       11</span>
 <span class="co">#5 2020-04-09 (not set) 5                   8       10</span>
 
-<span class="no">all_results</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-    <span class="no">my_property_id</span>,
-    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
-    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
-    <span class="kw">limit</span> <span class="kw">=</span> -<span class="fl">1</span>
-)
+<span class="va">all_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+    <span class="va">my_property_id</span>,
+    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
+    date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
+    limit <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>
+<span class="op">)</span>
 
-<span class="no">all_results</span>
+<span class="va">all_results</span>
 <span class="co"># A tibble: 1,763 x 5</span>
 <span class="co">#   date       city      dayOfWeek activeUsers sessions</span>
 <span class="co">#   &lt;date&gt;     &lt;chr&gt;     &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;</span>
@@ -397,36 +404,38 @@
 <span class="co"># 8 2020-03-31 (not set) 3                   7       10</span>
 <span class="co"># 9 2020-04-08 Bologna   4                   7        7</span>
 <span class="co">#10 2020-04-07 (not set) 3                   6        7</span>
-<span class="co"># … with 1,753 more rows</span></pre></body></html></div>
+<span class="co"># … with 1,753 more rows</span></code></pre></div>
 </div>
 <div id="custom-definitions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#custom-definitions" class="anchor"></a>Custom definitions</h3>
 <p>When fetching custom dimensions and metrics, specify the prefix as you read it in the meta data table. See this <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/advanced#listing_custom_definitions_and_creating_reports">Google article on custom definitions</a> for details.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="co"># will include your custom data</span>
-<span class="no">my_meta</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span>(<span class="st">"data"</span>, <span class="kw">propertyId</span> <span class="kw">=</span> <span class="fl">206670707</span>)
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># will include your custom data</span>
+<span class="va">my_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span><span class="op">(</span><span class="st">"data"</span>, propertyId <span class="op">=</span> <span class="fl">206670707</span><span class="op">)</span>
 
-<span class="no">custom</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-    <span class="no">my_property_id</span>,
-    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"customEvent:credits_spent"</span>),
-    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"customUser:last_level"</span>,<span class="st">"customEvent:achievement_id"</span>),
-    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
-    <span class="kw">limit</span> <span class="kw">=</span> -<span class="fl">1</span>
-)</pre></body></html></div>
+<span class="va">custom</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+    <span class="va">my_property_id</span>,
+    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"customEvent:credits_spent"</span><span class="op">)</span>,
+    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"customUser:last_level"</span>,<span class="st">"customEvent:achievement_id"</span><span class="op">)</span>,
+    date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
+    limit <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>
+<span class="op">)</span></code></pre></div>
 <div id="calculated-fields" class="section level4">
 <h4 class="hasAnchor">
 <a href="#calculated-fields" class="anchor"></a>Calculated fields</h4>
 <p>You can also create custom metrics and dimensions on the fly with calculated metrics. These let you send in combinations of metrics or dimensions:</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># metric and dimension expressions</span>
-
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># metric and dimension expressions</span>
+ 
 <span class="co"># create your own named metrics</span>
-<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-   <span class="no">my_property_id</span>,
-   <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>,<span class="kw">sessionsPerUser</span> <span class="kw">=</span> <span class="st">"sessions/activeUsers"</span>),
-   <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
-   <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
-   <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>
-   )
+<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+   <span class="va">my_property_id</span>,
+   metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>,sessionsPerUser <span class="op">=</span> <span class="st">"sessions/activeUsers"</span><span class="op">)</span>,
+   dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
+   date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
+   limit <span class="op">=</span> <span class="fl">100</span>
+   <span class="op">)</span>
 <span class="co">## A tibble: 100 x 6</span>
 <span class="co">#   date       city        dayOfWeek activeUsers sessions sessionsPerUser</span>
 <span class="co">#   &lt;date&gt;     &lt;chr&gt;       &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;           &lt;dbl&gt;</span>
@@ -437,13 +446,13 @@
 <span class="co">#...</span>
 
 <span class="co"># create your own aggregation dimensions</span>
-<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-   <span class="no">my_property_id</span>,
-   <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-   <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>, <span class="kw">cdow</span> <span class="kw">=</span> <span class="st">"city/dayOfWeek"</span>),
-   <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
-   <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>
-   )
+<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+   <span class="va">my_property_id</span>,
+   metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+   dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>, cdow <span class="op">=</span> <span class="st">"city/dayOfWeek"</span><span class="op">)</span>,
+   date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
+   limit <span class="op">=</span> <span class="fl">100</span>
+   <span class="op">)</span>
 <span class="co">## A tibble: 100 x 6</span>
 <span class="co">#   date       city      dayOfWeek cdow        activeUsers sessions</span>
 <span class="co">#   &lt;date&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;</span>
@@ -452,19 +461,19 @@
 <span class="co"># 3 2020-04-17 London    6         London/6              5        6</span>
 
 <span class="co"># useful for creating referral data</span>
-<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-    <span class="no">my_property_id</span>,
-    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>, <span class="kw">sessionMediumSource</span> <span class="kw">=</span> <span class="st">"sessionMedium/sessionSource"</span>),
-    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
-    <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>
-)
+<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+    <span class="va">my_property_id</span>,
+    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>, sessionMediumSource <span class="op">=</span> <span class="st">"sessionMedium/sessionSource"</span><span class="op">)</span>,
+    date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
+    limit <span class="op">=</span> <span class="fl">100</span>
+<span class="op">)</span>
 <span class="co">## A tibble: 100 x 4</span>
 <span class="co">#   date       sessionMediumSource     activeUsers sessions</span>
 <span class="co">#   &lt;date&gt;     &lt;chr&gt;                         &lt;dbl&gt;    &lt;dbl&gt;</span>
 <span class="co"># 1 2020-04-27 organic/google                   80       93</span>
 <span class="co"># 2 2020-04-15 organic/google                   79      101</span>
-<span class="co"># 3 2020-04-07 organic/google                   72       87</span></pre></body></html></div>
+<span class="co"># 3 2020-04-07 organic/google                   72       87</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -472,18 +481,20 @@
 <h2 class="hasAnchor">
 <a href="#date-ranges" class="anchor"></a>Date Ranges</h2>
 <p>You can send in up to 4 date ranges, via a vector of dates:</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">date_range4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-    <span class="no">my_property_id</span>,
-    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
-    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-06"</span>,
-                   <span class="st">"2020-04-07"</span>, <span class="st">"2020-04-14"</span>,
-                   <span class="st">"2020-04-15"</span>, <span class="st">"2020-04-22"</span>,
-                   <span class="st">"2020-04-23"</span>, <span class="st">"2020-04-30"</span>),
-    <span class="kw">limit</span> <span class="kw">=</span> -<span class="fl">1</span>
-)</pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">date_range4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+    <span class="va">my_property_id</span>,
+    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
+    date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-06"</span>, 
+                   <span class="st">"2020-04-07"</span>, <span class="st">"2020-04-14"</span>, 
+                   <span class="st">"2020-04-15"</span>, <span class="st">"2020-04-22"</span>, 
+                   <span class="st">"2020-04-23"</span>, <span class="st">"2020-04-30"</span><span class="op">)</span>,
+    limit <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>
+<span class="op">)</span></code></pre></div>
 <p>The date is output with a <code>dateRange</code> column indicating which date ranges the data belongs to:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">date_range4</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">date_range4</span>
 <span class="co"># A tibble: 7,948 x 6</span>
 <span class="co">#   date       city            dayOfWeek dateRange    activeUsers sessions</span>
 <span class="co">#   &lt;date&gt;     &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;              &lt;dbl&gt;    &lt;dbl&gt;</span>
@@ -493,44 +504,46 @@
 <span class="co"># 4 2020-04-01 Zielona Gora    4         date_range_0           1        1</span>
 <span class="co"># 5 2020-04-16 Charlottesville 5         date_range_2           1        1</span>
 <span class="co"># 6 2020-04-25 Fulshear        7         date_range_3           1        1</span>
-<span class="co"># … with 7,938 more rows</span></pre></body></html></div>
-<p>You can send in dates as strings in YYYY-MM-DD format; as R Dates (e.g. <code><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date()</a></code>) or via the API keywords “today”, “yesterday”, or “NdaysAgo”)</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="co"># use R to make useful date vectors</span>
-<span class="no">dates</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>(), <span class="kw">by</span> <span class="kw">=</span> -<span class="fl">7</span>, <span class="kw">length.out</span> <span class="kw">=</span> <span class="fl">8</span>))
-<span class="no">dates</span>
+<span class="co"># … with 7,938 more rows</span></code></pre></div>
+<p>You can send in dates as strings in YYYY-MM-DD format; as R Dates (e.g. <code><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date()</a></code>) or via the API keywords “today”, “yesterday”, or “NdaysAgo”)</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># use R to make useful date vectors</span>
+<span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, by <span class="op">=</span> <span class="op">-</span><span class="fl">7</span>, length.out <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span>
+<span class="va">dates</span>
 <span class="co">#[1] "2020-10-19" "2020-10-26" "2020-11-02" "2020-11-09" "2020-11-16" "2020-11-23" "2020-11-30" "2020-12-07"</span>
 
 <span class="co"># r dates</span>
-<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-    <span class="no">my_property_id</span>,
-    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
-    <span class="kw">date_range</span> <span class="kw">=</span> <span class="no">dates</span>,
-    <span class="kw">limit</span> <span class="kw">=</span> -<span class="fl">1</span>
-)
+<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+    <span class="va">my_property_id</span>,
+    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
+    date_range <span class="op">=</span> <span class="va">dates</span>,
+    limit <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>
+<span class="op">)</span>
 
 
 <span class="co"># text dates</span>
-<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-    <span class="no">my_property_id</span>,
-    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
-    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"yesterday"</span>,<span class="st">"today"</span>,<span class="st">"3daysAgo"</span>,<span class="st">"2daysAgo"</span>),
-    <span class="kw">limit</span> <span class="kw">=</span> -<span class="fl">1</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+    <span class="va">my_property_id</span>,
+    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
+    date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"yesterday"</span>,<span class="st">"today"</span>,<span class="st">"3daysAgo"</span>,<span class="st">"2daysAgo"</span><span class="op">)</span>,
+    limit <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="filters" class="section level2">
 <h2 class="hasAnchor">
 <a href="#filters" class="anchor"></a>Filters</h2>
 <p>Filters are simpler to create but more flexible than in Universal Analytics.</p>
 <p>There is now only one filter function - <code><a href="../reference/ga_data_filter.html">ga_data_filter()</a></code>. As was the case for <code><a href="../reference/google_analytics.html">google_analytics()</a></code> , you use the filter function to construct metric filters or dimension filters in the <code>dimensionFilter</code> or <code>metricFilter</code> parameters in your <code><a href="../reference/ga_data.html">ga_data()</a></code> call.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
    <span class="fl">206670707</span>,
-   <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-   <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
-   <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
-   <span class="kw">dimensionFilter</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span><span class="kw">==</span><span class="st">"Copenhagen"</span>),
-   <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>
-   )
+   metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+   dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
+   date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
+   dimensionFilter <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="st">"Copenhagen"</span><span class="op">)</span>,
+   limit <span class="op">=</span> <span class="fl">100</span>
+   <span class="op">)</span>
 <span class="co"># A tibble: 17 x 5</span>
 <span class="co">#   date       city       dayOfWeek activeUsers sessions</span>
 <span class="co">#   &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;</span>
@@ -538,7 +551,7 @@
 <span class="co"># 2 2020-04-10 Copenhagen 6                   2        2</span>
 <span class="co"># 3 2020-04-15 Copenhagen 4                   2        2</span>
 <span class="co"># 4 2020-04-17 Copenhagen 6                   2        2</span>
-<span class="co"># ...</span></pre></body></html></div>
+<span class="co"># ...</span></code></pre></div>
 <div id="making-filter-elements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#making-filter-elements" class="anchor"></a>Making filter elements</h3>
@@ -546,12 +559,12 @@
 <ul>
 <li>A single filter, or multiple filters within a filter expression can be passed in to <code><a href="../reference/ga_data.html">ga_data()</a></code>
 </li>
-<li>The single filter syntax is (field) (operator) (value) e.g. <code>city=="Copenhagen"</code>
+<li>The single filter syntax is (field) (operator) (value) e.g. <code>city=="Copenhagen"</code>
 </li>
 <li>(field) is a dimension or metric for your web property, which you can review via <code><a href="../reference/ga_meta.html">ga_meta("data")</a></code>
 </li>
 <li>(field) can be quoted (<code>"city"</code>, <code>"session"</code>), or unquoted ( <code>city</code> or <code>session</code>) if you want to use validation.</li>
-<li>(field) validation for unquoted fields is available if using default metadata (e.g. <code>city</code> or <code>session</code>), or you have fetched your custom fields via <code><a href="../reference/ga_meta.html">ga_meta("data", propertyId=123456)</a></code>
+<li>(field) validation for unquoted fields is available if using default metadata (e.g. <code>city</code> or <code>session</code>), or you have fetched your custom fields via <code><a href="../reference/ga_meta.html">ga_meta("data", propertyId=123456)</a></code>
 </li>
 <li>(operator) can be one of <code>==, &gt;, &gt;=, &lt;, &lt;=</code> for metrics</li>
 <li>(operator) can be one of <code>==, %begins%, %ends%, %contains%, %contains%, %regex%, %regex_partial%</code> for dimensions</li>
@@ -566,11 +579,12 @@
 <p>Do not construct metric filters and use in the <code>dimensionFilter</code> argument or vice-versa.</p>
 <p>You can use quoted (<code>"city"</code>, <code>"session"</code>) or unquoted fields ( <code>city</code> or <code>session</code>) which will check the field is valid before you send it to the API.</p>
 <p>If you want to use custom fields from your property, do a call to <code><a href="../reference/ga_meta.html">ga_meta("data", propertyId=1234546)</a></code> replacing your propertyId for the GA4 property that has the custom fields. Once fetched, they will be placed in your local environment for all future calls to <code><a href="../reference/ga_data_filter.html">ga_data_filter()</a></code> - use the custom events with a <code>cust_</code> prefix e.g.</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co"># gets fields including custom event field "customEvent:test_dim"</span>
-<span class="no">my_meta</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span>(<span class="st">"data"</span>, <span class="kw">propertyId</span> <span class="kw">=</span> <span class="fl">206670707</span>)
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># gets fields including custom event field "customEvent:test_dim"</span>
+<span class="va">my_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span><span class="op">(</span><span class="st">"data"</span>, propertyId <span class="op">=</span> <span class="fl">206670707</span><span class="op">)</span>
 
 <span class="co"># use the custom event in a filter</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">cust_test_dim</span> <span class="kw">==</span> <span class="st">"test"</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">cust_test_dim</span> <span class="op">==</span> <span class="st">"test"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="filter-values" class="section level4">
 <h4 class="hasAnchor">
@@ -578,19 +592,19 @@
 <p>Values are checked in the filter object based on the R class of the object you are passing in as its value:</p>
 <ul>
 <li>
-<code>character</code>: stringFilter - e.g. <code>"Copenhagen"</code>
+<code>character</code>: stringFilter - e.g. <code>"Copenhagen"</code>
 </li>
 <li>
-<code>character vector</code>: inListFilter e.g. <code><a href="https://rdrr.io/r/base/c.html">c("Copenhagen","London","New York")</a></code>
+<code>character vector</code>: inListFilter e.g. <code><a href="https://rdrr.io/r/base/c.html">c("Copenhagen","London","New York")</a></code>
 </li>
 <li>
-<code>numeric</code>: NumericFilter e.g. <code>5</code>
+<code>numeric</code>: NumericFilter e.g. <code>5</code>
 </li>
 <li>
-<code>numeric 2-length vector</code>: BetweenFilter e.g. <code><a href="https://rdrr.io/r/base/c.html">c(5, 10)</a></code>
+<code>numeric 2-length vector</code>: BetweenFilter e.g. <code><a href="https://rdrr.io/r/base/c.html">c(5, 10)</a></code>
 </li>
 <li>
-<code>NULL</code>: Will filter for NULL e.g. <code>city==NULL</code> - often used with <code>!</code> (not NULL)</li>
+<code>NULL</code>: Will filter for NULL e.g. <code>city==NULL</code> - often used with <code><a href="https://rdrr.io/r/base/Logic.html">!</a></code> (not NULL)</li>
 </ul>
 <p>e.g. if you pass in a character of length one (<code>"Copenhagen"</code>) then it will assume to be a class <code>StringFilter</code> (all dimensions that match “Copenhagen”) if you pass in a character of length greater than one <code><a href="https://rdrr.io/r/base/c.html">c("Copenhagen","London","New York")</a></code>, then it assume to be a class <code>InListFilter</code> (dimensions must match one in the list)</p>
 </div>
@@ -599,16 +613,17 @@
 <h3 class="hasAnchor">
 <a href="#examples-using-ga4-filters" class="anchor"></a>Examples Using GA4 Filters</h3>
 <p>All filters are made up of filter expressions using <code><a href="../reference/ga_data_filter.html">ga_data_filter()</a></code>:</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">simple_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simple_filter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
    <span class="fl">206670707</span>,
-   <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-   <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
-   <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
-   <span class="kw">dimensionFilter</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span><span class="kw">==</span><span class="st">"Copenhagen"</span>),
-   <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>
-   )
+   metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+   dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
+   date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
+   dimensionFilter <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="st">"Copenhagen"</span><span class="op">)</span>,
+   limit <span class="op">=</span> <span class="fl">100</span>
+   <span class="op">)</span>
 
-<span class="no">simple_filter</span>
+<span class="va">simple_filter</span>
 <span class="co"># A tibble: 17 x 5</span>
 <span class="co">#   date       city       dayOfWeek activeUsers sessions</span>
 <span class="co">#   &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;</span>
@@ -616,11 +631,12 @@
 <span class="co"># 2 2020-04-10 Copenhagen 6                   2        2</span>
 <span class="co"># 3 2020-04-15 Copenhagen 4                   2        2</span>
 <span class="co"># 4 2020-04-17 Copenhagen 6                   2        2</span>
-<span class="co"># ...</span></pre></body></html></div>
+<span class="co"># ...</span></code></pre></div>
 <p>If you need more complicated filters, then build them using the DSL syntax. This lets you combine <code><a href="../reference/ga_data_filter.html">ga_data_filter()</a></code> objects in various ways.</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="co">## filter clauses</span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## filter clauses</span>
 <span class="co"># OR string filter</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span><span class="kw">==</span><span class="st">"Copenhagen"</span> <span class="kw">|</span> <span class="no">city</span> <span class="kw">==</span> <span class="st">"London"</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="st">"Copenhagen"</span> <span class="op">|</span> <span class="va">city</span> <span class="op">==</span> <span class="st">"London"</span><span class="op">)</span></code></pre></div>
 <pre><code>## ===orGroup:  
 ## [[1]]
 ## --GA4 Filter:  
@@ -632,14 +648,16 @@
 ## --| city 
 ## ----stringFilter:  
 ## value:  London | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="co"># inlist string filter - equivalent to above</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span><span class="kw">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Copenhagen"</span>,<span class="st">"London"</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># inlist string filter - equivalent to above</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Copenhagen"</span>,<span class="st">"London"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| city 
 ## ----inListFilter:  
 ## values:  Copenhagen London 
 ## caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="co"># AND string filters</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span><span class="kw">==</span><span class="st">"Copenhagen"</span> <span class="kw">&amp;</span> <span class="no">dayOfWeek</span> <span class="kw">==</span> <span class="st">"5"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># AND string filters</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="st">"Copenhagen"</span> <span class="op">&amp;</span> <span class="va">dayOfWeek</span> <span class="op">==</span> <span class="st">"5"</span><span class="op">)</span></code></pre></div>
 <pre><code>## ===andGroup:  
 ## [[1]]
 ## --GA4 Filter:  
@@ -651,8 +669,9 @@
 ## --| dayOfWeek 
 ## ----stringFilter:  
 ## value:  5 | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="co"># NOT string filter</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(!(<span class="no">city</span><span class="kw">==</span><span class="st">"Copenhagen"</span> <span class="kw">|</span> <span class="no">city</span> <span class="kw">==</span> <span class="st">"London"</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># NOT string filter</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="st">"Copenhagen"</span> <span class="op">|</span> <span class="va">city</span> <span class="op">==</span> <span class="st">"London"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## ===notExpression:  
 ## ===orGroup:  
 ## [[1]]
@@ -665,9 +684,10 @@
 ## --| city 
 ## ----stringFilter:  
 ## value:  London | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="co"># multiple filter clauses</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span><span class="kw">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Copenhagen"</span>,<span class="st">"London"</span>,<span class="st">"Paris"</span>,<span class="st">"New York"</span>) <span class="kw">&amp;</span>
-                 (<span class="no">dayOfWeek</span><span class="kw">==</span><span class="st">"5"</span> <span class="kw">|</span> <span class="no">dayOfWeek</span><span class="kw">==</span><span class="st">"6"</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># multiple filter clauses</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Copenhagen"</span>,<span class="st">"London"</span>,<span class="st">"Paris"</span>,<span class="st">"New York"</span><span class="op">)</span> <span class="op">&amp;</span>
+                 <span class="op">(</span><span class="va">dayOfWeek</span><span class="op">==</span><span class="st">"5"</span> <span class="op">|</span> <span class="va">dayOfWeek</span><span class="op">==</span><span class="st">"6"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## =======andGroup:  
 ## [[1]]
 ## --GA4 Filter:  
@@ -692,42 +712,47 @@
 <h4 class="hasAnchor">
 <a href="#filter-field-validation" class="anchor"></a>Filter field validation</h4>
 <p>Validation is carried out if the field is unquoted. If you don’t want validation use quotes.</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="co"># validation of fields - correct</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span><span class="kw">==</span><span class="st">"Copenhagen"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># validation of fields - correct</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="st">"Copenhagen"</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  Copenhagen | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="co"># validation of fields - error</span>
-<span class="fu"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span>(<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">cittty</span><span class="kw">==</span><span class="st">"Copenhagen"</span>),
-         <span class="kw">error</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">err</span>) <span class="no">err</span>$<span class="no">message</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># validation of fields - error</span>
+<span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">cittty</span><span class="op">==</span><span class="st">"Copenhagen"</span><span class="op">)</span>, 
+         error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">err</span><span class="op">)</span> <span class="va">err</span><span class="op">$</span><span class="va">message</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "object 'cittty' not found"</code></pre>
-<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="co"># avoid validation by quoting</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="st">"cittty"</span><span class="kw">==</span><span class="st">"Copenhagen"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># avoid validation by quoting</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="st">"cittty"</span><span class="op">==</span><span class="st">"Copenhagen"</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| cittty 
 ## ----stringFilter:  
 ## value:  Copenhagen | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
 <p>For custom fields use <code><a href="../reference/ga_meta.html">ga_meta("data", propertyId=12345)</a></code> first to fetch them.</p>
-<div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="co"># gets fields including custom event field "customEvent:test_dim"</span>
-<span class="no">my_meta</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span>(<span class="st">"data"</span>, <span class="kw">propertyId</span> <span class="kw">=</span> <span class="fl">206670707</span>)
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># gets fields including custom event field "customEvent:test_dim"</span>
+<span class="va">my_meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span><span class="op">(</span><span class="st">"data"</span>, propertyId <span class="op">=</span> <span class="fl">206670707</span><span class="op">)</span>
 
 <span class="co"># use the custom event in a filter</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">cust_test_dim</span> <span class="kw">==</span> <span class="st">"test"</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">cust_test_dim</span> <span class="op">==</span> <span class="st">"test"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="numeric-filters-for-use-in-metricfilters" class="section level4">
 <h4 class="hasAnchor">
 <a href="#numeric-filters-for-use-in-metricfilters" class="anchor"></a>Numeric filters for use in <code>metricFilters</code>
 </h4>
 <p>An example of metric filters are below:</p>
-<div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="no">metric_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">metric_filter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
    <span class="fl">206670707</span>,
-   <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-   <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
-   <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
-   <span class="kw">metricFilter</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">sessions</span><span class="kw">&gt;</span><span class="fl">10</span>),
-   <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>
-   )
+   metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+   dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
+   date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
+   metricFilter <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">sessions</span><span class="op">&gt;</span><span class="fl">10</span><span class="op">)</span>,
+   limit <span class="op">=</span> <span class="fl">100</span>
+   <span class="op">)</span>
 
-<span class="no">metric_filter</span>
+<span class="va">metric_filter</span>
 <span class="co"># A tibble: 7 x 5</span>
 <span class="co">#  date       city      dayOfWeek activeUsers sessions</span>
 <span class="co">#  &lt;date&gt;     &lt;chr&gt;     &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;</span>
@@ -735,35 +760,41 @@
 <span class="co">#2 2020-04-08 Rome      4                  12       14</span>
 <span class="co">#3 2020-04-15 (not set) 4                   9       11</span>
 <span class="co">#4 2020-04-27 (not set) 2                   9       11</span>
-<span class="co"># ...</span></pre></body></html></div>
-<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="co">## numeric filter types</span>
+<span class="co"># ...</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## numeric filter types</span>
 <span class="co"># numeric equal filter</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">sessions</span><span class="kw">==</span><span class="fl">5</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">sessions</span><span class="op">==</span><span class="fl">5</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| sessions 
 ## ----numericFilter:  
 ## operation:  EQUAL | value:      5</code></pre>
-<div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="co"># between numeric filter</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">sessions</span><span class="kw">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">5</span>,<span class="fl">6</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># between numeric filter</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">sessions</span><span class="op">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">6</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| sessions 
 ## ----betweenFilter:  
 ## from:  5  to:  6</code></pre>
-<div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="co"># greater than numeric</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">sessions</span> <span class="kw">&gt;</span> <span class="fl">0</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># greater than numeric</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">sessions</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| sessions 
 ## ----numericFilter:  
 ## operation:  GREATER_THAN | value:      0</code></pre>
-<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="co"># greater than or equal</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">sessions</span> <span class="kw">&gt;=</span> <span class="fl">1</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># greater than or equal</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">sessions</span> <span class="op">&gt;=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| sessions 
 ## ----numericFilter:  
 ## operation:  GREATER_THAN_OR_EQUAL | value:      1</code></pre>
-<div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="co"># less than numeric</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">sessions</span> <span class="kw">&lt;</span> <span class="fl">100</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># less than numeric</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">sessions</span> <span class="op">&lt;</span> <span class="fl">100</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| sessions 
 ## ----numericFilter:  
 ## operation:  LESS_THAN | value:      100</code></pre>
-<div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="co"># less than or equal numeric</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">sessions</span> <span class="kw">&lt;=</span> <span class="fl">100</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># less than or equal numeric</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">sessions</span> <span class="op">&lt;=</span> <span class="fl">100</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| sessions 
 ## ----numericFilter:  
 ## operation:  LESS_THAN_OR_EQUAL | value:      100</code></pre>
@@ -773,51 +804,60 @@
 <a href="#dimension-filters-for-use-in-dimensionfilters" class="anchor"></a>Dimension filters for use in <code>dimensionFilters</code>
 </h4>
 <p>All the string filters that can be used are below:</p>
-<div class="sourceCode" id="cb46"><html><body><pre class="r"><span class="co">## string filter types</span>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## string filter types</span>
 <span class="co"># begins with string</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span> <span class="kw">%begins%</span> <span class="st">"Cope"</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span> <span class="op">%begins%</span> <span class="st">"Cope"</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  Cope | matchType:  BEGINS_WITH | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb48"><html><body><pre class="r"><span class="co"># ends with string</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span> <span class="kw">%ends%</span> <span class="st">"hagen"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># ends with string</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span> <span class="op">%ends%</span> <span class="st">"hagen"</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  hagen | matchType:  ENDS_WITH | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb50"><html><body><pre class="r"><span class="co"># contains string</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span> <span class="kw">%contains%</span> <span class="st">"ope"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># contains string</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span> <span class="op">%contains%</span> <span class="st">"ope"</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  ope | matchType:  CONTAINS | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb52"><html><body><pre class="r"><span class="co"># regex (full) string</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span> <span class="kw">%regex%</span> <span class="st">"^Cope"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># regex (full) string</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span> <span class="op">%regex%</span> <span class="st">"^Cope"</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  ^Cope | matchType:  FULL_REGEXP | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb54"><html><body><pre class="r"><span class="co"># regex (partial) string</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span> <span class="kw">%regex_partial%</span> <span class="st">"ope"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># regex (partial) string</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span> <span class="op">%regex_partial%</span> <span class="st">"ope"</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  ope | matchType:  PARTIAL_REGEXP | caseSensitive:  TRUE</code></pre>
-<div class="sourceCode" id="cb56"><html><body><pre class="r"><span class="co"># NULL filters</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(!<span class="no">city</span><span class="kw">==</span><span class="kw">NULL</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># NULL filters</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">city</span><span class="op">==</span><span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 <pre><code>## notExpression:  
 ## --GA4 Filter:  
 ## --| city 
 ## ----nullFilter:  TRUE</code></pre>
 <p>By default string filters are case sensitive. Use UPPERCASE operator to make then case insensitive</p>
-<div class="sourceCode" id="cb58"><html><body><pre class="r"><span class="co"># begins with string (case insensitive)</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span> <span class="kw">%BEGINS%</span> <span class="st">"cope"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># begins with string (case insensitive)</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span> <span class="op">%BEGINS%</span> <span class="st">"cope"</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  cope | matchType:  BEGINS_WITH | caseSensitive:  FALSE</code></pre>
-<div class="sourceCode" id="cb60"><html><body><pre class="r"><span class="co"># ends with string (case insensitive)</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span> <span class="kw">%ENDS%</span> <span class="st">"Hagen"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># ends with string (case insensitive)</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span> <span class="op">%ENDS%</span> <span class="st">"Hagen"</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  Hagen | matchType:  ENDS_WITH | caseSensitive:  FALSE</code></pre>
-<div class="sourceCode" id="cb62"><html><body><pre class="r"><span class="co"># case insensitive exact match</span>
-<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span> <span class="kw">%==%</span> <span class="st">"copeNHAGen"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># case insensitive exact match</span>
+<span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span> <span class="op">%==%</span> <span class="st">"copeNHAGen"</span><span class="op">)</span></code></pre></div>
 <pre><code>## --| city 
 ## ----stringFilter:  
 ## value:  copeNHAGen | matchType:  EXACT | caseSensitive:  FALSE</code></pre>
@@ -827,15 +867,16 @@
 <a href="#complex-filters" class="anchor"></a>Complex filters</h4>
 <p>You can also recursively nest filter expressions to make more complicated ones.</p>
 <p>The filter below looks for visitors from Copenhagen, London, Paris or New York who arrived on day 5 or 6 of the week, or from Google referrers but not including Google Ads.</p>
-<div class="sourceCode" id="cb64"><html><body><pre class="r"><span class="co"># use previously created filters to build another filter expression:</span>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># use previously created filters to build another filter expression:</span>
 <span class="co"># multiple filter clauses</span>
-<span class="no">f1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span><span class="kw">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Copenhagen"</span>,<span class="st">"London"</span>,<span class="st">"Paris"</span>,<span class="st">"New York"</span>) <span class="kw">&amp;</span>
-                       (<span class="no">dayOfWeek</span><span class="kw">==</span><span class="st">"5"</span> <span class="kw">|</span> <span class="no">dayOfWeek</span><span class="kw">==</span><span class="st">"6"</span>))
+<span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Copenhagen"</span>,<span class="st">"London"</span>,<span class="st">"Paris"</span>,<span class="st">"New York"</span><span class="op">)</span> <span class="op">&amp;</span>
+                       <span class="op">(</span><span class="va">dayOfWeek</span><span class="op">==</span><span class="st">"5"</span> <span class="op">|</span> <span class="va">dayOfWeek</span><span class="op">==</span><span class="st">"6"</span><span class="op">)</span><span class="op">)</span> 
 
 <span class="co"># build up complicated filters</span>
-<span class="no">f2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">f1</span> <span class="kw">|</span> <span class="no">sessionSource</span><span class="kw">==</span><span class="st">"google"</span> <span class="kw">&amp;</span> !<span class="no">city</span><span class="kw">==</span><span class="st">"(not set)"</span>)
-<span class="no">f3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">f2</span> <span class="kw">&amp;</span> !<span class="no">sessionMedium</span><span class="kw">==</span><span class="st">"cpc"</span>)
-<span class="no">f3</span></pre></body></html></div>
+<span class="va">f2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">f1</span> <span class="op">|</span> <span class="va">sessionSource</span><span class="op">==</span><span class="st">"google"</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">city</span><span class="op">==</span><span class="st">"(not set)"</span><span class="op">)</span>
+<span class="va">f3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">f2</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">sessionMedium</span><span class="op">==</span><span class="st">"cpc"</span><span class="op">)</span>
+<span class="va">f3</span></code></pre></div>
 <pre><code>## ===============andGroup:  
 ## [[1]]
 ## ===========orGroup:  
@@ -884,16 +925,17 @@
 ## ----stringFilter:  
 ## value:  cpc | matchType:  EXACT | caseSensitive:  TRUE</code></pre>
 <p>You can use filter expression objects above directly like so:</p>
-<div class="sourceCode" id="cb66"><html><body><pre class="r"><span class="no">complex_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">complex_filter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
    <span class="fl">206670707</span>,
-   <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-   <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
-   <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
-   <span class="kw">dimensionFilter</span> <span class="kw">=</span> <span class="no">f3</span>,
-   <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>
-   )
-
-<span class="no">complex_filter</span>
+   metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+   dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
+   date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
+   dimensionFilter <span class="op">=</span> <span class="va">f3</span>,
+   limit <span class="op">=</span> <span class="fl">100</span>
+   <span class="op">)</span>
+   
+<span class="va">complex_filter</span>
 <span class="co">## A tibble: 100 x 5</span>
 <span class="co">#   date       city      dayOfWeek activeUsers sessions</span>
 <span class="co">#   &lt;date&gt;     &lt;chr&gt;     &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;</span>
@@ -901,7 +943,7 @@
 <span class="co"># 2 2020-04-10 Eindhoven 6                   2        3</span>
 <span class="co"># 3 2020-04-07 Bristol   3                   2        2</span>
 <span class="co"># 4 2020-04-01 Reston    4                   2        2</span>
-<span class="co"># ...</span></pre></body></html></div>
+<span class="co"># ...</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -910,22 +952,25 @@
 <a href="#ordering" class="anchor"></a>Ordering</h2>
 <p>You can order or sort results using a new DSL via the function <code><a href="../reference/ga_data_order.html">ga_data_order()</a></code> that operate on the fields (dimensions/metrics) in your returned data.</p>
 <p>The DSL will validate the fields you are sending in are valid. You then prefix the field with a <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> for ascending order or <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> for descending order like so:</p>
-<div class="sourceCode" id="cb67"><html><body><pre class="r"><span class="co"># session in descending order</span>
-<span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span>(-<span class="no">sessions</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># session in descending order</span>
+<span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span><span class="op">(</span><span class="op">-</span><span class="va">sessions</span><span class="op">)</span></code></pre></div>
 <pre><code>## [[1]]
 ## ==GA4 OrderBy==
 ## Metric:        sessions 
 ## Descending:    TRUE</code></pre>
-<div class="sourceCode" id="cb69"><html><body><pre class="r"><span class="co"># city dimension in ascending alphanumeric order</span>
-<span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span>(+<span class="no">city</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># city dimension in ascending alphanumeric order</span>
+<span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span><span class="op">(</span><span class="op">+</span><span class="va">city</span><span class="op">)</span></code></pre></div>
 <pre><code>## [[1]]
 ## ==GA4 OrderBy==
 ## Dimension:     city 
 ## OrderType:     ALPHANUMERIC 
 ## Descending:    FALSE</code></pre>
 <p>You can have multiple orders - add the -/+{field} after the former without commas:</p>
-<div class="sourceCode" id="cb71"><html><body><pre class="r"><span class="co"># as above plus sessions in descending order</span>
-<span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span>(+<span class="no">city</span> -<span class="no">sessions</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># as above plus sessions in descending order</span>
+<span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span><span class="op">(</span><span class="op">+</span><span class="va">city</span> <span class="op">-</span><span class="va">sessions</span><span class="op">)</span></code></pre></div>
 <pre><code>## [[1]]
 ## ==GA4 OrderBy==
 ## Dimension:     city 
@@ -936,8 +981,9 @@
 ## ==GA4 OrderBy==
 ## Metric:        sessions 
 ## Descending:    TRUE</code></pre>
-<div class="sourceCode" id="cb73"><html><body><pre class="r"><span class="co"># as above plus activeUsers in ascending order</span>
-<span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span>(+<span class="no">city</span> -<span class="no">sessions</span> +<span class="no">activeUsers</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># as above plus activeUsers in ascending order</span>
+<span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span><span class="op">(</span><span class="op">+</span><span class="va">city</span> <span class="op">-</span><span class="va">sessions</span> <span class="op">+</span><span class="va">activeUsers</span><span class="op">)</span></code></pre></div>
 <pre><code>## [[1]]
 ## ==GA4 OrderBy==
 ## Dimension:     city 
@@ -963,13 +1009,14 @@
 <code>NUMERIC</code> - Dimension values are converted to numbers before sorting. For example in NUMERIC sort, “25” &lt; “100”, and in ALPHANUMERIC sort, “100” &lt; “25”. Non-numeric dimension values all have equal ordering value below all numeric values</li>
 </ul>
 <p>Use <code><a href="../reference/ga_data_order.html">ga_data_order()</a></code> objects in the <code>orderBys</code> argument:</p>
-<div class="sourceCode" id="cb75"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
   <span class="fl">206670707</span>,
-  <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-  <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
-  <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
-  <span class="kw">orderBys</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span>(-<span class="no">sessions</span> -<span class="no">dayOfWeek</span>)
-  )
+  metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+  dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
+  date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
+  orderBys <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span><span class="op">(</span><span class="op">-</span><span class="va">sessions</span> <span class="op">-</span><span class="va">dayOfWeek</span><span class="op">)</span>
+  <span class="op">)</span>
 <span class="co">## A tibble: 100 x 5</span>
 <span class="co">#   date       city           dayOfWeek activeUsers sessions</span>
 <span class="co">#   &lt;date&gt;     &lt;chr&gt;          &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;</span>
@@ -980,19 +1027,20 @@
 <span class="co"># 5 2020-04-15 (not set)      4                   9       11</span>
 <span class="co"># 6 2020-04-21 Amsterdam      3                   3       11</span>
 <span class="co"># 7 2020-04-27 (not set)      2                   9       11</span>
-<span class="co"># ...</span></pre></body></html></div>
+<span class="co"># ...</span></code></pre></div>
 <p>You can also combine <code><a href="../reference/ga_data_order.html">ga_data_order()</a></code> objects with <code><a href="https://rdrr.io/r/base/c.html">c()</a></code></p>
-<div class="sourceCode" id="cb76"><html><body><pre class="r"><span class="no">a</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span>(-<span class="no">sessions</span>)
-<span class="no">b</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span>(-<span class="no">dayOfWeek</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"NUMERIC"</span>)
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span><span class="op">(</span><span class="op">-</span><span class="va">sessions</span><span class="op">)</span>
+<span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span><span class="op">(</span><span class="op">-</span><span class="va">dayOfWeek</span>, type <span class="op">=</span> <span class="st">"NUMERIC"</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
+<span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
     <span class="fl">206670707</span>,
-    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
-    <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span>),
-    <span class="kw">orderBys</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">a</span>, <span class="no">b</span>),
-    <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>
-)
+    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
+    date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
+    orderBys <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span>,
+    limit <span class="op">=</span> <span class="fl">100</span>
+<span class="op">)</span>
 <span class="co">## A tibble: 100 x 5</span>
 <span class="co">#   date       city           dayOfWeek activeUsers sessions</span>
 <span class="co">#   &lt;date&gt;     &lt;chr&gt;          &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;</span>
@@ -1003,7 +1051,7 @@
 <span class="co"># 5 2020-04-15 (not set)      4                   9       11</span>
 <span class="co"># 6 2020-04-21 Amsterdam      3                   3       11</span>
 <span class="co"># 7 2020-04-27 (not set)      2                   9       11</span>
-<span class="co"># ...</span></pre></body></html></div>
+<span class="co"># ...</span></code></pre></div>
 <div id="order-fields" class="section level4">
 <h4 class="hasAnchor">
 <a href="#order-fields" class="anchor"></a>Order Fields</h4>
@@ -1017,29 +1065,31 @@
 <a href="#real-time-data" class="anchor"></a>Real Time Data</h2>
 <p>Real-time data can be fetched with the same function as the regular Data API, but it is calling another endpoint. Add the <code>realtime=TRUE</code> argument to the function.</p>
 <p>A limited subset of <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-api-schema">dimensions and metrics are available in the real-time API</a>. Date ranges are ignored.</p>
-<div class="sourceCode" id="cb77"><html><body><pre class="r"><span class="co"># run a real-time report </span>
-<span class="no">realtime</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># run a real-time report </span>
+<span class="va">realtime</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
   <span class="fl">206670707</span>,
-  <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"activeUsers"</span>,
-  <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"city"</span>,
-  <span class="kw">dimensionFilter</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(<span class="no">city</span><span class="kw">==</span><span class="st">"Copenhagen"</span>),
-  <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>,
-  <span class="kw">realtime</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+  metrics <span class="op">=</span> <span class="st">"activeUsers"</span>,
+  dimensions <span class="op">=</span> <span class="st">"city"</span>,
+  dimensionFilter <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="st">"Copenhagen"</span><span class="op">)</span>,
+  limit <span class="op">=</span> <span class="fl">100</span>,
+  realtime <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="metric-aggregations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#metric-aggregations" class="anchor"></a>Metric Aggregations</h2>
 <p>Each API call can include the TOTAL, MAXIMUM and MINIMUM metric aggregations in the returned data.frame’s metadata. You can access this data using base R’s <code><a href="https://rdrr.io/r/base/attr.html">attr()</a></code> function or use <code><a href="../reference/ga_data_aggregations.html">ga_data_aggregations()</a></code> to extract the data.frames:</p>
-<div class="sourceCode" id="cb78"><html><body><pre class="r"><span class="no">aggs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-      <span class="fl">206670707</span>,
-      <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>() - <span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>() - <span class="fl">1</span>),
-      <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"activeUsers"</span>,
-      <span class="kw">metricAggregations</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"TOTAL"</span>,<span class="st">"MINIMUM"</span>,<span class="st">"MAXIMUM"</span>),
-      <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"city"</span>,<span class="st">"unifiedScreenName"</span>),
-      <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>)
-
-<span class="no">all_aggs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_aggregations.html">ga_data_aggregations</a></span>(<span class="no">aggs</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"all"</span>)
-<span class="no">all_aggs</span>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">aggs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+      <span class="fl">206670707</span>, 
+      date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>,
+      metrics <span class="op">=</span> <span class="st">"activeUsers"</span>,
+      metricAggregations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TOTAL"</span>,<span class="st">"MINIMUM"</span>,<span class="st">"MAXIMUM"</span><span class="op">)</span>,
+      dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"city"</span>,<span class="st">"unifiedScreenName"</span><span class="op">)</span>,
+      limit <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
+      
+<span class="va">all_aggs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data_aggregations.html">ga_data_aggregations</a></span><span class="op">(</span><span class="va">aggs</span>, type <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
+<span class="va">all_aggs</span>
 <span class="co">#$totals</span>
 <span class="co">## A tibble: 1 x 4</span>
 <span class="co">#  city           unifiedScreenName dateRange    activeUsers</span>
@@ -1059,41 +1109,42 @@
 <span class="co">#1 RESERVED_MIN RESERVED_MIN      date_range_0           0</span>
 
 <span class="co"># now in a list</span>
-<span class="no">all_aggs</span>$<span class="no">totals</span>
+<span class="va">all_aggs</span><span class="op">$</span><span class="va">totals</span>
 <span class="co">## A tibble: 1 x 4</span>
 <span class="co">#  city           unifiedScreenName dateRange    activeUsers</span>
 <span class="co">#  &lt;chr&gt;          &lt;chr&gt;             &lt;chr&gt;              &lt;dbl&gt;</span>
 <span class="co">#1 RESERVED_TOTAL RESERVED_TOTAL    date_range_0         250</span>
 
 <span class="co"># extract individual aggregations individually</span>
-<span class="no">maxes</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data_aggregations.html">ga_data_aggregations</a></span>(<span class="no">aggs</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"maximums"</span>)
-<span class="no">maxes</span>
+<span class="va">maxes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data_aggregations.html">ga_data_aggregations</a></span><span class="op">(</span><span class="va">aggs</span>, type <span class="op">=</span> <span class="st">"maximums"</span><span class="op">)</span>
+<span class="va">maxes</span>
 <span class="co">## A tibble: 1 x 4</span>
 <span class="co">#  city         unifiedScreenName dateRange    activeUsers</span>
 <span class="co">#  &lt;chr&gt;        &lt;chr&gt;             &lt;chr&gt;              &lt;dbl&gt;</span>
-<span class="co">#1 RESERVED_MAX RESERVED_MAX      date_range_0           4</span></pre></body></html></div>
+<span class="co">#1 RESERVED_MAX RESERVED_MAX      date_range_0           4</span></code></pre></div>
 <p>If you request more than one date range, the aggregations will be calculated for each one:</p>
-<div class="sourceCode" id="cb79"><html><body><pre class="r"><span class="co"># use R to generate some dates</span>
-<span class="no">dates</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>(), <span class="kw">by</span> <span class="kw">=</span> -<span class="fl">7</span>, <span class="kw">length.out</span> <span class="kw">=</span> <span class="fl">8</span>))
-<span class="no">dates</span>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># use R to generate some dates</span>
+<span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, by <span class="op">=</span> <span class="op">-</span><span class="fl">7</span>, length.out <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span>
+<span class="va">dates</span>
 <span class="co">#[1] "2020-10-19" "2020-10-26" "2020-11-02" "2020-11-09" "2020-11-16" "2020-11-23" "2020-11-30" "2020-12-07"</span>
 
-<span class="no">aggs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-    <span class="fl">206670707</span>,
-    <span class="kw">date_range</span> <span class="kw">=</span> <span class="no">dates</span>,
-    <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"activeUsers"</span>,
-    <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"city"</span>,<span class="st">"unifiedScreenName"</span>),
-    <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">100</span>)
-
+<span class="va">aggs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+    <span class="fl">206670707</span>, 
+    date_range <span class="op">=</span> <span class="va">dates</span>,
+    metrics <span class="op">=</span> <span class="st">"activeUsers"</span>,
+    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"city"</span>,<span class="st">"unifiedScreenName"</span><span class="op">)</span>,
+    limit <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
+    
 <span class="co"># get the totals</span>
-<span class="fu"><a href="../reference/ga_data_aggregations.html">ga_data_aggregations</a></span>(<span class="no">aggs</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"totals"</span>)
+<span class="fu"><a href="../reference/ga_data_aggregations.html">ga_data_aggregations</a></span><span class="op">(</span><span class="va">aggs</span>, type <span class="op">=</span> <span class="st">"totals"</span><span class="op">)</span>
 <span class="co">## A tibble: 4 x 4</span>
 <span class="co">#  city           unifiedScreenName dateRange    activeUsers</span>
 <span class="co">#  &lt;chr&gt;          &lt;chr&gt;             &lt;chr&gt;              &lt;dbl&gt;</span>
 <span class="co">#1 RESERVED_TOTAL RESERVED_TOTAL    date_range_0         200</span>
 <span class="co">#2 RESERVED_TOTAL RESERVED_TOTAL    date_range_1           4</span>
 <span class="co">#3 RESERVED_TOTAL RESERVED_TOTAL    date_range_2           2</span>
-<span class="co">#4 RESERVED_TOTAL RESERVED_TOTAL    date_range_3         399</span></pre></body></html></div>
+<span class="co">#4 RESERVED_TOTAL RESERVED_TOTAL    date_range_3         399</span></code></pre></div>
 </div>
 <div id="quotas" class="section level2">
 <h2 class="hasAnchor">
@@ -1102,26 +1153,27 @@
 <p>The bigger and more complex the query you make, the more tokens you use.</p>
 <p>See this <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/quotas">Google guide on how API quotas are assigned</a>. The quotas are on a per GCP project and Ga4 web property level, and you get more if on GA360.</p>
 <p>An example taken from above:</p>
-<div class="sourceCode" id="cb80"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">googleAuthR.verbose</span><span class="kw">=</span><span class="fl">2</span>)
-<span class="no">complex_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>googleAuthR.verbose<span class="op">=</span><span class="fl">2</span><span class="op">)</span>
+<span class="va">complex_filter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
      <span class="fl">206670707</span>,
-     <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"activeUsers"</span>,<span class="st">"sessions"</span>),
-     <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span>),
-     <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2020-03-31"</span>, <span class="st">"2020-04-06"</span>,
-                    <span class="st">"2020-04-07"</span>, <span class="st">"2020-04-14"</span>,
-                    <span class="st">"2020-04-15"</span>, <span class="st">"2020-04-22"</span>,
-                    <span class="st">"2020-04-23"</span>, <span class="st">"2020-04-30"</span>),
-     <span class="kw">metricAggregations</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"TOTAL"</span>,<span class="st">"MINIMUM"</span>,<span class="st">"MAXIMUM"</span>),
-     <span class="kw">orderBys</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span>(-<span class="no">sessions</span> +<span class="no">city</span>),
-     <span class="kw">dimensionFilter</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span>(
-              <span class="no">city</span><span class="kw">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Copenhagen"</span>,<span class="st">"London"</span>,<span class="st">"Paris"</span>,<span class="st">"New York"</span>) <span class="kw">&amp;</span>
-              (<span class="no">dayOfWeek</span><span class="kw">==</span><span class="st">"5"</span> <span class="kw">|</span> <span class="no">dayOfWeek</span><span class="kw">==</span><span class="st">"6"</span>)),
-     <span class="kw">limit</span> <span class="kw">=</span> -<span class="fl">1</span>
-)
+     metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
+     dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
+     date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-06"</span>, 
+                    <span class="st">"2020-04-07"</span>, <span class="st">"2020-04-14"</span>, 
+                    <span class="st">"2020-04-15"</span>, <span class="st">"2020-04-22"</span>, 
+                    <span class="st">"2020-04-23"</span>, <span class="st">"2020-04-30"</span><span class="op">)</span>,
+     metricAggregations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TOTAL"</span>,<span class="st">"MINIMUM"</span>,<span class="st">"MAXIMUM"</span><span class="op">)</span>,
+     orderBys <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span><span class="op">(</span><span class="op">-</span><span class="va">sessions</span> <span class="op">+</span><span class="va">city</span><span class="op">)</span>,
+     dimensionFilter <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span>
+              <span class="va">city</span><span class="op">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Copenhagen"</span>,<span class="st">"London"</span>,<span class="st">"Paris"</span>,<span class="st">"New York"</span><span class="op">)</span> <span class="op">&amp;</span>
+              <span class="op">(</span><span class="va">dayOfWeek</span><span class="op">==</span><span class="st">"5"</span> <span class="op">|</span> <span class="va">dayOfWeek</span><span class="op">==</span><span class="st">"6"</span><span class="op">)</span><span class="op">)</span>,
+     limit <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>
+<span class="op">)</span>
 <span class="co">#&gt;ℹ 2020-11-24 16:12:36 &gt; tokensPerDay: Query Cost [ 15 ] / Remaining [ 24847 ]</span>
 <span class="co">#&gt;ℹ 2020-11-24 16:12:36 &gt; tokensPerHour: Query Cost [ 15 ] / Remaining [ 4967 ]</span>
 <span class="co">#&gt;ℹ 2020-11-24 16:12:36 &gt; concurrentRequests:  10  / 10</span>
-<span class="co">#&gt;ℹ 2020-11-24 16:12:36 &gt; serverErrorsPerProjectPerHour:  10  / 10</span></pre></body></html></div>
+<span class="co">#&gt;ℹ 2020-11-24 16:12:36 &gt; serverErrorsPerProjectPerHour:  10  / 10</span></code></pre></div>
 <p>The quotas are:</p>
 <ul>
 <li>
@@ -1139,7 +1191,8 @@
 <a href="#debugging-and-raw-json-requests" class="anchor"></a>Debugging and Raw JSON requests</h2>
 <p>If you ever need to inspect the API request, set <code><a href="https://rdrr.io/r/base/options.html">options(googleAuthR.verbose=2)</a></code> to see the request JSON. This is helpful in bug reports.</p>
 <p>If you use the <code>raw_json</code> argument only in <code><a href="../reference/ga_data.html">ga_data()</a></code> to send in a string of the JSON as specified by the <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1alpha/TopLevel/runReport"><code>runReport</code> object</a>, this can be used to fetch unimplemented API features or buggy requests to help debugging.</p>
-<div class="sourceCode" id="cb81"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(<span class="kw">raw_json</span> <span class="kw">=</span> <span class="st">'{"entity":{"propertyId":"206670707"},"metrics":[{"name":"sessions"}],"orderBys":[{"dimension":{"orderType":"ALPHANUMERIC","dimensionName":"date"},"desc":false}],"dimensions":[{"name":"date"}],"dateRanges":[{"startDate":"2020-01-08","endDate":"2021-01-07"}],"keepEmptyRows":true,"limit":-1,"returnPropertyQuota":true}'</span>)
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>raw_json <span class="op">=</span> <span class="st">'{"entity":{"propertyId":"206670707"},"metrics":[{"name":"sessions"}],"orderBys":[{"dimension":{"orderType":"ALPHANUMERIC","dimensionName":"date"},"desc":false}],"dimensions":[{"name":"date"}],"dateRanges":[{"startDate":"2020-01-08","endDate":"2021-01-07"}],"keepEmptyRows":true,"limit":-1,"returnPropertyQuota":true}'</span><span class="op">)</span>
 <span class="co">#ℹ 2021-01-08 09:27:04 &gt; Making API request with raw JSON:  {"entity":{"propertyId":"206670707"},"metrics":[{"name":"sessions"}],"orderBys":[{"dimension":{"orderType":"ALPHANUMERIC","dimensionName":"date"},"desc":false}],"dimensions":[{"name":"date"}],"dateRanges":[{"startDate":"2020-01-08","endDate":"2021-01-07"}],"keepEmptyRows":true,"limit":-1,"returnPropertyQuota":true}</span>
 <span class="co">#ℹ 2021-01-08 09:27:04 &gt; Request:  https://analyticsdata.googleapis.com/v1alpha:runReport/</span>
 <span class="co">#ℹ 2021-01-08 09:27:06 &gt; Body JSON parsed to:  "{\"entity\":{\"propertyId\":\"206670707\"},\"metrics\":[{\"name\":\"sessions\"}],\"orderBys\":[{\"dimension\":{\"orderType\":\"ALPHANUMERIC\",\"dimensionName\":\"date\"},\"desc\":false}],\"dimensions\":[{\"name\":\"date\"}],\"dateRanges\":[{\"startDate\":\"2020-01-08\",\"endDate\":\"2021-01-07\"}],\"keepEmptyRows\":true,\"limit\":-1,\"returnPropertyQuota\":true}"</span>
@@ -1155,16 +1208,17 @@
 <span class="co"># 2 2020-01-09      131</span>
 <span class="co"># 3 2020-01-10      124</span>
 <span class="co"># 4 2020-01-11       34</span>
-<span class="co"># ...</span></pre></body></html></div>
+<span class="co"># ...</span></code></pre></div>
 <p>Pass in the propertyId as well when querying the realtime API:</p>
-<div class="sourceCode" id="cb82"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_data.html">ga_data</a></span>(
-    <span class="kw">propertyId</span> <span class="kw">=</span> <span class="no">ga4_propertyId</span>,
-    <span class="kw">raw_json</span> <span class="kw">=</span> <span class="st">'{"metrics":[{"name":"activeUsers"}],"limit":100,"returnPropertyQuota":true}'</span>,
-    <span class="kw">realtime</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
+    propertyId <span class="op">=</span> <span class="va">ga4_propertyId</span>, 
+    raw_json <span class="op">=</span> <span class="st">'{"metrics":[{"name":"activeUsers"}],"limit":100,"returnPropertyQuota":true}'</span>,
+    realtime <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">## A tibble: 1 x 1</span>
 <span class="co">#  activeUsers</span>
 <span class="co">#        &lt;dbl&gt;</span>
-<span class="co">#1           2</span></pre></body></html></div>
+<span class="co">#1           2</span></code></pre></div>
 <p>You can also pass in an R list that will be converted into JSON via <code><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">jsonlite::fromJSON()</a></code></p>
 </div>
   </div>
@@ -1184,7 +1238,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

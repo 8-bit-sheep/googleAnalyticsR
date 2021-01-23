@@ -270,19 +270,19 @@
     <p>Legacy v3 API, for more modern API use <a href='google_analytics.html'>google_analytics</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>google_analytics_3</span>(
-  <span class='no'>id</span>,
-  <span class='no'>start</span>,
-  <span class='no'>end</span>,
-  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sessions"</span>, <span class='st'>"bounceRate"</span>),
-  <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sort</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>filters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>segment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>samplingLevel</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"DEFAULT"</span>, <span class='st'>"FASTER"</span>, <span class='st'>"HIGHER_PRECISION"</span>),
-  <span class='kw'>max_results</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ga"</span>, <span class='st'>"mcf"</span>)
-)</pre>
+    <pre class="usage"><span class='fu'>google_analytics_3</span><span class='op'>(</span>
+  <span class='va'>id</span>,
+  <span class='va'>start</span>,
+  <span class='va'>end</span>,
+  metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sessions"</span>, <span class='st'>"bounceRate"</span><span class='op'>)</span>,
+  dimensions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  sort <span class='op'>=</span> <span class='cn'>NULL</span>,
+  filters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  segment <span class='op'>=</span> <span class='cn'>NULL</span>,
+  samplingLevel <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"DEFAULT"</span>, <span class='st'>"FASTER"</span>, <span class='st'>"HIGHER_PRECISION"</span><span class='op'>)</span>,
+  max_results <span class='op'>=</span> <span class='fl'>100</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ga"</span>, <span class='st'>"mcf"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -342,13 +342,13 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>googleAnalyticsR</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://code.markedmondson.me/googleAnalyticsR/'>googleAnalyticsR</a></span><span class='op'>)</span>
 
 <span class='co'>## Authenticate in Google OAuth2</span>
 <span class='co'>## this also sets options</span>
-<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
+<span class='fu'><a href='ga_auth.html'>ga_auth</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'>## if you need to re-authenticate use ga_auth(new_user=TRUE)</span>
 <span class='co'>## if you have your own Google Dev console project keys,</span>
@@ -356,55 +356,57 @@
 <span class='co'>## instead put your options here, and run googleAuthR::gar_auth()</span>
 
 <span class='co'>## get account info, including View Ids</span>
-<span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_account_list.html'>ga_account_list</a></span>()
-<span class='no'>ga_id</span> <span class='kw'>&lt;-</span> <span class='no'>account_list</span>$<span class='no'>viewId</span>[<span class='fl'>1</span>]
+<span class='va'>account_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_account_list.html'>ga_account_list</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>ga_id</span> <span class='op'>&lt;-</span> <span class='va'>account_list</span><span class='op'>$</span><span class='va'>viewId</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>
 
 <span class='co'>## get a list of what metrics and dimensions you can use</span>
 
-<span class='no'>meta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_meta.html'>ga_meta</a></span>()
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>meta</span>)
+<span class='va'>meta</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_meta.html'>ga_meta</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>meta</span><span class='op'>)</span>
 
 <span class='co'>## pick the account_list$viewId you want to see data for.</span>
 <span class='co'>## metrics and dimensions can have or have not "ga:" prefix</span>
 
-<span class='no'>gadata</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_3</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>ga_id</span>,
-                           <span class='kw'>start</span><span class='kw'>=</span><span class='st'>"2015-08-01"</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='st'>"2015-08-02"</span>,
-                           <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sessions"</span>, <span class='st'>"bounceRate"</span>),
-                           <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"source"</span>, <span class='st'>"medium"</span>))
-
-
+<span class='va'>gadata</span> <span class='op'>&lt;-</span> <span class='fu'>google_analytics_3</span><span class='op'>(</span>id <span class='op'>=</span> <span class='va'>ga_id</span>,
+                           start<span class='op'>=</span><span class='st'>"2015-08-01"</span>, end<span class='op'>=</span><span class='st'>"2015-08-02"</span>,
+                           metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sessions"</span>, <span class='st'>"bounceRate"</span><span class='op'>)</span>,
+                           dimensions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"source"</span>, <span class='st'>"medium"</span><span class='op'>)</span><span class='op'>)</span>
+                       
+                                
 <span class='co'>## if more than 10000 rows in results, auto batching</span>
 <span class='co'>## example is setting lots of dimensions to try and create big sampled data</span>
-<span class='no'>batch_gadata</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_3</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>ga_id</span>,
-                                 <span class='kw'>start</span><span class='kw'>=</span><span class='st'>"2014-08-01"</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='st'>"2015-08-02"</span>,
-                                 <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sessions"</span>, <span class='st'>"bounceRate"</span>),
-                                 <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"source"</span>, <span class='st'>"medium"</span>,
+<span class='va'>batch_gadata</span> <span class='op'>&lt;-</span> <span class='fu'>google_analytics_3</span><span class='op'>(</span>id <span class='op'>=</span> <span class='va'>ga_id</span>,
+                                 start<span class='op'>=</span><span class='st'>"2014-08-01"</span>, end<span class='op'>=</span><span class='st'>"2015-08-02"</span>,
+                                 metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sessions"</span>, <span class='st'>"bounceRate"</span><span class='op'>)</span>,
+                                 dimensions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"source"</span>, <span class='st'>"medium"</span>, 
                                                <span class='st'>"landingPagePath"</span>,
-                                               <span class='st'>"hour"</span>,<span class='st'>"minute"</span>),
-                                <span class='kw'>max</span><span class='kw'>=</span><span class='fl'>99999999</span>)
+                                               <span class='st'>"hour"</span>,<span class='st'>"minute"</span><span class='op'>)</span>,
+                                max<span class='op'>=</span><span class='fl'>99999999</span><span class='op'>)</span>
 
 <span class='co'>## mitigate sampling by setting samplingLevel="WALK"</span>
 <span class='co'>## this will send lots and lots of calls to the Google API limits, beware</span>
-<span class='no'>walk_gadata</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_3</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>ga_id</span>,
-                                <span class='kw'>start</span><span class='kw'>=</span><span class='st'>"2014-08-01"</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='st'>"2015-08-02"</span>,
-                                <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sessions"</span>, <span class='st'>"bounceRate"</span>),
-                                <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"source"</span>, <span class='st'>"medium"</span>, <span class='st'>"landingPagePath"</span>),
-                                <span class='kw'>max</span><span class='kw'>=</span><span class='fl'>99999999</span>, <span class='kw'>samplingLevel</span><span class='kw'>=</span><span class='st'>"WALK"</span>)
-
+<span class='va'>walk_gadata</span> <span class='op'>&lt;-</span> <span class='fu'>google_analytics_3</span><span class='op'>(</span>id <span class='op'>=</span> <span class='va'>ga_id</span>,
+                                start<span class='op'>=</span><span class='st'>"2014-08-01"</span>, end<span class='op'>=</span><span class='st'>"2015-08-02"</span>,
+                                metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sessions"</span>, <span class='st'>"bounceRate"</span><span class='op'>)</span>,
+                                dimensions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"source"</span>, <span class='st'>"medium"</span>, <span class='st'>"landingPagePath"</span><span class='op'>)</span>,
+                                max<span class='op'>=</span><span class='fl'>99999999</span>, samplingLevel<span class='op'>=</span><span class='st'>"WALK"</span><span class='op'>)</span>
+                                
 <span class='co'>## multi-channel funnels set type="mcf"</span>
-<span class='no'>mcf_gadata</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_3</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>ga_id</span>,
-                               <span class='kw'>start</span><span class='kw'>=</span><span class='st'>"2015-08-01"</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='st'>"2015-08-02"</span>,
-                               <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"totalConversions"</span>),
-                               <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sourcePath"</span>),
-                               <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"mcf"</span>)
+<span class='va'>mcf_gadata</span> <span class='op'>&lt;-</span> <span class='fu'>google_analytics_3</span><span class='op'>(</span>id <span class='op'>=</span> <span class='va'>ga_id</span>,
+                               start<span class='op'>=</span><span class='st'>"2015-08-01"</span>, end<span class='op'>=</span><span class='st'>"2015-08-02"</span>,
+                               metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"totalConversions"</span><span class='op'>)</span>,
+                               dimensions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sourcePath"</span><span class='op'>)</span>,
+                               type<span class='op'>=</span><span class='st'>"mcf"</span><span class='op'>)</span>
 
 
 <span class='co'>## reach meta-data via attr()</span>
-<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>gadata</span>, <span class='st'>"profileInfo"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>gadata</span>, <span class='st'>"dateRange"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>gadata</span>, <span class='st'>"profileInfo"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>gadata</span>, <span class='st'>"dateRange"</span><span class='op'>)</span>
 
 
-}</div></pre>
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -420,7 +422,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

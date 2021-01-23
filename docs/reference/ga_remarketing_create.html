@@ -270,13 +270,13 @@
     <p>Create a remarketing audiences built via <a href='ga_remarketing_build.html'>ga_remarketing_build</a></p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_remarketing_create</span>(
-  <span class='no'>adwordsLinkId</span>,
-  <span class='no'>include</span>,
-  <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>audienceType</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SIMPLE"</span>, <span class='st'>"STATE_BASED"</span>),
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>ga_remarketing_create</span><span class='op'>(</span>
+  <span class='va'>adwordsLinkId</span>,
+  <span class='va'>include</span>,
+  exclude <span class='op'>=</span> <span class='cn'>NULL</span>,
+  audienceType <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"SIMPLE"</span>, <span class='st'>"STATE_BASED"</span><span class='op'>)</span>,
+  name <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -316,31 +316,32 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>adword_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_adwords_list.html'>ga_adwords_list</a></span>(<span class='fl'>123456</span>, <span class='st'>"UA-123456-1"</span>)
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>adword_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_adwords_list.html'>ga_adwords_list</a></span><span class='op'>(</span><span class='fl'>123456</span>, <span class='st'>"UA-123456-1"</span><span class='op'>)</span>
 
-<span class='no'>adword_link</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_adword</span>(<span class='no'>adword_list</span>$<span class='no'>id</span><span class='kw'>[[</span><span class='fl'>1</span>]])
+<span class='va'>adword_link</span> <span class='op'>&lt;-</span> <span class='fu'>ga_adword</span><span class='op'>(</span><span class='va'>adword_list</span><span class='op'>$</span><span class='va'>id</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
 
-<span class='no'>segment_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_segment_list.html'>ga_segment_list</a></span>()$<span class='no'>items</span>$<span class='no'>definition</span>
+<span class='va'>segment_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_segment_list.html'>ga_segment_list</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>items</span><span class='op'>$</span><span class='va'>definition</span>
 
-<span class='no'>my_remarketing1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_remarketing_build.html'>ga_remarketing_build</a></span>(<span class='no'>segment_list</span><span class='kw'>[[</span><span class='fl'>1</span>]],
-                    <span class='kw'>state_duration</span> <span class='kw'>=</span> <span class='st'>"TEMPORARY"</span>,
-                    <span class='kw'>membershipDurationDays</span> <span class='kw'>=</span> <span class='fl'>90</span>,
-                    <span class='kw'>daysToLookBack</span> <span class='kw'>=</span> <span class='fl'>14</span>)
-
-<span class='no'>my_remarketing2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ga_remarketing_build.html'>ga_remarketing_build</a></span>(<span class='no'>segment_list</span><span class='kw'>[[</span><span class='fl'>2</span>]],
-                     <span class='kw'>state_duration</span> <span class='kw'>=</span> <span class='st'>"PERMANENT"</span>,
-                     <span class='kw'>membershipDurationDays</span> <span class='kw'>=</span> <span class='fl'>7</span>,
-                     <span class='kw'>daysToLookBack</span> <span class='kw'>=</span> <span class='fl'>31</span>)
-
+<span class='va'>my_remarketing1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_remarketing_build.html'>ga_remarketing_build</a></span><span class='op'>(</span><span class='va'>segment_list</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, 
+                    state_duration <span class='op'>=</span> <span class='st'>"TEMPORARY"</span>,
+                    membershipDurationDays <span class='op'>=</span> <span class='fl'>90</span>, 
+                    daysToLookBack <span class='op'>=</span> <span class='fl'>14</span><span class='op'>)</span>
+                    
+<span class='va'>my_remarketing2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_remarketing_build.html'>ga_remarketing_build</a></span><span class='op'>(</span><span class='va'>segment_list</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span>, 
+                     state_duration <span class='op'>=</span> <span class='st'>"PERMANENT"</span>,
+                     membershipDurationDays <span class='op'>=</span> <span class='fl'>7</span>, 
+                     daysToLookBack <span class='op'>=</span> <span class='fl'>31</span><span class='op'>)</span>
+                     
 <span class='co'># state based only can include exclusions</span>
-<span class='fu'>ga_remarketing_create</span>(<span class='kw'>adwords_link</span> <span class='kw'>=</span> <span class='no'>adword_link</span>,
-                     <span class='kw'>include</span> <span class='kw'>=</span> <span class='no'>my_remarketing1</span>,
-                     <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='no'>my_remarketing2</span>,
-                     <span class='kw'>audienceType</span> <span class='kw'>=</span> <span class='st'>"STATE_BASED"</span>,
-                     <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"my_remarketing_seg1"</span>)
+<span class='fu'>ga_remarketing_create</span><span class='op'>(</span>adwords_link <span class='op'>=</span> <span class='va'>adword_link</span>,
+                     include <span class='op'>=</span> <span class='va'>my_remarketing1</span>, 
+                     exclude <span class='op'>=</span> <span class='va'>my_remarketing2</span>,
+                     audienceType <span class='op'>=</span> <span class='st'>"STATE_BASED"</span>, 
+                     name <span class='op'>=</span> <span class='st'>"my_remarketing_seg1"</span><span class='op'>)</span>
 
-}</div></pre>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -356,7 +357,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

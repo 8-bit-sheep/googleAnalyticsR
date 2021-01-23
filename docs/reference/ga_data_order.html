@@ -270,10 +270,10 @@
     <p>Use with <a href='ga_data.html'>ga_data</a> to create orderBys</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_data_order</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ALPHANUMERIC"</span>, <span class='st'>"CASE_INSENSITIVE_ALPHANUMERIC"</span>, <span class='st'>"NUMERIC"</span>)
-)</pre>
+    <pre class="usage"><span class='fu'>ga_data_order</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ALPHANUMERIC"</span>, <span class='st'>"CASE_INSENSITIVE_ALPHANUMERIC"</span>, <span class='st'>"NUMERIC"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -320,20 +320,23 @@
     <pre class="examples"><div class='input'>
 
 <span class='co'># session in descending order</span>
-<span class='fu'>ga_data_order</span>(-<span class='no'>sessions</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'>ga_data_order</span><span class='op'>(</span><span class='op'>-</span><span class='va'>sessions</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; ==GA4 OrderBy==
 #&gt; Metric:        sessions 
 #&gt; Descending:    TRUE 
 #&gt; </div><div class='input'>
 <span class='co'># city dimension in ascending alphanumeric order</span>
-<span class='fu'>ga_data_order</span>(+<span class='no'>city</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'>ga_data_order</span><span class='op'>(</span><span class='op'>+</span><span class='va'>city</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; ==GA4 OrderBy==
 #&gt; Dimension:     city 
 #&gt; OrderType:     ALPHANUMERIC 
 #&gt; Descending:    FALSE 
 #&gt; </div><div class='input'>
 <span class='co'># as above plus sessions in descending order</span>
-<span class='fu'>ga_data_order</span>(+<span class='no'>city</span> -<span class='no'>sessions</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'>ga_data_order</span><span class='op'>(</span><span class='op'>+</span><span class='va'>city</span> <span class='op'>-</span><span class='va'>sessions</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; ==GA4 OrderBy==
 #&gt; Dimension:     city 
 #&gt; OrderType:     ALPHANUMERIC 
@@ -345,7 +348,8 @@
 #&gt; Descending:    TRUE 
 #&gt; </div><div class='input'>
 <span class='co'># as above plus activeUsers in ascending order</span>
-<span class='fu'>ga_data_order</span>(+<span class='no'>city</span> -<span class='no'>sessions</span> +<span class='no'>activeUsers</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'>ga_data_order</span><span class='op'>(</span><span class='op'>+</span><span class='va'>city</span> <span class='op'>-</span><span class='va'>sessions</span> <span class='op'>+</span><span class='va'>activeUsers</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; ==GA4 OrderBy==
 #&gt; Dimension:     city 
 #&gt; OrderType:     ALPHANUMERIC 
@@ -362,16 +366,18 @@
 #&gt; Descending:    FALSE 
 #&gt; </div><div class='input'>
 <span class='co'># dayOfWeek dimension in ascending numeric order</span>
-<span class='fu'>ga_data_order</span>(+<span class='no'>dayOfWeek</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"NUMERIC"</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'>ga_data_order</span><span class='op'>(</span><span class='op'>+</span><span class='va'>dayOfWeek</span>, type <span class='op'>=</span> <span class='st'>"NUMERIC"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; ==GA4 OrderBy==
 #&gt; Dimension:     dayOfWeek 
 #&gt; OrderType:     NUMERIC 
 #&gt; Descending:    FALSE 
 #&gt; </div><div class='input'>
 <span class='co'># you can also combine them with c()</span>
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data_order</span>(-<span class='no'>sessions</span>)
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_data_order</span>(-<span class='no'>dayOfWeek</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"NUMERIC"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>a</span>, <span class='no'>b</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>ga_data_order</span><span class='op'>(</span><span class='op'>-</span><span class='va'>sessions</span><span class='op'>)</span>
+<span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fu'>ga_data_order</span><span class='op'>(</span><span class='op'>-</span><span class='va'>dayOfWeek</span>, type <span class='op'>=</span> <span class='st'>"NUMERIC"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; ==GA4 OrderBy==
 #&gt; Metric:        sessions 
 #&gt; Descending:    TRUE 
@@ -382,18 +388,21 @@
 #&gt; OrderType:     NUMERIC 
 #&gt; Descending:    TRUE 
 #&gt; </div><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># example of use</span>
-<span class='fu'><a href='ga_data.html'>ga_data</a></span>(
+<span class='fu'><a href='ga_data.html'>ga_data</a></span><span class='op'>(</span>
   <span class='fl'>206670707</span>,
-  <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"activeUsers"</span>,<span class='st'>"sessions"</span>),
-  <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"date"</span>,<span class='st'>"city"</span>,<span class='st'>"dayOfWeek"</span>),
-  <span class='kw'>date_range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2020-03-31"</span>, <span class='st'>"2020-04-27"</span>),
-  <span class='kw'>orderBys</span> <span class='kw'>=</span> <span class='fu'>ga_data_order</span>(-<span class='no'>sessions</span> -<span class='no'>dayOfWeek</span>)
-  )
+  metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"activeUsers"</span>,<span class='st'>"sessions"</span><span class='op'>)</span>,
+  dimensions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"date"</span>,<span class='st'>"city"</span>,<span class='st'>"dayOfWeek"</span><span class='op'>)</span>,
+  date_range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2020-03-31"</span>, <span class='st'>"2020-04-27"</span><span class='op'>)</span>,
+  orderBys <span class='op'>=</span> <span class='fu'>ga_data_order</span><span class='op'>(</span><span class='op'>-</span><span class='va'>sessions</span> <span class='op'>-</span><span class='va'>dayOfWeek</span><span class='op'>)</span>
+  <span class='op'>)</span>
 
 
-}</div></pre>
+<span class='op'>}</span>
+
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -409,7 +418,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

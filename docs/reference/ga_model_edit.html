@@ -270,18 +270,18 @@
     <p>Change features of a model by changing the functions within it.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_model_edit</span>(
-  <span class='no'>model</span>,
-  <span class='kw'>data_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>required_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>model_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>required_packages</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>outputShiny</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>renderShiny</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>inputShiny</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>output_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>ga_model_edit</span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  data_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  required_columns <span class='op'>=</span> <span class='cn'>NULL</span>,
+  model_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  required_packages <span class='op'>=</span> <span class='cn'>NULL</span>,
+  description <span class='op'>=</span> <span class='cn'>NULL</span>,
+  outputShiny <span class='op'>=</span> <span class='cn'>NULL</span>,
+  renderShiny <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inputShiny <span class='op'>=</span> <span class='cn'>NULL</span>,
+  output_f <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -337,6 +337,9 @@ must take data from result of <code>data_f</code> in first argument</p></td>
 <code><a href='ga_model_load.html'>ga_model_load</a>()</code>,
 <code><a href='ga_model_make.html'>ga_model_make</a>()</code>,
 <code><a href='ga_model_save.html'>ga_model_save</a>()</code>,
+<code><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a>()</code>,
+<code><a href='ga_model_shiny_ui.html'>ga_model_shiny_ui</a>()</code>,
+<code><a href='ga_model_shiny.html'>ga_model_shiny</a>()</code>,
 <code><a href='ga_model_write.html'>ga_model_write</a>()</code>,
 <code><a href='ga_model.html'>ga_model</a>()</code></p></div>
 
@@ -355,7 +358,7 @@ must take data from result of <code>data_f</code> in first argument</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

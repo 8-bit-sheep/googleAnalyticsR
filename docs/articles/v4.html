@@ -212,7 +212,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="v4_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Google Analytics Reporting API v4 in R Examples</h1>
@@ -241,26 +241,27 @@
 <h2 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting started</h2>
 <p>To get started refer to the tutorials linked on the homepage, consult <code><a href="../reference/google_analytics.html">?google_analytics</a></code> when within R to see the documentation, and see these example queries:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co">## setup</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## setup</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
 
 <span class="co">## authenticate</span>
-<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span>()
+<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co">## get your accounts</span>
-<span class="no">account_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span>()
+<span class="va">account_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co">## account_list will have a column called "viewId"</span>
-<span class="no">account_list</span>$<span class="no">viewId</span>
+<span class="va">account_list</span><span class="op">$</span><span class="va">viewId</span>
 
 <span class="co">## View account_list and pick the viewId you want to extract data from</span>
-<span class="no">ga_id</span> <span class="kw">&lt;-</span> <span class="fl">123456</span>
+<span class="va">ga_id</span> <span class="op">&lt;-</span> <span class="fl">123456</span>
 
 <span class="co">## simple query to test connection</span>
-<span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                 <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span>),
-                 <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
-                 <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"date"</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                 date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span><span class="op">)</span>, 
+                 metrics <span class="op">=</span> <span class="st">"sessions"</span>, 
+                 dimensions <span class="op">=</span> <span class="st">"date"</span><span class="op">)</span></code></pre></div>
 <p><a href="http://jeffgswanson.com/">Jeff Swanson</a> has made a video guide that goes into more detail about the above examples (<a href="https://www.youtube.com/watch?v=S9mSh5kcRgc&amp;feature=share">Digital Marketing in R: How to Connect to Google Analytics API</a>) and is embedded below, many thanks to Jeff.</p>
 <iframe width="560" height="315" src="http://www.youtube.com/embed/S9mSh5kcRgc?rel=0" frameborder="0" allowfullscreen>
 </iframe>
@@ -270,67 +271,74 @@
 <a href="#number-of-results" class="anchor"></a>Number of results</h2>
 <p>By default the function will return 1000 results. If you want to fetch all rows, set <code>max = -1</code></p>
 <p>You don’t have to worry about paging through the API results, the library deals with that for you.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># 1000 rows only</span>
-<span class="no">thousand</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                             <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span>),
-                             <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
-                             <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"date"</span>)
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># 1000 rows only</span>
+<span class="va">thousand</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                             date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span><span class="op">)</span>, 
+                             metrics <span class="op">=</span> <span class="st">"sessions"</span>, 
+                             dimensions <span class="op">=</span> <span class="st">"date"</span><span class="op">)</span>
 
 <span class="co"># 2000 rows</span>
-<span class="no">twothousand</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                             <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span>),
-                             <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
-                             <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"date"</span>,
-                             <span class="kw">max</span> <span class="kw">=</span> <span class="fl">2000</span>)
+<span class="va">twothousand</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                             date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span><span class="op">)</span>, 
+                             metrics <span class="op">=</span> <span class="st">"sessions"</span>, 
+                             dimensions <span class="op">=</span> <span class="st">"date"</span>,
+                             max <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span>  
 
 <span class="co"># All rows</span>
-<span class="no">alldata</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                             <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span>),
-                             <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
-                             <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"date"</span>,
-                             <span class="kw">max</span> <span class="kw">=</span> -<span class="fl">1</span>)</pre></body></html></div>
+<span class="va">alldata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                             date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span><span class="op">)</span>, 
+                             metrics <span class="op">=</span> <span class="st">"sessions"</span>, 
+                             dimensions <span class="op">=</span> <span class="st">"date"</span>,
+                             max <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span>   </code></pre></div>
 <p>If you are using anti-sampling, it will always fetch all rows. This is because it won’t make sense to fetch only the top results as the API splits up the calls over all days. If you want to limit it afterwards, use R by doing something like:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co">## anti_sample gets all results (max = -1)</span>
-<span class="no">gadata</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">myID</span>,
-                      <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">start_date</span>, <span class="no">end_date</span>),
-                      <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"pageviews"</span>,
-                      <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"pageTitle"</span>,
-                      <span class="kw">segments</span> <span class="kw">=</span> <span class="no">myseg</span>,
-                      <span class="kw">anti_sample</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## anti_sample gets all results (max = -1)</span>
+<span class="va">gadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">myID</span>,
+                      date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">start_date</span>, <span class="va">end_date</span><span class="op">)</span>,
+                      metrics <span class="op">=</span> <span class="st">"pageviews"</span>,
+                      dimensions <span class="op">=</span> <span class="st">"pageTitle"</span>,
+                      segments <span class="op">=</span> <span class="va">myseg</span>,
+                      anti_sample <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co">## limit to top 25</span>
-<span class="no">top_25</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">gadata</span>[<span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span>(<span class="no">gadata</span>$<span class="no">pageviews</span>, <span class="kw">decreasing</span> <span class="kw">=</span> <span class="fl">TRUE</span>), ] , <span class="fl">25</span>)</pre></body></html></div>
+<span class="va">top_25</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">gadata</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">gadata</span><span class="op">$</span><span class="va">pageviews</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="op">]</span> , <span class="fl">25</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="date-ranges" class="section level2">
 <h2 class="hasAnchor">
 <a href="#date-ranges" class="anchor"></a>Date Ranges</h2>
 <p>You can send in dates in <code>YYYY-MM-DD</code> format:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="fl">868768</span>, <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2016-12-31"</span>, <span class="st">"2017-02-01"</span>), <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="fl">868768</span>, date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2016-12-31"</span>, <span class="st">"2017-02-01"</span><span class="op">)</span>, metrics <span class="op">=</span> <span class="st">"sessions"</span><span class="op">)</span></code></pre></div>
 <p>Character strings are converted into <code>Date</code> class objects, so you can also use R’s native <code>Date</code> object handling to specify rolling dates:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">yesterday</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>() - <span class="fl">1</span>
-<span class="no">ThreedaysAgo</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>() - <span class="fl">3</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">yesterday</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span>
+<span class="va">ThreedaysAgo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">3</span>
 
-<span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="fl">868768</span>, <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">ThreedaysAgo</span>, <span class="no">yesterday</span>), <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="fl">868768</span>, date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">ThreedaysAgo</span>, <span class="va">yesterday</span><span class="op">)</span>, metrics <span class="op">=</span> <span class="st">"sessions"</span><span class="op">)</span></code></pre></div>
 <p>Or use the v4 API shortcuts directly such as <code>"yesterday"</code>, <code>"today"</code> or <code>"XDaysAgo"</code>:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="fl">868768</span>, <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"5daysAgo"</span>, <span class="st">"yesterday"</span>), <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="fl">868768</span>, date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"5daysAgo"</span>, <span class="st">"yesterday"</span><span class="op">)</span>, metrics <span class="op">=</span> <span class="st">"sessions"</span><span class="op">)</span></code></pre></div>
 <div id="compare-date-ranges" class="section level3">
 <h3 class="hasAnchor">
 <a href="#compare-date-ranges" class="anchor"></a>Compare date ranges</h3>
 <p>In v4 you can compare date ranges and return the two data sets in one call. Send in a 4-length vector of dates in the form <code>(range1_start, range1_end, range2_start, range2_end)</code></p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="fl">868768</span>,
-                   <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"16daysAgo"</span>, <span class="st">"9daysAgo"</span>, <span class="st">"8daysAgo"</span>, <span class="st">"yesterday"</span>),
-                   <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="fl">868768</span>, 
+                   date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"16daysAgo"</span>, <span class="st">"9daysAgo"</span>, <span class="st">"8daysAgo"</span>, <span class="st">"yesterday"</span><span class="op">)</span>, 
+                   metrics <span class="op">=</span> <span class="st">"sessions"</span><span class="op">)</span></code></pre></div>
 <p>When requesting multiple date ranges, you can use a new ordering feature of v4 to find the 10 most changed dimensions, rather than just say the top 10. <a href="http://code.markedmondson.me/quicker-insight-sort-metric-delta/">An article about using this feature can be found here</a>.</p>
 <p>An example is shown below, using the <code>order_type</code> function to sort by the change (<code>DELTA</code>) between dates:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">delta_sess</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/order_type.html">order_type</a></span>(<span class="st">"sessions"</span>,<span class="st">"DESCENDING"</span>, <span class="st">"DELTA"</span>)
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">delta_sess</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/order_type.html">order_type</a></span><span class="op">(</span><span class="st">"sessions"</span>,<span class="st">"DESCENDING"</span>, <span class="st">"DELTA"</span><span class="op">)</span>
 
 <span class="co">## find top 20 landing pages that changed most in sessions comparing this week and last week</span>
-<span class="no">gadata</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">gaid</span>,
-                             <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"16daysAgo"</span>, <span class="st">"9daysAgo"</span>, <span class="st">"8daysAgo"</span>, <span class="st">"yesterday"</span>),
-                             <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"sessions"</span>),
-                             <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"landingPagePath"</span>),
-                             <span class="kw">order</span> <span class="kw">=</span> <span class="no">delta_sess</span>,
-                             <span class="kw">max</span> <span class="kw">=</span> <span class="fl">20</span>)</pre></body></html></div>
+<span class="va">gadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">gaid</span>,
+                             date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"16daysAgo"</span>, <span class="st">"9daysAgo"</span>, <span class="st">"8daysAgo"</span>, <span class="st">"yesterday"</span><span class="op">)</span>,
+                             metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sessions"</span><span class="op">)</span>,
+                             dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"landingPagePath"</span><span class="op">)</span>,
+                             order <span class="op">=</span> <span class="va">delta_sess</span>,
+                             max <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="anti-sampling" class="section level2">
@@ -343,26 +351,28 @@
 <h3 class="hasAnchor">
 <a href="#sampled-data-example" class="anchor"></a>Sampled data example</h3>
 <p>If you have sampling in your data request, <code>googleAnalyticsR</code> reports it back to you in the console when making the request.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
-<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span>()
-<span class="no">sampled_data_fetch</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">id</span>,
-                                         <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2015-01-01"</span>,<span class="st">"2015-06-21"</span>),
-                                         <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"users"</span>,<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>),
-                                         <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"landingPagePath"</span>,<span class="st">"source"</span>))
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
+<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">sampled_data_fetch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">id</span>, 
+                                         date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2015-01-01"</span>,<span class="st">"2015-06-21"</span><span class="op">)</span>, 
+                                         metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"users"</span>,<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span><span class="op">)</span>, 
+                                         dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"landingPagePath"</span>,<span class="st">"source"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#Calling APIv4....</span>
-<span class="co">#Data is sampled, based on 39.75% of visits.</span></pre></body></html></div>
+<span class="co">#Data is sampled, based on 39.75% of visits.</span></code></pre></div>
 </div>
 <div id="unsampled-data-example" class="section level3">
 <h3 class="hasAnchor">
 <a href="#unsampled-data-example" class="anchor"></a>Unsampled data example</h3>
 <p>Setting the argument <code>anti_sample=TRUE</code> in a <code><a href="../reference/google_analytics.html">google_analytics()</a></code> request causes the calls to be split up into small enough chunks to avoid sampling. This uses more API calls so the data will reach you slower, but it should hold more detail.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
-<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span>()
-<span class="no">unsampled_data_fetch</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">id</span>,
-                                         <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2015-01-01"</span>,<span class="st">"2015-06-21"</span>),
-                                         <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"users"</span>,<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>),
-                                         <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"landingPagePath"</span>,<span class="st">"source"</span>),
-                                         <span class="kw">anti_sample</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
+<span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">unsampled_data_fetch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">id</span>, 
+                                         date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2015-01-01"</span>,<span class="st">"2015-06-21"</span><span class="op">)</span>, 
+                                         metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"users"</span>,<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span><span class="op">)</span>, 
+                                         dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"landingPagePath"</span>,<span class="st">"source"</span><span class="op">)</span>,
+                                         anti_sample <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co">#anti_sample set to TRUE. Mitigating sampling via multiple API calls.</span>
 <span class="co">#Finding how much sampling in data request...</span>
@@ -378,7 +388,7 @@
 <span class="co">#Anti-sample call covering 21 days: 2015-06-01, 2015-06-21</span>
 <span class="co">#Downloaded [21340] rows from a total of [21340].</span>
 <span class="co">#Finished unsampled data request, total rows [100814]</span>
-<span class="co">#Successfully avoided sampling</span></pre></body></html></div>
+<span class="co">#Successfully avoided sampling</span></code></pre></div>
 <p>The sequence involves a couple of exploratory API calls to determine the best split. This method will adjust the time periods to have the batch sizes large enough to not take too long, but small enough to have unsampled data.</p>
 </div>
 <div id="auto-anti-sampling-failure" class="section level3">
@@ -386,13 +396,14 @@
 <a href="#auto-anti-sampling-failure" class="anchor"></a>Auto-anti sampling failure</h3>
 <p>In some cases the anti-sampling won’t work. This will mainly be due to filters for the View you are using meaning that the calculation for the sampling sessions are incorrect - Google Analytics vanilla samples on a property level (whilst GA360 samples on a View level).</p>
 <p>Try using a raw profile if you can, otherwise you can set your own sample period by using the <code>anti_sample_batches</code> flag to indicate the sample size. Pick a number that is a little lower than the smallest period you saw in the auto-sample batches. If in doubt, setting <code>anti_sample_batches</code> to 1 will make a daily fetch.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co">## example setting your own anti_sample_batch to 5 days per batch</span>
-<span class="no">unsampled_data_fetch</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">id</span>,
-                                             <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2015-01-01"</span>,<span class="st">"2015-06-21"</span>),
-                                             <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"users"</span>,<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span>),
-                                             <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"landingPagePath"</span>,<span class="st">"source"</span>),
-                                             <span class="kw">anti_sample</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-                                             <span class="kw">anti_sample_batch</span> <span class="kw">=</span> <span class="fl">5</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## example setting your own anti_sample_batch to 5 days per batch</span>
+<span class="va">unsampled_data_fetch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">id</span>, 
+                                             date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2015-01-01"</span>,<span class="st">"2015-06-21"</span><span class="op">)</span>, 
+                                             metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"users"</span>,<span class="st">"sessions"</span>,<span class="st">"bounceRate"</span><span class="op">)</span>, 
+                                             dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"landingPagePath"</span>,<span class="st">"source"</span><span class="op">)</span>,
+                                             anti_sample <span class="op">=</span> <span class="cn">TRUE</span>,
+                                             anti_sample_batch <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="filters" class="section level2">
@@ -406,41 +417,43 @@
 <div id="one-filter" class="section level3">
 <h3 class="hasAnchor">
 <a href="#one-filter" class="anchor"></a>One filter</h3>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">campaign_filter</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/dim_filter.html">dim_filter</a></span>(<span class="kw">dimension</span><span class="kw">=</span><span class="st">"campaign"</span>,<span class="kw">operator</span><span class="kw">=</span><span class="st">"REGEXP"</span>,<span class="kw">expressions</span><span class="kw">=</span><span class="st">"welcome"</span>)
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">campaign_filter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dim_filter.html">dim_filter</a></span><span class="op">(</span>dimension<span class="op">=</span><span class="st">"campaign"</span>,operator<span class="op">=</span><span class="st">"REGEXP"</span>,expressions<span class="op">=</span><span class="st">"welcome"</span><span class="op">)</span>
 
-<span class="no">my_filter_clause</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/filter_clause_ga4.html">filter_clause_ga4</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">campaign_filter</span>))
+<span class="va">my_filter_clause</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_clause_ga4.html">filter_clause_ga4</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">campaign_filter</span><span class="op">)</span><span class="op">)</span>
 
-<span class="no">data_fetch</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,<span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2016-01-01"</span>,<span class="st">"2016-12-31"</span>),
-                                 <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"itemRevenue"</span>,<span class="st">"itemQuantity"</span>),
-                                 <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"campaign"</span>,<span class="st">"transactionId"</span>,<span class="st">"dateHour"</span>),
-                                 <span class="kw">dim_filters</span> <span class="kw">=</span> <span class="no">my_filter_clause</span>,
-                                 <span class="kw">anti_sample</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="va">data_fetch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>,date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2016-01-01"</span>,<span class="st">"2016-12-31"</span><span class="op">)</span>,
+                                 metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"itemRevenue"</span>,<span class="st">"itemQuantity"</span><span class="op">)</span>,
+                                 dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"campaign"</span>,<span class="st">"transactionId"</span>,<span class="st">"dateHour"</span><span class="op">)</span>,
+                                 dim_filters <span class="op">=</span> <span class="va">my_filter_clause</span>,
+                                 anti_sample <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="multiple-filters" class="section level3">
 <h3 class="hasAnchor">
 <a href="#multiple-filters" class="anchor"></a>Multiple filters</h3>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co">## create filters on metrics</span>
-<span class="no">mf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/met_filter.html">met_filter</a></span>(<span class="st">"bounces"</span>, <span class="st">"GREATER_THAN"</span>, <span class="fl">0</span>)
-<span class="no">mf2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/met_filter.html">met_filter</a></span>(<span class="st">"sessions"</span>, <span class="st">"GREATER"</span>, <span class="fl">2</span>)
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## create filters on metrics</span>
+<span class="va">mf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/met_filter.html">met_filter</a></span><span class="op">(</span><span class="st">"bounces"</span>, <span class="st">"GREATER_THAN"</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="va">mf2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/met_filter.html">met_filter</a></span><span class="op">(</span><span class="st">"sessions"</span>, <span class="st">"GREATER"</span>, <span class="fl">2</span><span class="op">)</span>
 
 <span class="co">## create filters on dimensions</span>
-<span class="no">df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/dim_filter.html">dim_filter</a></span>(<span class="st">"source"</span>,<span class="st">"BEGINS_WITH"</span>,<span class="st">"1"</span>,<span class="kw">not</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-<span class="no">df2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/dim_filter.html">dim_filter</a></span>(<span class="st">"source"</span>,<span class="st">"BEGINS_WITH"</span>,<span class="st">"a"</span>,<span class="kw">not</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dim_filter.html">dim_filter</a></span><span class="op">(</span><span class="st">"source"</span>,<span class="st">"BEGINS_WITH"</span>,<span class="st">"1"</span>,not <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dim_filter.html">dim_filter</a></span><span class="op">(</span><span class="st">"source"</span>,<span class="st">"BEGINS_WITH"</span>,<span class="st">"a"</span>,not <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co">## construct filter objects</span>
-<span class="no">fc2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/filter_clause_ga4.html">filter_clause_ga4</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">df</span>, <span class="no">df2</span>), <span class="kw">operator</span> <span class="kw">=</span> <span class="st">"AND"</span>)
-<span class="no">fc</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/filter_clause_ga4.html">filter_clause_ga4</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">mf</span>, <span class="no">mf2</span>), <span class="kw">operator</span> <span class="kw">=</span> <span class="st">"AND"</span>)
+<span class="va">fc2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_clause_ga4.html">filter_clause_ga4</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span>, operator <span class="op">=</span> <span class="st">"AND"</span><span class="op">)</span>
+<span class="va">fc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_clause_ga4.html">filter_clause_ga4</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mf</span>, <span class="va">mf2</span><span class="op">)</span>, operator <span class="op">=</span> <span class="st">"AND"</span><span class="op">)</span>
 
 <span class="co">## make v4 request</span>
-<span class="no">ga_data1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                              <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2015-07-30"</span>,<span class="st">"2015-10-01"</span>),
-                              <span class="kw">dimensions</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'source'</span>,<span class="st">'medium'</span>),
-                              <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'sessions'</span>,<span class="st">'bounces'</span>),
-                              <span class="kw">met_filters</span> <span class="kw">=</span> <span class="no">fc</span>,
-                              <span class="kw">dim_filters</span> <span class="kw">=</span> <span class="no">fc2</span>,
-                              <span class="kw">filtersExpression</span> <span class="kw">=</span> <span class="st">"ga:source!=(direct)"</span>)
+<span class="va">ga_data1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                              date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2015-07-30"</span>,<span class="st">"2015-10-01"</span><span class="op">)</span>,
+                              dimensions<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'source'</span>,<span class="st">'medium'</span><span class="op">)</span>, 
+                              metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'sessions'</span>,<span class="st">'bounces'</span><span class="op">)</span>, 
+                              met_filters <span class="op">=</span> <span class="va">fc</span>, 
+                              dim_filters <span class="op">=</span> <span class="va">fc2</span>, 
+                              filtersExpression <span class="op">=</span> <span class="st">"ga:source!=(direct)"</span><span class="op">)</span>
 
-<span class="no">ga_data1</span>
+<span class="va">ga_data1</span>
 
 <span class="co">#                     source   medium sessions bounces</span>
 <span class="co"># 1                  baby.dk referral        3       2</span>
@@ -453,7 +466,7 @@
 <span class="co"># 8          success-seo.com referral       35      35</span>
 <span class="co"># 9    video--production.com referral       11      11</span>
 <span class="co"># 10                   yahoo  organic       66      43</span>
-<span class="co"># 11              zapmeta.se referral        6       4</span></pre></body></html></div>
+<span class="co"># 11              zapmeta.se referral        6       4</span></code></pre></div>
 </div>
 </div>
 <div id="multiple-reports" class="section level2">
@@ -466,28 +479,29 @@
 <a href="#demo-of-querying-two-api-requests" class="anchor"></a>Demo of querying two API requests</h3>
 <p>The below example requests with two date ranges and two reports.</p>
 <p>When fetching multiple reports, you need to wrap the <code><a href="../reference/make_ga_4_req.html">make_ga_4_req()</a></code> created objects in a <code><a href="https://rdrr.io/r/base/list.html">list()</a></code></p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co">## First request we make via make_ga_4_req()</span>
-<span class="no">multidate_test</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/make_ga_4_req.html">make_ga_4_req</a></span>(<span class="no">ga_id</span>,
-                                <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2015-07-30"</span>,
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## First request we make via make_ga_4_req()</span>
+<span class="va">multidate_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_ga_4_req.html">make_ga_4_req</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                                date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2015-07-30"</span>,
                                                <span class="st">"2015-10-01"</span>,
                                                <span class="st">"2014-07-30"</span>,
-                                               <span class="st">"2014-10-01"</span>),
-                                <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'source'</span>,<span class="st">'medium'</span>),
-                                <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'sessions'</span>,<span class="st">'bounces'</span>),
-                                <span class="kw">order</span> <span class="kw">=</span> <span class="fu"><a href="../reference/order_type.html">order_type</a></span>(<span class="st">"sessions"</span>, <span class="st">"DESCENDING"</span>, <span class="st">"DELTA"</span>))
+                                               <span class="st">"2014-10-01"</span><span class="op">)</span>,
+                                dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'source'</span>,<span class="st">'medium'</span><span class="op">)</span>, 
+                                metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'sessions'</span>,<span class="st">'bounces'</span><span class="op">)</span>,
+                                order <span class="op">=</span> <span class="fu"><a href="../reference/order_type.html">order_type</a></span><span class="op">(</span><span class="st">"sessions"</span>, <span class="st">"DESCENDING"</span>, <span class="st">"DELTA"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">## Second request - same date ranges and ID required, but different dimensions/metrics/order.</span>
-<span class="no">multi_test2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/make_ga_4_req.html">make_ga_4_req</a></span>(<span class="no">ga_id</span>,
-                                <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2015-07-30"</span>,
+<span class="va">multi_test2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_ga_4_req.html">make_ga_4_req</a></span><span class="op">(</span><span class="va">ga_id</span>,
+                                date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2015-07-30"</span>,
                                                <span class="st">"2015-10-01"</span>,
                                                <span class="st">"2014-07-30"</span>,
-                                               <span class="st">"2014-10-01"</span>),
-                             <span class="kw">dimensions</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'hour'</span>,<span class="st">'medium'</span>),
-                             <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'visitors'</span>,<span class="st">'bounces'</span>))
+                                               <span class="st">"2014-10-01"</span><span class="op">)</span>,
+                             dimensions<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'hour'</span>,<span class="st">'medium'</span><span class="op">)</span>, 
+                             metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'visitors'</span>,<span class="st">'bounces'</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">## Request the two calls by wrapping them in a list() and passing to fetch_google_analytics()</span>
-<span class="no">ga_data3</span> <span class="kw">&lt;-</span> <span class="fu">fetch_google_analytics</span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">multidate_test</span>, <span class="no">multi_test2</span>))
-<span class="no">ga_data3</span>
+<span class="va">ga_data3</span> <span class="op">&lt;-</span> <span class="fu">fetch_google_analytics</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">multidate_test</span>, <span class="va">multi_test2</span><span class="op">)</span><span class="op">)</span> 
+<span class="va">ga_data3</span>
 <span class="co"># [[1]]</span>
 <span class="co">#                     source   medium sessions.d1 bounces.d1 sessions.d2 bounces.d2</span>
 <span class="co"># 1                  baby.dk referral           3          2           6          3</span>
@@ -506,7 +520,8 @@
 <span class="co">#    hour   medium visitors.d1 bounces.d1 visitors.d2 bounces.d2</span>
 <span class="co"># 1    00  organic          28         16          85         59</span>
 <span class="co"># 2    00 referral           3          2           1          1</span>
-<span class="co"># 3    01  organic          43         28          93         66</span></pre></body></html></div>
+<span class="co"># 3    01  organic          43         28          93         66</span>
+</code></pre></div>
 </div>
 </div>
 <div id="metric-expressions" class="section level2">
@@ -516,7 +531,8 @@
 <blockquote>
 <p>You need to use the <code>ga:</code> prefix when creating custom metrics, unlike normal API requests</p>
 </blockquote>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">my_custom_metric</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">visitPerVisitor</span> <span class="kw">=</span> <span class="st">"ga:visits/ga:visitors"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_custom_metric</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>visitPerVisitor <span class="op">=</span> <span class="st">"ga:visits/ga:visitors"</span><span class="op">)</span></code></pre></div>
 <p>Use metric expressions as you would other metrics within the <code>metrics</code> argument, but you also need to supply a <code>metricFormat</code> (see <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/reports/batchGet#MetricType">docs</a>) vector the same length which specifies the type of the metric you have calculated. These can be:</p>
 <ul>
 <li><code>METRIC_TYPE_UNSPECIFIED</code></li>
@@ -529,19 +545,20 @@
 <li><code>TIME</code></li>
 </ul>
 <p>An example is shown below, where a calculated metric is combined with a normal metric, <code>bounces</code>, which is type integer. You can lookup what the default metrics types are in the <code>meta</code> lookup table.</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">my_custom_metric</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">visitPerVisitor</span> <span class="kw">=</span> <span class="st">"ga:visits/ga:visitors"</span>)
-<span class="no">ga_data4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                               <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2015-07-30"</span>,
-                                              <span class="st">"2015-10-01"</span>),
-                              <span class="kw">dimensions</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'medium'</span>),
-                              <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">my_custom_metric</span>,
-                                          <span class="st">'bounces'</span>),
-                              <span class="kw">metricFormat</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"FLOAT"</span>,<span class="st">"INTEGER"</span>))
-<span class="no">ga_data4</span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_custom_metric</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>visitPerVisitor <span class="op">=</span> <span class="st">"ga:visits/ga:visitors"</span><span class="op">)</span>
+<span class="va">ga_data4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>,
+                               date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2015-07-30"</span>,
+                                              <span class="st">"2015-10-01"</span><span class="op">)</span>,
+                              dimensions<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'medium'</span><span class="op">)</span>, 
+                              metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">my_custom_metric</span>,
+                                          <span class="st">'bounces'</span><span class="op">)</span>, 
+                              metricFormat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"FLOAT"</span>,<span class="st">"INTEGER"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">ga_data4</span>
 <span class="co">#     medium visitsPerVisitor bounces</span>
 <span class="co"># 1   (none)         1.000000     117</span>
 <span class="co"># 2  organic         1.075137     612</span>
-<span class="co"># 3 referral         1.012500      71</span></pre></body></html></div>
+<span class="co"># 3 referral         1.012500      71</span></code></pre></div>
 </div>
 <div id="segments-v4" class="section level2">
 <h2 class="hasAnchor">
@@ -554,49 +571,52 @@
 <p>You can choose to create segments via the v4 syntax or the v3 syntax for backward compatibility.</p>
 <p>If you want to use v3 segments, then they can be used in the <code>segment_id</code> argument of the <code><a href="../reference/segment_ga4.html">segment_ga4()</a></code> function.</p>
 <p>You can view the segment Ids by using <code><a href="../reference/ga_segment_list.html">ga_segment_list()</a></code></p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r">## get list of segments
-segs &lt;- ga_segment_list()
-
-## segment Ids and name:
-segs[,c("name","id","definition")]
-
-## example output
-  id            name                                                          definition
-1 -1       All Users                                                                    
-2 -2       New Users                       sessions::condition::ga:userType==New Visitor
-3 -3 Returning Users                 sessions::condition::ga:userType==Returning Visitor
-4 -4    Paid Traffic         sessions::condition::ga:medium=~^(cpc|ppc|cpa|cpm|cpv|cpp)$
-5 -5 Organic Traffic                             sessions::condition::ga:medium==organic
-6 -6  Search Traffic sessions::condition::ga:medium=~^(cpc|ppc|cpa|cpm|cpv|cpp|organic)$
-....</pre></body></html></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co">## get list of segments</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>segs &lt;-<span class="st"> </span><span class="kw">ga_segment_list</span>()</span>
+<span id="cb17-3"><a href="#cb17-3"></a></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="co">## segment Ids and name:</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>segs[,<span class="kw">c</span>(<span class="st">"name"</span>,<span class="st">"id"</span>,<span class="st">"definition"</span>)]</span>
+<span id="cb17-6"><a href="#cb17-6"></a></span>
+<span id="cb17-7"><a href="#cb17-7"></a><span class="co">## example output</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a>  id            name                                                          definition</span>
+<span id="cb17-9"><a href="#cb17-9"></a><span class="dv">1</span> <span class="dv">-1</span>       All Users                                                                    </span>
+<span id="cb17-10"><a href="#cb17-10"></a><span class="dv">2</span> <span class="dv">-2</span>       New Users                       sessions<span class="op">::</span>condition<span class="op">::</span>ga<span class="op">:</span>userType<span class="op">==</span>New Visitor</span>
+<span id="cb17-11"><a href="#cb17-11"></a><span class="dv">3</span> <span class="dv">-3</span> Returning Users                 sessions<span class="op">::</span>condition<span class="op">::</span>ga<span class="op">:</span>userType<span class="op">==</span>Returning Visitor</span>
+<span id="cb17-12"><a href="#cb17-12"></a><span class="dv">4</span> <span class="dv">-4</span>    Paid Traffic         sessions<span class="op">::</span>condition<span class="op">::</span>ga<span class="op">:</span>medium=<span class="er">~^</span>(cpc<span class="op">|</span>ppc<span class="op">|</span>cpa<span class="op">|</span>cpm<span class="op">|</span>cpv<span class="op">|</span>cpp)<span class="op">$</span></span>
+<span id="cb17-13"><a href="#cb17-13"></a><span class="dv">5</span> <span class="dv">-5</span> Organic Traffic                             sessions<span class="op">::</span>condition<span class="op">::</span>ga<span class="op">:</span>medium<span class="op">==</span>organic</span>
+<span id="cb17-14"><a href="#cb17-14"></a><span class="dv">6</span> <span class="dv">-6</span>  Search Traffic sessions<span class="op">::</span>condition<span class="op">::</span>ga<span class="op">:</span>medium=<span class="er">~^</span>(cpc<span class="op">|</span>ppc<span class="op">|</span>cpa<span class="op">|</span>cpm<span class="op">|</span>cpv<span class="op">|</span>cpp<span class="op">|</span>organic)<span class="op">$</span></span>
+<span id="cb17-15"><a href="#cb17-15"></a>....</span></code></pre></div>
 <p>The ID you require is in the <code>$id</code> column which you need to prefix with “gaid::”</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="co">## choose the v3 segment</span>
-<span class="no">segment_for_call</span> <span class="kw">&lt;-</span> <span class="st">"gaid::-4"</span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## choose the v3 segment</span>
+<span class="va">segment_for_call</span> <span class="op">&lt;-</span> <span class="st">"gaid::-4"</span>
 
 <span class="co">## make the v3 segment object in the v4 segment object:</span>
-<span class="no">seg_obj</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_ga4.html">segment_ga4</a></span>(<span class="st">"PaidTraffic"</span>, <span class="kw">segment_id</span> <span class="kw">=</span> <span class="no">segment_for_call</span>)
+<span class="va">seg_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_ga4.html">segment_ga4</a></span><span class="op">(</span><span class="st">"PaidTraffic"</span>, segment_id <span class="op">=</span> <span class="va">segment_for_call</span><span class="op">)</span>
 
 <span class="co">## make the segment call</span>
-<span class="no">segmented_ga1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                                    <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2015-07-30"</span>,<span class="st">"2015-10-01"</span>),
-                                    <span class="kw">dimensions</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'source'</span>,<span class="st">'medium'</span>,<span class="st">'segment'</span>),
-                                    <span class="kw">segments</span> <span class="kw">=</span> <span class="no">seg_obj</span>,
-                                    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'sessions'</span>,<span class="st">'bounces'</span>)
-                                    )</pre></body></html></div>
+<span class="va">segmented_ga1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                                    <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2015-07-30"</span>,<span class="st">"2015-10-01"</span><span class="op">)</span>, 
+                                    dimensions<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'source'</span>,<span class="st">'medium'</span>,<span class="st">'segment'</span><span class="op">)</span>, 
+                                    segments <span class="op">=</span> <span class="va">seg_obj</span>, 
+                                    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'sessions'</span>,<span class="st">'bounces'</span><span class="op">)</span>
+                                    <span class="op">)</span>
+  </code></pre></div>
 <p>…or you can pass the v3 syntax for dynamic segments found from the <code>$definition</code> column:</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="co">## or pass the segment v3 defintion in directly:</span>
-<span class="no">segment_def_for_call</span> <span class="kw">&lt;-</span> <span class="st">"sessions::condition::ga:medium=~^(cpc|ppc|cpa|cpm|cpv|cpp)$"</span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## or pass the segment v3 defintion in directly:</span>
+<span class="va">segment_def_for_call</span> <span class="op">&lt;-</span> <span class="st">"sessions::condition::ga:medium=~^(cpc|ppc|cpa|cpm|cpv|cpp)$"</span>
 
 <span class="co">## make the v3 segment object in the v4 segment object:</span>
-<span class="no">seg_obj</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_ga4.html">segment_ga4</a></span>(<span class="st">"PaidTraffic"</span>, <span class="kw">segment_id</span> <span class="kw">=</span> <span class="no">segment_def_for_call</span>)
+<span class="va">seg_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_ga4.html">segment_ga4</a></span><span class="op">(</span><span class="st">"PaidTraffic"</span>, segment_id <span class="op">=</span> <span class="va">segment_def_for_call</span><span class="op">)</span>
 
 <span class="co">## make the segment call</span>
-<span class="no">segmented_ga1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                                    <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2015-07-30"</span>,<span class="st">"2015-10-01"</span>),
-                                    <span class="kw">dimensions</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'source'</span>,<span class="st">'medium'</span>,<span class="st">'segment'</span>),
-                                    <span class="kw">segments</span> <span class="kw">=</span> <span class="no">seg_obj</span>,
-                                    <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'sessions'</span>,<span class="st">'bounces'</span>)
-                                    )</pre></body></html></div>
+<span class="va">segmented_ga1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                                    <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2015-07-30"</span>,<span class="st">"2015-10-01"</span><span class="op">)</span>, 
+                                    dimensions<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'source'</span>,<span class="st">'medium'</span>,<span class="st">'segment'</span><span class="op">)</span>, 
+                                    segments <span class="op">=</span> <span class="va">seg_obj</span>, 
+                                    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'sessions'</span>,<span class="st">'bounces'</span><span class="op">)</span>
+                                    <span class="op">)</span></code></pre></div>
 </div>
 <div id="v4-segment-syntax" class="section level3">
 <h3 class="hasAnchor">
@@ -619,44 +639,45 @@ segs[,c("name","id","definition")]
 <div id="demo-simple-segment" class="section level3">
 <h3 class="hasAnchor">
 <a href="#demo-simple-segment" class="anchor"></a>Demo: simple segment</h3>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">se</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_element.html">segment_element</a></span>(<span class="st">"sessions"</span>,
-                      <span class="kw">operator</span> <span class="kw">=</span> <span class="st">"GREATER_THAN"</span>,
-                      <span class="kw">type</span> <span class="kw">=</span> <span class="st">"METRIC"</span>,
-                      <span class="kw">comparisonValue</span> <span class="kw">=</span> <span class="fl">1</span>,
-                      <span class="kw">scope</span> <span class="kw">=</span> <span class="st">"USER"</span>)
-
-<span class="no">se2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_element.html">segment_element</a></span>(<span class="st">"medium"</span>,
-                      <span class="kw">operator</span> <span class="kw">=</span> <span class="st">"EXACT"</span>,
-                      <span class="kw">type</span> <span class="kw">=</span> <span class="st">"DIMENSION"</span>,
-                      <span class="kw">expressions</span> <span class="kw">=</span> <span class="st">"organic"</span>)
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_element.html">segment_element</a></span><span class="op">(</span><span class="st">"sessions"</span>, 
+                      operator <span class="op">=</span> <span class="st">"GREATER_THAN"</span>, 
+                      type <span class="op">=</span> <span class="st">"METRIC"</span>, 
+                      comparisonValue <span class="op">=</span> <span class="fl">1</span>, 
+                      scope <span class="op">=</span> <span class="st">"USER"</span><span class="op">)</span>
+                      
+<span class="va">se2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_element.html">segment_element</a></span><span class="op">(</span><span class="st">"medium"</span>, 
+                      operator <span class="op">=</span> <span class="st">"EXACT"</span>, 
+                      type <span class="op">=</span> <span class="st">"DIMENSION"</span>, 
+                      expressions <span class="op">=</span> <span class="st">"organic"</span><span class="op">)</span>
 
 <span class="co">## choose between segment_vector_simple or segment_vector_sequence</span>
 <span class="co">## Elements can be combined into clauses, which can then be combined into OR filter clauses</span>
-<span class="no">sv_simple</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_vector_simple.html">segment_vector_simple</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">se</span>)))
+<span class="va">sv_simple</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_vector_simple.html">segment_vector_simple</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-<span class="no">sv_simple2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_vector_simple.html">segment_vector_simple</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">se2</span>)))
+<span class="va">sv_simple2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_vector_simple.html">segment_vector_simple</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">se2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">## Each segment vector can then be combined into a logical AND</span>
-<span class="no">seg_defined</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_define.html">segment_define</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">sv_simple</span>, <span class="no">sv_simple2</span>))
+<span class="va">seg_defined</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_define.html">segment_define</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">sv_simple</span>, <span class="va">sv_simple2</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">## Each segement defintion can apply to users, sessions or both.</span>
 <span class="co">## You can pass a list of several segments</span>
-<span class="no">segment4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_ga4.html">segment_ga4</a></span>(<span class="st">"simple"</span>, <span class="kw">user_segment</span> <span class="kw">=</span> <span class="no">seg_defined</span>)
+<span class="va">segment4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_ga4.html">segment_ga4</a></span><span class="op">(</span><span class="st">"simple"</span>, user_segment <span class="op">=</span> <span class="va">seg_defined</span><span class="op">)</span>
 
 <span class="co">## Add the segments to the segments param</span>
-<span class="no">segment_example</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                                      <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2015-07-30"</span>,<span class="st">"2015-10-01"</span>),
-                                      <span class="kw">dimensions</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'source'</span>,<span class="st">'medium'</span>,<span class="st">'segment'</span>),
-                                      <span class="kw">segments</span> <span class="kw">=</span> <span class="no">segment4</span>,
-                                      <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'sessions'</span>,<span class="st">'bounces'</span>)
-                                      )
+<span class="va">segment_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                                      <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2015-07-30"</span>,<span class="st">"2015-10-01"</span><span class="op">)</span>, 
+                                      dimensions<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'source'</span>,<span class="st">'medium'</span>,<span class="st">'segment'</span><span class="op">)</span>, 
+                                      segments <span class="op">=</span> <span class="va">segment4</span>, 
+                                      metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'sessions'</span>,<span class="st">'bounces'</span><span class="op">)</span>
+                                      <span class="op">)</span>
 
-<span class="no">segment_example</span>
+<span class="va">segment_example</span>
 <span class="co">#                            source   medium segment sessions bounces</span>
 <span class="co"># 1                        24.co.uk referral  simple        1       1</span>
 <span class="co"># 2                     aidsmap.com referral  simple        1       0</span>
 <span class="co"># 3                             aol  organic  simple       30      19</span>
-<span class="co"># 4                             ask  organic  simple       32      17</span></pre></body></html></div>
+<span class="co"># 4                             ask  organic  simple       32      17</span></code></pre></div>
 </div>
 <div id="demo-sequence-segment" class="section level3">
 <h3 class="hasAnchor">
@@ -696,61 +717,62 @@ segment_seq_example
 # 3      bestbackpackersinsurance.co.uk sequence        9       6
 # 4                                bing sequence       22       2</code></pre>
 <p>Some more examples, using different match types, contributed by Pawel Kapuscinski:</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">con1</span> <span class="kw">&lt;-</span><span class="fu"><a href="../reference/segment_vector_simple.html">segment_vector_simple</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="../reference/segment_element.html">segment_element</a></span>(<span class="st">"ga:dimension1"</span>,
-                      <span class="kw">operator</span> <span class="kw">=</span> <span class="st">"REGEXP"</span>,
-                      <span class="kw">type</span> <span class="kw">=</span> <span class="st">"DIMENSION"</span>,
-                      <span class="kw">expressions</span> <span class="kw">=</span> <span class="st">".*"</span>,
-                      <span class="kw">scope</span> <span class="kw">=</span> <span class="st">"SESSION"</span>))))
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">con1</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/segment_vector_simple.html">segment_vector_simple</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/segment_element.html">segment_element</a></span><span class="op">(</span><span class="st">"ga:dimension1"</span>, 
+                      operator <span class="op">=</span> <span class="st">"REGEXP"</span>, 
+                      type <span class="op">=</span> <span class="st">"DIMENSION"</span>, 
+                      expressions <span class="op">=</span> <span class="st">".*"</span>, 
+                      scope <span class="op">=</span> <span class="st">"SESSION"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-<span class="no">con2</span> <span class="kw">&lt;-</span><span class="fu"><a href="../reference/segment_vector_simple.html">segment_vector_simple</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="../reference/segment_element.html">segment_element</a></span>(<span class="st">"ga:deviceCategory"</span>,
-                      <span class="kw">operator</span> <span class="kw">=</span> <span class="st">"EXACT"</span>,
-                      <span class="kw">type</span> <span class="kw">=</span> <span class="st">"DIMENSION"</span>,
-                      <span class="kw">expressions</span> <span class="kw">=</span> <span class="st">"Desktop"</span>,
-                      <span class="kw">scope</span> <span class="kw">=</span> <span class="st">"SESSION"</span>))))
+<span class="va">con2</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/segment_vector_simple.html">segment_vector_simple</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/segment_element.html">segment_element</a></span><span class="op">(</span><span class="st">"ga:deviceCategory"</span>, 
+                      operator <span class="op">=</span> <span class="st">"EXACT"</span>, 
+                      type <span class="op">=</span> <span class="st">"DIMENSION"</span>, 
+                      expressions <span class="op">=</span> <span class="st">"Desktop"</span>, 
+                      scope <span class="op">=</span> <span class="st">"SESSION"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-<span class="no">seq1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_element.html">segment_element</a></span>(<span class="st">"ga:pagePath"</span>,
-                         <span class="kw">operator</span> <span class="kw">=</span> <span class="st">"EXACT"</span>,
-                         <span class="kw">type</span> <span class="kw">=</span> <span class="st">"DIMENSION"</span>,
-                         <span class="kw">expressions</span> <span class="kw">=</span> <span class="st">"yourdomain.com/page-path"</span>,
-                         <span class="kw">scope</span> <span class="kw">=</span> <span class="st">"SESSION"</span>)
+<span class="va">seq1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_element.html">segment_element</a></span><span class="op">(</span><span class="st">"ga:pagePath"</span>, 
+                         operator <span class="op">=</span> <span class="st">"EXACT"</span>, 
+                         type <span class="op">=</span> <span class="st">"DIMENSION"</span>, 
+                         expressions <span class="op">=</span> <span class="st">"yourdomain.com/page-path"</span>, 
+                         scope <span class="op">=</span> <span class="st">"SESSION"</span><span class="op">)</span>
 
 
-<span class="no">seq2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_element.html">segment_element</a></span>(<span class="st">"ga:eventAction"</span>,
-                         <span class="kw">operator</span> <span class="kw">=</span> <span class="st">"REGEXP"</span>,
-                         <span class="kw">type</span> <span class="kw">=</span> <span class="st">"DIMENSION"</span>,
-                         <span class="kw">expressions</span> <span class="kw">=</span> <span class="st">"english"</span>,
-                         <span class="kw">scope</span> <span class="kw">=</span> <span class="st">"SESSION"</span>,
-                         <span class="kw">matchType</span> <span class="kw">=</span> <span class="st">"IMMEDIATELY_PRECEDES"</span>)
+<span class="va">seq2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_element.html">segment_element</a></span><span class="op">(</span><span class="st">"ga:eventAction"</span>, 
+                         operator <span class="op">=</span> <span class="st">"REGEXP"</span>, 
+                         type <span class="op">=</span> <span class="st">"DIMENSION"</span>, 
+                         expressions <span class="op">=</span> <span class="st">"english"</span>, 
+                         scope <span class="op">=</span> <span class="st">"SESSION"</span>,
+                         matchType <span class="op">=</span> <span class="st">"IMMEDIATELY_PRECEDES"</span><span class="op">)</span>
 
-<span class="no">allSEQ</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_vector_sequence.html">segment_vector_sequence</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">seq1</span>), <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">seq2</span>)))
+<span class="va">allSEQ</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_vector_sequence.html">segment_vector_sequence</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">seq1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">seq2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-<span class="no">results</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                             <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2016-08-08"</span>,<span class="st">"2016-09-08"</span>),
-                             <span class="kw">segments</span> <span class="kw">=</span> <span class="fu"><a href="../reference/segment_ga4.html">segment_ga4</a></span>(<span class="st">"sequence+condition"</span>,
-                                                    <span class="kw">user_segment</span> <span class="kw">=</span> <span class="fu"><a href="../reference/segment_define.html">segment_define</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">con1</span>,<span class="no">con2</span>,<span class="no">allSEQ</span>))
-                                                    ),
-                             <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'ga:users'</span>),
-                             <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'ga:segment'</span>))
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                             date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2016-08-08"</span>,<span class="st">"2016-09-08"</span><span class="op">)</span>,
+                             segments <span class="op">=</span> <span class="fu"><a href="../reference/segment_ga4.html">segment_ga4</a></span><span class="op">(</span><span class="st">"sequence+condition"</span>,
+                                                    user_segment <span class="op">=</span> <span class="fu"><a href="../reference/segment_define.html">segment_define</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">con1</span>,<span class="va">con2</span>,<span class="va">allSEQ</span><span class="op">)</span><span class="op">)</span>
+                                                    <span class="op">)</span>,
+                             metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'ga:users'</span><span class="op">)</span>,
+                             dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'ga:segment'</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Users whose first session to website was social:</span>
-<span class="no">seg_social</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_element.html">segment_element</a></span>(<span class="st">"channelGrouping"</span>,
-                              <span class="kw">operator</span> <span class="kw">=</span> <span class="st">"EXACT"</span>,
-                              <span class="kw">type</span> <span class="kw">=</span> <span class="st">"DIMENSION"</span>,
-                              <span class="kw">expressions</span> <span class="kw">=</span> <span class="st">"Social"</span>)
-<span class="no">seg_first_visit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_element.html">segment_element</a></span>(<span class="st">"sessionCount"</span>,
-                                   <span class="kw">operator</span> <span class="kw">=</span> <span class="st">"EXACT"</span>,
-                                   <span class="kw">type</span> <span class="kw">=</span> <span class="st">"DIMENSION"</span>,
-                                   <span class="kw">expressions</span> <span class="kw">=</span> <span class="st">"1"</span>)
+<span class="va">seg_social</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_element.html">segment_element</a></span><span class="op">(</span><span class="st">"channelGrouping"</span>,
+                              operator <span class="op">=</span> <span class="st">"EXACT"</span>,
+                              type <span class="op">=</span> <span class="st">"DIMENSION"</span>,
+                              expressions <span class="op">=</span> <span class="st">"Social"</span><span class="op">)</span>
+<span class="va">seg_first_visit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_element.html">segment_element</a></span><span class="op">(</span><span class="st">"sessionCount"</span>,
+                                   operator <span class="op">=</span> <span class="st">"EXACT"</span>,
+                                   type <span class="op">=</span> <span class="st">"DIMENSION"</span>,
+                                   expressions <span class="op">=</span> <span class="st">"1"</span><span class="op">)</span>
 <span class="co"># social referrral followed by first sessionCount</span>
-<span class="no">segment_social_first</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_vector_sequence.html">segment_vector_sequence</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">seg_social</span>), <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">seg_first_visit</span>)))
-<span class="no">sd_segment</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_define.html">segment_define</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">segment_social_first</span>))
-<span class="no">segment_social</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/segment_ga4.html">segment_ga4</a></span>(<span class="st">"social_first"</span>, <span class="kw">user_segment</span> <span class="kw">=</span> <span class="no">sd_segment</span>)
-<span class="no">segment_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics_4</a></span>(<span class="no">my_viewId</span>,
-                                   <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"8daysAgo"</span>, <span class="st">"yesterday"</span>),
-                                   <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"sessions"</span>, <span class="st">"users"</span>, <span class="kw">sessions_per_user</span> <span class="kw">=</span> <span class="st">"ga:sessions/ga:users"</span>),
-                                   <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>, <span class="st">"country"</span>, <span class="st">"channelGrouping"</span>, <span class="st">"sessionCount"</span>),
-                                   <span class="kw">segments</span> <span class="kw">=</span> <span class="no">segment_social</span>,
-                                   <span class="kw">metricFormat</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"FLOAT"</span>, <span class="st">"INTEGER"</span>, <span class="st">"INTEGER"</span>))</pre></body></html></div>
+<span class="va">segment_social_first</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_vector_sequence.html">segment_vector_sequence</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">seg_social</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">seg_first_visit</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">sd_segment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_define.html">segment_define</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">segment_social_first</span><span class="op">)</span><span class="op">)</span>
+<span class="va">segment_social</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_ga4.html">segment_ga4</a></span><span class="op">(</span><span class="st">"social_first"</span>, user_segment <span class="op">=</span> <span class="va">sd_segment</span><span class="op">)</span>
+<span class="va">segment_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics_4</a></span><span class="op">(</span><span class="va">my_viewId</span>,
+                                   date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"8daysAgo"</span>, <span class="st">"yesterday"</span><span class="op">)</span>,
+                                   metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sessions"</span>, <span class="st">"users"</span>, sessions_per_user <span class="op">=</span> <span class="st">"ga:sessions/ga:users"</span><span class="op">)</span>,
+                                   dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>, <span class="st">"country"</span>, <span class="st">"channelGrouping"</span>, <span class="st">"sessionCount"</span><span class="op">)</span>,
+                                   segments <span class="op">=</span> <span class="va">segment_social</span>,
+                                   metricFormat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"FLOAT"</span>, <span class="st">"INTEGER"</span>, <span class="st">"INTEGER"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>If you are still struggling with segment syntax, you may want to try the <a href="https://github.com/jdeboer/ganalytics/issues/56"><code>ganalytics</code> package</a> by Johann de Boer which has developed a domain specific language for making segments and may be easier to parse.</p>
 </div>
 <div id="rstudio-addin-segment-helper" class="section level3">
@@ -759,7 +781,7 @@ segment_seq_example
 <p>There is an RStudio Addin to help create segments via a UI rather than the lists above.</p>
 <p>You can call it via <code>googleAnalyticsR:::gadget_GASegment()</code> or within the RStudio interface like displayed below:</p>
 <div class="figure">
-<img src="googleAnalyticsRsegmentCreator.gif" alt="Google Analytics v4 segment RStudio Addin"><p class="caption">Google Analytics v4 segment RStudio Addin</p>
+<img src="googleAnalyticsRsegmentCreator.gif" alt=""><p class="caption">Google Analytics v4 segment RStudio Addin</p>
 </div>
 </div>
 </div>
@@ -767,63 +789,66 @@ segment_seq_example
 <h2 class="hasAnchor">
 <a href="#cohort-reports" class="anchor"></a>Cohort reports</h2>
 <p>Details on <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohorts">cohort reports and LTV can be found here</a> and via the examples below.</p>
-<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="co">## first make a cohort group</span>
-<span class="no">cohort4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/make_cohort_group.html">make_cohort_group</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"Jan2016"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2016-01-01"</span>, <span class="st">"2016-01-31"</span>),
-                                <span class="st">"Feb2016"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2016-02-01"</span>,<span class="st">"2016-02-28"</span>)))
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## first make a cohort group</span>
+<span class="va">cohort4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_cohort_group.html">make_cohort_group</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"Jan2016"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2016-01-01"</span>, <span class="st">"2016-01-31"</span><span class="op">)</span>, 
+                                <span class="st">"Feb2016"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2016-02-01"</span>,<span class="st">"2016-02-28"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">## then call cohort report.  No date_range and must include metrics and dimensions</span>
 <span class="co">##   from the cohort list</span>
-<span class="no">cohort_example</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                                     <span class="kw">dimensions</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'cohort'</span>),
-                                     <span class="kw">cohort</span> <span class="kw">=</span> <span class="no">cohort4</span>,
-                                     <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'cohortTotalUsers'</span>))
+<span class="va">cohort_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                                     dimensions<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'cohort'</span><span class="op">)</span>, 
+                                     cohort <span class="op">=</span> <span class="va">cohort4</span>, 
+                                     metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'cohortTotalUsers'</span><span class="op">)</span><span class="op">)</span>
 
-<span class="no">cohort_example</span>
+<span class="va">cohort_example</span>
 <span class="co">#    cohort cohortTotalUsers</span>
 <span class="co"># 1 Feb2016            19040</span>
-<span class="co"># 2 Jan2016            23378</span></pre></body></html></div>
+<span class="co"># 2 Jan2016            23378</span></code></pre></div>
 </div>
 <div id="pivot-requests" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pivot-requests" class="anchor"></a>Pivot Requests</h2>
 <p>These change the shape of the returned data, which you could probably do in R anyway but it gives you another option when you make the request.</p>
-<div class="sourceCode" id="cb24"><html><body><pre class="r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="co">## filter pivot results to </span>
-<span class="no">pivot_dim_filter1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/dim_filter.html">dim_filter</a></span>(<span class="st">"medium"</span>,
+<span class="va">pivot_dim_filter1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dim_filter.html">dim_filter</a></span><span class="op">(</span><span class="st">"medium"</span>,
                                 <span class="st">"REGEXP"</span>,
-                                <span class="st">"organic|social|email|cpc"</span>)
+                                <span class="st">"organic|social|email|cpc"</span><span class="op">)</span>
+                                
+<span class="va">pivot_dim_clause</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_clause_ga4.html">filter_clause_ga4</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">pivot_dim_filter1</span><span class="op">)</span><span class="op">)</span>
 
-<span class="no">pivot_dim_clause</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/filter_clause_ga4.html">filter_clause_ga4</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">pivot_dim_filter1</span>))
+<span class="va">pivme</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pivot_ga4.html">pivot_ga4</a></span><span class="op">(</span><span class="st">"medium"</span>,
+                   metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sessions"</span><span class="op">)</span>, 
+                   maxGroupCount <span class="op">=</span> <span class="fl">4</span>, 
+                   dim_filter_clause <span class="op">=</span> <span class="va">pivot_dim_clause</span><span class="op">)</span>
 
-<span class="no">pivme</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/pivot_ga4.html">pivot_ga4</a></span>(<span class="st">"medium"</span>,
-                   <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"sessions"</span>),
-                   <span class="kw">maxGroupCount</span> <span class="kw">=</span> <span class="fl">4</span>,
-                   <span class="kw">dim_filter_clause</span> <span class="kw">=</span> <span class="no">pivot_dim_clause</span>)
-
-<span class="no">pivtest1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                               <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2016-01-30"</span>,<span class="st">"2016-10-01"</span>),
-                               <span class="kw">dimensions</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'source'</span>),
-                               <span class="kw">metrics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'sessions'</span>),
-                               <span class="kw">pivots</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">pivme</span>))
+<span class="va">pivtest1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                               <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2016-01-30"</span>,<span class="st">"2016-10-01"</span><span class="op">)</span>, 
+                               dimensions<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'source'</span><span class="op">)</span>, 
+                               metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'sessions'</span><span class="op">)</span>, 
+                               pivots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">pivme</span><span class="op">)</span><span class="op">)</span>
 
 
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">pivtest1</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">pivtest1</span><span class="op">)</span>
 <span class="co">#  [1] "source"                      "sessions"                    "medium.referral.sessions"   </span>
 <span class="co">#  [4] "medium..none..sessions"      "medium.cpc.sessions"         "medium.email.sessions"      </span>
 <span class="co">#  [7] "medium.social.sessions"      "medium.twitter.sessions"     "medium.socialMedia.sessions"</span>
-<span class="co"># [10] "medium.Social.sessions"      "medium.linkedin.sessions"  </span></pre></body></html></div>
+<span class="co"># [10] "medium.Social.sessions"      "medium.linkedin.sessions"  </span></code></pre></div>
 </div>
 <div id="ga360-quota-system" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ga360-quota-system" class="anchor"></a>GA360 Quota System</h2>
 <p>If you have GA360, you have access to <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/resource-based-quota">resource based quotas</a> that increase the number of sessions before sampling kicks in from 1 to 100 million sessions.</p>
 <p>To access this quota, set <code>useResourceQuotas = TRUE</code> in the command.</p>
-<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                 <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span>),
-                 <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
-                 <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"date"</span>,
-                 <span class="kw">max</span> <span class="kw">=</span> -<span class="fl">1</span>,
-                 <span class="kw">useResourceQuotas</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                 date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span><span class="op">)</span>, 
+                 metrics <span class="op">=</span> <span class="st">"sessions"</span>, 
+                 dimensions <span class="op">=</span> <span class="st">"date"</span>,
+                 max <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,
+                 useResourceQuotas <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="customising-api-fetches" class="section level2">
 <h2 class="hasAnchor">
@@ -834,12 +859,13 @@ segment_seq_example
 <a href="#batching-large-results" class="anchor"></a>Batching large results</h3>
 <p>The v4 API allows you to send 5 batched calls at once in one API request, meaning by default 50,000 rows will be requested per API call. However, since this puts additional strain on the Google servers, for complicated queries (i.e. lots of segments or dimensions) this may fail with a 500 error. If that happens, the library will fall back to the slower fetching of 10,000 rows per API call.</p>
 <p>If you want to default to the slower fetching, set <code>slow_fetch=TRUE</code> in your request e.g.</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                 <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span>),
-                 <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
-                 <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"date"</span>,
-                 <span class="kw">max</span> <span class="kw">=</span> -<span class="fl">1</span>,
-                 <span class="kw">slow_fetch</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                 date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span><span class="op">)</span>, 
+                 metrics <span class="op">=</span> <span class="st">"sessions"</span>, 
+                 dimensions <span class="op">=</span> <span class="st">"date"</span>,
+                 max <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,
+                 slow_fetch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="caching" class="section level3">
 <h3 class="hasAnchor">
@@ -849,21 +875,22 @@ segment_seq_example
 <iframe width="560" height="315" src="http://www.youtube.com/embed/2-f0aTwWiNw?rel=0" frameborder="0" allowfullscreen>
 </iframe>
 <p>e.g.</p>
-<div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="fu"><a href="../reference/ga_cache_call.html">ga_cache_call</a></span>(<span class="st">"my_cache_folder"</span>)
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/ga_cache_call.html">ga_cache_call</a></span><span class="op">(</span><span class="st">"my_cache_folder"</span><span class="op">)</span>
 
 <span class="co">## will make the call and save files to my_cache_folder</span>
-<span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                 <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span>),
-                 <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
-                 <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"date"</span>,
-                 <span class="kw">max</span> <span class="kw">=</span> -<span class="fl">1</span>)
-
+<span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                 date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span><span class="op">)</span>, 
+                 metrics <span class="op">=</span> <span class="st">"sessions"</span>, 
+                 dimensions <span class="op">=</span> <span class="st">"date"</span>,
+                 max <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span>
+                 
 <span class="co">## making the same exact call again will read from disk, and be much quicker</span>
-<span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                 <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span>),
-                 <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
-                 <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"date"</span>,
-                 <span class="kw">max</span> <span class="kw">=</span> -<span class="fl">1</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                 date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span><span class="op">)</span>, 
+                 metrics <span class="op">=</span> <span class="st">"sessions"</span>, 
+                 dimensions <span class="op">=</span> <span class="st">"date"</span>,
+                 max <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p>This means that repeated long fetches can be much quicker as older requests will read from disk.</p>
 <p>If you are running long repeated calls over time, this is a good strategy to only fetch the latest data from the API, relying on the cache for historic data - for instance, set a loop that requests each month’s worth of data - for the month’s you already have the requests will come from disk, but for the most recent month it will fetch from the API.</p>
 </div>
@@ -872,14 +899,15 @@ segment_seq_example
 <a href="#rows-per-call" class="anchor"></a>Rows Per call</h3>
 <p>The API lets you call up to 100,000 rows, which coupled with the batching above means potentially 500,000 rows can be called per API call. In reality, this many rows will probably be too heavy for the Google servers, so you may want to experiment using increased row per calls but with <code>slow_fetch=TRUE</code> to find the optimum.</p>
 <p>e.g.</p>
-<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="co">## making the same exact call again will read from disk, and be much quicker</span>
-<span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">ga_id</span>,
-                 <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span>),
-                 <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
-                 <span class="kw">dimensions</span> <span class="kw">=</span> <span class="st">"date"</span>,
-                 <span class="kw">rows_per_call</span> <span class="kw">=</span> <span class="fl">40000</span>,
-                 <span class="kw">slow_fetch</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-                 <span class="kw">max</span> <span class="kw">=</span> -<span class="fl">1</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## making the same exact call again will read from disk, and be much quicker</span>
+<span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">ga_id</span>, 
+                 date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2017-01-01"</span>, <span class="st">"2017-03-01"</span><span class="op">)</span>, 
+                 metrics <span class="op">=</span> <span class="st">"sessions"</span>, 
+                 dimensions <span class="op">=</span> <span class="st">"date"</span>,
+                 rows_per_call <span class="op">=</span> <span class="fl">40000</span>,
+                 slow_fetch <span class="op">=</span> <span class="cn">TRUE</span>,
+                 max <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p>The defaults are 10,000 rows per call (50,000 per batch) and <code>slow_fetch = FALSE</code> which suit for most cases.</p>
 </div>
 </div>
@@ -888,24 +916,25 @@ segment_seq_example
 <a href="#fetching-from-multiple-views" class="anchor"></a>Fetching from multiple views</h2>
 <p>Whilst the <a href="http://code.markedmondson.me/googleAnalyticsR/v3.html">v3 multi account batching feature</a> isn’t available for multi-accounts in v4, by using <a href="https://github.com/HenrikBengtsson/future.apply"><code>future.apply</code></a> you can launch multiple R sessions that will fetch the API in parallel. An example is shown below, that fetches from three View IDs at once.</p>
 <p>The limiting factor will then be the v4 <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/limits-quotas">API limits</a>, which are currently 1000 requests per 100 seconds per user, per Google API project (e.g. you will probably want to setup your own Google project if making a lot of requests)</p>
-<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">googleAnalyticsR</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">future.apply</span>)
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">future.apply</span><span class="op">)</span>
 
 <span class="co">## setup multisession R for your parallel data fetches </span>
-<span class="fu">plan</span>(<span class="no">multisession</span>)
+<span class="fu">plan</span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span>
 
 <span class="co">## the ViewIds to fetch all at once</span>
-<span class="no">gaids</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">12345634</span>, <span class="fl">9888890</span>,<span class="fl">10624323</span>)
+<span class="va">gaids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">12345634</span>, <span class="fl">9888890</span>,<span class="fl">10624323</span><span class="op">)</span>
 
-<span class="no">my_fetch</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x</span>) {
-  <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span>(<span class="no">x</span>,
-                   <span class="kw">date_range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2017-01-01"</span>,<span class="st">"yesterday"</span>),
-                   <span class="kw">metrics</span> <span class="kw">=</span> <span class="st">"sessions"</span>,
-                   <span class="kw">dimensions</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>,<span class="st">"medium"</span>))
-}
+<span class="va">my_fetch</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">x</span>, 
+                   date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2017-01-01"</span>,<span class="st">"yesterday"</span><span class="op">)</span>, 
+                   metrics <span class="op">=</span> <span class="st">"sessions"</span>, 
+                   dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"medium"</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span>
 
 <span class="co">## makes 3 API calls at once</span>
-<span class="no">all_data</span> <span class="kw">&lt;-</span> <span class="fu">future_lapply</span>(<span class="no">gaids</span>, <span class="no">my_fetch</span>)</pre></body></html></div>
+<span class="va">all_data</span> <span class="op">&lt;-</span> <span class="fu">future_lapply</span><span class="op">(</span><span class="va">gaids</span>, <span class="va">my_fetch</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
 
@@ -924,7 +953,7 @@ segment_seq_example
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

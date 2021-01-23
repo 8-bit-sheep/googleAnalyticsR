@@ -280,21 +280,21 @@ segment_element that are combined in OR lists for segment_vectors_*
 
     </div>
 
-    <pre class="usage"><span class='fu'>segment_element</span>(
-  <span class='no'>name</span>,
-  <span class='kw'>operator</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"REGEXP"</span>, <span class='st'>"BEGINS_WITH"</span>, <span class='st'>"ENDS_WITH"</span>, <span class='st'>"PARTIAL"</span>, <span class='st'>"EXACT"</span>, <span class='st'>"IN_LIST"</span>,
+    <pre class="usage"><span class='fu'>segment_element</span><span class='op'>(</span>
+  <span class='va'>name</span>,
+  operator <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"REGEXP"</span>, <span class='st'>"BEGINS_WITH"</span>, <span class='st'>"ENDS_WITH"</span>, <span class='st'>"PARTIAL"</span>, <span class='st'>"EXACT"</span>, <span class='st'>"IN_LIST"</span>,
     <span class='st'>"NUMERIC_LESS_THAN"</span>, <span class='st'>"NUMERIC_GREATER_THAN"</span>, <span class='st'>"NUMERIC_BETWEEN"</span>, <span class='st'>"LESS_THAN"</span>,
-    <span class='st'>"GREATER_THAN"</span>, <span class='st'>"EQUAL"</span>, <span class='st'>"BETWEEN"</span>),
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"METRIC"</span>, <span class='st'>"DIMENSION"</span>),
-  <span class='kw'>not</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>expressions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>caseSensitive</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>minComparisonValue</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>maxComparisonValue</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scope</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SESSION"</span>, <span class='st'>"USER"</span>, <span class='st'>"HIT"</span>, <span class='st'>"PRODUCT"</span>),
-  <span class='kw'>comparisonValue</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>matchType</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PRECEDES"</span>, <span class='st'>"IMMEDIATELY_PRECEDES"</span>)
-)</pre>
+    <span class='st'>"GREATER_THAN"</span>, <span class='st'>"EQUAL"</span>, <span class='st'>"BETWEEN"</span><span class='op'>)</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"METRIC"</span>, <span class='st'>"DIMENSION"</span><span class='op'>)</span>,
+  not <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  expressions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  caseSensitive <span class='op'>=</span> <span class='cn'>NULL</span>,
+  minComparisonValue <span class='op'>=</span> <span class='cn'>NULL</span>,
+  maxComparisonValue <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scope <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"SESSION"</span>, <span class='st'>"USER"</span>, <span class='st'>"HIT"</span>, <span class='st'>"PRODUCT"</span><span class='op'>)</span>,
+  comparisonValue <span class='op'>=</span> <span class='cn'>NULL</span>,
+  matchType <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"PRECEDES"</span>, <span class='st'>"IMMEDIATELY_PRECEDES"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -371,7 +371,7 @@ segment_element that are combined in OR lists for segment_vectors_*
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

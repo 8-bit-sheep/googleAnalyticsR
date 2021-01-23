@@ -270,7 +270,7 @@
     <p>Create a cohort group</p>
     </div>
 
-    <pre class="usage"><span class='fu'>make_cohort_group</span>(<span class='no'>cohorts</span>, <span class='kw'>lifetimeValue</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>cohort_types</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>make_cohort_group</span><span class='op'>(</span><span class='va'>cohorts</span>, lifetimeValue <span class='op'>=</span> <span class='cn'>FALSE</span>, cohort_types <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -307,53 +307,55 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>googleAnalyticsR</span>)
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://code.markedmondson.me/googleAnalyticsR/'>googleAnalyticsR</a></span><span class='op'>)</span>
 
 <span class='co'>## authenticate, </span>
 <span class='co'>## or use the RStudio Addin "Google API Auth" with analytics scopes set</span>
-<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
+<span class='fu'><a href='ga_auth.html'>ga_auth</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'>## get your accounts</span>
-<span class='no'>account_list</span> <span class='kw'>&lt;-</span> <span class='fu'>google_analytics_account_list</span>()
+<span class='va'>account_list</span> <span class='op'>&lt;-</span> <span class='fu'>google_analytics_account_list</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'>## pick a profile with data to query</span>
 
-<span class='no'>ga_id</span> <span class='kw'>&lt;-</span> <span class='no'>account_list</span>[<span class='fl'>23</span>,<span class='st'>'viewId'</span>]
+<span class='va'>ga_id</span> <span class='op'>&lt;-</span> <span class='va'>account_list</span><span class='op'>[</span><span class='fl'>23</span>,<span class='st'>'viewId'</span><span class='op'>]</span>
 
 
 <span class='co'>## first make a cohort group</span>
 
-<span class='no'>cohort4</span> <span class='kw'>&lt;-</span> <span class='fu'>make_cohort_group</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"cohort 1"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2015-08-01"</span>, <span class='st'>"2015-08-01"</span>),
-                                  <span class='st'>"cohort 2"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2015-07-01"</span>,<span class='st'>"2015-07-01"</span>)))
-
+<span class='va'>cohort4</span> <span class='op'>&lt;-</span> <span class='fu'>make_cohort_group</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"cohort 1"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2015-08-01"</span>, <span class='st'>"2015-08-01"</span><span class='op'>)</span>, 
+                                  <span class='st'>"cohort 2"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2015-07-01"</span>,<span class='st'>"2015-07-01"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+                                  
 <span class='co'>## then call cohort report.  No date_range and must include metrics and dimensions</span>
 <span class='co'>##   from the cohort list</span>
-<span class='no'>cohort_example</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>ga_id</span>,
-                                   <span class='kw'>dimensions</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'cohort'</span>),
-                                   <span class='kw'>cohort</span> <span class='kw'>=</span> <span class='no'>cohort4</span>,
-                                   <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'cohortTotalUsers'</span>))
-
-
+<span class='va'>cohort_example</span> <span class='op'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span><span class='op'>(</span><span class='va'>ga_id</span>, 
+                                   dimensions<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'cohort'</span><span class='op'>)</span>, 
+                                   cohort <span class='op'>=</span> <span class='va'>cohort4</span>, 
+                                   metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'cohortTotalUsers'</span><span class='op'>)</span><span class='op'>)</span>
+                                     
+                                     
 <span class='co'>### Lifetime Value report - just a variation of the cohort report </span>
 <span class='co'># with lifetimeValue = TRUE</span>
 <span class='co'>### and ltv specific metrics</span>
 <span class='co'>### The view MUST be an app view at the moment</span>
-
+ 
 <span class='co'>## make a cohort group with lifetimeValue = TRUE</span>
-
-<span class='no'>cohort_ltv</span> <span class='kw'>&lt;-</span> <span class='fu'>make_cohort_group</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"cohort 1"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2018-12-01"</span>, <span class='st'>"2018-12-31"</span>),
-                                     <span class='st'>"cohort 2"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2019-01-01"</span>, <span class='st'>"2019-01-31"</span>)),
-                                     <span class='kw'>lifetimeValue</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+ 
+<span class='va'>cohort_ltv</span> <span class='op'>&lt;-</span> <span class='fu'>make_cohort_group</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"cohort 1"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2018-12-01"</span>, <span class='st'>"2018-12-31"</span><span class='op'>)</span>, 
+                                     <span class='st'>"cohort 2"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2019-01-01"</span>, <span class='st'>"2019-01-31"</span><span class='op'>)</span><span class='op'>)</span>,
+                                     lifetimeValue <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+                                     
 <span class='co'>## call a cohort report with ltv metrics</span>
 
-<span class='no'>ltv_example</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span>(<span class='no'>ga_id</span>,
-     <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'cohort'</span>, <span class='st'>"acquisitionTrafficChannel"</span>),
-     <span class='kw'>cohorts</span> <span class='kw'>=</span> <span class='no'>cohort_ltv</span>,
-     <span class='kw'>metrics</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cohortGoalCompletionsPerUserWithLifetimeCriteria"</span>))
+<span class='va'>ltv_example</span> <span class='op'>&lt;-</span> <span class='fu'><a href='google_analytics.html'>google_analytics</a></span><span class='op'>(</span><span class='va'>ga_id</span>, 
+     dimensions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'cohort'</span>, <span class='st'>"acquisitionTrafficChannel"</span><span class='op'>)</span>, 
+     cohorts <span class='op'>=</span> <span class='va'>cohort_ltv</span>, 
+     metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"cohortGoalCompletionsPerUserWithLifetimeCriteria"</span><span class='op'>)</span><span class='op'>)</span>              
+                                    
+<span class='op'>}</span>
 
-}</div></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -369,7 +371,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

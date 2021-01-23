@@ -270,13 +270,13 @@
     <p>Take a filter object and add and/or apply it so its live.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_filter_add</span>(
-  <span class='no'>Filter</span>,
-  <span class='no'>accountId</span>,
-  <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>linkFilter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>ga_filter_add</span><span class='op'>(</span>
+  <span class='va'>Filter</span>,
+  <span class='va'>accountId</span>,
+  webPropertyId <span class='op'>=</span> <span class='cn'>NULL</span>,
+  viewId <span class='op'>=</span> <span class='cn'>NULL</span>,
+  linkFilter <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -323,72 +323,74 @@ You will find it listed in the admin panel Account &gt; All Filters.  You can th
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'>## Create a filter object for adding an IP exclusion:</span>
-<span class='no'>Filter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-               <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>'Exclude Internal Traffic'</span>,
-               <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'EXCLUDE'</span>,
-               <span class='kw'>excludeDetails</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-                   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>'GEO_IP_ADDRESS'</span>,
-                   <span class='kw'>matchType</span> <span class='kw'>=</span> <span class='st'>'EQUAL'</span>,
-                   <span class='kw'>expressionValue</span> <span class='kw'>=</span> <span class='st'>'199.04.123.1'</span>,
-                   <span class='kw'>caseSensitive</span> <span class='kw'>=</span> <span class='st'>'False'</span>
-                                    )
-              )
+<span class='va'>Filter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+               name <span class='op'>=</span> <span class='st'>'Exclude Internal Traffic'</span>,
+               type <span class='op'>=</span> <span class='st'>'EXCLUDE'</span>,
+               excludeDetails <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+                   field <span class='op'>=</span> <span class='st'>'GEO_IP_ADDRESS'</span>,
+                   matchType <span class='op'>=</span> <span class='st'>'EQUAL'</span>,
+                   expressionValue <span class='op'>=</span> <span class='st'>'199.04.123.1'</span>,
+                   caseSensitive <span class='op'>=</span> <span class='st'>'False'</span>
+                                    <span class='op'>)</span>
+              <span class='op'>)</span>
 
 <span class='co'># create and add the filter to the view specified      </span>
-<span class='no'>my_filter</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_filter_add</span>(<span class='no'>Filter</span>,
-                           <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='fl'>12345</span>,
-                           <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-12345-1"</span>,
-                           <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>654321</span>,
-                           <span class='kw'>linkFilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='va'>my_filter</span> <span class='op'>&lt;-</span> <span class='fu'>ga_filter_add</span><span class='op'>(</span><span class='va'>Filter</span>, 
+                           accountId <span class='op'>=</span> <span class='fl'>12345</span>, 
+                           webPropertyId <span class='op'>=</span> <span class='st'>"UA-12345-1"</span>, 
+                           viewId <span class='op'>=</span> <span class='fl'>654321</span>,
+                           linkFilter <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># only create the filter, don't apply it to any view - returns filterId for use later</span>
-<span class='no'>my_filter</span> <span class='kw'>&lt;-</span> <span class='fu'>ga_filter_add</span>(<span class='no'>Filter</span>,
-                           <span class='kw'>accountId</span> <span class='kw'>=</span> <span class='fl'>12345</span>,
-                           <span class='kw'>linkFilter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='va'>my_filter</span> <span class='op'>&lt;-</span> <span class='fu'>ga_filter_add</span><span class='op'>(</span><span class='va'>Filter</span>, 
+                           accountId <span class='op'>=</span> <span class='fl'>12345</span>, 
+                           linkFilter <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>                          
 
 <span class='co'>## Other examples of filters you can create below:</span>
 <span class='co'>## Create a filter object for making campaign medium lowercase</span>
-<span class='no'>Filter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-               <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>'Lowercase Campaign Medium'</span>,
-               <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'LOWERCASE'</span>,
-               <span class='kw'>lowercaseDetails</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-                   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>'CAMPAIGN_MEDIUM'</span>
-                                    )
-              )
+<span class='va'>Filter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+               name <span class='op'>=</span> <span class='st'>'Lowercase Campaign Medium'</span>,
+               type <span class='op'>=</span> <span class='st'>'LOWERCASE'</span>,
+               lowercaseDetails <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+                   field <span class='op'>=</span> <span class='st'>'CAMPAIGN_MEDIUM'</span>
+                                    <span class='op'>)</span>
+              <span class='op'>)</span>
 
 <span class='co'>## Create a filter object to append hostname to URI</span>
-<span class='no'>Filter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-               <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>'Append hostname to URI'</span>,
-               <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'ADVANCED'</span>,
-               <span class='kw'>advancedDetails</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-                   <span class='kw'>fieldA</span> <span class='kw'>=</span> <span class='st'>'PAGE_HOSTNAME'</span>,
-                   <span class='kw'>extractA</span> <span class='kw'>=</span> <span class='st'>'(.*)'</span>,
-                   <span class='kw'>fieldARequired</span> <span class='kw'>=</span> <span class='st'>'True'</span>,
-                   <span class='kw'>fieldB</span> <span class='kw'>=</span> <span class='st'>'PAGE_REQUEST_URI'</span>,
-                   <span class='kw'>extractB</span> <span class='kw'>=</span> <span class='st'>'(.*)'</span>,
-                   <span class='kw'>fieldBRequired</span> <span class='kw'>=</span> <span class='st'>'False'</span>,
-                   <span class='kw'>outputConstructor</span> <span class='kw'>=</span> <span class='st'>'$A1$B1'</span>,
-                   <span class='kw'>outputToField</span> <span class='kw'>=</span> <span class='st'>'PAGE_REQUEST_URI'</span>,
-                   <span class='kw'>caseSensitive</span> <span class='kw'>=</span> <span class='st'>'False'</span>,
-                   <span class='kw'>overrideOutputField</span> <span class='kw'>=</span> <span class='st'>'True'</span>
-                                    )
-              )
+<span class='va'>Filter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+               name <span class='op'>=</span> <span class='st'>'Append hostname to URI'</span>,
+               type <span class='op'>=</span> <span class='st'>'ADVANCED'</span>,
+               advancedDetails <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+                   fieldA <span class='op'>=</span> <span class='st'>'PAGE_HOSTNAME'</span>,
+                   extractA <span class='op'>=</span> <span class='st'>'(.*)'</span>,
+                   fieldARequired <span class='op'>=</span> <span class='st'>'True'</span>,
+                   fieldB <span class='op'>=</span> <span class='st'>'PAGE_REQUEST_URI'</span>,
+                   extractB <span class='op'>=</span> <span class='st'>'(.*)'</span>,
+                   fieldBRequired <span class='op'>=</span> <span class='st'>'False'</span>,
+                   outputConstructor <span class='op'>=</span> <span class='st'>'$A1$B1'</span>,
+                   outputToField <span class='op'>=</span> <span class='st'>'PAGE_REQUEST_URI'</span>,
+                   caseSensitive <span class='op'>=</span> <span class='st'>'False'</span>,
+                   overrideOutputField <span class='op'>=</span> <span class='st'>'True'</span>
+                                    <span class='op'>)</span>
+              <span class='op'>)</span>
 
 <span class='co'>## Create a filter object to add www hostname without it</span>
-<span class='no'>Filter</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-               <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>'Search and Replace www'</span>,
-               <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'SEARCH_AND_REPLACE'</span>,
-               <span class='kw'>searchAndReplaceDetails</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-                   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>'PAGE_HOSTNAME'</span>,
-                   <span class='kw'>searchString</span> <span class='kw'>=</span> <span class='st'>'^exampleUSA\\.com$'</span>,
-                   <span class='kw'>replaceString</span> <span class='kw'>=</span> <span class='st'>'www.exampleUSA.com'</span>,
-                   <span class='kw'>caseSensitive</span> <span class='kw'>=</span> <span class='st'>'False'</span>
-                                    )
-              )
+<span class='va'>Filter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+               name <span class='op'>=</span> <span class='st'>'Search and Replace www'</span>,
+               type <span class='op'>=</span> <span class='st'>'SEARCH_AND_REPLACE'</span>,
+               searchAndReplaceDetails <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+                   field <span class='op'>=</span> <span class='st'>'PAGE_HOSTNAME'</span>,
+                   searchString <span class='op'>=</span> <span class='st'>'^exampleUSA\\.com$'</span>,
+                   replaceString <span class='op'>=</span> <span class='st'>'www.exampleUSA.com'</span>,
+                   caseSensitive <span class='op'>=</span> <span class='st'>'False'</span>
+                                    <span class='op'>)</span>
+              <span class='op'>)</span>
 
-}</div></pre>
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -404,7 +406,7 @@ You will find it listed in the admin panel Account &gt; All Filters.  You can th
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

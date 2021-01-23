@@ -270,7 +270,7 @@
     <p>Get a list of Account level user links, or if you supply the webPropertyId or viewId it will show user links at that level</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_users_list</span>(<span class='no'>accountId</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"~all"</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='st'>"~all"</span>)</pre>
+    <pre class="usage"><span class='fu'>ga_users_list</span><span class='op'>(</span><span class='va'>accountId</span>, webPropertyId <span class='op'>=</span> <span class='st'>"~all"</span>, viewId <span class='op'>=</span> <span class='st'>"~all"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -306,17 +306,18 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>googleAnalyticsR</span>)
-<span class='fu'><a href='ga_auth.html'>ga_auth</a></span>()
-<span class='fu'>ga_users_list</span>(<span class='fl'>47480439</span>)
-<span class='fu'>ga_users_list</span>(<span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-47480439-2"</span>)
-<span class='fu'>ga_users_list</span>(<span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='st'>"UA-47480439-2"</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='fl'>81416156</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://code.markedmondson.me/googleAnalyticsR/'>googleAnalyticsR</a></span><span class='op'>)</span>
+<span class='fu'><a href='ga_auth.html'>ga_auth</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>ga_users_list</span><span class='op'>(</span><span class='fl'>47480439</span><span class='op'>)</span>
+<span class='fu'>ga_users_list</span><span class='op'>(</span><span class='fl'>47480439</span>, webPropertyId <span class='op'>=</span> <span class='st'>"UA-47480439-2"</span><span class='op'>)</span>
+<span class='fu'>ga_users_list</span><span class='op'>(</span><span class='fl'>47480439</span>, webPropertyId <span class='op'>=</span> <span class='st'>"UA-47480439-2"</span>, viewId <span class='op'>=</span> <span class='fl'>81416156</span><span class='op'>)</span>
 
 <span class='co'># use NULL to only list linkids for that level</span>
-<span class='fu'>ga_users_list</span>(<span class='fl'>47480439</span>, <span class='kw'>webPropertyId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>viewId</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-}</div></pre>
+<span class='fu'>ga_users_list</span><span class='op'>(</span><span class='fl'>47480439</span>, webPropertyId <span class='op'>=</span> <span class='cn'>NULL</span>, viewId <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -332,7 +333,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
