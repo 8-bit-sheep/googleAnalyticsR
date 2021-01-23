@@ -48,7 +48,7 @@ steps:
     volumes:
       - name: ssh
         path: /root/.ssh
-  - name: gcr.io/gcer-public/packagetools:master
+  - name: gcr.io/gcer-public/packagetools
     args:
       - Rscript
       - -e
