@@ -10,11 +10,11 @@
 ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
   
   if(name == "list"){
-    return(list.files(system.file("models","shiny", 
+    return(list.files(system.file("models","shiny_templates", 
                                   package = "googleAnalyticsR")))
   }
   
-  f <- system.file("models","shiny",name, 
+  f <- system.file("models","shiny_templates",name, 
                    package = "googleAnalyticsR")
   if(!nzchar(f)){
     stop("Couldn't find template named ", name, call. = FALSE)
@@ -31,7 +31,8 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #' Create a Shiny app from a ga_model file
 #' 
 #' @param models The \link{ga_model} file location ("my_model.gamr") or a \link{ga_model} object - can pass in multiple as a list
-#' @param template The template file for the Shiny app
+#' @param template The template Shiny files for the Shiny app - passed to \code{shiny::runApp()}
+#' @param header_boilerplate Whether to add header boilerplate to the template
 #' @param auth_dropdown What type of account picker to include
 #' @param web_json The client.id json file for Web
 #' @param scopes The scope the API requests will be under
@@ -40,20 +41,21 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #' @param deployed_url If deploying Shiny app to a server, put the URL of the deployed app here so the authentication will redirect to the correct place
 #' @param date_range Most templates support a {{ date_range }} global input for the data import functions, set this to FALSE to remove it
 #' @param ui_f A function to generate the UI from the models list argument - default is \link{ga_model_shiny_ui}
-#' @param template_type Shiny app templates can hold only the ui of an app, which means the server and/or the header section will be loaded via the standard boilerplate from \code{"server_boilerplate.R"} and/or \code{"header_boilerplate.R"}. Select \code{"full"} if the template holds everything including header, ui and server code
 #' @param ... Extra macro variables the template may support: a named list with the name being a template variable
 #' 
 #' @details 
 #' 
 #' As \link{ga_model} objects have standardised code, they can be used to build standard templated Shiny apps.  Templates are made using the \link[whisker]{whisker.render} function
 #' 
-#' Templates hold macro variables indicated via \code{ \{\{ macro_name \}\} } in the Shiny app template code. See \code{ga_model_shiny_template("template_full.R", TRUE)} for an example showing a minimal viable app.
-#' 
-#' Template contain code to allow multi-user login via Google OAuth2.
-#' 
-#' As the header and server parts of the Shiny code are generic, they can also be templated leaving you only needing to create the UI part of the Shiny code.  This is the default of \code{template_type = "ui-only"}.  Use the other template_type's if your Shiny template does include header or server code.
-#' 
 #' Some templates are included with the package, seen via \code{ga_model_shiny_template("list")}
+#' 
+#' Templates hold macro variables indicated via \code{ \{\{ macro_name \}\} } in the Shiny app template code. See \code{ga_model_shiny_template("basic_app", TRUE)} for an example showing a minimal viable app.  Templates can be files such as ui.R or app.R files, or folders containing ui.R, app.R files or www/ folders for advanced themes. 
+#' 
+#' Templates contain code to allow multi-user login via Google OAuth2.
+#' 
+#' If your template is pointing at a file such as ui.R or app.R it will create an app.R Shiny object.  If your template is pointing at a directory it will check for the presence of ui.R within the folder.  In either case if the server.R is missing it will use the boilerplate version from \code{ga_model_shiny_template("boilerplate")}
+#' 
+#' By default the Shiny app is launched which in most cases will prompt authorisation for your Google Analytics.  You can instead write the app out using \code{local_folder} to a valid location for deployment later.
 #' 
 #' @section Template macro variables:
 #' 
@@ -62,14 +64,14 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #'  \item{\code{\{\{\{ web_json \}\}\}}}{- Adds Google OAuth2 client for web applications}
 #'  \item{\code{\{\{\{ scopes \}\}\}}}{- Adds Google Oauth2 scopes for the API calls}
 #'  \item{\code{\{\{\{ deployed_url \}\}\}}}{- Adds \code{option(googleAuthR.redirect)} option for deployed Shiny apps}
-#'  \item{\code{\{\{\{ model_load \}\}\}}}{- Adds \link{ga_model_load} calls loading all models in the list passed to this function's \code{models} argument}
+#'  \item{\code{\{\{\{ model_load \}\}\}}}{- Adds \link{ga_model_load} calls loading all models in the list passed to this function's \code{models} argument.  It creates R objects called 'model1', 'model2' etc. in the Shiny app code}
 #'  \item{\code{\{\{\{ shiny_title \}\}\}}}{- Adds the title to the Shiny app}
 #'  \item{\code{\{\{\{ auth_ui \}\}\}}}{- Adds the correct dropdown Shiny module for picking a GA4 or Universal Analytics properties}
 #'  \item{\code{\{\{\{ date_range \}\}\}}}{- Adds a \code{shiny::dateInput()} date selector with id "date_range" for use in model's data fetching functions}
-#'  \item{\code{\{\{\{ model_ui \}\}\}}}{- Adds the models UI elements as configured in the \link{ga_model} object}
+#'  \item{\code{\{\{\{ model_ui \}\}\}}}{- Adds the models UI elements as configured in the \link{ga_model} object.  It uses the object loaded above via the model_load macro.  It looks like \code{model1$ui('model1')} in the code.}
 #'  \item{\code{\{\{\{ auth_server \}\}\}}}{- Adds the authentication module's server side function}
 #'  \item{\code{\{\{\{ auth_accounts \}\}\}}}{- Adds a call to \link{ga_account_list} for the appropriate GA account type (GA4 or Universal)}
-#'  \item{\code{\{\{\{ model_server \}\}\}}}{- Adds the server side module for the models as configured in the \link{ga_model} configuration}
+#'  \item{\code{\{\{\{ model_server \}\}\}}}{- Adds the server side module for the models as configured in the \link{ga_model} configuration. It uses the object loaded above via the model_load macro.  It looks like \code{model1$server('model1')} in the code.}
 #'  \item{\code{\{\{\{ your_argument \}\}\}}}{- You can pass in your own custom variables to the template via the \code{...} argument of this function if they are named the same as the template macro variable}
 #' }
 #' 
@@ -84,9 +86,28 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #' 
 #' \dontrun{
 #' 
-#' # a universal analytics model using default template "template1.R"
+#' # a universal analytics model using default template "basic"
 #' ga_model_shiny(
-#'   ga_model_example("decomp_ga.gamr"), auth_dropdown = "universal")
+#'   ga_model_example("decomp_ga.gamr"), 
+#'   auth_dropdown = "universal")
+#'
+#' # a template from a directory holding an app.R file
+#' ga_model_shiny(
+#'   ga_model_example("decomp_ga.gamr"), 
+#'   auth_dropdown = "universal",
+#'   template = ga_model_shiny_template("basic_app"))
+#'   
+#' # a template directly from an app.R file that has its own server object
+#' ga_model_shiny(
+#'   ga_model_example("decomp_ga.gamr"), 
+#'   auth_dropdown = "universal",
+#'   template = ga_model_shiny_template("basic_app/app.R"))
+#'   
+#' # a template from only an ui.R file that will import boilerplate server.R
+#' ga_model_shiny(
+#'   ga_model_example("decomp_ga.gamr"), 
+#'   auth_dropdown = "universal",
+#'   template = ga_model_shiny_template("basic/ui.R"))
 #' 
 #' # multiple models
 #' m3 <- ga_model_example("time-normalised.gamr")
@@ -94,7 +115,7 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #' 
 #' # launch in gentelella template
 #' ga_model_shiny(list(m4, m3), auth_dropdown = "universal",
-#'               template = ga_model_shiny_template("gentelella.R"))
+#'               template = ga_model_shiny_template("gentelella"))
 #' 
 #' # custom shinydashboard template              
 #' ## make a function to output the custom shinydashboard tabs
@@ -103,8 +124,9 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #'   labels <- lapply(models, function(x) substr(x$description, 0,14))
 #'   
 #'   f <- function(model_n, label){
-#'   paste(sprintf("menuItem('%s', tabName = '%s')", 
-#'         label, model_n), collapse = ",\n")}
+#'     paste(sprintf("menuItem('%s', tabName = '%s')", 
+#'                   label, model_n), collapse = ",\n")
+#'   }
 #'  
 #'   mapply(f, model_n, labels, SIMPLIFY = FALSE, USE.NAMES = FALSE)
 #' }
@@ -121,27 +143,26 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #' ## launch shiny app with the models in each tab
 #' ## model_tabs is via ... and a custom macro in the shinydashboard template
 #' ga_model_shiny(models, auth_dropdown = "universal", 
-#'      template = ga_model_shiny_template("shinydashboard.R"), 
+#'      template = ga_model_shiny_template("shinydashboard"), 
 #'      ui_f = shinydashboard_ui, 
 #'      model_tabs = shinydashboard_ui_menu(models))
 #' }
 #' @family GA modelling functions
 ga_model_shiny <- function(
   models,
-  template = ga_model_shiny_template("template1.R"),
-  template_type = c("ui-only","ui-header","full"),
+  template = ga_model_shiny_template("basic"),
+  header_boilerplate = TRUE,
   title = "ga_model_shiny",
   auth_dropdown = c("ga4","universal","none"),
   web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"),
   date_range = TRUE,
   scopes = "https://www.googleapis.com/auth/analytics.readonly",
   deployed_url = "",
-  local_file = "",
+  local_folder = "",
   ui_f = ga_model_shiny_ui,
   ...){
   
   auth_dropdown <- match.arg(auth_dropdown)
-  template_type <- match.arg(template_type)
   
   if(is.ga_model(models)){
     models <- list(models)
@@ -160,7 +181,10 @@ ga_model_shiny <- function(
     date_range = date_range, 
     ga_model_shiny_ui_f = ui_f)
   
-  txt <- readLines(template)
+  txt <- ga_model_shiny_template_make(
+    template, 
+    header_boilerplate = header_boilerplate)
+  
   values <- c(list(...),
               make_date_range(date_range),
               make_auth_dropdown(auth_dropdown), 
@@ -170,59 +194,172 @@ ga_model_shiny <- function(
               web_json = web_json,
               scopes = scopes,
               shiny_title = title)
+  
   myMessage("passed template values:\n", 
             paste(names(values),"=",values, collapse = "\n"),
             level = 3)
   
-  render <- whisker.render(txt, values)
-  
-  if(template_type == "ui-only"){
-    myMessage(
-      "Adding ga_model_shiny_template('header_boilerplate.R') to Shiny code",
-      level = 3)
-    
-    # add the header boiler plate
-    hdr_txt <- ga_model_shiny_template("header_boilerplate.R", 
-                                       read_lines = TRUE)
-    hdr_render <- whisker.render(hdr_txt, values)
-    render <- c(hdr_render,
-                render)
-  }
-  
-  if(template_type %in% c("ui-only","ui-header")){
-    myMessage(
-      "Adding ga_model_shiny_template('server_boilerplate.R') to Shiny code",
-      level = 3)
-    
-    # add the server boiler plate
-    server_txt <- ga_model_shiny_template("server_boilerplate.R", 
-                                          read_lines = TRUE)
-    server_render <- whisker.render(server_txt, values)
-    render <- c(render,
-                server_render)
-  }
-  
-  if(nzchar(local_file)){
+  render <- lapply(txt, whisker.render, data = values)
 
-    writeLines(render, local_file)
+  if(nzchar(local_folder)){
+    write_template_object(render, local_folder)
     return(render)
   }
   
-  tmp <- tempfile(fileext = ".R")
-  on.exit(unlink(tmp))
+  tmp_dir <- tempdir()
+  if(dir.exists(template)){
+    # copy over any dependencies in template folder
+    file.copy(list.files(template, full.names = TRUE), 
+              tmp_dir, recursive = TRUE)    
+  }
   
-  writeLines(render, tmp)
-  myMessage("Launching Shiny app from ", tmp, level = 3)
-  shiny::runApp(tmp)
+  write_template_object(render, tmp_dir)
+  
+  myMessage("Launching Shiny app from ", tmp_dir, level = 3)
+  
+  shiny_obj <- create_app_from_template(render, tmp_dir)
+  shiny::runApp(shiny_obj)
+}
+
+create_app_from_template <- function(output, location){
+  if(!is.null(output$app) && nzchar(output$app)){
+    return(shiny::shinyAppDir(location))
+  }
+  
+  # a shiny app in location with ui.R and server.R
+  ui <- source(file.path(location, "ui.R"))
+  server <- source(file.path(location, "server.R"))
+  
+  shiny::shinyApp(
+    googleAuthR::gar_shiny_ui(ui$value, 
+                              login_ui = googleAuthR::silent_auth), 
+    server$value)
+  
+}
+
+write_template_object <- function(output, destination_folder){
+  if(!dir.exists(destination_folder)){
+    dir.create(destination_folder)
+  }
+
+  if(!is.null(output$app) && nzchar(output$app)){
+    loc <- file.path(destination_folder, "app.R")
+    myMessage("Writing Shiny app.R to ", loc, level = 3)
+    writeLines(output$app, loc)
+  }
+  
+  if(!is.null(output$ui) && nzchar(output$ui)){
+    loc <- file.path(destination_folder, "ui.R")
+    myMessage("Writing Shiny ui.R to ", loc, level = 3)
+    writeLines(output$ui, loc)
+  }
+  
+  if(!is.null(output$server) && nzchar(output$server)){
+    loc <- file.path(destination_folder, "server.R")
+    myMessage("Writing Shiny server.R to ", loc, level = 3)
+    writeLines(output$server, loc)
+  }
+  
+  invisible(NULL)
+  
+}
+
+# turn templates files into txt for server.R and ui.R for launching
+ga_model_shiny_template_make <- function(template, header_boilerplate = TRUE){
+  
+  if(!dir.exists(template) && !file.exists(template)){
+    stop("Couldn't detect if template was a file or directory: ", template, 
+         call. = FALSE)
+  }
+  
+  # as an example
+  output <- list(
+    app = NULL,
+    ui = NULL,
+    server = NULL
+  )
+  
+  hdr_txt <- ""
+  if(header_boilerplate){
+    myMessage(
+      "Adding ga_model_shiny_template('header_boilerplate.R') to Shiny code",
+      level = 3)
+    # add the header boiler plate
+    hdr_txt <- ga_model_shiny_template("boilerplate/header_boilerplate.R", 
+                                       read_lines = TRUE)
+  }
+  
+  # default
+  server_txt <- ga_model_shiny_template("boilerplate/server_boilerplate.R",
+                                        read_lines = TRUE)
+  
+  if(dir.exists(template)){
+    # its a directory holding at least ui.R or app.R
+    dir_files <- list.files(template, recursive = TRUE)
+    
+    if(!"ui.R" %in% dir_files && !"app.R" %in% dir_files){
+      stop("Template folder must include ui.R or app.R file", call. = FALSE)
+    }
+    
+    if("app.R" %in% dir_files){
+      myMessage("Using app.R in template folder ", template)
+      # does it have a server object? write it out as app.R
+      app_txt <- readLines(file.path(template, "app.R"))
+      output$app <- has_server_object(
+        app_txt, 
+        ga_model_shiny_template("boilerplate/server_app_boilerplate.R", 
+                                read_lines = TRUE))
+    } else {
+      ui_txt <- readLines(file.path(template, "ui.R"))
+      
+      # it has its own server.R so overwrite default
+      if("server.R" %in% dir_files){
+        server_txt <- readLines(file.path(template, "server.R"))
+      }
+      
+      output$ui <- c(hdr_txt, ui_txt)
+      output$server <- server_txt
+    }
+    
+  } else if(file.exists(template)){
+    
+    # its a file of app.R, ui.R or expression that produces a Shiny app object
+    ui_txt <- readLines(template)
+
+    # we assume all ui.R files do not include server objects
+    if(basename(template) == "ui.R"){
+      output$ui <- c(hdr_txt, ui_txt)
+      output$server <- server_txt
+    } else {
+      # does it have a server object? write it out as app.R
+      output$app <- has_server_object(
+        ui_txt, 
+        ga_model_shiny_template("boilerplate/server_app_boilerplate.R", 
+                                read_lines = TRUE))
+    }
+
+  }
+  
+  output
+
+}
+
+has_server_object <- function(txt, default){
+  
+  # does it have a server object? 
+  if(any(grepl("^server", txt))){
+    return(txt)
+  }
+  
+  default
 }
 
 make_date_range <- function(date_range){
   if(!date_range) return("br()")
   
-  list(date_range = 'dateRangeInput("date_range", 
-                        "Date Range", 
-                        start = Sys.Date() - 400,
-                        end = Sys.Date() - 1)')
+  list(date_range = 
+         'dateRangeInput("date_range", "Date Range", 
+          start = Sys.Date() - 400, end = Sys.Date() - 1)')
 }
 
 make_model_libraries <- function(models){

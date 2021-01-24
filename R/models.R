@@ -80,6 +80,13 @@ ga_model_save <- function(model, filename = "my-model.gamr"){
 #' @export
 #' @import assertthat
 #' @family GA modelling functions
+#' @examples 
+#' 
+#' # models used in ga_model_example() are here:
+#' location <- system.file("models","decomp_ga.gamr", 
+#'                         package = "googleAnalyticsR")
+#' 
+#' ga_model_load(location)
 ga_model_load <- function(filename = "my-model.gamr"){
   
   assert_that(is.readable(filename))
@@ -98,6 +105,13 @@ ga_model_load <- function(filename = "my-model.gamr"){
 #' @export
 #' @import assertthat
 #' @family GA modelling functions
+#' @examples 
+#' 
+#' # example .gamr files included with the package
+#' ga_model_example()
+#' 
+#' # load one example
+#' ga_model_example("ga4-trend.gamr")
 ga_model_example <- function(name = "list"){
   
   if(name == "list"){

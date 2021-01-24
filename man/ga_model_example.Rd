@@ -12,6 +12,14 @@ ga_model_example(name = "list")
 \description{
 Load an example model
 }
+\examples{
+
+# example .gamr files included with the package
+ga_model_example()
+
+# load one example
+ga_model_example("ga4-trend.gamr")
+}
 \seealso{
 Other GA modelling functions: 
 \code{\link{ga_model_edit}()},

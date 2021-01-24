@@ -12,6 +12,14 @@ ga_model_load(filename = "my-model.gamr")
 \description{
 Load a created model
 }
+\examples{
+
+# models used in ga_model_example() are here:
+location <- system.file("models","decomp_ga.gamr", 
+                        package = "googleAnalyticsR")
+
+ga_model_load(location)
+}
 \seealso{
 Other GA modelling functions: 
 \code{\link{ga_model_edit}()},

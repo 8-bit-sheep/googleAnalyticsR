@@ -6,15 +6,15 @@
 \usage{
 ga_model_shiny(
   models,
-  template = ga_model_shiny_template("template1.R"),
-  template_type = c("ui-only", "ui-header", "full"),
+  template = ga_model_shiny_template("basic"),
+  header_boilerplate = TRUE,
   title = "ga_model_shiny",
   auth_dropdown = c("ga4", "universal", "none"),
   web_json = Sys.getenv("GAR_CLIENT_WEB_JSON"),
   date_range = TRUE,
   scopes = "https://www.googleapis.com/auth/analytics.readonly",
   deployed_url = "",
-  local_file = "",
+  local_folder = "",
   ui_f = ga_model_shiny_ui,
   ...
 )
@@ -22,9 +22,9 @@ ga_model_shiny(
 \arguments{
 \item{models}{The \link{ga_model} file location ("my_model.gamr") or a \link{ga_model} object - can pass in multiple as a list}
 
-\item{template}{The template file for the Shiny app}
+\item{template}{The template Shiny files for the Shiny app - passed to \code{shiny::runApp()}}
 
-\item{template_type}{Shiny app templates can hold only the ui of an app, which means the server and/or the header section will be loaded via the standard boilerplate from \code{"server_boilerplate.R"} and/or \code{"header_boilerplate.R"}. Select \code{"full"} if the template holds everything including header, ui and server code}
+\item{header_boilerplate}{Whether to add header boilerplate to the template}
 
 \item{title}{The title of the Shiny app}
 
@@ -38,11 +38,11 @@ ga_model_shiny(
 
 \item{deployed_url}{If deploying Shiny app to a server, put the URL of the deployed app here so the authentication will redirect to the correct place}
 
-\item{local_file}{If not empty, will not launch Shiny app but write code to the file location you put here}
-
 \item{ui_f}{A function to generate the UI from the models list argument - default is \link{ga_model_shiny_ui}}
 
 \item{...}{Extra macro variables the template may support: a named list with the name being a template variable}
+
+\item{local_file}{If not empty, will not launch Shiny app but write code to the file location you put here}
 }
 \description{
 Create a Shiny app from a ga_model file
@@ -50,13 +50,15 @@ Create a Shiny app from a ga_model file
 \details{
 As \link{ga_model} objects have standardised code, they can be used to build standard templated Shiny apps.  Templates are made using the \link[whisker]{whisker.render} function
 
-Templates hold macro variables indicated via \code{ \{\{ macro_name \}\} } in the Shiny app template code. See \code{ga_model_shiny_template("template_full.R", TRUE)} for an example showing a minimal viable app.
-
-Template contain code to allow multi-user login via Google OAuth2.
-
-As the header and server parts of the Shiny code are generic, they can also be templated leaving you only needing to create the UI part of the Shiny code.  This is the default of \code{template_type = "ui-only"}.  Use the other template_type's if your Shiny template does include header or server code.
-
 Some templates are included with the package, seen via \code{ga_model_shiny_template("list")}
+
+Templates hold macro variables indicated via \code{ \{\{ macro_name \}\} } in the Shiny app template code. See \code{ga_model_shiny_template("basic_app", TRUE)} for an example showing a minimal viable app.  Templates can be files such as ui.R or app.R files, or folders containing ui.R, app.R files or www/ folders for advanced themes. 
+
+Templates contain code to allow multi-user login via Google OAuth2.
+
+If your template is pointing at a file such as ui.R or app.R it will create an app.R Shiny object.  If your template is pointing at a directory it will check for the presence of ui.R within the folder.  In either case if the server.R is missing it will use the boilerplate version from \code{ga_model_shiny_template("boilerplate")}
+
+By default the Shiny app is launched which in most cases will prompt authorisation for your Google Analytics.  You can instead write the app out using \code{local_folder} to a valid location for deployment later.
 }
 \section{Template macro variables}{
 
@@ -66,14 +68,14 @@ Some templates are included with the package, seen via \code{ga_model_shiny_temp
  \item{\code{\{\{\{ web_json \}\}\}}}{- Adds Google OAuth2 client for web applications}
  \item{\code{\{\{\{ scopes \}\}\}}}{- Adds Google Oauth2 scopes for the API calls}
  \item{\code{\{\{\{ deployed_url \}\}\}}}{- Adds \code{option(googleAuthR.redirect)} option for deployed Shiny apps}
- \item{\code{\{\{\{ model_load \}\}\}}}{- Adds \link{ga_model_load} calls loading all models in the list passed to this function's \code{models} argument}
+ \item{\code{\{\{\{ model_load \}\}\}}}{- Adds \link{ga_model_load} calls loading all models in the list passed to this function's \code{models} argument.  It creates R objects called 'model1', 'model2' etc. in the Shiny app code}
  \item{\code{\{\{\{ shiny_title \}\}\}}}{- Adds the title to the Shiny app}
  \item{\code{\{\{\{ auth_ui \}\}\}}}{- Adds the correct dropdown Shiny module for picking a GA4 or Universal Analytics properties}
  \item{\code{\{\{\{ date_range \}\}\}}}{- Adds a \code{shiny::dateInput()} date selector with id "date_range" for use in model's data fetching functions}
- \item{\code{\{\{\{ model_ui \}\}\}}}{- Adds the models UI elements as configured in the \link{ga_model} object}
+ \item{\code{\{\{\{ model_ui \}\}\}}}{- Adds the models UI elements as configured in the \link{ga_model} object.  It uses the object loaded above via the model_load macro.  It looks like \code{model1$ui('model1')} in the code.}
  \item{\code{\{\{\{ auth_server \}\}\}}}{- Adds the authentication module's server side function}
  \item{\code{\{\{\{ auth_accounts \}\}\}}}{- Adds a call to \link{ga_account_list} for the appropriate GA account type (GA4 or Universal)}
- \item{\code{\{\{\{ model_server \}\}\}}}{- Adds the server side module for the models as configured in the \link{ga_model} configuration}
+ \item{\code{\{\{\{ model_server \}\}\}}}{- Adds the server side module for the models as configured in the \link{ga_model} configuration. It uses the object loaded above via the model_load macro.  It looks like \code{model1$server('model1')} in the code.}
  \item{\code{\{\{\{ your_argument \}\}\}}}{- You can pass in your own custom variables to the template via the \code{...} argument of this function if they are named the same as the template macro variable}
 }
 }
@@ -85,9 +87,28 @@ ga_model_shiny_template("list")
 
 \dontrun{
 
-# a universal analytics model using default template "template1.R"
+# a universal analytics model using default template "basic"
 ga_model_shiny(
-  ga_model_example("decomp_ga.gamr"), auth_dropdown = "universal")
+  ga_model_example("decomp_ga.gamr"), 
+  auth_dropdown = "universal")
+
+# a template from a directory holding an app.R file
+ga_model_shiny(
+  ga_model_example("decomp_ga.gamr"), 
+  auth_dropdown = "universal",
+  template = ga_model_shiny_template("basic_app"))
+  
+# a template directly from an app.R file that has its own server object
+ga_model_shiny(
+  ga_model_example("decomp_ga.gamr"), 
+  auth_dropdown = "universal",
+  template = ga_model_shiny_template("basic_app/app.R"))
+  
+# a template from only an ui.R file that will import boilerplate server.R
+ga_model_shiny(
+  ga_model_example("decomp_ga.gamr"), 
+  auth_dropdown = "universal",
+  template = ga_model_shiny_template("basic/ui.R"))
 
 # multiple models
 m3 <- ga_model_example("time-normalised.gamr")
@@ -95,7 +116,7 @@ m4 <- ga_model_example("ga-effect.gamr")
 
 # launch in gentelella template
 ga_model_shiny(list(m4, m3), auth_dropdown = "universal",
-              template = ga_model_shiny_template("gentelella.R"))
+              template = ga_model_shiny_template("gentelella"))
 
 # custom shinydashboard template              
 ## make a function to output the custom shinydashboard tabs
@@ -122,7 +143,7 @@ models <- list(m3, m4)
 ## launch shiny app with the models in each tab
 ## model_tabs is via ... and a custom macro in the shinydashboard template
 ga_model_shiny(models, auth_dropdown = "universal", 
-     template = ga_model_shiny_template("shinydashboard.R"), 
+     template = ga_model_shiny_template("shinydashboard"), 
      ui_f = shinydashboard_ui, 
      model_tabs = shinydashboard_ui_menu(models))
 }
