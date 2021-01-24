@@ -272,15 +272,15 @@
 
     <pre class="usage"><span class='fu'>ga_model_shiny</span><span class='op'>(</span>
   <span class='va'>models</span>,
-  template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"template1.R"</span><span class='op'>)</span>,
-  template_type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ui-only"</span>, <span class='st'>"ui-header"</span>, <span class='st'>"full"</span><span class='op'>)</span>,
+  template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"basic"</span><span class='op'>)</span>,
+  header_boilerplate <span class='op'>=</span> <span class='cn'>TRUE</span>,
   title <span class='op'>=</span> <span class='st'>"ga_model_shiny"</span>,
   auth_dropdown <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ga4"</span>, <span class='st'>"universal"</span>, <span class='st'>"none"</span><span class='op'>)</span>,
   web_json <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"GAR_CLIENT_WEB_JSON"</span><span class='op'>)</span>,
   date_range <span class='op'>=</span> <span class='cn'>TRUE</span>,
   scopes <span class='op'>=</span> <span class='st'>"https://www.googleapis.com/auth/analytics.readonly"</span>,
   deployed_url <span class='op'>=</span> <span class='st'>""</span>,
-  local_file <span class='op'>=</span> <span class='st'>""</span>,
+  local_folder <span class='op'>=</span> <span class='st'>""</span>,
   ui_f <span class='op'>=</span> <span class='va'>ga_model_shiny_ui</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -294,11 +294,11 @@
     </tr>
     <tr>
       <th>template</th>
-      <td><p>The template file for the Shiny app</p></td>
+      <td><p>The template Shiny files for the Shiny app - passed to <code><a href='https://shiny.rstudio.com/reference/shiny/latest/runApp.html'>shiny::runApp()</a></code></p></td>
     </tr>
     <tr>
-      <th>template_type</th>
-      <td><p>Shiny app templates can hold only the ui of an app, which means the server and/or the header section will be loaded via the standard boilerplate from <code>"server_boilerplate.R"</code> and/or <code>"header_boilerplate.R"</code>. Select <code>"full"</code> if the template holds everything including header, ui and server code</p></td>
+      <th>header_boilerplate</th>
+      <td><p>Whether to add header boilerplate to the template</p></td>
     </tr>
     <tr>
       <th>title</th>
@@ -325,10 +325,6 @@
       <td><p>If deploying Shiny app to a server, put the URL of the deployed app here so the authentication will redirect to the correct place</p></td>
     </tr>
     <tr>
-      <th>local_file</th>
-      <td><p>If not empty, will not launch Shiny app but write code to the file location you put here</p></td>
-    </tr>
-    <tr>
       <th>ui_f</th>
       <td><p>A function to generate the UI from the models list argument - default is <a href='ga_model_shiny_ui.html'>ga_model_shiny_ui</a></p></td>
     </tr>
@@ -336,15 +332,20 @@
       <th>...</th>
       <td><p>Extra macro variables the template may support: a named list with the name being a template variable</p></td>
     </tr>
+    <tr>
+      <th>local_file</th>
+      <td><p>If not empty, will not launch Shiny app but write code to the file location you put here</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>As <a href='ga_model.html'>ga_model</a> objects have standardised code, they can be used to build standard templated Shiny apps.  Templates are made using the <a href='https://rdrr.io/pkg/whisker/man/whisker.render.html'>whisker.render</a> function</p>
-<p>Templates hold macro variables indicated via <code> {{ macro_name }} </code> in the Shiny app template code. See <code><a href='ga_model_shiny_template.html'>ga_model_shiny_template("template_full.R", TRUE)</a></code> for an example showing a minimal viable app.</p>
-<p>Template contain code to allow multi-user login via Google OAuth2.</p>
-<p>As the header and server parts of the Shiny code are generic, they can also be templated leaving you only needing to create the UI part of the Shiny code.  This is the default of <code>template_type = "ui-only"</code>.  Use the other template_type's if your Shiny template does include header or server code.</p>
 <p>Some templates are included with the package, seen via <code><a href='ga_model_shiny_template.html'>ga_model_shiny_template("list")</a></code></p>
+<p>Templates hold macro variables indicated via <code> {{ macro_name }} </code> in the Shiny app template code. See <code><a href='ga_model_shiny_template.html'>ga_model_shiny_template("basic_app", TRUE)</a></code> for an example showing a minimal viable app.  Templates can be files such as ui.R or app.R files, or folders containing ui.R, app.R files or www/ folders for advanced themes.</p>
+<p>Templates contain code to allow multi-user login via Google OAuth2.</p>
+<p>If your template is pointing at a file such as ui.R or app.R it will create an app.R Shiny object.  If your template is pointing at a directory it will check for the presence of ui.R within the folder.  In either case if the server.R is missing it will use the boilerplate version from <code><a href='ga_model_shiny_template.html'>ga_model_shiny_template("boilerplate")</a></code></p>
+<p>By default the Shiny app is launched which in most cases will prompt authorisation for your Google Analytics.  You can instead write the app out using <code>local_folder</code> to a valid location for deployment later.</p>
     <h2 class="hasAnchor" id="template-macro-variables"><a class="anchor" href="#template-macro-variables"></a>Template macro variables</h2>
 
     
@@ -355,14 +356,14 @@
 <li><p><code>{{{ web_json }}}</code>- Adds Google OAuth2 client for web applications</p></li>
 <li><p><code>{{{ scopes }}}</code>- Adds Google Oauth2 scopes for the API calls</p></li>
 <li><p><code>{{{ deployed_url }}}</code>- Adds <code><a href='https://rdrr.io/r/base/options.html'>option(googleAuthR.redirect)</a></code> option for deployed Shiny apps</p></li>
-<li><p><code>{{{ model_load }}}</code>- Adds <a href='ga_model_load.html'>ga_model_load</a> calls loading all models in the list passed to this function's <code>models</code> argument</p></li>
+<li><p><code>{{{ model_load }}}</code>- Adds <a href='ga_model_load.html'>ga_model_load</a> calls loading all models in the list passed to this function's <code>models</code> argument.  It creates R objects called 'model1', 'model2' etc. in the Shiny app code</p></li>
 <li><p><code>{{{ shiny_title }}}</code>- Adds the title to the Shiny app</p></li>
 <li><p><code>{{{ auth_ui }}}</code>- Adds the correct dropdown Shiny module for picking a GA4 or Universal Analytics properties</p></li>
 <li><p><code>{{{ date_range }}}</code>- Adds a <code><a href='https://shiny.rstudio.com/reference/shiny/latest/dateInput.html'>shiny::dateInput()</a></code> date selector with id "date_range" for use in model's data fetching functions</p></li>
-<li><p><code>{{{ model_ui }}}</code>- Adds the models UI elements as configured in the <a href='ga_model.html'>ga_model</a> object</p></li>
+<li><p><code>{{{ model_ui }}}</code>- Adds the models UI elements as configured in the <a href='ga_model.html'>ga_model</a> object.  It uses the object loaded above via the model_load macro.  It looks like <code>model1$ui('model1')</code> in the code.</p></li>
 <li><p><code>{{{ auth_server }}}</code>- Adds the authentication module's server side function</p></li>
 <li><p><code>{{{ auth_accounts }}}</code>- Adds a call to <a href='ga_account_list.html'>ga_account_list</a> for the appropriate GA account type (GA4 or Universal)</p></li>
-<li><p><code>{{{ model_server }}}</code>- Adds the server side module for the models as configured in the <a href='ga_model.html'>ga_model</a> configuration</p></li>
+<li><p><code>{{{ model_server }}}</code>- Adds the server side module for the models as configured in the <a href='ga_model.html'>ga_model</a> configuration. It uses the object loaded above via the model_load macro.  It looks like <code>model1$server('model1')</code> in the code.</p></li>
 <li><p><code>{{{ your_argument }}}</code>- You can pass in your own custom variables to the template via the <code>...</code> argument of this function if they are named the same as the template macro variable</p></li>
 </ul>
 
@@ -383,13 +384,32 @@
     <pre class="examples"><div class='input'>
 <span class='co'># see Shiny templates included with the package</span>
 <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"list"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "gentelella.R"         "header_boilerplate.R" "server_boilerplate.R"
-#&gt; [4] "shinydashboard.R"     "template_full.R"      "template1.R"         </div><div class='input'>
+</div><div class='output co'>#&gt; [1] "basic"          "basic_app"      "boilerplate"    "gentelella"    
+#&gt; [5] "html_based"     "shinydashboard"</div><div class='input'>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 
-<span class='co'># a universal analytics model using default template "template1.R"</span>
+<span class='co'># a universal analytics model using default template "basic"</span>
 <span class='fu'>ga_model_shiny</span><span class='op'>(</span>
-  <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"decomp_ga.gamr"</span><span class='op'>)</span>, auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span><span class='op'>)</span>
+  <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"decomp_ga.gamr"</span><span class='op'>)</span>, 
+  auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span><span class='op'>)</span>
+
+<span class='co'># a template from a directory holding an app.R file</span>
+<span class='fu'>ga_model_shiny</span><span class='op'>(</span>
+  <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"decomp_ga.gamr"</span><span class='op'>)</span>, 
+  auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>,
+  template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"basic_app"</span><span class='op'>)</span><span class='op'>)</span>
+  
+<span class='co'># a template directly from an app.R file that has its own server object</span>
+<span class='fu'>ga_model_shiny</span><span class='op'>(</span>
+  <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"decomp_ga.gamr"</span><span class='op'>)</span>, 
+  auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>,
+  template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"basic_app/app.R"</span><span class='op'>)</span><span class='op'>)</span>
+  
+<span class='co'># a template from only an ui.R file that will import boilerplate server.R</span>
+<span class='fu'>ga_model_shiny</span><span class='op'>(</span>
+  <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"decomp_ga.gamr"</span><span class='op'>)</span>, 
+  auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>,
+  template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"basic/ui.R"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># multiple models</span>
 <span class='va'>m3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"time-normalised.gamr"</span><span class='op'>)</span>
@@ -397,7 +417,7 @@
 
 <span class='co'># launch in gentelella template</span>
 <span class='fu'>ga_model_shiny</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>m4</span>, <span class='va'>m3</span><span class='op'>)</span>, auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>,
-              template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"gentelella.R"</span><span class='op'>)</span><span class='op'>)</span>
+              template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"gentelella"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># custom shinydashboard template              </span>
 <span class='co'>## make a function to output the custom shinydashboard tabs</span>
@@ -424,7 +444,7 @@
 <span class='co'>## launch shiny app with the models in each tab</span>
 <span class='co'>## model_tabs is via ... and a custom macro in the shinydashboard template</span>
 <span class='fu'>ga_model_shiny</span><span class='op'>(</span><span class='va'>models</span>, auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>, 
-     template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"shinydashboard.R"</span><span class='op'>)</span>, 
+     template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"shinydashboard"</span><span class='op'>)</span>, 
      ui_f <span class='op'>=</span> <span class='va'>shinydashboard_ui</span>, 
      model_tabs <span class='op'>=</span> <span class='fu'>shinydashboard_ui_menu</span><span class='op'>(</span><span class='va'>models</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
