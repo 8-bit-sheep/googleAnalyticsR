@@ -52,7 +52,7 @@ As \link{ga_model} objects have standardised code, they can be used to build sta
 
 Some templates are included with the package, seen via \code{ga_model_shiny_template("list")}
 
-Templates hold macro variables indicated via \code{ \{\{ macro_name \}\} } in the Shiny app template code. See \code{ga_model_shiny_template("basic_app", TRUE)} for an example showing a minimal viable app.  Templates can be files such as ui.R or app.R files, or folders containing ui.R, app.R files or www/ folders for advanced themes. 
+Templates hold macro variables indicated via \code{ \{\{ macro_name \}\} } in the Shiny app template code. See \code{ga_model_shiny_template("basic_app", TRUE)} for an example showing a minimal viable app.  Templates can be files such as ui.R or app.R files; folders containing ui.R, app.R files; or ui.R with html files for advanced themes - see \href{https://shiny.rstudio.com/articles/templates.html}{Shiny HTML templates}. All additional files that may be in the folder are also copied over (such as global.R or www/ folders)
 
 Templates contain code to allow multi-user login via Google OAuth2.
 
@@ -76,6 +76,7 @@ By default the Shiny app is launched which in most cases will prompt authorisati
  \item{\code{\{\{\{ auth_server \}\}\}}}{- Adds the authentication module's server side function}
  \item{\code{\{\{\{ auth_accounts \}\}\}}}{- Adds a call to \link{ga_account_list} for the appropriate GA account type (GA4 or Universal)}
  \item{\code{\{\{\{ model_server \}\}\}}}{- Adds the server side module for the models as configured in the \link{ga_model} configuration. It uses the object loaded above via the model_load macro.  It looks like \code{model1$server('model1')} in the code.}
+ \item{\code{\{\{\{ model1 \}\}\}}}{- Alternative to \code{model_load}, this will load the model file location instead, which you can pass to \code{ga_model_load()}} in the template.  model1 is the first model passed, model2 the second, etc.
  \item{\code{\{\{\{ your_argument \}\}\}}}{- You can pass in your own custom variables to the template via the \code{...} argument of this function if they are named the same as the template macro variable}
 }
 }
@@ -115,6 +116,19 @@ ga_model_shiny(
   ga_model_example("decomp_ga.gamr"), 
   auth_dropdown = "universal",
   template = ga_model_shiny_template("basic/ui.R"))
+
+# a template from a custom html based theme
+ga_model_shiny(
+  ga_model_example("decomp_ga.gamr"), 
+  auth_dropdown = "universal",
+  template = ga_model_shiny_template("html_based"))
+
+# a template using library(argonDash)
+ga_model_shiny(
+  ga_model_example("ga-effect.gamr"), 
+  title = "Argon Demo",
+  auth_dropdown = "universal",
+  template = ga_model_shiny_template("argonDash") )
 
 # multiple models
 m3 <- ga_model_example("time-normalised.gamr")

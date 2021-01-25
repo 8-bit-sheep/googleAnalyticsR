@@ -11,7 +11,9 @@ extract_from_list <- function(a_list, id_regex = "id$"){
   chrs <- rapply(a_list, function(x) if(is.character(x)){x})
   o <- unique(unname(chrs[grepl(id_regex,names(chrs))]))
   if(identical(o, character(0))) return(NULL)
-  o
+  
+  # remove any with -label
+  o[!grepl("-label$", o)]
 }
 
 
