@@ -35,5 +35,3 @@ server <- function(input, output, session){
 }
 
 shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)
-
-

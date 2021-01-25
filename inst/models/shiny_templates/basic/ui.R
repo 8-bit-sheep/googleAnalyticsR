@@ -4,5 +4,4 @@ fluidPage(title = "{{ shiny_title }}",
                 {{{ date_range }}},
                 h2("Model Output"),
 {{{ model_ui }}}
-                
 )

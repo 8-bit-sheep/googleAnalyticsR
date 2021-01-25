@@ -85,6 +85,12 @@ By default the Shiny app is launched which in most cases will prompt authorisati
 # see Shiny templates included with the package
 ga_model_shiny_template("list")
 
+# see an example of an ui.R template with macros
+ga_model_shiny_template("basic/ui.R", read_lines = TRUE)
+
+# see an example of an app.R template with macros
+ga_model_shiny_template("basic_app/app.R", read_lines = TRUE)
+
 \dontrun{
 
 # a universal analytics model using default template "basic"
@@ -126,7 +132,8 @@ shinydashboard_ui_menu <- function(models){
   
   f <- function(model_n, label){
     paste(sprintf("menuItem('\%s', tabName = '\%s')", 
-                  label, model_n), collapse = ",\n")
+                  label, model_n), 
+          collapse = ",\n")
   }
  
   mapply(f, model_n, labels, SIMPLIFY = FALSE, USE.NAMES = FALSE)
@@ -135,7 +142,8 @@ shinydashboard_ui_menu <- function(models){
 ## supply custom function for wrapping the model_ui output with tabItem()
 shinydashboard_ui <- function(model_n){
    paste(sprintf("tabItem(tabName = '\%s',\%s$ui('\%s'))", 
-         model_n, model_n, model_n),collapse = ",\n")}
+                 model_n, model_n, model_n),
+         collapse = ",\n")}
          
 m3 <- ga_model_example("time-normalised.gamr")
 m4 <- ga_model_example("ga-effect.gamr")

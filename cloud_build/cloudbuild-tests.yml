@@ -23,7 +23,7 @@ steps:
       - NOT_CRAN=true
       - GA_AUTH_FILE=/workspace/auth.json
       - GAR_CLIENT_JSON=/workspace/client.json
-  - name: gcr.io/gcer-public/packagetools:master
+  - name: gcr.io/gcer-public/packagetools
     args:
       - Rscript
       - -e

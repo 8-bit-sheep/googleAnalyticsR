@@ -75,6 +75,7 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #'  \item{\code{\{\{\{ your_argument \}\}\}}}{- You can pass in your own custom variables to the template via the \code{...} argument of this function if they are named the same as the template macro variable}
 #' }
 #' 
+#' 
 #' @export
 #' @importFrom assertthat is.readable is.writeable
 #' @importFrom whisker whisker.render
@@ -83,6 +84,12 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #' 
 #' # see Shiny templates included with the package
 #' ga_model_shiny_template("list")
+#' 
+#' # see an example of an ui.R template with macros
+#' ga_model_shiny_template("basic/ui.R", read_lines = TRUE)
+#' 
+#' # see an example of an app.R template with macros
+#' ga_model_shiny_template("basic_app/app.R", read_lines = TRUE)
 #' 
 #' \dontrun{
 #' 
@@ -125,7 +132,8 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #'   
 #'   f <- function(model_n, label){
 #'     paste(sprintf("menuItem('%s', tabName = '%s')", 
-#'                   label, model_n), collapse = ",\n")
+#'                   label, model_n), 
+#'           collapse = ",\n")
 #'   }
 #'  
 #'   mapply(f, model_n, labels, SIMPLIFY = FALSE, USE.NAMES = FALSE)
@@ -134,7 +142,8 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #' ## supply custom function for wrapping the model_ui output with tabItem()
 #' shinydashboard_ui <- function(model_n){
 #'    paste(sprintf("tabItem(tabName = '%s',%s$ui('%s'))", 
-#'          model_n, model_n, model_n),collapse = ",\n")}
+#'                  model_n, model_n, model_n),
+#'          collapse = ",\n")}
 #'          
 #' m3 <- ga_model_example("time-normalised.gamr")
 #' m4 <- ga_model_example("ga-effect.gamr")
