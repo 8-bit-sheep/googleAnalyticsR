@@ -342,7 +342,7 @@
 
     <p>As <a href='ga_model.html'>ga_model</a> objects have standardised code, they can be used to build standard templated Shiny apps.  Templates are made using the <a href='https://rdrr.io/pkg/whisker/man/whisker.render.html'>whisker.render</a> function</p>
 <p>Some templates are included with the package, seen via <code><a href='ga_model_shiny_template.html'>ga_model_shiny_template("list")</a></code></p>
-<p>Templates hold macro variables indicated via <code> {{ macro_name }} </code> in the Shiny app template code. See <code><a href='ga_model_shiny_template.html'>ga_model_shiny_template("basic_app", TRUE)</a></code> for an example showing a minimal viable app.  Templates can be files such as ui.R or app.R files, or folders containing ui.R, app.R files or www/ folders for advanced themes.</p>
+<p>Templates hold macro variables indicated via <code> {{ macro_name }} </code> in the Shiny app template code. See <code><a href='ga_model_shiny_template.html'>ga_model_shiny_template("basic_app", TRUE)</a></code> for an example showing a minimal viable app.  Templates can be files such as ui.R or app.R files; folders containing ui.R, app.R files; or ui.R with html files for advanced themes - see <a href='https://shiny.rstudio.com/articles/templates.html'>Shiny HTML templates</a>. All additional files that may be in the folder are also copied over (such as global.R or www/ folders)</p>
 <p>Templates contain code to allow multi-user login via Google OAuth2.</p>
 <p>If your template is pointing at a file such as ui.R or app.R it will create an app.R Shiny object.  If your template is pointing at a directory it will check for the presence of ui.R within the folder.  In either case if the server.R is missing it will use the boilerplate version from <code><a href='ga_model_shiny_template.html'>ga_model_shiny_template("boilerplate")</a></code></p>
 <p>By default the Shiny app is launched which in most cases will prompt authorisation for your Google Analytics.  You can instead write the app out using <code>local_folder</code> to a valid location for deployment later.</p>
@@ -364,6 +364,7 @@
 <li><p><code>{{{ auth_server }}}</code>- Adds the authentication module's server side function</p></li>
 <li><p><code>{{{ auth_accounts }}}</code>- Adds a call to <a href='ga_account_list.html'>ga_account_list</a> for the appropriate GA account type (GA4 or Universal)</p></li>
 <li><p><code>{{{ model_server }}}</code>- Adds the server side module for the models as configured in the <a href='ga_model.html'>ga_model</a> configuration. It uses the object loaded above via the model_load macro.  It looks like <code>model1$server('model1')</code> in the code.</p></li>
+<li><p><code>{{{ model1 }}}</code>- Alternative to <code>model_load</code>, this will load the model file location instead, which you can pass to <code><a href='ga_model_load.html'>ga_model_load()</a></code> in the template.  model1 is the first model passed, model2 the second, etc.</p></li>
 <li><p><code>{{{ your_argument }}}</code>- You can pass in your own custom variables to the template via the <code>...</code> argument of this function if they are named the same as the template macro variable</p></li>
 </ul>
 
@@ -384,8 +385,8 @@
     <pre class="examples"><div class='input'>
 <span class='co'># see Shiny templates included with the package</span>
 <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"list"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "basic"          "basic_app"      "boilerplate"    "gentelella"    
-#&gt; [5] "html_based"     "shinydashboard"</div><div class='input'>
+</div><div class='output co'>#&gt; [1] "argonDash"      "basic"          "basic_app"      "basic_bslib"   
+#&gt; [5] "boilerplate"    "gentelella"     "html_based"     "shinydashboard"</div><div class='input'>
 <span class='co'># see an example of an ui.R template with macros</span>
 <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"basic/ui.R"</span>, read_lines <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "## basic ui.R"                           
@@ -458,6 +459,19 @@
   <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"decomp_ga.gamr"</span><span class='op'>)</span>, 
   auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>,
   template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"basic/ui.R"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># a template from a custom html based theme</span>
+<span class='fu'>ga_model_shiny</span><span class='op'>(</span>
+  <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"decomp_ga.gamr"</span><span class='op'>)</span>, 
+  auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>,
+  template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"html_based"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># a template using library(argonDash)</span>
+<span class='fu'>ga_model_shiny</span><span class='op'>(</span>
+  <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"ga-effect.gamr"</span><span class='op'>)</span>, 
+  title <span class='op'>=</span> <span class='st'>"Argon Demo"</span>,
+  auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>,
+  template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"argonDash"</span><span class='op'>)</span> <span class='op'>)</span>
 
 <span class='co'># multiple models</span>
 <span class='va'>m3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"time-normalised.gamr"</span><span class='op'>)</span>
