@@ -386,6 +386,54 @@
 <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"list"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "basic"          "basic_app"      "boilerplate"    "gentelella"    
 #&gt; [5] "html_based"     "shinydashboard"</div><div class='input'>
+<span class='co'># see an example of an ui.R template with macros</span>
+<span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"basic/ui.R"</span>, read_lines <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "## basic ui.R"                           
+#&gt; [2] "fluidPage(title = \"{{ shiny_title }}\","
+#&gt; [3] "                {{ auth_ui }},"          
+#&gt; [4] "                {{{ date_range }}},"     
+#&gt; [5] "                h2(\"Model Output\"),"   
+#&gt; [6] "{{{ model_ui }}}"                        
+#&gt; [7] ")"                                       </div><div class='input'>
+<span class='co'># see an example of an app.R template with macros</span>
+<span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"basic_app/app.R"</span>, read_lines <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "## basic_full ui.R"                                        
+#&gt;  [2] "library(shiny)"                                            
+#&gt;  [3] "library(googleAuthR)"                                      
+#&gt;  [4] "library(googleAnalyticsR)"                                 
+#&gt;  [5] "{{{ model_libraries }}}"                                   
+#&gt;  [6] ""                                                          
+#&gt;  [7] "gar_set_client(web_json = \"{{ web_json }}\","             
+#&gt;  [8] "               scopes = \"{{ scopes }}\")"                 
+#&gt;  [9] "options(googleAuthR.redirect = \"{{ deployed_url }}\")"    
+#&gt; [10] ""                                                          
+#&gt; [11] "# loads pre-existing models"                               
+#&gt; [12] "{{{ model_load }}}"                                        
+#&gt; [13] ""                                                          
+#&gt; [14] "## ui.R"                                                   
+#&gt; [15] "ui &lt;- fluidPage(title = \"{{ shiny_title }}\","            
+#&gt; [16] "                {{ auth_ui }},"                            
+#&gt; [17] "                {{{ date_range }}},"                       
+#&gt; [18] "                h2(\"Model Output\"),"                     
+#&gt; [19] "{{{ model_ui }}}"                                          
+#&gt; [20] "                "                                          
+#&gt; [21] ")"                                                         
+#&gt; [22] ""                                                          
+#&gt; [23] "server &lt;- function(input, output, session){"               
+#&gt; [24] "  "                                                        
+#&gt; [25] "  token &lt;- gar_shiny_auth(session)"                        
+#&gt; [26] "  "                                                        
+#&gt; [27] "  {{{ auth_accounts }}}"                                   
+#&gt; [28] "  "                                                        
+#&gt; [29] "  # module for authentication"                             
+#&gt; [30] "  view_id &lt;- {{ auth_server }}"                            
+#&gt; [31] "  "                                                        
+#&gt; [32] "  # module to display model results"                       
+#&gt; [33] "  {{{ model_server }}}"                                    
+#&gt; [34] "  "                                                        
+#&gt; [35] "}"                                                         
+#&gt; [36] ""                                                          
+#&gt; [37] "shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)"</div><div class='input'>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 
 <span class='co'># a universal analytics model using default template "basic"</span>
@@ -427,7 +475,8 @@
   
   <span class='va'>f</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>model_n</span>, <span class='va'>label</span><span class='op'>)</span><span class='op'>{</span>
     <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span><span class='op'>(</span><span class='st'>"menuItem('%s', tabName = '%s')"</span>, 
-                  <span class='va'>label</span>, <span class='va'>model_n</span><span class='op'>)</span>, collapse <span class='op'>=</span> <span class='st'>",\n"</span><span class='op'>)</span>
+                  <span class='va'>label</span>, <span class='va'>model_n</span><span class='op'>)</span>, 
+          collapse <span class='op'>=</span> <span class='st'>",\n"</span><span class='op'>)</span>
   <span class='op'>}</span>
  
   <span class='fu'><a href='https://rdrr.io/r/base/mapply.html'>mapply</a></span><span class='op'>(</span><span class='va'>f</span>, <span class='va'>model_n</span>, <span class='va'>labels</span>, SIMPLIFY <span class='op'>=</span> <span class='cn'>FALSE</span>, USE.NAMES <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
@@ -436,7 +485,8 @@
 <span class='co'>## supply custom function for wrapping the model_ui output with tabItem()</span>
 <span class='va'>shinydashboard_ui</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>model_n</span><span class='op'>)</span><span class='op'>{</span>
    <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span><span class='op'>(</span><span class='st'>"tabItem(tabName = '%s',%s$ui('%s'))"</span>, 
-         <span class='va'>model_n</span>, <span class='va'>model_n</span>, <span class='va'>model_n</span><span class='op'>)</span>,collapse <span class='op'>=</span> <span class='st'>",\n"</span><span class='op'>)</span><span class='op'>}</span>
+                 <span class='va'>model_n</span>, <span class='va'>model_n</span>, <span class='va'>model_n</span><span class='op'>)</span>,
+         collapse <span class='op'>=</span> <span class='st'>",\n"</span><span class='op'>)</span><span class='op'>}</span>
          
 <span class='va'>m3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"time-normalised.gamr"</span><span class='op'>)</span>
 <span class='va'>m4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"ga-effect.gamr"</span><span class='op'>)</span>
