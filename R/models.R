@@ -425,6 +425,7 @@ create_shiny_module_ui <- function(outputShiny,inputShiny, input_ids){
 
 #' @noRd
 #' @import assertthat
+#' @importFrom utils modifyList
 create_shiny_module_funcs <- function(data_f,
                                       model_f,
                                       output_f,

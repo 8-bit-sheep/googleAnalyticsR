@@ -38,11 +38,11 @@ ga_model_shiny(
 
 \item{deployed_url}{If deploying Shiny app to a server, put the URL of the deployed app here so the authentication will redirect to the correct place}
 
+\item{local_folder}{If not empty, will not launch Shiny app but write code to the folder location you put here}
+
 \item{ui_f}{A function to generate the UI from the models list argument - default is \link{ga_model_shiny_ui}}
 
 \item{...}{Extra macro variables the template may support: a named list with the name being a template variable}
-
-\item{local_file}{If not empty, will not launch Shiny app but write code to the file location you put here}
 }
 \description{
 Create a Shiny app from a ga_model file
@@ -125,8 +125,9 @@ shinydashboard_ui_menu <- function(models){
   labels <- lapply(models, function(x) substr(x$description, 0,14))
   
   f <- function(model_n, label){
-  paste(sprintf("menuItem('\%s', tabName = '\%s')", 
-        label, model_n), collapse = ",\n")}
+    paste(sprintf("menuItem('\%s', tabName = '\%s')", 
+                  label, model_n), collapse = ",\n")
+  }
  
   mapply(f, model_n, labels, SIMPLIFY = FALSE, USE.NAMES = FALSE)
 }

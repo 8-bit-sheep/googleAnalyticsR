@@ -37,7 +37,7 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #' @param web_json The client.id json file for Web
 #' @param scopes The scope the API requests will be under
 #' @param title The title of the Shiny app
-#' @param local_file If not empty, will not launch Shiny app but write code to the file location you put here
+#' @param local_folder If not empty, will not launch Shiny app but write code to the folder location you put here
 #' @param deployed_url If deploying Shiny app to a server, put the URL of the deployed app here so the authentication will redirect to the correct place
 #' @param date_range Most templates support a {{ date_range }} global input for the data import functions, set this to FALSE to remove it
 #' @param ui_f A function to generate the UI from the models list argument - default is \link{ga_model_shiny_ui}

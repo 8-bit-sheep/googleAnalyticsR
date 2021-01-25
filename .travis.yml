@@ -2,7 +2,6 @@ language: r
 cache: packages
 r_packages:
 - knitr
-- covr
 - bigQueryR
 - googleCloudStorageR
 r_github_packages:
@@ -12,8 +11,6 @@ notifications:
   email:
     on_success: change
     on_failure: change
-after_success:
-- Rscript -e 'covr::codecov(line_exclusions = list("R/gadget.R","R/shiny-modules.R","R/shiny-modules-segments.R","R/options.R"))'
 env:
   matrix:
     secure: L5Zl1fZp2x26Yhx+lMw5fM8rljI17EwDBgGmy+ZCRHFTj3pkJiYVo1R4jRLAaAHi3IbkihLEXGHeGGPxzkWWJFIDMMS+6UMLKS78nKxldROI2SLXUM/cgW8SrBdzlKIPKvzLsDQ8AJBWQE97dc+3ef+oiuO78CzodyOEIcEh5DZh/C60LtJxlUb5ayRyyGZGMxyaQw3fVJnmQMHKT4ZOLnu5eJHibz5jmCs3Cr238zTYwkEcFFz59IzA27C+2bwl3JY0crh8rnZi7IL9Cw6/btEG9OS579xbwsg+Efo+rBEOcPb0NwJ3p4q65B5YmXE7zPxo7+GObzFUKPT03dk44rlzpgJQQwWqOAbk44GVfKN0Jhx11feBmOZJanPb7AdRP7ipIjHcFTrURn9GcyDwGWgCOtAnpLaiDxB+M+oMsra69Wm5xH2z+3yBcBUX+Fi+skSEH3/hs3S0W+VHyUvxGCmcXp3dis/GMIPLRhplek8nyOT2Gs63ZYGw1PWFC650+9effb87qA+kFt4jVAIInJTytfLDVVDVhJ2a1wsmvm+Y9bPVTM9XbMPFmH0ViyMahpHZ1a7sQgHDXUrBHd+ineoHZpBC96Tu/vVsTXKLAIctB3WFDMfegrYVb0eDEbHedaCY4pEyJBdmjIi6XhvuB07CsUXSTnhb5wOTSc5UWEM=
