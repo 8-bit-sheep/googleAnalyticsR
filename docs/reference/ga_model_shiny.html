@@ -325,16 +325,16 @@
       <td><p>If deploying Shiny app to a server, put the URL of the deployed app here so the authentication will redirect to the correct place</p></td>
     </tr>
     <tr>
+      <th>local_folder</th>
+      <td><p>If not empty, will not launch Shiny app but write code to the folder location you put here</p></td>
+    </tr>
+    <tr>
       <th>ui_f</th>
       <td><p>A function to generate the UI from the models list argument - default is <a href='ga_model_shiny_ui.html'>ga_model_shiny_ui</a></p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Extra macro variables the template may support: a named list with the name being a template variable</p></td>
-    </tr>
-    <tr>
-      <th>local_file</th>
-      <td><p>If not empty, will not launch Shiny app but write code to the file location you put here</p></td>
     </tr>
     </table>
 
@@ -426,8 +426,9 @@
   <span class='va'>labels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>models</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>description</span>, <span class='fl'>0</span>,<span class='fl'>14</span><span class='op'>)</span><span class='op'>)</span>
   
   <span class='va'>f</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>model_n</span>, <span class='va'>label</span><span class='op'>)</span><span class='op'>{</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span><span class='op'>(</span><span class='st'>"menuItem('%s', tabName = '%s')"</span>, 
-        <span class='va'>label</span>, <span class='va'>model_n</span><span class='op'>)</span>, collapse <span class='op'>=</span> <span class='st'>",\n"</span><span class='op'>)</span><span class='op'>}</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span><span class='op'>(</span><span class='st'>"menuItem('%s', tabName = '%s')"</span>, 
+                  <span class='va'>label</span>, <span class='va'>model_n</span><span class='op'>)</span>, collapse <span class='op'>=</span> <span class='st'>",\n"</span><span class='op'>)</span>
+  <span class='op'>}</span>
  
   <span class='fu'><a href='https://rdrr.io/r/base/mapply.html'>mapply</a></span><span class='op'>(</span><span class='va'>f</span>, <span class='va'>model_n</span>, <span class='va'>labels</span>, SIMPLIFY <span class='op'>=</span> <span class='cn'>FALSE</span>, USE.NAMES <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='op'>}</span>
