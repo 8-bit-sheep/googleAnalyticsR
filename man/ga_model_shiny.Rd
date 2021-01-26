@@ -15,7 +15,6 @@ ga_model_shiny(
   scopes = "https://www.googleapis.com/auth/analytics.readonly",
   deployed_url = "",
   local_folder = "",
-  ui_f = ga_model_shiny_ui,
   ...
 )
 }
@@ -39,8 +38,6 @@ ga_model_shiny(
 \item{deployed_url}{If deploying Shiny app to a server, put the URL of the deployed app here so the authentication will redirect to the correct place}
 
 \item{local_folder}{If not empty, will not launch Shiny app but write code to the folder location you put here}
-
-\item{ui_f}{A function to generate the UI from the models list argument - default is \link{ga_model_shiny_ui}}
 
 \item{...}{Extra macro variables the template may support: a named list with the name being a template variable}
 }
@@ -139,46 +136,21 @@ m4 <- ga_model_example("ga-effect.gamr")
 ga_model_shiny(list(m4, m3), auth_dropdown = "universal",
               template = ga_model_shiny_template("gentelella"))
 
-# custom shinydashboard template              
-## make a function to output the custom shinydashboard tabs
-shinydashboard_ui_menu <- function(models){
-  model_n <- paste0("model", seq_along(models)) 
-  labels <- lapply(models, function(x) substr(x$description, 0,14))
-  
-  f <- function(model_n, label){
-    paste(sprintf("menuItem('\%s', tabName = '\%s')", 
-                  label, model_n), 
-          collapse = ",\n")
-  }
- 
-  mapply(f, model_n, labels, SIMPLIFY = FALSE, USE.NAMES = FALSE)
-}
-
-## supply custom function for wrapping the model_ui output with tabItem()
-shinydashboard_ui <- function(model_n){
-   paste(sprintf("tabItem(tabName = '\%s',\%s$ui('\%s'))", 
-                 model_n, model_n, model_n),
-         collapse = ",\n")}
-         
-m3 <- ga_model_example("time-normalised.gamr")
-m4 <- ga_model_example("ga-effect.gamr")
-models <- list(m3, m4)
-
-## launch shiny app with the models in each tab
-## model_tabs is via ... and a custom macro in the shinydashboard template
-ga_model_shiny(models, auth_dropdown = "universal", 
-     template = ga_model_shiny_template("shinydashboard"), 
-     ui_f = shinydashboard_ui, 
-     model_tabs = shinydashboard_ui_menu(models))
-}
-
-# you can include the ui_f embedded within the template file instead
+     
+# you can make custom ui embedded within the template file
 # use \{\{\{ model_list \}\}\} to work with the models in the ui.R
 
-# below adds custom macro 'theme' but puts its ui_f within the template
-ga_model_shiny(models, auth_dropdown = "universal", 
+# below adds custom macro 'theme' and a custom ui in box tabs
+ga_model_shiny(list(m4, m3), auth_dropdown = "universal", 
                template = ga_model_shiny_template("shinythemes"), 
                theme = "yeti")
+
+# shinydashboard's custom ui functions put a model in each side tab      
+ga_model_shiny(list(m4, m3), auth_dropdown = "universal", 
+               template = ga_model_shiny_template("shinydashboard"), 
+               skin = "green")
+}
+
 
 
 }
@@ -189,8 +161,8 @@ Other GA modelling functions:
 \code{\link{ga_model_load}()},
 \code{\link{ga_model_make}()},
 \code{\link{ga_model_save}()},
+\code{\link{ga_model_shiny_load}()},
 \code{\link{ga_model_shiny_template}()},
-\code{\link{ga_model_shiny_ui}()},
 \code{\link{ga_model_write}()},
 \code{\link{ga_model}()}
 }

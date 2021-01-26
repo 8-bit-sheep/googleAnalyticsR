@@ -40,7 +40,6 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #' @param local_folder If not empty, will not launch Shiny app but write code to the folder location you put here
 #' @param deployed_url If deploying Shiny app to a server, put the URL of the deployed app here so the authentication will redirect to the correct place
 #' @param date_range Most templates support a {{ date_range }} global input for the data import functions, set this to FALSE to remove it
-#' @param ui_f A function to generate the UI from the models list argument - default is \link{ga_model_shiny_ui}
 #' @param ... Extra macro variables the template may support: a named list with the name being a template variable
 #' 
 #' @details 
@@ -139,45 +138,19 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #' ga_model_shiny(list(m4, m3), auth_dropdown = "universal",
 #'               template = ga_model_shiny_template("gentelella"))
 #' 
-#' # custom shinydashboard template              
-#' ## make a function to output the custom shinydashboard tabs
-#' shinydashboard_ui_menu <- function(models){
-#'   model_n <- paste0("model", seq_along(models)) 
-#'   labels <- lapply(models, function(x) substr(x$description, 0,14))
-#'   
-#'   f <- function(model_n, label){
-#'     paste(sprintf("menuItem('%s', tabName = '%s')", 
-#'                   label, model_n), 
-#'           collapse = ",\n")
-#'   }
-#'  
-#'   mapply(f, model_n, labels, SIMPLIFY = FALSE, USE.NAMES = FALSE)
-#' }
-#' 
-#' ## supply custom function for wrapping the model_ui output with tabItem()
-#' shinydashboard_ui <- function(model_n){
-#'    paste(sprintf("tabItem(tabName = '%s',%s$ui('%s'))", 
-#'                  model_n, model_n, model_n),
-#'          collapse = ",\n")}
-#'          
-#' m3 <- ga_model_example("time-normalised.gamr")
-#' m4 <- ga_model_example("ga-effect.gamr")
-#' models <- list(m3, m4)
-#' 
-#' ## launch shiny app with the models in each tab
-#' ## model_tabs is via ... and a custom macro in the shinydashboard template
-#' ga_model_shiny(models, auth_dropdown = "universal", 
-#'      template = ga_model_shiny_template("shinydashboard"), 
-#'      ui_f = shinydashboard_ui, 
-#'      model_tabs = shinydashboard_ui_menu(models))
 #'      
-#' # you can include the ui_f embedded within the template file instead
+#' # you can make custom ui embedded within the template file
 #' # use \{\{\{ model_list \}\}\} to work with the models in the ui.R
 #' 
-#' # below adds custom macro 'theme' but puts its ui_f within the template
-#' ga_model_shiny(models, auth_dropdown = "universal", 
+#' # below adds custom macro 'theme' and a custom ui in box tabs
+#' ga_model_shiny(list(m4, m3), auth_dropdown = "universal", 
 #'                template = ga_model_shiny_template("shinythemes"), 
 #'                theme = "yeti")
+#'
+#' # shinydashboard's custom ui functions put a model in each side tab      
+#' ga_model_shiny(list(m4, m3), auth_dropdown = "universal", 
+#'                template = ga_model_shiny_template("shinydashboard"), 
+#'                skin = "green")
 #' }
 #' 
 #' 
@@ -194,7 +167,6 @@ ga_model_shiny <- function(
   scopes = "https://www.googleapis.com/auth/analytics.readonly",
   deployed_url = "",
   local_folder = "",
-  ui_f = ga_model_shiny_ui,
   ...){
   
   auth_dropdown <- match.arg(auth_dropdown)
@@ -213,8 +185,7 @@ ga_model_shiny <- function(
   
   model_template <- make_model_template(
     model_locations, 
-    date_range = date_range, 
-    ga_model_shiny_ui_f = ui_f)
+    date_range = date_range)
   
   txt <- ga_model_shiny_template_make(
     template, 
@@ -407,9 +378,7 @@ make_model_libraries <- function(models){
   )
 }
 
-make_model_template <- function(model_locations, 
-                                date_range,
-                                ga_model_shiny_ui_f){
+make_model_template <- function(model_locations, date_range){
   
   # add dependency on global input$date_range?
   if(!date_range){
@@ -436,7 +405,7 @@ make_model_template <- function(model_locations,
       sprintf("%s <- ga_model_shiny_load('%s')", 
               names(model_locations), model_locations), 
       collapse = "\n"),
-    model_ui = ga_model_shiny_ui_f(names(model_locations)),
+    model_ui = shiny_ui(names(model_locations)),
     model_server = model_server,
     model_list = model_list
   )
@@ -453,44 +422,15 @@ make_model_template <- function(model_locations,
 #' 
 #' \code{ga_model_shiny_ui()} generates the UI for loading the model.  At minimum it needs to load \code{model1$ui('model1')} which is the default.  You may want to add some logic to make menu items for some templates, which this function helps facilitate.
 #' 
-#' @export
 #' @examples 
 #' 
 #' ga_model_shiny_ui("model1")
-#' @rdname ga_model_shiny_load
-ga_model_shiny_ui <- function(model_n){
+#' @keywords internal
+#' @noRd
+shiny_ui <- function(model_n){
   paste(
     sprintf("%s$ui('%s')", model_n, model_n), 
     collapse = ",\n")
-}
-
-shinydashboard_ui <- function(model_n){
-  
-  paste(
-    sprintf(
-      "tabItem(tabName = '%s',
-         %s$ui('%s'))", 
-      model_n, model_n, model_n
-    ),
-    collapse = ",\n"
-  )
-}
-
-shinydashboard_ui_menu <- function(models){
-  
-  model_n <- paste0("model", seq_along(models)) 
-  labels <- lapply(models, function(x) substr(x$description, 0,14))
-  
-  f <- function(model_n, label){
-    paste(
-      sprintf(
-        "menuItem('%s', tabName = '%s')", 
-        label, model_n
-      ),
-      collapse = ",\n"
-    )}
-  
-  mapply(f, model_n, labels, SIMPLIFY = FALSE, USE.NAMES = FALSE)
 }
 
 make_auth_dropdown <- function(type){
