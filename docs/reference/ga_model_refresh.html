@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>segmentChain — segmentChain • googleAnalyticsR</title>
+<title>Refresh a model — ga_model_refresh • googleAnalyticsR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="segmentChain — segmentChain" />
-<meta property="og:description" content="Shiny Module for use with segmentChainUI" />
+<meta property="og:title" content="Refresh a model — ga_model_refresh" />
+<meta property="og:description" content="Sometimes necessary if functions were created under differing package versions" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
 
@@ -261,44 +261,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>segmentChain</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/shiny-modules-segments.R'><code>R/shiny-modules-segments.R</code></a></small>
-    <div class="hidden name"><code>segmentChain.Rd</code></div>
+    <h1>Refresh a model</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/models.R'><code>R/models.R</code></a></small>
+    <div class="hidden name"><code>ga_model_refresh.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Shiny Module for use with <a href='segmentChainUI.html'>segmentChainUI</a></p>
+    <p>Sometimes necessary if functions were created under differing package versions</p>
     </div>
 
-    <pre class="usage"><span class='fu'>segmentChain</span><span class='op'>(</span><span class='va'>input</span>, <span class='va'>output</span>, <span class='va'>session</span>, <span class='va'>element_inputs</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ga_model_refresh</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>input</th>
-      <td><p>shiny input</p></td>
-    </tr>
-    <tr>
-      <th>output</th>
-      <td><p>shiny output</p></td>
-    </tr>
-    <tr>
-      <th>session</th>
-      <td><p>shiny session</p></td>
-    </tr>
-    <tr>
-      <th>element_inputs</th>
-      <td><p>from <a href='segmentElementUI.html'>segmentElementUI</a></p></td>
+      <th>model</th>
+      <td><p>Model or file location of model .gamr file</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Something</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Call via <code><a href='https://rdrr.io/pkg/shiny/man/callModule.html'>shiny::callModule(segmentChain, "your_id")</a></code></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

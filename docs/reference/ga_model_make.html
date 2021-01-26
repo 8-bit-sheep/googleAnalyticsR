@@ -277,8 +277,8 @@
   output_f <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span>     <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='op'>}</span>,
   required_packages <span class='op'>=</span> <span class='cn'>NULL</span>,
   description <span class='op'>=</span> <span class='cn'>NULL</span>,
-  outputShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html'>plotOutput</a></span>,
-  renderShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html'>renderPlot</a></span>,
+  outputShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/shiny/man/plotOutput.html'>plotOutput</a></span>,
+  renderShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/shiny/man/renderPlot.html'>renderPlot</a></span>,
   inputShiny <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
@@ -339,8 +339,8 @@ The <code>data_f</code> function result will feed to <code>model_f</code></p>
 <code><a href='ga_model_example.html'>ga_model_example</a>()</code>,
 <code><a href='ga_model_load.html'>ga_model_load</a>()</code>,
 <code><a href='ga_model_save.html'>ga_model_save</a>()</code>,
+<code><a href='ga_model_shiny_load.html'>ga_model_shiny_load</a>()</code>,
 <code><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a>()</code>,
-<code><a href='ga_model_shiny_ui.html'>ga_model_shiny_ui</a>()</code>,
 <code><a href='ga_model_shiny.html'>ga_model_shiny</a>()</code>,
 <code><a href='ga_model_write.html'>ga_model_write</a>()</code>,
 <code><a href='ga_model.html'>ga_model</a>()</code></p></div>
@@ -389,8 +389,8 @@ The <code>data_f</code> function result will feed to <code>model_f</code></p>
                             model_f <span class='op'>=</span> <span class='va'>decompose_sessions</span>,
                             output_f <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>...</span><span class='op'>)</span><span class='op'>{</span><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>}</span>,
                             description <span class='op'>=</span> <span class='st'>"Performs decomposition and creates a plot"</span>,
-                            outputShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html'>plotOutput</a></span>,
-                            renderShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html'>renderPlot</a></span><span class='op'>)</span>
+                            outputShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/shiny/man/plotOutput.html'>plotOutput</a></span>,
+                            renderShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/shiny/man/renderPlot.html'>renderPlot</a></span><span class='op'>)</span>
 
 <span class='op'>}</span>
 </div></pre>

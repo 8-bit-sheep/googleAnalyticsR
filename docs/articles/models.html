@@ -295,7 +295,7 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/ga_model_shiny.html">ga_model_shiny</a></span><span class="op">(</span><span class="st">"inst/models/decomp_ga.gamr"</span>, template <span class="op">=</span> <span class="fu"><a href="../reference/ga_model_shiny_template.html">ga_model_shiny_template</a></span><span class="op">(</span><span class="st">"template1"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Templates can be created and parsed via <code>{{ var }}</code> templating rules. The default variables used in all templates are <code>web_json</code>, <code>scopes</code> (for Google auth), and <code>title</code>. You can pass other template specific ones via the <code>...</code> argument. The <code>ga_model</code> argument is used to load the previously created <code>ga_model</code> object into the Shiny app.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://shiny.rstudio.com">shiny</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/">shiny</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAuthR/">googleAuthR</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
 
@@ -309,10 +309,10 @@
 <span class="va">modelServer</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="va">shiny_module</span><span class="op">$</span><span class="va">server</span>
 
 <span class="co">## ui.R</span>
-<span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html">fluidPage</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"{{ shiny_title }}"</span>,
+<span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"{{ shiny_title }}"</span>,
                 <span class="fu"><a href="../reference/authDropdownUI.html">authDropdownUI</a></span><span class="op">(</span><span class="st">"auth_menu"</span><span class="op">)</span>,
                 <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">h2</a></span><span class="op">(</span><span class="st">"Model Description"</span><span class="op">)</span>,
-                <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/textOutput.html">textOutput</a></span><span class="op">(</span><span class="st">"model_description"</span><span class="op">)</span>,
+                <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html">textOutput</a></span><span class="op">(</span><span class="st">"model_description"</span><span class="op">)</span>,
                 <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">h2</a></span><span class="op">(</span><span class="st">"Model Output"</span><span class="op">)</span>,
                 <span class="fu">modelUi</span><span class="op">(</span><span class="st">"{{ ga_model_name }}"</span><span class="op">)</span>
                 
@@ -323,21 +323,21 @@
   
   <span class="va">token</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_auth.html">gar_shiny_auth</a></span><span class="op">(</span><span class="va">session</span><span class="op">)</span>
   
-  <span class="va">al</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span><span class="op">(</span><span class="op">{</span>
-    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/req.html">req</a></span><span class="op">(</span><span class="va">token</span><span class="op">)</span>
+  <span class="va">al</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span><span class="op">(</span><span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/req.html">req</a></span><span class="op">(</span><span class="va">token</span><span class="op">)</span>
     <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span><span class="op">(</span><span class="op">)</span>
   <span class="op">}</span><span class="op">)</span>
   
   <span class="co"># module for authentication</span>
-  <span class="va">view_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/callModule.html">callModule</a></span><span class="op">(</span><span class="va">authDropdown</span>, <span class="st">"auth_menu"</span>, ga.table <span class="op">=</span> <span class="va">al</span><span class="op">)</span>
-  <span class="va">output</span><span class="op">$</span><span class="va">model_description</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderText.html">renderText</a></span><span class="op">(</span><span class="va">model</span><span class="op">$</span><span class="va">description</span><span class="op">)</span>
+  <span class="va">view_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/callModule.html">callModule</a></span><span class="op">(</span><span class="va">authDropdown</span>, <span class="st">"auth_menu"</span>, ga.table <span class="op">=</span> <span class="va">al</span><span class="op">)</span>
+  <span class="va">output</span><span class="op">$</span><span class="va">model_description</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html">renderText</a></span><span class="op">(</span><span class="va">model</span><span class="op">$</span><span class="va">description</span><span class="op">)</span>
   
   <span class="co"># module to display model results</span>
   <span class="fu">modelServer</span><span class="op">(</span><span class="st">"{{ ga_model_name }}"</span>, view_id <span class="op">=</span> <span class="va">view_id</span><span class="op">)</span>
   
 <span class="op">}</span>
 
-<span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html">shinyApp</a></span><span class="op">(</span><span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_ui.html">gar_shiny_ui</a></span><span class="op">(</span><span class="va">ui</span>, login_ui <span class="op">=</span> <span class="va">silent_auth</span><span class="op">)</span>, <span class="va">server</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span><span class="op">(</span><span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_ui.html">gar_shiny_ui</a></span><span class="op">(</span><span class="va">ui</span>, login_ui <span class="op">=</span> <span class="va">silent_auth</span><span class="op">)</span>, <span class="va">server</span><span class="op">)</span></code></pre></div>
 <div id="models-and-templates-included-with-googleanalyticsr" class="section level3">
 <h3 class="hasAnchor">
 <a href="#models-and-templates-included-with-googleanalyticsr" class="anchor"></a>Models and Templates included with googleAnalyticsR</h3>
@@ -416,8 +416,8 @@
                            model_f <span class="op">=</span> <span class="va">decompose_sessions</span>,
                            output_f <span class="op">=</span> <span class="fu">graphics</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>,
                            description <span class="op">=</span> <span class="st">"Performs decomposition and creates a plot"</span>,
-                           outputShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html">plotOutput</a></span>,
-                           renderShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html">renderPlot</a></span><span class="op">)</span></code></pre></div>
+                           outputShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span>,
+                           renderShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="advanced-use" class="section level2">
 <h2 class="hasAnchor">
@@ -450,8 +450,8 @@
                            model_f <span class="op">=</span> <span class="va">decompose_sessions</span>,
                            output_f <span class="op">=</span> <span class="fu">graphics</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>,
                            description <span class="op">=</span> <span class="st">"Performs decomposition and creates a plot"</span>,
-                           outputShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html">plotOutput</a></span>,
-                           renderShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html">renderPlot</a></span><span class="op">)</span></code></pre></div>
+                           outputShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span>,
+                           renderShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span><span class="op">)</span></code></pre></div>
 <p>It would then be used via:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span><span class="op">(</span><span class="fl">81416156</span>, <span class="va">decomp_ga_advanced</span>, metric<span class="op">=</span><span class="st">"users"</span>, frequency <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></code></pre></div>
@@ -657,7 +657,7 @@ An example for the documentation - CausalImpact/Dygraphs with ga_models <a href=
 — Mark Edmondson (<span class="citation">@HoloMarkeD</span>) <a href="https://twitter.com/HoloMarkeD/status/1106958249130119169?ref_src=twsrc%5Etfw">March 16, 2019</a>
 </blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><p>Similarly, you can launch this in a Shiny app by slightly modifying the Shiny example used previously.</p>
-<p>This is available within the package via <code><a href="https://shiny.rstudio.com/reference/shiny/latest/runApp.html">shiny::runApp(system.file("shiny/models-ga-effect", package="googleAnalyticsR"))</a></code></p>
+<p>This is available within the package via <code><a href="https://rdrr.io/pkg/shiny/man/runApp.html">shiny::runApp(system.file("shiny/models-ga-effect", package="googleAnalyticsR"))</a></code></p>
 <p><img src="model-ga-effect.png"></p>
 <p>Dress it up in a nice theme and add some more inputs and outputs and you are close to the finished result.</p>
 </div>

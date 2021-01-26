@@ -281,7 +281,6 @@
   scopes <span class='op'>=</span> <span class='st'>"https://www.googleapis.com/auth/analytics.readonly"</span>,
   deployed_url <span class='op'>=</span> <span class='st'>""</span>,
   local_folder <span class='op'>=</span> <span class='st'>""</span>,
-  ui_f <span class='op'>=</span> <span class='va'>ga_model_shiny_ui</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -294,7 +293,7 @@
     </tr>
     <tr>
       <th>template</th>
-      <td><p>The template Shiny files for the Shiny app - passed to <code><a href='https://shiny.rstudio.com/reference/shiny/latest/runApp.html'>shiny::runApp()</a></code></p></td>
+      <td><p>The template Shiny files for the Shiny app - passed to <code><a href='https://rdrr.io/pkg/shiny/man/runApp.html'>shiny::runApp()</a></code></p></td>
     </tr>
     <tr>
       <th>header_boilerplate</th>
@@ -329,10 +328,6 @@
       <td><p>If not empty, will not launch Shiny app but write code to the folder location you put here</p></td>
     </tr>
     <tr>
-      <th>ui_f</th>
-      <td><p>A function to generate the UI from the models list argument - default is <a href='ga_model_shiny_ui.html'>ga_model_shiny_ui</a></p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>Extra macro variables the template may support: a named list with the name being a template variable</p></td>
     </tr>
@@ -357,9 +352,10 @@
 <li><p><code>{{{ scopes }}}</code>- Adds Google Oauth2 scopes for the API calls</p></li>
 <li><p><code>{{{ deployed_url }}}</code>- Adds <code><a href='https://rdrr.io/r/base/options.html'>option(googleAuthR.redirect)</a></code> option for deployed Shiny apps</p></li>
 <li><p><code>{{{ model_load }}}</code>- Adds <a href='ga_model_load.html'>ga_model_load</a> calls loading all models in the list passed to this function's <code>models</code> argument.  It creates R objects called 'model1', 'model2' etc. in the Shiny app code</p></li>
+<li><p><code>{{{ model_list }}}</code>- Adds a list of the model objects after model_load.  Useful for creating custom functions in themes that can loop over model objects</p></li>
 <li><p><code>{{{ shiny_title }}}</code>- Adds the title to the Shiny app</p></li>
 <li><p><code>{{{ auth_ui }}}</code>- Adds the correct dropdown Shiny module for picking a GA4 or Universal Analytics properties</p></li>
-<li><p><code>{{{ date_range }}}</code>- Adds a <code><a href='https://shiny.rstudio.com/reference/shiny/latest/dateInput.html'>shiny::dateInput()</a></code> date selector with id "date_range" for use in model's data fetching functions</p></li>
+<li><p><code>{{{ date_range }}}</code>- Adds a <code><a href='https://rdrr.io/pkg/shiny/man/dateInput.html'>shiny::dateInput()</a></code> date selector with id "date_range" for use in model's data fetching functions</p></li>
 <li><p><code>{{{ model_ui }}}</code>- Adds the models UI elements as configured in the <a href='ga_model.html'>ga_model</a> object.  It uses the object loaded above via the model_load macro.  It looks like <code>model1$ui('model1')</code> in the code.</p></li>
 <li><p><code>{{{ auth_server }}}</code>- Adds the authentication module's server side function</p></li>
 <li><p><code>{{{ auth_accounts }}}</code>- Adds a call to <a href='ga_account_list.html'>ga_account_list</a> for the appropriate GA account type (GA4 or Universal)</p></li>
@@ -376,8 +372,8 @@
 <code><a href='ga_model_load.html'>ga_model_load</a>()</code>,
 <code><a href='ga_model_make.html'>ga_model_make</a>()</code>,
 <code><a href='ga_model_save.html'>ga_model_save</a>()</code>,
+<code><a href='ga_model_shiny_load.html'>ga_model_shiny_load</a>()</code>,
 <code><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a>()</code>,
-<code><a href='ga_model_shiny_ui.html'>ga_model_shiny_ui</a>()</code>,
 <code><a href='ga_model_write.html'>ga_model_write</a>()</code>,
 <code><a href='ga_model.html'>ga_model</a>()</code></p></div>
 
@@ -386,7 +382,8 @@
 <span class='co'># see Shiny templates included with the package</span>
 <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"list"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "argonDash"      "basic"          "basic_app"      "basic_bslib"   
-#&gt; [5] "boilerplate"    "gentelella"     "html_based"     "shinydashboard"</div><div class='input'>
+#&gt; [5] "boilerplate"    "gentelella"     "html_based"     "shinydashboard"
+#&gt; [9] "shinythemes"   </div><div class='input'>
 <span class='co'># see an example of an ui.R template with macros</span>
 <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"basic/ui.R"</span>, read_lines <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "## basic ui.R"                           
@@ -481,38 +478,23 @@
 <span class='fu'>ga_model_shiny</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>m4</span>, <span class='va'>m3</span><span class='op'>)</span>, auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>,
               template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"gentelella"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='co'># custom shinydashboard template              </span>
-<span class='co'>## make a function to output the custom shinydashboard tabs</span>
-<span class='va'>shinydashboard_ui_menu</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>models</span><span class='op'>)</span><span class='op'>{</span>
-  <span class='va'>model_n</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"model"</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='va'>models</span><span class='op'>)</span><span class='op'>)</span> 
-  <span class='va'>labels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>models</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>description</span>, <span class='fl'>0</span>,<span class='fl'>14</span><span class='op'>)</span><span class='op'>)</span>
-  
-  <span class='va'>f</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>model_n</span>, <span class='va'>label</span><span class='op'>)</span><span class='op'>{</span>
-    <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span><span class='op'>(</span><span class='st'>"menuItem('%s', tabName = '%s')"</span>, 
-                  <span class='va'>label</span>, <span class='va'>model_n</span><span class='op'>)</span>, 
-          collapse <span class='op'>=</span> <span class='st'>",\n"</span><span class='op'>)</span>
-  <span class='op'>}</span>
- 
-  <span class='fu'><a href='https://rdrr.io/r/base/mapply.html'>mapply</a></span><span class='op'>(</span><span class='va'>f</span>, <span class='va'>model_n</span>, <span class='va'>labels</span>, SIMPLIFY <span class='op'>=</span> <span class='cn'>FALSE</span>, USE.NAMES <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+     
+<span class='co'># you can make custom ui embedded within the template file</span>
+<span class='co'># use {{{ model_list }}} to work with the models in the ui.R</span>
+
+<span class='co'># below adds custom macro 'theme' and a custom ui in box tabs</span>
+<span class='fu'>ga_model_shiny</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>m4</span>, <span class='va'>m3</span><span class='op'>)</span>, auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>, 
+               template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"shinythemes"</span><span class='op'>)</span>, 
+               theme <span class='op'>=</span> <span class='st'>"yeti"</span><span class='op'>)</span>
+
+<span class='co'># shinydashboard's custom ui functions put a model in each side tab      </span>
+<span class='fu'>ga_model_shiny</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>m4</span>, <span class='va'>m3</span><span class='op'>)</span>, auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>, 
+               template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"shinydashboard"</span><span class='op'>)</span>, 
+               skin <span class='op'>=</span> <span class='st'>"green"</span><span class='op'>)</span>
 <span class='op'>}</span>
 
-<span class='co'>## supply custom function for wrapping the model_ui output with tabItem()</span>
-<span class='va'>shinydashboard_ui</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>model_n</span><span class='op'>)</span><span class='op'>{</span>
-   <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span><span class='op'>(</span><span class='st'>"tabItem(tabName = '%s',%s$ui('%s'))"</span>, 
-                 <span class='va'>model_n</span>, <span class='va'>model_n</span>, <span class='va'>model_n</span><span class='op'>)</span>,
-         collapse <span class='op'>=</span> <span class='st'>",\n"</span><span class='op'>)</span><span class='op'>}</span>
-         
-<span class='va'>m3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"time-normalised.gamr"</span><span class='op'>)</span>
-<span class='va'>m4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"ga-effect.gamr"</span><span class='op'>)</span>
-<span class='va'>models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>m3</span>, <span class='va'>m4</span><span class='op'>)</span>
 
-<span class='co'>## launch shiny app with the models in each tab</span>
-<span class='co'>## model_tabs is via ... and a custom macro in the shinydashboard template</span>
-<span class='fu'>ga_model_shiny</span><span class='op'>(</span><span class='va'>models</span>, auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>, 
-     template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"shinydashboard"</span><span class='op'>)</span>, 
-     ui_f <span class='op'>=</span> <span class='va'>shinydashboard_ui</span>, 
-     model_tabs <span class='op'>=</span> <span class='fu'>shinydashboard_ui_menu</span><span class='op'>(</span><span class='va'>models</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>}</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
