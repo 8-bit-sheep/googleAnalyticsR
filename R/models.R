@@ -581,3 +581,38 @@ write_f <- function(name, f){
   c(name, deparse(f))
 }
 
+#' Refresh a model
+#' 
+#' Sometimes necessary if functions were created under differing package versions
+#' 
+#' @param model Model or file location of model .gamr file
+#' 
+#' @export
+ga_model_refresh <- function(model){
+  save_me <- ""
+  if(is.character(model)){
+    save_me <- model
+    model <- ga_model_load(model)
+  }
+  
+  new_model <- ga_model_edit(model,
+    data_f = model$data_f,
+    required_columns = model$required_columns,
+    model_f = model$model_f,
+    required_packages = model$required_packages,
+    description = model$description,
+    outputShiny = model$outputShiny,
+    renderShiny = model$renderShiny,
+    inputShiny = model$inputShiny,
+    output_f = model$output_f
+  )
+  
+  if(nzchar(save_me)){
+    ga_model_save(new_model, filename = save_me)
+  }
+  
+  new_model
+  
+  
+}
+

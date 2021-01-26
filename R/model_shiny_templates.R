@@ -65,6 +65,7 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #'  \item{\code{\{\{\{ scopes \}\}\}}}{- Adds Google Oauth2 scopes for the API calls}
 #'  \item{\code{\{\{\{ deployed_url \}\}\}}}{- Adds \code{option(googleAuthR.redirect)} option for deployed Shiny apps}
 #'  \item{\code{\{\{\{ model_load \}\}\}}}{- Adds \link{ga_model_load} calls loading all models in the list passed to this function's \code{models} argument.  It creates R objects called 'model1', 'model2' etc. in the Shiny app code}
+#'  \item{\code{\{\{\{ model_list \}\}\}}}{- Adds a list of the model objects after model_load.  Useful for creating custom functions in themes that can loop over model objects}
 #'  \item{\code{\{\{\{ shiny_title \}\}\}}}{- Adds the title to the Shiny app}
 #'  \item{\code{\{\{\{ auth_ui \}\}\}}}{- Adds the correct dropdown Shiny module for picking a GA4 or Universal Analytics properties}
 #'  \item{\code{\{\{\{ date_range \}\}\}}}{- Adds a \code{shiny::dateInput()} date selector with id "date_range" for use in model's data fetching functions}
@@ -170,6 +171,16 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #'      ui_f = shinydashboard_ui, 
 #'      model_tabs = shinydashboard_ui_menu(models))
 #' }
+#' 
+#' # you can include the ui_f embedded within the template file instead
+#' # use \{\{\{ model_list \}\}\} to work with the models in the ui.R
+#' 
+#' # below adds custom macro 'theme' but puts its ui_f within the template
+#' ga_model_shiny(models, auth_dropdown = "universal", 
+#'                template = ga_model_shiny_template("shinythemes"), 
+#'                theme = "yeti")
+#' 
+#' 
 #' @family GA modelling functions
 ga_model_shiny <- function(
   models,
@@ -220,7 +231,7 @@ ga_model_shiny <- function(
   
   myMessage("passed template values:\n", 
             paste(names(values),"=",values, collapse = "\n"),
-            level = 3)
+            level = 2)
   
   render <- lapply(txt, whisker.render, data = values)
 
@@ -270,19 +281,19 @@ write_template_object <- function(output, destination_folder){
 
   if(!is.null(output$app) && nzchar(output$app)){
     loc <- file.path(destination_folder, "app.R")
-    myMessage("Writing Shiny app.R to ", loc, level = 3)
+    myMessage("Writing Shiny app.R to ", loc, level = 2)
     writeLines(output$app, loc)
   }
   
   if(!is.null(output$ui) && nzchar(output$ui)){
     loc <- file.path(destination_folder, "ui.R")
-    myMessage("Writing Shiny ui.R to ", loc, level = 3)
+    myMessage("Writing Shiny ui.R to ", loc, level = 2)
     writeLines(output$ui, loc)
   }
   
   if(!is.null(output$server) && nzchar(output$server)){
     loc <- file.path(destination_folder, "server.R")
-    myMessage("Writing Shiny server.R to ", loc, level = 3)
+    myMessage("Writing Shiny server.R to ", loc, level = 2)
     writeLines(output$server, loc)
   }
   
@@ -309,7 +320,7 @@ ga_model_shiny_template_make <- function(template, header_boilerplate = TRUE){
   if(header_boilerplate){
     myMessage(
       "Adding ga_model_shiny_template('header_boilerplate.R') to Shiny code",
-      level = 3)
+      level = 2)
     # add the header boiler plate
     hdr_txt <- ga_model_shiny_template("boilerplate/header_boilerplate.R", 
                                        read_lines = TRUE)
@@ -413,13 +424,20 @@ make_model_template <- function(model_locations,
       collapse = "\n")
   }
   
+  # models in a list that can be used in theme templates
+  model_list <- paste("list(", 
+                      paste(names(model_locations), 
+                            collapse = ",", sep = ","),
+                      ")")
+  
   list(
     model_load = paste(
       sprintf("%s <- ga_model_shiny_load('%s')", 
               names(model_locations), model_locations), 
       collapse = "\n"),
     model_ui = ga_model_shiny_ui_f(names(model_locations)),
-    model_server = model_server
+    model_server = model_server,
+    model_list = model_list
   )
   
 }

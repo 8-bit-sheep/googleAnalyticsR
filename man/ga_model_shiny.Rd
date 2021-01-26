@@ -69,6 +69,7 @@ By default the Shiny app is launched which in most cases will prompt authorisati
  \item{\code{\{\{\{ scopes \}\}\}}}{- Adds Google Oauth2 scopes for the API calls}
  \item{\code{\{\{\{ deployed_url \}\}\}}}{- Adds \code{option(googleAuthR.redirect)} option for deployed Shiny apps}
  \item{\code{\{\{\{ model_load \}\}\}}}{- Adds \link{ga_model_load} calls loading all models in the list passed to this function's \code{models} argument.  It creates R objects called 'model1', 'model2' etc. in the Shiny app code}
+ \item{\code{\{\{\{ model_list \}\}\}}}{- Adds a list of the model objects after model_load.  Useful for creating custom functions in themes that can loop over model objects}
  \item{\code{\{\{\{ shiny_title \}\}\}}}{- Adds the title to the Shiny app}
  \item{\code{\{\{\{ auth_ui \}\}\}}}{- Adds the correct dropdown Shiny module for picking a GA4 or Universal Analytics properties}
  \item{\code{\{\{\{ date_range \}\}\}}}{- Adds a \code{shiny::dateInput()} date selector with id "date_range" for use in model's data fetching functions}
@@ -170,6 +171,16 @@ ga_model_shiny(models, auth_dropdown = "universal",
      ui_f = shinydashboard_ui, 
      model_tabs = shinydashboard_ui_menu(models))
 }
+
+# you can include the ui_f embedded within the template file instead
+# use \{\{\{ model_list \}\}\} to work with the models in the ui.R
+
+# below adds custom macro 'theme' but puts its ui_f within the template
+ga_model_shiny(models, auth_dropdown = "universal", 
+               template = ga_model_shiny_template("shinythemes"), 
+               theme = "yeti")
+
+
 }
 \seealso{
 Other GA modelling functions: 
