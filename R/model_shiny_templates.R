@@ -170,8 +170,7 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #'      template = ga_model_shiny_template("shinydashboard"), 
 #'      ui_f = shinydashboard_ui, 
 #'      model_tabs = shinydashboard_ui_menu(models))
-#' }
-#' 
+#'      
 #' # you can include the ui_f embedded within the template file instead
 #' # use \{\{\{ model_list \}\}\} to work with the models in the ui.R
 #' 
@@ -179,6 +178,8 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #' ga_model_shiny(models, auth_dropdown = "universal", 
 #'                template = ga_model_shiny_template("shinythemes"), 
 #'                theme = "yeti")
+#' }
+#' 
 #' 
 #' 
 #' @family GA modelling functions
