@@ -115,12 +115,12 @@ ga_model_load <- function(filename = "my-model.gamr"){
 ga_model_example <- function(name = "list"){
   
   if(name == "list"){
-    return(list.files(system.file("models", package = "googleAnalyticsR"), 
+    return(list.files(system.file("models","examples", package = "googleAnalyticsR"), 
                include.dirs = FALSE))
   }
   
   # this will fetch from more places such as other packages and GCS eventually
-  filename <- system.file("models", name, package = "googleAnalyticsR")
+  filename <- system.file("models","examples", name, package = "googleAnalyticsR")
   
   ga_model_load(filename)
 }
@@ -180,7 +180,7 @@ ga_model_example <- function(name = "list"){
 #'  ga_model(81416156, decomp_ga)
 #'
 #'  # save the model for later
-#'  model_location <- "inst/models/decomp_ga.gamr"
+#'  model_location <- "decomp_ga.gamr"
 #'  ga_model_save(decomp_ga, filename = model_location)
 #'
 #'  # can load model from file

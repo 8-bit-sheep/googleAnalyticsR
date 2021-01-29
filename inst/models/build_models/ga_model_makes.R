@@ -1,9 +1,14 @@
 library(googleAnalyticsR)
+library(dygraphs)
+library(xts)
+library(shiny)
+library(plotly)
+library(CausalImpact)
 
-ga_model_refresh("inst/models/ga-effect.gamr")
+ga_model_refresh("inst/models/examples/ga-effect.gamr")
 
 source("inst/models/model_scripts/ga4-dygraphs.R")
-ga_model_edit("inst/models/ga4-trend.gamr",
+ga_model_edit("inst/models/examples/ga4-trend.gamr",
               data_f = data_f, model_f = model_f, output_f = output_f, 
               outputShiny = dygraphs::dygraphOutput, 
               renderShiny = dygraphs::renderDygraph, inputShiny = uiInput)
@@ -11,7 +16,7 @@ ga_model_edit("inst/models/ga4-trend.gamr",
 date_input <- shiny::dateRangeInput("date_range", "Dates", 
                                     start = Sys.Date()-300, end = Sys.Date()-1)
 source("inst/models/model_scripts/ua-decomp.R")
-ga_model_edit("inst/models/decomp_ga.gamr",
+ga_model_edit("inst/models/examples/decomp_ga.gamr",
               data_f = data_f, model_f = model_f, output_f = output_f, 
               outputShiny = shiny::plotOutput, 
               renderShiny = shiny::renderPlot,
@@ -24,7 +29,7 @@ freq_input <- shiny::selectInput("frequency", "Periodic Frequency",
 metric_input <- shiny::selectInput("metric", "Metric", 
                                    choices = c("sessions","users","pageviews"))
 source("inst/models/model_scripts/decomp_advanced.R")
-ga_model_edit("inst/models/decomp_ga_advanced.gamr", 
+ga_model_edit("inst/models/examples/decomp_ga_advanced.gamr", 
               description = "Performs decomposition (Advanced)",
               data_f = data_f, model_f = model_f, output_f = output_f, 
               outputShiny = shiny::plotOutput, renderShiny = shiny::renderPlot,
@@ -43,7 +48,7 @@ is <- shiny::tagList(
   shiny::textInput("page_regex", label = "Page filter regex", value = ".*")
 )
 
-ga_model_edit("inst/models/time-normalised.gamr",
+ga_model_edit("inst/models/examples/time-normalised.gamr",
               data_f = data_f, model_f = model_f, output_f = output_f, 
               outputShiny = plotly::plotlyOutput, 
               renderShiny = plotly::renderPlotly,
