@@ -1,8 +1,6 @@
-source("inst/models/model_scripts/ua-causalimpact.R")
-ga_model_edit("inst/models/ga-effect.gamr",
-              data_f = data_f, model_f = model_f, output_f = output_f, 
-              outputShiny = dygraphs::dygraphOutput, 
-              renderShiny = dygraphs::renderDygraph, inputShiny = uiInput)
+library(googleAnalyticsR)
+
+ga_model_refresh("inst/models/ga-effect.gamr")
 
 source("inst/models/model_scripts/ga4-dygraphs.R")
 ga_model_edit("inst/models/ga4-trend.gamr",
@@ -34,15 +32,15 @@ ga_model_edit("inst/models/decomp_ga_advanced.gamr",
 
 source("inst/models/model_scripts/ua-time-normalised.R")
 
-library(shiny)
-is <- tagList(
-  numericInput("first_day", "First day minimum pageviews",
+
+is <- shiny::tagList(
+  shiny::numericInput("first_day", "First day minimum pageviews",
                                value = 2, min=0, max=100),
-  numericInput("total_min_cutoff", "Minimum Total pageviews",
+  shiny::numericInput("total_min_cutoff", "Minimum Total pageviews",
                              value = 500, min = 0, max = 1000),
-  numericInput("days_live", label = "Days Live",
+  shiny::numericInput("days_live", label = "Days Live",
                                value = 60, min = 10, max = 400),
-  textInput("page_regex", label = "Page filter regex", value = ".*")
+  shiny::textInput("page_regex", label = "Page filter regex", value = ".*")
 )
 
 ga_model_edit("inst/models/time-normalised.gamr",
