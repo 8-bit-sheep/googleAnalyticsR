@@ -289,7 +289,9 @@ parse_rows <- function(o, dim_names, met_names){
     myMessage("Warning: some buckets of dimension combinations are rolled into '(other)' row. This can happen for high cardinality reports.", level = 3)
   }
   
-  attr(res, "metadata") <- o$metadata
+  if(!is.null(o$metadata) && length(o$metadata) > 1){
+    attr(res, "metadata") <- o$metadata
+  }
   attr(res, "metricAggregations") <- list(
     totals =   parse_aggregations(o$totals, dim_names, met_names),
     maximums = parse_aggregations(o$maximums, dim_names, met_names),
