@@ -264,6 +264,28 @@
       <small>Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="googleanalyticsr-0809000" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.0.9000">
+<a href="#googleanalyticsr-0809000" class="anchor"></a>googleAnalyticsR 0.8.0.9000<small> Unreleased </small>
+</h1>
+<ul>
+<li>Allow authentication with service JSON keys without needing to change default client.id (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/324'>#324</a> - thanks <a href='https://github.com/adamribaudo'>@adamribaudo</a>)</li>
+<li>Fix GA Adwords list parsing (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/322'>#322</a> - thanks <a href='https://github.com/millett-a'>@millett-a</a>)</li>
+<li>Add getUniversalMetadata API fetch to <code><a href="../reference/ga_meta.html">ga_meta(version="data")</a></code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/335'>#335</a>)</li>
+<li>Fix for passing <code>ganalytics</code>-style expressions for dimension and metric filters/segments (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/339'>#339</a> and <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/305'>#305</a>), which also resolves <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/279'>#279</a> (and improves on <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/253'>#253</a>) for continued support of combining expressions (for filters and segments) using <code><a href="https://rdrr.io/r/base/list.html">list()</a></code>.</li>
+<li>Support new Google Analytics 4 APIs via <code><a href="../reference/ga_data.html">ga_data()</a></code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/335'>#335</a>)</li>
+<li>Add <code>ga_data_aggregation()</code>, <code><a href="../reference/ga_data_filter.html">ga_data_filter()</a></code>, <code><a href="../reference/ga_data_order.html">ga_data_order()</a></code> for working with <code><a href="../reference/ga_data.html">ga_data()</a></code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/335'>#335</a>)</li>
+<li>Remove support for API v3 multi-account batching (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/347'>#347</a>)</li>
+<li>Deprecate <code><a href="../reference/google_analytics_3.html">google_analytics_3()</a></code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/347'>#347</a>)</li>
+<li>Add GA4’s Admin API to <code><a href="../reference/ga_account_list.html">ga_account_list("ga4")</a></code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/350'>#350</a>)</li>
+<li>Remove <code>ga_model_tweet()</code>
+</li>
+<li>Add new Shiny module for GA4 web properties - <code><a href="../reference/accountPickerUI.html">accountPicker()</a></code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/357'>#357</a>)</li>
+<li>Add new Shiny module for GA4 fields - <code><a href="../reference/metricDimensionSelectUI.html">metricDimensionSelect()</a></code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/357'>#357</a>)</li>
+<li>Enable generation of Shiny apps from <code><a href="../reference/ga_model.html">ga_model()</a></code> objects using template files <code><a href="../reference/ga_model_shiny.html">ga_model_shiny()</a></code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/358'>#358</a>)</li>
+<li>From 0.9.0 there will be a dev version of the website at <code>https://code.markedmondson.me/googleAnalyticsR/dev/</code> with the development documentation. <code>https://code.markedmondson.me/googleAnalyticsR/</code> will only carry the CRAN version.</li>
+</ul>
+</div>
     <div id="googleanalyticsr-080" class="section level1">
 <h1 class="page-header" data-toc-text="0.8.0">
 <a href="#googleanalyticsr-080" class="anchor"></a>googleAnalyticsR 0.8.0<small> 2020-06-24 </small>
