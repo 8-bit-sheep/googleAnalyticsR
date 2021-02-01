@@ -74,7 +74,7 @@ The \code{data_f} function result will feed to \code{model_f}
  ga_model(81416156, decomp_ga)
 
  # save the model for later
- model_location <- "inst/models/decomp_ga.gamr"
+ model_location <- "decomp_ga.gamr"
  ga_model_save(decomp_ga, filename = model_location)
 
  # can load model from file

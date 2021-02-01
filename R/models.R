@@ -83,7 +83,7 @@ ga_model_save <- function(model, filename = "my-model.gamr"){
 #' @examples 
 #' 
 #' # models used in ga_model_example() are here:
-#' location <- system.file("models","decomp_ga.gamr", 
+#' location <- system.file("models","examples","decomp_ga.gamr", 
 #'                         package = "googleAnalyticsR")
 #' 
 #' ga_model_load(location)
@@ -95,7 +95,9 @@ ga_model_load <- function(filename = "my-model.gamr"){
   
   assert_that(is.ga_model(model))
   myMessage("Loaded model from ", filename, level = 2)
-  model
+  
+  # refresh to use local libraries
+  ga_model_refresh(model)
   
 }
 
@@ -248,8 +250,8 @@ ga_model_edit <- function(
   model_f = NULL,
   required_packages = NULL,
   description = NULL,
-  outputShiny = NULL,
-  renderShiny = NULL,
+  outputShiny = shiny::plotOutput,
+  renderShiny = shiny::renderPlot,
   inputShiny = NULL,
   output_f = NULL){
   

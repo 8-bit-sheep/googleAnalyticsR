@@ -11,8 +11,8 @@ ga_model_edit(
   model_f = NULL,
   required_packages = NULL,
   description = NULL,
-  outputShiny = NULL,
-  renderShiny = NULL,
+  outputShiny = shiny::plotOutput,
+  renderShiny = shiny::renderPlot,
   inputShiny = NULL,
   output_f = NULL
 )

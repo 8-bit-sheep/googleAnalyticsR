@@ -72,11 +72,11 @@ test_that("Run a model online",{
 
   expect_equal(model$description, "A description")
 
-  model2 <- ga_model_edit(model, description = "changed")
+  model2 <- ga_model_edit(model, description = "changed",
+                          outputShiny = shiny::plotOutput, renderShiny = shiny::renderPlot)
   expect_equal(model2$description, "changed")
 
-  expect_equal(as.character(model$shiny_module$ui("test")),
-               "<div id=\"test-ui_out\" class=\"shiny-plot-output\" style=\"width: 100% ; height: 400px\"></div>")
+  expect_snapshot(model2$shiny_module$ui("test"))
 
   ga_model_write(model, "test_model_write.R")
   expect_true(file.exists("test_model_write.R"))
