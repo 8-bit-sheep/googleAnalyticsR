@@ -10,7 +10,7 @@ options(googleAuthR.scopes.selected =
             "https://www.googleapis.com/auth/drive"))
 
 # auth cache with custom project creds
-if(Sys.getenv("GAR_CLIENT_JSON") != ""){
+if(nzchar(Sys.getenv("GAR_CLIENT_JSON"))){
   googleAuthR::gar_set_client()
   dir.create("cache/", showWarnings = FALSE)
   ga_cache_call("cache/")

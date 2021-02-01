@@ -96,8 +96,7 @@ ga_model_load <- function(filename = "my-model.gamr"){
   assert_that(is.ga_model(model))
   myMessage("Loaded model from ", filename, level = 2)
   
-  # refresh to use local libraries
-  ga_model_refresh(model)
+  model
   
 }
 

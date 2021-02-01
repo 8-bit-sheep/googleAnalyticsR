@@ -2,7 +2,7 @@ title: "googleAnalyticsR"
 output_dir: "."
 url: https://code.markedmondson.me/googleAnalyticsR/
 development:
-  mode: release
+  mode: auto
 authors:
   name: Mark Edmondson
   href: https://code.markedmondson.me

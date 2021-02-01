@@ -15,7 +15,7 @@ Load a created model
 \examples{
 
 # models used in ga_model_example() are here:
-location <- system.file("models","decomp_ga.gamr", 
+location <- system.file("models","examples","decomp_ga.gamr", 
                         package = "googleAnalyticsR")
 
 ga_model_load(location)

@@ -1,3 +1,5 @@
+source("setup.R")
+
 test_that("Shiny unit tests", {
   
   # ui tests

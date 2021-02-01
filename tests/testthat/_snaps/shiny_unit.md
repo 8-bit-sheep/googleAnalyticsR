@@ -1,24 +1,24 @@
 # Shiny unit tests
 
     <div class="form-group shiny-input-container">
-      <label class="control-label" for="test1-accounts">Accounts</label>
+      <label class="control-label" id="test1-accounts-label" for="test1-accounts">Accounts</label>
       <div>
         <select id="test1-accounts"></select>
-        <script type="application/json" data-for="test1-accounts" data-nonempty="">{}</script>
+        <script type="application/json" data-for="test1-accounts" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
       </div>
     </div>
     <div class="form-group shiny-input-container">
-      <label class="control-label" for="test1-web.prop">WebProperty</label>
+      <label class="control-label" id="test1-web.prop-label" for="test1-web.prop">WebProperty</label>
       <div>
         <select id="test1-web.prop"></select>
-        <script type="application/json" data-for="test1-web.prop" data-nonempty="">{}</script>
+        <script type="application/json" data-for="test1-web.prop" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
       </div>
     </div>
     <div class="form-group shiny-input-container">
-      <label class="control-label" for="test1-view">Select View</label>
+      <label class="control-label" id="test1-view-label" for="test1-view">Select View</label>
       <div>
         <select id="test1-view"></select>
-        <script type="application/json" data-for="test1-view" data-nonempty="">{}</script>
+        <script type="application/json" data-for="test1-view" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
       </div>
     </div>
 
@@ -26,28 +26,28 @@
 
     <div class="col-sm-4">
       <div class="form-group shiny-input-container">
-        <label class="control-label" for="test1-accounts">Accounts</label>
+        <label class="control-label" id="test1-accounts-label" for="test1-accounts">Accounts</label>
         <div>
           <select id="test1-accounts"></select>
-          <script type="application/json" data-for="test1-accounts" data-nonempty="">{}</script>
+          <script type="application/json" data-for="test1-accounts" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
         </div>
       </div>
     </div>
     <div class="col-sm-4">
       <div class="form-group shiny-input-container">
-        <label class="control-label" for="test1-web.prop">WebProperty</label>
+        <label class="control-label" id="test1-web.prop-label" for="test1-web.prop">WebProperty</label>
         <div>
           <select id="test1-web.prop"></select>
-          <script type="application/json" data-for="test1-web.prop" data-nonempty="">{}</script>
+          <script type="application/json" data-for="test1-web.prop" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
         </div>
       </div>
     </div>
     <div class="col-sm-4">
       <div class="form-group shiny-input-container">
-        <label class="control-label" for="test1-view">Select View</label>
+        <label class="control-label" id="test1-view-label" for="test1-view">Select View</label>
         <div>
           <select id="test1-view"></select>
-          <script type="application/json" data-for="test1-view" data-nonempty="">{}</script>
+          <script type="application/json" data-for="test1-view" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
         </div>
       </div>
     </div>
@@ -55,27 +55,27 @@
 ---
 
     <div class="form-group shiny-input-container">
-      <label class="control-label" for="test1-multi_select">Metric</label>
+      <label class="control-label" id="test1-multi_select-label" for="test1-multi_select">Metric</label>
       <div>
         <select id="test1-multi_select" multiple="multiple"></select>
-        <script type="application/json" data-for="test1-multi_select">{}</script>
+        <script type="application/json" data-for="test1-multi_select">{"plugins":["selectize-plugin-a11y"]}</script>
       </div>
     </div>
 
 ---
 
     <div class="form-group shiny-input-container">
-      <label class="control-label" for="test1-account_name">Accounts</label>
+      <label class="control-label" id="test1-account_name-label" for="test1-account_name">Accounts</label>
       <div>
         <select id="test1-account_name"></select>
-        <script type="application/json" data-for="test1-account_name" data-nonempty="">{}</script>
+        <script type="application/json" data-for="test1-account_name" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
       </div>
     </div>
     <div class="form-group shiny-input-container">
-      <label class="control-label" for="test1-property_name">Select Property</label>
+      <label class="control-label" id="test1-property_name-label" for="test1-property_name">Select Property</label>
       <div>
         <select id="test1-property_name"></select>
-        <script type="application/json" data-for="test1-property_name" data-nonempty="">{}</script>
+        <script type="application/json" data-for="test1-property_name" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
       </div>
     </div>
 
@@ -83,19 +83,19 @@
 
     <div class="col-sm-6">
       <div class="form-group shiny-input-container">
-        <label class="control-label" for="test1-account_name">Accounts</label>
+        <label class="control-label" id="test1-account_name-label" for="test1-account_name">Accounts</label>
         <div>
           <select id="test1-account_name"></select>
-          <script type="application/json" data-for="test1-account_name" data-nonempty="">{}</script>
+          <script type="application/json" data-for="test1-account_name" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
         </div>
       </div>
     </div>
     <div class="col-sm-6">
       <div class="form-group shiny-input-container">
-        <label class="control-label" for="test1-property_name">Select Property</label>
+        <label class="control-label" id="test1-property_name-label" for="test1-property_name">Select Property</label>
         <div>
           <select id="test1-property_name"></select>
-          <script type="application/json" data-for="test1-property_name" data-nonempty="">{}</script>
+          <script type="application/json" data-for="test1-property_name" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
         </div>
       </div>
     </div>
@@ -103,10 +103,10 @@
 ---
 
     <div class="form-group shiny-input-container">
-      <label class="control-label" for="test1-multi_select">Metric</label>
+      <label class="control-label" id="test1-multi_select-label" for="test1-multi_select">Metric</label>
       <div>
         <select id="test1-multi_select" multiple="multiple"></select>
-        <script type="application/json" data-for="test1-multi_select">{}</script>
+        <script type="application/json" data-for="test1-multi_select">{"plugins":["selectize-plugin-a11y"]}</script>
       </div>
     </div>
 
