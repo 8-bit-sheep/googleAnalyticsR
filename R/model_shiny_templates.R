@@ -151,6 +151,11 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #' ga_model_shiny(list(m4, m3), auth_dropdown = "universal", 
 #'                template = ga_model_shiny_template("shinydashboard"), 
 #'                skin = "green")
+#'                
+#' # send in lots of theme variables to bslib in shiny > 1.6.0
+#' ga_model_shiny(list(m4, m3), auth_dropdown = "universal",
+#'                template = ga_model_shiny_template("basic_bslib"), 
+#'                bg = "white", fg = "red", primary = "grey")
 #' }
 #' 
 #' 
