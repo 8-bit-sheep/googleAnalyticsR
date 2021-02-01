@@ -1,4 +1,4 @@
-# 0.8.0.9000
+# googleAnalyticsR 0.8.0.9000
 
 * Allow authentication with service JSON keys without needing to change default client.id (#324 - thanks @adamribaudo)
 * Fix GA Adwords list parsing (#322 - thanks @millett-a)
@@ -13,6 +13,7 @@
 * Add new Shiny module for GA4 web properties - `accountPicker()` (#357)
 * Add new Shiny module for GA4 fields - `metricDimensionSelect()` (#357)
 * Enable generation of Shiny apps from `ga_model()` objects using template files `ga_model_shiny()` (#358)
+* From 0.9.0 there will be a dev version of the website at `https://code.markedmondson.me/googleAnalyticsR/dev/` with the development documentation.  `https://code.markedmondson.me/googleAnalyticsR/` will only carry the CRAN version.
 
 # googleAnalyticsR 0.8.0
 

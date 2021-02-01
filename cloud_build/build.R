@@ -30,10 +30,15 @@ cr_deploy_pkgdown(
 
 # run build of models
 bs <- c(
+  cr_buildstep_docker(
+    "ga-model-examples",
+    location = "inst/models/build_models/",
+    kaniko_cache = TRUE
+  ),
   cr_buildstep_gitsetup("github-ssh"),
   cr_buildstep_r(
     "inst/models/build_models/ga_model_makes.R",
-    name = "gcr.io/gcer-public/googleanalyticsr:master"),
+    name = "gcr.io/gcer-public/ga-model-examples:$BUILD_ID"),
   cr_buildstep_git("add","--all"),
   cr_buildstep_git("commit", "-a","-m","build_models"),
   cr_buildstep_git("push")
