@@ -32,7 +32,7 @@ cr_deploy_pkgdown(
 bs <- c(
   cr_buildstep_docker(
     "ga-model-examples",
-    location = "inst/models/build_models/",
+    dir = "inst/models/build_models/",
     kaniko_cache = TRUE
   ),
   cr_buildstep_gitsetup("github-ssh"),
