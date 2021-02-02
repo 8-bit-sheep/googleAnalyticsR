@@ -5,15 +5,16 @@ RUN ulimit -s 16384 \
 
 RUN install2.r --error \ 
     -r 'http://cran.rstudio.com' \
-    xts dygraphs \
-    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
+    xts dygraphs
 
 RUN install2.r --error \ 
     -r 'http://cran.rstudio.com' \
-    CausalImpact \
-    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
+    CausalImpact
 
 RUN install2.r --error \ 
     -r 'http://cran.rstudio.com' \
-    shiny plotly \
+    shiny plotly
+
+RUN installGithub.r MarkEdmondson1234/googleAnalyticsR \
+    && R -e 'sessionInfo()'
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
