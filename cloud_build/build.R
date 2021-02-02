@@ -39,9 +39,9 @@ bs <- c(
   cr_buildstep_r(
     "inst/models/build_models/ga_model_makes.R",
     name = "gcr.io/mark-edmondson-gde/ga-model-examples:$BUILD_ID"),
-  cr_buildstep_git("add","--all"),
-  cr_buildstep_git("commit", "-a","-m","build_models"),
-  cr_buildstep_git("push")
+  cr_buildstep_git(git_args = c("add","--all")),
+  cr_buildstep_git(git_args = c("commit", "-a","-m","build_models")),
+  cr_buildstep_git(git_args = "push")
 )
 
 by <- cr_build_yaml(bs, timeout = 2400)
