@@ -45,7 +45,7 @@ bs <- c(
 )
 
 by <- cr_build_yaml(bs, timeout = 2400)
-build <- cr_build_make(by, options = list(machineType = "N1_HIGHCPU_8"))
+build <- cr_build_make(by, options = list(machineType = "E2_HIGHCPU_8"))
 
 cr_build_write(build, "cloud_build/build_models.yml")
 

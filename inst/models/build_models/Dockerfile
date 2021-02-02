@@ -1,5 +1,8 @@
 FROM gcr.io/gcer-public/googleanalyticsr
 
+RUN ulimit -s 16384 \
+    && R -e 'install.packages("Boom");'
+
 RUN install2.r --error \ 
     -r 'http://cran.rstudio.com' \
     xts dygraphs \
