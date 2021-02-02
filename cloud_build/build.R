@@ -46,8 +46,9 @@ bs <- c(
     dir = "payload"),
   cr_buildstep_git(git_args = c("add","--all"), 
                    dir = "payload"),
-  cr_buildstep_git(git_args = c("commit", "-a","-m","build_models"),
-                   dir = "payload"),
+  cr_buildstep_git(
+    git_args = c("commit", "-a","-m","build_models from ${COMMIT_SHA}"),
+    dir = "payload"),
   cr_buildstep_git(git_args = c("push"),
                    dir = "payload")
 )
@@ -60,6 +61,7 @@ build <- cr_build_make(by)
 
 cr_build_write(build, "cloud_build/build_models.yml")
 
-cr_buildtrigger("cloud_build/build_models.yml", 
-                name = "ga-model-example-builds",
-                trigger = cr_buildtrigger_repo("MarkEdmondson1234/googleAnalyticsR"))
+cr_buildtrigger(
+  "cloud_build/build_models.yml", 
+  name = "ga-model-example-builds",
+  trigger = cr_buildtrigger_repo("MarkEdmondson1234/googleAnalyticsR"))
