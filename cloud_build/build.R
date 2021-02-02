@@ -36,16 +36,27 @@ bs <- c(
     kaniko_cache = TRUE
   ),
   cr_buildstep_gitsetup("github-ssh"),
+  cr_buildstep_git(
+    git_args = c("clone",
+                 "git@github.com:MarkEdmondson1234/googleAnalyticsR",
+                 "payload")),
   cr_buildstep_r(
     "inst/models/build_models/ga_model_makes.R",
-    name = "gcr.io/mark-edmondson-gde/ga-model-examples:$BUILD_ID"),
-  cr_buildstep_git(git_args = c("add","--all")),
-  cr_buildstep_git(git_args = c("commit", "-a","-m","build_models")),
-  cr_buildstep_git(git_args = "push")
+    name = "gcr.io/mark-edmondson-gde/ga-model-examples:$BUILD_ID",
+    dir = "payload"),
+  cr_buildstep_git(git_args = c("add","--all"), 
+                   dir = "payload"),
+  cr_buildstep_git(git_args = c("commit", "-a","-m","build_models"),
+                   dir = "payload"),
+  cr_buildstep_git(git_args = c("push"),
+                   dir = "payload")
 )
 
 by <- cr_build_yaml(bs, timeout = 2400)
-build <- cr_build_make(by, options = list(machineType = "E2_HIGHCPU_8"))
+## if building Boom/CausalImpact you will need a bigger machine
+#build <- cr_build_make(by, options = list(machineType = "E2_HIGHCPU_8"))
+## but this one is cheaper
+build <- cr_build_make(by)
 
 cr_build_write(build, "cloud_build/build_models.yml")
 
