@@ -16,5 +16,5 @@ RUN install2.r --error \
     shiny plotly
 
 RUN installGithub.r MarkEdmondson1234/googleAnalyticsR \
-    && R -e 'sessionInfo()'
+    && R -e 'sessionInfo()' \
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
