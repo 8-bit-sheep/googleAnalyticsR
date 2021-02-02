@@ -44,8 +44,8 @@ bs <- c(
   cr_buildstep_git("push")
 )
 
-by <- cr_build_yaml(bs)
-build <- cr_build_make(by)
+by <- cr_build_yaml(bs, timeout = 2400)
+build <- cr_build_make(by, options = list(machineType = "N1_HIGHCPU_8"))
 
 cr_build_write(build, "cloud_build/build_models.yml")
 
