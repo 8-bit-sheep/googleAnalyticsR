@@ -491,6 +491,11 @@
 <span class='fu'>ga_model_shiny</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>m4</span>, <span class='va'>m3</span><span class='op'>)</span>, auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>, 
                template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"shinydashboard"</span><span class='op'>)</span>, 
                skin <span class='op'>=</span> <span class='st'>"green"</span><span class='op'>)</span>
+               
+<span class='co'># send in lots of theme variables to bslib in shiny &gt; 1.6.0</span>
+<span class='fu'>ga_model_shiny</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>m4</span>, <span class='va'>m3</span><span class='op'>)</span>, auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>,
+               template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"basic_bslib"</span><span class='op'>)</span>, 
+               bg <span class='op'>=</span> <span class='st'>"white"</span>, fg <span class='op'>=</span> <span class='st'>"red"</span>, primary <span class='op'>=</span> <span class='st'>"grey"</span><span class='op'>)</span>
 <span class='op'>}</span>
 
 
