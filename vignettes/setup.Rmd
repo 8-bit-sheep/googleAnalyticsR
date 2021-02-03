@@ -47,13 +47,13 @@ install.packages("googleAnalyticsR", dependencies = TRUE)
 
 You may prefer to use the latest development version on GitHub which you can install via the below.
 
-Github check status: [![Travis-CI Build Status](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR.svg?branch=master)](https://travis-ci.org/MarkEdmondson1234/googleAnalyticsR)
+Build status: ![CloudBuild](https://badger-ewjogewawq-ew.a.run.app/build/status?project=mark-edmondson-gde&id=4ae2fa13-b1d8-41f3-b846-8bf3c67f050a)
 
 ```r
 remotes::install_github("MarkEdmondson1234/googleAnalyticsR")
 ```
 
-Check out the [NEWS](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/NEWS.md) to see whats currently available in each version.
+Check out the [NEWS](https://code.markedmondson.me/googleAnalyticsR/news/) to see what is currently available in each version and the [development version of the website here](https://code.markedmondson.me/googleAnalyticsR/dev/) which carries experimental documentation. 
 
 ### Docker image
 

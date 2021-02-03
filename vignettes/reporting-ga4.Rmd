@@ -19,6 +19,12 @@ library(googleAnalyticsR)
 * Easier integration with the real-time API
 * Improved filter syntax
 
+## Demo video
+
+See a demo video on GA4 and some of the new `ga_data()` features in this [GA4 API FTW YouTube video](https://www.youtube.com/watch?v=5Itz6xfJGDk).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5Itz6xfJGDk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## GA4 enabled properties
 
 You can see the GA4 accounts you have access to under your authentication via `ga_account_list("ga4")`
