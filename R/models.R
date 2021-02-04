@@ -468,6 +468,19 @@ create_shiny_module_funcs <- function(data_f,
           new <- lapply(input_ids, function(x){dots[[x]] <- input[[x]]})
           modifyList(dots, setNames(new, input_ids))
         }
+        
+        inputs_in_f_args <- function(f, dots){
+          intersect(function_args(f), names(dots))
+        }
+        
+        # ga_data_cache <- shiny::reactive({
+        #   dots <- copy_input_ids(input_ids, input, dots)
+        #   dot_names <- inputs_in_f_args(data_f, dots)
+        #   o <- setNames(lapply(dot_names, 
+        #          function(x) dots[[x]]),dot_names)
+        #   str(o)
+        #   o
+        # })
 
         gadata <- shiny::reactive({
           shiny::req(view_id())

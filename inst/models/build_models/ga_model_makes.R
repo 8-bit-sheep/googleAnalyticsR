@@ -54,7 +54,7 @@ is <- shiny::tagList(
                              value = 500, min = 0, max = 1000),
   shiny::numericInput("days_live", label = "Days Live",
                                value = 60, min = 10, max = 400),
-  shiny::textInput("page_regex", label = "Page filter regex", value = ".*")
+  shiny::textInput("page_filter_regex", label = "Page filter regex", value = ".*")
 )
 
 ga_model_edit("inst/models/examples/time-normalised.gamr",
