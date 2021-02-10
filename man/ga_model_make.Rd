@@ -13,7 +13,7 @@ ga_model_make(
   description = NULL,
   outputShiny = shiny::plotOutput,
   renderShiny = shiny::renderPlot,
-  inputShiny = NULL
+  inputShiny = shiny::tagList()
 )
 }
 \arguments{

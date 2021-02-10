@@ -7,7 +7,9 @@ library(purrr)
 library(ggplot2)
 
 # fetch data
-data_f <- function(view_id, page_filter_regex = ".*", ...) {
+data_f <- function(view_id, 
+                   date_range = c(Sys.Date() - 365, Sys.Date() - 1),
+                   page_filter_regex = ".*", ...) {
     page_filter_object <- dim_filter("pagePath", 
                                      operator = "REGEXP", 
                                      expressions = page_filter_regex)
@@ -16,7 +18,7 @@ data_f <- function(view_id, page_filter_regex = ".*", ...) {
     
     google_analytics(
         viewId = view_id,
-        date_range = c(Sys.Date() - 365, Sys.Date() - 1), 
+        date_range = date_range, 
         metrics = "uniquePageviews", 
         dimensions = c("date", "pagePath"), 
         dim_filters = page_filter, 

@@ -211,7 +211,7 @@ ga_model_make <- function(
   description = NULL,
   outputShiny = shiny::plotOutput,
   renderShiny = shiny::renderPlot,
-  inputShiny = NULL){
+  inputShiny = shiny::tagList()){
   
   Model(
     data_f            = data_f,
@@ -287,7 +287,7 @@ ga_model_edit <- function(
     shiny_module_server2 <- assign_new(renderShiny, shiny_module_server2)
     shiny_module_uiInput2 <- assign_new(inputShiny, shiny_module_uiInput2, is.inputShiny)
   }
-  
+
   shiny_module <- create_shiny_module_funcs(
     data_f = data_f2,
     model_f = model_f2,
@@ -465,7 +465,11 @@ create_shiny_module_funcs <- function(data_f,
                   level = 2)
         
         copy_input_ids <- function(input_ids, input, dots){
-          new <- lapply(input_ids, function(x){dots[[x]] <- input[[x]]})
+
+          new <- lapply(input_ids, function(x){
+            if(is.null(x)) return(NULL)
+            dots[[x]] <- input[[x]]
+            })
           modifyList(dots, setNames(new, input_ids))
         }
         
@@ -473,14 +477,16 @@ create_shiny_module_funcs <- function(data_f,
           intersect(function_args(f), names(dots))
         }
         
-        # ga_data_cache <- shiny::reactive({
-        #   dots <- copy_input_ids(input_ids, input, dots)
-        #   dot_names <- inputs_in_f_args(data_f, dots)
-        #   o <- setNames(lapply(dot_names, 
-        #          function(x) dots[[x]]),dot_names)
-        #   str(o)
-        #   o
-        # })
+        cache_my_inputs <- function(f, dots){
+          dots <- copy_input_ids(input_ids, input, dots)
+          cache_these <- inputs_in_f_args(f, dots)
+          myMessage(
+            as.character(substitute(f)),
+            "cache_these:", paste(cache_these, collapse = ", "), 
+            level = 3)
+          
+          eval_input_list(dots[cache_these])
+        }
 
         gadata <- shiny::reactive({
           shiny::req(view_id())
@@ -492,29 +498,31 @@ create_shiny_module_funcs <- function(data_f,
                                  dependency = list(view_id = view_id()),
                                  dots = dots)
           
-        })
+        }) %>% shiny::bindCache(cache_my_inputs(data_f, dots), view_id())
         
         model_output <- shiny::reactive({
           shiny::validate(shiny::need(gadata(), 
                                       message = "Waiting for data"))
           dots <- copy_input_ids(input_ids, input, dots)
+
           myMessage("Modelling data", level = 3)
           execute_model_function(model_f,
                                  dependency = list(gadata()),
                                  dots = dots)
           
-        })
+        }) %>% shiny::bindCache(cache_my_inputs(model_f, dots), gadata())
         
         output$ui_out <- renderShiny({
           shiny::validate(shiny::need(model_output(), 
                                       message = "Waiting for model output"))
           dots <- copy_input_ids(input_ids, input, dots)
+
           myMessage("Rendering model output", level = 3)
           execute_model_function(output_f,
                                  dependency = list(model_output()),
                                  dots = dots)
           
-        })
+        }) %>% shiny::bindCache(cache_my_inputs(output_f, dots), model_output())
         
         return(model_output)
       })

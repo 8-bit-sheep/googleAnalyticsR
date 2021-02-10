@@ -6,12 +6,18 @@ library(plotly)
 library(CausalImpact)
 
 source("inst/models/model_scripts/ua-causalimpact.R")
-ga_model_edit("inst/models/examples/ga-effect.gamr",
-              outputShiny = dygraphs::dygraphOutput, 
-              renderShiny = dygraphs::renderDygraph, 
-              inputShiny = shiny::dateInput("event_date", 
-                                            label = "Event Date",
-                                            value = Sys.Date() - 30))
+m1 <- ga_model_make(
+  data_f = data_f, model_f = model_f, output_f = output_f,
+  required_columns = c("date","channelGrouping","sessions"),
+  required_packages = c("CausalImpact","xts","tidyr",
+                        "googleAnalyticsR","assertthat","dygraphs"),
+  description = "Causal Impact on channelGrouping data ",
+  outputShiny = dygraphs::dygraphOutput, 
+  renderShiny = dygraphs::renderDygraph, 
+  inputShiny = shiny::dateInput("event_date", 
+                                label = "Event Date",
+                                value = Sys.Date() - 30))
+ga_model_save(m1, "inst/models/examples/ga-effect.gamr")
 
 source("inst/models/model_scripts/ga4-dygraphs.R")
 
@@ -26,10 +32,16 @@ ga_model_edit("inst/models/examples/ga4-trend.gamr",
               inputShiny = uiInput)
 
 source("inst/models/model_scripts/ua-decomp.R")
-ga_model_edit("inst/models/examples/decomp_ga.gamr",
-              data_f = data_f, model_f = model_f, output_f = output_f, 
+
+m4 <- ga_model_make(
+  data_f = data_f, model_f = model_f, output_f = output_f, 
+  description = "Perform decomposition on your GA sessions",
+  required_columns = c("date","sessions"),
+  required_packages = c("googleAnalyticsR"),
               outputShiny = shiny::plotOutput, 
-              renderShiny = shiny::renderPlot)
+              renderShiny = shiny::renderPlot,
+              inputShiny = NULL)
+ga_model_save(m4, "inst/models/examples/decomp_ga.gamr")
 
 date_input <- shiny::dateRangeInput("date_range", "Dates", 
                                     start = Sys.Date()-300, end = Sys.Date()-1)
@@ -48,11 +60,11 @@ source("inst/models/model_scripts/ua-time-normalised.R")
 
 
 is <- shiny::tagList(
-  shiny::numericInput("first_day", "First day minimum pageviews",
+  shiny::numericInput("first_day_pageviews_min", "First day minimum pageviews",
                                value = 2, min=0, max=100),
-  shiny::numericInput("total_min_cutoff", "Minimum Total pageviews",
+  shiny::numericInput("total_unique_pageviews_cutoff", "Minimum Total pageviews",
                              value = 500, min = 0, max = 1000),
-  shiny::numericInput("days_live", label = "Days Live",
+  shiny::numericInput("days_live_range", label = "Days Live",
                                value = 60, min = 10, max = 400),
   shiny::textInput("page_filter_regex", label = "Page filter regex", value = ".*")
 )

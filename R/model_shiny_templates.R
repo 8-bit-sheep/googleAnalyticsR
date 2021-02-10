@@ -105,11 +105,6 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #'   auth_dropdown = "universal",
 #'   template = ga_model_shiny_template("basic_app"))
 #'   
-#' # a template directly from an app.R file that has its own server object
-#' ga_model_shiny(
-#'   ga_model_example("decomp_ga.gamr"), 
-#'   auth_dropdown = "universal",
-#'   template = ga_model_shiny_template("basic_app/app.R"))
 #'   
 #' # a template from only an ui.R file that will import boilerplate server.R
 #' ga_model_shiny(
@@ -229,7 +224,7 @@ ga_model_shiny <- function(
 
   write_template_object(render, tmp_dir)
   
-  myMessage("Launching Shiny app from ", tmp_dir, level = 3)
+  myMessage("Launching Shiny app from", tmp_dir, level = 3)
   
   shiny_obj <- create_app_from_template(render, tmp_dir)
   shiny::runApp(shiny_obj)
@@ -237,6 +232,7 @@ ga_model_shiny <- function(
 
 create_app_from_template <- function(output, location){
   if(!is.null(output$app) && nzchar(output$app)){
+    myMessage("Detected Shiny app.R for location:", location, level = 3)
     return(shiny::shinyAppDir(location))
   }
   
@@ -258,19 +254,19 @@ write_template_object <- function(output, destination_folder){
 
   if(!is.null(output$app) && nzchar(output$app)){
     loc <- file.path(destination_folder, "app.R")
-    myMessage("Writing Shiny app.R to ", loc, level = 2)
+    myMessage("Writing Shiny app.R to", loc, level = 2)
     writeLines(output$app, loc)
   }
   
   if(!is.null(output$ui) && nzchar(output$ui)){
     loc <- file.path(destination_folder, "ui.R")
-    myMessage("Writing Shiny ui.R to ", loc, level = 2)
+    myMessage("Writing Shiny ui.R to", loc, level = 2)
     writeLines(output$ui, loc)
   }
   
   if(!is.null(output$server) && nzchar(output$server)){
     loc <- file.path(destination_folder, "server.R")
-    myMessage("Writing Shiny server.R to ", loc, level = 2)
+    myMessage("Writing Shiny server.R to", loc, level = 2)
     writeLines(output$server, loc)
   }
   

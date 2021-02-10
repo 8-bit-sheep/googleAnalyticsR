@@ -103,11 +103,6 @@ ga_model_shiny(
   auth_dropdown = "universal",
   template = ga_model_shiny_template("basic_app"))
   
-# a template directly from an app.R file that has its own server object
-ga_model_shiny(
-  ga_model_example("decomp_ga.gamr"), 
-  auth_dropdown = "universal",
-  template = ga_model_shiny_template("basic_app/app.R"))
   
 # a template from only an ui.R file that will import boilerplate server.R
 ga_model_shiny(
