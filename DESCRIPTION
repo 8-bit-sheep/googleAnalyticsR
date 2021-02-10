@@ -52,7 +52,7 @@ Suggests:
     testthat
 License: MIT + file LICENSE
 LazyData: TRUE
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Remotes:
    MarkEdmondson1234/googleAuthR
 Config/testthat/edition: 3
