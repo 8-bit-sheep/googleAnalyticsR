@@ -1,4 +1,7 @@
 # ---start server_boilerplate.R
+# loads pre-existing models
+{{{ model_load }}}
+
 function(input, output, session){
   
   token <- gar_shiny_auth(session)

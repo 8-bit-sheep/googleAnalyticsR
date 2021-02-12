@@ -35,9 +35,9 @@ ga_model_shiny(model, auth_dropdown = "universal")
 
 ![The basic](ga_model_shiny_basic.png)
 
-### Gentellela
+### Gentelella
 
-Using a custom theme from https://github.com/MarkEdmondson1234/gentelellaShiny and a `ga_model()` using `CausalImpact()`
+Using a custom theme from https://github.com/MarkEdmondson1234/gentelellaShiny and a `ga_model()` using [CausalImpact](http://google.github.io/CausalImpact/CausalImpact.html) and [dygraphs](https://rstudio.github.io/dygraphs/)
 
 ```r
 model <- ga_model_example("ga-effect.gamr")

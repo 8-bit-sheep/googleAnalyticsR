@@ -11,7 +11,8 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
   
   if(name == "list"){
     return(list.files(system.file("models","shiny_templates", 
-                                  package = "googleAnalyticsR")))
+                                  package = "googleAnalyticsR"),
+                      recursive = TRUE))
   }
   
   f <- system.file("models","shiny_templates",name, 
@@ -151,6 +152,12 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #' ga_model_shiny(list(m4, m3), auth_dropdown = "universal",
 #'                template = ga_model_shiny_template("basic_bslib"), 
 #'                bg = "white", fg = "red", primary = "grey")
+#'  
+#' # write out an app to a local folder
+#' ga_model_shiny(list(m4, m3), auth_dropdown = "universal",
+#'                template = ga_model_shiny_template("basic_bslib"), 
+#'                bg = "white", fg = "red", primary = "grey",
+#'                local_folder = "deploy_shiny")
 #' }
 #' 
 #' 
@@ -171,11 +178,16 @@ ga_model_shiny <- function(
   
   auth_dropdown <- match.arg(auth_dropdown)
   
+  if(nzchar(local_folder) && !dir.exists(local_folder)){
+    dir.create(local_folder)
+    assert_that(is.writeable(local_folder))
+  }
+  
   if(is.ga_model(models)){
     models <- list(models)
   }
   
-  model_locations <- lapply(models, model_path)
+  model_locations <- lapply(models, model_path, local_path = local_folder)
   # model1, model2, etc.
   names(model_locations) <- paste0("model", seq_along(models))
   
@@ -458,6 +470,7 @@ ga_model_shiny_load <- function(model_n, ...){
   model <- tryCatch(
     ga_model_load(model_n),
     error = function(err){
+      myMessage("Error loading model from ", normalizePath(model_n), level = 3)
       NULL
     })
   if(is.null(model)){
@@ -475,9 +488,15 @@ ga_model_shiny_load <- function(model_n, ...){
   )
 }
 
-model_path <- function(m){
+model_path <- function(m, local_path){
+  
+  tmpdir <- tempdir()
+  if(nzchar(local_path)){
+    tmpdir <- local_path
+  }
+  
   if(is.ga_model(m)){
-    tmp_model <- tempfile(fileext = ".gamr")
+    tmp_model <- tempfile(fileext = ".gamr", tmpdir = tmpdir)
     ga_model_save(m, filename = tmp_model)
     model_location <- tmp_model
   } else {
@@ -486,6 +505,11 @@ model_path <- function(m){
   
   assert_that(is.readable(model_location))
   
+  if(nzchar(local_path)){
+    # relative file path so its all self-contained in folder
+    return(basename(model_location))
+  }
+  # absolute path for local use
   normalizePath(model_location)
 }
 

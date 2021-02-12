@@ -1,4 +1,6 @@
-#' Use a model function created by \link{ga_model_make}
+#' Use a model 
+#' 
+#' Use a model created by \link{ga_model_make}
 #'
 #' @param viewId The GA viewId to operate on
 #' @param model A file location of a model object or a model object
@@ -8,6 +10,25 @@
 #'
 #' @export
 #' @family GA modelling functions
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' # your own Google Analytics viewID
+#' my_viewid <- 81416156
+#' 
+#' # load the model (equivalent to ga_model_load())
+#' decomp_ga <- ga_model_example("decomp_ga.gamr")
+#' 
+#' # apply model to your data
+#' d1 <- ga_model(my_viewid, model = decomp_ga)
+#' 
+#' # change default date range to 20 days ago to yesterday
+#' d2 <- ga_model(my_viewid, model = decomp_ga, 
+#'                date_range = c("20daysAgo","yesterday"))
+#' 
+#' 
+#' }
 ga_model <- function(viewId, model, load_libs = TRUE, ...){
   
   # a filepath
@@ -65,6 +86,15 @@ is.ga_model_result <- function(x){
 #'
 #' @export
 #' @family GA modelling functions
+#' 
+#' \dontrun{
+#' # load the model (equivalent to ga_model_load())
+#' decomp_ga <- ga_model_example("decomp_ga.gamr")
+#' 
+#' # save it somewhere else
+#' ga_model_save(decomp_ga, "somewhereelse.gamr")
+#' 
+#' }
 ga_model_save <- function(model, filename = "my-model.gamr"){
   assert_that(
     is.ga_model(model)
@@ -242,6 +272,17 @@ ga_model_make <- function(
 #' 
 #' @export
 #' @family GA modelling functions
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' decomp_ga <- ga_model_example("decomp_ga.gamr")
+#' decomp_ga
+#' 
+#' # edit its description
+#' ga_model_edit(decomp_ga, description = "Changed")
+#' 
+#' }
 ga_model_edit <- function(
   model,
   data_f = NULL,
@@ -568,6 +609,14 @@ eval_input_list <- function(dots){
 #' @export
 #' @family GA modelling functions
 #' @import assertthat
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' decomp_ga <- ga_model_example("decomp_ga.gamr")
+#' ga_model_write(decomp_ga, "a_file.R")
+#' }
 ga_model_write <- function(model, filepath = "ga_model.R"){
   
   if(is.character(model)){
@@ -610,6 +659,14 @@ write_f <- function(name, f){
 #' @param model Model or file location of model .gamr file
 #' 
 #' @export
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' decomp_ga <- ga_model_example("decomp_ga.gamr")
+#' decomp_ga <- ga_model_refresh(decomp_ga)
+#' 
+#' }
 ga_model_refresh <- function(model){
   save_me <- ""
   if(is.character(model)){

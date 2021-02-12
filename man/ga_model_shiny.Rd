@@ -149,6 +149,12 @@ ga_model_shiny(list(m4, m3), auth_dropdown = "universal",
 ga_model_shiny(list(m4, m3), auth_dropdown = "universal",
                template = ga_model_shiny_template("basic_bslib"), 
                bg = "white", fg = "red", primary = "grey")
+ 
+# write out an app to a local folder
+ga_model_shiny(list(m4, m3), auth_dropdown = "universal",
+               template = ga_model_shiny_template("basic_bslib"), 
+               bg = "white", fg = "red", primary = "grey",
+               local_folder = "deploy_shiny")
 }
 
 
@@ -160,7 +166,6 @@ Other GA modelling functions:
 \code{\link{ga_model_example}()},
 \code{\link{ga_model_load}()},
 \code{\link{ga_model_make}()},
-\code{\link{ga_model_save}()},
 \code{\link{ga_model_shiny_load}()},
 \code{\link{ga_model_shiny_template}()},
 \code{\link{ga_model_write}()},

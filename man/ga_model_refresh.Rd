@@ -12,3 +12,12 @@ ga_model_refresh(model)
 \description{
 Sometimes necessary if functions were created under differing package versions
 }
+\examples{
+
+\dontrun{
+
+decomp_ga <- ga_model_example("decomp_ga.gamr")
+decomp_ga <- ga_model_refresh(decomp_ga)
+
+}
+}

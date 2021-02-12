@@ -43,12 +43,23 @@ must take data from result of \code{data_f} in first argument}
 \description{
 Change features of a model by changing the functions within it.
 }
+\examples{
+
+\dontrun{
+
+decomp_ga <- ga_model_example("decomp_ga.gamr")
+decomp_ga
+
+# edit its description
+ga_model_edit(decomp_ga, description = "Changed")
+
+}
+}
 \seealso{
 Other GA modelling functions: 
 \code{\link{ga_model_example}()},
 \code{\link{ga_model_load}()},
 \code{\link{ga_model_make}()},
-\code{\link{ga_model_save}()},
 \code{\link{ga_model_shiny_load}()},
 \code{\link{ga_model_shiny_template}()},
 \code{\link{ga_model_shiny}()},

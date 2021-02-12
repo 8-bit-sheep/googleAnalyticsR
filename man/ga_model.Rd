@@ -2,7 +2,7 @@
 % Please edit documentation in R/models.R
 \name{ga_model}
 \alias{ga_model}
-\title{Use a model function created by \link{ga_model_make}}
+\title{Use a model}
 \usage{
 ga_model(viewId, model, load_libs = TRUE, ...)
 }
@@ -17,7 +17,27 @@ created by \link{ga_model_make}}
 \item{...}{Other arguments to pass into the model as needed}
 }
 \description{
-Use a model function created by \link{ga_model_make}
+Use a model created by \link{ga_model_make}
+}
+\examples{
+
+\dontrun{
+
+# your own Google Analytics viewID
+my_viewid <- 81416156
+
+# load the model (equivalent to ga_model_load())
+decomp_ga <- ga_model_example("decomp_ga.gamr")
+
+# apply model to your data
+d1 <- ga_model(my_viewid, model = decomp_ga)
+
+# change default date range to 20 days ago to yesterday
+d2 <- ga_model(my_viewid, model = decomp_ga, 
+               date_range = c("20daysAgo","yesterday"))
+
+
+}
 }
 \seealso{
 Other GA modelling functions: 
@@ -25,7 +45,6 @@ Other GA modelling functions:
 \code{\link{ga_model_example}()},
 \code{\link{ga_model_load}()},
 \code{\link{ga_model_make}()},
-\code{\link{ga_model_save}()},
 \code{\link{ga_model_shiny_load}()},
 \code{\link{ga_model_shiny_template}()},
 \code{\link{ga_model_shiny}()},
