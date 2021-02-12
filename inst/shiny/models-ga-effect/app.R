@@ -5,13 +5,12 @@ library(dygraphs)
 library(xts)
 library(tidyr)
 
-gar_set_client(web_json = "ga-web-client.json",
-               scopes = "https://www.googleapis.com/auth/analytics.readonly")
+gar_set_client(scopes = "https://www.googleapis.com/auth/analytics.readonly")
 
 options(googleAuthR.redirect = "http://localhost:1221")
 
 # loads a pre-existing model
-model <- ga_model_example("ga-effect.gamr", location = "googleAnalyticsR")
+model <- ga_model_example("ga-effect.gamr")
 
 ## ui.R
 ui <- fluidPage(title = "googleAnalyticsR GA-Effect Model",

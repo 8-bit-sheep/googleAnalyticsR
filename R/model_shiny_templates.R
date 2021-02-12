@@ -61,7 +61,7 @@ ga_model_shiny_template <- function(name = "list", read_lines = FALSE){
 #' \itemize{
 #'  \item{\code{\{\{\{ model_libraries \}\}\}}}{- Adds \code{library()} calls based on models$required_packages}
 #'  \item{\code{\{\{\{ web_json \}\}\}}}{- Adds Google OAuth2 client for web applications}
-#'  \item{\code{\{\{\{ scopes \}\}\}}}{- Adds Google Oauth2 scopes for the API calls}
+#'  \item{\code{\{\{\{ scopes \}\}\}}}{- Adds Google OAuth2 scopes for the API calls}
 #'  \item{\code{\{\{\{ deployed_url \}\}\}}}{- Adds \code{option(googleAuthR.redirect)} option for deployed Shiny apps}
 #'  \item{\code{\{\{\{ model_load \}\}\}}}{- Adds \link{ga_model_load} calls loading all models in the list passed to this function's \code{models} argument.  It creates R objects called 'model1', 'model2' etc. in the Shiny app code}
 #'  \item{\code{\{\{\{ model_list \}\}\}}}{- Adds a list of the model objects after model_load.  Useful for creating custom functions in themes that can loop over model objects}

@@ -12,7 +12,9 @@ To make it easier to distribute these analysis, `googleAnalyticsR` now includes 
 
 `.gamr` files also includes the ability to create Shiny modules which you can use to quickly create online Shiny dashboards displaying the model results, and which can switch to users own Google Analytics data using the multi-user login capabilities.
 
-The `.gamr` file format can be shared with others online or within your organisation.  A new R package that includes some more advanced examples is available from [`IronistM/googleAnalyticsModelR/`](https://github.com/IronistM/googleAnalyticsModelR/)
+The `.gamr` file format can be shared with others online or within your organisation. 
+
+You can also use model objects to create Shiny apps - see [Model Shiny Templates](articles/model-templates.html)
 
 
 ## A simple example loading a model directly
@@ -521,15 +523,7 @@ ci$plot
 
 ![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16-1.png)
 
-That can display interactively in a tweet:
+You can launch this in a Shiny app via the `ga_model_shiny()` function that will write the Shiny code for you - see [Model Shiny Templates](articles/model-templates.html)
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">An example for the documentation - CausalImpact/Dygraphs with ga_models <a href="https://t.co/9qfvi3uvLc">https://t.co/9qfvi3uvLc</a></p>&mdash; Mark Edmondson (@HoloMarkeD) <a href="https://twitter.com/HoloMarkeD/status/1106958249130119169?ref_src=twsrc%5Etfw">March 16, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
-
-Similarly, you can launch this in a Shiny app by slightly modifying the Shiny example used previously.  
-
-This is available within the package via `shiny::runApp(system.file("shiny/models-ga-effect", package="googleAnalyticsR"))`
-
-![](model-ga-effect.png)
-
-Dress it up in a nice theme and add some more inputs and outputs and you are close to the finished result.
+![](ga_model_shiny1.png)
 

@@ -54,9 +54,13 @@ navbar:
       - text: "RMarkdown"
         icon: fa-pencil-square
         href: articles/rmarkdown.html
-    - text: "Models"
-      icon: fa-calculator
-      href: articles/models.html
+      menu:
+      - text: "Creating Models"
+        icon: fa-calculator
+        href: articles/models.html
+      - text: "Shiny Model Templates"
+        icon: fa-photo-video
+        href: articles/model-templates.html
     - text: "Help"
       icon: fa-question-circle
       menu:
@@ -72,7 +76,6 @@ navbar:
       - text: "Practical tips"
         icon: fa-bicycle
         href: articles/practical-tips.html
-        
 reference:
   - title: "Authentication and Setup"
     desc: >
