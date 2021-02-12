@@ -54,6 +54,8 @@ navbar:
       - text: "RMarkdown"
         icon: fa-pencil-square
         href: articles/rmarkdown.html
+    - text: Models
+      icon: fa-calculator
       menu:
       - text: "Creating Models"
         icon: fa-calculator
