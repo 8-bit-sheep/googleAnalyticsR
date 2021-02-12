@@ -193,12 +193,30 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../articles/models.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fas fa-calculator"></span>
      
     Models
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/models.html">
+        <span class="fas fa-calculator"></span>
+         
+        Creating Models
+      </a>
+    </li>
+    <li>
+      <a href="../articles/model-templates.html">
+        <span class="fas fa-photo-video"></span>
+         
+        Shiny Model Templates
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -269,7 +287,7 @@
 <a href="#googleanalyticsr-0809000" class="anchor"></a>googleAnalyticsR 0.8.0.9000<small> Unreleased </small>
 </h1>
 <ul>
-<li>Allow authentication with service JSON keys without needing to change default client.id (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/324'>#324</a> - thanks <a href='https://github.com/adamribaudo'>@adamribaudo</a>)</li>
+<li>Allow authentication with service JSON keys without needing to change default client.id e.g. <code><a href="../reference/ga_auth.html">ga_auth(json_file="auth-key.json")</a></code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/324'>#324</a> - thanks <a href='https://github.com/adamribaudo'>@adamribaudo</a>)</li>
 <li>Fix GA Adwords list parsing (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/322'>#322</a> - thanks <a href='https://github.com/millett-a'>@millett-a</a>)</li>
 <li>Add getUniversalMetadata API fetch to <code><a href="../reference/ga_meta.html">ga_meta(version="data")</a></code> (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/335'>#335</a>)</li>
 <li>Fix for passing <code>ganalytics</code>-style expressions for dimension and metric filters/segments (<a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/339'>#339</a> and <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/305'>#305</a>), which also resolves <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/279'>#279</a> (and improves on <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/issues/253'>#253</a>) for continued support of combining expressions (for filters and segments) using <code><a href="https://rdrr.io/r/base/list.html">list()</a></code>.</li>
