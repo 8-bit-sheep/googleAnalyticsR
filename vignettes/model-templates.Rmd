@@ -158,6 +158,7 @@ ga_model_shiny(
 
 Use this to help craft your own templates.
 
+
 ### Template macro variables
 
 Put these macros within the `ui.R` or `server.R` shiny files to import them when loading via `ga_model_shiny()`
@@ -191,3 +192,69 @@ Put these macros within the `ui.R` or `server.R` shiny files to import them when
 * `{{{ model1 }}}` - Alternative to model_load, this will load the model file location instead, which you can pass to ga_model_load() in the template. model1 is the first model passed, model2 the second, etc.
 
 * `{{{ your_argument }}}` - You can pass in your own custom variables to the template via the ... argument of this function if they are named the same as the template macro variable
+
+
+### Boilerplate files
+
+There are some common shared code that is available in the `boilerplate` files.
+
+* header_boilerplate.R - for loading the models and libraries in a UI
+
+```r
+# ---start header_boilerplate.R
+library(shiny)
+library(googleAuthR)
+library(googleAnalyticsR)
+{{{ model_libraries }}}
+
+gar_set_client(web_json = "{{ web_json }}",
+               scopes = "{{ scopes }}")
+options(googleAuthR.redirect = "{{ deployed_url }}")
+
+# loads pre-existing models
+{{{ model_load }}}
+# ---end header_boilerplate.R
+
+```
+
+* server_app_boilerplate.R - for a single app.R using a server for OAuth2
+
+```r
+# ---start server_app_boilerplate.R
+server <- function(input, output, session){
+  
+  token <- gar_shiny_auth(session)
+  
+  {{{ auth_accounts }}}
+  
+  # module for authentication
+  view_id <- {{ auth_server }}
+  
+  # module to display model results
+  {{{ model_server }}}
+  
+}
+
+shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)
+# ---end server_app_boilerplate.R
+```
+
+* server_boilerplate.R - for a Shiny app using multiple files (ui.R, server.R, etc.)
+
+```r
+# ---start server_boilerplate.R
+function(input, output, session){
+  
+  token <- gar_shiny_auth(session)
+  
+  {{{ auth_accounts }}}
+  
+  # module for authentication
+  view_id <- {{ auth_server }}
+  
+  # module to display model results
+  {{{ model_server }}}
+  
+}
+# ---end server_boilerplate.R
+```
