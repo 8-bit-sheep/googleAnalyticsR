@@ -81,6 +81,7 @@ If you have used the package and published online then get in touch and I'll lis
 * Chloe writes on how to use googleAnalyticsR to [detect spam traffic in your Google Analytics data](https://medium.com/@the.numerist/detecting-spam-traffic-in-google-analytics-data-with-googleanalyticsr-d2a97b83e926)
 * Carl from RStudio writes about the process of [creating custom Google Analytics dashboards with R](https://blog.rstudio.com/2020/11/27/google-analytics-part1/).
 * Antoine writes a nice in-depth post on [analysis you can do with your blog traffic in R](https://www.statsandr.com/blog/track-blog-performance-in-r/)
+* Jamarius Taylor shows how to do [Market Basket Analysis with googleAnalyticsR data](https://www.linkedin.com/pulse/market-basket-analysis-ga-r-jamarius-taylor/)
 
 ## My website
 
