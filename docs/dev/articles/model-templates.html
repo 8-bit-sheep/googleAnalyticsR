@@ -271,10 +271,10 @@
 <img src="ga_model_shiny_basic.png" alt=""><p class="caption">The basic</p>
 </div>
 </div>
-<div id="gentellela" class="section level3">
+<div id="gentelella" class="section level3">
 <h3 class="hasAnchor">
-<a href="#gentellela" class="anchor"></a>Gentellela</h3>
-<p>Using a custom theme from <a href="https://github.com/MarkEdmondson1234/gentelellaShiny" class="uri">https://github.com/MarkEdmondson1234/gentelellaShiny</a> and a <code><a href="../reference/ga_model.html">ga_model()</a></code> using <code>CausalImpact()</code></p>
+<a href="#gentelella" class="anchor"></a>Gentelella</h3>
+<p>Using a custom theme from <a href="https://github.com/MarkEdmondson1234/gentelellaShiny" class="uri">https://github.com/MarkEdmondson1234/gentelellaShiny</a> and a <code><a href="../reference/ga_model.html">ga_model()</a></code> using <a href="http://google.github.io/CausalImpact/CausalImpact.html">CausalImpact</a> and <a href="https://rstudio.github.io/dygraphs/">dygraphs</a></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model_example.html">ga_model_example</a></span><span class="op">(</span><span class="st">"ga-effect.gamr"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/ga_model_shiny.html">ga_model_shiny</a></span><span class="op">(</span><span class="va">model</span>, auth_dropdown <span class="op">=</span> <span class="st">"universal"</span>,
@@ -359,9 +359,19 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># current templates available in inst/models/shiny_templates</span>
 <span class="fu"><a href="../reference/ga_model_shiny_template.html">ga_model_shiny_template</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "argonDash"      "basic"          "basic_app"      "basic_bslib"   
-## [5] "boilerplate"    "gentelella"     "html_based"     "shinydashboard"
-## [9] "shinythemes"</code></pre>
+<pre><code>##  [1] "argonDash/ui.R"                      
+##  [2] "basic_app/app.R"                     
+##  [3] "basic_bslib/ui.R"                    
+##  [4] "basic/ui.R"                          
+##  [5] "boilerplate/header_boilerplate.R"    
+##  [6] "boilerplate/server_app_boilerplate.R"
+##  [7] "boilerplate/server_boilerplate.R"    
+##  [8] "gentelella/ui.R"                     
+##  [9] "html_based/template.html"            
+## [10] "html_based/ui.R"                     
+## [11] "html_based/www/dummy.js"             
+## [12] "shinydashboard/ui.R"                 
+## [13] "shinythemes/ui.R"</code></pre>
 <p>To use, supply a model and a template to the <code><a href="../reference/ga_model_shiny.html">ga_model_shiny()</a></code> function:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># creates a Shiny app from the "decomp_ga.gamr" model</span>
