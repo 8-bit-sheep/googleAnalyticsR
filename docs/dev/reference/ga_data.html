@@ -297,7 +297,6 @@
   dimensionDelimiter <span class='op'>=</span> <span class='st'>"/"</span>,
   metricFilter <span class='op'>=</span> <span class='cn'>NULL</span>,
   orderBys <span class='op'>=</span> <span class='cn'>NULL</span>,
-  metricAggregations <span class='op'>=</span> <span class='cn'>NULL</span>,
   limit <span class='op'>=</span> <span class='fl'>100</span>,
   realtime <span class='op'>=</span> <span class='cn'>FALSE</span>,
   raw_json <span class='op'>=</span> <span class='cn'>NULL</span>
@@ -308,11 +307,11 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>propertyId</th>
-      <td><p>A Google Analytics App + Web property id</p></td>
+      <td><p>A GA4 property Id</p></td>
     </tr>
     <tr>
       <th>metrics</th>
-      <td><p>The metrics requested and displayed</p></td>
+      <td><p>The metrics to request - see <a href='ga_meta.html'>ga_meta</a></p></td>
     </tr>
     <tr>
       <th>date_range</th>
@@ -320,11 +319,11 @@
     </tr>
     <tr>
       <th>dimensions</th>
-      <td><p>The dimensions requested and displayed</p></td>
+      <td><p>The dimensions to request - see <a href='ga_meta.html'>ga_meta</a></p></td>
     </tr>
     <tr>
       <th>dimensionFilter</th>
-      <td><p>The filter clause of dimensions - see <a href='ga_data_filter.html'>ga_data_filter</a></p></td>
+      <td><p>Filter on the dimensions of the request - a filter object created by <a href='ga_data_filter.html'>ga_data_filter</a></p></td>
     </tr>
     <tr>
       <th>dimensionDelimiter</th>
@@ -332,15 +331,11 @@
     </tr>
     <tr>
       <th>metricFilter</th>
-      <td><p>The filter clause of metrics - see <a href='ga_data_filter.html'>ga_data_filter</a></p></td>
+      <td><p>Filter on the metrics of the request - a filter object created by <a href='ga_data_filter.html'>ga_data_filter</a></p></td>
     </tr>
     <tr>
       <th>orderBys</th>
-      <td><p>Specifies how rows are ordered in the response - see <a href='ga_data_order.html'>ga_data_order</a></p></td>
-    </tr>
-    <tr>
-      <th>metricAggregations</th>
-      <td><p>Aggregation of metrics. Aggregated metric values will be shown in rows where the dimensionValues are set to "RESERVED_(MetricAggregation)".</p></td>
+      <td><p>How to order the response - an order object created by <a href='ga_data_order.html'>ga_data_order</a></p></td>
     </tr>
     <tr>
       <th>limit</th>

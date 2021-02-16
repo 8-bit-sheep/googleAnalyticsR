@@ -4,55 +4,7 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//index.html</loc>
   </url>
   <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/BatchRunReportsRequest.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/BetweenFilter.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/Dimension.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/DimensionExpression.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/DimensionOrderBy.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/Entity.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/FilterExpression.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/FilterExpressionList.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/Filter_aw.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/InListFilter.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/Metric.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/NumericFilter.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/OrderBy.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/PivotObject.html</loc>
-  </url>
-  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/PivotOrderBy.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/RunReportRequest.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/StringFilter.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/accountPicker.html</loc>
@@ -95,12 +47,6 @@
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/dynamicSegment_ga4-class.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/fetch_google_analytics_4.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/fetch_google_analytics_4_slow.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/filter_clause_ga4.html</loc>
@@ -356,9 +302,6 @@
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/make_cohort_group.html</loc>
-  </url>
-  <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/make_ga_4_req.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/met_fil_ga4-class.html</loc>
