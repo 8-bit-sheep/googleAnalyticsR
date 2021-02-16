@@ -1,11 +1,11 @@
 #' List web properties
 #' 
 #' This gets the meta data for web properties associated with a particular accountId. 
-#' If you want all information available to your user, use \link{ga_account_list} instead.
+#' If you want all information available to your user, use [ga_account_list] instead.
 #'
 #' @param accountId Account Id
 #'
-#' @return A \code{data.frame} of webproperty meta-data
+#' @return A `data.frame` of webproperty meta-data
 #' @importFrom googleAuthR gar_api_generator
 #' @import assertthat
 #' @family account structure functions
@@ -52,7 +52,7 @@ parse_webproperty_list <- function(x){
 #' Gets metadata for one particular web property
 #'
 #' @param accountId Account Id
-#' @param webPropertyId Web Property Id e.g. \code{UA-12345-1}
+#' @param webPropertyId Web Property Id e.g. `UA-12345-1`
 #'
 #' @return webproperty
 #' @importFrom googleAuthR gar_api_generator

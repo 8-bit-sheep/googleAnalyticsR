@@ -1,4 +1,4 @@
-#' authDropdown UI [Shiny Module]
+#' authDropdown UI Shiny Module
 #' 
 #' @description Makes a dropdown row for use for authentication.
 #' 
@@ -6,7 +6,7 @@
 #' @param width The width of the input
 #' @param inColumns whether to wrap selectInputs in width=4 columns.
 #'   
-#'   Shiny Module for use with \link{authDropdown}.
+#'   Shiny Module for use with [authDropdown].
 #'   
 #'   
 #' @return Shiny UI
@@ -61,11 +61,11 @@ authDropdownUI <- function(id,
   
 }
 
-#' authDropdown [Shiny Module]
+#' authDropdown Shiny Module
 #'
-#' Shiny Module for use with \link{authDropdownUI}
+#' Shiny Module for use with [authDropdownUI]
 #'
-#' Call via \code{shiny::callModule(authDropdown, "your_id")}
+#' Call via `shiny::callModule(authDropdown, "your_id")`
 #'
 #' @param input shiny input
 #' @param output shiny output
@@ -167,9 +167,9 @@ authDropdown <- function(input, output, session,
   
 }
 
-#' multi_select UI [Shiny Module]
+#' multi_select UI Shiny Module
 #'
-#' Shiny Module for use with \link{multi_select}
+#' Shiny Module for use with [multi_select]
 #' 
 #' Create a Google Analytics variable selector
 #' 
@@ -196,11 +196,11 @@ multi_selectUI <- function(id,
   
 }
 
-#' multi_select [Shiny Module]
+#' multi_select Shiny Module
 #'
-#' Shiny Module for use with \link{multi_selectUI}
+#' Shiny Module for use with [multi_selectUI]
 #'
-#' Call via \code{shiny::callModule(multi_select, "your_id")}
+#' Call via `shiny::callModule(multi_select, "your_id")`
 #'
 #' @param input shiny input
 #' @param output shiny output

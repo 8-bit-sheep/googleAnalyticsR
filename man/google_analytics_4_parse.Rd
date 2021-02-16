@@ -7,6 +7,6 @@
 google_analytics_4_parse(x)
 }
 \description{
-x is response_list$reports[[1]] from google_analytics_4_parse_batch
+x is response_list$reports[\link{1}] from google_analytics_4_parse_batch
 }
 \keyword{internal}

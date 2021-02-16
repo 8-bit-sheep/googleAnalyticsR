@@ -92,7 +92,7 @@ makePivotNames <- function(pivotHeaders){
 #'
 #' @details If maxGroupCount is set to -1 returns all groups.
 #'
-#' @return pivot object of class \code{pivot_ga4} for use in \code{\link{filter_clause_ga4}}
+#' @return pivot object of class `pivot_ga4` for use in [filter_clause_ga4()]
 #' 
 #' 
 #' @examples 

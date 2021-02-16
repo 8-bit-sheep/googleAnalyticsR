@@ -1,6 +1,6 @@
 #' Get Google Analytics v3 data (formerly google_analytics())
 #' 
-#' Legacy v3 API, for more modern API use \link{google_analytics}.
+#' Legacy v3 API, for more modern API use [google_analytics].
 #'
 #' @param id A character vector of View Ids to fetch from.
 #' @param start Start date in YYY-MM-DD format.

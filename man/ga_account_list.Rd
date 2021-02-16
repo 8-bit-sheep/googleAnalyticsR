@@ -13,7 +13,7 @@ ga_account_list(type = c("universal", "ga4", "data"))
 a dataframe of all account, webproperty and view data
 }
 \description{
-This is the recommended way to get all your account details for your user, including the web property and View IDs.  The \code{$viewId} column contains the ID you need for the data fetching functions such as \link{google_analytics}.
+This is the recommended way to get all your account details for your user, including the web property and View IDs.  The \verb{$viewId} column contains the ID you need for the data fetching functions such as \link{google_analytics}.
 }
 \details{
 Get a summary of all your accounts, web properties and views your authenticated user can see.

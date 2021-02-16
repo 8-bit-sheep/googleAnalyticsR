@@ -14,9 +14,9 @@ segment_vector_sequence(segment_elements, firstStepMatch = FALSE)
 \description{
 \code{segment_vector_sequence} is in the hierarchy of segment creation, for which you will also need:
 \itemize{
- \item \link{segment_define} : AND combination of segmentFilters
- \item \link{segment_vector_simple} or \link{segment_vector_sequence}
- \item \link{segment_element} that are combined in OR lists for \code{segment_vectors_*}
+\item \link{segment_define} : AND combination of segmentFilters
+\item \link{segment_vector_simple} or \link{segment_vector_sequence}
+\item \link{segment_element} that are combined in OR lists for \verb{segment_vectors_*}
 }
 }
 \seealso{

@@ -14,11 +14,5 @@ Follow the online documentation here: \url{https://code.markedmondson.me/googleA
 \details{
 You may wish to set the below environment arguments for easier authentication
 
-\code{
-GA_CLIENT_ID
-GA_CLIENT_SECRET
-GA_WEB_CLIENT_ID
-GA_WEB_CLIENT_SECRET
-GA_AUTH_FILE
-}
+\verb{GA_CLIENT_ID GA_CLIENT_SECRET GA_WEB_CLIENT_ID GA_WEB_CLIENT_SECRET GA_AUTH_FILE}
 }

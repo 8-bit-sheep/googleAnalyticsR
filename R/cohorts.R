@@ -74,12 +74,12 @@ cohort_dimension_check <- function(dimensions){
 #' 
 #' @details
 #' 
-#' Example: \code{list("cohort 1" = c("2015-08-01", "2015-08-01"), 
-#'                     "cohort 2" = c("2015-07-01","2015-07-01"))}
+#' Example: `list("cohort 1" = c("2015-08-01", "2015-08-01"), 
+#'                     "cohort 2" = c("2015-07-01","2015-07-01"))`
 #' 
 #' @return A cohortGroup object
 #' 
-#' @seealso \url{https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohort_and_lifetime_value_ltv_dimensions_and_metrics}
+#' @seealso <https://developers.google.com/analytics/devguides/reporting/core/v4/advanced#cohort_and_lifetime_value_ltv_dimensions_and_metrics>
 #' 
 #' 
 #' @examples 
@@ -174,7 +174,7 @@ cohortGroup <- function(cohorts,
 #' 
 #' @param name A unique name for the cohort
 #' @param type Type of cohort.  Only FIRST_VISIT_DATE is support at the moment. 
-#' @param dateRange A \link{date_ga4} object
+#' @param dateRange A [date_ga4] object
 #'
 #' @family v4 cohort functions
 #' @keywords internal

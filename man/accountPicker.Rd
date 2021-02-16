@@ -3,7 +3,7 @@
 \name{accountPickerUI}
 \alias{accountPickerUI}
 \alias{accountPicker}
-\title{accountPicker UI [Shiny Module] - pick GA4 accounts/webProperties in Shiny}
+\title{accountPicker UI Shiny Module - pick GA4 accounts/webProperties in Shiny}
 \usage{
 accountPickerUI(id, width = NULL, inColumns = FALSE)
 

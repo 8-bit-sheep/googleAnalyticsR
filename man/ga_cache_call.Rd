@@ -13,6 +13,6 @@ ga_cache_call(cache_location)
 Lets you cache API calls to disk
 }
 \details{
-By default this is turned on upon package load to \code{RAM}.  
-  Should you want to cache calls to a folder then run this function to specify where.
+By default this is turned on upon package load to \code{RAM}.
+Should you want to cache calls to a folder then run this function to specify where.
 }

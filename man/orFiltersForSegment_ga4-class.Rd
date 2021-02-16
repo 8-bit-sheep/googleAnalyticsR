@@ -3,7 +3,7 @@
 \docType{class}
 \name{orFiltersForSegment_ga4-class}
 \alias{orFiltersForSegment_ga4-class}
-\title{`orFiltersForSegment_ga4` class.}
+\title{\code{orFiltersForSegment_ga4} class.}
 \description{
 Or-filter for segment.
 }

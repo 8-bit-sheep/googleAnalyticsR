@@ -40,12 +40,12 @@ ga_view <- function(accountId,
 #' List View (Profile)
 #' 
 #' This gets the meta data associated with the Google Analytics Views for a particular accountId and webPropertyId.  
-#' If you want all viewId information for all accounts you have access to, use \link{ga_account_list} instead.
+#' If you want all viewId information for all accounts you have access to, use [ga_account_list] instead.
 #'
 #' @param accountId Account Id
-#' @param webPropertyId Web Property Id e.g. \code{UA-12345-1}
+#' @param webPropertyId Web Property Id e.g. `UA-12345-1`
 #'
-#' @return A \code{data.frame} of meta-data for the views
+#' @return A `data.frame` of meta-data for the views
 #' @importFrom googleAuthR gar_api_generator
 #' @import assertthat
 #' @family account structure functions

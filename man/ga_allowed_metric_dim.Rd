@@ -18,7 +18,7 @@ ga_allowed_metric_dim(
 \item{callAPI}{This will update the meta table (Requires online authorization)
 
 This is useful to expand goalXCompletions to all the possibilities,
-  as well as restricting to those that variables that work with your API call.
+as well as restricting to those that variables that work with your API call.
 
 Use internal meta table, but you have option to update to the latest version.}
 }

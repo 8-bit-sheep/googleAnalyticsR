@@ -1,6 +1,6 @@
 #' Google Analytics API metadata
 #' 
-#' This is a local copy of the data provided by \link{ga_meta}
+#' This is a local copy of the data provided by [ga_meta]
 #' 
 #' Running your own call will be more up to date, but this is here in case.
 #' 
@@ -9,17 +9,17 @@
 #' @format A data frame containing metric and dimensions that 
 #'   you can query the Reporting API with.
 #' 
-#' @source \url{https://developers.google.com/analytics/devguides/reporting/core/dimsmets}
+#' @source <https://developers.google.com/analytics/devguides/reporting/core/dimsmets>
 "meta"
 
 #' Google Analytics API metadata
 #' 
-#' This is a local copy of the data provided by \code{ga_meta("data")}
+#' This is a local copy of the data provided by `ga_meta("data")`
 #' 
 #' Running your own call will be more up to date, but this is here in case.
 #' 
 #' @format A data frame containing metric and dimensions that 
 #'   you can query the Data API with.
 #' 
-#' @source \url{https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema}
+#' @source <https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema>
 "meta4"

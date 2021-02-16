@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny-modules.R
 \name{multi_select}
 \alias{multi_select}
-\title{multi_select [Shiny Module]}
+\title{multi_select Shiny Module}
 \usage{
 multi_select(
   input,

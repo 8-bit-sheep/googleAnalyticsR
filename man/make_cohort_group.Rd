@@ -20,8 +20,7 @@ A cohortGroup object
 Create a cohort group
 }
 \details{
-Example: \code{list("cohort 1" = c("2015-08-01", "2015-08-01"), 
-                    "cohort 2" = c("2015-07-01","2015-07-01"))}
+Example: \code{list("cohort 1" = c("2015-08-01", "2015-08-01"),  "cohort 2" = c("2015-07-01","2015-07-01"))}
 }
 \examples{
 

@@ -25,7 +25,7 @@ ga_custom_vars_patch(
 
 \item{active}{\code{TRUE} or \code{FALSE} if custom dimension is active or not}
 
-\item{scope}{Scope of custom dimension - one of \code{"HIT","SESSION","USER","PRODUCT"}}
+\item{scope}{Scope of custom dimension - one of \verb{"HIT","SESSION","USER","PRODUCT"}}
 
 \item{ignoreCustomDataSourceLinks}{Force the update and ignore any warnings related to the custom dimension being linked to a custom data source / data set.}
 }

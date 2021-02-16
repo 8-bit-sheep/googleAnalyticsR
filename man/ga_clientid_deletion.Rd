@@ -16,7 +16,7 @@ ga_clientid_deletion(
 
 \item{propertyId}{The Google Analytics Web property or Firebase ProjectId you are deleting the user from.}
 
-\item{idType}{Type of user. One of \code{APP_INSTANCE_ID, CLIENT_ID or USER_ID}.}
+\item{idType}{Type of user. One of \verb{APP_INSTANCE_ID, CLIENT_ID or USER_ID}.}
 
 \item{propertyType}{Firebase or Google Analytics}
 }
@@ -27,7 +27,7 @@ a data.frame with a row for each userID you sent in, plus a column with its \cod
 The Google Analytics User Deletion API allows customers to process deletions of data associated with a given user identifier.
 }
 \details{
-The user explorer report in Google Analytics can give you the client.id you need to test. 
+The user explorer report in Google Analytics can give you the client.id you need to test.
 
 A data deletion request can be applied to either a Google Analytics web property (specified by \code{propertyType="ga"}) or Firebase application (\code{propertyType="firebase"}). A user whose data will be deleted can be specified by setting one of the identifiers the \code{userId} field. The type of the identifier must be specified inside \code{idType} field.
 

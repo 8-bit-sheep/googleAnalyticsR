@@ -3,7 +3,7 @@
 \docType{class}
 \name{simpleSegment_ga4-class}
 \alias{simpleSegment_ga4-class}
-\title{`simpleSegment_ga4` class.}
+\title{\code{simpleSegment_ga4} class.}
 \description{
 Simple segment.
 }

@@ -9,8 +9,8 @@ ga_remarketing_estimate(remarketingAudience)
 \arguments{
 \item{remarketingAudience}{A remarketing audience object from \link{ga_remarketing_get}
 
-Takes the segment definition from a remarketing audiences and runs 
-  it against the viewId to see current estimated users
+Takes the segment definition from a remarketing audiences and runs
+it against the viewId to see current estimated users
 
 The total audience size is this figure for every membershipDurationDay from yesterday}
 }

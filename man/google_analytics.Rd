@@ -39,7 +39,7 @@ google_analytics_4(...)
 
 \item{slow_fetch}{For large, complicated API requests this bypasses some API hacks that may result in 500 errors.  For smaller queries, leave this as \code{FALSE} for quicker data fetching.}
 
-\item{useResourceQuotas}{If using GA360, access increased sampling limits. 
+\item{useResourceQuotas}{If using GA360, access increased sampling limits.
 Default \code{NULL}, set to \code{TRUE} or \code{FALSE} if you have access to this feature.}
 
 \item{rows_per_call}{Set how many rows are requested by the API per call, up to a maximum of 100000.}
@@ -61,31 +61,31 @@ By default the API call will use v4 batching that splits requests into 5 separat
 \section{Anti-sampling}{
 
 
-\code{anti_sample} being TRUE ignores \code{max} as the API call is split over days 
-  to mitigate the sampling session limit, in which case a row limit won't work.  Take the top rows
-  of the result yourself instead e.g. \code{head(ga_data_unsampled, 50300)}
-  
-\code{anti_sample} being TRUE will also set \code{samplingLevel='LARGE'} to minimise 
-  the number of calls.
+\code{anti_sample} being TRUE ignores \code{max} as the API call is split over days
+to mitigate the sampling session limit, in which case a row limit won't work.  Take the top rows
+of the result yourself instead e.g. \code{head(ga_data_unsampled, 50300)}
+
+\code{anti_sample} being TRUE will also set \code{samplingLevel='LARGE'} to minimise
+the number of calls.
 }
 
 \section{Resource Quotas}{
 
 
 If you are on GA360 and have access to resource quotas,
-  set the \code{useResourceQuotas=TRUE} and set the Google Cloud 
-  client ID to the project that has resource quotas activated, 
-  via \link[googleAuthR]{gar_set_client} or options.
+set the \code{useResourceQuotas=TRUE} and set the Google Cloud
+client ID to the project that has resource quotas activated,
+via \link[googleAuthR:gar_set_client]{gar_set_client} or options.
 }
 
 \section{Caching}{
 
 
 By default local caching is turned on for v4 API requests.  This means that
-  making the same request as one this session will read from memory and not
-  make an API call. You can also set the cache to disk via 
-  the \link{ga_cache_call} function.  This can be useful
-  when running RMarkdown reports using data.
+making the same request as one this session will read from memory and not
+make an API call. You can also set the cache to disk via
+the \link{ga_cache_call} function.  This can be useful
+when running RMarkdown reports using data.
 }
 
 \examples{

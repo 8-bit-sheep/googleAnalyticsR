@@ -3,7 +3,7 @@
 \docType{class}
 \name{dynamicSegment_ga4-class}
 \alias{dynamicSegment_ga4-class}
-\title{`dynamicSegment_ga4` class.}
+\title{\code{dynamicSegment_ga4} class.}
 \description{
 Dynamic Segment.
 }

@@ -1,4 +1,4 @@
-#' accountPicker UI [Shiny Module] - pick GA4 accounts/webProperties in Shiny
+#' accountPicker UI Shiny Module - pick GA4 accounts/webProperties in Shiny
 #' 
 #' @description Makes a dropdown row for use for authentication with GA4 web properties.
 #' 
@@ -39,14 +39,14 @@ is.ga4_table <- function(df){
   all(names(df) == c("account_name","accountId","property_name","propertyId"))
 }
 
-#' accountPicker [Shiny Module] - pick GA4 accounts/webProperties in Shiny
+#' accountPicker Shiny Module - pick GA4 accounts/webProperties in Shiny
 #'
-#' Shiny Module for use with \link{accountPickerUI}
+#' Shiny Module for use with [accountPickerUI]
 #'
-#' @param ga_table A table GA4 accounts/web properties from \code{ga_account_summary("ga4")}
+#' @param ga_table A table GA4 accounts/web properties from `ga_account_summary("ga4")`
 #' @param id_only Whether to return just the id, not the row
 #'
-#' @return If id_only=FALSE, the row of ga_table for the selected GA4 web property e.g. use \code{ga_table$propertyId} to send to \link{ga_data} calls.  If id_only=TRUE, just the propertyId
+#' @return If id_only=FALSE, the row of ga_table for the selected GA4 web property e.g. use `ga_table$propertyId` to send to [ga_data] calls.  If id_only=TRUE, just the propertyId
 #' 
 #' @family Shiny modules
 #' @importFrom dplyr select filter pull
@@ -130,7 +130,7 @@ accountPicker <- function(id, ga_table, id_only = TRUE){
   
 }
 
-#' metricDimensionSelectUI - GA4 [Shiny Module]
+#' metricDimensionSelectUI - GA4 Shiny Module
 #' 
 #' Create a Google Analytics variable selector
 #' 
@@ -158,13 +158,13 @@ metricDimensionSelectUI <- function(
   
 }
 
-#' metricDimensionSelect - GA4 [Shiny Module]
+#' metricDimensionSelect - GA4 Shiny Module
 #'
-#' Shiny Module for use with GA4 metric and dimension fields fetched via \code{ga_meta("ga4")}
+#' Shiny Module for use with GA4 metric and dimension fields fetched via `ga_meta("ga4")`
 #' 
 #' @param id The Shiny id
 #' @param field_type metric or dimension
-#' @param custom_meta Pass a meta field table from \code{ga_meta("ga4")} to get custom fields from GA4 (reactive)
+#' @param custom_meta Pass a meta field table from `ga_meta("ga4")` to get custom fields from GA4 (reactive)
 #' @param default The default selected choice. First element if NULL
 #'
 #' @return the selected variable

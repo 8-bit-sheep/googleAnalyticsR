@@ -18,7 +18,7 @@ ga_model_edit(
 )
 }
 \arguments{
-\item{model}{The model to edit - if a filepath will load model and 
+\item{model}{The model to edit - if a filepath will load model and
 save back edited model to the same file}
 
 \item{data_f}{A function that gets the data}

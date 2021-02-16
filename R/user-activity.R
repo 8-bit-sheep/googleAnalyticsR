@@ -6,7 +6,7 @@
 #' @param ids The userId or clientId.  You can send in a vector of them
 #' @param id_type Whether its userId or clientId
 #' @param date_range A vector of start and end dates.  If not used will default to a week.
-#' @param activity_type If specified, filters down response to the activity type.  Choice between \code{"PAGEVIEW","SCREENVIEW","GOAL","ECOMMERCE","EVENT"}
+#' @param activity_type If specified, filters down response to the activity type.  Choice between `"PAGEVIEW","SCREENVIEW","GOAL","ECOMMERCE","EVENT"`
 #' 
 #' @details 
 #' 
@@ -14,13 +14,13 @@
 #' 
 #' Bear in mind each call will count against your API quota, so fetching a large amount of client ids will be limited by that.
 #' 
-#' Use \link{ga_clientid_activity_unnest} to unnest deeply nested data in the hits data.
+#' Use [ga_clientid_activity_unnest] to unnest deeply nested data in the hits data.
 #' 
-#' The timestamps are available to millisecond level but you will need to set your R options to see them e.g. \code{options(digits.secs=3)}
+#' The timestamps are available to millisecond level but you will need to set your R options to see them e.g. `options(digits.secs=3)`
 #' 
 #' @export
 #' 
-#' @return A list of data.frames: \code{$sessions} contains session level data. \code{$hits} contains individual activity data
+#' @return A list of data.frames: `$sessions` contains session level data. `$hits` contains individual activity data
 #' @importFrom googleAuthR gar_api_generator gar_api_page
 #' @import assertthat
 #' @examples 
@@ -67,7 +67,7 @@
 #' 
 #' 
 #' }
-#' @seealso \url{https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search}
+#' @seealso <https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search>
 #' @importFrom purrr map map_dfr
 #' @family clientid functions
 ga_clientid_activity <- function(ids, 
@@ -252,10 +252,10 @@ parse_user_activity <- function(x){
 
 #' Unnest user activity columns
 #' 
-#' A function to help expand data out of nested columns returned by \link{ga_clientid_activity}
+#' A function to help expand data out of nested columns returned by [ga_clientid_activity]
 #' 
 #' @param hits The hits data.frame with the columns to expand
-#' @param column Which column to expand - one of \code{"customDimension","ecommerce","goals"}
+#' @param column Which column to expand - one of `"customDimension","ecommerce","goals"`
 #' 
 #' @return An unnested data.frame tibble for all hits that matches the column
 #' 

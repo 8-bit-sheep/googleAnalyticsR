@@ -5,8 +5,8 @@
 \alias{meta4}
 \title{Google Analytics API metadata}
 \format{
-A data frame containing metric and dimensions that 
-  you can query the Data API with.
+A data frame containing metric and dimensions that
+you can query the Data API with.
 }
 \source{
 \url{https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema}

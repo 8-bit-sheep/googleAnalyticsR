@@ -46,6 +46,7 @@ Suggests:
     googleCloudStorageR (>= 0.2.0),
     htmlwidgets,
     knitr,
+    lifecycle (>= 1.0.0),
     miniUI (>= 0.1.1),
     rmarkdown,
     shiny (>= 1.6.0),
@@ -57,3 +58,6 @@ Remotes:
    MarkEdmondson1234/googleAuthR
 Config/testthat/edition: 3
 Config/testthat/parallel: true
+Roxygen: list(markdown = TRUE)
+Encoding: UTF-8
+

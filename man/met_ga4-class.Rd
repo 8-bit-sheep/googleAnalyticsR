@@ -3,7 +3,7 @@
 \docType{class}
 \name{met_ga4-class}
 \alias{met_ga4-class}
-\title{`met_ga4` class.}
+\title{\code{met_ga4} class.}
 \description{
 Metric.
 }

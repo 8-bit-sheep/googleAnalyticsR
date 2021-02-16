@@ -13,7 +13,7 @@ ga_webproperty_list(accountId)
 A \code{data.frame} of webproperty meta-data
 }
 \description{
-This gets the meta data for web properties associated with a particular accountId. 
+This gets the meta data for web properties associated with a particular accountId.
 If you want all information available to your user, use \link{ga_account_list} instead.
 }
 \examples{

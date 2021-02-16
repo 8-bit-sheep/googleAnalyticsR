@@ -45,6 +45,8 @@ ga_data(
 A data.frame tibble, including attributes metadata, metricAggregations and rowCount.  Use \link{ga_data_aggregations} to extract the data.frames of metricAggregations
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
 Fetches Google Analytics from the Data API for Google Analytics 4 (Previously App+Web)
 }
 \details{

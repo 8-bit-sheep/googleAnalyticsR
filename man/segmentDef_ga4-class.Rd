@@ -3,7 +3,7 @@
 \docType{class}
 \name{segmentDef_ga4-class}
 \alias{segmentDef_ga4-class}
-\title{`segmentDef_ga4` class.}
+\title{\code{segmentDef_ga4} class.}
 \description{
 Segment definition.
 }

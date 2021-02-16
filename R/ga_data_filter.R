@@ -1,35 +1,35 @@
 #' Filter DSL for GA4 filters
 #' 
-#' Use with \link{ga_data} to create filters
+#' Use with [ga_data] to create filters
 #' 
 #' @param x Filter DSL enabled syntax or the output of a previous call to this function - see examples
 #' 
 #' @details 
 #' 
-#' This uses a specific filter DSL syntax to create GA4 filters that can be passed to \link{ga_data} arguments \code{dimensionFilter} or \code{metricFilter}. Ensure that the fields you use are either all metrics or all dimensions.
+#' This uses a specific filter DSL syntax to create GA4 filters that can be passed to [ga_data] arguments `dimensionFilter` or `metricFilter`. Ensure that the fields you use are either all metrics or all dimensions.
 #' 
 #' The syntax uses operators and the class of the value you are setting (string, numeric or logical) to construct the filter expression object.
 #' 
-#' Fields including custom fields for your propertyId can be imported if you fetch them via \code{ga_meta("data", propertyId = 12345)} before you construct a filter.  If you do not want filters to be validated, then send them in as strings ("field").
+#' Fields including custom fields for your propertyId can be imported if you fetch them via `ga_meta("data", propertyId = 12345)` before you construct a filter.  If you do not want filters to be validated, then send them in as strings ("field").
 #' 
 #' The DSL rules are:
 #' 
 #' 
 #' \itemize{
 #'   \item{}{ Single filters can be used without wrapping in filter expressions}
-#'   \item{}{ A single filter syntax is \code{(field) (operator) (value)}}
-#'   \item{}{ (field) is a dimension or metric for your web property, which you can review via \link{ga_meta}}
-#'   \item{}{ (field) can be validated if you fetch metadata before you construct the filter.  If you do this, you can call the fields without quote strings e.g. \code{city} and not \code{"city"}}
-#'   \item{}{ (operator) for metrics can be one of: \code{==, >, >=, <, <=}} 
-#'   \item{}{ (operator) for dimensions can be one of: \code{==, \%begins\%, \%ends\%, \%contains\%, \%in\%, \%regex\%, \%regex_partial\%} for dimensions}
-#'   \item{}{ dimension (operator) are by default case sensitive.  Make them case insensitive by using UPPER case variations \code{\%BEGINS\%, \%ENDS\%, ...} or \code{===} for exact matches}
-#'   \item{} {(value) can be strings (\code{"dim1"}), numerics (\code{55}), string vectors (\code{c("dim1", "dim2")}), numeric vectors (\code{c(1,2,3)}) or boolean (\code{TRUE}) - the type will created different types of filters - see examples}
-#'   \item{}{Create filter expressions for multiple filters when using the operators: \code{&, |, !} for logical combinations of AND, OR and NOT respectively. }
+#'   \item{}{ A single filter syntax is `(field) (operator) (value)`}
+#'   \item{}{ (field) is a dimension or metric for your web property, which you can review via [ga_meta]}
+#'   \item{}{ (field) can be validated if you fetch metadata before you construct the filter.  If you do this, you can call the fields without quote strings e.g. `city` and not `"city"`}
+#'   \item{}{ (operator) for metrics can be one of: `==, >, >=, <, <=`} 
+#'   \item{}{ (operator) for dimensions can be one of: `==, \%begins\%, \%ends\%, \%contains\%, \%in\%, \%regex\%, \%regex_partial\%` for dimensions}
+#'   \item{}{ dimension (operator) are by default case sensitive.  Make them case insensitive by using UPPER case variations `\%BEGINS\%, \%ENDS\%, ...` or `===` for exact matches}
+#'   \item{} {(value) can be strings (`"dim1"`), numerics (`55`), string vectors (`c("dim1", "dim2")`), numeric vectors (`c(1,2,3)`) or boolean (`TRUE`) - the type will created different types of filters - see examples}
+#'   \item{}{Create filter expressions for multiple filters when using the operators: `&, |, !` for logical combinations of AND, OR and NOT respectively. }
 #' }
 #' 
 #' 
 #' 
-#' @return A \link{FilterExpression} object suitable for use in \link{ga_data}
+#' @return A [FilterExpression] object suitable for use in [ga_data]
 #' @export
 #' @importFrom rlang enquo eval_tidy
 #' @examples 
@@ -112,7 +112,7 @@ ga_data_filter <- function(x){
 
 #' Create a filter for use within App+Web filter expressions
 #' 
-#' Used within \link{ga_aw_filter_expr}
+#' Used within [ga_aw_filter_expr]
 #' 
 #' @param field The dimension or metric field name
 #' @param value The value - filter type is based on what class of object
@@ -209,14 +209,14 @@ ga_aw_filter <- function(field,
 
 #' Create a filter expression for use with App+Web Reports
 #' 
-#' For use with \link{ga_data} - filter expressions are built up via filters or other nested filter expressions.
+#' For use with [ga_data] - filter expressions are built up via filters or other nested filter expressions.
 #' 
-#' @param ... Vectors of \link{ga_aw_filter}, or vectors of FilterExpression created from previous calls to this function.
+#' @param ... Vectors of [ga_aw_filter], or vectors of FilterExpression created from previous calls to this function.
 #' @param type The type of filter
 #' 
 #' @return A FilterExpression
 #' 
-#' @details The fields in a FilterExpression need to be either all dimensions or all metrics. Use them in the appropriate dimensionFilter or metricFilter arguments within \link{ga_data}
+#' @details The fields in a FilterExpression need to be either all dimensions or all metrics. Use them in the appropriate dimensionFilter or metricFilter arguments within [ga_data]
 #' 
 #' You can't pass a mix of filters and filter expressions, or multiple filter expressions with type="not" as it doesn't know how to combine the filters (and/or) - make a filter expression with type = "and/or" then pass that back into the function with type="not" to negate the filter expression.
 #' 

@@ -22,8 +22,8 @@ A helper function to aggregate over dimensions
 }
 \details{
 Will auto select metrics if they are numeric class columns.
-  Will auto perform mean aggregation it metric names match \code{mean_regex} argument
-  If agg_names is NULL will aggregate over all
+Will auto perform mean aggregation it metric names match \code{mean_regex} argument
+If agg_names is NULL will aggregate over all
 }
 \examples{
 

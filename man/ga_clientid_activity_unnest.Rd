@@ -12,7 +12,7 @@ ga_clientid_activity_unnest(
 \arguments{
 \item{hits}{The hits data.frame with the columns to expand}
 
-\item{column}{Which column to expand - one of \code{"customDimension","ecommerce","goals"}}
+\item{column}{Which column to expand - one of \verb{"customDimension","ecommerce","goals"}}
 }
 \value{
 An unnested data.frame tibble for all hits that matches the column

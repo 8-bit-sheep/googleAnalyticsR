@@ -7,7 +7,7 @@
 #' 
 #' @details 
 #' 
-#' You primarily need this to get the \code{customDataSourceId} for the uploads via \link{ga_custom_upload_file}
+#' You primarily need this to get the `customDataSourceId` for the uploads via [ga_custom_upload_file]
 #'
 #' @return Custom Data Source
 #' @importFrom googleAuthR gar_api_generator
@@ -95,7 +95,7 @@ parse_custom_upload_list <- function(x){
 #' 
 #' @details
 #' 
-#' You can supply either \code{upload_object} generated via function or \link{ga_custom_upload_file}, or make an \code{}
+#' You can supply either `upload_object` generated via function or [ga_custom_upload_file], or make an \code{}
 #' 
 #' @examples 
 #' 
@@ -133,7 +133,7 @@ parse_custom_upload_list <- function(x){
 #' 
 #' }
 #'
-#' @return An object of class \code{ga_custom_data_source_upload}
+#' @return An object of class `ga_custom_data_source_upload`
 #' @importFrom googleAuthR gar_api_generator
 #' @family custom datasource functions
 #' @export
@@ -188,21 +188,21 @@ ga_custom_upload <- function(accountId,
 #' 
 #' You need to create a custom data source in the web UI first.  
 #' 
-#' If you are uploading an R data frame, the function will prefix the column names with \code{"ga:"} for you if necessary.
+#' If you are uploading an R data frame, the function will prefix the column names with `"ga:"` for you if necessary.
 #'   
-#' After upload check the status by querying data sources using \link{ga_custom_upload} 
-#'   and examining the \code{status} field.
+#' After upload check the status by querying data sources using [ga_custom_upload] 
+#'   and examining the `status` field.
 #'
 #' Currently only supports simple uploads (not resumable).
 #' 
 #' @seealso 
 #' 
-#' A guide for preparing the data is available: \href{https://developers.google.com/analytics/solutions/data-import-cost}{from Google here}.
+#' A guide for preparing the data is available: [from Google here](https://developers.google.com/analytics/solutions/data-import-cost).
 #' 
-#' The dev guide for this function: \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/data-import#format}{Data Import Developer Guide}
+#' The dev guide for this function: [Data Import Developer Guide](https://developers.google.com/analytics/devguides/config/mgmt/v3/data-import#format)
 #' 
 #'
-#' @return An object of class \code{ga_custom_data_source_upload}
+#' @return An object of class `ga_custom_data_source_upload`
 #' 
 #' @examples 
 #' 

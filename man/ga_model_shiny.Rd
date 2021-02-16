@@ -45,7 +45,7 @@ ga_model_shiny(
 Create a Shiny app from a ga_model file
 }
 \details{
-As \link{ga_model} objects have standardised code, they can be used to build standard templated Shiny apps.  Templates are made using the \link[whisker]{whisker.render} function
+As \link{ga_model} objects have standardised code, they can be used to build standard templated Shiny apps.  Templates are made using the \link[whisker:whisker.render]{whisker.render} function
 
 Some templates are included with the package, seen via \code{ga_model_shiny_template("list")}
 
@@ -61,21 +61,21 @@ By default the Shiny app is launched which in most cases will prompt authorisati
 
 
 \itemize{
- \item{\code{\{\{\{ model_libraries \}\}\}}}{- Adds \code{library()} calls based on models$required_packages}
- \item{\code{\{\{\{ web_json \}\}\}}}{- Adds Google OAuth2 client for web applications}
- \item{\code{\{\{\{ scopes \}\}\}}}{- Adds Google OAuth2 scopes for the API calls}
- \item{\code{\{\{\{ deployed_url \}\}\}}}{- Adds \code{option(googleAuthR.redirect)} option for deployed Shiny apps}
- \item{\code{\{\{\{ model_load \}\}\}}}{- Adds \link{ga_model_load} calls loading all models in the list passed to this function's \code{models} argument.  It creates R objects called 'model1', 'model2' etc. in the Shiny app code}
- \item{\code{\{\{\{ model_list \}\}\}}}{- Adds a list of the model objects after model_load.  Useful for creating custom functions in themes that can loop over model objects}
- \item{\code{\{\{\{ shiny_title \}\}\}}}{- Adds the title to the Shiny app}
- \item{\code{\{\{\{ auth_ui \}\}\}}}{- Adds the correct dropdown Shiny module for picking a GA4 or Universal Analytics properties}
- \item{\code{\{\{\{ date_range \}\}\}}}{- Adds a \code{shiny::dateInput()} date selector with id "date_range" for use in model's data fetching functions}
- \item{\code{\{\{\{ model_ui \}\}\}}}{- Adds the models UI elements as configured in the \link{ga_model} object.  It uses the object loaded above via the model_load macro.  It looks like \code{model1$ui('model1')} in the code.}
- \item{\code{\{\{\{ auth_server \}\}\}}}{- Adds the authentication module's server side function}
- \item{\code{\{\{\{ auth_accounts \}\}\}}}{- Adds a call to \link{ga_account_list} for the appropriate GA account type (GA4 or Universal)}
- \item{\code{\{\{\{ model_server \}\}\}}}{- Adds the server side module for the models as configured in the \link{ga_model} configuration. It uses the object loaded above via the model_load macro.  It looks like \code{model1$server('model1')} in the code.}
- \item{\code{\{\{\{ model1 \}\}\}}}{- Alternative to \code{model_load}, this will load the model file location instead, which you can pass to \code{ga_model_load()}} in the template.  model1 is the first model passed, model2 the second, etc.
- \item{\code{\{\{\{ your_argument \}\}\}}}{- You can pass in your own custom variables to the template via the \code{...} argument of this function if they are named the same as the template macro variable}
+\item{\code{\{\{\{ model_libraries \}\}\}}}{- Adds \code{library()} calls based on models$required_packages}
+\item{\code{\{\{\{ web_json \}\}\}}}{- Adds Google OAuth2 client for web applications}
+\item{\code{\{\{\{ scopes \}\}\}}}{- Adds Google OAuth2 scopes for the API calls}
+\item{\code{\{\{\{ deployed_url \}\}\}}}{- Adds \code{option(googleAuthR.redirect)} option for deployed Shiny apps}
+\item{\code{\{\{\{ model_load \}\}\}}}{- Adds \link{ga_model_load} calls loading all models in the list passed to this function's \code{models} argument.  It creates R objects called 'model1', 'model2' etc. in the Shiny app code}
+\item{\code{\{\{\{ model_list \}\}\}}}{- Adds a list of the model objects after model_load.  Useful for creating custom functions in themes that can loop over model objects}
+\item{\code{\{\{\{ shiny_title \}\}\}}}{- Adds the title to the Shiny app}
+\item{\code{\{\{\{ auth_ui \}\}\}}}{- Adds the correct dropdown Shiny module for picking a GA4 or Universal Analytics properties}
+\item{\code{\{\{\{ date_range \}\}\}}}{- Adds a \code{shiny::dateInput()} date selector with id "date_range" for use in model's data fetching functions}
+\item{\code{\{\{\{ model_ui \}\}\}}}{- Adds the models UI elements as configured in the \link{ga_model} object.  It uses the object loaded above via the model_load macro.  It looks like \code{model1$ui('model1')} in the code.}
+\item{\code{\{\{\{ auth_server \}\}\}}}{- Adds the authentication module's server side function}
+\item{\code{\{\{\{ auth_accounts \}\}\}}}{- Adds a call to \link{ga_account_list} for the appropriate GA account type (GA4 or Universal)}
+\item{\code{\{\{\{ model_server \}\}\}}}{- Adds the server side module for the models as configured in the \link{ga_model} configuration. It uses the object loaded above via the model_load macro.  It looks like \code{model1$server('model1')} in the code.}
+\item{\code{\{\{\{ model1 \}\}\}}}{- Alternative to \code{model_load}, this will load the model file location instead, which you can pass to \code{ga_model_load()}} in the template.  model1 is the first model passed, model2 the second, etc.
+\item{\code{\{\{\{ your_argument \}\}\}}}{- You can pass in your own custom variables to the template via the \code{...} argument of this function if they are named the same as the template macro variable}
 }
 }
 

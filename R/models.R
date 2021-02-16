@@ -1,10 +1,10 @@
 #' Use a model 
 #' 
-#' Use a model created by \link{ga_model_make}
+#' Use a model created by [ga_model_make]
 #'
 #' @param viewId The GA viewId to operate on
 #' @param model A file location of a model object or a model object
-#'   created by \link{ga_model_make}
+#'   created by [ga_model_make]
 #' @param load_libs Whether to load the library requirements into your namespace
 #' @param ... Other arguments to pass into the model as needed
 #'
@@ -166,25 +166,25 @@ ga_model_example <- function(name = "list"){
 #' @param data_f A function that gets the data 
 #' @param required_columns What dimensions and metrics are required
 #' @param model_f A function that inputs data, and outputs a list of assets -
-#'   must take data from result of \code{data_f} in first argument
-#' @param output_f A function that inputs the output from \code{model_f}, outputs a visualisation
-#' @param required_packages The packages needed for \code{data_f} and \code{model_f} to work
+#'   must take data from result of `data_f` in first argument
+#' @param output_f A function that inputs the output from `model_f`, outputs a visualisation
+#' @param required_packages The packages needed for `data_f` and `model_f` to work
 #' @param description An optional description of what the model does
-#' @param renderShiny A shiny render function that will create the output for \code{outputShiny} from \code{output_f}
-#' @param outputShiny A shiny UI output function that will display the results \code{renderShiny}
-#' @param inputShiny Optional input shiny functions (like \code{dateInput()}) that will be used within the model's Shiny module.  The id should be exactly the same as one of the variables in the model functions.
+#' @param renderShiny A shiny render function that will create the output for `outputShiny` from `output_f`
+#' @param outputShiny A shiny UI output function that will display the results `renderShiny`
+#' @param inputShiny Optional input shiny functions (like `dateInput()`) that will be used within the model's Shiny module.  The id should be exactly the same as one of the variables in the model functions.
 #'
 #' @details 
 #' 
-#' The passed functions should all have \code{...} to make them flexible
+#' The passed functions should all have `...` to make them flexible
 #'   in what arguments can be added.  Do not have the same argument names in both functions.
-#' The \code{data_f} function result will feed to \code{model_f}
+#' The `data_f` function result will feed to `model_f`
 #'
 #' @export
 #' @import assertthat
 #' @family GA modelling functions
 #' 
-#' @return A \code{ga_model} object to pass to \link{ga_model}
+#' @return A `ga_model` object to pass to [ga_model]
 #'
 #' @examples
 #'
@@ -605,7 +605,7 @@ eval_input_list <- function(dots){
 
 #' Write the ga_model functions to a file
 #' 
-#' @param model The \code{ga_model} object to extract functions from to write, or a filepath to a model
+#' @param model The `ga_model` object to extract functions from to write, or a filepath to a model
 #' @param filepath The filepath to write the functions to
 #' 
 #' @export

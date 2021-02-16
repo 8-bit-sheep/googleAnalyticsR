@@ -14,7 +14,7 @@
 #' 
 #' @description 
 #' 
-#' This is the recommended way to get all your account details for your user, including the web property and View IDs.  The \code{$viewId} column contains the ID you need for the data fetching functions such as \link{google_analytics}.
+#' This is the recommended way to get all your account details for your user, including the web property and View IDs.  The `$viewId` column contains the ID you need for the data fetching functions such as [google_analytics].
 #' 
 #' @examples 
 #' 
@@ -49,7 +49,7 @@ ga_account_list <- function(type = c("universal","ga4", "data")){
 #' List account metadata
 #' 
 #' This gets the meta data associated with the accounts you have access to with your user.  
-#' If you want all information such as web properties and viewIds, use \link{ga_account_list} instead.
+#' If you want all information such as web properties and viewIds, use [ga_account_list] instead.
 #'
 #' @importFrom googleAuthR gar_api_generator
 #' @family account structure functions
@@ -58,7 +58,7 @@ ga_account_list <- function(type = c("universal","ga4", "data")){
 #' 
 #'   This gets a list of account meta data, that can be used in other management API functions.
 #'   
-#' @return A \code{data.frame} with accountid, name, an R datetime object (\code{POSIXct}) when the account was created and last updated, and the effective permissions your user has for those accounts. 
+#' @return A `data.frame` with accountid, name, an R datetime object (`POSIXct`) when the account was created and last updated, and the effective permissions your user has for those accounts. 
 #' 
 #' @export
 #' @examples 

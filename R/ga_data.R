@@ -3,31 +3,34 @@ version_aw <- function(){
 }
 
 #' Google Analytics Data for GA4 (App+Web)
-#'
+#' 
+#' @description 
+#' `r lifecycle::badge("experimental")`
+#' 
 #' Fetches Google Analytics from the Data API for Google Analytics 4 (Previously App+Web)
 #'
-#' @seealso \href{https://developers.google.com/analytics/devguides/reporting/data/v1}{Documentation on Data API}
+#' @seealso [Documentation on Data API](https://developers.google.com/analytics/devguides/reporting/data/v1)
 #'
 #' @details 
 #' 
 #' This is the main function to call the Google Analytics 4 Data API.  
 #'
 #' @param propertyId A GA4 property Id
-#' @param metrics The metrics to request - see \link{ga_meta}
-#' @param dimensions The dimensions to request - see \link{ga_meta}
-#' @param dimensionFilter Filter on the dimensions of the request - a filter object created by \link{ga_data_filter}
-#' @param metricFilter Filter on the metrics of the request - a filter object created by \link{ga_data_filter}
-#' @param orderBys How to order the response - an order object created by \link{ga_data_order}
+#' @param metrics The metrics to request - see [ga_meta]
+#' @param dimensions The dimensions to request - see [ga_meta]
+#' @param dimensionFilter Filter on the dimensions of the request - a filter object created by [ga_data_filter]
+#' @param metricFilter Filter on the metrics of the request - a filter object created by [ga_data_filter]
+#' @param orderBys How to order the response - an order object created by [ga_data_order]
 #' @param limit The number of rows to return - use -1 to return all rows
 #' @param date_range A vector of length two with start and end dates in YYYY-MM-DD format
 #' @param dimensionDelimiter If combining dimensions in one column, the delimiter for the value field
-#' @param realtime If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see \href{https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics}{valid real-time dimensions}
+#' @param realtime If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see [valid real-time dimensions](https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics)
 #' @param raw_json You can send in the raw JSON string for a Data API request which will skip all checks
 #' @importFrom googleAuthR gar_api_generator
 #' @import assertthat
 #' @family GA4 functions
 #' 
-#' @return A data.frame tibble, including attributes metadata, metricAggregations and rowCount.  Use \link{ga_data_aggregations} to extract the data.frames of metricAggregations
+#' @return A data.frame tibble, including attributes metadata, metricAggregations and rowCount.  Use [ga_data_aggregations] to extract the data.frames of metricAggregations
 #' @export
 #' @examples 
 #' 
@@ -312,11 +315,14 @@ parse_rows <- function(o, dim_names, met_names){
   
 }
 
-#' Extract metric aggregations from a \link{ga_data} result
+#' Extract metric aggregations from a [ga_data] result
+#' 
+#' @description 
+#' `r lifecycle::badge("experimental")`
 #' 
 #' Metric aggregations are available in all requests.  This function lets you easily access the data.frames
 #' 
-#' @param df A data.frame result from \link{ga_data}
+#' @param df A data.frame result from [ga_data]
 #' @param type totals, maximums, minimums, counts (if available) or all
 #' 
 #' @export

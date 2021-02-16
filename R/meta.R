@@ -3,10 +3,10 @@
 #' @param version The Google Analytics API metadata to fetch - "universal" for Universal and earlier versions, "data" for Google Analytics 4
 #' @param propertyId If requesting from Google Analytics 4, pass the propertyId to get metadata specific to that property.  Leaving it NULL or 0 will return universal metadata
 #' @param cached Whether to use a cached version or to use the API to fetch the results again
-#' @param no_api Don't call the API, just return \code{googleAnalyticsR::meta4}
+#' @param no_api Don't call the API, just return `googleAnalyticsR::meta4`
 #' @return dataframe of dimensions and metrics available to use
 #'
-#' @seealso \url{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}, \url{https://developers.google.com/analytics/trusted-testing/analytics-data/rest/v1alpha/TopLevel/getUniversalMetadata}
+#' @seealso <https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list>, <https://developers.google.com/analytics/trusted-testing/analytics-data/rest/v1alpha/TopLevel/getUniversalMetadata>
 #' 
 #' @importFrom googleAuthR gar_api_generator
 #' 

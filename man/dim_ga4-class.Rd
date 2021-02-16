@@ -3,7 +3,7 @@
 \docType{class}
 \name{dim_ga4-class}
 \alias{dim_ga4-class}
-\title{`dim_ga4` class.}
+\title{\code{dim_ga4} class.}
 \description{
 Dimension.
 }

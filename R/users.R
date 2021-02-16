@@ -8,9 +8,9 @@
 #' 
 #' @description Get a list of Account level user links, or if you supply the webPropertyId or viewId it will show user links at that level
 #' 
-#' @return A \code{data.frame} of user entity links including the linkId, email and permissions
+#' @return A `data.frame` of user entity links including the linkId, email and permissions
 #' 
-#' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks}{Account User Links Google Documentation}
+#' @seealso [Account User Links Google Documentation](https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks)
 #'
 #' @importFrom googleAuthR gar_api_generator
 #' @family User management functions
@@ -71,13 +71,13 @@ parse_ga_users_list <- function(x){
 #' @param accountId The accountId that the user will be deleted from including all web properties and Views underneath.
 #' 
 #' @description 
-#' This is a wrapper around calls to \link{ga_users_list} and \link{ga_users_delete_linkid}.  If you want more fine-grained control look at those functions.
+#' This is a wrapper around calls to [ga_users_list] and [ga_users_delete_linkid].  If you want more fine-grained control look at those functions.
 #' 
 #' The user email is deleted from all web properties and views underneath the accountId you provide. 
 #' @import assertthat
 #' @importFrom dplyr filter select
 #' @importFrom purrr map map2 pmap
-#' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete}{Google Documentation}
+#' @seealso [Google Documentation](https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete)
 #' @family User management functions
 #' @export
 #' @examples 
@@ -160,23 +160,23 @@ ga_users_delete <- function(email, accountId){
 
 #' Delete users access from account, webproperty or view level
 #' 
-#' @param linkId The linkId(s) that is available using \link{ga_users_list} e.g. \code{47480439:104185380183364788718}
+#' @param linkId The linkId(s) that is available using [ga_users_list] e.g. `47480439:104185380183364788718`
 #' @inheritParams ga_users_list
-#' @param check If the default \code{TRUE} will check that the user has user access at the level you are trying to delete them from - if not will throw an error.
+#' @param check If the default `TRUE` will check that the user has user access at the level you are trying to delete them from - if not will throw an error.
 #' 
 #' @description 
 #' 
-#' The \code{linkId} is in the form of the accountId/webPropertyId/viewId colon separated from a link unique Id.
+#' The `linkId` is in the form of the accountId/webPropertyId/viewId colon separated from a link unique Id.
 #' 
-#' Delete user access by supplying the linkId for that user at the level they have been given access.  It won't work to delete user links at account level if they have been assigned at web property or view level - you will need to get the linkId for that level instead. e.g. a user needs \code{permissions.local} to be non-NULL to be deleted at that level.  The parameter \code{check} will do this check before deletion and throw an error if they can not be deleted.   Set this to \code{check=FALSE} to suppress this behaviour.
+#' Delete user access by supplying the linkId for that user at the level they have been given access.  It won't work to delete user links at account level if they have been assigned at web property or view level - you will need to get the linkId for that level instead. e.g. a user needs `permissions.local` to be non-NULL to be deleted at that level.  The parameter `check` will do this check before deletion and throw an error if they can not be deleted.   Set this to `check=FALSE` to suppress this behaviour.
 #' 
-#' If you supply more than one \code{linkId}, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a \code{TRUE} result on successful batch, but individual \code{linkId}s may have failed.  Check via \link{ga_users_list} afterwards and try to delete individual linkIds to get more descriptive error messages. 
+#' If you supply more than one `linkId`, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a `TRUE` result on successful batch, but individual `linkId`s may have failed.  Check via [ga_users_list] afterwards and try to delete individual linkIds to get more descriptive error messages. 
 #' 
 #' @return TRUE if the deletion is successful, an error if not. 
 #' @importFrom googleAuthR gar_api_generator gar_batch_walk
 #' 
 #' @import assertthat
-#' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete}{Google Documentation}
+#' @seealso [Google Documentation](https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/accountUserLinks/delete)
 #' @family User management functions
 #' @export
 #' @examples 
@@ -267,20 +267,20 @@ ga_users_delete_linkid <- function(linkId,
 #' Create or update user access to Google Analytics
 #' 
 #' @param email The email(s) of the user(s) to add.  Has to have a Google account. 
-#' @param permissions Which permissions to add as a vector - \code{"MANAGE_USERS"},\code{"EDIT"},\code{"COLLABORATE"},\code{"READ_AND_ANALYZE"}
+#' @param permissions Which permissions to add as a vector - `"MANAGE_USERS"`,`"EDIT"`,`"COLLABORATE"`,`"READ_AND_ANALYZE"`
 #' @inheritParams ga_users_list
 #' 
 #' @description 
 #' 
-#' If you supply more than one \code{email}, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a \code{TRUE} result on successful batch, but individual entries may have failed.  Check via \link{ga_users_list} afterwards and try to add individual linkIds to get more descriptive error messages. 
+#' If you supply more than one `email`, then batch processing will be applied.  Batching has special rules that give you 30 operations for the cost of one API call against your quota. When batching you will only get a `TRUE` result on successful batch, but individual entries may have failed.  Check via [ga_users_list] afterwards and try to add individual linkIds to get more descriptive error messages. 
 #' 
-#' @return \code{TRUE} if successful
+#' @return `TRUE` if successful
 #' @family User management functions
 #' @import assertthat
 #' 
 #' @importFrom googleAuthR gar_api_generator gar_batch_walk
 #' @export
-#' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management}{Google help article on user permissions}
+#' @seealso [Google help article on user permissions](https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management)
 #' @examples 
 #' 
 #' \dontrun{
@@ -373,7 +373,7 @@ ga_users_add <- function(email,
 #' @import assertthat
 #' @importFrom googleAuthR gar_api_generator gar_batch_walk
 #' @export
-#' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management}{Google help article on user permissions}
+#' @seealso [Google help article on user permissions](https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management)
 #' @examples 
 #' 
 #' \dontrun{

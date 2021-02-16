@@ -3,7 +3,7 @@
 \docType{class}
 \name{met_fil_ga4-class}
 \alias{met_fil_ga4-class}
-\title{`met_fil_ga4` class.}
+\title{\code{met_fil_ga4} class.}
 \description{
 Metric filter.
 }

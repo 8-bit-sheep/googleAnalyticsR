@@ -9,8 +9,8 @@ segmentDefinition(segmentFilterList)
 \arguments{
 \item{segmentFilterList}{A list of segmentFilters
 
-SegmentDefinition defines the segment to be a set of 
-  SegmentFilters which are combined together with a logical AND operation.}
+SegmentDefinition defines the segment to be a set of
+SegmentFilters which are combined together with a logical AND operation.}
 }
 \description{
 Segment Definition

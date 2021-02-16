@@ -24,17 +24,16 @@ Fields including custom fields for your propertyId can be imported if you fetch 
 
 The DSL rules are:
 
-
 \itemize{
-  \item{}{ Single filters can be used without wrapping in filter expressions}
-  \item{}{ A single filter syntax is \code{(field) (operator) (value)}}
-  \item{}{ (field) is a dimension or metric for your web property, which you can review via \link{ga_meta}}
-  \item{}{ (field) can be validated if you fetch metadata before you construct the filter.  If you do this, you can call the fields without quote strings e.g. \code{city} and not \code{"city"}}
-  \item{}{ (operator) for metrics can be one of: \code{==, >, >=, <, <=}} 
-  \item{}{ (operator) for dimensions can be one of: \code{==, \%begins\%, \%ends\%, \%contains\%, \%in\%, \%regex\%, \%regex_partial\%} for dimensions}
-  \item{}{ dimension (operator) are by default case sensitive.  Make them case insensitive by using UPPER case variations \code{\%BEGINS\%, \%ENDS\%, ...} or \code{===} for exact matches}
-  \item{} {(value) can be strings (\code{"dim1"}), numerics (\code{55}), string vectors (\code{c("dim1", "dim2")}), numeric vectors (\code{c(1,2,3)}) or boolean (\code{TRUE}) - the type will created different types of filters - see examples}
-  \item{}{Create filter expressions for multiple filters when using the operators: \code{&, |, !} for logical combinations of AND, OR and NOT respectively. }
+\item{}{ Single filters can be used without wrapping in filter expressions}
+\item{}{ A single filter syntax is \code{(field) (operator) (value)}}
+\item{}{ (field) is a dimension or metric for your web property, which you can review via \link{ga_meta}}
+\item{}{ (field) can be validated if you fetch metadata before you construct the filter.  If you do this, you can call the fields without quote strings e.g. \code{city} and not \code{"city"}}
+\item{}{ (operator) for metrics can be one of: \verb{==, >, >=, <, <=}}
+\item{}{ (operator) for dimensions can be one of: \verb{==, \\\%begins\\\%, \\\%ends\\\%, \\\%contains\\\%, \\\%in\\\%, \\\%regex\\\%, \\\%regex_partial\\\%} for dimensions}
+\item{}{ dimension (operator) are by default case sensitive.  Make them case insensitive by using UPPER case variations \verb{\\\%BEGINS\\\%, \\\%ENDS\\\%, ...} or \verb{===} for exact matches}
+\item{} {(value) can be strings (\code{"dim1"}), numerics (\code{55}), string vectors (\code{c("dim1", "dim2")}), numeric vectors (\code{c(1,2,3)}) or boolean (\code{TRUE}) - the type will created different types of filters - see examples}
+\item{}{Create filter expressions for multiple filters when using the operators: \verb{&, |, !} for logical combinations of AND, OR and NOT respectively. }
 }
 }
 \examples{

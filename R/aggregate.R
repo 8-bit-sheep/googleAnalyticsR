@@ -24,7 +24,7 @@ getColNameOfClass <- function(df, class_name){
 #'
 #' @details
 #'   Will auto select metrics if they are numeric class columns.
-#'   Will auto perform mean aggregation it metric names match \code{mean_regex} argument
+#'   Will auto perform mean aggregation it metric names match `mean_regex` argument
 #'   If agg_names is NULL will aggregate over all
 #'
 #' @importFrom magrittr %>%

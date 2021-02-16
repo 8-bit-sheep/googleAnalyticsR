@@ -3,7 +3,7 @@
 \docType{class}
 \name{segmentSequenceStep_ga4-class}
 \alias{segmentSequenceStep_ga4-class}
-\title{`segmentSequenceStep_ga4` class.}
+\title{\code{segmentSequenceStep_ga4} class.}
 \description{
 Segment sequence step.
 }

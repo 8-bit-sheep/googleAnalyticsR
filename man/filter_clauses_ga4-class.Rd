@@ -3,7 +3,7 @@
 \docType{class}
 \name{.filter_clauses_ga4-class}
 \alias{.filter_clauses_ga4-class}
-\title{`.filter_clauses_ga4` class.}
+\title{\code{.filter_clauses_ga4} class.}
 \description{
 Filter clauses class union.
 }

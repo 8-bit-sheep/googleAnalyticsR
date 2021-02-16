@@ -7,7 +7,7 @@
 #' 
 #' Requires installation of bigQueryR and authentication under ga_bq_auth() 
 #' or googleAuthR::gar_auth() with BigQuery scope set.
-#' View your projectIds upon authentication via \code{\link[bigQueryR]{bqr_list_projects}}
+#' View your projectIds upon authentication via [bigQueryR::bqr_list_projects()]
 #' 
 #' No segments for now.  
 #' 
@@ -17,7 +17,7 @@
 #' Custom dimensions can be specified as session or hit level, so ignoring the setting in GA interface. 
 #' 
 #' You can get a sample Google Analytics dataset in bigquery by following the instructions
-#'   here: \url{https://support.google.com/analytics/answer/3416091?hl=en}
+#'   here: <https://support.google.com/analytics/answer/3416091?hl=en>
 #' 
 #' 
 #' @param projectId The Google project Id where the BigQuery exports sit
@@ -36,8 +36,8 @@
 #' 
 #' @return data.frame of results
 #' 
-#' @seealso \url{https://support.google.com/analytics/answer/4419694?hl=en}
-#'          \url{https://support.google.com/analytics/answer/3437719?hl=en}
+#' @seealso <https://support.google.com/analytics/answer/4419694?hl=en>
+#'          <https://support.google.com/analytics/answer/3437719?hl=en>
 #' 
 #' @export
 google_analytics_bq <- function(projectId,

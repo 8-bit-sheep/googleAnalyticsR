@@ -117,7 +117,7 @@ parse_unsampled_list <- function(x){
 #' @param profileId Profile Id
 #' @param downloadFile Default TRUE, whether to download, if FALSE returns a dataframe instead
 
-#' @return file location if \code{downloadFile} is TRUE, else a \code{data.frame} of download
+#' @return file location if `downloadFile` is TRUE, else a `data.frame` of download
 
 #' @examples 
 #' 

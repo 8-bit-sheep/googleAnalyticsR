@@ -29,7 +29,7 @@ ga_clientid_hash <- function(webPropertyId, clientId){
 #' The Google Analytics User Deletion API allows customers to process deletions of data associated with a given user identifier. 
 #' 
 #' @param userId A character vector of user ID's
-#' @param idType Type of user. One of \code{APP_INSTANCE_ID, CLIENT_ID or USER_ID}.
+#' @param idType Type of user. One of `APP_INSTANCE_ID, CLIENT_ID or USER_ID`.
 #' @param propertyId The Google Analytics Web property or Firebase ProjectId you are deleting the user from.
 #' @param propertyType Firebase or Google Analytics
 #' 
@@ -37,15 +37,15 @@ ga_clientid_hash <- function(webPropertyId, clientId){
 #' 
 #' The user explorer report in Google Analytics can give you the client.id you need to test. 
 #' 
-#' A data deletion request can be applied to either a Google Analytics web property (specified by \code{propertyType="ga"}) or Firebase application (\code{propertyType="firebase"}). A user whose data will be deleted can be specified by setting one of the identifiers the \code{userId} field. The type of the identifier must be specified inside \code{idType} field.
+#' A data deletion request can be applied to either a Google Analytics web property (specified by `propertyType="ga"`) or Firebase application (`propertyType="firebase"`). A user whose data will be deleted can be specified by setting one of the identifiers the `userId` field. The type of the identifier must be specified inside `idType` field.
 #' 
 #' There is a quota of 500 queries per day per cloud project.
 #' 
-#' The API returns a User Deletion Request Resource with \code{deletionRequestTime} field set. This field is the point in time up to which all user data will be deleted. This means that all user data for the specified user identifier and Google Analytics property or Firebase project will be deleted up to this date and time - if the user with the same identifier returns after this date/time, they will reappear in reporting. 
+#' The API returns a User Deletion Request Resource with `deletionRequestTime` field set. This field is the point in time up to which all user data will be deleted. This means that all user data for the specified user identifier and Google Analytics property or Firebase project will be deleted up to this date and time - if the user with the same identifier returns after this date/time, they will reappear in reporting. 
 #' 
-#' @return a data.frame with a row for each userID you sent in, plus a column with its \code{deletionRequestTime}
+#' @return a data.frame with a row for each userID you sent in, plus a column with its `deletionRequestTime`
 #' 
-#' @seealso \url{https://developers.google.com/analytics/devguides/config/userdeletion/v3/}
+#' @seealso <https://developers.google.com/analytics/devguides/config/userdeletion/v3/>
 #' 
 #' @examples 
 #' 

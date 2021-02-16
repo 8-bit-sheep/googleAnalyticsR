@@ -1,6 +1,6 @@
 #' Order DSL for GA4 OrderBy
 #' 
-#' Use with \link{ga_data} to create orderBys
+#' Use with [ga_data] to create orderBys
 #' 
 #' @param x Order DSL enabled syntax
 #' @param type Order Type
@@ -11,9 +11,9 @@
 #' 
 #' \itemize{
 #'   \item{}{Fields can be quoted or unquoted.  If unquoted they will be validated}
-#'   \item{}{Use + as a prefix to indicate ascending order e.g. \code{+sessions}}
-#'   \item{}{Use - as a prefix to indicate decreasing order e.g. \code{-sessions}}
-#'   \item{}{Combine order fields without commas e.g. \code{+sessions -city}}
+#'   \item{}{Use + as a prefix to indicate ascending order e.g. `+sessions`}
+#'   \item{}{Use - as a prefix to indicate decreasing order e.g. `-sessions`}
+#'   \item{}{Combine order fields without commas e.g. `+sessions -city`}
 #'   \item{}{Ordering of dimensions can also specify a type of ordering: ALPHANUMERIC, CASE_INSENSITIVE_ALPHANUMERIC, NUMERIC}
 #' }
 #' 
@@ -26,9 +26,9 @@
 #' }
 #' 
 #' 
-#' @return A list of \link{OrderBy} objects suitable for use in \link{ga_data}
+#' @return A list of [OrderBy] objects suitable for use in [ga_data]
 #' @export
-#' @seealso \url{https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1alpha/OrderBy}
+#' @seealso <https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1alpha/OrderBy>
 #' @importFrom rlang enquo eval_tidy
 #' @examples 
 #' 
@@ -201,7 +201,7 @@ is.OrderBy <- function(x){
 #' @details
 #' Sorts by dimension values.
 #' 
-#' \code{orderType} has values:
+#' `orderType` has values:
 #' 
 #' Alphanumeric sort by Unicode code point. For example, "2" < "A" < "X" < "b" < "z".
 #' 

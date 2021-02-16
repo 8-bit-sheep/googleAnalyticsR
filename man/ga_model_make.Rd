@@ -44,7 +44,7 @@ Create ga_model objects for easy application of models to data
 }
 \details{
 The passed functions should all have \code{...} to make them flexible
-  in what arguments can be added.  Do not have the same argument names in both functions.
+in what arguments can be added.  Do not have the same argument names in both functions.
 The \code{data_f} function result will feed to \code{model_f}
 }
 \examples{

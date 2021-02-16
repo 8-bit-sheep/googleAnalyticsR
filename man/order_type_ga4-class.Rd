@@ -3,7 +3,7 @@
 \docType{class}
 \name{order_type_ga4-class}
 \alias{order_type_ga4-class}
-\title{`order_type_ga4` class.}
+\title{\code{order_type_ga4} class.}
 \description{
 Order type.
 }

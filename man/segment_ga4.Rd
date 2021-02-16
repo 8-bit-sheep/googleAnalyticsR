@@ -24,16 +24,16 @@ segment_ga4(
 a segmentFilter object. You can pass a list of these to the request.
 }
 \description{
-A Segment is a subset of the Analytics data. 
-For example, of the entire set of users, one Segment 
+A Segment is a subset of the Analytics data.
+For example, of the entire set of users, one Segment
 might be users from a particular country or city.
 }
 \details{
 \code{segment_ga4} is the top hierarchy of segment creation, for which you will also need:
 \itemize{
- \item \link{segment_define} : AND combination of segmentFilters
- \item \link{segment_vector_simple} or \link{segment_vector_sequence}
- \item \link{segment_element} that are combined in OR lists for \code{segment_vectors_*}
+\item \link{segment_define} : AND combination of segmentFilters
+\item \link{segment_vector_simple} or \link{segment_vector_sequence}
+\item \link{segment_element} that are combined in OR lists for \verb{segment_vectors_*}
 }
 }
 \examples{

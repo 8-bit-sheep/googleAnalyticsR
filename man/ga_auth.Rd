@@ -17,10 +17,10 @@ ga_auth(token = NULL, email = NULL, json_file = NULL)
 Invisibly, the token that has been saved to the session
 }
 \description{
-A wrapper for \link[googleAuthR]{gar_auth} and \link[googleAuthR]{gar_auth_service}
+A wrapper for \link[googleAuthR:gar_auth]{gar_auth} and \link[googleAuthR:gar_auth_service]{gar_auth_service}
 }
 \details{
-Run this function first time to authenticate with Google in your browser.  
+Run this function first time to authenticate with Google in your browser.
 
 After initial authentication, your authentication details will be kept globally for use later, tied to your email, and the next time you authenticate you will be given a prompt to choose which email to authentcate from.  Set \code{email="your@email.com"} to skip the interactive prompt.
 }
@@ -32,9 +32,9 @@ You can authenticate with a new email for each account. Supply a different email
 
 \section{Service accounts}{
 
-  
-If you use the service account JSON, you will need to add the service account email 
-  to your Google Analytics users to see data e.g. \code{xxxx@yyyyyy.iam.gserviceaccount.com}
+
+If you use the service account JSON, you will need to add the service account email
+to your Google Analytics users to see data e.g. \code{xxxx@yyyyyy.iam.gserviceaccount.com}
 }
 
 \section{Auto-authentication}{
@@ -45,8 +45,8 @@ You can choose to auto-authenticate by creating a Google OAuth service account J
 Specify an environment variable in R via a \code{.Renviron} file or using \link{Sys.setenv} which points to the file location of your chosen authentication file.  See \link{Startup}
 
 Once you have set the environment variable \code{GA_AUTH_FILE} to a valid file location,
-  the function will look there for authentication details upon loading the library meaning 
-  you will not need to call \code{ga_auth()} yourself as you would normally.
+the function will look there for authentication details upon loading the library meaning
+you will not need to call \code{ga_auth()} yourself as you would normally.
 
 An example \code{.Renviron} file is below:
 
@@ -58,21 +58,16 @@ An example \code{.Renviron} file is below:
 \section{Your own Google Project}{
 
 
-Be default the Google Project used is shared by all users, so you may find it runs out of API calls.  
+Be default the Google Project used is shared by all users, so you may find it runs out of API calls.
 To mitigate that, create your own Google Project and turn on the Analytics APIs.
 
-The best way to do this is to use \link[googleAuthR]{gar_set_client} by downloading your JSON client credentials and setting them to be found on package startup via the \code{GAR_CLIENT_JSON} environment argument.  See \code{?googleAuthR::gar_set_client} function help pages for details.
+The best way to do this is to use \link[googleAuthR:gar_set_client]{gar_set_client} by downloading your JSON client credentials and setting them to be found on package startup via the \code{GAR_CLIENT_JSON} environment argument.  See \code{?googleAuthR::gar_set_client} function help pages for details.
 
 Or you can then copy your Google Cloud Project's client ID and client secret, to place in options or environment arguments (whichever is easiest)
 
 The environment args are below.  Similar to auto-authentication, you can place your entries in an \code{.Renviron} file
 
-\code{
-GA_CLIENT_ID="XXXX"
-GA_CLIENT_SECRET="XXX"
-GA_WEB_CLIENT_ID="XXX"
-GA_WEB_CLIENT_SECRET="XXX"
-}
+\verb{GA_CLIENT_ID="XXXX" GA_CLIENT_SECRET="XXX" GA_WEB_CLIENT_ID="XXX" GA_WEB_CLIENT_SECRET="XXX"}
 }
 
 \examples{

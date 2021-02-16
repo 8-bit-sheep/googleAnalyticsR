@@ -1,14 +1,14 @@
 #' Make a dimension or metric filter clause object
 #'
-#' @param filters a list of \link{dim_filter} or \link{met_filter}. Only one type allowed.
+#' @param filters a list of [dim_filter] or [met_filter]. Only one type allowed.
 #' @param operator combination of filter.
 #'
 #' @details If you have dimension and metric filters,
-#'   make the clauses in two separate calls, then pass the objects to \link{make_ga_4_req}
+#'   make the clauses in two separate calls, then pass the objects to [make_ga_4_req]
 #'
 #'
-#' @return An object of class \code{dim_fil_ga4} or \code{met_fil_ga4}
-#'   for use in \code{\link{make_ga_4_req}}
+#' @return An object of class `dim_fil_ga4` or `met_fil_ga4`
+#'   for use in [make_ga_4_req()]
 #'
 #'
 #' @examples
@@ -103,7 +103,7 @@ is.met_filter <- function(x){
 #' @param caseSensitive Boolean.
 #' @param not Logical NOT operator. Boolean.
 #'
-#' @return An object of class \code{dim_fil_ga4} for use in \code{\link{filter_clause_ga4}}
+#' @return An object of class `dim_fil_ga4` for use in [filter_clause_ga4()]
 #'
 #' @examples
 #'
@@ -196,7 +196,7 @@ dim_filter <- function(dimension,
 #' @param comparisonValue What to match.
 #' @param not Logical NOT operator. Boolean.
 #'
-#' @return An object of class \code{met_fil_ga4} for use in \code{\link{filter_clause_ga4}}
+#' @return An object of class `met_fil_ga4` for use in [filter_clause_ga4()]
 #'
 #'
 #' @examples

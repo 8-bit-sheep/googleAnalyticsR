@@ -24,7 +24,7 @@ pivot_ga4(
 \item{maxGroupCount}{Maximum number of groups to return.}
 }
 \value{
-pivot object of class \code{pivot_ga4} for use in \code{\link{filter_clause_ga4}}
+pivot object of class \code{pivot_ga4} for use in \code{\link[=filter_clause_ga4]{filter_clause_ga4()}}
 }
 \description{
 Make a pivot object

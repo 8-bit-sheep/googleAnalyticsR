@@ -24,19 +24,19 @@ Use with \link{ga_data} to create orderBys
 The DSL rules are:
 
 \itemize{
-  \item{}{Fields can be quoted or unquoted.  If unquoted they will be validated}
-  \item{}{Use + as a prefix to indicate ascending order e.g. \code{+sessions}}
-  \item{}{Use - as a prefix to indicate decreasing order e.g. \code{-sessions}}
-  \item{}{Combine order fields without commas e.g. \code{+sessions -city}}
-  \item{}{Ordering of dimensions can also specify a type of ordering: ALPHANUMERIC, CASE_INSENSITIVE_ALPHANUMERIC, NUMERIC}
+\item{}{Fields can be quoted or unquoted.  If unquoted they will be validated}
+\item{}{Use + as a prefix to indicate ascending order e.g. \code{+sessions}}
+\item{}{Use - as a prefix to indicate decreasing order e.g. \code{-sessions}}
+\item{}{Combine order fields without commas e.g. \code{+sessions -city}}
+\item{}{Ordering of dimensions can also specify a type of ordering: ALPHANUMERIC, CASE_INSENSITIVE_ALPHANUMERIC, NUMERIC}
 }
 
 The dimension ordering have these effects:
 
 \itemize{
-  \item{ALPHANUMERIC}{ For example, "2" < "A" < "X" < "b" < "z"}
-  \item{CASE_INSENSITIVE_ALPHANUMERIC}{ Case insensitive alphanumeric sort by lower case Unicode code point. For example, "2" < "A" < "b" < "X" < "z"}
-  \item{NUMERIC}{ Dimension values are converted to numbers before sorting. For example in NUMERIC sort, "25" < "100", and in ALPHANUMERIC sort, "100" < "25". Non-numeric dimension values all have equal ordering value below all numeric values}
+\item{ALPHANUMERIC}{ For example, "2" < "A" < "X" < "b" < "z"}
+\item{CASE_INSENSITIVE_ALPHANUMERIC}{ Case insensitive alphanumeric sort by lower case Unicode code point. For example, "2" < "A" < "b" < "X" < "z"}
+\item{NUMERIC}{ Dimension values are converted to numbers before sorting. For example in NUMERIC sort, "25" < "100", and in ALPHANUMERIC sort, "100" < "25". Non-numeric dimension values all have equal ordering value below all numeric values}
 }
 }
 \examples{

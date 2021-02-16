@@ -97,7 +97,7 @@ parse_ga_adwords_list <- function(x){
 #'
 #' @importFrom googleAuthR gar_api_generator
 #' @export
-#' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/webPropertyAdWordsLinks/insert }{Google documentation}
+#' @seealso [Google documentation](https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/webPropertyAdWordsLinks/insert )
 #' @examples
 #' 
 #' \dontrun{
@@ -164,7 +164,7 @@ ga_adwords_add_linkid <- function(adwordsAccountId, linkName, accountId, webProp
 #'
 #' @importFrom googleAuthR gar_api_generator
 #' @export
-#' @seealso \href{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/webPropertyAdWordsLinks/delete }{Google documentation}
+#' @seealso [Google documentation](https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/webPropertyAdWordsLinks/delete )
 #' @examples
 #' 
 #' \dontrun{

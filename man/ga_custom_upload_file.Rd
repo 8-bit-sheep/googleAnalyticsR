@@ -22,12 +22,12 @@ An object of class \code{ga_custom_data_source_upload}
 Upload external data up to 1GB to Google Analytics via the management API.
 }
 \details{
-You need to create a custom data source in the web UI first.  
+You need to create a custom data source in the web UI first.
 
 If you are uploading an R data frame, the function will prefix the column names with \code{"ga:"} for you if necessary.
-  
-After upload check the status by querying data sources using \link{ga_custom_upload} 
-  and examining the \code{status} field.
+
+After upload check the status by querying data sources using \link{ga_custom_upload}
+and examining the \code{status} field.
 
 Currently only supports simple uploads (not resumable).
 }

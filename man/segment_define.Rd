@@ -9,21 +9,21 @@ segment_define(segment_filters, not_vector = NULL)
 \arguments{
 \item{segment_filters}{A list of \link{segment_vector_simple} and \link{segment_vector_sequence}}
 
-\item{not_vector}{Boolean applied to each segmentFilter step. 
+\item{not_vector}{Boolean applied to each segmentFilter step.
 If NULL, assumed FALSE}
 }
 \value{
 segmentDefinition object for \link{segment_ga4}
 }
 \description{
-Defines the segment to be a set of SegmentFilters 
-  which are combined together with a logical AND operation.
-  
+Defines the segment to be a set of SegmentFilters
+which are combined together with a logical AND operation.
+
 \code{segment_define} is in the hierarchy of segment creation, for which you will also need:
 \itemize{
- \item \link{segment_define} : AND combination of segmentFilters
- \item \link{segment_vector_simple} or \link{segment_vector_sequence}
- \item \link{segment_element} that are combined in OR lists for \code{segment_vectors_*}
+\item \link{segment_define} : AND combination of segmentFilters
+\item \link{segment_vector_simple} or \link{segment_vector_sequence}
+\item \link{segment_element} that are combined in OR lists for \verb{segment_vectors_*}
 }
 }
 \seealso{

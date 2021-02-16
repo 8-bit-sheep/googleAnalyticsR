@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny-modules.R
 \name{authDropdown}
 \alias{authDropdown}
-\title{authDropdown [Shiny Module]}
+\title{authDropdown Shiny Module}
 \usage{
 authDropdown(input, output, session, ga.table, viewIdOnly = TRUE, rmNA = TRUE)
 }

@@ -3,7 +3,7 @@
 \name{ga_unsampled_download}
 \alias{ga_unsampled_download}
 \title{Download Unsampled Report from Google Drive. You must be authenticated with the
-same account that you setup the unsampled report. This means service account 
+same account that you setup the unsampled report. This means service account
 authentication is not supported.}
 \usage{
 ga_unsampled_download(
@@ -30,7 +30,7 @@ file location if \code{downloadFile} is TRUE, else a \code{data.frame} of downlo
 }
 \description{
 Download Unsampled Report from Google Drive. You must be authenticated with the
-same account that you setup the unsampled report. This means service account 
+same account that you setup the unsampled report. This means service account
 authentication is not supported.
 }
 \examples{

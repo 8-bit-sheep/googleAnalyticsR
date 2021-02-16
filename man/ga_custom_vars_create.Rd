@@ -24,7 +24,7 @@ ga_custom_vars_create(
 
 \item{active}{\code{TRUE} or \code{FALSE} if custom dimension is active or not}
 
-\item{scope}{Scope of custom dimension - one of \code{"HIT","SESSION","USER","PRODUCT"}}
+\item{scope}{Scope of custom dimension - one of \verb{"HIT","SESSION","USER","PRODUCT"}}
 }
 \description{
 Create a dimension by specifying its attributes.

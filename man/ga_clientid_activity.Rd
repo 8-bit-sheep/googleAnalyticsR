@@ -19,18 +19,18 @@ ga_clientid_activity(
 
 \item{id_type}{Whether its userId or clientId}
 
-\item{activity_type}{If specified, filters down response to the activity type.  Choice between \code{"PAGEVIEW","SCREENVIEW","GOAL","ECOMMERCE","EVENT"}}
+\item{activity_type}{If specified, filters down response to the activity type.  Choice between \verb{"PAGEVIEW","SCREENVIEW","GOAL","ECOMMERCE","EVENT"}}
 
 \item{date_range}{A vector of start and end dates.  If not used will default to a week.}
 }
 \value{
-A list of data.frames: \code{$sessions} contains session level data. \code{$hits} contains individual activity data
+A list of data.frames: \verb{$sessions} contains session level data. \verb{$hits} contains individual activity data
 }
 \description{
 Get activity on an individual user
 }
 \details{
-The User Activity API lets you query an individual user's movement through your website, by sending in the individual `clientId` or `userId`.
+The User Activity API lets you query an individual user's movement through your website, by sending in the individual \code{clientId} or \code{userId}.
 
 Bear in mind each call will count against your API quota, so fetching a large amount of client ids will be limited by that.
 

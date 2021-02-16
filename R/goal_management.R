@@ -7,7 +7,7 @@
 #'
 #' @return The Goal object
 #'
-#' @seealso \url{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/#Goals}
+#' @seealso <https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/#Goals>
 #'
 #' @examples
 #'
@@ -145,7 +145,7 @@ ga_goal_add <- function(Goal,
 #' @param method PUT by default. For patch semantics use PATCH
 #' 
 #' @return A goalManagement object
-#' @seealso \url{https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/#Goals} 
+#' @seealso <https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/#Goals> 
 #' @examples 
 #' 
 #' \dontrun{

@@ -3,7 +3,7 @@
 \docType{class}
 \name{segmentFilterClause_ga4-class}
 \alias{segmentFilterClause_ga4-class}
-\title{`segmentFilterClause_ga4` class.}
+\title{\code{segmentFilterClause_ga4} class.}
 \description{
 Segment filter clause.
 }

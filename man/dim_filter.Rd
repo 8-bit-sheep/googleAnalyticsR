@@ -25,7 +25,7 @@ dim_filter(
 \item{not}{Logical NOT operator. Boolean.}
 }
 \value{
-An object of class \code{dim_fil_ga4} for use in \code{\link{filter_clause_ga4}}
+An object of class \code{dim_fil_ga4} for use in \code{\link[=filter_clause_ga4]{filter_clause_ga4()}}
 }
 \description{
 Make a dimension filter object

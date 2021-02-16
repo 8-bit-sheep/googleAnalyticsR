@@ -3,7 +3,7 @@
 \name{metricDimensionSelectUI}
 \alias{metricDimensionSelectUI}
 \alias{metricDimensionSelect}
-\title{metricDimensionSelectUI - GA4 [Shiny Module]}
+\title{metricDimensionSelectUI - GA4 Shiny Module}
 \usage{
 metricDimensionSelectUI(id, label = "Metric", multiple = TRUE, width = NULL)
 

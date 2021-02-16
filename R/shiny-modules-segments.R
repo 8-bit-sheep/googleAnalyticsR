@@ -1,6 +1,6 @@
 #' Create a GAv4 Segment Builder
 #' 
-#' Shiny Module for use with \link{segmentBuilder}
+#' Shiny Module for use with [segmentBuilder]
 #' 
 #' @param id Shiny id
 #' 
@@ -46,7 +46,7 @@ segmentBuilderUI <- function(id){
 
 #' Create a GAv4 Segment Builder
 #' 
-#' Shiny Module for use with \link{segmentBuilderUI}
+#' Shiny Module for use with [segmentBuilderUI]
 #' 
 #' @param input shiny input
 #' @param output shiny output
@@ -54,7 +54,7 @@ segmentBuilderUI <- function(id){
 #' 
 #' @details 
 #'
-#' Call via \code{shiny::callModule(segmentBuilder, "your_id")}
+#' Call via `shiny::callModule(segmentBuilder, "your_id")`
 #' 
 #' @return A segment definition
 #' 
@@ -187,7 +187,7 @@ segment_element_ui <- function(id, seq, segment_type=NULL){
 
 #' segmentChain UI
 #'
-#' Shiny Module for use with \link{segmentChain}
+#' Shiny Module for use with [segmentChain]
 #' 
 #' @param id Shiny id
 #'
@@ -214,14 +214,14 @@ segmentChainUI <- function(id){
 
 #' segmentChain
 #'
-#' Shiny Module for use with \link{segmentChainUI}
+#' Shiny Module for use with [segmentChainUI]
 #'
-#' Call via \code{shiny::callModule(segmentChain, "your_id")}
+#' Call via `shiny::callModule(segmentChain, "your_id")`
 #'
 #' @param input shiny input
 #' @param output shiny output
 #' @param session shiny session
-#' @param element_inputs from \link{segmentElementUI}
+#' @param element_inputs from [segmentElementUI]
 #'
 #' @return Something
 #' @keywords internal

@@ -3,7 +3,7 @@
 \docType{class}
 \name{dim_fil_ga4-class}
 \alias{dim_fil_ga4-class}
-\title{`dim_fil_ga4` class.}
+\title{\code{dim_fil_ga4} class.}
 \description{
 Dimension filter.
 }

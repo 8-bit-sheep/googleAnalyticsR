@@ -20,14 +20,11 @@ Make a dimension object
 \section{histograms}{
 
 
- If supplying histogramBuckets, the name will be used to create the buckets
+If supplying histogramBuckets, the name will be used to create the buckets
 
- e.g. \code{dimensions = c("source", "medium")
-            histogramBuckets = list(source = c(1,5,10,20,200),
-                                   medium = c(0,7,14,21,999))
-                                   }
+e.g. \verb{dimensions = c("source", "medium") histogramBuckets = list(source = c(1,5,10,20,200), medium = c(0,7,14,21,999)) }
 
- Warning: only makes sense to apply to dimensions that are numeric e.g. ga:hour
+Warning: only makes sense to apply to dimensions that are numeric e.g. ga:hour
 }
 
 \keyword{internal}

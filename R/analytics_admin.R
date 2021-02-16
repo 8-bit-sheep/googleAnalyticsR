@@ -1,7 +1,7 @@
 #' Returns summaries of all accounts accessible by the caller.
 #' 
 #' 
-#' @seealso \href{http://code.google.com/apis/analytics/docs/mgmt/home.html}{Google Documentation}
+#' @seealso [Google Documentation](http://code.google.com/apis/analytics/docs/mgmt/home.html)
 #' 
 #' @details 
 #' 
