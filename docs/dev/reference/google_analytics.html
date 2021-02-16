@@ -334,7 +334,7 @@
     </tr>
     <tr>
       <th>useResourceQuotas</th>
-      <td><p>If using GA360, access increased sampling limits. 
+      <td><p>If using GA360, access increased sampling limits.
 Default <code>NULL</code>, set to <code>TRUE</code> or <code>FALSE</code> if you have access to this feature.</p></td>
     </tr>
     <tr>
@@ -361,30 +361,30 @@ Default <code>NULL</code>, set to <code>TRUE</code> or <code>FALSE</code> if you
     
 
 
-<p><code>anti_sample</code> being TRUE ignores <code>max</code> as the API call is split over days 
-  to mitigate the sampling session limit, in which case a row limit won't work.  Take the top rows
-  of the result yourself instead e.g. <code><a href='https://rdrr.io/r/utils/head.html'>head(ga_data_unsampled, 50300)</a></code></p>  
-<p><code>anti_sample</code> being TRUE will also set <code>samplingLevel='LARGE'</code> to minimise 
-  the number of calls.</p>
+<p><code>anti_sample</code> being TRUE ignores <code>max</code> as the API call is split over days
+to mitigate the sampling session limit, in which case a row limit won't work.  Take the top rows
+of the result yourself instead e.g. <code><a href='https://rdrr.io/r/utils/head.html'>head(ga_data_unsampled, 50300)</a></code></p>
+<p><code>anti_sample</code> being TRUE will also set <code>samplingLevel='LARGE'</code> to minimise
+the number of calls.</p>
     <h2 class="hasAnchor" id="resource-quotas"><a class="anchor" href="#resource-quotas"></a>Resource Quotas</h2>
 
     
 
 
 <p>If you are on GA360 and have access to resource quotas,
-  set the <code>useResourceQuotas=TRUE</code> and set the Google Cloud 
-  client ID to the project that has resource quotas activated, 
-  via <a href='https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html'>gar_set_client</a> or options.</p>
+set the <code>useResourceQuotas=TRUE</code> and set the Google Cloud
+client ID to the project that has resource quotas activated,
+via <a href='https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html'>gar_set_client</a> or options.</p>
     <h2 class="hasAnchor" id="caching"><a class="anchor" href="#caching"></a>Caching</h2>
 
     
 
 
 <p>By default local caching is turned on for v4 API requests.  This means that
-  making the same request as one this session will read from memory and not
-  make an API call. You can also set the cache to disk via 
-  the <a href='ga_cache_call.html'>ga_cache_call</a> function.  This can be useful
-  when running RMarkdown reports using data.</p>
+making the same request as one this session will read from memory and not
+make an API call. You can also set the cache to disk via
+the <a href='ga_cache_call.html'>ga_cache_call</a> function.  This can be useful
+when running RMarkdown reports using data.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
