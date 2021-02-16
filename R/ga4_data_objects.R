@@ -35,6 +35,7 @@ RunRealtimeReport <- function(dimensions = NULL,
 #' @return BatchRunReportsRequest object
 #'
 #' @family BatchRunReportsRequest functions
+#' @noRd
 BatchRunReportsRequest <- function(entity, requests){
   
   assert_that(is.Entity(entity))
@@ -70,6 +71,7 @@ BatchRunReportsRequest <- function(entity, requests){
 #' @return RunReportRequest object
 #'
 #' @family RunReportRequest functions
+#' @noRd
 RunReportRequest <- function(entity = NULL, 
                              metrics = NULL, 
                              currencyCode = NULL,
@@ -122,6 +124,7 @@ is.RunReportRequest <- function(x){
 #' @return Entity object
 #'
 #' @family Entity functions
+#' @noRd
 Entity <- function(propertyId) {
   structure(list(propertyId = as.character(propertyId)),
             class = c("gar_Entity", "list"))
@@ -144,6 +147,7 @@ is.Entity <- function(x){
 #' @return Metric object
 #'
 #' @family Metric functions
+#' @noRd
 Metric <- function(name, 
                    expression = NULL,
                    invisible = NULL) {
@@ -172,6 +176,7 @@ is.Metric <- function(x){
 #' @return DimensionExpression object
 #'
 #' @family DimensionExpression functions
+#' @noRd
 DimensionExpression <- function(lowerCase = NULL, 
                                 concatenate = NULL, 
                                 upperCase = NULL) {
@@ -197,6 +202,7 @@ is.DimensionExpression <- function(x){
 #' @return Dimension object
 #'
 #' @family Dimension functions
+#' @noRd
 Dimension <- function(name, dimensionExpression = NULL) {
   assert_that(is.string(name))
   

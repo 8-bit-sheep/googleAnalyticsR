@@ -13,30 +13,27 @@ ga_data(
   dimensionDelimiter = "/",
   metricFilter = NULL,
   orderBys = NULL,
-  metricAggregations = NULL,
   limit = 100,
   realtime = FALSE,
   raw_json = NULL
 )
 }
 \arguments{
-\item{propertyId}{A Google Analytics App + Web property id}
+\item{propertyId}{A GA4 property Id}
 
-\item{metrics}{The metrics requested and displayed}
+\item{metrics}{The metrics to request - see \link{ga_meta}}
 
 \item{date_range}{A vector of length two with start and end dates in YYYY-MM-DD format}
 
-\item{dimensions}{The dimensions requested and displayed}
+\item{dimensions}{The dimensions to request - see \link{ga_meta}}
 
-\item{dimensionFilter}{The filter clause of dimensions - see \link{ga_data_filter}}
+\item{dimensionFilter}{Filter on the dimensions of the request - a filter object created by \link{ga_data_filter}}
 
 \item{dimensionDelimiter}{If combining dimensions in one column, the delimiter for the value field}
 
-\item{metricFilter}{The filter clause of metrics - see \link{ga_data_filter}}
+\item{metricFilter}{Filter on the metrics of the request - a filter object created by \link{ga_data_filter}}
 
-\item{orderBys}{Specifies how rows are ordered in the response - see \link{ga_data_order}}
-
-\item{metricAggregations}{Aggregation of metrics. Aggregated metric values will be shown in rows where the dimensionValues are set to "RESERVED_(MetricAggregation)".}
+\item{orderBys}{How to order the response - an order object created by \link{ga_data_order}}
 
 \item{limit}{The number of rows to return - use -1 to return all rows}
 

@@ -104,7 +104,7 @@
 #' 
 #' @family GAv4 fetch functions
 #' @import assertthat
-#' @export
+#' @noRd
 make_ga_4_req <- function(viewId,
                           date_range=NULL,
                           metrics=NULL,
@@ -531,6 +531,7 @@ google_analytics_4 <- function(...){
 #' @return A dataframe of all the requests
 #' @importFrom googleAuthR gar_api_generator
 #' @family GAv4 fetch functions
+#' @noRd
 fetch_google_analytics_4_slow <- function(request_list, 
                                           max_rows, 
                                           allRows = FALSE, 
@@ -635,7 +636,7 @@ fetch_google_analytics_4_slow <- function(request_list,
 #' 
 #' @family GAv4 fetch functions
 #' @import assertthat
-#' @export
+#' @noRd
 fetch_google_analytics_4 <- function(request_list, merge = FALSE, useResourceQuotas = NULL){
 
   assert_that(is.list(request_list))

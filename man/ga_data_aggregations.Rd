@@ -15,7 +15,7 @@ ga_data_aggregations(
 \item{type}{totals, maximums, minimums, counts (if available) or all}
 }
 \description{
-Metric aggregations are available in each \link{ga_data} result.  This function lets you easily access the data.frames
+Metric aggregations are available in all requests.  This function lets you easily access the data.frames
 }
 \examples{
 

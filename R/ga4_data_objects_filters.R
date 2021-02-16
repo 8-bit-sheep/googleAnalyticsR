@@ -15,7 +15,7 @@
 #' @return Filter object
 #'
 #' @family Filter functions
-#' @export
+#' @noRd
 Filter_aw <- function(fieldName,
                    numericFilter = NULL, 
                    inListFilter = NULL, 
@@ -64,7 +64,7 @@ is.Filter <- function(x){
 #' @return FilterExpression object
 #'
 #' @family FilterExpression functions
-#' @export
+#' @noRd
 #' @importFrom purrr compact
 FilterExpression <- function(andGroup = NULL,
                              filter = NULL,
@@ -103,7 +103,7 @@ is.FilterExpression <- function(x){
 #' @return FilterExpressionList object
 #'
 #' @family FilterExpressionList functions
-#' @export
+#' @noRd
 FilterExpressionList <- function(expressions){
   
   assert_that_list(expressions, is.FilterExpression)
@@ -129,7 +129,7 @@ is.FilterExpressionList <- function(x){
 #' @return StringFilter object
 #'
 #' @family StringFilter functions
-#' @export
+#' @noRd
 StringFilter <- function(value,
                          matchType = c("EXACT",
                                        "BEGINS_WITH",
@@ -163,7 +163,7 @@ is.StringFilter <- function(x){
 #' @return InListFilter object
 #'
 #' @family InListFilter functions
-#' @export
+#' @noRd
 InListFilter <- function(values, caseSensitive = TRUE){
   assert_that(is.character(values),
               is.flag(caseSensitive))
@@ -189,7 +189,7 @@ is.InListFilter <- function(x){
 #' @return NumericFilter object
 #'
 #' @family NumericFilter functions
-#' @export
+#' @noRd
 NumericFilter <- function(value, 
                           operation = c("EQUAL",
                                         "LESS_THAN",
@@ -233,7 +233,7 @@ as.NumericValue <- function(value){
 #' @return BetweenFilter object
 #'
 #' @family BetweenFilter functions
-#' @export
+#' @noRd
 BetweenFilter <- function(toValue, fromValue){
   
   structure(list(toValue = as.NumericValue(toValue), 

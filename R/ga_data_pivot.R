@@ -43,7 +43,7 @@ is.PivotOrderBy <- function(x){
 #' @param metricAggregations Aggregate the metrics by dimensions in this pivot using the specified metricAggregations.
 #' 
 #' @return Pivot Object
-#' @export
+#' @noRd
 PivotObject <- function(fieldNames,
                         orderBys = NULL,
                         offset = NULL,

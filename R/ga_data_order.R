@@ -164,7 +164,7 @@ lookup_field_class <- function(field){
 #' @return OrderBy object
 #'
 #' @family OrderBy functions
-#' @export
+#' @noRd
 OrderBy <- function(metric = NULL, 
                     pivot = NULL, 
                     dimension = NULL, 
@@ -216,7 +216,7 @@ is.OrderBy <- function(x){
 #' @return DimensionOrderBy object
 #'
 #' @family DimensionOrderBy functions
-#' @export
+#' @noRd
 DimensionOrderBy <- function(dimensionName, 
                              orderType = c("ALPHANUMERIC",
                                            "CASE_INSENSITIVE_ALPHANUMERIC",

@@ -21,6 +21,8 @@ Use a model created by \link{ga_model_make}
 }
 \examples{
 
+# models that come with the package
+ga_model_example()
 \dontrun{
 
 # your own Google Analytics viewID

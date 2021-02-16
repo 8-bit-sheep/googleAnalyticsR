@@ -12,6 +12,8 @@
 #' @family GA modelling functions
 #' @examples 
 #' 
+#' # models that come with the package
+#' ga_model_example()
 #' \dontrun{
 #' 
 #' # your own Google Analytics viewID

@@ -31,41 +31,7 @@ google_analytics(
 google_analytics_4(...)
 }
 \arguments{
-\item{viewId}{viewId of data to get.}
-
-\item{date_range}{character or date vector of format \code{c(start, end)} or 
-for two date ranges: \code{c(start1,end1,start2,end2)}}
-
-\item{metrics}{Metric(s) to fetch as a character vector.  You do not need to 
-supply the \code{"ga:"} prefix.  See \link{meta} for a list of dimensons 
-and metrics the API supports. Also supports your own calculated metrics.}
-
-\item{dimensions}{Dimension(s) to fetch as a character vector. You do not need to 
-supply the \code{"ga:"} prefix. See \link{meta} for a list of dimensons 
-and metrics the API supports.}
-
-\item{dim_filters}{A \link{filter_clause_ga4} wrapping \link{dim_filter}}
-
-\item{met_filters}{A \link{filter_clause_ga4} wrapping \link{met_filter}}
-
-\item{filtersExpression}{A v3 API style simple filter string. Not used with other filters.}
-
-\item{order}{An \link{order_type} object}
-
-\item{segments}{List of segments as created by \link{segment_ga4}}
-
-\item{pivots}{Pivots of the data as created by \link{pivot_ga4}}
-
-\item{cohorts}{Cohorts created by \link{make_cohort_group}}
-
 \item{max}{Maximum number of rows to fetch. Defaults at 1000. Use -1 to fetch all results. Ignored when \code{anti_sample=TRUE}.}
-
-\item{samplingLevel}{Sample level}
-
-\item{metricFormat}{If supplying calculated metrics, specify the metric type}
-
-\item{histogramBuckets}{For numeric dimensions such as hour, a list of buckets of data.
-See details in \link{make_ga_4_req}}
 
 \item{anti_sample}{If TRUE will split up the call to avoid sampling.}
 
@@ -158,11 +124,5 @@ google_analytics(1234567, date_range = c("30daysAgo", "yesterday"), metrics = "s
 
 }
 
-}
-\seealso{
-Other GAv4 fetch functions: 
-\code{\link{fetch_google_analytics_4_slow}()},
-\code{\link{fetch_google_analytics_4}()},
-\code{\link{make_ga_4_req}()}
 }
 \concept{GAv4 fetch functions}
