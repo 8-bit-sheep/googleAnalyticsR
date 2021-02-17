@@ -131,10 +131,11 @@ ga_model_shiny_template()
 To use, supply a model and a template to the `ga_model_shiny()` function:
 
 ```r
-# creates a Shiny app from the "decomp_ga.gamr" model
+# A Shiny app using "decomp_ga.gamr" model with the "shinythemes" template
 ga_model_shiny(
   ga_model_example("decomp_ga.gamr"), 
-  auth_dropdown = "universal")
+  auth_dropdown = "universal",
+  template = ga_model_shiny_template("shinythemes"))
 ```
 
 If a `server.R` file is not supplied, then it will take the default `server.R` from `bootstrap` files.

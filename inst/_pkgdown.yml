@@ -137,13 +137,6 @@ reference:
       - multi_select
       - metricDimensionSelect
       - segmentBuilder
-  - title: "Advanced fetching options"
-    desc: >
-      Building your own Google Analytics API requests
-    contents:
-      - make_ga_4_req
-      - fetch_google_analytics_4
-      - fetch_google_analytics_4_slow
   - title: "Model functions"
     desc: >
       Functions to create and use models with your Google Analytics data
