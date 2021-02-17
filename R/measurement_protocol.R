@@ -39,13 +39,12 @@
 #' # your GA4 settings
 #' my_measurement_id <- "G-43MDXK6CLZ"
 #' a_client_id <- 1234567
-#' S
 #' 
 #' event <- ga_mp_event("an_event")
-#' ga_mp_send(event, 1234567, "G-43MDXK6CLZ", debug = TRUE)
+#' ga_mp_send(event, my_measurement_id, 1234567, debug = TRUE)
 #' 
 #' another <- ga_mp_event("another_event")
-#' ga_mp_send(list(event, another), 1234567, "G-43MDXK6CLZ", debug = TRUE)
+#' ga_mp_send(list(event, another), my_measurement_id, 1234567, debug = TRUE)
 #' 
 ga_mp_send <- function(events,
                        measurement_id,
