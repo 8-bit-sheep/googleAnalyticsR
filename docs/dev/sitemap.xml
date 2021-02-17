@@ -220,6 +220,15 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_write.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_mp_event.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_mp_event_item.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_mp_send.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_remarketing_build.html</loc>
   </url>
   <url>

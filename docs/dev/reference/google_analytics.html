@@ -317,8 +317,69 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>viewId</th>
+      <td><p>viewId of data to get.</p></td>
+    </tr>
+    <tr>
+      <th>date_range</th>
+      <td><p>character or date vector of format <code><a href='https://rdrr.io/r/base/c.html'>c(start, end)</a></code> or
+for two date ranges: <code><a href='https://rdrr.io/r/base/c.html'>c(start1,end1,start2,end2)</a></code></p></td>
+    </tr>
+    <tr>
+      <th>metrics</th>
+      <td><p>Metric(s) to fetch as a character vector.  You do not need to
+supply the <code>"ga:"</code> prefix.  See <a href='meta.html'>meta</a> for a list of dimensons
+and metrics the API supports. Also supports your own calculated metrics.</p></td>
+    </tr>
+    <tr>
+      <th>dimensions</th>
+      <td><p>Dimension(s) to fetch as a character vector. You do not need to
+supply the <code>"ga:"</code> prefix. See <a href='meta.html'>meta</a> for a list of dimensons
+and metrics the API supports.</p></td>
+    </tr>
+    <tr>
+      <th>dim_filters</th>
+      <td><p>A <a href='filter_clause_ga4.html'>filter_clause_ga4</a> wrapping <a href='dim_filter.html'>dim_filter</a></p></td>
+    </tr>
+    <tr>
+      <th>met_filters</th>
+      <td><p>A <a href='filter_clause_ga4.html'>filter_clause_ga4</a> wrapping <a href='met_filter.html'>met_filter</a></p></td>
+    </tr>
+    <tr>
+      <th>filtersExpression</th>
+      <td><p>A v3 API style simple filter string. Not used with other filters.</p></td>
+    </tr>
+    <tr>
+      <th>order</th>
+      <td><p>An <a href='order_type.html'>order_type</a> object</p></td>
+    </tr>
+    <tr>
+      <th>segments</th>
+      <td><p>List of segments as created by <a href='segment_ga4.html'>segment_ga4</a></p></td>
+    </tr>
+    <tr>
+      <th>pivots</th>
+      <td><p>Pivots of the data as created by <a href='pivot_ga4.html'>pivot_ga4</a></p></td>
+    </tr>
+    <tr>
+      <th>cohorts</th>
+      <td><p>Cohorts created by <a href='make_cohort_group.html'>make_cohort_group</a></p></td>
+    </tr>
+    <tr>
       <th>max</th>
       <td><p>Maximum number of rows to fetch. Defaults at 1000. Use -1 to fetch all results. Ignored when <code>anti_sample=TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>samplingLevel</th>
+      <td><p>Sample level</p></td>
+    </tr>
+    <tr>
+      <th>metricFormat</th>
+      <td><p>If supplying calculated metrics, specify the metric type</p></td>
+    </tr>
+    <tr>
+      <th>histogramBuckets</th>
+      <td><p>For numeric dimensions such as hour, a list of buckets of data.</p></td>
     </tr>
     <tr>
       <th>anti_sample</th>
@@ -385,6 +446,45 @@ making the same request as one this session will read from memory and not
 make an API call. You can also set the cache to disk via
 the <a href='ga_cache_call.html'>ga_cache_call</a> function.  This can be useful
 when running RMarkdown reports using data.</p>
+    <h2 class="hasAnchor" id="metrics"><a class="anchor" href="#metrics"></a>Metrics</h2>
+
+    
+
+<p>Metrics support calculated metrics like ga:users / ga:sessions if you supply
+them in a named vector.</p>
+<p>You must supply the correct 'ga:' prefix unlike normal metrics</p>
+<p>You can mix calculated and normal metrics like so:</p>
+<p><code>customMetric &lt;- c(sessionPerVisitor = "ga:sessions / ga:visitors", "bounceRate", "entrances")</code></p>
+<p>You can also optionally supply a <code>metricFormat</code> parameter that must be
+the same length as the metrics.  <code>metricFormat</code> can be:
+<code>METRIC_TYPE_UNSPECIFIED, INTEGER, FLOAT, CURRENCY, PERCENT, TIME</code></p>
+<p>All metrics are currently parsed to as.numeric when in R.</p>
+    <h2 class="hasAnchor" id="dimensions"><a class="anchor" href="#dimensions"></a>Dimensions</h2>
+
+    
+
+
+<p>Supply a character vector of dimensions, with or without <code>ga:</code> prefix.</p>
+<p>Optionally for numeric dimension types such as
+<code>ga:hour, ga:browserVersion, ga:sessionsToTransaction</code>, etc. supply
+histogram buckets suitable for histogram plots.</p>
+<p>If non-empty, we place dimension values into buckets after string to int64.
+Dimension values that are not the string representation of an integral value
+will be converted to zero. The bucket values have to be in increasing order.
+Each bucket is closed on the lower end, and open on the upper end.
+The "first" bucket includes all values less than the first boundary,
+the "last" bucket includes all values up to infinity.
+Dimension values that fall in a bucket get transformed to a new dimension
+value. For example, if one gives a list of "0, 1, 3, 4, 7", then we
+return the following buckets: -</p><ul>
+<li><p>bucket #1: values &lt; 0, dimension value "&lt;0"</p></li>
+<li><p>bucket #2: values in [0,1), dimension value "0"</p></li>
+<li><p>bucket #3: values in [1,3), dimension value "1-2"</p></li>
+<li><p>bucket #4: values in [3,4), dimension value "3"</p></li>
+<li><p>bucket #5: values in [4,7), dimension value "4-6"</p></li>
+<li><p>bucket #6: values &gt;= 7, dimension value "7+"</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>

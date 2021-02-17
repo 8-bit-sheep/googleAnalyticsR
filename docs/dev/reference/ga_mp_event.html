@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract metric aggregations from a ga_data result — ga_data_aggregations • googleAnalyticsR</title>
+<title>Create a Measurement Protocol Event — ga_mp_event • googleAnalyticsR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,9 +46,9 @@
 
 
 
-<meta property="og:title" content="Extract metric aggregations from a ga_data result — ga_data_aggregations" />
+<meta property="og:title" content="Create a Measurement Protocol Event — ga_mp_event" />
 <meta property="og:description" content="
-Metric aggregations are available in all requests.  This function lets you easily access the data.frames" />
+This creates an event to send via ga_mp_send" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
 
@@ -280,56 +280,57 @@ Metric aggregations are available in all requests.  This function lets you easil
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract metric aggregations from a <a href='ga_data.html'>ga_data</a> result</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/ga_data.R'><code>R/ga_data.R</code></a></small>
-    <div class="hidden name"><code>ga_data_aggregations.Rd</code></div>
+    <h1>Create a Measurement Protocol Event</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/measurement_protocol.R'><code>R/measurement_protocol.R</code></a></small>
+    <div class="hidden name"><code>ga_mp_event.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p>
-<p>Metric aggregations are available in all requests.  This function lets you easily access the data.frames</p>
+    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a>
+This creates an event to send via <a href='ga_mp_send.html'>ga_mp_send</a></p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_data_aggregations</span><span class='op'>(</span>
-  <span class='va'>df</span>,
-  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"totals"</span>, <span class='st'>"maximums"</span>, <span class='st'>"minimums"</span>, <span class='st'>"count"</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ga_mp_event</span><span class='op'>(</span><span class='va'>name</span>, params <span class='op'>=</span> <span class='cn'>NULL</span>, items <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>df</th>
-      <td><p>A data.frame result from <a href='ga_data.html'>ga_data</a></p></td>
+      <th>name</th>
+      <td><p>The event name to send in</p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>totals, maximums, minimums, counts (if available) or all</p></td>
+      <th>items</th>
+      <td><p>Optional items created via <a href='ga_mp_event_item.html'>ga_mp_event_item</a></p></td>
+    </tr>
+    <tr>
+      <th>param</th>
+      <td><p>Optional event parameters sent in as a named list</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Measurement Protocol functions: 
+<code><a href='ga_mp_event_item.html'>ga_mp_event_item</a>()</code>,
+<code><a href='ga_mp_send.html'>ga_mp_send</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'>#' # send up to 4 date ranges</span>
-<span class='va'>multi_date</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_data.html'>ga_data</a></span><span class='op'>(</span>
-  <span class='fl'>206670707</span>,
-  metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"activeUsers"</span>,<span class='st'>"sessions"</span><span class='op'>)</span>,
-  dimensions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"date"</span>,<span class='st'>"city"</span>,<span class='st'>"dayOfWeek"</span><span class='op'>)</span>,
-  date_range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2020-03-31"</span>, <span class='st'>"2020-04-27"</span>, <span class='st'>"2020-04-30"</span>, <span class='st'>"2020-05-27"</span><span class='op'>)</span>,
-  dimensionFilter <span class='op'>=</span> <span class='fu'><a href='ga_data_filter.html'>ga_data_filter</a></span><span class='op'>(</span><span class='st'>"city"</span><span class='op'>==</span><span class='st'>"Copenhagen"</span><span class='op'>)</span>,
-  limit <span class='op'>=</span> <span class='fl'>100</span>
-  <span class='op'>)</span>
-
-<span class='co'># metric aggregations for each date range</span>
-<span class='fu'>ga_data_aggregations</span><span class='op'>(</span><span class='va'>multi_date</span>, type <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
-
-<span class='co'># specify type</span>
-<span class='fu'>ga_data_aggregations</span><span class='op'>(</span><span class='va'>multi_date</span>, type <span class='op'>=</span> <span class='st'>"maximums"</span><span class='op'>)</span>
-
-<span class='op'>}</span>
-</div></pre>
+<span class='fu'>ga_mp_event</span><span class='op'>(</span><span class='st'>"custom_event"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; ==GA4 MP Event
+#&gt; {
+#&gt;   "name": "custom_event"
+#&gt; } </div><div class='input'><span class='fu'>ga_mp_event</span><span class='op'>(</span><span class='st'>"custom_event"</span>, params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>my_param <span class='op'>=</span> <span class='st'>"SUPER"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; ==GA4 MP Event
+#&gt; {
+#&gt;   "name": "custom_event",
+#&gt;   "params": {
+#&gt;     "my_param": "SUPER"
+#&gt;   }
+#&gt; } </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
