@@ -102,6 +102,11 @@ reference:
       - ga_data_filter
       - ga_data_aggregations
       - ga_data_order
+  - title: "Measurement Protocol v2"
+    desc: > 
+      Send data into GA4 with the Measurement Protocol
+    contents:
+      - matches("ga_mp")
   - title: "Reporting API v4 objects"
     desc: >
       Creating objects for more advanced v4 Reporting API fetches

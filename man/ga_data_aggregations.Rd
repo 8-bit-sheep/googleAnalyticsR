@@ -15,6 +15,8 @@ ga_data_aggregations(
 \item{type}{totals, maximums, minimums, counts (if available) or all}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
 Metric aggregations are available in all requests.  This function lets you easily access the data.frames
 }
 \examples{

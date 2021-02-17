@@ -245,7 +245,69 @@ make_ga_4_req <- function(viewId,
 #'   the [ga_cache_call] function.  This can be useful
 #'   when running RMarkdown reports using data.
 #' 
-#' @inheritParams make_ga_4_req
+#' @section Metrics:
+#'   Metrics support calculated metrics like ga:users / ga:sessions if you supply
+#'   them in a named vector.
+#'
+#'   You must supply the correct 'ga:' prefix unlike normal metrics
+#'
+#'   You can mix calculated and normal metrics like so:
+#'
+#'   `customMetric <- c(sessionPerVisitor = "ga:sessions / ga:visitors",
+#'                           "bounceRate",
+#'                           "entrances")`
+#'
+#'    You can also optionally supply a `metricFormat` parameter that must be
+#'    the same length as the metrics.  `metricFormat` can be:
+#'    `METRIC_TYPE_UNSPECIFIED, INTEGER, FLOAT, CURRENCY, PERCENT, TIME`
+#'
+#'    All metrics are currently parsed to as.numeric when in R.
+#'
+#' @section Dimensions:
+#'
+#'   Supply a character vector of dimensions, with or without `ga:` prefix.
+#'
+#'   Optionally for numeric dimension types such as
+#'   `ga:hour, ga:browserVersion, ga:sessionsToTransaction`, etc. supply
+#'   histogram buckets suitable for histogram plots.
+#'
+#'   If non-empty, we place dimension values into buckets after string to int64.
+#'   Dimension values that are not the string representation of an integral value
+#'   will be converted to zero. The bucket values have to be in increasing order.
+#'   Each bucket is closed on the lower end, and open on the upper end.
+#'   The "first" bucket includes all values less than the first boundary,
+#'   the "last" bucket includes all values up to infinity.
+#'   Dimension values that fall in a bucket get transformed to a new dimension
+#'   value. For example, if one gives a list of "0, 1, 3, 4, 7", then we
+#'   return the following buckets: -
+#' \itemize{
+#'   \item bucket #1: values < 0, dimension value "<0"
+#'   \item bucket #2: values in [0,1), dimension value "0"
+#'   \item bucket #3: values in [1,3), dimension value "1-2"
+#'   \item bucket #4: values in [3,4), dimension value "3"
+#'   \item bucket #5: values in [4,7), dimension value "4-6"
+#'   \item bucket #6: values >= 7, dimension value "7+"
+#'  }
+#' 
+#' @param viewId viewId of data to get.
+#' @param date_range character or date vector of format `c(start, end)` or 
+#'   for two date ranges: `c(start1,end1,start2,end2)`
+#' @param metrics Metric(s) to fetch as a character vector.  You do not need to 
+#'   supply the `"ga:"` prefix.  See [meta] for a list of dimensons 
+#'   and metrics the API supports. Also supports your own calculated metrics.
+#' @param dimensions Dimension(s) to fetch as a character vector. You do not need to 
+#'   supply the `"ga:"` prefix. See [meta] for a list of dimensons 
+#'   and metrics the API supports.
+#' @param dim_filters A [filter_clause_ga4] wrapping [dim_filter]
+#' @param met_filters A [filter_clause_ga4] wrapping [met_filter]
+#' @param filtersExpression A v3 API style simple filter string. Not used with other filters. 
+#' @param order An [order_type] object
+#' @param segments List of segments as created by [segment_ga4]
+#' @param pivots Pivots of the data as created by [pivot_ga4]
+#' @param cohorts Cohorts created by [make_cohort_group]
+#' @param samplingLevel Sample level
+#' @param metricFormat If supplying calculated metrics, specify the metric type
+#' @param histogramBuckets For numeric dimensions such as hour, a list of buckets of data.
 #' @param max Maximum number of rows to fetch. Defaults at 1000. Use -1 to fetch all results. Ignored when `anti_sample=TRUE`.
 #' @param anti_sample If TRUE will split up the call to avoid sampling.
 #' @param anti_sample_batches "auto" default, or set to number of days per batch. 1 = daily.

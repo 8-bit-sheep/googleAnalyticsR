@@ -31,7 +31,40 @@ google_analytics(
 google_analytics_4(...)
 }
 \arguments{
+\item{viewId}{viewId of data to get.}
+
+\item{date_range}{character or date vector of format \code{c(start, end)} or
+for two date ranges: \code{c(start1,end1,start2,end2)}}
+
+\item{metrics}{Metric(s) to fetch as a character vector.  You do not need to
+supply the \code{"ga:"} prefix.  See \link{meta} for a list of dimensons
+and metrics the API supports. Also supports your own calculated metrics.}
+
+\item{dimensions}{Dimension(s) to fetch as a character vector. You do not need to
+supply the \code{"ga:"} prefix. See \link{meta} for a list of dimensons
+and metrics the API supports.}
+
+\item{dim_filters}{A \link{filter_clause_ga4} wrapping \link{dim_filter}}
+
+\item{met_filters}{A \link{filter_clause_ga4} wrapping \link{met_filter}}
+
+\item{filtersExpression}{A v3 API style simple filter string. Not used with other filters.}
+
+\item{order}{An \link{order_type} object}
+
+\item{segments}{List of segments as created by \link{segment_ga4}}
+
+\item{pivots}{Pivots of the data as created by \link{pivot_ga4}}
+
+\item{cohorts}{Cohorts created by \link{make_cohort_group}}
+
 \item{max}{Maximum number of rows to fetch. Defaults at 1000. Use -1 to fetch all results. Ignored when \code{anti_sample=TRUE}.}
+
+\item{samplingLevel}{Sample level}
+
+\item{metricFormat}{If supplying calculated metrics, specify the metric type}
+
+\item{histogramBuckets}{For numeric dimensions such as hour, a list of buckets of data.}
 
 \item{anti_sample}{If TRUE will split up the call to avoid sampling.}
 
@@ -86,6 +119,52 @@ making the same request as one this session will read from memory and not
 make an API call. You can also set the cache to disk via
 the \link{ga_cache_call} function.  This can be useful
 when running RMarkdown reports using data.
+}
+
+\section{Metrics}{
+
+Metrics support calculated metrics like ga:users / ga:sessions if you supply
+them in a named vector.
+
+You must supply the correct 'ga:' prefix unlike normal metrics
+
+You can mix calculated and normal metrics like so:
+
+\code{customMetric <- c(sessionPerVisitor = "ga:sessions / ga:visitors", "bounceRate", "entrances")}
+
+You can also optionally supply a \code{metricFormat} parameter that must be
+the same length as the metrics.  \code{metricFormat} can be:
+\verb{METRIC_TYPE_UNSPECIFIED, INTEGER, FLOAT, CURRENCY, PERCENT, TIME}
+
+All metrics are currently parsed to as.numeric when in R.
+}
+
+\section{Dimensions}{
+
+
+Supply a character vector of dimensions, with or without \verb{ga:} prefix.
+
+Optionally for numeric dimension types such as
+\verb{ga:hour, ga:browserVersion, ga:sessionsToTransaction}, etc. supply
+histogram buckets suitable for histogram plots.
+
+If non-empty, we place dimension values into buckets after string to int64.
+Dimension values that are not the string representation of an integral value
+will be converted to zero. The bucket values have to be in increasing order.
+Each bucket is closed on the lower end, and open on the upper end.
+The "first" bucket includes all values less than the first boundary,
+the "last" bucket includes all values up to infinity.
+Dimension values that fall in a bucket get transformed to a new dimension
+value. For example, if one gives a list of "0, 1, 3, 4, 7", then we
+return the following buckets: -
+\itemize{
+\item bucket #1: values < 0, dimension value "<0"
+\item bucket #2: values in [0,1), dimension value "0"
+\item bucket #3: values in [1,3), dimension value "1-2"
+\item bucket #4: values in [3,4), dimension value "3"
+\item bucket #5: values in [4,7), dimension value "4-6"
+\item bucket #6: values >= 7, dimension value "7+"
+}
 }
 
 \examples{

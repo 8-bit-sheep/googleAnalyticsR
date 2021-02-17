@@ -2,8 +2,6 @@
 #' 
 #' Calculates multiple API calls to avoid sampling
 #' 
-#' @inheritParams make_ga_4_req
-#' @inheritParams google_analytics
 #' @keywords internal
 #' @noRd
 anti_sample <- function(anti_sample_batches,
