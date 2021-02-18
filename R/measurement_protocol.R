@@ -11,7 +11,7 @@
 #' @param debug Send hits to the debug endpoint to validate hits
 #' @param user_id Optional. Unique id for the user
 #' @param timestamp_micros Optional. A Unix timestamp (in microseconds) for the time to associate with the event. 
-#' @param user_properties Optional. The user properties for the measurement.
+#' @param user_properties Optional. The user properties for the measurement sent in as a named list.
 #' @param non_personalized_ads Optional. Set to true to indicate these events should not be used for personalized ads. 
 #' 
 #' @details 
@@ -25,6 +25,8 @@
 #' `user_properties` - describe segments of your user base, such as language preference or geographic location.  See [User properties](https://developers.google.com/analytics/devguides/collection/protocol/ga4/user-properties?client_type=gtag) 
 #' 
 #' Ensure you also have user permission as specified in the [feature policy](https://developers.google.com/analytics/devguides/collection/protocol/ga4/policy)
+#' 
+#' Invalid events are silently rejected with a 204 response, so use `debug=TRUE` to validate your events first.
 #' 
 #' @seealso [Measurement Protocol (Google Analytics 4)](https://developers.google.com/analytics/devguides/collection/protocol/ga4)
 #'   
