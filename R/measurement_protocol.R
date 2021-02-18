@@ -24,14 +24,13 @@
 #' 
 #' `user_properties` - describe segments of your user base, such as language preference or geographic location.  See [User properties](https://developers.google.com/analytics/devguides/collection/protocol/ga4/user-properties?client_type=gtag) 
 #' 
-#' @section ClientID:
-#' 
-#' In order for an event to be valid, it must have a client_id that has already been used to send an event from gtag.js. You will need to capture this ID client-side and include it in your call to the measurement protocol.  Ensure you also have user permission as specified in the [feature policy](https://developers.google.com/analytics/devguides/collection/protocol/ga4/policy)
+#' Ensure you also have user permission as specified in the [feature policy](https://developers.google.com/analytics/devguides/collection/protocol/ga4/policy)
 #' 
 #' @seealso [Measurement Protocol (Google Analytics 4)](https://developers.google.com/analytics/devguides/collection/protocol/ga4)
 #'   
 #' @export
 #' @family Measurement Protocol functions
+#' @return `TRUE` if successful, if `debug=TRUE` then validation messages if not a valid hit.
 #' @examples 
 #' # preferably set this in .Renviron
 #' Sys.setenv(GA_MP_SECRET="MY_SECRET")
@@ -41,14 +40,28 @@
 #' a_client_id <- 1234567
 #' 
 #' event <- ga_mp_event("an_event")
-#' ga_mp_send(event, my_measurement_id, 1234567, debug = TRUE)
+#' ga_mp_send(event, a_client_id, my_measurement_id, debug = TRUE)
 #' 
 #' another <- ga_mp_event("another_event")
-#' ga_mp_send(list(event, another), my_measurement_id, 1234567, debug = TRUE)
+#' ga_mp_send(list(event, another), 
+#'            a_client_id, my_measurement_id, 
+#'            debug = TRUE)
+#' \dontrun{
+#' # you can see sent events in the real-time reports
+#' my_property_id <- 206670707
+#' ga_data(my_property_id, 
+#'         dimensions = "eventName", 
+#'         metrics = "eventCount", 
+#'         dimensionFilter = ga_data_filter(
+#'            eventName == c("an_event","another_event")),
+#'         realtime = TRUE)
 #' 
+#' }
+#' @importFrom jsonlite toJSON fromJSON
+#' @importFrom httr content POST
 ga_mp_send <- function(events,
-                       measurement_id,
                        client_id,
+                       measurement_id,
                        user_id = NULL,
                        api_secret = Sys.getenv("GA_MP_SECRET"),
                        debug = FALSE,
@@ -89,27 +102,27 @@ ga_mp_send <- function(events,
   
   if(debug || getOption("googleAuthR.verbose") < 3){
     myMessage("MP Request:", the_url,"\n", 
-              jsonlite::toJSON(the_body, auto_unbox = TRUE), 
+              toJSON(the_body, auto_unbox = TRUE), 
               level = 3)
   }
   
-  res <- httr::POST(
+  res <- POST(
     the_url,
     body = the_body,
     encode = "json"
   )
   
   myMessage("Response: ", res$status, level = 3)
+
+  parsed <- content(res, as = "text", encoding = "UTF-8")
   
-  o <- jsonlite::fromJSON(httr::content(res, as = "text"))
-  
-  if(debug){
+  if(nzchar(parsed) && debug){
+    o <- fromJSON(parsed)
     if(length(o$validationMessages) > 0) return(o$validationMessages)
     myMessage("No validation messages found", level = 3)
-    return(invisible(NULL))
   }
   
-  o
+  TRUE
 }
 
 #' Create a Measurement Protocol Event

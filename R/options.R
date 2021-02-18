@@ -5,11 +5,12 @@
     ## default Google project
     googleAuthR.client_id = "289759286325-i5kd45j7qnoc1t8h86611b38icnfk38d.apps.googleusercontent.com",
     googleAuthR.client_secret = "RnKpRn0ZOrKbwwSPeX4Giujf",
-    googleAuthR.scopes.selected = c("https://www.googleapis.com/auth/analytics",
-                                    "https://www.googleapis.com/auth/analytics.readonly",
-                                    "https://www.googleapis.com/auth/analytics.edit",
-                                    "https://www.googleapis.com/auth/analytics.manage.users",
-                                    "https://www.googleapis.com/auth/analytics.user.deletion"),
+    googleAuthR.scopes.selected = 
+      c("https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.readonly",
+        "https://www.googleapis.com/auth/analytics.edit",
+        "https://www.googleapis.com/auth/analytics.manage.users",
+        "https://www.googleapis.com/auth/analytics.user.deletion"),
     googleAuthR.quotaUser = Sys.info()[["user"]]
   )
   
@@ -19,12 +20,13 @@
   
   ## override existing options
   options(
-    googleAuthR.batch_endpoint = "https://www.googleapis.com/batch/analytics/v3",
+    googleAuthR.batch_endpoint = 
+      "https://www.googleapis.com/batch/analytics/v3",
     googleAuthR.tryAttempts = 1)
   
   f <- function(req){
-    
-    ga4 <- tryCatch(req$content$reports, error = function(x) NULL)
+
+    ga4  <- tryCatch(req$content$reports, error = function(x) NULL)
     data <- tryCatch(req$content$rows, error = function(x) NULL)
     
     # v4 data is not golden

@@ -16,7 +16,7 @@ version_aw <- function(){
 #' This is the main function to call the Google Analytics 4 Data API.  
 #'
 #' @param propertyId A GA4 property Id
-#' @param metrics The metrics to request - see [ga_meta]
+#' @param metrics The metrics to request - see [ga_meta] - set to NULL to only see dimensions
 #' @param dimensions The dimensions to request - see [ga_meta]
 #' @param dimensionFilter Filter on the dimensions of the request - a filter object created by [ga_data_filter]
 #' @param metricFilter Filter on the metrics of the request - a filter object created by [ga_data_filter]
@@ -170,6 +170,9 @@ ga_data <- function(
 #' Realtime API
 #' @noRd
 ga_aw_realtime <- function(property, requestObj){
+  
+  # we have to delete all the cache
+  suppressMessages(googleAuthR::gar_cache_empty())
   
   url <- 
     sprintf("https://analyticsdata.googleapis.com/%s/properties/%s:runRealtimeReport",

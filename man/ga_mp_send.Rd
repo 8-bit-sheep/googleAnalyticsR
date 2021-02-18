@@ -6,8 +6,8 @@
 \usage{
 ga_mp_send(
   events,
-  measurement_id,
   client_id,
+  measurement_id,
   user_id = NULL,
   api_secret = Sys.getenv("GA_MP_SECRET"),
   debug = FALSE,
@@ -19,9 +19,9 @@ ga_mp_send(
 \arguments{
 \item{events}{The events to send}
 
-\item{measurement_id}{The measurement ID associated with a stream}
-
 \item{client_id}{The client_id to associate with the event}
+
+\item{measurement_id}{The measurement ID associated with a stream}
 
 \item{user_id}{Optional. Unique id for the user}
 
@@ -35,6 +35,9 @@ ga_mp_send(
 
 \item{non_personalized_ads}{Optional. Set to true to indicate these events should not be used for personalized ads.}
 }
+\value{
+\code{TRUE} if successful, if \code{debug=TRUE} then validation messages if not a valid hit.
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Create a server side call to Google Analytics 4 via its Measurement Protocol
@@ -47,13 +50,9 @@ Create an API secret via \verb{Admin > Data Streams > choose your stream > Measu
 \code{timestamp_micros} should only be set to record events that happened in the past. This value can be overridden via user_property or event timestamps. Events can be backdated up to 48 hours. Note microseconds, not milliseconds.
 
 \code{user_properties} - describe segments of your user base, such as language preference or geographic location.  See \href{https://developers.google.com/analytics/devguides/collection/protocol/ga4/user-properties?client_type=gtag}{User properties}
+
+Ensure you also have user permission as specified in the \href{https://developers.google.com/analytics/devguides/collection/protocol/ga4/policy}{feature policy}
 }
-\section{ClientID}{
-
-
-In order for an event to be valid, it must have a client_id that has already been used to send an event from gtag.js. You will need to capture this ID client-side and include it in your call to the measurement protocol.  Ensure you also have user permission as specified in the \href{https://developers.google.com/analytics/devguides/collection/protocol/ga4/policy}{feature policy}
-}
-
 \examples{
 # preferably set this in .Renviron
 Sys.setenv(GA_MP_SECRET="MY_SECRET")
@@ -63,11 +62,23 @@ my_measurement_id <- "G-43MDXK6CLZ"
 a_client_id <- 1234567
 
 event <- ga_mp_event("an_event")
-ga_mp_send(event, my_measurement_id, 1234567, debug = TRUE)
+ga_mp_send(event, a_client_id, my_measurement_id, debug = TRUE)
 
 another <- ga_mp_event("another_event")
-ga_mp_send(list(event, another), my_measurement_id, 1234567, debug = TRUE)
+ga_mp_send(list(event, another), 
+           a_client_id, my_measurement_id, 
+           debug = TRUE)
+\dontrun{
+# you can see sent events in the real-time reports
+my_property_id <- 206670707
+ga_data(my_property_id, 
+        dimensions = "eventName", 
+        metrics = "eventCount", 
+        dimensionFilter = ga_data_filter(
+           eventName == c("an_event","another_event")),
+        realtime = TRUE)
 
+}
 }
 \seealso{
 \href{https://developers.google.com/analytics/devguides/collection/protocol/ga4}{Measurement Protocol (Google Analytics 4)}

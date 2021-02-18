@@ -21,7 +21,7 @@ ga_data(
 \arguments{
 \item{propertyId}{A GA4 property Id}
 
-\item{metrics}{The metrics to request - see \link{ga_meta}}
+\item{metrics}{The metrics to request - see \link{ga_meta} - set to NULL to only see dimensions}
 
 \item{date_range}{A vector of length two with start and end dates in YYYY-MM-DD format}
 
