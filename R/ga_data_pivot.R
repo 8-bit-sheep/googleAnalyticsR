@@ -23,6 +23,7 @@
 #' @return PivotOrderBy object
 #'
 #' @family PivotOrderBy functions
+#' @noRd
 PivotOrderBy <- function(pivotSelections = NULL, metricName = NULL) {
   structure(
     list(pivotSelections = pivotSelections, 

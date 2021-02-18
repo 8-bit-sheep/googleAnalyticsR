@@ -128,7 +128,6 @@ ga_data_filter <- function(x){
 #'   \item{character vector: in list filter}
 #'   \item{numeric: Numeric filter}
 #'   \item{numeric 2-length vector: between filter}
-#'   \item{NULL: Will filter for NULLs}
 #'  }
 #' 
 #' For numerics also make sure to specify integer or float for metrics e.g.
@@ -196,8 +195,6 @@ ga_aw_filter <- function(field,
                      fromValue = value[[1]],
                      toValue = value[[2]]
                    ))
-  } else if(is.null(value)){
-    o <- Filter_aw(field, nullFilter = TRUE)
   } else {
     stop("Filter didn't know what to do with value of type: ", class(value), 
          call. = FALSE)
