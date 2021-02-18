@@ -10,7 +10,7 @@ ga_data_filter(x)
 \item{x}{Filter DSL enabled syntax or the output of a previous call to this function - see examples}
 }
 \value{
-A \link{FilterExpression} object suitable for use in \link{ga_data}
+A \code{FilterExpression} object suitable for use in \link{ga_data}
 }
 \description{
 Use with \link{ga_data} to create filters

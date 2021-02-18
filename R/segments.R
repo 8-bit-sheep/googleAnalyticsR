@@ -276,6 +276,7 @@ segment_vector_simple <- function(segment_elements){
 
 #' Make orFiltersForSegment
 #' @keywords internal
+#' @noRd
 makeOrFilters <- function(segment_element_list){
   
   lapply(segment_element_list, function(sfc){
@@ -334,15 +335,15 @@ segment_vector_sequence <- function(segment_elements,
 #' @param operator How name shall operate on expression or comparisonValue
 #' @param type A metric or dimension based segment element
 #' @param not Should the element be the negation of what is defined
-#' @param expressions [dim] What the name shall compare to
-#' @param caseSensitive [dim] Whether to be case sensitive
-#' @param minComparisonValue [dim] Minimum comparison values for BETWEEN
+#' @param expressions `dim` What the name shall compare to
+#' @param caseSensitive `dim` Whether to be case sensitive
+#' @param minComparisonValue `dim` Minimum comparison values for BETWEEN
 #' @param maxComparisonValue Max comparison value for BETWEEN operator
-#' @param scope [met] Scope of the metric value
-#' @param comparisonValue [met] What the name shall compare to
+#' @param scope `met` Scope of the metric value
+#' @param comparisonValue `met` What the name shall compare to
 #' @param matchType If used in sequence segment, what behaviour
 #'
-#' @return An SegmentFilterClause object
+#' @return A SegmentFilterClause object
 #' 
 #' @family v4 segment functions
 #' @export
@@ -457,6 +458,7 @@ segment_element <- function(name,
 #' @return a list of class `segment_ga4`
 #'
 #' @keywords internal
+#' @noRd
 segmentObj_ga4 <- function(dynamicSegment=NULL, segmentId=NULL){
   
   if(!is.null(dynamicSegment) && !is.null(segmentId))
@@ -481,6 +483,7 @@ segmentObj_ga4 <- function(dynamicSegment=NULL, segmentId=NULL){
 #' @param sessionSegment sessionSegment to include in the segment
 #'
 #' @keywords internal
+#' @noRd
 dynamicSegment <- function(name, userSegment, sessionSegment){
 
   assertthat::assert_that(is.character(name))
@@ -504,6 +507,7 @@ dynamicSegment <- function(name, userSegment, sessionSegment){
 #'   SegmentFilters which are combined together with a logical AND operation.
 #' 
 #' @keywords internal
+#' @noRd
 segmentDefinition <- function(segmentFilterList){
   
   structure(
@@ -526,6 +530,7 @@ segmentDefinition <- function(segmentFilterList){
 #' For example, to match all visits not from "New York", set to TRUE.
 #'
 #' @keywords internal
+#' @noRd
 segmentFilter <- function(not=FALSE, simpleSegment=NULL, sequenceSegment=NULL){
   
   assertthat::assert_that(is.logical(not))
@@ -552,6 +557,7 @@ segmentFilter <- function(not=FALSE, simpleSegment=NULL, sequenceSegment=NULL){
 #' Simple Segment
 #'
 #' @keywords internal
+#' @noRd
 simpleSegment <- function(orFiltersForSegmentList){
   
   structure(
@@ -566,6 +572,7 @@ simpleSegment <- function(orFiltersForSegmentList){
 #' orFiltersForSegment
 #'
 #' @keywords internal
+#' @noRd
 orFiltersForSegment <- function(segmentFilterClauseList){
   
   structure(
@@ -582,6 +589,7 @@ orFiltersForSegment <- function(segmentFilterClauseList){
 #' Make this internal
 #'
 #' @keywords internal
+#' @noRd
 segmentFilterClause <- function(not=FALSE,
                                 dimensionFilter=NULL,
                                 metricFilter=NULL){
@@ -602,6 +610,7 @@ segmentFilterClause <- function(not=FALSE,
 #' segmentDimensionFilter
 #'
 #' @keywords internal
+#' @noRd
 segmentDimensionFilter <- function(name,
                                    expressions,
                                    operator = c(
@@ -639,6 +648,7 @@ segmentDimensionFilter <- function(name,
 #' segmentMetricFilter
 #'
 #' @keywords internal
+#' @noRd
 segmentMetricFilter <- function(name,
                                 scope = c("PRODUCT", "HIT","SESSION","USER"),
                                 operator = c("LESS_THAN","GREATER_THAN","EQUAL","BETWEEN"),
@@ -670,6 +680,7 @@ segmentMetricFilter <- function(name,
 #' @return A sequenceSegment object
 #'
 #' @keywords internal
+#' @noRd
 sequenceSegment <- function(segmentSequenceStepList, firstStepMatch=FALSE){
   
   assertthat::assert_that(is.logical(firstStepMatch))
@@ -691,6 +702,7 @@ sequenceSegment <- function(segmentSequenceStepList, firstStepMatch=FALSE){
 #' @return segmentSequenceStep object
 #' 
 #' @keywords internal
+#' @noRd
 segmentSequenceStep <- function(orFiltersForSegmentList,
                                 matchType = c("PRECEDES", "IMMEDIATELY_PRECEDES")){
 

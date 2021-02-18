@@ -87,9 +87,10 @@ google_analytics_4_parse_batch <- function(response_list){
 
 #' ga v4 data parsing
 #'
-#' x is response_list$reports[[1]] from google_analytics_4_parse_batch
+#' x is `response_list$reports[[1]]` from google_analytics_4_parse_batch
 #' @importFrom stats setNames
 #' @keywords internal
+#' @noRd
 google_analytics_4_parse <- function(x){
   
   myMessage("Parsing GA API v4", level = 1)

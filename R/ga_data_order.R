@@ -26,7 +26,7 @@
 #' }
 #' 
 #' 
-#' @return A list of [OrderBy] objects suitable for use in [ga_data]
+#' @return A list of `OrderBy` objects suitable for use in [ga_data]
 #' @export
 #' @seealso <https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1alpha/OrderBy>
 #' @importFrom rlang enquo eval_tidy

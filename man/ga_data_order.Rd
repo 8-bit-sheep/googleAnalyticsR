@@ -15,7 +15,7 @@ ga_data_order(
 \item{type}{Order Type}
 }
 \value{
-A list of \link{OrderBy} objects suitable for use in \link{ga_data}
+A list of \code{OrderBy} objects suitable for use in \link{ga_data}
 }
 \description{
 Use with \link{ga_data} to create orderBys

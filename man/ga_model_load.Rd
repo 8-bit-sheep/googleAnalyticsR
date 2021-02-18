@@ -25,6 +25,7 @@ Other GA modelling functions:
 \code{\link{ga_model_edit}()},
 \code{\link{ga_model_example}()},
 \code{\link{ga_model_make}()},
+\code{\link{ga_model_save}()},
 \code{\link{ga_model_shiny_load}()},
 \code{\link{ga_model_shiny_template}()},
 \code{\link{ga_model_shiny}()},

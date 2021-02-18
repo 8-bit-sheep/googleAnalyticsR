@@ -9,9 +9,9 @@ ga_mp_event(name, params = NULL, items = NULL)
 \arguments{
 \item{name}{The event name to send in}
 
-\item{items}{Optional items created via \link{ga_mp_event_item}}
+\item{params}{Optional event parameters sent in as a named list}
 
-\item{param}{Optional event parameters sent in as a named list}
+\item{items}{Optional items created via \link{ga_mp_event_item}}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}

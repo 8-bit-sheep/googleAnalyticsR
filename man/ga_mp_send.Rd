@@ -31,7 +31,7 @@ ga_mp_send(
 
 \item{timestamp_micros}{Optional. A Unix timestamp (in microseconds) for the time to associate with the event.}
 
-\item{user_properties}{Optional. The user properties for the measurement.}
+\item{user_properties}{Optional. The user properties for the measurement sent in as a named list.}
 
 \item{non_personalized_ads}{Optional. Set to true to indicate these events should not be used for personalized ads.}
 }
@@ -52,6 +52,8 @@ Create an API secret via \verb{Admin > Data Streams > choose your stream > Measu
 \code{user_properties} - describe segments of your user base, such as language preference or geographic location.  See \href{https://developers.google.com/analytics/devguides/collection/protocol/ga4/user-properties?client_type=gtag}{User properties}
 
 Ensure you also have user permission as specified in the \href{https://developers.google.com/analytics/devguides/collection/protocol/ga4/policy}{feature policy}
+
+Invalid events are silently rejected with a 204 response, so use \code{debug=TRUE} to validate your events first.
 }
 \examples{
 # preferably set this in .Renviron

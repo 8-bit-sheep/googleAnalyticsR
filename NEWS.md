@@ -15,6 +15,7 @@
 * Enable generation of Shiny apps from `ga_model()` objects using template files `ga_model_shiny()` (#358)
 * From 0.9.0 there will be a dev version of the website at `https://code.markedmondson.me/googleAnalyticsR/dev/` with the development documentation.  `https://code.markedmondson.me/googleAnalyticsR/` will only carry the CRAN version.
 * Add Measurement Protocol v2 functions `ga_mp_send()`, `ga_mp_event()` and `ga_mp_event_item()` (#370)
+* Cleanup a lot of functions and objects in the NAMESPACE
 
 # googleAnalyticsR 0.8.0
 

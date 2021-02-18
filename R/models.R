@@ -88,6 +88,7 @@ is.ga_model_result <- function(x){
 #'
 #' @export
 #' @family GA modelling functions
+#' @examples 
 #' 
 #' \dontrun{
 #' # load the model (equivalent to ga_model_load())

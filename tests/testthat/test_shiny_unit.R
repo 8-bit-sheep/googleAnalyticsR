@@ -27,13 +27,15 @@ test_that("Shiny unit tests", {
   
   m1 <- ga_model_example("decomp_ga.gamr")
   test_folder <- "basic_m1"
-  ga_model_shiny(m1, local_folder = test_folder, auth_dropdown = "universal")
-  expect_true(all(list.files(test_folder) %in% c("server.R","ui.R")))
+  ga_model_shiny(m1, local_folder = test_folder, auth_dropdown = "universal",
+                 web_json = "dummy_web.json")
+  expect_true(all(c("server.R","ui.R") %in% list.files(test_folder)))
   
   ui <- readLines(file.path(test_folder, "ui.R"))
   server <- readLines(file.path(test_folder, "server.R"))
-  # remove variable filename
+  # remove variable filenames
   ui <- ui[!grepl("^model1 <-", ui)]
+  server <- server[!grepl("^model1 <-", server)]  
   
   expect_snapshot_output(ui)
   expect_snapshot_output(server)

@@ -29,22 +29,22 @@ segment_element(
 
 \item{not}{Should the element be the negation of what is defined}
 
-\item{expressions}{\link{dim} What the name shall compare to}
+\item{expressions}{\code{dim} What the name shall compare to}
 
-\item{caseSensitive}{\link{dim} Whether to be case sensitive}
+\item{caseSensitive}{\code{dim} Whether to be case sensitive}
 
-\item{minComparisonValue}{\link{dim} Minimum comparison values for BETWEEN}
+\item{minComparisonValue}{\code{dim} Minimum comparison values for BETWEEN}
 
 \item{maxComparisonValue}{Max comparison value for BETWEEN operator}
 
-\item{scope}{\link{met} Scope of the metric value}
+\item{scope}{\code{met} Scope of the metric value}
 
-\item{comparisonValue}{\link{met} What the name shall compare to}
+\item{comparisonValue}{\code{met} What the name shall compare to}
 
 \item{matchType}{If used in sequence segment, what behaviour}
 }
 \value{
-An SegmentFilterClause object
+A SegmentFilterClause object
 }
 \description{
 \code{segment_element} is the lowest hierarchy of segment creation, for which you will also need:

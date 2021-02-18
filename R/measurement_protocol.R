@@ -134,7 +134,7 @@ ga_mp_send <- function(events,
 #' This creates an event to send via [ga_mp_send]
 #' 
 #' @param name The event name to send in
-#' @param param Optional event parameters sent in as a named list
+#' @param params Optional event parameters sent in as a named list
 #' @param items Optional items created via [ga_mp_event_item]
 #' 
 #' @export

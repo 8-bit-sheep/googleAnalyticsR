@@ -4,6 +4,7 @@
 #' 
 #' @family v4 cohort functions
 #' @keywords internal
+#' @noRd
 cohort_metric_check <- function(metrics){
   
   metrics <- sapply(metrics, checkPrefix, prefix="ga", USE.NAMES = F)
@@ -39,6 +40,7 @@ cohort_metric_check <- function(metrics){
 #' @param metrics A vector of dimensions
 #' @family v4 cohort functions
 #' @keywords internal
+#' @noRd
 cohort_dimension_check <- function(dimensions){
   
   dimensions <- sapply(dimensions, checkPrefix, prefix="ga", USE.NAMES = F)
@@ -157,6 +159,7 @@ make_cohort_group <- function(cohorts, lifetimeValue=FALSE, cohort_types=NULL){
 #'
 #' @family v4 cohort functions
 #' @keywords internal
+#' @noRd
 cohortGroup <- function(cohorts,
                         lifetimeValue=FALSE){
 
@@ -179,6 +182,7 @@ cohortGroup <- function(cohorts,
 #' @family v4 cohort functions
 #' @keywords internal
 #' @import assertthat
+#' @noRd
 cohort <- function(name,
                    type = c("FIRST_VISIT_DATE"),
                    dateRange){

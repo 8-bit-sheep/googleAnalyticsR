@@ -29,7 +29,7 @@
 #' 
 #' 
 #' 
-#' @return A [FilterExpression] object suitable for use in [ga_data]
+#' @return A `FilterExpression` object suitable for use in [ga_data]
 #' @export
 #' @importFrom rlang enquo eval_tidy
 #' @examples 

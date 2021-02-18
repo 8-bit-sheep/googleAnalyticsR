@@ -4,11 +4,10 @@
 #' @param operator combination of filter.
 #'
 #' @details If you have dimension and metric filters,
-#'   make the clauses in two separate calls, then pass the objects to [make_ga_4_req]
+#'   make the clauses in two separate calls
 #'
 #'
 #' @return An object of class `dim_fil_ga4` or `met_fil_ga4`
-#'   for use in [make_ga_4_req()]
 #'
 #'
 #' @examples

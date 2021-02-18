@@ -193,6 +193,7 @@ segment_element_ui <- function(id, seq, segment_type=NULL){
 #'
 #' @return Shiny UI
 #' @keywords internal
+#' @noRd
 segmentChainUI <- function(id){
   
   ns <- shiny::NS(id)
@@ -225,6 +226,7 @@ segmentChainUI <- function(id){
 #'
 #' @return Something
 #' @keywords internal
+#' @noRd
 segmentChain <- function(input, output, session,
                          element_inputs){
   
@@ -494,6 +496,7 @@ segment_vector_calls <- function(sv){
 #' @param id shiny id
 #' 
 #' @keywords internal
+#' @noRd
 segmentElementUI <- function(id){
   
   ns <- shiny::NS(id)
