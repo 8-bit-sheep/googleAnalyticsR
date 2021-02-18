@@ -16,13 +16,22 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/authDropdownUI.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/dim_fil_ga4-class.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/dim_filter.html</loc>
   </url>
   <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/dimension_ga4.html</loc>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/dim_ga4-class.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/dynamicSegment_ga4-class.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/filter_clause_ga4.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/filter_clauses_ga4-class.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_account_list.html</loc>
@@ -271,7 +280,13 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/make_cohort_group.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/met_fil_ga4-class.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/met_filter.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/met_ga4-class.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/meta.html</loc>
@@ -283,16 +298,19 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/metricDimensionSelect.html</loc>
   </url>
   <url>
-    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/metric_ga4.html</loc>
-  </url>
-  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/multi_select.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/multi_selectUI.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/orFiltersForSegment_ga4-class.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/order_type.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/order_type_ga4-class.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/parse_ga_account_summary.html</loc>
@@ -307,10 +325,25 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/segmentBuilderUI.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/segmentDef_ga4-class.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/segmentFilterClause_ga4-class.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/segmentFilter_ga4-class.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/segmentSequenceStep_ga4-class.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/segment_define.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/segment_element.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/segment_ga4-class.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/segment_ga4.html</loc>
@@ -320,6 +353,12 @@
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/segment_vector_simple.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/sequenceSegment_ga4-class.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/simpleSegment_ga4-class.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//articles/big-query.html</loc>
