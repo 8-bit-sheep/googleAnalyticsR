@@ -91,7 +91,6 @@ test_that("Metric Aggregations", {
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek"),
     date_range = c("2020-03-31", "2020-04-27","2020-04-28", "2020-05-27"),
-    metricAggregations = c("TOTAL","MAXIMUM","MINIMUM"),
     limit = 100
   )
   

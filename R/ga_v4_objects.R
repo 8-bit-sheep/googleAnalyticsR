@@ -38,6 +38,7 @@ date_ga4 <- function(dvector){
 #'
 #' @keywords internal
 #' @return a list suitable for parsing in req
+#' @noRd
 dimension_ga4 <- function(vector, histogramBuckets=NULL){
   
   if(is.null(vector)) return(NULL)
@@ -63,6 +64,7 @@ dimension_ga4 <- function(vector, histogramBuckets=NULL){
 #'   for the API to return
 #'
 #' @keywords internal
+#' @noRd
 #' @return a list suitable for parsing in req
 metric_ga4 <- function(vector, metricFormat=NULL){
 
@@ -154,7 +156,6 @@ order_type <- function(field,
 #'
 #' @rdname dim_ga4-class
 #' @keywords internal
-#' @noRd
 #' @export
 setClass("dim_ga4")
 
@@ -164,7 +165,6 @@ setClass("dim_ga4")
 #'
 #' @rdname met_ga4-class
 #' @keywords internal
-#' @noRd
 #' @export
 setClass("met_ga4")
 
@@ -174,7 +174,6 @@ setClass("met_ga4")
 #'
 #' @rdname order_type_ga4-class
 #' @keywords internal
-#' @noRd
 #' @export
 setClass("order_type_ga4")
 
@@ -184,7 +183,6 @@ setClass("order_type_ga4")
 #'
 #' @rdname dim_fil_ga4-class
 #' @keywords internal
-#' @noRd
 #' @export
 setClass("dim_fil_ga4")
 
@@ -194,7 +192,6 @@ setClass("dim_fil_ga4")
 #'
 #' @rdname met_fil_ga4-class
 #' @keywords internal
-#' @noRd
 #' @export
 setClass("met_fil_ga4")
 
@@ -204,7 +201,6 @@ setClass("met_fil_ga4")
 #'
 #' @rdname filter_clauses_ga4-class
 #' @keywords internal
-#' @noRd
 #' @export
 setClassUnion(".filter_clauses_ga4", members = c("dim_fil_ga4", "met_fil_ga4"))
 
@@ -214,7 +210,6 @@ setClassUnion(".filter_clauses_ga4", members = c("dim_fil_ga4", "met_fil_ga4"))
 #'
 #' @rdname segmentFilterClause_ga4-class
 #' @keywords internal
-#' @noRd
 #' @export
 setClass("segmentFilterClause_ga4")
 
@@ -224,7 +219,6 @@ setClass("segmentFilterClause_ga4")
 #'
 #' @rdname orFiltersForSegment_ga4-class
 #' @keywords internal
-#' @noRd
 #' @export
 setClass("orFiltersForSegment_ga4")
 
@@ -234,7 +228,6 @@ setClass("orFiltersForSegment_ga4")
 #'
 #' @rdname segmentSequenceStep_ga4-class
 #' @keywords internal
-#' @noRd
 #' @export
 setClass("segmentSequenceStep_ga4")
 
@@ -244,7 +237,6 @@ setClass("segmentSequenceStep_ga4")
 #'
 #' @rdname simpleSegment_ga4-class
 #' @keywords internal
-#' @noRd
 #' @export
 setClass("simpleSegment_ga4")
 
@@ -254,7 +246,6 @@ setClass("simpleSegment_ga4")
 #'
 #' @rdname sequenceSegment_ga4-class
 #' @keywords internal
-#' @noRd
 #' @export
 setClass("sequenceSegment_ga4")
 
@@ -264,7 +255,6 @@ setClass("sequenceSegment_ga4")
 #'
 #' @rdname segmentFilter_ga4-class
 #' @keywords internal
-#' @noRd
 #' @export
 setClass("segmentFilter_ga4")
 
@@ -274,7 +264,6 @@ setClass("segmentFilter_ga4")
 #'
 #' @rdname segmentDef_ga4-class
 #' @keywords internal
-#' @noRd
 #' @export
 setClass("segmentDef_ga4")
 
@@ -284,7 +273,6 @@ setClass("segmentDef_ga4")
 #'
 #' @rdname segment_ga4-class
 #' @keywords internal
-#' @noRd
 #' @export
 setClass("segment_ga4")
 
@@ -294,6 +282,5 @@ setClass("segment_ga4")
 #'
 #' @rdname dynamicSegment_ga4-class
 #' @keywords internal
-#' @noRd
 #' @export
 setClass("dynamicSegment_ga4")
