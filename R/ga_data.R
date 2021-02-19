@@ -188,8 +188,36 @@ ga_aw_realtime <- function(property, requestObj){
 
 #' Normal Reporting API
 #' @noRd
+#' @importFrom dplyr bind_rows
 ga_aw_report <- function(requestObj){
+  page_size <- 100000L
   
+  if(requestObj$limit == -1){
+    # we don't know yet, need to do a request
+    requestObj$limit <- page_size
+  }
+  
+  o <- do_runreport_req(requestObj)
+  # don't need pagination
+  if(o$rowCount < o$limit) return(o)
+  
+  # get number of pages
+  pages <- (o$rowCount %/% page_size) + 1
+  offsets <- seq(from = page_size, by = page_size, length.out = pages)
+  
+  o_pages <- lapply(offsets, function(x){
+    myMessage("Paging through requests - offset:", x, level = 2)
+    requestObj$offset <- x
+    do_runreport_req(requestObj)
+  })
+  
+  ooo <- c(list(o), o_pages)
+
+  bind_rows(ooo)
+  
+}
+
+do_runreport_req <- function(requestObj){
   url <- sprintf("https://analyticsdata.googleapis.com/%s:runReport",
                  version_aw())
   
@@ -197,9 +225,7 @@ ga_aw_report <- function(requestObj){
   f <- gar_api_generator(url, "POST", 
                          data_parse_function = parse_runreport)
   
-  o <- f(the_body = requestObj)
-  
-  o
+  f(the_body = requestObj)
 }
 
 
