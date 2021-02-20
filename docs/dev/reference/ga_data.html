@@ -300,6 +300,7 @@ Fetches Google Analytics from the Data API for Google Analytics 4 (Previously Ap
   metricFilter <span class='op'>=</span> <span class='cn'>NULL</span>,
   orderBys <span class='op'>=</span> <span class='cn'>NULL</span>,
   limit <span class='op'>=</span> <span class='fl'>100</span>,
+  page_size <span class='op'>=</span> <span class='fl'>100000L</span>,
   realtime <span class='op'>=</span> <span class='cn'>FALSE</span>,
   raw_json <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
@@ -342,6 +343,10 @@ Fetches Google Analytics from the Data API for Google Analytics 4 (Previously Ap
     <tr>
       <th>limit</th>
       <td><p>The number of rows to return - use -1 to return all rows</p></td>
+    </tr>
+    <tr>
+      <th>page_size</th>
+      <td><p>The size of API pages - default is 100000L rows</p></td>
     </tr>
     <tr>
       <th>realtime</th>
