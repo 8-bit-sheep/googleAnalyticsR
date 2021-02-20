@@ -207,6 +207,40 @@ all_results
 # … with 1,753 more rows
 ```
 
+You can also select how big the API will page.  The default is the maximum 100000 rows - you may want to change this if you experience problems downloading a lot of data with several columns.  Set via the `page_size` parameter:
+
+```r
+# get all results, but page every 500 rows
+all_results_paged <- ga_data(
+  my_property_id,
+  metrics = c("activeUsers","sessions"),
+  dimensions = c("date","city","dayOfWeek"),
+  date_range = c("2020-03-31", "2020-04-27"),
+  limit = -1,
+  page_size = 500L
+)
+#ℹ 2021-02-20 12:26:11 > Downloaded [ 500 ] of total [ 1763 ] rows
+#ℹ 2021-02-20 12:26:11 > Paging API from offset [ 500 ]
+#ℹ 2021-02-20 12:26:12 > Downloaded [ 500 ] of total [ 1763 ] rows
+#ℹ 2021-02-20 12:26:12 > Paging API from offset [ 1000 ]
+#ℹ 2021-02-20 12:26:13 > Downloaded [ 500 ] of total [ 1763 ] rows
+#ℹ 2021-02-20 12:26:13 > Paging API from offset [ 1500 ]
+#ℹ 2021-02-20 12:26:14 > Downloaded [ 263 ] of total [ 1763 ] rows
+
+# get 510 rows, page every 500 rows (so 2 total)
+top510_paged500 <- ga_data(
+  my_property_id,
+  metrics = c("activeUsers","sessions"),
+  dimensions = c("date","city","dayOfWeek"),
+  date_range = c("2020-03-31", "2020-04-27"),
+  limit = 510,
+  page_size = 500L
+)
+#ℹ 2021-02-20 12:26:45 > Downloaded [ 500 ] of total [ 1763 ] rows
+#ℹ 2021-02-20 12:26:45 > Paging API from offset [ 500 ]
+#ℹ 2021-02-20 12:26:46 > Downloaded [ 10 ] of total [ 1763 ] rows
+```
+
 ### Custom definitions
 
 When fetching custom dimensions and metrics, specify the prefix as you read it in the meta data table.  See this [Google article on custom definitions](https://developers.google.com/analytics/devguides/reporting/data/v1/advanced#listing_custom_definitions_and_creating_reports) for details.

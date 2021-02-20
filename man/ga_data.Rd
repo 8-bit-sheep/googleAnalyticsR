@@ -14,6 +14,7 @@ ga_data(
   metricFilter = NULL,
   orderBys = NULL,
   limit = 100,
+  page_size = 100000L,
   realtime = FALSE,
   raw_json = NULL
 )
@@ -36,6 +37,8 @@ ga_data(
 \item{orderBys}{How to order the response - an order object created by \link{ga_data_order}}
 
 \item{limit}{The number of rows to return - use -1 to return all rows}
+
+\item{page_size}{The size of API pages - default is 100000L rows}
 
 \item{realtime}{If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see \href{https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics}{valid real-time dimensions}}
 

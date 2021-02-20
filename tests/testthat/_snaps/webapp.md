@@ -15,6 +15,86 @@
     10 2020-04-07 (not set)           6
     # ... with 90 more rows
 
+# Pagination
+
+    Code
+      all_results
+    Output
+      # A tibble: 1,763 x 5
+         date       city      dayOfWeek activeUsers sessions
+         <date>     <chr>     <chr>           <dbl>    <dbl>
+       1 2020-04-08 (not set) 3                  18       21
+       2 2020-04-08 Rome      3                  12       14
+       3 2020-04-15 (not set) 3                   9       11
+       4 2020-04-27 (not set) 1                   9       11
+       5 2020-04-09 (not set) 4                   8       10
+       6 2020-04-14 (not set) 2                   8        8
+       7 2020-04-22 (not set) 3                   8        9
+       8 2020-03-31 (not set) 2                   7       10
+       9 2020-04-08 Bologna   3                   7        7
+      10 2020-04-07 (not set) 2                   6        7
+      # ... with 1,753 more rows
+
+---
+
+    Code
+      all_results_paged
+    Output
+      # A tibble: 1,763 x 5
+         date       city      dayOfWeek activeUsers sessions
+         <date>     <chr>     <chr>           <dbl>    <dbl>
+       1 2020-04-08 (not set) 3                  18       21
+       2 2020-04-08 Rome      3                  12       14
+       3 2020-04-15 (not set) 3                   9       11
+       4 2020-04-27 (not set) 1                   9       11
+       5 2020-04-09 (not set) 4                   8       10
+       6 2020-04-14 (not set) 2                   8        8
+       7 2020-04-22 (not set) 3                   8        9
+       8 2020-03-31 (not set) 2                   7       10
+       9 2020-04-08 Bologna   3                   7        7
+      10 2020-04-07 (not set) 2                   6        7
+      # ... with 1,753 more rows
+
+---
+
+    Code
+      top_510
+    Output
+      # A tibble: 510 x 5
+         date       city      dayOfWeek activeUsers sessions
+         <date>     <chr>     <chr>           <dbl>    <dbl>
+       1 2020-04-08 (not set) 3                  18       21
+       2 2020-04-08 Rome      3                  12       14
+       3 2020-04-15 (not set) 3                   9       11
+       4 2020-04-27 (not set) 1                   9       11
+       5 2020-04-09 (not set) 4                   8       10
+       6 2020-04-14 (not set) 2                   8        8
+       7 2020-04-22 (not set) 3                   8        9
+       8 2020-03-31 (not set) 2                   7       10
+       9 2020-04-08 Bologna   3                   7        7
+      10 2020-04-07 (not set) 2                   6        7
+      # ... with 500 more rows
+
+---
+
+    Code
+      top510_paged500
+    Output
+      # A tibble: 510 x 5
+         date       city      dayOfWeek activeUsers sessions
+         <date>     <chr>     <chr>           <dbl>    <dbl>
+       1 2020-04-08 (not set) 3                  18       21
+       2 2020-04-08 Rome      3                  12       14
+       3 2020-04-15 (not set) 3                   9       11
+       4 2020-04-27 (not set) 1                   9       11
+       5 2020-04-09 (not set) 4                   8       10
+       6 2020-04-14 (not set) 2                   8        8
+       7 2020-04-22 (not set) 3                   8        9
+       8 2020-03-31 (not set) 2                   7       10
+       9 2020-04-08 Bologna   3                   7        7
+      10 2020-04-07 (not set) 2                   6        7
+      # ... with 500 more rows
+
 # Raw Data fetch
 
     # A tibble: 340 x 2
@@ -73,11 +153,6 @@
     --| activeUsers 
     ----betweenFilter:  
     from:  1  to:  3
-
----
-
-    --| city 
-    ----nullFilter:  TRUE 
 
 # Custom data
 

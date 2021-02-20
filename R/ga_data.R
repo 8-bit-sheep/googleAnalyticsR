@@ -22,6 +22,7 @@ version_aw <- function(){
 #' @param metricFilter Filter on the metrics of the request - a filter object created by [ga_data_filter]
 #' @param orderBys How to order the response - an order object created by [ga_data_order]
 #' @param limit The number of rows to return - use -1 to return all rows
+#' @param page_size The size of API pages - default is 100000L rows
 #' @param date_range A vector of length two with start and end dates in YYYY-MM-DD format
 #' @param dimensionDelimiter If combining dimensions in one column, the delimiter for the value field
 #' @param realtime If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see [valid real-time dimensions](https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics)
@@ -101,12 +102,13 @@ ga_data <- function(
   metricFilter = NULL,
   orderBys = NULL,
   limit = 100,
+  page_size = 100000L,
   realtime = FALSE,
   raw_json = NULL) {
   
   if(!is.null(raw_json)){
     if(is.list(raw_json)){
-      raw_json_txt <- jsonlite::toJSON(raw_json)
+      raw_json_txt <- jsonlite::toJSON(raw_json, auto_unbox = TRUE)
     } else {
       raw_json_txt <- raw_json
     }
@@ -114,8 +116,11 @@ ga_data <- function(
     
     if(realtime) return(ga_aw_realtime(propertyId, raw_json))
     
-    return(ga_aw_report(raw_json))
+    return(do_runreport_req(raw_json))
   }
+  
+  assert_that(is.integer(page_size),
+              page_size <= 100000)
   
   # in case someone passes in a filter instead of an expression
   dimensionFilter <- as_filterExpression(dimensionFilter)
@@ -164,7 +169,7 @@ ga_data <- function(
         returnPropertyQuota = TRUE
       )
   
-  ga_aw_report(brrr)
+  ga_aw_report(brrr, page_size)
 }
 
 #' Realtime API
@@ -189,24 +194,39 @@ ga_aw_realtime <- function(property, requestObj){
 #' Normal Reporting API
 #' @noRd
 #' @importFrom dplyr bind_rows
-ga_aw_report <- function(requestObj){
-  page_size <- 100000L
+ga_aw_report <- function(requestObj, page_size){
   
-  if(requestObj$limit == -1){
-    # we don't know yet, need to do a request
+  request_limit <- requestObj$limit
+
+  if(request_limit == -1 || page_size < request_limit){
     requestObj$limit <- page_size
   }
   
+  # first page
   o <- do_runreport_req(requestObj)
+  
+  rowCount <- attr(o, "rowCount")
+  
+  to_fetch <- min(rowCount, request_limit)
+  if(request_limit == -1){
+    to_fetch <- rowCount
+  }
+
   # don't need pagination
-  if(o$rowCount < o$limit) return(o)
+  if(to_fetch < page_size) return(o)
   
   # get number of pages
-  pages <- (o$rowCount %/% page_size) + 1
+  pages <- (to_fetch %/% page_size)
   offsets <- seq(from = page_size, by = page_size, length.out = pages)
   
   o_pages <- lapply(offsets, function(x){
-    myMessage("Paging through requests - offset:", x, level = 2)
+    myMessage("Paging API from offset [", x,"]", level = 3)
+    
+    remaining_rows <- to_fetch - x
+    if(remaining_rows < page_size){
+      requestObj$limit <- remaining_rows
+    }
+    
     requestObj$offset <- x
     do_runreport_req(requestObj)
   })
@@ -332,6 +352,8 @@ parse_rows <- function(o, dim_names, met_names){
     maximums = parse_aggregations(o$maximums, dim_names, met_names),
     minimums = parse_aggregations(o$minimums, dim_names, met_names)
   )
+  myMessage("Downloaded [",nrow(res), "] of total [", o$rowCount,"] rows", 
+            level = 3)
   attr(res, "rowCount") <- o$rowCount
   
   ## remove dateRange column if only one unique value

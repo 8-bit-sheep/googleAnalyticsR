@@ -21,6 +21,60 @@ test_that("Basic fetch", {
   
 })
 
+test_that("Pagination", {
+  skip_on_cran()
+  skip_on_travis()
+  
+  all_results <- ga_data(
+    ga4_propertyId,
+    metrics = c("activeUsers","sessions"),
+    dimensions = c("date","city","dayOfWeek"),
+    date_range = c("2020-03-31", "2020-04-27"),
+    limit = -1
+  )
+  expect_snapshot(all_results)
+  
+  all_results_paged <- ga_data(
+    ga4_propertyId,
+    metrics = c("activeUsers","sessions"),
+    dimensions = c("date","city","dayOfWeek"),
+    date_range = c("2020-03-31", "2020-04-27"),
+    limit = -1,
+    page_size = 500L
+  )
+  expect_snapshot(all_results_paged)
+  
+  expect_equal(all_results, all_results_paged)
+  expect_equal(sum(all_results$sessions), sum(all_results_paged$sessions))
+  
+  top_510 <- ga_data(
+    ga4_propertyId,
+    metrics = c("activeUsers","sessions"),
+    dimensions = c("date","city","dayOfWeek"),
+    date_range = c("2020-03-31", "2020-04-27"),
+    limit = 510,
+    page_size = 600L
+  )
+  expect_snapshot(top_510)
+  expect_equal(nrow(top_510), 510)
+  
+  top510_paged500 <- ga_data(
+    ga4_propertyId,
+    metrics = c("activeUsers","sessions"),
+    dimensions = c("date","city","dayOfWeek"),
+    date_range = c("2020-03-31", "2020-04-27"),
+    limit = 510,
+    page_size = 500L
+  )
+  expect_snapshot(top510_paged500)
+  expect_equal(nrow(top510_paged500), 510)
+  
+  expect_equal(top510_paged500, top_510)
+  expect_equal(sum(top_510$sessions), sum(top510_paged500$sessions))
+  
+  
+})
+
 test_that("Raw Data fetch", {
   skip_on_cran()
   skip_on_travis()
@@ -59,7 +113,6 @@ test_that("Filter objects", {
   in_list_f <- ga_aw_filter("city",c("Copenhagen","London"))
   numeric_f <- ga_aw_filter("activeUsers", 1L, "GREATER_THAN")
   numeric_list_f <- ga_aw_filter("activeUsers", c(1L,3L))
-  no_nulls <- ga_aw_filter("city", NULL)
   
   expect_s3_class(string_f, "gar_Filter")
   expect_s3_class(string_f$stringFilter, "gar_StringFilter")
@@ -77,9 +130,6 @@ test_that("Filter objects", {
   expect_s3_class(numeric_list_f$betweenFilter, "gar_BetweenFilter")
   expect_snapshot_output(numeric_list_f)
   
-  expect_s3_class(no_nulls, "gar_Filter")
-  expect_true(no_nulls$nullFilter)
-  expect_snapshot_output(no_nulls)
   
 })
 
