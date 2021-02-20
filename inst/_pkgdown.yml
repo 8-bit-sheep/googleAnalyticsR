@@ -133,15 +133,20 @@ reference:
       - ga_aggregate
       - ga_allowed_metric_dim
       - ga_meta
+      - meta
+      - meta4
   - title: "Shiny modules"
     desc: >
       Using Google Analytics with Shiny
     contents:
       - accountPicker
       - authDropdown
+      - authDropdownUI
       - multi_select
+      - multi_selectUI
       - metricDimensionSelect
       - segmentBuilder
+      - segmentBuilderUI
   - title: "Model functions"
     desc: >
       Functions to create and use models with your Google Analytics data
@@ -164,6 +169,8 @@ reference:
       - ga_segment_list
       - ga_adwords_list
       - ga_adwords
+      - ga_adwords_add_linkid
+      - ga_adwords_delete_linkid
       - ga_remarketing_list
       - ga_remarketing_build
       - ga_remarketing_create

@@ -571,8 +571,6 @@ ga_data_filter(city %contains% "ope")
 ga_data_filter(city %regex% "^Cope")
 # regex (partial) string
 ga_data_filter(city %regex_partial% "ope")
-# NULL filters
-ga_data_filter(!city==NULL)
 ```
 
 By default string filters are case sensitive.  Use UPPERCASE operator to make then case insensitive
