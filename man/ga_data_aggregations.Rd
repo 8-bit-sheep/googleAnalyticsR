@@ -28,7 +28,7 @@ multi_date <- ga_data(
   metrics = c("activeUsers","sessions"),
   dimensions = c("date","city","dayOfWeek"),
   date_range = c("2020-03-31", "2020-04-27", "2020-04-30", "2020-05-27"),
-  dimensionFilter = ga_data_filter("city"=="Copenhagen"),
+  dim_filters = ga_data_filter("city"=="Copenhagen"),
   limit = 100
   )
 

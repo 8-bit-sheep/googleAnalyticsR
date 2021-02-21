@@ -16,7 +16,7 @@ A \code{FilterExpression} object suitable for use in \link{ga_data}
 Use with \link{ga_data} to create filters
 }
 \details{
-This uses a specific filter DSL syntax to create GA4 filters that can be passed to \link{ga_data} arguments \code{dimensionFilter} or \code{metricFilter}. Ensure that the fields you use are either all metrics or all dimensions.
+This uses a specific filter DSL syntax to create GA4 filters that can be passed to \link{ga_data} arguments \code{dim_filters} or \code{met_filters}. Ensure that the fields you use are either all metrics or all dimensions.
 
 The syntax uses operators and the class of the value you are setting (string, numeric or logical) to construct the filter expression object.
 

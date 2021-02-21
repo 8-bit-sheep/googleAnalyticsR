@@ -18,12 +18,12 @@ version_aw <- function(){
 #' @param propertyId A GA4 property Id
 #' @param metrics The metrics to request - see [ga_meta] - set to NULL to only see dimensions
 #' @param dimensions The dimensions to request - see [ga_meta]
-#' @param dimensionFilter Filter on the dimensions of the request - a filter object created by [ga_data_filter]
-#' @param metricFilter Filter on the metrics of the request - a filter object created by [ga_data_filter]
+#' @param dim_filters Filter on the dimensions of the request - a filter object created by [ga_data_filter]
+#' @param met_filters Filter on the metrics of the request - a filter object created by [ga_data_filter]
 #' @param orderBys How to order the response - an order object created by [ga_data_order]
 #' @param limit The number of rows to return - use -1 to return all rows
 #' @param page_size The size of API pages - default is 100000L rows
-#' @param date_range A vector of length two with start and end dates in YYYY-MM-DD format
+#' @param date_range A vector with start and end dates in YYYY-MM-DD format - can send in up to four date ranges at once
 #' @param dimensionDelimiter If combining dimensions in one column, the delimiter for the value field
 #' @param realtime If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see [valid real-time dimensions](https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics)
 #' @param raw_json You can send in the raw JSON string for a Data API request which will skip all checks
@@ -43,7 +43,7 @@ version_aw <- function(){
 #'   metrics = c("activeUsers","sessions"),
 #'   dimensions = c("date","city","dayOfWeek"),
 #'   date_range = c("2020-03-31", "2020-04-27", "2020-04-30", "2020-05-27"),
-#'   dimensionFilter = ga_data_filter("city"=="Copenhagen"),
+#'   dim_filters = ga_data_filter("city"=="Copenhagen"),
 #'   limit = 100
 #'   )
 #' 
@@ -97,9 +97,9 @@ ga_data <- function(
   metrics,
   date_range = NULL,
   dimensions = NULL,
-  dimensionFilter = NULL,
+  dim_filters = NULL,
   dimensionDelimiter = "/",
-  metricFilter = NULL,
+  met_filters = NULL,
   orderBys = NULL,
   limit = 100,
   page_size = 100000L,
@@ -123,8 +123,8 @@ ga_data <- function(
               page_size <= 100000)
   
   # in case someone passes in a filter instead of an expression
-  dimensionFilter <- as_filterExpression(dimensionFilter)
-  metricFilter    <- as_filterExpression(metricFilter)
+  dimensionFilter <- as_filterExpression(dim_filters)
+  metricFilter    <- as_filterExpression(met_filters)
  
   # we always get these 3 - COUNT is not available unless pivot?
   metricAggregations <- c("TOTAL","MAXIMUM","MINIMUM")
@@ -386,7 +386,7 @@ parse_rows <- function(o, dim_names, met_names){
 #'   metrics = c("activeUsers","sessions"),
 #'   dimensions = c("date","city","dayOfWeek"),
 #'   date_range = c("2020-03-31", "2020-04-27", "2020-04-30", "2020-05-27"),
-#'   dimensionFilter = ga_data_filter("city"=="Copenhagen"),
+#'   dim_filters = ga_data_filter("city"=="Copenhagen"),
 #'   limit = 100
 #'   )
 #'

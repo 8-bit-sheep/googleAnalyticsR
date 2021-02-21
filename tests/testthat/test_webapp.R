@@ -270,8 +270,8 @@ test_that("Filter fetch types", {
       metrics = "activeUsers",
       dimensions = c("date","city", "dayOfWeek"),
       date_range = c("2020-03-31", "2020-04-27"),
-      dimensionFilter = dim_filter,
-      metricFilter = met_filter,
+      dim_filters = dim_filter,
+      met_filters = met_filter,
       limit = 100
     )
   }

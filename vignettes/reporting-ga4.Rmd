@@ -151,7 +151,7 @@ ga_data(
     metrics = "eventCount",
     dimensions = "eventName",
     date_range = c("2020-03-31", "2020-04-27"),
-    dimensionFilter = ga_data_filter(eventName=="video_start")
+    dim_filters = ga_data_filter(eventName=="video_start")
 )
 ## A tibble: 1 x 2
 #  eventName   eventCount
@@ -378,7 +378,7 @@ ga_data(
 
 Filters are simpler to create but more flexible than in Universal Analytics. 
 
-There is now only one filter function - `ga_data_filter()`.  As was the case for `google_analytics()` , you use the filter function to construct metric filters or dimension filters in the `dimensionFilter` or `metricFilter` parameters in your `ga_data()` call. 
+There is now only one filter function - `ga_data_filter()`.  As was the case for `google_analytics()` , you use the filter function to construct metric filters or dimension filters in the `dim_filters` or `met_filters` parameters in your `ga_data()` call. 
 
 ```r
 ga_data(
@@ -386,7 +386,7 @@ ga_data(
    metrics = c("activeUsers","sessions"),
    dimensions = c("date","city","dayOfWeek"),
    date_range = c("2020-03-31", "2020-04-27"),
-   dimensionFilter = ga_data_filter(city=="Copenhagen"),
+   dim_filters = ga_data_filter(city=="Copenhagen"),
    limit = 100
    )
 # A tibble: 17 x 5
@@ -418,7 +418,7 @@ The base object is `ga_data_filter()` - this holds the logic for the specific me
 
 Fields are metrics and dimensions that are available to your GA4 implementation, including custom fields.  You can see what is available by calling the `ga_meta("data")` function.
 
-Do not construct metric filters and use in the `dimensionFilter` argument or vice-versa.
+Do not construct metric filters and use in the `dim_filters` argument or vice-versa.
 
 You can use quoted (`"city"`, `"session"`) or unquoted fields ( `city` or `session`) which will check the field is valid before you send it to the API.  
 
@@ -454,7 +454,7 @@ simple_filter <- ga_data(
    metrics = c("activeUsers","sessions"),
    dimensions = c("date","city","dayOfWeek"),
    date_range = c("2020-03-31", "2020-04-27"),
-   dimensionFilter = ga_data_filter(city=="Copenhagen"),
+   dim_filters = ga_data_filter(city=="Copenhagen"),
    limit = 100
    )
 
@@ -514,7 +514,7 @@ my_meta <- ga_meta("data", propertyId = 206670707)
 ga_data_filter(cust_test_dim == "test")
 ```
 
-#### Numeric filters for use in `metricFilters`
+#### Numeric filters for use in `met_filters`
 
 An example of metric filters are below:
 
@@ -524,7 +524,7 @@ metric_filter <- ga_data(
    metrics = c("activeUsers","sessions"),
    dimensions = c("date","city","dayOfWeek"),
    date_range = c("2020-03-31", "2020-04-27"),
-   metricFilter = ga_data_filter(sessions>10),
+   met_filters = ga_data_filter(sessions>10),
    limit = 100
    )
 
@@ -555,7 +555,7 @@ ga_data_filter(sessions < 100)
 ga_data_filter(sessions <= 100)
 ```
 
-#### Dimension filters for use in `dimensionFilters`
+#### Dimension filters for use in `dim_filters`
 
 All the string filters that can be used are below:
 
@@ -610,7 +610,7 @@ complex_filter <- ga_data(
    metrics = c("activeUsers","sessions"),
    dimensions = c("date","city","dayOfWeek"),
    date_range = c("2020-03-31", "2020-04-27"),
-   dimensionFilter = f3,
+   dim_filters = f3,
    limit = 100
    )
    
@@ -726,7 +726,7 @@ realtime <- ga_data(
   206670707,
   metrics = "activeUsers",
   dimensions = "city",
-  dimensionFilter = ga_data_filter(city=="Copenhagen"),
+  dim_filters = ga_data_filter(city=="Copenhagen"),
   limit = 100,
   realtime = TRUE)
 ```
@@ -828,7 +828,7 @@ complex_filter <- ga_data(
                     "2020-04-23", "2020-04-30"),
      metricAggregations = c("TOTAL","MINIMUM","MAXIMUM"),
      orderBys = ga_data_order(-sessions +city),
-     dimensionFilter = ga_data_filter(
+     dim_filters = ga_data_filter(
               city==c("Copenhagen","London","Paris","New York") &
               (dayOfWeek=="5" | dayOfWeek=="6")),
      limit = -1

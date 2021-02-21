@@ -9,9 +9,9 @@ ga_data(
   metrics,
   date_range = NULL,
   dimensions = NULL,
-  dimensionFilter = NULL,
+  dim_filters = NULL,
   dimensionDelimiter = "/",
-  metricFilter = NULL,
+  met_filters = NULL,
   orderBys = NULL,
   limit = 100,
   page_size = 100000L,
@@ -24,15 +24,15 @@ ga_data(
 
 \item{metrics}{The metrics to request - see \link{ga_meta} - set to NULL to only see dimensions}
 
-\item{date_range}{A vector of length two with start and end dates in YYYY-MM-DD format}
+\item{date_range}{A vector with start and end dates in YYYY-MM-DD format - can send in up to four date ranges at once}
 
 \item{dimensions}{The dimensions to request - see \link{ga_meta}}
 
-\item{dimensionFilter}{Filter on the dimensions of the request - a filter object created by \link{ga_data_filter}}
+\item{dim_filters}{Filter on the dimensions of the request - a filter object created by \link{ga_data_filter}}
 
 \item{dimensionDelimiter}{If combining dimensions in one column, the delimiter for the value field}
 
-\item{metricFilter}{Filter on the metrics of the request - a filter object created by \link{ga_data_filter}}
+\item{met_filters}{Filter on the metrics of the request - a filter object created by \link{ga_data_filter}}
 
 \item{orderBys}{How to order the response - an order object created by \link{ga_data_order}}
 
@@ -65,7 +65,7 @@ multi_date <- ga_data(
   metrics = c("activeUsers","sessions"),
   dimensions = c("date","city","dayOfWeek"),
   date_range = c("2020-03-31", "2020-04-27", "2020-04-30", "2020-05-27"),
-  dimensionFilter = ga_data_filter("city"=="Copenhagen"),
+  dim_filters = ga_data_filter("city"=="Copenhagen"),
   limit = 100
   )
 

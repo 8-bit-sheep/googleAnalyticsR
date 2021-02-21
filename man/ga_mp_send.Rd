@@ -76,7 +76,7 @@ my_property_id <- 206670707
 ga_data(my_property_id, 
         dimensions = "eventName", 
         metrics = "eventCount", 
-        dimensionFilter = ga_data_filter(
+        dim_filters = ga_data_filter(
            eventName == c("an_event","another_event")),
         realtime = TRUE)
 
