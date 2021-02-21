@@ -304,7 +304,7 @@
     <p>A <code>FilterExpression</code> object suitable for use in <a href='ga_data.html'>ga_data</a></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This uses a specific filter DSL syntax to create GA4 filters that can be passed to <a href='ga_data.html'>ga_data</a> arguments <code>dimensionFilter</code> or <code>metricFilter</code>. Ensure that the fields you use are either all metrics or all dimensions.</p>
+    <p>This uses a specific filter DSL syntax to create GA4 filters that can be passed to <a href='ga_data.html'>ga_data</a> arguments <code>dim_filters</code> or <code>met_filters</code>. Ensure that the fields you use are either all metrics or all dimensions.</p>
 <p>The syntax uses operators and the class of the value you are setting (string, numeric or logical) to construct the filter expression object.</p>
 <p>Fields including custom fields for your propertyId can be imported if you fetch them via <code><a href='ga_meta.html'>ga_meta("data", propertyId = 12345)</a></code> before you construct a filter.  If you do not want filters to be validated, then send them in as strings ("field").</p>
 <p>The DSL rules are:</p>

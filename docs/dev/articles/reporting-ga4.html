@@ -378,7 +378,7 @@
     metrics <span class="op">=</span> <span class="st">"eventCount"</span>,
     dimensions <span class="op">=</span> <span class="st">"eventName"</span>,
     date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
-    dimensionFilter <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">eventName</span><span class="op">==</span><span class="st">"video_start"</span><span class="op">)</span>
+    dim_filters <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">eventName</span><span class="op">==</span><span class="st">"video_start"</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="co">## A tibble: 1 x 2</span>
 <span class="co">#  eventName   eventCount</span>
@@ -591,14 +591,14 @@
 <h2 class="hasAnchor">
 <a href="#filters" class="anchor"></a>Filters</h2>
 <p>Filters are simpler to create but more flexible than in Universal Analytics.</p>
-<p>There is now only one filter function - <code><a href="../reference/ga_data_filter.html">ga_data_filter()</a></code>. As was the case for <code><a href="../reference/google_analytics.html">google_analytics()</a></code> , you use the filter function to construct metric filters or dimension filters in the <code>dimensionFilter</code> or <code>metricFilter</code> parameters in your <code><a href="../reference/ga_data.html">ga_data()</a></code> call.</p>
+<p>There is now only one filter function - <code><a href="../reference/ga_data_filter.html">ga_data_filter()</a></code>. As was the case for <code><a href="../reference/google_analytics.html">google_analytics()</a></code> , you use the filter function to construct metric filters or dimension filters in the <code>dim_filters</code> or <code>met_filters</code> parameters in your <code><a href="../reference/ga_data.html">ga_data()</a></code> call.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
    <span class="fl">206670707</span>,
    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
    date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
-   dimensionFilter <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="st">"Copenhagen"</span><span class="op">)</span>,
+   dim_filters <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="st">"Copenhagen"</span><span class="op">)</span>,
    limit <span class="op">=</span> <span class="fl">100</span>
    <span class="op">)</span>
 <span class="co"># A tibble: 17 x 5</span>
@@ -633,7 +633,7 @@
 <h4 class="hasAnchor">
 <a href="#filter-fields" class="anchor"></a>Filter Fields</h4>
 <p>Fields are metrics and dimensions that are available to your GA4 implementation, including custom fields. You can see what is available by calling the <code><a href="../reference/ga_meta.html">ga_meta("data")</a></code> function.</p>
-<p>Do not construct metric filters and use in the <code>dimensionFilter</code> argument or vice-versa.</p>
+<p>Do not construct metric filters and use in the <code>dim_filters</code> argument or vice-versa.</p>
 <p>You can use quoted (<code>"city"</code>, <code>"session"</code>) or unquoted fields ( <code>city</code> or <code>session</code>) which will check the field is valid before you send it to the API.</p>
 <p>If you want to use custom fields from your property, do a call to <code><a href="../reference/ga_meta.html">ga_meta("data", propertyId=1234546)</a></code> replacing your propertyId for the GA4 property that has the custom fields. Once fetched, they will be placed in your local environment for all future calls to <code><a href="../reference/ga_data_filter.html">ga_data_filter()</a></code> - use the custom events with a <code>cust_</code> prefix e.g.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -676,7 +676,7 @@
    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
    date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
-   dimensionFilter <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="st">"Copenhagen"</span><span class="op">)</span>,
+   dim_filters <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="st">"Copenhagen"</span><span class="op">)</span>,
    limit <span class="op">=</span> <span class="fl">100</span>
    <span class="op">)</span>
 
@@ -794,9 +794,9 @@
 <span class="co"># use the custom event in a filter</span>
 <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">cust_test_dim</span> <span class="op">==</span> <span class="st">"test"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="numeric-filters-for-use-in-metricfilters" class="section level4">
+<div id="numeric-filters-for-use-in-met_filters" class="section level4">
 <h4 class="hasAnchor">
-<a href="#numeric-filters-for-use-in-metricfilters" class="anchor"></a>Numeric filters for use in <code>metricFilters</code>
+<a href="#numeric-filters-for-use-in-met_filters" class="anchor"></a>Numeric filters for use in <code>met_filters</code>
 </h4>
 <p>An example of metric filters are below:</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
@@ -805,7 +805,7 @@
    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
    date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
-   metricFilter <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">sessions</span><span class="op">&gt;</span><span class="fl">10</span><span class="op">)</span>,
+   met_filters <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">sessions</span><span class="op">&gt;</span><span class="fl">10</span><span class="op">)</span>,
    limit <span class="op">=</span> <span class="fl">100</span>
    <span class="op">)</span>
 
@@ -856,9 +856,9 @@
 ## ----numericFilter:  
 ## operation:  LESS_THAN_OR_EQUAL | value:      100</code></pre>
 </div>
-<div id="dimension-filters-for-use-in-dimensionfilters" class="section level4">
+<div id="dimension-filters-for-use-in-dim_filters" class="section level4">
 <h4 class="hasAnchor">
-<a href="#dimension-filters-for-use-in-dimensionfilters" class="anchor"></a>Dimension filters for use in <code>dimensionFilters</code>
+<a href="#dimension-filters-for-use-in-dim_filters" class="anchor"></a>Dimension filters for use in <code>dim_filters</code>
 </h4>
 <p>All the string filters that can be used are below:</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
@@ -981,7 +981,7 @@
    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"activeUsers"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"city"</span>,<span class="st">"dayOfWeek"</span><span class="op">)</span>,
    date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-03-31"</span>, <span class="st">"2020-04-27"</span><span class="op">)</span>,
-   dimensionFilter <span class="op">=</span> <span class="va">f3</span>,
+   dim_filters <span class="op">=</span> <span class="va">f3</span>,
    limit <span class="op">=</span> <span class="fl">100</span>
    <span class="op">)</span>
    
@@ -1121,7 +1121,7 @@
   <span class="fl">206670707</span>,
   metrics <span class="op">=</span> <span class="st">"activeUsers"</span>,
   dimensions <span class="op">=</span> <span class="st">"city"</span>,
-  dimensionFilter <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="st">"Copenhagen"</span><span class="op">)</span>,
+  dim_filters <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span><span class="va">city</span><span class="op">==</span><span class="st">"Copenhagen"</span><span class="op">)</span>,
   limit <span class="op">=</span> <span class="fl">100</span>,
   realtime <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
@@ -1215,7 +1215,7 @@
                     <span class="st">"2020-04-23"</span>, <span class="st">"2020-04-30"</span><span class="op">)</span>,
      metricAggregations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TOTAL"</span>,<span class="st">"MINIMUM"</span>,<span class="st">"MAXIMUM"</span><span class="op">)</span>,
      orderBys <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_order.html">ga_data_order</a></span><span class="op">(</span><span class="op">-</span><span class="va">sessions</span> <span class="op">+</span><span class="va">city</span><span class="op">)</span>,
-     dimensionFilter <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span>
+     dim_filters <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span>
               <span class="va">city</span><span class="op">==</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Copenhagen"</span>,<span class="st">"London"</span>,<span class="st">"Paris"</span>,<span class="st">"New York"</span><span class="op">)</span> <span class="op">&amp;</span>
               <span class="op">(</span><span class="va">dayOfWeek</span><span class="op">==</span><span class="st">"5"</span> <span class="op">|</span> <span class="va">dayOfWeek</span><span class="op">==</span><span class="st">"6"</span><span class="op">)</span><span class="op">)</span>,
      limit <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>
