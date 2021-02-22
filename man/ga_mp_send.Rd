@@ -86,6 +86,7 @@ ga_data(my_property_id,
 \href{https://developers.google.com/analytics/devguides/collection/protocol/ga4}{Measurement Protocol (Google Analytics 4)}
 
 Other Measurement Protocol functions: 
+\code{\link{ga_mp_cid}()},
 \code{\link{ga_mp_event_item}()},
 \code{\link{ga_mp_event}()}
 }

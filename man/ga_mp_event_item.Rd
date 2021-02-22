@@ -68,6 +68,7 @@ ga_mp_event("add_payment_info",
 }
 \seealso{
 Other Measurement Protocol functions: 
+\code{\link{ga_mp_cid}()},
 \code{\link{ga_mp_event}()},
 \code{\link{ga_mp_send}()}
 }

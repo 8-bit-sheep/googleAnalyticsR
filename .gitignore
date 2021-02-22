@@ -19,3 +19,4 @@ gar_parse_error.rds
 test.oauth
 .Renviron
 tests/testthat/cache
+.optin-googleanalyticsr

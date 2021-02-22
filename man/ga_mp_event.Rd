@@ -24,6 +24,7 @@ ga_mp_event("custom_event", params = list(my_param = "SUPER"))
 }
 \seealso{
 Other Measurement Protocol functions: 
+\code{\link{ga_mp_cid}()},
 \code{\link{ga_mp_event_item}()},
 \code{\link{ga_mp_send}()}
 }

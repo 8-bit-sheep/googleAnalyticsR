@@ -67,6 +67,13 @@
   # for json files
   googleAuthR::gar_attach_auto_auth(needed, 
                                     environment_var = "GA_AUTH_FILE")
+  if(!file.exists(".optin-googleanalyticsr") && interactive()){
+    packageStartupMessage(
+      "You can opt in to tracking of your use of googleAnalyticsR - see ga_trackme() for details."
+    )
+  }
+
+  ga_trackme_event()
   
   invisible(NULL)
   
