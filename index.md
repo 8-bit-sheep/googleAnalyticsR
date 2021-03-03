@@ -13,7 +13,7 @@ Welcome to the website for **googleAnalyticsR**, an R library for working with [
 
 ![](https://raw.githubusercontent.com/MarkEdmondson1234/googleAnalyticsR/master/inst/hexlogo/hex.png)
 
-Follow development on the project's [Github development site.](https://github.com/MarkEdmondson1234/googleAnalyticsR)
+Follow development on the project's [Github development site.](https://github.com/MarkEdmondson1234/googleAnalyticsR) or browse the [development documentation of googleAnalyticsR](https://code.markedmondson.me/googleAnalyticsR/dev/index.html) which is subject to change.
 
 The Slack group `googleAuthRverse` includes a `#googleAnalyticsR` channel. For news, chat and support join via this [request form](https://docs.google.com/forms/d/e/1FAIpQLSerjirmMpB3b7LmBs_Vx_XPIE9IrhpCpPg1jUcpfBcivA3uBw/viewform). 
 
