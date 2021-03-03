@@ -104,7 +104,7 @@ ga_mp_send <- function(events,
   
   if(debug || getOption("googleAuthR.verbose") < 3){
     myMessage("MP Request:", the_url,"\n", 
-              toJSON(the_body, auto_unbox = TRUE), 
+              toJSON(the_body, auto_unbox = TRUE, pretty = TRUE), 
               level = 3)
   }
   
@@ -275,21 +275,25 @@ ga_mp_cid <- function(seed = NULL){
 
 #' Opt in or out of googleAnalyticsR usage tracking
 #' 
-#' You can opt-in or out to sending a measurement protocol hit when you load the package for use in the package's statistics via this function, or opt-out again by deleting the `.optin-googleanalyticsr` file.
-#' 
-#' Run this function to control your choices.
+#' You can opt-in or out to sending a measurement protocol hit when you load the package for use in the package's statistics via this function.  No personal data is collected.  
 #' 
 #' @export
-#' @family package tracking functions
+#' @rdname ga_trackme_event
+#' 
+#' @examples 
+#' 
+#' # control your tracking choices via a menu
+#' ga_trackme()
 ga_trackme <- function(){
   
   cli::cli_h1("Tracking Consent for googleAnalyticsR usage")
-  cli::cli_alert_info("This function opts you in or out of sending a tracking hit to a GA4 enabled property each time the library is loaded.  It is done via the Measurement Protocol using ga_mp_send().")
+  cli::cli_alert_info("This function opts you in or out of sending a tracking hit each time the library loads.  It is done using ga_trackme_event().")
   opt_in <- usethis::ui_yeah(
     "Do you opt in to tracking each time you load googleAnalyticsR?"
   )
   
-  the_file <- ".optin-googleanalyticsr"
+  # this folder should exist as its used for gargle
+  the_file <- .trackme$filepath
   
   if(opt_in){
     if(file.exists(the_file)){
@@ -298,14 +302,12 @@ ga_trackme <- function(){
     }
     
     cli::cli_alert_success(
-      "Thanks! Your consent and an ID will be marked by the presence of the file {the_file} in this folder.  Delete it to remove consent or run this function again.")
+      "Thanks! Your consent and an ID will be marked by the presence of the file {the_file} in this folder.  Delete it or run this function again to remove consent.")
     
     file.create(the_file)
     cid <- ga_mp_cid()
     write(cid, the_file)
 
-    if(file.exists(".gitignore")) usethis::use_git_ignore(the_file)
-    if(file.exists(".Rbuildignore")) usethis::use_build_ignore(the_file)
     return(invisible(NULL))
   }
   
@@ -318,24 +320,38 @@ ga_trackme <- function(){
     "No worries! If you change your mind run this function again.")
 }  
 
+.trackme <- new.env()
+.trackme$measurement_id <- "G-43MDXK6CLZ"
+.trackme$api <- "_hS_7VJARhqbCq9mF3oiNg"
+.trackme$filepath <- file.path(path.expand('~'),".R","optin-googleanalyticsr")
+
 #' Send a tracking hit for googleAnalyticsR package statistics
 #' 
-#' This is the function that fires if you consent to tracking via [ga_trackme]
+#' If you opt in, `ga_trackme_event()` is the function that fires.  You can use `debug=TRUE` to see what would be sent before opting in or out.
 #' 
-#' Running this function will send a Measurement Protocol hit via [ga_mp_send] only if the `.optin-googleanalyticsr` file is present in the same directory
+#' Running `ga_trackme_event()` function will send a Measurement Protocol hit via [ga_mp_send] only if the `~/.R/optin-googleanalyticsr` file is present
 #' 
-#' @param debug Send as a debug event to see what will be sent
+#' @param debug Set as a debug event to see what would be sent
+#' @param say_hello If you want to add your own custom message to the event sent, add it here!
 #' 
 #' @export
-#' @family package tracking functions
 #' 
 #' @examples 
 #' 
-#' # this only works with a valid opt-in file present in the working directory
+#' # this only works with a valid opt-in file present 
 #' ga_trackme_event()
-ga_trackme_event <- function(debug = FALSE){
-  the_file <- ".optin-googleanalyticsr"
-  if(!file.exists(the_file)){
+#' 
+#' # see what data is sent
+#' ga_trackme_event(debug=TRUE)
+#' 
+#' # add your own message!
+#' ga_trackme_event(debug = TRUE, say_hello = "err hello Mark")
+ga_trackme_event <- function(debug = FALSE, say_hello = NULL){
+  
+  assert_that_ifnn(say_hello, is.string)
+  
+  the_file <- .trackme$filepath
+  if(!file.exists(the_file) & !debug){
     myMessage("No consent file found", level = 2)
     return(FALSE)
   }
@@ -348,17 +364,41 @@ ga_trackme_event <- function(debug = FALSE){
       r_platform = ss$platform,
       r_locale = ss$locale,
       r_system = ss$running,
+      say_hello = say_hello,
       package = paste("googleAnalyticsR",  packageVersion("googleAnalyticsR"))
     )
   )
   
-  cid <- readLines(the_file)[[1]]
+  if(debug){
+    cid <- tryCatch(cid <- readLines(the_file)[[1]], 
+                    error = function(e) "12345678.987654")
+  } else {
+    cid <- readLines(the_file)[[1]]
+  }
   
+  
+  if(is.null(.trackme$measurement_id) | is.null(.trackme$api)){
+    myMessage("No tracking parameters found, setting dummy values", level = 3)
+    m_id = "Measurement_ID"
+    api = "API_secret"
+  } else {
+    m_id = .trackme$measurement_id
+    api = .trackme$api
+  }
+  
+  
+  if(debug){
+    return(ga_mp_send(event, client_id = cid,
+                      measurement_id = m_id,
+                      api_secret = api,
+                      debug = TRUE))
+  }
   suppressMessages(
     ga_mp_send(event, client_id = cid,
-               measurement_id = "G-43MDXK6CLZ",
-               api_secret = "_hS_7VJARhqbCq9mF3oiNg",
-               debug = debug))
+               measurement_id = m_id,
+               api_secret = api,
+               debug = debug)
+    )
   
   cli::cli_alert_success("Sent library load tracking event")
   
