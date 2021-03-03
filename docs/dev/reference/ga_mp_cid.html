@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create an Measurement Protocol Item Property for an Event — ga_mp_event_item • googleAnalyticsR</title>
+<title>Generate a random client_id — ga_mp_cid • googleAnalyticsR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,9 +46,8 @@
 
 
 
-<meta property="og:title" content="Create an Measurement Protocol Item Property for an Event — ga_mp_event_item" />
-<meta property="og:description" content="
-Some events work with item properties" />
+<meta property="og:title" content="Generate a random client_id — ga_mp_cid" />
+<meta property="og:description" content="This has a random number plus a timestamp" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
 
@@ -280,132 +279,33 @@ Some events work with item properties" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create an Measurement Protocol Item Property for an Event</h1>
+    <h1>Generate a random client_id</h1>
     <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/measurement_protocol.R'><code>R/measurement_protocol.R</code></a></small>
-    <div class="hidden name"><code>ga_mp_event_item.Rd</code></div>
+    <div class="hidden name"><code>ga_mp_cid.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a>
-Some events work with item properties</p>
+    <p>This has a random number plus a timestamp</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ga_mp_event_item</span><span class='op'>(</span>
-  item_id <span class='op'>=</span> <span class='cn'>NULL</span>,
-  item_name <span class='op'>=</span> <span class='cn'>NULL</span>,
-  coupon <span class='op'>=</span> <span class='cn'>NULL</span>,
-  discount <span class='op'>=</span> <span class='cn'>NULL</span>,
-  affiliation <span class='op'>=</span> <span class='cn'>NULL</span>,
-  item_brand <span class='op'>=</span> <span class='cn'>NULL</span>,
-  item_category <span class='op'>=</span> <span class='cn'>NULL</span>,
-  item_variant <span class='op'>=</span> <span class='cn'>NULL</span>,
-  price <span class='op'>=</span> <span class='cn'>NULL</span>,
-  currency <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ga_mp_cid</span><span class='op'>(</span>seed <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>item_id</th>
-      <td><p>Item ID</p></td>
-    </tr>
-    <tr>
-      <th>item_name</th>
-      <td><p>Item Name</p></td>
-    </tr>
-    <tr>
-      <th>coupon</th>
-      <td><p>Coupon</p></td>
-    </tr>
-    <tr>
-      <th>discount</th>
-      <td><p>Discount</p></td>
-    </tr>
-    <tr>
-      <th>affiliation</th>
-      <td><p>Affiliation</p></td>
-    </tr>
-    <tr>
-      <th>item_brand</th>
-      <td><p>Brand</p></td>
-    </tr>
-    <tr>
-      <th>item_category</th>
-      <td><p>Category</p></td>
-    </tr>
-    <tr>
-      <th>item_variant</th>
-      <td><p>Variant</p></td>
-    </tr>
-    <tr>
-      <th>price</th>
-      <td><p>Price</p></td>
-    </tr>
-    <tr>
-      <th>currency</th>
-      <td><p>Currency</p></td>
+      <th>seed</th>
+      <td><p>If you set a seed, then the random number will be the same for each value</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Measurement Protocol functions: 
-<code><a href='ga_mp_cid.html'>ga_mp_cid</a>()</code>,
+<code><a href='ga_mp_event_item.html'>ga_mp_event_item</a>()</code>,
 <code><a href='ga_mp_event.html'>ga_mp_event</a>()</code>,
 <code><a href='ga_mp_send.html'>ga_mp_send</a>()</code></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># one item</span>
-<span class='fu'>ga_mp_event_item</span><span class='op'>(</span>item_name <span class='op'>=</span> <span class='st'>"jeggings"</span>, 
-                 price <span class='op'>=</span> <span class='fl'>8.88</span>, 
-                 item_variant <span class='op'>=</span> <span class='st'>"Black"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ==GA4 MP Event Item
-#&gt; {
-#&gt;   "item_name": "jeggings",
-#&gt;   "item_variant": "Black",
-#&gt;   "price": 8.88
-#&gt; } </div><div class='input'>                 
-<span class='co'># many items in a list</span>
-<span class='va'>items</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-  <span class='fu'>ga_mp_event_item</span><span class='op'>(</span>item_id <span class='op'>=</span> <span class='st'>"SKU_12345"</span>, 
-                   price <span class='op'>=</span> <span class='fl'>9.99</span>, 
-                   item_brand <span class='op'>=</span> <span class='st'>"Gucci"</span><span class='op'>)</span>, 
-  <span class='fu'>ga_mp_event_item</span><span class='op'>(</span>item_name <span class='op'>=</span> <span class='st'>"jeggings"</span>, 
-                   price <span class='op'>=</span> <span class='fl'>8.88</span>, 
-                   item_variant <span class='op'>=</span> <span class='st'>"Black"</span><span class='op'>)</span><span class='op'>)</span>
-                   
-<span class='co'># construct an event with its own fields</span>
-<span class='fu'><a href='ga_mp_event.html'>ga_mp_event</a></span><span class='op'>(</span><span class='st'>"add_payment_info"</span>, 
-            params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>coupon <span class='op'>=</span> <span class='st'>"SUMMER_FUN"</span>, 
-                          payment_type <span class='op'>=</span> <span class='st'>"Credit Card"</span>, 
-                          value <span class='op'>=</span> <span class='fl'>7.77</span>, 
-                          currency <span class='op'>=</span> <span class='st'>"USD"</span><span class='op'>)</span>, 
-            items <span class='op'>=</span> <span class='va'>items</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; ==GA4 MP Event
-#&gt; {
-#&gt;   "name": "add_payment_info",
-#&gt;   "params": {
-#&gt;     "coupon": "SUMMER_FUN",
-#&gt;     "payment_type": "Credit Card",
-#&gt;     "value": 7.77,
-#&gt;     "currency": "USD",
-#&gt;     "items": [
-#&gt;       {
-#&gt;         "item_id": "SKU_12345",
-#&gt;         "item_brand": "Gucci",
-#&gt;         "price": 9.99
-#&gt;       },
-#&gt;       {
-#&gt;         "item_name": "jeggings",
-#&gt;         "item_variant": "Black",
-#&gt;         "price": 8.88
-#&gt;       }
-#&gt;     ]
-#&gt;   }
-#&gt; } </div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -196,6 +196,9 @@
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_model_write.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_mp_cid.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_mp_event.html</loc>
   </url>
   <url>
@@ -221,6 +224,9 @@
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_segment_list.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_trackme_event.html</loc>
   </url>
   <url>
     <loc>https://code.markedmondson.me/googleAnalyticsR//reference/ga_unsampled.html</loc>
