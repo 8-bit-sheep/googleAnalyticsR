@@ -55,6 +55,54 @@ remotes::install_github("MarkEdmondson1234/googleAnalyticsR")
 
 Check out the [NEWS](https://code.markedmondson.me/googleAnalyticsR/news/) to see what is currently available in each version and the [development version of the website here](https://code.markedmondson.me/googleAnalyticsR/dev/) which carries experimental documentation. 
 
+### Optional opt-in tracking of library use
+
+If you are not opted in and its an interactive session, this message appears on first startup:
+
+```r
+library(googleAnalyticsR)
+#You can opt in to tracking of your use of googleAnalyticsR - see ?ga_trackme for details.
+```
+
+If you run `ga_trackme()` then you get this dialogue:
+
+```r
+> ga_trackme()
+
+── Tracking Consent for googleAnalyticsR usage ──────────────────────
+ℹ This function opts you in or out of sending a tracking hit each time the library loads.  It is done using ga_trackme_event().
+Do you opt in to tracking each time you load googleAnalyticsR?
+
+1: Absolutely not
+2: No way
+3: Yeah
+```
+
+If you opt-in it creates an `.optin-googleanalyticsr` file with your client.id (the ID associated with you)
+
+```r
+✓ Thanks! Your consent and an ID will be marked by the presence of the file .optin-googleanalyticsr.  Delete it or run this function again to remove consent.
+```
+
+When opted-in, on library load it sends a hit via the function `ga_trackme_event()`
+
+```r
+library(googleAnalyticsR)
+✓ Sent library load tracking event
+```
+
+You can examine what is sent in that hit by looking at `ga_trackme_event(debug=TRUE)`
+
+Its sending your R session info (no personal data) to my GA4 account.
+
+You can send your own message to the analytics with the `say_hello` argument:
+
+```r
+# use debug=TRUE to see what would be sent, debug=FALSE will send it
+ga_trackme_event(debug = TRUE, say_hello = "I love you")
+```
+
+
 ### Docker image
 
 If you know docker, then a public image is available at `gcr.io/gcer-public/googleanalyticsr`
@@ -66,7 +114,7 @@ If you know docker, then a public image is available at `gcr.io/gcer-public/goog
 
 `googleAnalyticsR` requires the packages described in the [`Imports` field of the `DESCRIPTION` file](https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/DESCRIPTION) to be installed first, which it will do via `install.packages("googleAnalyticsR", dependencies = TRUE)`
 
-The depedencies are roughly split into the following roles:
+The dependencies are roughly split into the following roles:
 
 * `googleAuthR`, `gargle` are used for authentication with Google APIs
 * `jsonlite`, `httr` work with API responses

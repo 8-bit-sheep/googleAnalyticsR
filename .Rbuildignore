@@ -40,3 +40,4 @@
 ^cloud_build*
 ^pkgdown*
 ^\.covrignore$
+^\.optin-googleanalyticsr$
