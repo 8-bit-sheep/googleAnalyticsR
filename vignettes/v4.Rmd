@@ -494,6 +494,25 @@ segment_example
 # 2                     aidsmap.com referral  simple        1       0
 # 3                             aol  organic  simple       30      19
 # 4                             ask  organic  simple       32      17
+
+## You can send in multiple segments at a time by adding them as a list
+segment4_again <- segment_ga4("simple_2", user_segment = seg_defined)
+
+## Add the segments to the segments param
+segment_example2 <- google_analytics(ga_id, 
+                                      c("2015-07-30","2015-10-01"), 
+                                      dimensions=c('source','medium','segment'), 
+                                      segments = list(segment4, segment4_again),
+                                      metrics = c('sessions','bounces')
+                                      )
+#                source   medium  segment sessions bounces
+#1             (direct)   (none)   simple       30      22
+#2             (direct)   (none) simple_2       30      22
+#3       127.0.0.1:7424 referral   simple        1       1
+#4       127.0.0.1:7424 referral simple_2        1       1
+#5  analyticsforfun.com referral   simple        5       1
+#6  analyticsforfun.com referral simple_2        5       1
+#...
 ```
 
 ### Demo: Sequence segment
