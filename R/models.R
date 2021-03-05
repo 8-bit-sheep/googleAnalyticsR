@@ -246,6 +246,8 @@ ga_model_make <- function(
   renderShiny = shiny::renderPlot,
   inputShiny = shiny::tagList()){
   
+  if(is.null(inputShiny)) inputShiny <- shiny::tagList()
+  
   Model(
     data_f            = data_f,
     required_columns  = required_columns,

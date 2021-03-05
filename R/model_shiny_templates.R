@@ -187,13 +187,16 @@ ga_model_shiny <- function(
     }
     # this is in the root, to aid deployment
     file.copy(ga_model_shiny_template("boilerplate/deploy.R"), 
-              file.path(local_folder, "app.R"))
+              to = file.path(local_folder, "app.R"),
+              overwrite = TRUE)
     
     # the rest of the app is copied to local_folder/app/
     local_folder <- file.path(local_folder, "app")
-    dir.create(local_folder)
+    dir.create(local_folder, showWarnings = FALSE)
     # copy web_json file over
-    file.copy(web_json, file.path(local_folder, basename(web_json)))
+    file.copy(web_json, 
+              to = file.path(local_folder, basename(web_json)),
+              overwrite = TRUE)
     web_json <- basename(web_json)
     if(!nzchar(deployed_url)){
       myMessage("If deploying this app online remember to set the 'deployed_url' to the URL of the final Shiny app location and set the same URL in the GCP console web client settings", 
@@ -265,11 +268,12 @@ ga_model_shiny <- function(
 create_app_from_template <- function(output, location){
   if(!is.null(output$app) && nzchar(output$app)){
     myMessage("Detected Shiny app.R for location:", location, level = 3)
-    return(shiny::shinyAppDir(location))
+    app <- source(file.path(location, "app.R"), chdir = TRUE)
+    return(app$value)
   }
   
   # a shiny app in location with ui.R and server.R
-  ui <- source(file.path(location, "ui.R"), chdir = TRUE)
+  ui     <- source(file.path(location, "ui.R"), chdir = TRUE)
   server <- source(file.path(location, "server.R"), chdir = TRUE)
 
   shiny::shinyApp(

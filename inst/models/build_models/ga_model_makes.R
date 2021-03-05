@@ -38,9 +38,9 @@ m4 <- ga_model_make(
   description = "Perform decomposition on your GA sessions",
   required_columns = c("date","sessions"),
   required_packages = c("googleAnalyticsR"),
-              outputShiny = shiny::plotOutput, 
-              renderShiny = shiny::renderPlot,
-              inputShiny = NULL)
+  outputShiny = shiny::plotOutput, 
+  renderShiny = shiny::renderPlot,
+  inputShiny = shiny::tagList())
 ga_model_save(m4, "inst/models/examples/decomp_ga.gamr")
 
 date_input <- shiny::dateRangeInput("date_range", "Dates", 
