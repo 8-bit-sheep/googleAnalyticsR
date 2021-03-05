@@ -268,7 +268,7 @@ ga_mp_cid <- function(seed = NULL){
   if(!is.null(seed)){
     set.seed(seed)
   }
-  rand <- round(runif(1, min = 1, max = 100000000))
+  rand <- round(stats::runif(1, min = 1, max = 100000000))
   ts <- round(as.numeric(Sys.time()))
   
   paste0(rand,".",ts)
@@ -284,8 +284,11 @@ ga_mp_cid <- function(seed = NULL){
 #' 
 #' @examples 
 #' 
-#' # control your tracking choices via a menu
-#' ga_trackme()
+#' # control your tracking choices via a menu if in interactive session
+#' if(interactive()){
+#'   ga_trackme()
+#' }
+#' @importFrom usethis ui_yeah
 ga_trackme <- function(){
   
   cli::cli_h1("Tracking Consent for googleAnalyticsR usage")
@@ -358,7 +361,7 @@ ga_trackme_event <- function(debug = FALSE, say_hello = NULL){
     return(FALSE)
   }
   
-  ss <- sessionInfo()
+  ss <- utils::sessionInfo()
   event <- ga_mp_event(
     "googleanalyticsr_loaded",
     params = list(
@@ -367,7 +370,7 @@ ga_trackme_event <- function(debug = FALSE, say_hello = NULL){
       r_locale = ss$locale,
       r_system = ss$running,
       say_hello = say_hello,
-      package = paste("googleAnalyticsR",  packageVersion("googleAnalyticsR"))
+      package = paste("googleAnalyticsR",  utils::packageVersion("googleAnalyticsR"))
     )
   )
   

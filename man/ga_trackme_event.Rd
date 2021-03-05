@@ -24,8 +24,10 @@ Running \code{ga_trackme_event()} function will send a Measurement Protocol hit 
 }
 \examples{
 
-# control your tracking choices via a menu
-ga_trackme()
+# control your tracking choices via a menu if in interactive session
+if(interactive()){
+  ga_trackme()
+}
 
 # this only works with a valid opt-in file present 
 ga_trackme_event()

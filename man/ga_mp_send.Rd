@@ -45,6 +45,8 @@ Create a server side call to Google Analytics 4 via its Measurement Protocol
 \details{
 Create an API secret via \verb{Admin > Data Streams > choose your stream > Measurement Protocol > Create}
 
+To see event parameters, create custom fields in your GA4 account first, to see them in your reports 24hrs after you send them in with this function via \verb{Custom definitions > Create custom dimensions} - \verb{dimension name} will be how it looks like in the reports, \verb{event parameter} will be the parameter you have sent in with the event.
+
 \code{user_id} can be used for \href{https://support.google.com/analytics/answer/9213390}{cross-platform analysis}
 
 \code{timestamp_micros} should only be set to record events that happened in the past. This value can be overridden via user_property or event timestamps. Events can be backdated up to 48 hours. Note microseconds, not milliseconds.
