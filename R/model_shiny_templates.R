@@ -178,9 +178,27 @@ ga_model_shiny <- function(
   
   auth_dropdown <- match.arg(auth_dropdown)
   
-  if(nzchar(local_folder) && !dir.exists(local_folder)){
+  # make a deployment folder
+  if(nzchar(local_folder)){
+    
+    if(!dir.exists(local_folder)){
+      dir.create(local_folder)
+      assert_that(is.writeable(local_folder))
+    }
+    # this is in the root, to aid deployment
+    file.copy(ga_model_shiny_template("boilerplate/deploy.R"), 
+              file.path(local_folder, "app.R"))
+    
+    # the rest of the app is copied to local_folder/app/
+    local_folder <- file.path(local_folder, "app")
     dir.create(local_folder)
-    assert_that(is.writeable(local_folder))
+    # copy web_json file over
+    file.copy(web_json, file.path(local_folder, basename(web_json)))
+    web_json <- basename(web_json)
+    if(!nzchar(deployed_url)){
+      myMessage("If deploying this app online remember to set the 'deployed_url' to the URL of the final Shiny app location and set the same URL in the GCP console web client settings", 
+                level = 3)
+    }
   }
   
   if(is.ga_model(models)){
@@ -202,6 +220,8 @@ ga_model_shiny <- function(
   txt <- ga_model_shiny_template_make(
     template, 
     header_boilerplate = header_boilerplate)
+  
+
   
   values <- c(list(...),
               make_date_range(date_range),
