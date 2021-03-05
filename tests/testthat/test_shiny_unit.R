@@ -29,10 +29,11 @@ test_that("Shiny unit tests", {
   test_folder <- "basic_m1"
   ga_model_shiny(m1, local_folder = test_folder, auth_dropdown = "universal",
                  web_json = "dummy_web.json")
-  expect_true(all(c("server.R","ui.R") %in% list.files(test_folder)))
+  expect_true(all(c("app/server.R","app/ui.R","app.R") %in% 
+                    list.files(test_folder, recursive = TRUE)))
   
-  ui <- readLines(file.path(test_folder, "ui.R"))
-  server <- readLines(file.path(test_folder, "server.R"))
+  ui <- readLines(file.path(test_folder, "app/ui.R"))
+  server <- readLines(file.path(test_folder, "app/server.R"))
   # remove variable filenames
   ui <- ui[!grepl("^model1 <-", ui)]
   server <- server[!grepl("^model1 <-", server)]  
