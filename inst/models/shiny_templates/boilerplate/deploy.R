@@ -2,7 +2,7 @@
 library(shiny)
 library(googleAuthR)
 
-ui     <- source("ui.R")$value
-server <- source("server.R")$value
+ui     <- source("app/ui.R", chdir = TRUE)$value
+server <- source("app/server.R", chdir = TRUE)$value
 
 shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)
