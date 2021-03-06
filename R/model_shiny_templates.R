@@ -185,14 +185,28 @@ ga_model_shiny <- function(
       dir.create(local_folder)
       assert_that(is.writeable(local_folder))
     }
-    # this is in the root, to aid deployment
-    file.copy(ga_model_shiny_template("boilerplate/deploy.R"), 
-              to = file.path(local_folder, "app.R"),
-              overwrite = TRUE)
     
-    # the rest of the app is copied to local_folder/app/
-    local_folder <- file.path(local_folder, "app")
-    dir.create(local_folder, showWarnings = FALSE)
+    # for apps we don't need to make an app folder
+    if(grepl("^app", template_type(template))){
+      # a useful Dockerfile
+      file.copy(ga_model_shiny_template("boilerplate/Dockerfile_app"), 
+                to = file.path(local_folder, "Dockerfile"),
+                overwrite = TRUE)
+      
+    } else {
+      # a useful Dockerfile
+      file.copy(ga_model_shiny_template("boilerplate/Dockerfile_ui_server"), 
+                to = file.path(local_folder, "Dockerfile"),
+                overwrite = TRUE)
+      
+      # this is in the root, to aid deployment
+      file.copy(ga_model_shiny_template("boilerplate/deploy.R"), 
+                to = file.path(local_folder, "app.R"),
+                overwrite = TRUE)
+      # the rest of the app is copied to local_folder/app/
+      local_folder <- file.path(local_folder, "app")
+      dir.create(local_folder, showWarnings = FALSE)
+    }
     # copy web_json file over
     file.copy(web_json, 
               to = file.path(local_folder, basename(web_json)),
@@ -223,8 +237,6 @@ ga_model_shiny <- function(
   txt <- ga_model_shiny_template_make(
     template, 
     header_boilerplate = header_boilerplate)
-  
-
   
   values <- c(list(...),
               make_date_range(date_range),
@@ -310,13 +322,57 @@ write_template_object <- function(output, destination_folder){
   
 }
 
-# turn templates files into txt for server.R and ui.R for launching
-ga_model_shiny_template_make <- function(template, header_boilerplate = TRUE){
+# returns app or ui_server or ui suffix _folder/_file
+template_type <- function(template){
+  
+  the_type <- NULL
   
   if(!dir.exists(template) && !file.exists(template)){
     stop("Couldn't detect if template was a file or directory: ", template, 
          call. = FALSE)
   }
+  
+  if(dir.exists(template)){
+    # its a directory holding at least ui.R or app.R
+    dir_files <- list.files(template, recursive = TRUE)
+    
+    if(!"ui.R" %in% dir_files && !"app.R" %in% dir_files){
+      stop("Template folder must include ui.R or app.R file", call. = FALSE)
+    }
+    
+    if("app.R" %in% dir_files){
+      the_type <- "app_folder"
+    } else {
+      
+      # it has its own server.R so overwrite default
+      if("server.R" %in% dir_files){
+        the_type <- "ui_server_folder"
+      }
+      
+      the_type <- "ui_folder"
+    }
+    myMessage("Template type:", the_type, level = 2)
+    return(the_type)
+    
+  }
+  # its a file
+    
+  # we assume all ui.R files do not include server objects
+  if(basename(template) == "ui.R"){
+    the_type <- "ui_file"
+  } else {
+    the_type <- "app_file"
+  }
+  
+  myMessage("Template type:", the_type, level = 2)
+  the_type
+  
+}
+
+# turn templates files into txt for server.R and ui.R for launching
+ga_model_shiny_template_make <- function(template, header_boilerplate = TRUE){
+  
+  the_type <- template_type(template)
   
   # as an example
   output <- list(
@@ -339,51 +395,37 @@ ga_model_shiny_template_make <- function(template, header_boilerplate = TRUE){
   server_txt <- ga_model_shiny_template("boilerplate/server_boilerplate.R",
                                         read_lines = TRUE)
   
-  if(dir.exists(template)){
-    # its a directory holding at least ui.R or app.R
-    dir_files <- list.files(template, recursive = TRUE)
+  if(the_type == "app_folder"){
+    # does it have a server object? write it out as app.R
+    app_txt <- readLines(file.path(template, "app.R"))
+    output$app <- has_server_object(
+      app_txt, 
+      ga_model_shiny_template("boilerplate/server_app_boilerplate.R", 
+                              read_lines = TRUE))
+  } else if(the_type == "ui_folder"){
+    ui_txt <- readLines(file.path(template, "ui.R"))
     
-    if(!"ui.R" %in% dir_files && !"app.R" %in% dir_files){
-      stop("Template folder must include ui.R or app.R file", call. = FALSE)
-    }
+    output$ui <- c(hdr_txt, ui_txt)
+  } else if(the_type == "ui_server_folder"){
+    ui_txt <- readLines(file.path(template, "ui.R"))
+    server_txt <- readLines(file.path(template, "server.R"))
     
-    if("app.R" %in% dir_files){
-      myMessage("Using app.R in template folder ", template)
-      # does it have a server object? write it out as app.R
-      app_txt <- readLines(file.path(template, "app.R"))
-      output$app <- has_server_object(
-        app_txt, 
-        ga_model_shiny_template("boilerplate/server_app_boilerplate.R", 
-                                read_lines = TRUE))
-    } else {
-      ui_txt <- readLines(file.path(template, "ui.R"))
-      
-      # it has its own server.R so overwrite default
-      if("server.R" %in% dir_files){
-        server_txt <- readLines(file.path(template, "server.R"))
-      }
-      
-      output$ui <- c(hdr_txt, ui_txt)
-      output$server <- server_txt
-    }
-    
-  } else if(file.exists(template)){
-    
-    # its a file of app.R, ui.R or expression that produces a Shiny app object
+    output$ui <- c(hdr_txt, ui_txt)    
+    output$server <- server_txt
+  } else if(the_type == "ui_file"){
     ui_txt <- readLines(template)
-
-    # we assume all ui.R files do not include server objects
-    if(basename(template) == "ui.R"){
-      output$ui <- c(hdr_txt, ui_txt)
-      output$server <- server_txt
-    } else {
-      # does it have a server object? write it out as app.R
-      output$app <- has_server_object(
-        ui_txt, 
-        ga_model_shiny_template("boilerplate/server_app_boilerplate.R", 
-                                read_lines = TRUE))
-    }
-
+    
+    output$ui <- c(hdr_txt, ui_txt)
+    output$server <- server_txt
+  } else if(the_type == "app_file"){
+    ui_txt <- readLines(template)
+    
+    output$app <- has_server_object(
+      ui_txt, 
+      ga_model_shiny_template("boilerplate/server_app_boilerplate.R", 
+                              read_lines = TRUE))
+  } else {
+    stop("Unrecognised type of template file.", call. = FALSE)
   }
   
   output
