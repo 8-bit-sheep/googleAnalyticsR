@@ -256,6 +256,7 @@
 <li>Support for GA4 and Universal Analytics account pickers</li>
 <li>Multiple models can be viewed in one Shiny app</li>
 </ul>
+<p>For authentication, you will need to create a Web based Client ID JSON file (as opposed to the Desktop app JSON file for local use) at <code>https://console.cloud.google.com/apis/credentials</code> and add an Authorised redirect URI - for local testing <code>http://localhost:1221</code> is helpful if you have set your Shiny apps to a static port via <code><a href="https://rdrr.io/r/base/options.html">options(shiny.port = 1221)</a></code>. See the <a href="https://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#shiny-authentication-examples"><code>googleAuthR</code> website for details</a>.</p>
 <div id="example-template-outputs" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-template-outputs" class="anchor"></a>Example Template Outputs</h2>
@@ -363,15 +364,18 @@
 ##  [2] "basic_app/app.R"                     
 ##  [3] "basic_bslib/ui.R"                    
 ##  [4] "basic/ui.R"                          
-##  [5] "boilerplate/header_boilerplate.R"    
-##  [6] "boilerplate/server_app_boilerplate.R"
-##  [7] "boilerplate/server_boilerplate.R"    
-##  [8] "gentelella/ui.R"                     
-##  [9] "html_based/template.html"            
-## [10] "html_based/ui.R"                     
-## [11] "html_based/www/dummy.js"             
-## [12] "shinydashboard/ui.R"                 
-## [13] "shinythemes/ui.R"</code></pre>
+##  [5] "boilerplate/deploy.R"                
+##  [6] "boilerplate/Dockerfile_app"          
+##  [7] "boilerplate/Dockerfile_ui_server"    
+##  [8] "boilerplate/header_boilerplate.R"    
+##  [9] "boilerplate/server_app_boilerplate.R"
+## [10] "boilerplate/server_boilerplate.R"    
+## [11] "gentelella/ui.R"                     
+## [12] "html_based/template.html"            
+## [13] "html_based/ui.R"                     
+## [14] "html_based/www/dummy.js"             
+## [15] "shinydashboard/ui.R"                 
+## [16] "shinythemes/ui.R"</code></pre>
 <p>To use, supply a model and a template to the <code><a href="../reference/ga_model_shiny.html">ga_model_shiny()</a></code> function:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A Shiny app using "decomp_ga.gamr" model with the "shinythemes" template</span>
@@ -484,6 +488,87 @@
   
 <span class="op">}</span>
 <span class="co"># ---end server_boilerplate.R</span></code></pre></div>
+</div>
+</div>
+<div id="deploying-shiny-apps" class="section level2">
+<h2 class="hasAnchor">
+<a href="#deploying-shiny-apps" class="anchor"></a>Deploying Shiny apps</h2>
+<p>By default the Shiny app will run locally but you can also deploy them to Shiny hosting services such as shinyapps.io or a Shiny Server running on Cloud Run. <a href="https://code.markedmondson.me/googleCloudRunner/"><code>googleCloudRunner</code></a> includes functions for easier deployment of Shiny apps to Cloud Run.</p>
+<p>For deployment, you will need:</p>
+<ol style="list-style-type: decimal">
+<li>Ensure you have your web_json clientId file available</li>
+<li>Write the Shiny app to the local folder</li>
+<li>Deploy the app to see the final URL - copy-paste the URL.</li>
+<li>Re-created the Shiny app with <code>deployed_url</code> argument set to the URL from step 3</li>
+<li>Update your ClientId’s permitted redirect URL to the app URL from step 3</li>
+<li>Re-deploy the app</li>
+</ol>
+<div id="deployment-options" class="section level3">
+<h3 class="hasAnchor">
+<a href="#deployment-options" class="anchor"></a>Deployment options</h3>
+<p>If deploying to shinyapps.io or a local RStudio Connect instance you can use the “Deploy” button within RStudio.</p>
+<p>If deploying to another environment you may want a Dockerfile holding your Shiny app, which is added to the deployment folder.</p>
+<p>To deploy to Cloud Run using <a href="https://code.markedmondson.me/googleCloudRunner/"><code>googleCloudRunner</code></a> the below code is an example:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
+
+<span class="co"># create the Shiny app - first time without deployed_url, second time with</span>
+<span class="fu"><a href="../reference/ga_model_shiny.html">ga_model_shiny</a></span><span class="op">(</span>
+    <span class="fu"><a href="../reference/ga_model_example.html">ga_model_example</a></span><span class="op">(</span><span class="st">"decomp_ga.gamr"</span><span class="op">)</span>, 
+    auth_dropdown <span class="op">=</span> <span class="st">"universal"</span>,
+    template <span class="op">=</span> <span class="fu"><a href="../reference/ga_model_shiny_template.html">ga_model_shiny_template</a></span><span class="op">(</span><span class="st">"basic_app"</span><span class="op">)</span>,
+    deployed_url<span class="op">=</span><span class="st">"https://cloudrun-test-ewjogewawq-ew.a.run.app"</span>,
+    local_folder <span class="op">=</span> <span class="st">"cloudrun_test"</span><span class="op">)</span>
+    
+<span class="co"># deploy the cloudrun_test folder that contains a Dockerfile</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">googleCloudRunner</span><span class="op">)</span>
+
+<span class="co"># run two times, first to generate the URL, the second to deploy the final app</span>
+<span class="fu">cr_deploy_run</span><span class="op">(</span><span class="st">"cloudrun_test/"</span>,
+              remote <span class="op">=</span> <span class="st">"cloudrun_test"</span>,
+              tag <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"latest"</span>,<span class="st">"$BUILD_ID"</span><span class="op">)</span>,
+              max_instances <span class="op">=</span> <span class="fl">1</span>, <span class="co"># required for shiny</span>
+              concurrency <span class="op">=</span> <span class="fl">80</span>, 
+              launch_browser <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+              </code></pre></div>
+<p>An example Dockerfile may look like this:</p>
+<pre><code># from rocker/shiny with googleAnalyticsR installed &amp; configued for Cloud Run
+FROM gcr.io/gcer-public/googleanalyticsr-shiny-cloudrun
+
+# add any dependencies for your app here
+# RUN install2.r --error -r 'http://cran.rstudio.com' googleAnalyticsR
+# RUN installGithub.r MarkEdmondson1234/googleAnalyticsR
+
+COPY . /srv/shiny-server/</code></pre>
+<p>Modify the Dockerfile to include any dependencies you may need for your app (e.g. dygraphs if using a dygraph enabled model)</p>
+</div>
+<div id="helper-docker-file---googleanalytics-shiny-cloudrun" class="section level3">
+<h3 class="hasAnchor">
+<a href="#helper-docker-file---googleanalytics-shiny-cloudrun" class="anchor"></a>Helper Docker file - googleanalytics-shiny-cloudrun</h3>
+<p>The <code>gcr.io/gcer-public/googleanalyticsr-shiny-cloudrun</code> image is one that installed <code>googleAnalyticsR</code> on top or <code>rocker/shiny</code> and configures Shiny for use within Cloud Run. See the <a href="https://code.markedmondson.me/googleCloudRunner/articles/usecases.html#deploying-shiny-to-cloud-run-1">Deploying Shiny to Cloud Run use case on the googleCloudRunner website</a> for details.</p>
+<p>The Dockerfile for that image is below:</p>
+<pre><code>FROM rocker/shiny
+
+# install googleanalyticsr
+RUN install2.r --error \ 
+    -r 'http://cran.rstudio.com' \
+    googleAnalyticsR \
+    ## install Github packages
+    &amp;&amp; installGithub.r MarkEdmondson1234/googleAnalyticsR \
+    ## clean up
+    &amp;&amp; rm -rf /tmp/downloaded_packages/ /tmp/*.rds
+
+COPY app.R /srv/shiny-server/app.R
+COPY app/ /srv/shiny-server/app/
+COPY shiny-customised.config /etc/shiny-server/shiny-server.conf
+
+EXPOSE 8080
+
+USER shiny
+
+# avoid s6 initialization
+# see https://github.com/rocker-org/shiny/issues/79
+CMD ["/usr/bin/shiny-server"]</code></pre>
 </div>
 </div>
   </div>
