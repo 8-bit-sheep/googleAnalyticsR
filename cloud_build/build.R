@@ -65,3 +65,12 @@ cr_buildtrigger(
   "cloud_build/build_models.yml", 
   name = "ga-model-example-builds",
   trigger = cr_buildtrigger_repo("MarkEdmondson1234/googleAnalyticsR"))
+
+
+## shiny and googleanalyticsr configured for cloud run
+cr_deploy_docker_trigger(
+  cr_buildtrigger_repo("MarkEdmondson1234/googleAnalyticsR"),
+  image = "googleanalyticsr-shiny-cloudrun",
+  dir = "cloud_build/shiny_cloudrun",
+  project = "gcer-public"
+)

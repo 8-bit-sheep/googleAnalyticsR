@@ -1,5 +1,5 @@
 # from rocker/shiny with googleAnalyticsR installed & configued for Cloud Run
-FROM gcr.io/gcer-public/googleanalyticsr-shiny
+FROM gcr.io/gcer-public/googleanalyticsr-shiny-cloudrun
 
 # add any dependencies for your app here
 # RUN install2.r --error -r 'http://cran.rstudio.com' googleAnalyticsR

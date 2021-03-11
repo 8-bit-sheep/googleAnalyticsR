@@ -246,6 +246,7 @@ ga_model_shiny <- function(
               make_model_libraries(models),
               web_json = web_json,
               scopes = scopes,
+              deployed_url = deployed_url,
               shiny_title = title)
   
   myMessage("passed template values:\n", 
