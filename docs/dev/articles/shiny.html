@@ -231,7 +231,7 @@
 
       
 
-      </header><script src="shiny_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="shiny_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Shiny Apps that call Google Analytics API data</h1>
@@ -300,9 +300,9 @@
 <p><img src="authDropdown.png"></p>
 <p>Make sure to authenticate with at least <code>https://www.googleapis.com/auth/analytics.edit</code> scopes since this is needed for listing GA accounts.</p>
 <p>This is useful in combination with <code>googleAuthR</code>’s <code>googleAuth</code> module that helps with user login:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">## ui.R</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">googleAuthUI</span>(<span class="st">"login"</span>),</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">authDropdownUI</span>(<span class="st">"auth_menu"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ui.R</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">googleAuthUI</span>(<span class="st">"login"</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">authDropdownUI</span>(<span class="st">"auth_menu"</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## server.R </span>
 

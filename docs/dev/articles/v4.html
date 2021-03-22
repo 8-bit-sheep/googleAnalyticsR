@@ -231,7 +231,7 @@
 
       
 
-      </header><script src="v4_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="v4_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Google Analytics Reporting API v4 in R Examples</h1>
@@ -590,21 +590,21 @@
 <p>You can choose to create segments via the v4 syntax or the v3 syntax for backward compatibility.</p>
 <p>If you want to use v3 segments, then they can be used in the <code>segment_id</code> argument of the <code><a href="../reference/segment_ga4.html">segment_ga4()</a></code> function.</p>
 <p>You can view the segment Ids by using <code><a href="../reference/ga_segment_list.html">ga_segment_list()</a></code></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co">## get list of segments</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>segs &lt;-<span class="st"> </span><span class="kw">ga_segment_list</span>()</span>
-<span id="cb17-3"><a href="#cb17-3"></a></span>
-<span id="cb17-4"><a href="#cb17-4"></a><span class="co">## segment Ids and name:</span></span>
-<span id="cb17-5"><a href="#cb17-5"></a>segs[,<span class="kw">c</span>(<span class="st">"name"</span>,<span class="st">"id"</span>,<span class="st">"definition"</span>)]</span>
-<span id="cb17-6"><a href="#cb17-6"></a></span>
-<span id="cb17-7"><a href="#cb17-7"></a><span class="co">## example output</span></span>
-<span id="cb17-8"><a href="#cb17-8"></a>  id            name                                                          definition</span>
-<span id="cb17-9"><a href="#cb17-9"></a><span class="dv">1</span> <span class="dv">-1</span>       All Users                                                                    </span>
-<span id="cb17-10"><a href="#cb17-10"></a><span class="dv">2</span> <span class="dv">-2</span>       New Users                       sessions<span class="op">::</span>condition<span class="op">::</span>ga<span class="op">:</span>userType<span class="op">==</span>New Visitor</span>
-<span id="cb17-11"><a href="#cb17-11"></a><span class="dv">3</span> <span class="dv">-3</span> Returning Users                 sessions<span class="op">::</span>condition<span class="op">::</span>ga<span class="op">:</span>userType<span class="op">==</span>Returning Visitor</span>
-<span id="cb17-12"><a href="#cb17-12"></a><span class="dv">4</span> <span class="dv">-4</span>    Paid Traffic         sessions<span class="op">::</span>condition<span class="op">::</span>ga<span class="op">:</span>medium=<span class="er">~^</span>(cpc<span class="op">|</span>ppc<span class="op">|</span>cpa<span class="op">|</span>cpm<span class="op">|</span>cpv<span class="op">|</span>cpp)<span class="op">$</span></span>
-<span id="cb17-13"><a href="#cb17-13"></a><span class="dv">5</span> <span class="dv">-5</span> Organic Traffic                             sessions<span class="op">::</span>condition<span class="op">::</span>ga<span class="op">:</span>medium<span class="op">==</span>organic</span>
-<span id="cb17-14"><a href="#cb17-14"></a><span class="dv">6</span> <span class="dv">-6</span>  Search Traffic sessions<span class="op">::</span>condition<span class="op">::</span>ga<span class="op">:</span>medium=<span class="er">~^</span>(cpc<span class="op">|</span>ppc<span class="op">|</span>cpa<span class="op">|</span>cpm<span class="op">|</span>cpv<span class="op">|</span>cpp<span class="op">|</span>organic)<span class="op">$</span></span>
-<span id="cb17-15"><a href="#cb17-15"></a>....</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## get list of segments</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>segs <span class="ot">&lt;-</span> <span class="fu">ga_segment_list</span>()</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="do">## segment Ids and name:</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>segs[,<span class="fu">c</span>(<span class="st">"name"</span>,<span class="st">"id"</span>,<span class="st">"definition"</span>)]</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="do">## example output</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  id            name                                                          definition</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span>       All Users                                                                    </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">-</span><span class="dv">2</span>       New Users                       sessions<span class="sc">::</span>condition<span class="sc">::</span>ga<span class="sc">:</span>userType<span class="sc">==</span>New Visitor</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">-</span><span class="dv">3</span> Returning Users                 sessions<span class="sc">::</span>condition<span class="sc">::</span>ga<span class="sc">:</span>userType<span class="sc">==</span>Returning Visitor</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="sc">-</span><span class="dv">4</span>    Paid Traffic         sessions<span class="sc">::</span>condition<span class="sc">::</span>ga<span class="sc">:</span>medium<span class="ot">=</span><span class="er">~^</span>(cpc<span class="sc">|</span>ppc<span class="sc">|</span>cpa<span class="sc">|</span>cpm<span class="sc">|</span>cpv<span class="sc">|</span>cpp)<span class="sc">$</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="sc">-</span><span class="dv">5</span> Organic Traffic                             sessions<span class="sc">::</span>condition<span class="sc">::</span>ga<span class="sc">:</span>medium<span class="sc">==</span>organic</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="sc">-</span><span class="dv">6</span>  Search Traffic sessions<span class="sc">::</span>condition<span class="sc">::</span>ga<span class="sc">:</span>medium<span class="ot">=</span><span class="er">~^</span>(cpc<span class="sc">|</span>ppc<span class="sc">|</span>cpa<span class="sc">|</span>cpm<span class="sc">|</span>cpv<span class="sc">|</span>cpp<span class="sc">|</span>organic)<span class="sc">$</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>....</span></code></pre></div>
 <p>The ID you require is in the <code>$id</code> column which you need to prefix with “gaid::”</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## choose the v3 segment</span>

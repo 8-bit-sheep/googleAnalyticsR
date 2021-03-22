@@ -231,7 +231,7 @@
 
       
 
-      </header><script src="big-query_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="big-query_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Big Query Exports from Google Analytics 360 to R</h1>
@@ -284,27 +284,27 @@
 <a href="#exporting-data" class="anchor"></a>Exporting data</h2>
 <p>For BigQuery Google Analytics 360 exports, the dataset is the same as the GA View ID you are exporting.</p>
 <p>You can then export BigQuery data via:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>bq &lt;-<span class="st"> </span><span class="kw">google_analytics_bq</span>(<span class="st">"project-id"</span>, <span class="st">"dataset-id-ga-viewid"</span>, </span>
-<span id="cb6-2"><a href="#cb6-2"></a>                           <span class="dt">start =</span> <span class="st">"2016-01-01"</span>, <span class="dt">end =</span> <span class="st">"2016-02-01"</span>, </span>
-<span id="cb6-3"><a href="#cb6-3"></a>                           <span class="dt">metrics =</span> <span class="st">"users"</span>, </span>
-<span id="cb6-4"><a href="#cb6-4"></a>                           <span class="dt">dimensions =</span> <span class="kw">c</span>(<span class="st">"source"</span>,<span class="st">"medium"</span>))</span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="kw">head</span>(bq)</span>
-<span id="cb6-6"><a href="#cb6-6"></a>             source   medium  users</span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="dv">1</span>   mavas<span class="op">|</span>blahbs.ru  display  <span class="dv">47837</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="dv">2</span>          examp.ae referral   <span class="dv">6090</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="dv">3</span>   lm.facebook.com referral    <span class="dv">335</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="dv">4</span>       ghtie_yahoo  display <span class="dv">133900</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="dv">5</span>      fjsfs_inmobi  display  <span class="dv">19887</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="dv">6</span> tripadvisor.co.dk referral    <span class="dv">307</span>                         </span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bq <span class="ot">&lt;-</span> <span class="fu">google_analytics_bq</span>(<span class="st">"project-id"</span>, <span class="st">"dataset-id-ga-viewid"</span>, </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">start =</span> <span class="st">"2016-01-01"</span>, <span class="at">end =</span> <span class="st">"2016-02-01"</span>, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">metrics =</span> <span class="st">"users"</span>, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">dimensions =</span> <span class="fu">c</span>(<span class="st">"source"</span>,<span class="st">"medium"</span>))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bq)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>             source   medium  users</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>   mavas<span class="sc">|</span>blahbs.ru  display  <span class="dv">47837</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>          examp.ae referral   <span class="dv">6090</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>   lm.facebook.com referral    <span class="dv">335</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>       ghtie_yahoo  display <span class="dv">133900</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>      fjsfs_inmobi  display  <span class="dv">19887</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> tripadvisor.co.dk referral    <span class="dv">307</span>                         </span></code></pre></div>
 <p>At the moment the metrics/dimensions are limited as they need to added manually to a lookup table.<br>
 Segments/filters are not supported. The data is unsampled though.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>bq2 &lt;-<span class="st"> </span><span class="kw">google_analytics_bq</span>(<span class="st">"project-id"</span>, <span class="st">"dataset-id-ga-viewid"</span>, </span>
-<span id="cb7-2"><a href="#cb7-2"></a>                           <span class="dt">start =</span> <span class="st">"2016-01-01"</span>, <span class="dt">end =</span> <span class="st">"2016-02-01"</span>, </span>
-<span id="cb7-3"><a href="#cb7-3"></a>                           <span class="dt">metrics =</span> <span class="st">"users"</span>, </span>
-<span id="cb7-4"><a href="#cb7-4"></a>                           <span class="dt">dimensions =</span> <span class="kw">c</span>(<span class="st">"source"</span>,<span class="st">"medium"</span>,<span class="st">"landingPagePath"</span>))</span>
-<span id="cb7-5"><a href="#cb7-5"></a>                           </span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="op">&gt;</span><span class="st"> </span>Error <span class="cf">in</span> <span class="kw">google_analytics_bq</span>(<span class="st">"project-id"</span>, <span class="st">"dataset-id-ga-viewid"</span>, <span class="dt">start =</span> <span class="st">"2016-01-01"</span>,  <span class="op">:</span><span class="st"> </span></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="st">  </span>dimension not yet supported. Must be one of referralPath, campaign, source, medium, keyword, adContent, adwordsCampaignID, adwordsAdGroupID, transactionId, date, visitorId, visitId, visitStartTime, visitNumber                           </span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>bq2 <span class="ot">&lt;-</span> <span class="fu">google_analytics_bq</span>(<span class="st">"project-id"</span>, <span class="st">"dataset-id-ga-viewid"</span>, </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">start =</span> <span class="st">"2016-01-01"</span>, <span class="at">end =</span> <span class="st">"2016-02-01"</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">metrics =</span> <span class="st">"users"</span>, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">dimensions =</span> <span class="fu">c</span>(<span class="st">"source"</span>,<span class="st">"medium"</span>,<span class="st">"landingPagePath"</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                           </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> Error <span class="cf">in</span> <span class="fu">google_analytics_bq</span>(<span class="st">"project-id"</span>, <span class="st">"dataset-id-ga-viewid"</span>, <span class="at">start =</span> <span class="st">"2016-01-01"</span>,  <span class="sc">:</span> </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  dimension not yet supported. Must be one of referralPath, campaign, source, medium, keyword, adContent, adwordsCampaignID, adwordsAdGroupID, transactionId, date, visitorId, visitId, visitStartTime, visitNumber                           </span></code></pre></div>
 </div>
 <div id="raw-bigquery-sql" class="section level2">
 <h2 class="hasAnchor">
@@ -343,61 +343,61 @@ ORDER BY date ASC "</span>
 <p>The metrics and dimensions implemented so far are in the two lookups below.</p>
 <p>They include the BigQuery exclusive <code>hitTimestamp</code>, <code>fullVisitorId</code>, <code>visitId</code> etc.</p>
 <p>Read the full <a href="https://support.google.com/analytics/answer/3437719?hl=en">Google Analytics 360 BigQuery data schema</a> for an idea on what can be queried.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>lookup_bq_query_m &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">visits =</span> <span class="st">"SUM(totals.visits) as sessions"</span>,</span>
-<span id="cb10-2"><a href="#cb10-2"></a>                       <span class="dt">sessions =</span> <span class="st">"SUM(totals.visits) as sessions"</span>,</span>
-<span id="cb10-3"><a href="#cb10-3"></a>                       <span class="dt">pageviews =</span> <span class="st">"SUM(totals.pageviews) as pageviews"</span>,</span>
-<span id="cb10-4"><a href="#cb10-4"></a>                       <span class="dt">timeOnSite =</span> <span class="st">"SUM(totals.timeOnSite) as timeOnSite"</span>,</span>
-<span id="cb10-5"><a href="#cb10-5"></a>                       <span class="dt">bounces =</span> <span class="st">"SUM(totals.bounces) as bounces"</span>,</span>
-<span id="cb10-6"><a href="#cb10-6"></a>                       <span class="dt">transactions =</span> <span class="st">"SUM(totals.transactions) as transactions"</span>,</span>
-<span id="cb10-7"><a href="#cb10-7"></a>                       <span class="dt">transactionRevenue =</span> <span class="st">"SUM(totals.transactionRevenue)/1000000 as transactionRevenue"</span>,</span>
-<span id="cb10-8"><a href="#cb10-8"></a>                       <span class="dt">newVisits =</span> <span class="st">"SUM(totals.newVisits) as newVisits"</span>,</span>
-<span id="cb10-9"><a href="#cb10-9"></a>                       <span class="dt">screenviews =</span> <span class="st">"SUM(totals.screenviews) as screenviews"</span>,</span>
-<span id="cb10-10"><a href="#cb10-10"></a>                       <span class="dt">uniqueScreenviews =</span> <span class="st">"SUM(totals.uniqueScreenviews) as uniqueScreenviews"</span>,</span>
-<span id="cb10-11"><a href="#cb10-11"></a>                       <span class="dt">timeOnScreen =</span> <span class="st">"SUM(totals.timeOnScreen) as timeOnScreen"</span>,</span>
-<span id="cb10-12"><a href="#cb10-12"></a>                       <span class="dt">users =</span> <span class="st">"COUNT(fullVisitorId) as users"</span>,</span>
-<span id="cb10-13"><a href="#cb10-13"></a>                       <span class="dt">exits =</span> <span class="st">"COUNT(hits.isExit) as exits"</span>,</span>
-<span id="cb10-14"><a href="#cb10-14"></a>                       <span class="dt">entrances =</span> <span class="st">"COUNT(hits.isEntrance) as entrances"</span>,</span>
-<span id="cb10-15"><a href="#cb10-15"></a>                       <span class="dt">eventValue =</span> <span class="st">"SUM(hits.eventinfo.eventValue) as eventValue"</span>,</span>
-<span id="cb10-16"><a href="#cb10-16"></a>                       <span class="dt">metricXX =</span> {a <span class="cf">function</span> to output hit level custom metrics})</span>
-<span id="cb10-17"><a href="#cb10-17"></a></span>
-<span id="cb10-18"><a href="#cb10-18"></a>lookup_bq_query_d &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">referralPath =</span> <span class="st">"trafficSource.referralPath as referralPath"</span>,</span>
-<span id="cb10-19"><a href="#cb10-19"></a>                       <span class="dt">hitTimestamp =</span> <span class="st">"(visitStartTime + (hits.time/1000)) as hitTimestamp"</span>,</span>
-<span id="cb10-20"><a href="#cb10-20"></a>                       <span class="dt">campaign =</span> <span class="st">"trafficSource.campaign as campaign"</span>,</span>
-<span id="cb10-21"><a href="#cb10-21"></a>                       <span class="dt">source =</span> <span class="st">"trafficSource.source as source"</span>,</span>
-<span id="cb10-22"><a href="#cb10-22"></a>                       <span class="dt">medium =</span> <span class="st">"trafficSource.medium as medium"</span>,</span>
-<span id="cb10-23"><a href="#cb10-23"></a>                       <span class="dt">keyword =</span> <span class="st">"trafficSource.keyword as keyword"</span>,</span>
-<span id="cb10-24"><a href="#cb10-24"></a>                       <span class="dt">adContent =</span> <span class="st">"trafficSource.adContent as adContent"</span>,</span>
-<span id="cb10-25"><a href="#cb10-25"></a>                       <span class="dt">adwordsCampaignID =</span> <span class="st">"trafficSource.adwordsClickInfo.campaignId as adwordsCampaignId"</span>,</span>
-<span id="cb10-26"><a href="#cb10-26"></a>                       <span class="dt">adwordsAdGroupID =</span> <span class="st">"trafficSource.adwordsClickInfo.adGroupId as adwordsAdGroupId"</span>,</span>
-<span id="cb10-27"><a href="#cb10-27"></a>                       <span class="co"># adwords...etc...</span></span>
-<span id="cb10-28"><a href="#cb10-28"></a>                       <span class="dt">transactionId =</span> <span class="st">"hits.transaction.transactionId as transactionId"</span>,</span>
-<span id="cb10-29"><a href="#cb10-29"></a>                       <span class="dt">date =</span> <span class="st">"date"</span>,</span>
-<span id="cb10-30"><a href="#cb10-30"></a>                       <span class="dt">fullVisitorId =</span> <span class="st">"fullVisitorId"</span>,</span>
-<span id="cb10-31"><a href="#cb10-31"></a>                       <span class="dt">userId =</span> <span class="st">"userId"</span>,</span>
-<span id="cb10-32"><a href="#cb10-32"></a>                       <span class="dt">visitorId =</span> <span class="st">"visitorId"</span>,</span>
-<span id="cb10-33"><a href="#cb10-33"></a>                       <span class="dt">visitId =</span> <span class="st">"visitId"</span>,</span>
-<span id="cb10-34"><a href="#cb10-34"></a>                       <span class="dt">visitStartTime =</span> <span class="st">"visitStartTime"</span>,</span>
-<span id="cb10-35"><a href="#cb10-35"></a>                       <span class="dt">visitNumber =</span> <span class="st">"visitNumber"</span>,</span>
-<span id="cb10-36"><a href="#cb10-36"></a>                       <span class="dt">browser =</span> <span class="st">"device.browser as browser"</span>,</span>
-<span id="cb10-37"><a href="#cb10-37"></a>                       <span class="dt">browserVersion =</span> <span class="st">"device.browserVersion as browserVersion"</span>,</span>
-<span id="cb10-38"><a href="#cb10-38"></a>                       <span class="dt">operatingSystem =</span> <span class="st">"device.operatingSystem as operatingSystem"</span>,</span>
-<span id="cb10-39"><a href="#cb10-39"></a>                       <span class="dt">operatingSystemVersion =</span> <span class="st">"device.operatingSystemVersion as operatingSystemVersion"</span>,</span>
-<span id="cb10-40"><a href="#cb10-40"></a>                       <span class="dt">mobileDeviceBranding =</span> <span class="st">"device.mobileDeviceBranding as mobileDeviceBranding"</span>,</span>
-<span id="cb10-41"><a href="#cb10-41"></a>                       <span class="dt">flashVersion =</span> <span class="st">"device.flashVersion as flashVersion"</span>,</span>
-<span id="cb10-42"><a href="#cb10-42"></a>                       <span class="dt">language =</span> <span class="st">"device.language as language"</span>,</span>
-<span id="cb10-43"><a href="#cb10-43"></a>                       <span class="dt">screenColors =</span> <span class="st">"device.screenColors as screenColors"</span>,</span>
-<span id="cb10-44"><a href="#cb10-44"></a>                       <span class="dt">screenResolution =</span> <span class="st">"device.screenResolution as screenResolution"</span>,</span>
-<span id="cb10-45"><a href="#cb10-45"></a>                       <span class="dt">deviceCategory =</span> <span class="st">"device.deviceCategory as deviceCategory"</span>,</span>
-<span id="cb10-46"><a href="#cb10-46"></a>                       <span class="dt">continent =</span> <span class="st">"geoNetwork.continent as continent"</span>,</span>
-<span id="cb10-47"><a href="#cb10-47"></a>                       <span class="dt">subContinent =</span> <span class="st">"geoNetwork.subContinent as subContinent"</span>,</span>
-<span id="cb10-48"><a href="#cb10-48"></a>                       <span class="dt">country =</span> <span class="st">"geoNetwork.country as country"</span>,</span>
-<span id="cb10-49"><a href="#cb10-49"></a>                       <span class="dt">region =</span> <span class="st">"geoNetwork.region as region"</span>,</span>
-<span id="cb10-50"><a href="#cb10-50"></a>                       <span class="dt">metro =</span> <span class="st">"geoNetwork.region as metro"</span>,</span>
-<span id="cb10-51"><a href="#cb10-51"></a>                       <span class="dt">pagePath =</span> <span class="st">"hits.page.pagePath as pagePath"</span>,</span>
-<span id="cb10-52"><a href="#cb10-52"></a>                       <span class="dt">eventCategory =</span> <span class="st">"hits.eventInfo.eventCategory as eventCategory"</span>,</span>
-<span id="cb10-53"><a href="#cb10-53"></a>                       <span class="dt">eventAction =</span> <span class="st">"hits.eventInfo.eventAction as eventAction"</span>,</span>
-<span id="cb10-54"><a href="#cb10-54"></a>                       <span class="dt">eventLabel =</span> <span class="st">"hits.eventInfo.eventLabel as eventLabel"</span>,</span>
-<span id="cb10-55"><a href="#cb10-55"></a>                       <span class="dt">dimensionXX =</span> {a <span class="cf">function</span> to output hit level custom dimensions})</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>lookup_bq_query_m <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">visits =</span> <span class="st">"SUM(totals.visits) as sessions"</span>,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sessions =</span> <span class="st">"SUM(totals.visits) as sessions"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">pageviews =</span> <span class="st">"SUM(totals.pageviews) as pageviews"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">timeOnSite =</span> <span class="st">"SUM(totals.timeOnSite) as timeOnSite"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">bounces =</span> <span class="st">"SUM(totals.bounces) as bounces"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">transactions =</span> <span class="st">"SUM(totals.transactions) as transactions"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">transactionRevenue =</span> <span class="st">"SUM(totals.transactionRevenue)/1000000 as transactionRevenue"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">newVisits =</span> <span class="st">"SUM(totals.newVisits) as newVisits"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">screenviews =</span> <span class="st">"SUM(totals.screenviews) as screenviews"</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">uniqueScreenviews =</span> <span class="st">"SUM(totals.uniqueScreenviews) as uniqueScreenviews"</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">timeOnScreen =</span> <span class="st">"SUM(totals.timeOnScreen) as timeOnScreen"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">users =</span> <span class="st">"COUNT(fullVisitorId) as users"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                       <span class="at">exits =</span> <span class="st">"COUNT(hits.isExit) as exits"</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                       <span class="at">entrances =</span> <span class="st">"COUNT(hits.isEntrance) as entrances"</span>,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">eventValue =</span> <span class="st">"SUM(hits.eventinfo.eventValue) as eventValue"</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">metricXX =</span> {a <span class="cf">function</span> to output hit level custom metrics})</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>lookup_bq_query_d <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">referralPath =</span> <span class="st">"trafficSource.referralPath as referralPath"</span>,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>                       <span class="at">hitTimestamp =</span> <span class="st">"(visitStartTime + (hits.time/1000)) as hitTimestamp"</span>,</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>                       <span class="at">campaign =</span> <span class="st">"trafficSource.campaign as campaign"</span>,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>                       <span class="at">source =</span> <span class="st">"trafficSource.source as source"</span>,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>                       <span class="at">medium =</span> <span class="st">"trafficSource.medium as medium"</span>,</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>                       <span class="at">keyword =</span> <span class="st">"trafficSource.keyword as keyword"</span>,</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>                       <span class="at">adContent =</span> <span class="st">"trafficSource.adContent as adContent"</span>,</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>                       <span class="at">adwordsCampaignID =</span> <span class="st">"trafficSource.adwordsClickInfo.campaignId as adwordsCampaignId"</span>,</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>                       <span class="at">adwordsAdGroupID =</span> <span class="st">"trafficSource.adwordsClickInfo.adGroupId as adwordsAdGroupId"</span>,</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>                       <span class="co"># adwords...etc...</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>                       <span class="at">transactionId =</span> <span class="st">"hits.transaction.transactionId as transactionId"</span>,</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>                       <span class="at">date =</span> <span class="st">"date"</span>,</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fullVisitorId =</span> <span class="st">"fullVisitorId"</span>,</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>                       <span class="at">userId =</span> <span class="st">"userId"</span>,</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>                       <span class="at">visitorId =</span> <span class="st">"visitorId"</span>,</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>                       <span class="at">visitId =</span> <span class="st">"visitId"</span>,</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>                       <span class="at">visitStartTime =</span> <span class="st">"visitStartTime"</span>,</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>                       <span class="at">visitNumber =</span> <span class="st">"visitNumber"</span>,</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>                       <span class="at">browser =</span> <span class="st">"device.browser as browser"</span>,</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>                       <span class="at">browserVersion =</span> <span class="st">"device.browserVersion as browserVersion"</span>,</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>                       <span class="at">operatingSystem =</span> <span class="st">"device.operatingSystem as operatingSystem"</span>,</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>                       <span class="at">operatingSystemVersion =</span> <span class="st">"device.operatingSystemVersion as operatingSystemVersion"</span>,</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>                       <span class="at">mobileDeviceBranding =</span> <span class="st">"device.mobileDeviceBranding as mobileDeviceBranding"</span>,</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>                       <span class="at">flashVersion =</span> <span class="st">"device.flashVersion as flashVersion"</span>,</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>                       <span class="at">language =</span> <span class="st">"device.language as language"</span>,</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>                       <span class="at">screenColors =</span> <span class="st">"device.screenColors as screenColors"</span>,</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>                       <span class="at">screenResolution =</span> <span class="st">"device.screenResolution as screenResolution"</span>,</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>                       <span class="at">deviceCategory =</span> <span class="st">"device.deviceCategory as deviceCategory"</span>,</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>                       <span class="at">continent =</span> <span class="st">"geoNetwork.continent as continent"</span>,</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>                       <span class="at">subContinent =</span> <span class="st">"geoNetwork.subContinent as subContinent"</span>,</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>                       <span class="at">country =</span> <span class="st">"geoNetwork.country as country"</span>,</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>                       <span class="at">region =</span> <span class="st">"geoNetwork.region as region"</span>,</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>                       <span class="at">metro =</span> <span class="st">"geoNetwork.region as metro"</span>,</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>                       <span class="at">pagePath =</span> <span class="st">"hits.page.pagePath as pagePath"</span>,</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>                       <span class="at">eventCategory =</span> <span class="st">"hits.eventInfo.eventCategory as eventCategory"</span>,</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>                       <span class="at">eventAction =</span> <span class="st">"hits.eventInfo.eventAction as eventAction"</span>,</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>                       <span class="at">eventLabel =</span> <span class="st">"hits.eventInfo.eventLabel as eventLabel"</span>,</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>                       <span class="at">dimensionXX =</span> {a <span class="cf">function</span> to output hit level custom dimensions})</span></code></pre></div>
 <p>This will increase as I get time to work on it, but feel free to submit a pull request with more.</p>
 </div>
   </div>
