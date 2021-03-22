@@ -26,9 +26,14 @@
   
   f <- function(req){
 
+    # a realtime API call - no cache
+    if(!is.null(req$content$kind) && 
+       req$content$kind == "analyticsData#runRealtimeReport"){
+      return(FALSE)
+    }
     ga4  <- tryCatch(req$content$reports, error = function(x) NULL)
     data <- tryCatch(req$content$rows, error = function(x) NULL)
-    
+
     # v4 data is not golden
     if(!is.null(ga4[[1]]$data$isDataGolden) && 
        !ga4[[1]]$data$isDataGolden){

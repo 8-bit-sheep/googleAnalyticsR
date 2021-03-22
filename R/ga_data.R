@@ -73,7 +73,6 @@ version_aw <- function(){
 #'   206670707,
 #'   metrics = "activeUsers",
 #'   dimensions = c("city","unifiedScreenName"),
-#'   metricAggregations = c("TOTAL", "MINIMUM", "MAXIMUM"),
 #'   limit = 100,
 #'   realtime = TRUE)
 #' 
@@ -176,9 +175,6 @@ ga_data <- function(
 #' @noRd
 ga_aw_realtime <- function(property, requestObj){
   
-  # we have to delete all the cache
-  suppressMessages(googleAuthR::gar_cache_empty())
-  
   url <- 
     sprintf("https://analyticsdata.googleapis.com/%s/properties/%s:runRealtimeReport",
                  version_aw(), property)
@@ -251,7 +247,7 @@ do_runreport_req <- function(requestObj){
 
 parse_realtime <- function(x){
   if(no_rows(x)) return(data.frame())
-  
+
   dim_names <- x$dimensionHeaders$name
   met_names <- x$metricHeaders$name
   
