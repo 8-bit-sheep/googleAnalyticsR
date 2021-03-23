@@ -733,14 +733,13 @@ realtime <- ga_data(
 
 ## Metric Aggregations
 
-Each API call can include the TOTAL, MAXIMUM and MINIMUM metric aggregations in the returned data.frame's metadata.  You can access this data using base R's `attr()` function or use `ga_data_aggregations()` to extract the data.frames:
+Each API call includes the TOTAL, MAXIMUM and MINIMUM metric aggregations in the returned data.frame's metadata.  You can access this data using base R's `attr()` function or use `ga_data_aggregations()` to extract the data.frames:
 
 ```r
 aggs <- ga_data(
       206670707, 
       date_range = c(Sys.Date() - 4, Sys.Date() - 1),
       metrics = "activeUsers",
-      metricAggregations = c("TOTAL","MINIMUM","MAXIMUM"),
       dimensions = c("city","unifiedScreenName"),
       limit = 100)
       

@@ -27,6 +27,9 @@ navbar:
         - text: "GA4 Data API"
           href: articles/reporting-ga4.html
           icon: fa-digital-tachograph
+        - text: "Measurement Protocol"
+          href: articles/measurement-protocol-v2.html
+          icon: fa-upload
         - text: "v4 API"
           href: articles/v4.html
           icon: fa-cogs
