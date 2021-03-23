@@ -81,6 +81,13 @@
       </a>
     </li>
     <li>
+      <a href="../articles/measurement-protocol-v2.html">
+        <span class="fas fa-upload"></span>
+         
+        Measurement Protocol
+      </a>
+    </li>
+    <li>
       <a href="../articles/v4.html">
         <span class="fas fa-cogs"></span>
          
@@ -1128,13 +1135,12 @@
 <div id="metric-aggregations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#metric-aggregations" class="anchor"></a>Metric Aggregations</h2>
-<p>Each API call can include the TOTAL, MAXIMUM and MINIMUM metric aggregations in the returned data.frame’s metadata. You can access this data using base R’s <code><a href="https://rdrr.io/r/base/attr.html">attr()</a></code> function or use <code><a href="../reference/ga_data_aggregations.html">ga_data_aggregations()</a></code> to extract the data.frames:</p>
+<p>Each API call includes the TOTAL, MAXIMUM and MINIMUM metric aggregations in the returned data.frame’s metadata. You can access this data using base R’s <code><a href="https://rdrr.io/r/base/attr.html">attr()</a></code> function or use <code><a href="../reference/ga_data_aggregations.html">ga_data_aggregations()</a></code> to extract the data.frames:</p>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">aggs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_data.html">ga_data</a></span><span class="op">(</span>
       <span class="fl">206670707</span>, 
       date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>,
       metrics <span class="op">=</span> <span class="st">"activeUsers"</span>,
-      metricAggregations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TOTAL"</span>,<span class="st">"MINIMUM"</span>,<span class="st">"MAXIMUM"</span><span class="op">)</span>,
       dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"city"</span>,<span class="st">"unifiedScreenName"</span><span class="op">)</span>,
       limit <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
       
