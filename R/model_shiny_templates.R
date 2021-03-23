@@ -406,6 +406,7 @@ ga_model_shiny_template_make <- function(template, header_boilerplate = TRUE){
   } else if(the_type == "ui_folder"){
     ui_txt <- readLines(file.path(template, "ui.R"))
     
+    output$server <- server_txt
     output$ui <- c(hdr_txt, ui_txt)
   } else if(the_type == "ui_server_folder"){
     ui_txt <- readLines(file.path(template, "ui.R"))
