@@ -13,6 +13,7 @@
 #' @param timestamp_micros Optional. A Unix timestamp (in microseconds) for the time to associate with the event. 
 #' @param user_properties Optional. The user properties for the measurement sent in as a named list.
 #' @param non_personalized_ads Optional. Set to true to indicate these events should not be used for personalized ads. 
+#' @param custom_endpoint You can send to Measurement Protocol to your own GTM-Server Side instance with a Measurement Protocol Client configured.  Enter its domain here to override the Google default.
 #' 
 #' @details 
 #' 
@@ -71,7 +72,8 @@ ga_mp_send <- function(events,
                        debug = FALSE,
                        timestamp_micros = NULL,
                        user_properties = NULL,
-                       non_personalized_ads = TRUE){
+                       non_personalized_ads = TRUE,
+                       custom_endpoint = NULL){
   
   assert_that(
     is.string(measurement_id),
@@ -88,6 +90,8 @@ ga_mp_send <- function(events,
   }
   
   endpoint <- "https://www.google-analytics.com/mp/collect"
+  if(!is.null(custom_endpoint)) endpoint <- custom_endpoint
+  
   if(debug) endpoint <- "https://www.google-analytics.com/debug/mp/collect"
   
   the_url <- sprintf(
