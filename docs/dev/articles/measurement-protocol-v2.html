@@ -340,16 +340,16 @@
 
 <span class="va">event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_mp_event.html">ga_mp_event</a></span><span class="op">(</span><span class="st">"an_event"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/ga_mp_send.html">ga_mp_send</a></span><span class="op">(</span><span class="va">event</span>, <span class="va">a_client_id</span>, <span class="va">my_measurement_id</span>, debug <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>## ℹ 2021-03-23 22:52:56 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=MY_SECRET 
+<pre><code>## ℹ 2021-03-31 19:57:30 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=MY_SECRET 
 ##  {
-##   "client_id": "62858145.1616539976",
+##   "client_id": "60958481.1617220650",
 ##   "non_personalized_ads": true,
 ##   "events": {
 ##     "name": "an_event"
 ##   }
 ## }</code></pre>
-<pre><code>## ℹ 2021-03-23 22:52:56 &gt; Response:  200</code></pre>
-<pre><code>## ℹ 2021-03-23 22:52:56 &gt; No validation messages found</code></pre>
+<pre><code>## ℹ 2021-03-31 19:57:30 &gt; Response:  200</code></pre>
+<pre><code>## ℹ 2021-03-31 19:57:30 &gt; No validation messages found</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>You can send many events in on send:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -357,9 +357,9 @@
 <span class="fu"><a href="../reference/ga_mp_send.html">ga_mp_send</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">event</span>, <span class="va">another</span><span class="op">)</span>, 
            <span class="va">a_client_id</span>, <span class="va">my_measurement_id</span>, 
            debug <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>## ℹ 2021-03-23 22:52:56 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=MY_SECRET 
+<pre><code>## ℹ 2021-03-31 19:57:30 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=MY_SECRET 
 ##  {
-##   "client_id": "62858145.1616539976",
+##   "client_id": "60958481.1617220650",
 ##   "non_personalized_ads": true,
 ##   "events": [
 ##     {
@@ -370,8 +370,8 @@
 ##     }
 ##   ]
 ## }</code></pre>
-<pre><code>## ℹ 2021-03-23 22:52:56 &gt; Response:  200</code></pre>
-<pre><code>## ℹ 2021-03-23 22:52:56 &gt; No validation messages found</code></pre>
+<pre><code>## ℹ 2021-03-31 19:57:30 &gt; Response:  200</code></pre>
+<pre><code>## ℹ 2021-03-31 19:57:30 &gt; No validation messages found</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Events are flexible with the number of parameters you send with the event name - this allows for rich data streams. The data parameters can be added via the <code>params</code> argument and accepts (nested) named R lists:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -449,7 +449,7 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/ga_trackme.html">ga_trackme_event</a></span><span class="op">(</span>debug <span class="op">=</span> <span class="cn">TRUE</span>, say_hello <span class="op">=</span> <span class="st">"Documentation is a feature"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning in file(con, "r"): cannot open file '/builder/home/.R/optin-
 ## googleanalyticsr': No such file or directory</code></pre>
-<pre><code>## ℹ 2021-03-23 22:52:57 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=_hS_7VJARhqbCq9mF3oiNg 
+<pre><code>## ℹ 2021-03-31 19:57:30 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=_hS_7VJARhqbCq9mF3oiNg 
 ##  {
 ##   "client_id": "12345678.987654",
 ##   "non_personalized_ads": true,
@@ -465,8 +465,8 @@
 ##     }
 ##   }
 ## }</code></pre>
-<pre><code>## ℹ 2021-03-23 22:52:57 &gt; Response:  200</code></pre>
-<pre><code>## ℹ 2021-03-23 22:52:57 &gt; No validation messages found</code></pre>
+<pre><code>## ℹ 2021-03-31 19:57:30 &gt; Response:  200</code></pre>
+<pre><code>## ℹ 2021-03-31 19:57:30 &gt; No validation messages found</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Send your own messages if you like! I will read them in the GA4 interface.</p>
 </div>
