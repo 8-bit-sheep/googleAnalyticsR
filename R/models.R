@@ -229,7 +229,7 @@ ga_model_example <- function(name = "list"){
 #'  decomp_ga <- ga_model_make(get_model_data,
 #'                             required_columns = c("date", "sessions"),
 #'                             model_f = decompose_sessions,
-#'                             output_f = function(df, ...){plot(df)},
+#'                             output_f = function(df, ...){graphics::plot(df)},
 #'                             description = "Performs decomposition and creates a plot",
 #'                             outputShiny = shiny::plotOutput,
 #'                             renderShiny = shiny::renderPlot)

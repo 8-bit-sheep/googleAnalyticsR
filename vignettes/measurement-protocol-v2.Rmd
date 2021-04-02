@@ -149,4 +149,6 @@ ga_trackme_event(debug = TRUE, say_hello = "Documentation is a feature")
 
 Send your own messages if you like!  I will read them in the GA4 interface.
 
+## Custom endpoint
 
+If you are running GTM Server Side you can create your own URL endpoint - supply this to `custom_endpoint`

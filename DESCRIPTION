@@ -32,6 +32,7 @@ Imports:
     memoise,
     methods,
     purrr (>= 0.2.2),
+    rappdirs (>= 0.3.3),
     rlang (>= 0.4.7),
     stats,
     tibble (>= 2.0.1),

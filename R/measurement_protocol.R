@@ -311,8 +311,9 @@ ga_trackme <- function(){
     }
     
     cli::cli_alert_success(
-      "Thanks! Your consent and an ID will be marked by the presence of the file {the_file} in this folder.  Delete it or run this function again to remove consent.")
+      "Thanks! Your consent and an ID will be marked by the presence of the file {the_file}.  Delete it or run this function again to remove consent.")
     
+    dir.create(rappdirs::user_config_dir("googleAnalyticsR"), showWarnings = FALSE)
     file.create(the_file)
     cid <- ga_mp_cid()
     write(cid, the_file)
@@ -332,7 +333,8 @@ ga_trackme <- function(){
 .trackme <- new.env()
 .trackme$measurement_id <- "G-43MDXK6CLZ"
 .trackme$api <- "_hS_7VJARhqbCq9mF3oiNg"
-.trackme$filepath <- file.path(path.expand('~'),".R","optin-googleanalyticsr")
+.trackme$filepath <- file.path(rappdirs::user_config_dir("googleAnalyticsR"), 
+                               "optin-googleanalyticsr")
 
 #' Send a tracking hit for googleAnalyticsR package statistics
 #' 
