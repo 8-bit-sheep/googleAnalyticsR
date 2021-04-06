@@ -360,29 +360,27 @@
 
 <span class="va">event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_mp_event.html">ga_mp_event</a></span><span class="op">(</span><span class="st">"an_event"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/ga_mp_send.html">ga_mp_send</a></span><span class="op">(</span><span class="va">event</span>, <span class="va">a_client_id</span>, <span class="va">my_connection</span>, debug_call <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>## ℹ 2021-04-06 09:20:04 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-1234&amp;api_secret= 
+<pre><code>## ℹ 2021-04-06 11:02:08 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-1234&amp;api_secret=MY_SECRET 
 ##  {
-##   "client_id": "24810682.1617700805",
+##   "client_id": "68200274.1617706928",
 ##   "non_personalized_ads": true,
 ##   "events": {
 ##     "name": "an_event"
 ##   }
 ## }</code></pre>
-<pre><code>## ℹ 2021-04-06 09:20:04 &gt; Response:  200</code></pre>
-<pre><code>##    fieldPath                                                       description
-## 1 api_secret Unable to find non-empty parameter [api_secret] value in request.
-##   validationCode
-## 1 VALUE_REQUIRED</code></pre>
+<pre><code>## ℹ 2021-04-06 11:02:08 &gt; Response:  200</code></pre>
+<pre><code>## ℹ 2021-04-06 11:02:08 &gt; No validation messages found</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 <p>You can send many events in on send:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">another</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_mp_event.html">ga_mp_event</a></span><span class="op">(</span><span class="st">"another_event"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/ga_mp_send.html">ga_mp_send</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">event</span>, <span class="va">another</span><span class="op">)</span>, 
            <span class="va">a_client_id</span>, 
            <span class="va">my_connection</span>, 
            debug_call <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>## ℹ 2021-04-06 09:20:05 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-1234&amp;api_secret= 
+<pre><code>## ℹ 2021-04-06 11:02:08 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-1234&amp;api_secret=MY_SECRET 
 ##  {
-##   "client_id": "24810682.1617700805",
+##   "client_id": "68200274.1617706928",
 ##   "non_personalized_ads": true,
 ##   "events": [
 ##     {
@@ -393,13 +391,11 @@
 ##     }
 ##   ]
 ## }</code></pre>
-<pre><code>## ℹ 2021-04-06 09:20:05 &gt; Response:  200</code></pre>
-<pre><code>##    fieldPath                                                       description
-## 1 api_secret Unable to find non-empty parameter [api_secret] value in request.
-##   validationCode
-## 1 VALUE_REQUIRED</code></pre>
+<pre><code>## ℹ 2021-04-06 11:02:08 &gt; Response:  200</code></pre>
+<pre><code>## ℹ 2021-04-06 11:02:08 &gt; No validation messages found</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 <p>Events are flexible with the number of parameters you send with the event name - this allows for rich data streams. The data parameters can be added via the <code>params</code> argument and accepts (nested) named R lists:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ga_mp_event.html">ga_mp_event</a></span><span class="op">(</span><span class="st">"event_with_params"</span>, params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>my_param <span class="op">=</span> <span class="st">"hello"</span>, my_param2 <span class="op">=</span> <span class="st">"mum"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## ==GA4 MP Event
@@ -411,7 +407,7 @@
 ##   }
 ## }</code></pre>
 <p>If you are making product item style hits, the helper function <code><a href="../reference/ga_mp_event_item.html">ga_mp_event_item()</a></code> helps you construct them:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># one item</span>
 <span class="fu"><a href="../reference/ga_mp_event_item.html">ga_mp_event_item</a></span><span class="op">(</span>item_name <span class="op">=</span> <span class="st">"jeggings"</span>, 
                  price <span class="op">=</span> <span class="fl">8.88</span>, 
@@ -422,7 +418,7 @@
 ##   "item_variant": "Black",
 ##   "price": 8.88
 ## }</code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># many items in a list</span>
 <span class="va">items</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   <span class="fu"><a href="../reference/ga_mp_event_item.html">ga_mp_event_item</a></span><span class="op">(</span>item_id <span class="op">=</span> <span class="st">"SKU_12345"</span>, 
@@ -470,11 +466,11 @@
 <p><code>googleAnalyticsR</code> uses the above to provide opt-in tracking of what systems its running on.</p>
 <p><code><a href="../reference/ga_trackme.html">ga_trackme()</a></code> is send on package load if consent is given in the form of a file saved on the user’s computer (much like a website cookie).</p>
 <p>You can see what is sent with the <code>debug_call=TRUE</code> flag - the below is sent when this RMarkdown file renders:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ga_trackme.html">ga_trackme_event</a></span><span class="op">(</span>debug_call <span class="op">=</span> <span class="cn">TRUE</span>, say_hello <span class="op">=</span> <span class="st">"Documentation is a feature"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning in file(con, "r"): cannot open file '/builder/home/.config/
 ## googleAnalyticsR/optin-googleanalyticsr': No such file or directory</code></pre>
-<pre><code>## ℹ 2021-04-06 09:20:05 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=_hS_7VJARhqbCq9mF3oiNg 
+<pre><code>## ℹ 2021-04-06 11:02:08 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=_hS_7VJARhqbCq9mF3oiNg 
 ##  {
 ##   "client_id": "12345678.987654",
 ##   "non_personalized_ads": true,
@@ -490,8 +486,8 @@
 ##     }
 ##   }
 ## }</code></pre>
-<pre><code>## ℹ 2021-04-06 09:20:05 &gt; Response:  200</code></pre>
-<pre><code>## ℹ 2021-04-06 09:20:06 &gt; No validation messages found</code></pre>
+<pre><code>## ℹ 2021-04-06 11:02:08 &gt; Response:  200</code></pre>
+<pre><code>## ℹ 2021-04-06 11:02:08 &gt; No validation messages found</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Send your own messages if you like! I will read them in the GA4 interface.</p>
 </div>
