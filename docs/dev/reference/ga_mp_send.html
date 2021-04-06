@@ -48,7 +48,8 @@
 
 <meta property="og:title" content="Make a Measurement Protocol v2 request — ga_mp_send" />
 <meta property="og:description" content="
-Create a server side call to Google Analytics 4 via its Measurement Protocol" />
+Create a server side call to Google Analytics 4 via its Measurement Protocol
+Use ga_mp_connection to set up the Measurement Protocol connections to pass to ga_mp_send.  If using Google Tag Manager Server-Side, you can also set up a custom endpoint." />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
 
@@ -295,19 +296,25 @@ Create a server side call to Google Analytics 4 via its Measurement Protocol" />
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a>
 Create a server side call to Google Analytics 4 via its Measurement Protocol</p>
+<p>Use ga_mp_connection to set up the Measurement Protocol connections to pass to ga_mp_send.  If using Google Tag Manager Server-Side, you can also set up a custom endpoint.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ga_mp_send</span><span class='op'>(</span>
   <span class='va'>events</span>,
   <span class='va'>client_id</span>,
-  <span class='va'>measurement_id</span>,
+  <span class='va'>connection</span>,
   user_id <span class='op'>=</span> <span class='cn'>NULL</span>,
-  api_secret <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"GA_MP_SECRET"</span><span class='op'>)</span>,
-  debug <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  debug_call <span class='op'>=</span> <span class='cn'>FALSE</span>,
   timestamp_micros <span class='op'>=</span> <span class='cn'>NULL</span>,
   user_properties <span class='op'>=</span> <span class='cn'>NULL</span>,
-  non_personalized_ads <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  custom_endpoint <span class='op'>=</span> <span class='cn'>NULL</span>
+  non_personalized_ads <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+
+<span class='fu'>ga_mp_connection</span><span class='op'>(</span>
+  <span class='va'>measurement_id</span>,
+  api_secret <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"GA_MP_SECRET"</span><span class='op'>)</span>,
+  endpoint <span class='op'>=</span> <span class='cn'>NULL</span>,
+  preview_header <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -322,20 +329,16 @@ Create a server side call to Google Analytics 4 via its Measurement Protocol</p>
       <td><p>The client_id to associate with the event</p></td>
     </tr>
     <tr>
-      <th>measurement_id</th>
-      <td><p>The measurement ID associated with a stream</p></td>
+      <th>connection</th>
+      <td><p>The connection details created by ga_mp_connection</p></td>
     </tr>
     <tr>
       <th>user_id</th>
       <td><p>Optional. Unique id for the user</p></td>
     </tr>
     <tr>
-      <th>api_secret</th>
-      <td><p>The secret generated in the GA4 UI - by default will look for environment arg <code>GA_MP_SECRET</code></p></td>
-    </tr>
-    <tr>
-      <th>debug</th>
-      <td><p>Send hits to the debug endpoint to validate hits</p></td>
+      <th>debug_call</th>
+      <td><p>Send hits to the Google debug endpoint to validate hits.</p></td>
     </tr>
     <tr>
       <th>timestamp_micros</th>
@@ -350,14 +353,30 @@ Create a server side call to Google Analytics 4 via its Measurement Protocol</p>
       <td><p>Optional. Set to true to indicate these events should not be used for personalized ads.</p></td>
     </tr>
     <tr>
+      <th>measurement_id</th>
+      <td><p>The measurement ID associated with a stream</p></td>
+    </tr>
+    <tr>
+      <th>api_secret</th>
+      <td><p>The secret generated in the GA4 UI - by default will look for environment arg <code>GA_MP_SECRET</code></p></td>
+    </tr>
+    <tr>
+      <th>endpoint</th>
+      <td><p>If NULL will use Google default, otherwise set to the URL of your Measurement Protocol custom endpoint</p></td>
+    </tr>
+    <tr>
+      <th>preview_header</th>
+      <td><p>Only needed for custom endpoints. The <code>X-Gtm-Server-Preview</code> HTTP Header found in your GTM debugger</p></td>
+    </tr>
+    <tr>
       <th>custom_endpoint</th>
-      <td><p>You can send to Measurement Protocol to your own GTM-Server Side instance with a Measurement Protocol Client configured.  Enter its domain here to override the Google default.</p></td>
+      <td><p>You can send to Measurement Protocol to your own GTM-Server Side instance with a Measurement Protocol Client configured.  Use ga_mp_custom to create this endpoint and pass to this argument.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>TRUE</code> if successful, if <code>debug=TRUE</code> then validation messages if not a valid hit.</p>
+    <p><code>TRUE</code> if successful, if <code>debug_call=TRUE</code> then validation messages if not a valid hit.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Create an API secret via <code>Admin &gt; Data Streams &gt; choose your stream &gt; Measurement Protocol &gt; Create</code></p>
@@ -366,7 +385,7 @@ Create a server side call to Google Analytics 4 via its Measurement Protocol</p>
 <p><code>timestamp_micros</code> should only be set to record events that happened in the past. This value can be overridden via user_property or event timestamps. Events can be backdated up to 48 hours. Note microseconds, not milliseconds.</p>
 <p><code>user_properties</code> - describe segments of your user base, such as language preference or geographic location.  See <a href='https://developers.google.com/analytics/devguides/collection/protocol/ga4/user-properties?client_type=gtag'>User properties</a></p>
 <p>Ensure you also have user permission as specified in the <a href='https://developers.google.com/analytics/devguides/collection/protocol/ga4/policy'>feature policy</a></p>
-<p>Invalid events are silently rejected with a 204 response, so use <code>debug=TRUE</code> to validate your events first.</p>
+<p>Invalid events are silently rejected with a 204 response, so use <code>debug_call=TRUE</code> to validate your events first.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://developers.google.com/analytics/devguides/collection/protocol/ga4'>Measurement Protocol (Google Analytics 4)</a></p>
@@ -376,51 +395,7 @@ Create a server side call to Google Analytics 4 via its Measurement Protocol</p>
 <code><a href='ga_mp_event.html'>ga_mp_event</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># preferably set this in .Renviron</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.setenv</a></span><span class='op'>(</span>GA_MP_SECRET<span class='op'>=</span><span class='st'>"MY_SECRET"</span><span class='op'>)</span>
-
-<span class='co'># your GA4 settings</span>
-<span class='va'>my_measurement_id</span> <span class='op'>&lt;-</span> <span class='st'>"G-43MDXK6CLZ"</span>
-<span class='va'>a_client_id</span> <span class='op'>&lt;-</span> <span class='fl'>1234567</span>
-
-<span class='va'>event</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_mp_event.html'>ga_mp_event</a></span><span class='op'>(</span><span class='st'>"an_event"</span><span class='op'>)</span>
-<span class='fu'>ga_mp_send</span><span class='op'>(</span><span class='va'>event</span>, <span class='va'>a_client_id</span>, <span class='va'>my_measurement_id</span>, debug <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-03-31 19:57:09 &gt;</span><span> MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=MY_SECRET </span>
-#&gt; <span class='message'> {</span>
-#&gt; <span class='message'>  "client_id": "1234567",</span>
-#&gt; <span class='message'>  "non_personalized_ads": true,</span>
-#&gt; <span class='message'>  "events": {</span>
-#&gt; <span class='message'>    "name": "an_event"</span>
-#&gt; <span class='message'>  }</span>
-#&gt; <span class='message'>}</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-03-31 19:57:09 &gt;</span><span> Response:  200</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-03-31 19:57:09 &gt;</span><span> No validation messages found</span></div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='va'>another</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_mp_event.html'>ga_mp_event</a></span><span class='op'>(</span><span class='st'>"another_event"</span><span class='op'>)</span>
-<span class='fu'>ga_mp_send</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>event</span>, <span class='va'>another</span><span class='op'>)</span>, 
-           <span class='va'>a_client_id</span>, <span class='va'>my_measurement_id</span>, 
-           debug <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-03-31 19:57:09 &gt;</span><span> MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=MY_SECRET </span>
-#&gt; <span class='message'> {</span>
-#&gt; <span class='message'>  "client_id": "1234567",</span>
-#&gt; <span class='message'>  "non_personalized_ads": true,</span>
-#&gt; <span class='message'>  "events": [</span>
-#&gt; <span class='message'>    {</span>
-#&gt; <span class='message'>      "name": "an_event"</span>
-#&gt; <span class='message'>    },</span>
-#&gt; <span class='message'>    {</span>
-#&gt; <span class='message'>      "name": "another_event"</span>
-#&gt; <span class='message'>    }</span>
-#&gt; <span class='message'>  ]</span>
-#&gt; <span class='message'>}</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-03-31 19:57:09 &gt;</span><span> Response:  200</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-03-31 19:57:09 &gt;</span><span> No validation messages found</span></div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># you can see sent events in the real-time reports</span>
-<span class='va'>my_property_id</span> <span class='op'>&lt;-</span> <span class='fl'>206670707</span>
-<span class='fu'><a href='ga_data.html'>ga_data</a></span><span class='op'>(</span><span class='va'>my_property_id</span>, 
-        dimensions <span class='op'>=</span> <span class='st'>"eventName"</span>, 
-        metrics <span class='op'>=</span> <span class='st'>"eventCount"</span>, 
-        dim_filters <span class='op'>=</span> <span class='fu'><a href='ga_data_filter.html'>ga_data_filter</a></span><span class='op'>(</span>
-           <span class='va'>eventName</span> <span class='op'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"an_event"</span>,<span class='st'>"another_event"</span><span class='op'>)</span><span class='op'>)</span>,
-        realtime <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
-<span class='op'>}</span>
-</div></span></pre>
+    <pre class="examples"></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
