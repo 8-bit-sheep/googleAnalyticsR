@@ -6,14 +6,13 @@
 #' 
 #' @param events The events to send
 #' @param client_id The client_id to associate with the event
-#' @param measurement_id The measurement ID associated with a stream
-#' @param api_secret The secret generated in the GA4 UI - by default will look for environment arg `GA_MP_SECRET`
-#' @param debug Send hits to the debug endpoint to validate hits
+#' @param connection The connection details created by [ga_mp_connection]
+#' @param debug_call Send hits to the Google debug endpoint to validate hits.
 #' @param user_id Optional. Unique id for the user
 #' @param timestamp_micros Optional. A Unix timestamp (in microseconds) for the time to associate with the event. 
 #' @param user_properties Optional. The user properties for the measurement sent in as a named list.
 #' @param non_personalized_ads Optional. Set to true to indicate these events should not be used for personalized ads. 
-#' @param custom_endpoint You can send to Measurement Protocol to your own GTM-Server Side instance with a Measurement Protocol Client configured.  Enter its domain here to override the Google default.
+#' @param custom_endpoint You can send to Measurement Protocol to your own GTM-Server Side instance with a Measurement Protocol Client configured.  Use [ga_mp_custom] to create this endpoint and pass to this argument.
 #' 
 #' @details 
 #' 
@@ -29,28 +28,33 @@
 #' 
 #' Ensure you also have user permission as specified in the [feature policy](https://developers.google.com/analytics/devguides/collection/protocol/ga4/policy)
 #' 
-#' Invalid events are silently rejected with a 204 response, so use `debug=TRUE` to validate your events first.
+#' Invalid events are silently rejected with a 204 response, so use `debug_call=TRUE` to validate your events first.
 #' 
 #' @seealso [Measurement Protocol (Google Analytics 4)](https://developers.google.com/analytics/devguides/collection/protocol/ga4)
 #'   
 #' @export
 #' @family Measurement Protocol functions
-#' @return `TRUE` if successful, if `debug=TRUE` then validation messages if not a valid hit.
+#' @return `TRUE` if successful, if `debug_call=TRUE` then validation messages if not a valid hit.
 #' @examples 
 #' # preferably set this in .Renviron
 #' Sys.setenv(GA_MP_SECRET="MY_SECRET")
 #' 
 #' # your GA4 settings
-#' my_measurement_id <- "G-43MDXK6CLZ"
-#' a_client_id <- 1234567
+#' my_measurement_id <- "G-1234"
 #' 
+#' my_connection <- ga_mp_connection(my_measurement_id)
+#' 
+#' a_client_id <- 123.456
 #' event <- ga_mp_event("an_event")
-#' ga_mp_send(event, a_client_id, my_measurement_id, debug = TRUE)
+#' ga_mp_send(event, a_client_id, my_connection, debug_call = TRUE)
 #' 
+#' # multiple events at same time in a batch
 #' another <- ga_mp_event("another_event")
+#' 
 #' ga_mp_send(list(event, another), 
-#'            a_client_id, my_measurement_id, 
-#'            debug = TRUE)
+#'            a_client_id, 
+#'            my_connection 
+#'            debug_call = TRUE)
 #' \dontrun{
 #' # you can see sent events in the real-time reports
 #' my_property_id <- 206670707
@@ -63,22 +67,20 @@
 #' 
 #' }
 #' @importFrom jsonlite toJSON fromJSON
-#' @importFrom httr content POST
-ga_mp_send <- function(events,
-                       client_id,
-                       measurement_id,
-                       user_id = NULL,
-                       api_secret = Sys.getenv("GA_MP_SECRET"),
-                       debug = FALSE,
-                       timestamp_micros = NULL,
-                       user_properties = NULL,
-                       non_personalized_ads = TRUE,
-                       custom_endpoint = NULL){
+#' @importFrom httr content POST verbose add_headers
+ga_mp_send <- function(
+  events,
+  client_id,
+  connection,
+  user_id = NULL,
+  debug_call = FALSE,
+  timestamp_micros = NULL,
+  user_properties = NULL,
+  non_personalized_ads = TRUE){
   
   assert_that(
-    is.string(measurement_id),
-    is.string(api_secret),
-    is.flag(debug),
+    is.ga_mp_connection(connection),
+    is.flag(debug_call),
     is.flag(non_personalized_ads)
   )
   
@@ -89,14 +91,13 @@ ga_mp_send <- function(events,
          call. = FALSE)
   }
   
-  endpoint <- "https://www.google-analytics.com/mp/collect"
-  if(!is.null(custom_endpoint)) endpoint <- custom_endpoint
-  
-  if(debug) endpoint <- "https://www.google-analytics.com/debug/mp/collect"
+  endpoint <- connection$endpoint
+  if(debug_call) endpoint <- "https://www.google-analytics.com/debug/mp/collect"
+  my_headers <- connection$preview_header
   
   the_url <- sprintf(
     "%s?measurement_id=%s&api_secret=%s",
-    endpoint, measurement_id, api_secret
+    endpoint, connection$measurement_id, connection$api_secret
   )
   
   the_body <- rmNullObs(list(
@@ -108,15 +109,21 @@ ga_mp_send <- function(events,
     events = events
   ))
   
-  if(debug || getOption("googleAuthR.verbose") < 3){
+  my_verbose <- NULL
+  if(debug_call || getOption("googleAuthR.verbose") < 3){
     myMessage("MP Request:", the_url,"\n", 
               toJSON(the_body, auto_unbox = TRUE, pretty = TRUE), 
               level = 3)
+    
+    if(getOption("googleAuthR.verbose") < 2) my_verbose <- verbose()
+    
   }
   
   res <- POST(
     the_url,
     body = the_body,
+    connection$preview_header,
+    my_verbose,
     encode = "json"
   )
   
@@ -124,7 +131,7 @@ ga_mp_send <- function(events,
 
   parsed <- content(res, as = "text", encoding = "UTF-8")
   
-  if(nzchar(parsed) && debug){
+  if(nzchar(parsed) && debug_call){
     o <- fromJSON(parsed)
     if(length(o$validationMessages) > 0) return(o$validationMessages)
     myMessage("No validation messages found", level = 3)
@@ -132,6 +139,62 @@ ga_mp_send <- function(events,
   
   TRUE
 }
+
+#' Create a connection for Measurement Protocol v2
+#' 
+#' Use [ga_mp_connection] to set up the Measurement Protocol connections to pass to [ga_mp_send].  If using Google Tag Manager Server-Side, you can also set up a custom endpoint.
+#' 
+#' @param api_secret The secret generated in the GA4 UI - by default will look for environment arg `GA_MP_SECRET`
+#' @param measurement_id The measurement ID associated with a stream
+#' @param endpoint If NULL will use Google default, otherwise set to the URL of your Measurement Protocol custom endpoint
+#' @param preview_header Only needed for custom endpoints. The `X-Gtm-Server-Preview` HTTP Header found in your GTM debugger
+#' @export
+#' @examples 
+#' 
+#' # custom GTM server side endpoint
+#' my_custom_connection <- ga_mp_connection(
+#'    my_measurement_id,
+#'    endpoint = "https://gtm.example.com",
+#'    preview_header = "ZW52LTV8OWdPOExNWFkYjA0Njk4NmQ="
+#'  )
+#'  
+#' @rdname ga_mp_send
+ga_mp_connection <- function(measurement_id,
+                             api_secret = Sys.getenv("GA_MP_SECRET"),
+                             endpoint = NULL, 
+                             preview_header = NULL){
+  assertthat::assert_that(
+    assertthat::is.string(measurement_id),
+    assertthat::is.string(api_secret)
+  )
+  
+  the_endpoint <- "https://www.google-analytics.com/mp/collect"
+  my_headers <- NULL
+  
+  if(!is.null(endpoint)){
+    assertthat::assert_that(is.string(endpoint),
+                grepl("^http", endpoint, ignore.case = TRUE))
+    the_endpoint <- endpoint
+  }
+  
+  if(!is.null(preview_header)){
+    assertthat::assert_that(is.string(preview_header))
+    my_headers <- add_headers("X-Gtm-Server-Preview" = preview_header)
+  }
+  
+  structure(list(
+    measurement_id = measurement_id,
+    api_secret = api_secret,
+    endpoint = the_endpoint,
+    preview_header = my_headers
+  ),
+  class = "ga_mp_connection")
+}
+
+is.ga_mp_connection <- function(x){
+  inherits(x, "ga_mp_connection")
+}
+
 
 #' Create a Measurement Protocol Event
 #' 
@@ -338,11 +401,11 @@ ga_trackme <- function(){
 
 #' Send a tracking hit for googleAnalyticsR package statistics
 #' 
-#' If you opt in, `ga_trackme_event()` is the function that fires.  You can use `debug=TRUE` to see what would be sent before opting in or out.
+#' If you opt in, `ga_trackme_event()` is the function that fires.  You can use `debug_call=TRUE` to see what would be sent before opting in or out.
 #' 
 #' Running `ga_trackme_event()` function will send a Measurement Protocol hit via [ga_mp_send] only if the `~/.R/optin-googleanalyticsr` file is present
 #' 
-#' @param debug Set as a debug event to see what would be sent
+#' @param debug_call Set as a debug event to see what would be sent
 #' @param say_hello If you want to add your own custom message to the event sent, add it here!
 #' 
 #' @export
@@ -353,16 +416,16 @@ ga_trackme <- function(){
 #' ga_trackme_event()
 #' 
 #' # see what data is sent
-#' ga_trackme_event(debug=TRUE)
+#' ga_trackme_event(debug_call=TRUE)
 #' 
 #' # add your own message!
-#' ga_trackme_event(debug = TRUE, say_hello = "err hello Mark")
-ga_trackme_event <- function(debug = FALSE, say_hello = NULL){
+#' ga_trackme_event(debug_call = TRUE, say_hello = "err hello Mark")
+ga_trackme_event <- function(debug_call = FALSE, say_hello = NULL){
   
   assert_that_ifnn(say_hello, is.string)
   
   the_file <- .trackme$filepath
-  if(!file.exists(the_file) & !debug){
+  if(!file.exists(the_file) & !debug_call){
     myMessage("No consent file found", level = 2)
     return(FALSE)
   }
@@ -380,7 +443,7 @@ ga_trackme_event <- function(debug = FALSE, say_hello = NULL){
     )
   )
   
-  if(debug){
+  if(debug_call){
     cid <- tryCatch(cid <- readLines(the_file)[[1]], 
                     error = function(e) "12345678.987654")
   } else {
@@ -397,18 +460,17 @@ ga_trackme_event <- function(debug = FALSE, say_hello = NULL){
     api = .trackme$api
   }
   
+  my_conn <- ga_mp_connection(measurement_id = m_id, api_secret = api)
   
-  if(debug){
+  if(debug_call){
     return(ga_mp_send(event, client_id = cid,
-                      measurement_id = m_id,
-                      api_secret = api,
-                      debug = TRUE))
+                      connection = my_conn,
+                      debug_call = TRUE))
   }
   suppressMessages(
     ga_mp_send(event, client_id = cid,
-               measurement_id = m_id,
-               api_secret = api,
-               debug = debug)
+               connection = my_conn,
+               debug_call = debug_call)
     )
   
   cli::cli_alert_success("Sent library load tracking event")

@@ -38,17 +38,20 @@ Sys.setenv(GA_MP_SECRET="MY_SECRET")
 # your GA4 settings
 my_measurement_id <- "G-43MDXK6CLZ"
 
+# create a connection object
+my_connection <- ga_mp_connection(my_measurement_id)
+
 # a random clientId
 a_client_id <- ga_mp_cid()
 
 event <- ga_mp_event("an_event")
 
 # send to debug endpoint first to validate the hit
-ga_mp_send(event, a_client_id, my_measurement_id, debug = TRUE)
+ga_mp_send(event, a_client_id, my_connection, debug_call = TRUE)
 
 another <- ga_mp_event("another_event")
 
-# send a real hit
+# send a real hit - batched together
 ga_mp_send(list(event, another), 
            a_client_id, my_measurement_id)
 
@@ -70,6 +73,32 @@ You also need a clientId, which is the ID associated with the user creating the 
 
 Once you have those then you need to decide what event you want to send in. To see event parameters in your GA4 reports, create custom fields in your GA4 account first, after which you can see them in your reports 24hrs after you send them - - `dimension name` will be the label in the reports, `event parameter` will be the parameter you have sent in with the event. 
 
+### Creating the connection object
+
+The connection is configured with the API secret and your measurementId. Ideally the API secret should be set in your `.Renviron` file via environment argument `GA_MP_SECRET` 
+
+```r
+# preferably set this in .Renviron
+Sys.setenv(GA_MP_SECRET="MY_SECRET")
+
+# your GA4 settings
+my_measurement_id <- "G-1234"
+
+my_connection <- ga_mp_connection(my_measurement_id)
+```
+
+By default it will send the hits to `https://www.google-analytics.com/mp/collect`. To send to the debug URL `https://www.google-analytics.com/debug/mp/collect"` specify `debug_call=TRUE` in the `ga_mp_send()` function. 
+
+If you have a custom endpoint (say you are running GTM Server Side) then you can override this URL.  In that case you will also want to see your hits appear in the GTM Server Side debugger, which requires a `X-Gtm-Server-Preview` header added to the request.  When in your debugger Web UI's Preview mode, select from the top right menu "send requests manually" to find your header value and put into the connection like below:
+
+```r
+my_custom_connection <- ga_mp_connection(
+    my_measurement_id,
+    endpoint = "https://gtm.example.com",
+    preview_header = "ZW52LTV8OWdPOExNWFkYjA0Njk4NmQ="
+)
+```
+
 ### Sending the GA4 hit via R
 
 You construct an event via `ga_mp_event()` - a simple one may be `ga_mp_event("an_event")`
@@ -80,18 +109,14 @@ ga_mp_event("an_event")
 
 Refer to the [Events documentation](https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events) on what you can send in.
 
-Once you have an event you can test it will show up when you send via `ga_mp_send()` by setting `debug=TRUE`
+Once you have an event you can test it will show up when you send via `ga_mp_send()` by setting `debug_call=TRUE`
 
 ```{r}
-# preferably set this in .Renviron
-Sys.setenv(GA_MP_SECRET="MY_SECRET")
-
-# your GA4 settings
-my_measurement_id <- "G-43MDXK6CLZ"
+my_connection <- ga_mp_connection("G-1234")
 a_client_id <- ga_mp_cid()
 
 event <- ga_mp_event("an_event")
-ga_mp_send(event, a_client_id, my_measurement_id, debug = TRUE)
+ga_mp_send(event, a_client_id, my_connection, debug_call = TRUE)
 ```
 
 You can send many events in on send:
@@ -99,8 +124,9 @@ You can send many events in on send:
 ```{r}
 another <- ga_mp_event("another_event")
 ga_mp_send(list(event, another), 
-           a_client_id, my_measurement_id, 
-           debug = TRUE)
+           a_client_id, 
+           my_connection, 
+           debug_call = TRUE)
 ```
 
 Events are flexible with the number of parameters you send with the event name - this allows for rich data streams.  The data parameters can be added via the `params` argument and accepts (nested) named R lists:
@@ -141,14 +167,10 @@ ga_mp_event("add_payment_info",
 
 `ga_trackme()` is send on package load if consent is given in the form of a file saved on the user's computer (much like a website cookie).
 
-You can see what is sent with the `debug=TRUE` flag - the below is sent when this RMarkdown file renders:
+You can see what is sent with the `debug_call=TRUE` flag - the below is sent when this RMarkdown file renders:
 
 ```{r}
-ga_trackme_event(debug = TRUE, say_hello = "Documentation is a feature")
+ga_trackme_event(debug_call = TRUE, say_hello = "Documentation is a feature")
 ```
 
 Send your own messages if you like!  I will read them in the GA4 interface.
-
-## Custom endpoint
-
-If you are running GTM Server Side you can create your own URL endpoint - supply this to `custom_endpoint`

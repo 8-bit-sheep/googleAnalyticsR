@@ -2,19 +2,25 @@
 % Please edit documentation in R/measurement_protocol.R
 \name{ga_mp_send}
 \alias{ga_mp_send}
+\alias{ga_mp_connection}
 \title{Make a Measurement Protocol v2 request}
 \usage{
 ga_mp_send(
   events,
   client_id,
-  measurement_id,
+  connection,
   user_id = NULL,
-  api_secret = Sys.getenv("GA_MP_SECRET"),
-  debug = FALSE,
+  debug_call = FALSE,
   timestamp_micros = NULL,
   user_properties = NULL,
-  non_personalized_ads = TRUE,
-  custom_endpoint = NULL
+  non_personalized_ads = TRUE
+)
+
+ga_mp_connection(
+  measurement_id,
+  api_secret = Sys.getenv("GA_MP_SECRET"),
+  endpoint = NULL,
+  preview_header = NULL
 )
 }
 \arguments{
@@ -22,13 +28,11 @@ ga_mp_send(
 
 \item{client_id}{The client_id to associate with the event}
 
-\item{measurement_id}{The measurement ID associated with a stream}
+\item{connection}{The connection details created by \link{ga_mp_connection}}
 
 \item{user_id}{Optional. Unique id for the user}
 
-\item{api_secret}{The secret generated in the GA4 UI - by default will look for environment arg \code{GA_MP_SECRET}}
-
-\item{debug}{Send hits to the debug endpoint to validate hits}
+\item{debug_call}{Send hits to the Google debug endpoint to validate hits.}
 
 \item{timestamp_micros}{Optional. A Unix timestamp (in microseconds) for the time to associate with the event.}
 
@@ -36,14 +40,24 @@ ga_mp_send(
 
 \item{non_personalized_ads}{Optional. Set to true to indicate these events should not be used for personalized ads.}
 
-\item{custom_endpoint}{You can send to Measurement Protocol to your own GTM-Server Side instance with a Measurement Protocol Client configured.  Enter its domain here to override the Google default.}
+\item{measurement_id}{The measurement ID associated with a stream}
+
+\item{api_secret}{The secret generated in the GA4 UI - by default will look for environment arg \code{GA_MP_SECRET}}
+
+\item{endpoint}{If NULL will use Google default, otherwise set to the URL of your Measurement Protocol custom endpoint}
+
+\item{preview_header}{Only needed for custom endpoints. The \code{X-Gtm-Server-Preview} HTTP Header found in your GTM debugger}
+
+\item{custom_endpoint}{You can send to Measurement Protocol to your own GTM-Server Side instance with a Measurement Protocol Client configured.  Use \link{ga_mp_custom} to create this endpoint and pass to this argument.}
 }
 \value{
-\code{TRUE} if successful, if \code{debug=TRUE} then validation messages if not a valid hit.
+\code{TRUE} if successful, if \code{debug_call=TRUE} then validation messages if not a valid hit.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Create a server side call to Google Analytics 4 via its Measurement Protocol
+
+Use \link{ga_mp_connection} to set up the Measurement Protocol connections to pass to \link{ga_mp_send}.  If using Google Tag Manager Server-Side, you can also set up a custom endpoint.
 }
 \details{
 Create an API secret via \verb{Admin > Data Streams > choose your stream > Measurement Protocol > Create}
@@ -58,23 +72,28 @@ To see event parameters, create custom fields in your GA4 account first, to see 
 
 Ensure you also have user permission as specified in the \href{https://developers.google.com/analytics/devguides/collection/protocol/ga4/policy}{feature policy}
 
-Invalid events are silently rejected with a 204 response, so use \code{debug=TRUE} to validate your events first.
+Invalid events are silently rejected with a 204 response, so use \code{debug_call=TRUE} to validate your events first.
 }
 \examples{
 # preferably set this in .Renviron
 Sys.setenv(GA_MP_SECRET="MY_SECRET")
 
 # your GA4 settings
-my_measurement_id <- "G-43MDXK6CLZ"
-a_client_id <- 1234567
+my_measurement_id <- "G-1234"
 
+my_connection <- ga_mp_connection(my_measurement_id)
+
+a_client_id <- 123.456
 event <- ga_mp_event("an_event")
-ga_mp_send(event, a_client_id, my_measurement_id, debug = TRUE)
+ga_mp_send(event, a_client_id, my_connection, debug_call = TRUE)
 
+# multiple events at same time in a batch
 another <- ga_mp_event("another_event")
+
 ga_mp_send(list(event, another), 
-           a_client_id, my_measurement_id, 
-           debug = TRUE)
+           a_client_id, 
+           my_connection 
+           debug_call = TRUE)
 \dontrun{
 # you can see sent events in the real-time reports
 my_property_id <- 206670707
@@ -86,6 +105,14 @@ ga_data(my_property_id,
         realtime = TRUE)
 
 }
+
+# custom GTM server side endpoint
+my_custom_connection <- ga_mp_connection(
+   my_measurement_id,
+   endpoint = "https://gtm.example.com",
+   preview_header = "ZW52LTV8OWdPOExNWFkYjA0Njk4NmQ="
+ )
+ 
 }
 \seealso{
 \href{https://developers.google.com/analytics/devguides/collection/protocol/ga4}{Measurement Protocol (Google Analytics 4)}

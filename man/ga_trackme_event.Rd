@@ -7,17 +7,17 @@
 \usage{
 ga_trackme()
 
-ga_trackme_event(debug = FALSE, say_hello = NULL)
+ga_trackme_event(debug_call = FALSE, say_hello = NULL)
 }
 \arguments{
-\item{debug}{Set as a debug event to see what would be sent}
+\item{debug_call}{Set as a debug event to see what would be sent}
 
 \item{say_hello}{If you want to add your own custom message to the event sent, add it here!}
 }
 \description{
 You can opt-in or out to sending a measurement protocol hit when you load the package for use in the package's statistics via this function.  No personal data is collected.
 
-If you opt in, \code{ga_trackme_event()} is the function that fires.  You can use \code{debug=TRUE} to see what would be sent before opting in or out.
+If you opt in, \code{ga_trackme_event()} is the function that fires.  You can use \code{debug_call=TRUE} to see what would be sent before opting in or out.
 }
 \details{
 Running \code{ga_trackme_event()} function will send a Measurement Protocol hit via \link{ga_mp_send} only if the \verb{~/.R/optin-googleanalyticsr} file is present
@@ -33,8 +33,8 @@ if(interactive()){
 ga_trackme_event()
 
 # see what data is sent
-ga_trackme_event(debug=TRUE)
+ga_trackme_event(debug_call=TRUE)
 
 # add your own message!
-ga_trackme_event(debug = TRUE, say_hello = "err hello Mark")
+ga_trackme_event(debug_call = TRUE, say_hello = "err hello Mark")
 }
