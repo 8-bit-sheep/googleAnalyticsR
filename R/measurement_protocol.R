@@ -12,7 +12,6 @@
 #' @param timestamp_micros Optional. A Unix timestamp (in microseconds) for the time to associate with the event. 
 #' @param user_properties Optional. The user properties for the measurement sent in as a named list.
 #' @param non_personalized_ads Optional. Set to true to indicate these events should not be used for personalized ads. 
-#' @param custom_endpoint You can send to Measurement Protocol to your own GTM-Server Side instance with a Measurement Protocol Client configured.  Use [ga_mp_custom] to create this endpoint and pass to this argument.
 #' 
 #' @details 
 #' 
@@ -53,7 +52,7 @@
 #' 
 #' ga_mp_send(list(event, another), 
 #'            a_client_id, 
-#'            my_connection 
+#'            my_connection,
 #'            debug_call = TRUE)
 #' \dontrun{
 #' # you can see sent events in the real-time reports

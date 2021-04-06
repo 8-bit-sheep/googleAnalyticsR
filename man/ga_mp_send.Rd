@@ -47,8 +47,6 @@ ga_mp_connection(
 \item{endpoint}{If NULL will use Google default, otherwise set to the URL of your Measurement Protocol custom endpoint}
 
 \item{preview_header}{Only needed for custom endpoints. The \code{X-Gtm-Server-Preview} HTTP Header found in your GTM debugger}
-
-\item{custom_endpoint}{You can send to Measurement Protocol to your own GTM-Server Side instance with a Measurement Protocol Client configured.  Use \link{ga_mp_custom} to create this endpoint and pass to this argument.}
 }
 \value{
 \code{TRUE} if successful, if \code{debug_call=TRUE} then validation messages if not a valid hit.
@@ -92,7 +90,7 @@ another <- ga_mp_event("another_event")
 
 ga_mp_send(list(event, another), 
            a_client_id, 
-           my_connection 
+           my_connection,
            debug_call = TRUE)
 \dontrun{
 # you can see sent events in the real-time reports
