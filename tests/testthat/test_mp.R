@@ -5,20 +5,22 @@ test_that("Measurement Protocol Hits",{
   
   # your GA4 settings
   my_measurement_id <- "G-43MDXK6CLZ"
+  
+  my_connection <- ga_mp_connection(my_measurement_id)
   a_client_id <- 1234567
   
   event <- ga_mp_event("an_event")
-  mp1 <- ga_mp_send(event, a_client_id, my_measurement_id, debug = TRUE)
+  mp1 <- ga_mp_send(event, a_client_id, my_connection, debug_call = TRUE)
   expect_true(mp1)
   
   event_error <- ga_mp_event("_an_event")
-  mp3 <- ga_mp_send(event_error, a_client_id, my_measurement_id, debug = TRUE)
+  mp3 <- ga_mp_send(event_error, a_client_id, my_connection, debug_call = TRUE)
   expect_snapshot(mp3)
   
   another <- ga_mp_event("another_event")
   mp2 <- ga_mp_send(list(event, another), 
-             a_client_id, my_measurement_id, 
-             debug = TRUE)
+             a_client_id, my_connection, 
+             debug_call = TRUE)
   expect_true(mp2)
   
   # one item
