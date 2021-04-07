@@ -18,7 +18,7 @@ ga_mp_send(
 
 ga_mp_connection(
   measurement_id,
-  api_secret = Sys.getenv("GA_MP_SECRET"),
+  api_secret = Sys.getenv("MP_SECRET"),
   endpoint = NULL,
   preview_header = NULL
 )
@@ -42,7 +42,7 @@ ga_mp_connection(
 
 \item{measurement_id}{The measurement ID associated with a stream}
 
-\item{api_secret}{The secret generated in the GA4 UI - by default will look for environment arg \code{GA_MP_SECRET}}
+\item{api_secret}{The secret generated in the GA4 UI - by default will look for environment arg \code{MP_SECRET}}
 
 \item{endpoint}{If NULL will use Google default, otherwise set to the URL of your Measurement Protocol custom endpoint}
 

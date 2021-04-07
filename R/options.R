@@ -72,11 +72,9 @@
   # for json files
   googleAuthR::gar_attach_auto_auth(needed, 
                                     environment_var = "GA_AUTH_FILE")
-  
-  measurementProtocol::mp_trackme_startup("googleAnalyticsR")
 
-  # need to comment this out if changing these functions else it prevents package load
-  ga_trackme_event()
+  # opt-in package tracking
+  measurementProtocol::mp_trackme_event(pkgname)
   
   invisible(NULL)
   
