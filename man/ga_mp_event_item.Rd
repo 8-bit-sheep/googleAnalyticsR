@@ -64,7 +64,6 @@ ga_mp_event("add_payment_info",
                           value = 7.77, 
                           currency = "USD"), 
             items = items)
-
 }
 \seealso{
 Other Measurement Protocol functions: 

@@ -65,8 +65,7 @@
 #'         realtime = TRUE)
 #' 
 #' }
-#' @importFrom jsonlite toJSON fromJSON
-#' @importFrom httr content POST verbose add_headers
+#' @importFrom measurementProtocol mp_send
 ga_mp_send <- function(
   events,
   client_id,
@@ -77,66 +76,14 @@ ga_mp_send <- function(
   user_properties = NULL,
   non_personalized_ads = TRUE){
   
-  assert_that(
-    is.ga_mp_connection(connection),
-    is.flag(debug_call),
-    is.flag(non_personalized_ads)
-  )
-  
-  if(length(events) > 0 && 
-     !is.ga_mp_event(events) && 
-     !all(unlist(lapply(events, is.ga_mp_event)))){
-    stop("Must supply a ga_mp_event object or a list of ga_mp_event objects", 
-         call. = FALSE)
-  }
-  
-  endpoint <- connection$endpoint
-  if(debug_call) endpoint <- "https://www.google-analytics.com/debug/mp/collect"
-  my_headers <- connection$preview_header
-  
-  the_url <- sprintf(
-    "%s?measurement_id=%s&api_secret=%s",
-    endpoint, connection$measurement_id, connection$api_secret
-  )
-  
-  the_body <- rmNullObs(list(
-    client_id = as.character(client_id),
-    user_id = as.character(user_id),
-    timestamp_micros = timestamp_micros,
-    user_properties = user_properties,
-    non_personalized_ads = non_personalized_ads,
-    events = events
-  ))
-  
-  my_verbose <- NULL
-  if(debug_call || getOption("googleAuthR.verbose") < 3){
-    myMessage("MP Request:", the_url,"\n", 
-              toJSON(the_body, auto_unbox = TRUE, pretty = TRUE), 
-              level = 3)
-    
-    if(getOption("googleAuthR.verbose") < 2) my_verbose <- verbose()
-    
-  }
-  
-  res <- POST(
-    the_url,
-    body = the_body,
-    connection$preview_header,
-    my_verbose,
-    encode = "json"
-  )
-  
-  myMessage("Response: ", res$status, level = 3)
-
-  parsed <- content(res, as = "text", encoding = "UTF-8")
-  
-  if(nzchar(parsed) && debug_call){
-    o <- fromJSON(parsed)
-    if(length(o$validationMessages) > 0) return(o$validationMessages)
-    myMessage("No validation messages found", level = 3)
-  }
-  
-  TRUE
+  mp_send(events = events,
+          client_id = client_id,
+          connection = connection,
+          user_id = user_id,
+          debug_call = debug_call,
+          timestamp_micros = timestamp_micros,
+          user_properties = user_properties,
+          non_personalized_ads = non_personalized_ads)
 }
 
 #' Create a connection for Measurement Protocol v2
@@ -158,40 +105,16 @@ ga_mp_send <- function(
 #'  )
 #'  
 #' @rdname ga_mp_send
+#' @importFrom measurementProtocol mp_connection
 ga_mp_connection <- function(measurement_id,
                              api_secret = Sys.getenv("GA_MP_SECRET"),
                              endpoint = NULL, 
                              preview_header = NULL){
-  assertthat::assert_that(
-    assertthat::is.string(measurement_id),
-    assertthat::is.string(api_secret)
-  )
   
-  the_endpoint <- "https://www.google-analytics.com/mp/collect"
-  my_headers <- NULL
-  
-  if(!is.null(endpoint)){
-    assertthat::assert_that(is.string(endpoint),
-                grepl("^http", endpoint, ignore.case = TRUE))
-    the_endpoint <- endpoint
-  }
-  
-  if(!is.null(preview_header)){
-    assertthat::assert_that(is.string(preview_header))
-    my_headers <- add_headers("X-Gtm-Server-Preview" = preview_header)
-  }
-  
-  structure(list(
-    measurement_id = measurement_id,
-    api_secret = api_secret,
-    endpoint = the_endpoint,
-    preview_header = my_headers
-  ),
-  class = "ga_mp_connection")
-}
-
-is.ga_mp_connection <- function(x){
-  inherits(x, "ga_mp_connection")
+  mp_connection(measurement_id = measurement_id,
+                api_secret = api_secret,
+                endpoint = endpoint,
+                preview_header = preview_header)
 }
 
 
@@ -211,28 +134,11 @@ is.ga_mp_connection <- function(x){
 #' 
 #' ga_mp_event("custom_event")
 #' ga_mp_event("custom_event", params = list(my_param = "SUPER"))
+#' @importFrom measurementProtocol mp_event
 ga_mp_event <- function(name, params = NULL, items = NULL){
   
-  if(!is.null(items)){
-    params <- c(params, list(items = items))
-  }
+  mp_event(name = name, params = params, items = items)
   
-  structure(
-    rmNullObs(list(
-      name = name,
-      params = params
-    )), class = c("ga_mp_event","list")
-  )
-}
-
-is.ga_mp_event <- function(x){
-  inherits(x, "ga_mp_event")
-}
-
-#' @export
-print.ga_mp_event <- function(x, ...){
-  cat("\n==GA4 MP Event\n")
-  print(jsonlite::toJSON(x, pretty = TRUE, auto_unbox = TRUE))
 }
 
 #' Create an Measurement Protocol Item Property for an Event
@@ -276,7 +182,7 @@ print.ga_mp_event <- function(x, ...){
 #'                           value = 7.77, 
 #'                           currency = "USD"), 
 #'             items = items)
-#'
+#' @importFrom measurementProtocol mp_event_item
 ga_mp_event_item <- function(
   item_id = NULL,
   item_name = NULL,
@@ -290,35 +196,17 @@ ga_mp_event_item <- function(
   currency = NULL
 ){
   
-  if(all(is.null(item_id), is.null(item_name))){
-    stop("One of item_id or item_name is required")
-  }
+  mp_event_item(item_id = item_id,
+                item_name = item_name,
+                coupon = coupon,
+                discount = discount,
+                affiliation = affiliation,
+                item_brand = item_brand,
+                item_category = item_category,
+                item_variant = item_variant,
+                price = price,
+                currency = currency)
   
-  structure(
-    rmNullObs(list(
-      item_id = item_id,
-      item_name = item_name,
-      coupon = coupon,
-      discount = discount,
-      affiliation = affiliation,
-      item_brand = item_brand,
-      item_category = item_category,
-      item_variant = item_variant,
-      price = price,
-      currency = currency
-    )), class = c("ga_mp_event_item","list")
-  )
-  
-}
-
-is.ga_mp_event_item <- function(x){
-  inherits(x, "ga_mp_event_item")
-}
-
-#' @export
-print.ga_mp_event_item <- function(x, ...){
-  cat("==GA4 MP Event Item\n")
-  print(jsonlite::toJSON(x, pretty = TRUE, auto_unbox = TRUE))
 }
 
 #' Generate a random client_id
@@ -329,15 +217,10 @@ print.ga_mp_event_item <- function(x, ...){
 #' 
 #' @export
 #' @family Measurement Protocol functions
+#' @importFrom measurementProtocol mp_cid
 ga_mp_cid <- function(seed = NULL){
   
-  if(!is.null(seed)){
-    set.seed(seed)
-  }
-  rand <- round(stats::runif(1, min = 1, max = 100000000))
-  ts <- round(as.numeric(Sys.time()))
-  
-  paste0(rand,".",ts)
+  mp_cid(seed = seed)
 
 }
 

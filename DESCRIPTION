@@ -60,4 +60,7 @@ Config/testthat/edition: 3
 Config/testthat/parallel: true
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
+Remotes:
+  MarkEdmondson1234/measurementProtocol
+  
 

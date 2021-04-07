@@ -79,7 +79,7 @@
   }
 
   # need to comment this out if changing these functions else it prevents package load
-  ga_trackme_event()
+  #ga_trackme_event()
   
   invisible(NULL)
   
