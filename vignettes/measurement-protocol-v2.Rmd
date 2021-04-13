@@ -13,6 +13,13 @@ From the [Google docs](https://developers.google.com/analytics/devguides/collect
 
 The Google Analytics Measurement Protocol for Google Analytics 4 allows developers to make HTTP requests to send events directly to Google Analytics servers. This allows developers to measure how users interact with their business from any HTTP-enabled environment. Notably, this makes it easy to measure interactions that happen server-to-server.
 
+### library(measurementProtocol)
+
+The [measurementProtocol library](https://code.markedmondson.me/measurementProtocol/) is the one actually making the hits, with `googleAnalyticsR` calling the same functions.  Use `library(measurementProtocol)` directly if you don't need the rest of the `googleAnalyticsR` functions and would like a lighter package to work with. 
+
+
+## Usage
+
 Using the `ga_mp_send()` function you can send tracking hits from any R environment that is connected to HTTP.  This can be used in variety of ways including R package tracking; extracting user data then running statistical analysis on GA4 user data and sending it back into GA4; server side tracking implementations of R web apps such as Shiny.
 
 `googleAnalyticsR` includes opt-in GA4 tracking of the package usage via the `ga_trackme()` function.
@@ -75,11 +82,11 @@ Once you have those then you need to decide what event you want to send in. To s
 
 ### Creating the connection object
 
-The connection is configured with the API secret and your measurementId. Ideally the API secret should be set in your `.Renviron` file via environment argument `GA_MP_SECRET` 
+The connection is configured with the API secret and your measurementId. Ideally the API secret should be set in your `.Renviron` file via environment argument `MP_SECRET` 
 
 ```r
 # preferably set this in .Renviron
-Sys.setenv(GA_MP_SECRET="MY_SECRET")
+Sys.setenv(MP_SECRET="MY_SECRET")
 
 # your GA4 settings
 my_measurement_id <- "G-1234"

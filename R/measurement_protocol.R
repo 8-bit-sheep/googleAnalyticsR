@@ -36,7 +36,7 @@
 #' @return `TRUE` if successful, if `debug_call=TRUE` then validation messages if not a valid hit.
 #' @examples 
 #' # preferably set this in .Renviron
-#' Sys.setenv(GA_MP_SECRET="MY_SECRET")
+#' Sys.setenv(MP_SECRET="MY_SECRET")
 #' 
 #' # your GA4 settings
 #' my_measurement_id <- "G-1234"
