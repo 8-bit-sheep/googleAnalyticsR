@@ -1,5 +1,5 @@
 version_aw <- function(){
-  "v1alpha"
+  "v1beta"
 }
 
 #' Google Analytics Data for GA4 (App+Web)
@@ -115,7 +115,7 @@ ga_data <- function(
     
     if(realtime) return(ga_aw_realtime(propertyId, raw_json))
     
-    return(do_runreport_req(raw_json))
+    return(do_runreport_req(propertyId, raw_json))
   }
   
   assert_that(is.integer(page_size),
@@ -155,7 +155,6 @@ ga_data <- function(
   dates <- gaw_dates(date_range)
   
   brrr <- RunReportRequest(
-        entity = Entity(propertyId),
         metrics = mets,
         dimensions = dims,
         dateRanges = dates,
@@ -168,16 +167,16 @@ ga_data <- function(
         returnPropertyQuota = TRUE
       )
   
-  ga_aw_report(brrr, page_size)
+  ga_aw_report(propertyId, brrr, page_size)
 }
 
 #' Realtime API
 #' @noRd
-ga_aw_realtime <- function(property, requestObj){
+ga_aw_realtime <- function(propertyId, requestObj){
   
   url <- 
     sprintf("https://analyticsdata.googleapis.com/%s/properties/%s:runRealtimeReport",
-                 version_aw(), property)
+                 version_aw(), propertyId)
   # analyticsdata.runRealtimeReport
   f <- gar_api_generator(url, "POST", 
                          data_parse_function = parse_realtime)
@@ -190,7 +189,7 @@ ga_aw_realtime <- function(property, requestObj){
 #' Normal Reporting API
 #' @noRd
 #' @importFrom dplyr bind_rows
-ga_aw_report <- function(requestObj, page_size){
+ga_aw_report <- function(propertyId, requestObj, page_size){
   
   request_limit <- requestObj$limit
 
@@ -199,7 +198,7 @@ ga_aw_report <- function(requestObj, page_size){
   }
   
   # first page
-  o <- do_runreport_req(requestObj)
+  o <- do_runreport_req(propertyId, requestObj)
   
   rowCount <- attr(o, "rowCount")
   
@@ -224,7 +223,7 @@ ga_aw_report <- function(requestObj, page_size){
     }
     
     requestObj$offset <- x
-    do_runreport_req(requestObj)
+    do_runreport_req(propertyId, requestObj)
   })
   
   ooo <- c(list(o), o_pages)
@@ -233,9 +232,10 @@ ga_aw_report <- function(requestObj, page_size){
   
 }
 
-do_runreport_req <- function(requestObj){
-  url <- sprintf("https://analyticsdata.googleapis.com/%s:runReport",
-                 version_aw())
+do_runreport_req <- function(property, requestObj){
+  url <- 
+    sprintf("https://analyticsdata.googleapis.com/%s/properties/%s:runReport",
+            version_aw(), property)
   
   # analyticsdata.runReport
   f <- gar_api_generator(url, "POST", 

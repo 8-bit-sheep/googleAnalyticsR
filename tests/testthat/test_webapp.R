@@ -79,18 +79,18 @@ test_that("Raw Data fetch", {
   skip_on_cran()
   skip_on_travis()
   
-  the_json <- '{"entity":{"propertyId":"206670707"},"metrics":[{"name":"sessions"}],"orderBys":[{"dimension":{"orderType":"ALPHANUMERIC","dimensionName":"date"},"desc":false}],"dimensions":[{"name":"date"}],"dateRanges":[{"startDate":"2020-01-08","endDate":"2021-01-07"}],"keepEmptyRows":true,"limit":-1,"returnPropertyQuota":true}'
+  the_json <- '{"metrics":[{"name":"sessions"}],"orderBys":[{"dimension":{"orderType":"ALPHANUMERIC","dimensionName":"date"},"desc":false}],"dimensions":[{"name":"date"}],"dateRanges":[{"startDate":"2021-01-01","endDate":"2021-01-07"}],"keepEmptyRows":true,"limit":100,"returnPropertyQuota":true}'
   
-  raw <- ga_data(raw_json = the_json)
+  raw <- ga_data(ga4_propertyId, raw_json = the_json)
   expect_s3_class(raw, "data.frame")
   expect_snapshot_output(raw)
   
-  raw_2 <- ga_data(raw_json = jsonlite::fromJSON(the_json))
+  raw_2 <- ga_data(ga4_propertyId, raw_json = jsonlite::fromJSON(the_json))
   expect_s3_class(raw_2, "data.frame")
   expect_snapshot_output(raw_2)
   
   raw_rt <- ga_data(
-    propertyId = ga4_propertyId, 
+    propertyId = ga4_propertyId, metrics = NULL,
     raw_json = '{"metrics":[{"name":"activeUsers"}],"limit":100,"returnPropertyQuota":true}',
     realtime = TRUE)
   expect_s3_class(raw_rt, "data.frame")
@@ -102,8 +102,8 @@ test_that("Meta Data API",{
   skip_on_travis()
   
   meta44 <- ga_meta("data", propertyId =ga4_propertyId)
-  expect_equal(meta44[meta44$apiName == "customEvent:test_dim","uiName"],
-               "test_dim")
+  expect_equal(meta44[meta44$apiName == "customEvent:r_platform","uiName"],
+               "R platform")
   expect_s3_class(meta44, "data.frame")
 })
 
