@@ -41,3 +41,5 @@
 ^pkgdown*
 ^\.covrignore$
 ^\.optin-googleanalyticsr$
+^inst/jupyter*
+
