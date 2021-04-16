@@ -1,8 +1,7 @@
 ## Test environments
-
-* local OS X install, R 3.6.3
-* ubuntu 12.04 (on travis-ci), R 3.6.3
-* win-builder, R Under development (unstable) (2018-12-19 r75867)
+* local R installation, R 3.6.3
+* x86_64-pc-linux-gnu (64-bit) (on Google Cloud Build), R 4.0.5
+* win-builder (devel)
 
 
 ## R CMD check results
@@ -13,10 +12,11 @@
 
 ## Dependencies
 
-2 packages were dependent on googleAnalyticsR:
+3 packages have googleAnalyticsR in SUGGESTS:
 
-* ganalytics (v0.10.4)
-* googleAuthR (v0.7.0)
+* ganalytics (v0.10.7)
+* googleAuthR (v1.4.0)
+* ryandexdirect (v3.6.0)
 
-Both were checked and found no errors, warnings or notes
+All were checked and found no errors, warnings or notes
 
