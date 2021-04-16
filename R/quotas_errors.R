@@ -23,7 +23,7 @@ is_default_project <- function(){
 default_project_message <- function(){
 
   if(is_default_project()){
-    myMessage("Default Google Project for googleAnalyticsR is set.  \n This is shared with all googleAnalyticsR users. \n If making a lot of API calls, please: \n visit: https://bit.ly/2Evk6hn \n for instructions on setting your own Google Project \n", 
+    myMessage("Default Google Project for googleAnalyticsR is set.  \n This is shared with all googleAnalyticsR users. \n If making a lot of API calls, please visit: \n https://gtm2.markedmondson.me/gar-setup \n for instructions on setting your own Google Project \n", 
               level = 3)
 
   }

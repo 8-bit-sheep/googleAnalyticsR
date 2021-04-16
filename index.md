@@ -1,11 +1,12 @@
 # googleAnalyticsR - Google Analytics API to R
 
-![CRAN](http://www.r-pkg.org/badges/version/googleAnalyticsR)
+<!-- badges: start -->
+[![CRAN](http://www.r-pkg.org/badges/version/googleAnalyticsR)](http://cran.r-project.org/package=googleAnalyticsR)
 [![codecov](https://codecov.io/gh/MarkEdmondson1234/googleAnalyticsR/branch/master/graph/badge.svg)](https://codecov.io/gh/MarkEdmondson1234/googleAnalyticsR)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2025/badge)](https://bestpractices.coreinfrastructure.org/projects/2025)
 ![CloudBuild](https://badger-ewjogewawq-ew.a.run.app/build/status?project=mark-edmondson-gde&id=4ae2fa13-b1d8-41f3-b846-8bf3c67f050a)
 [![CodeFactor](https://www.codefactor.io/repository/github/markedmondson1234/googleanalyticsr/badge)](https://www.codefactor.io/repository/github/markedmondson1234/googleanalyticsr)
-
+<!-- badges: end -->
 
 ## googleAnalyticsR
 
@@ -21,7 +22,9 @@ Collaboration is welcomed and encouraged, if you are interested get in touch.
 
 ## Features
 
-* First [Google Analytics Reporting v4 API](https://code.markedmondson.me/googleAnalyticsR/articles/v4.html) library for R
+* First [GA4 Data API R package](https://code.markedmondson.me/googleAnalyticsR/articles/reporting-ga4.html) for fetching data from GA4 properties
+* Send server-side Measurement Protocol v2 hits to GA4 via the [measurementProtocol R package](https://code.markedmondson.me/measurementProtocol/)
+* First [Google Analytics Reporting v4 API](https://code.markedmondson.me/googleAnalyticsR/articles/v4.html) library for Universal Analytics to R
 * Automatic [anti-sampling techniques](https://code.markedmondson.me/googleAnalyticsR/articles/v4.html#anti-sampling) to return more detailed data
 * v4 features include: metric expressions, pivots, date comparisons, batching.
 * Auto-paging, [auto-authentication](https://code.markedmondson.me/googleAnalyticsR/articles/setup.html) options
@@ -82,6 +85,7 @@ If you have used the package and published online then get in touch and I'll lis
 * Carl from RStudio writes about the process of [creating custom Google Analytics dashboards with R](https://blog.rstudio.com/2020/11/27/google-analytics-part1/).
 * Antoine writes a nice in-depth post on [analysis you can do with your blog traffic in R](https://www.statsandr.com/blog/track-blog-performance-in-r/)
 * Jamarius Taylor shows how to do [Market Basket Analysis with googleAnalyticsR data](https://www.linkedin.com/pulse/market-basket-analysis-ga-r-jamarius-taylor/)
+* Adil Khan shows how to apply [k-means clustering to Google Analytics data](https://analyticslog.com/blog/2021/2/20/google-analytics-content-segmentation-via-k-means-clustering-in-r-programming)
 
 ## My website
 
