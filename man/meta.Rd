@@ -9,7 +9,7 @@ A data frame containing metric and dimensions that
 you can query the Reporting API with.
 }
 \source{
-\url{https://developers.google.com/analytics/devguides/reporting/core/dimsmets}
+\url{https://ga-dev-tools.appspot.com/dimensions-metrics-explorer/}
 }
 \usage{
 meta

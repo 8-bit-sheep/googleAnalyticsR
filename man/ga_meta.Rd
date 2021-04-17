@@ -42,5 +42,5 @@ ga_meta("data", propertyId = 206670707)
 }
 }
 \seealso{
-\url{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}, \url{https://developers.google.com/analytics/trusted-testing/analytics-data/rest/v1alpha/TopLevel/getUniversalMetadata}
+\url{https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list}, \url{https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1alpha/properties/getMetadata}
 }

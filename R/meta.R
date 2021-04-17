@@ -6,7 +6,7 @@
 #' @param no_api Don't call the API, just return `googleAnalyticsR::meta4`
 #' @return dataframe of dimensions and metrics available to use
 #'
-#' @seealso <https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list>, <https://developers.google.com/analytics/trusted-testing/analytics-data/rest/v1alpha/TopLevel/getUniversalMetadata>
+#' @seealso <https://developers.google.com/analytics/devguides/reporting/metadata/v3/reference/metadata/columns/list>, <https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1alpha/properties/getMetadata>
 #' 
 #' @importFrom googleAuthR gar_api_generator
 #' 
