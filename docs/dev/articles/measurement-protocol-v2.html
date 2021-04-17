@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.8.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -369,9 +369,9 @@
 
 <span class="va">event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_mp_event.html">ga_mp_event</a></span><span class="op">(</span><span class="st">"an_event"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/ga_mp_send.html">ga_mp_send</a></span><span class="op">(</span><span class="va">event</span>, <span class="va">a_client_id</span>, <span class="va">my_connection</span>, debug_call <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>## ℹ 2021-04-13 19:19:34 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-1234&amp;api_secret=MY_SECRET 
+<pre><code>## ℹ 2021-04-17 11:57:25 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-1234&amp;api_secret=MY_SECRET 
 ##  {
-##   "client_id": "94949160.1618341574",
+##   "client_id": "91796296.1618660646",
 ##   "non_personalized_ads": true,
 ##   "events": [
 ##     {
@@ -379,8 +379,8 @@
 ##     }
 ##   ]
 ## }</code></pre>
-<pre><code>## ℹ 2021-04-13 19:19:34 &gt; Response:  200</code></pre>
-<pre><code>## ℹ 2021-04-13 19:19:34 &gt; No validation messages found</code></pre>
+<pre><code>## ℹ 2021-04-17 11:57:25 &gt; Response:  200</code></pre>
+<pre><code>## ℹ 2021-04-17 11:57:25 &gt; No validation messages found</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>You can send many events in on send:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -389,9 +389,9 @@
            <span class="va">a_client_id</span>, 
            <span class="va">my_connection</span>, 
            debug_call <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>## ℹ 2021-04-13 19:19:34 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-1234&amp;api_secret=MY_SECRET 
+<pre><code>## ℹ 2021-04-17 11:57:26 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-1234&amp;api_secret=MY_SECRET 
 ##  {
-##   "client_id": "94949160.1618341574",
+##   "client_id": "91796296.1618660646",
 ##   "non_personalized_ads": true,
 ##   "events": [
 ##     {
@@ -402,8 +402,8 @@
 ##     }
 ##   ]
 ## }</code></pre>
-<pre><code>## ℹ 2021-04-13 19:19:34 &gt; Response:  200</code></pre>
-<pre><code>## ℹ 2021-04-13 19:19:34 &gt; No validation messages found</code></pre>
+<pre><code>## ℹ 2021-04-17 11:57:26 &gt; Response:  200</code></pre>
+<pre><code>## ℹ 2021-04-17 11:57:26 &gt; No validation messages found</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Events are flexible with the number of parameters you send with the event name - this allows for rich data streams. The data parameters can be added via the <code>params</code> argument and accepts (nested) named R lists:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
@@ -481,7 +481,7 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/ga_trackme.html">ga_trackme_event</a></span><span class="op">(</span>debug_call <span class="op">=</span> <span class="cn">TRUE</span>, say_hello <span class="op">=</span> <span class="st">"Documentation is a feature"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning in file(con, "r"): cannot open file '/builder/home/.config/
 ## googleAnalyticsR/optin-tracking': No such file or directory</code></pre>
-<pre><code>## ℹ 2021-04-13 19:19:34 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=_hS_7VJARhqbCq9mF3oiNg 
+<pre><code>## ℹ 2021-04-17 11:57:26 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=_hS_7VJARhqbCq9mF3oiNg 
 ##  {
 ##   "client_id": "12345678.987654",
 ##   "non_personalized_ads": true,
@@ -494,13 +494,13 @@
 ##         "r_locale": "LC_CTYPE=en_US.UTF-8;LC_NUMERIC=C;LC_TIME=en_US.UTF-8;LC_COLLATE=en_US.UTF-8;LC_MONETARY=en_US.UTF-8;LC_MESSAGES=C;LC_PAPER=en_US.UTF-8;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=en_US.UTF-8;LC_IDENTIFICATION=C",
 ##         "r_system": "Ubuntu 20.04 LTS",
 ##         "say_hello": "Documentation is a feature",
-##         "package": "googleAnalyticsR 0.8.0.9000"
+##         "package": "googleAnalyticsR 1.0.0.9000"
 ##       }
 ##     }
 ##   ]
 ## }</code></pre>
-<pre><code>## ℹ 2021-04-13 19:19:34 &gt; Response:  200</code></pre>
-<pre><code>## ℹ 2021-04-13 19:19:34 &gt; No validation messages found</code></pre>
+<pre><code>## ℹ 2021-04-17 11:57:26 &gt; Response:  200</code></pre>
+<pre><code>## ℹ 2021-04-17 11:57:26 &gt; No validation messages found</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Send your own messages if you like! I will read them in the GA4 interface.</p>
 </div>

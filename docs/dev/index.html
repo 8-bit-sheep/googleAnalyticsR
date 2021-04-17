@@ -21,7 +21,7 @@
 <meta property="og:description" content="Interact with the Google Analytics 
   APIs &lt;https://developers.google.com/analytics/&gt;, including 
   the Core Reporting API (v3 and v4), Management API, User Activity API
-  and Multi-Channel Funnel API.">
+  GA4's Data API and Admin API and Multi-Channel Funnel API.">
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -48,7 +48,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">googleAnalyticsR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.8.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -245,6 +245,7 @@
   <div class="contents col-md-9">
 <div id="googleanalyticsr---google-analytics-api-to-r" class="section level1">
 
+<!-- badges: start -->
 
 <div id="googleanalyticsr" class="section level2">
 <h2 class="hasAnchor">
@@ -259,7 +260,10 @@
 <h2 class="hasAnchor">
 <a href="#features" class="anchor"></a>Features</h2>
 <ul>
-<li>First <a href="https://code.markedmondson.me/googleAnalyticsR/articles/v4.html">Google Analytics Reporting v4 API</a> library for R</li>
+<li>First <a href="https://code.markedmondson.me/googleAnalyticsR/articles/reporting-ga4.html">GA4 Data API R package</a> for fetching data from GA4 properties</li>
+<li>Send server-side Measurement Protocol v2 hits to GA4 via the <a href="https://code.markedmondson.me/measurementProtocol/">measurementProtocol R package</a>
+</li>
+<li>First <a href="https://code.markedmondson.me/googleAnalyticsR/articles/v4.html">Google Analytics Reporting v4 API</a> library for Universal Analytics to R</li>
 <li>Automatic <a href="https://code.markedmondson.me/googleAnalyticsR/articles/v4.html#anti-sampling">anti-sampling techniques</a> to return more detailed data</li>
 <li>v4 features include: metric expressions, pivots, date comparisons, batching.</li>
 <li>Auto-paging, <a href="https://code.markedmondson.me/googleAnalyticsR/articles/setup.html">auto-authentication</a> options</li>
@@ -346,6 +350,8 @@
 </li>
 <li>Jamarius Taylor shows how to do <a href="https://www.linkedin.com/pulse/market-basket-analysis-ga-r-jamarius-taylor/">Market Basket Analysis with googleAnalyticsR data</a>
 </li>
+<li>Adil Khan shows how to apply <a href="https://analyticslog.com/blog/2021/2/20/google-analytics-content-segmentation-via-k-means-clustering-in-r-programming">k-means clustering to Google Analytics data</a>
+</li>
 </ul>
 </div>
 <div id="my-website" class="section level2">
@@ -394,6 +400,7 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="http://cran.r-project.org/package=googleAnalyticsR"><img src="http://www.r-pkg.org/badges/version/googleAnalyticsR" alt="CRAN"></a></li>
 <li><a href="https://codecov.io/gh/MarkEdmondson1234/googleAnalyticsR"><img src="https://codecov.io/gh/MarkEdmondson1234/googleAnalyticsR/branch/master/graph/badge.svg" alt="codecov"></a></li>
 <li><a href="https://bestpractices.coreinfrastructure.org/projects/2025"><img src="https://bestpractices.coreinfrastructure.org/projects/2025/badge" alt="CII Best Practices"></a></li>
 <li><a href="https://www.codefactor.io/repository/github/markedmondson1234/googleanalyticsr"><img src="https://www.codefactor.io/repository/github/markedmondson1234/googleanalyticsr/badge" alt="CodeFactor"></a></li>

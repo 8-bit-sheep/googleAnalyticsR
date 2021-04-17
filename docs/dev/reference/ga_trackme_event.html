@@ -91,7 +91,7 @@ If you opt in, ga_trackme_event() is the function that fires.  You can use debug
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.8.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -327,10 +327,10 @@ If you opt in, ga_trackme_event() is the function that fires.  You can use debug
 
 <span class='co'># this only works with a valid opt-in file present </span>
 <span class='fu'>ga_trackme_event</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-04-13 19:19:15 &gt;</span><span> No consent file found</span></div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-04-17 11:56:51 &gt;</span><span> No consent file found</span></div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
 <span class='co'># see what data is sent</span>
 <span class='fu'>ga_trackme_event</span><span class='op'>(</span>debug_call<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot open file '/builder/home/.config/googleAnalyticsR/optin-tracking': No such file or directory</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-04-13 19:19:15 &gt;</span><span> MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=_hS_7VJARhqbCq9mF3oiNg </span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot open file '/builder/home/.config/googleAnalyticsR/optin-tracking': No such file or directory</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-04-17 11:56:51 &gt;</span><span> MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=_hS_7VJARhqbCq9mF3oiNg </span>
 #&gt; <span class='message'> {</span>
 #&gt; <span class='message'>  "client_id": "12345678.987654",</span>
 #&gt; <span class='message'>  "non_personalized_ads": true,</span>
@@ -342,14 +342,14 @@ If you opt in, ga_trackme_event() is the function that fires.  You can use debug
 #&gt; <span class='message'>        "r_platform": "x86_64-pc-linux-gnu (64-bit)",</span>
 #&gt; <span class='message'>        "r_locale": "LC_CTYPE=en_US.UTF-8;LC_NUMERIC=C;LC_TIME=en_US.UTF-8;LC_COLLATE=en_US.UTF-8;LC_MONETARY=en_US.UTF-8;LC_MESSAGES=C;LC_PAPER=en_US.UTF-8;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=en_US.UTF-8;LC_IDENTIFICATION=C",</span>
 #&gt; <span class='message'>        "r_system": "Ubuntu 20.04 LTS",</span>
-#&gt; <span class='message'>        "package": "googleAnalyticsR 0.8.0.9000"</span>
+#&gt; <span class='message'>        "package": "googleAnalyticsR 1.0.0.9000"</span>
 #&gt; <span class='message'>      }</span>
 #&gt; <span class='message'>    }</span>
 #&gt; <span class='message'>  ]</span>
-#&gt; <span class='message'>}</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-04-13 19:19:15 &gt;</span><span> Response:  200</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-04-13 19:19:15 &gt;</span><span> No validation messages found</span></div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+#&gt; <span class='message'>}</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-04-17 11:56:51 &gt;</span><span> Response:  200</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-04-17 11:56:51 &gt;</span><span> No validation messages found</span></div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># add your own message!</span>
 <span class='fu'>ga_trackme_event</span><span class='op'>(</span>debug_call <span class='op'>=</span> <span class='cn'>TRUE</span>, say_hello <span class='op'>=</span> <span class='st'>"err hello Mark"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot open file '/builder/home/.config/googleAnalyticsR/optin-tracking': No such file or directory</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-04-13 19:19:16 &gt;</span><span> MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=_hS_7VJARhqbCq9mF3oiNg </span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot open file '/builder/home/.config/googleAnalyticsR/optin-tracking': No such file or directory</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-04-17 11:56:52 &gt;</span><span> MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=_hS_7VJARhqbCq9mF3oiNg </span>
 #&gt; <span class='message'> {</span>
 #&gt; <span class='message'>  "client_id": "12345678.987654",</span>
 #&gt; <span class='message'>  "non_personalized_ads": true,</span>
@@ -362,11 +362,11 @@ If you opt in, ga_trackme_event() is the function that fires.  You can use debug
 #&gt; <span class='message'>        "r_locale": "LC_CTYPE=en_US.UTF-8;LC_NUMERIC=C;LC_TIME=en_US.UTF-8;LC_COLLATE=en_US.UTF-8;LC_MONETARY=en_US.UTF-8;LC_MESSAGES=C;LC_PAPER=en_US.UTF-8;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=en_US.UTF-8;LC_IDENTIFICATION=C",</span>
 #&gt; <span class='message'>        "r_system": "Ubuntu 20.04 LTS",</span>
 #&gt; <span class='message'>        "say_hello": "err hello Mark",</span>
-#&gt; <span class='message'>        "package": "googleAnalyticsR 0.8.0.9000"</span>
+#&gt; <span class='message'>        "package": "googleAnalyticsR 1.0.0.9000"</span>
 #&gt; <span class='message'>      }</span>
 #&gt; <span class='message'>    }</span>
 #&gt; <span class='message'>  ]</span>
-#&gt; <span class='message'>}</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-04-13 19:19:16 &gt;</span><span> Response:  200</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-04-13 19:19:16 &gt;</span><span> No validation messages found</span></div><div class='output co'>#&gt; [1] TRUE</div></span></pre>
+#&gt; <span class='message'>}</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-04-17 11:56:52 &gt;</span><span> Response:  200</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> </span><span style='color: #B2B2B2;'>2021-04-17 11:56:52 &gt;</span><span> No validation messages found</span></div><div class='output co'>#&gt; [1] TRUE</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
