@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -123,6 +123,13 @@
         <span class="fas fa-digital-tachograph"></span>
          
         GA4 Data API
+      </a>
+    </li>
+    <li>
+      <a href="../articles/measurement-protocol-v2.html">
+        <span class="fas fa-upload"></span>
+         
+        Measurement Protocol
       </a>
     </li>
     <li>
@@ -194,12 +201,30 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../articles/models.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fas fa-calculator"></span>
      
     Models
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/models.html">
+        <span class="fas fa-calculator"></span>
+         
+        Creating Models
+      </a>
+    </li>
+    <li>
+      <a href="../articles/model-templates.html">
+        <span class="fas fa-photo-video"></span>
+         
+        Shiny Model Templates
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -279,7 +304,7 @@
   description <span class='op'>=</span> <span class='cn'>NULL</span>,
   outputShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/shiny/man/plotOutput.html'>plotOutput</a></span>,
   renderShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/shiny/man/renderPlot.html'>renderPlot</a></span>,
-  inputShiny <span class='op'>=</span> <span class='cn'>NULL</span>
+  inputShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/tag.html'>tagList</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -330,7 +355,7 @@ must take data from result of <code>data_f</code> in first argument</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The passed functions should all have <code>...</code> to make them flexible
-  in what arguments can be added.  Do not have the same argument names in both functions.
+in what arguments can be added.  Do not have the same argument names in both functions.
 The <code>data_f</code> function result will feed to <code>model_f</code></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -387,7 +412,7 @@ The <code>data_f</code> function result will feed to <code>model_f</code></p>
  <span class='va'>decomp_ga</span> <span class='op'>&lt;-</span> <span class='fu'>ga_model_make</span><span class='op'>(</span><span class='va'>get_model_data</span>,
                             required_columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"date"</span>, <span class='st'>"sessions"</span><span class='op'>)</span>,
                             model_f <span class='op'>=</span> <span class='va'>decompose_sessions</span>,
-                            output_f <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>...</span><span class='op'>)</span><span class='op'>{</span><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>}</span>,
+                            output_f <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>...</span><span class='op'>)</span><span class='op'>{</span><span class='fu'>graphics</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>}</span>,
                             description <span class='op'>=</span> <span class='st'>"Performs decomposition and creates a plot"</span>,
                             outputShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/shiny/man/plotOutput.html'>plotOutput</a></span>,
                             renderShiny <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/shiny/man/renderPlot.html'>renderPlot</a></span><span class='op'>)</span>

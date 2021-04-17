@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Get Google Analytics 360 BigQuery data — google_analytics_bq" />
-<meta property="og:description" content="Turn a google_analytics style call into BigQuery SQL. 
+<meta property="og:description" content="Turn a google_analytics style call into BigQuery SQL.
 Used with Google Analytics 360 BigQuery exports." />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
@@ -91,7 +91,7 @@ Used with Google Analytics 360 BigQuery exports." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -124,6 +124,13 @@ Used with Google Analytics 360 BigQuery exports." />
         <span class="fas fa-digital-tachograph"></span>
          
         GA4 Data API
+      </a>
+    </li>
+    <li>
+      <a href="../articles/measurement-protocol-v2.html">
+        <span class="fas fa-upload"></span>
+         
+        Measurement Protocol
       </a>
     </li>
     <li>
@@ -195,12 +202,30 @@ Used with Google Analytics 360 BigQuery exports." />
     </li>
   </ul>
 </li>
-<li>
-  <a href="../articles/models.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fas fa-calculator"></span>
      
     Models
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/models.html">
+        <span class="fas fa-calculator"></span>
+         
+        Creating Models
+      </a>
+    </li>
+    <li>
+      <a href="../articles/model-templates.html">
+        <span class="fas fa-photo-video"></span>
+         
+        Shiny Model Templates
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -268,7 +293,7 @@ Used with Google Analytics 360 BigQuery exports." />
     </div>
 
     <div class="ref-description">
-    <p>Turn a google_analytics style call into BigQuery SQL. 
+    <p>Turn a google_analytics style call into BigQuery SQL.
 Used with Google Analytics 360 BigQuery exports.</p>
     </div>
 
@@ -351,19 +376,19 @@ Used with Google Analytics 360 BigQuery exports.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>All data will be unsampled, and requests will cost money against your BigQuery quota.</p>
-<p>Requires installation of bigQueryR and authentication under ga_bq_auth() 
+<p>Requires installation of bigQueryR and authentication under ga_bq_auth()
 or googleAuthR::gar_auth() with BigQuery scope set.
-View your projectIds upon authentication via <code><a href='https://rdrr.io/pkg/bigQueryR/man/bqr_list_projects.html'>bqr_list_projects</a></code></p>
+View your projectIds upon authentication via <code><a href='https://rdrr.io/pkg/bigQueryR/man/bqr_list_projects.html'>bigQueryR::bqr_list_projects()</a></code></p>
 <p>No segments for now.</p>
 <p>Goals are not specified in BQ exports, so you need to look at how you define them and replicate per view
 e.g. unique pageviews or unique events.</p>
 <p>Custom dimensions can be specified as session or hit level, so ignoring the setting in GA interface.</p>
 <p>You can get a sample Google Analytics dataset in bigquery by following the instructions
-  here: <a href='https://support.google.com/analytics/answer/3416091?hl=en'>https://support.google.com/analytics/answer/3416091?hl=en</a></p>
+here: <a href='https://support.google.com/analytics/answer/3416091?hl=en'>https://support.google.com/analytics/answer/3416091?hl=en</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://support.google.com/analytics/answer/4419694?hl=en'>https://support.google.com/analytics/answer/4419694?hl=en</a>
-         <a href='https://support.google.com/analytics/answer/3437719?hl=en'>https://support.google.com/analytics/answer/3437719?hl=en</a></p></div>
+<a href='https://support.google.com/analytics/answer/3437719?hl=en'>https://support.google.com/analytics/answer/3437719?hl=en</a></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

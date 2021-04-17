@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -123,6 +123,13 @@
         <span class="fas fa-digital-tachograph"></span>
          
         GA4 Data API
+      </a>
+    </li>
+    <li>
+      <a href="../articles/measurement-protocol-v2.html">
+        <span class="fas fa-upload"></span>
+         
+        Measurement Protocol
       </a>
     </li>
     <li>
@@ -194,12 +201,30 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../articles/models.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fas fa-calculator"></span>
      
     Models
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/models.html">
+        <span class="fas fa-calculator"></span>
+         
+        Creating Models
+      </a>
+    </li>
+    <li>
+      <a href="../articles/model-templates.html">
+        <span class="fas fa-photo-video"></span>
+         
+        Shiny Model Templates
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -349,7 +374,7 @@
 <ul>
 <li><p><code>{{{ model_libraries }}}</code>- Adds <code><a href='https://rdrr.io/r/base/library.html'>library()</a></code> calls based on models$required_packages</p></li>
 <li><p><code>{{{ web_json }}}</code>- Adds Google OAuth2 client for web applications</p></li>
-<li><p><code>{{{ scopes }}}</code>- Adds Google Oauth2 scopes for the API calls</p></li>
+<li><p><code>{{{ scopes }}}</code>- Adds Google OAuth2 scopes for the API calls</p></li>
 <li><p><code>{{{ deployed_url }}}</code>- Adds <code><a href='https://rdrr.io/r/base/options.html'>option(googleAuthR.redirect)</a></code> option for deployed Shiny apps</p></li>
 <li><p><code>{{{ model_load }}}</code>- Adds <a href='ga_model_load.html'>ga_model_load</a> calls loading all models in the list passed to this function's <code>models</code> argument.  It creates R objects called 'model1', 'model2' etc. in the Shiny app code</p></li>
 <li><p><code>{{{ model_list }}}</code>- Adds a list of the model objects after model_load.  Useful for creating custom functions in themes that can loop over model objects</p></li>
@@ -381,9 +406,22 @@
     <pre class="examples"><div class='input'>
 <span class='co'># see Shiny templates included with the package</span>
 <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"list"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "argonDash"      "basic"          "basic_app"      "basic_bslib"   
-#&gt; [5] "boilerplate"    "gentelella"     "html_based"     "shinydashboard"
-#&gt; [9] "shinythemes"   </div><div class='input'>
+</div><div class='output co'>#&gt;  [1] "argonDash/ui.R"                      
+#&gt;  [2] "basic_app/app.R"                     
+#&gt;  [3] "basic_bslib/ui.R"                    
+#&gt;  [4] "basic/ui.R"                          
+#&gt;  [5] "boilerplate/deploy.R"                
+#&gt;  [6] "boilerplate/Dockerfile_app"          
+#&gt;  [7] "boilerplate/Dockerfile_ui_server"    
+#&gt;  [8] "boilerplate/header_boilerplate.R"    
+#&gt;  [9] "boilerplate/server_app_boilerplate.R"
+#&gt; [10] "boilerplate/server_boilerplate.R"    
+#&gt; [11] "gentelella/ui.R"                     
+#&gt; [12] "html_based/template.html"            
+#&gt; [13] "html_based/ui.R"                     
+#&gt; [14] "html_based/www/dummy.js"             
+#&gt; [15] "shinydashboard/ui.R"                 
+#&gt; [16] "shinythemes/ui.R"                    </div><div class='input'>
 <span class='co'># see an example of an ui.R template with macros</span>
 <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"basic/ui.R"</span>, read_lines <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "## basic ui.R"                           
@@ -402,36 +440,37 @@
 #&gt;  [5] "{{{ model_libraries }}}"                                   
 #&gt;  [6] ""                                                          
 #&gt;  [7] "gar_set_client(web_json = \"{{ web_json }}\","             
-#&gt;  [8] "               scopes = \"{{ scopes }}\")"                 
-#&gt;  [9] "options(googleAuthR.redirect = \"{{ deployed_url }}\")"    
-#&gt; [10] ""                                                          
-#&gt; [11] "# loads pre-existing models"                               
-#&gt; [12] "{{{ model_load }}}"                                        
-#&gt; [13] ""                                                          
-#&gt; [14] "## ui.R"                                                   
-#&gt; [15] "ui &lt;- fluidPage(title = \"{{ shiny_title }}\","            
-#&gt; [16] "                {{ auth_ui }},"                            
-#&gt; [17] "                {{{ date_range }}},"                       
-#&gt; [18] "                h2(\"Model Output\"),"                     
-#&gt; [19] "{{{ model_ui }}}"                                          
-#&gt; [20] "                "                                          
-#&gt; [21] ")"                                                         
-#&gt; [22] ""                                                          
-#&gt; [23] "server &lt;- function(input, output, session){"               
-#&gt; [24] "  "                                                        
-#&gt; [25] "  token &lt;- gar_shiny_auth(session)"                        
-#&gt; [26] "  "                                                        
-#&gt; [27] "  {{{ auth_accounts }}}"                                   
-#&gt; [28] "  "                                                        
-#&gt; [29] "  # module for authentication"                             
-#&gt; [30] "  view_id &lt;- {{ auth_server }}"                            
-#&gt; [31] "  "                                                        
-#&gt; [32] "  # module to display model results"                       
-#&gt; [33] "  {{{ model_server }}}"                                    
-#&gt; [34] "  "                                                        
-#&gt; [35] "}"                                                         
-#&gt; [36] ""                                                          
-#&gt; [37] "shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)"</div><div class='input'>
+#&gt;  [8] "               scopes = \"{{ scopes }}\", "                
+#&gt;  [9] "               activate = \"web\")"                        
+#&gt; [10] "options(googleAuthR.redirect = \"{{ deployed_url }}\")"    
+#&gt; [11] ""                                                          
+#&gt; [12] "# loads pre-existing models"                               
+#&gt; [13] "{{{ model_load }}}"                                        
+#&gt; [14] ""                                                          
+#&gt; [15] "## ui.R"                                                   
+#&gt; [16] "ui &lt;- fluidPage(title = \"{{ shiny_title }}\","            
+#&gt; [17] "                {{ auth_ui }},"                            
+#&gt; [18] "                {{{ date_range }}},"                       
+#&gt; [19] "                h2(\"Model Output\"),"                     
+#&gt; [20] "{{{ model_ui }}}"                                          
+#&gt; [21] "                "                                          
+#&gt; [22] ")"                                                         
+#&gt; [23] ""                                                          
+#&gt; [24] "server &lt;- function(input, output, session){"               
+#&gt; [25] "  "                                                        
+#&gt; [26] "  token &lt;- gar_shiny_auth(session)"                        
+#&gt; [27] "  "                                                        
+#&gt; [28] "  {{{ auth_accounts }}}"                                   
+#&gt; [29] "  "                                                        
+#&gt; [30] "  # module for authentication"                             
+#&gt; [31] "  view_id &lt;- {{ auth_server }}"                            
+#&gt; [32] "  "                                                        
+#&gt; [33] "  # module to display model results"                       
+#&gt; [34] "  {{{ model_server }}}"                                    
+#&gt; [35] "  "                                                        
+#&gt; [36] "}"                                                         
+#&gt; [37] ""                                                          
+#&gt; [38] "shinyApp(gar_shiny_ui(ui, login_ui = silent_auth), server)"</div><div class='input'>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 
 <span class='co'># a universal analytics model using default template "basic"</span>
@@ -445,11 +484,6 @@
   auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>,
   template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"basic_app"</span><span class='op'>)</span><span class='op'>)</span>
   
-<span class='co'># a template directly from an app.R file that has its own server object</span>
-<span class='fu'>ga_model_shiny</span><span class='op'>(</span>
-  <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"decomp_ga.gamr"</span><span class='op'>)</span>, 
-  auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>,
-  template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"basic_app/app.R"</span><span class='op'>)</span><span class='op'>)</span>
   
 <span class='co'># a template from only an ui.R file that will import boilerplate server.R</span>
 <span class='fu'>ga_model_shiny</span><span class='op'>(</span>
@@ -491,6 +525,17 @@
 <span class='fu'>ga_model_shiny</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>m4</span>, <span class='va'>m3</span><span class='op'>)</span>, auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>, 
                template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"shinydashboard"</span><span class='op'>)</span>, 
                skin <span class='op'>=</span> <span class='st'>"green"</span><span class='op'>)</span>
+               
+<span class='co'># send in lots of theme variables to bslib in shiny &gt; 1.6.0</span>
+<span class='fu'>ga_model_shiny</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>m4</span>, <span class='va'>m3</span><span class='op'>)</span>, auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>,
+               template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"basic_bslib"</span><span class='op'>)</span>, 
+               bg <span class='op'>=</span> <span class='st'>"white"</span>, fg <span class='op'>=</span> <span class='st'>"red"</span>, primary <span class='op'>=</span> <span class='st'>"grey"</span><span class='op'>)</span>
+ 
+<span class='co'># write out an app to a local folder</span>
+<span class='fu'>ga_model_shiny</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>m4</span>, <span class='va'>m3</span><span class='op'>)</span>, auth_dropdown <span class='op'>=</span> <span class='st'>"universal"</span>,
+               template <span class='op'>=</span> <span class='fu'><a href='ga_model_shiny_template.html'>ga_model_shiny_template</a></span><span class='op'>(</span><span class='st'>"basic_bslib"</span><span class='op'>)</span>, 
+               bg <span class='op'>=</span> <span class='st'>"white"</span>, fg <span class='op'>=</span> <span class='st'>"red"</span>, primary <span class='op'>=</span> <span class='st'>"grey"</span>,
+               local_folder <span class='op'>=</span> <span class='st'>"deploy_shiny"</span><span class='op'>)</span>
 <span class='op'>}</span>
 
 

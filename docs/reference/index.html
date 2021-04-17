@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -122,6 +122,13 @@
         <span class="fas fa-digital-tachograph"></span>
          
         GA4 Data API
+      </a>
+    </li>
+    <li>
+      <a href="../articles/measurement-protocol-v2.html">
+        <span class="fas fa-upload"></span>
+         
+        Measurement Protocol
       </a>
     </li>
     <li>
@@ -193,12 +200,30 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../articles/models.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fas fa-calculator"></span>
      
     Models
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/models.html">
+        <span class="fas fa-calculator"></span>
+         
+        Creating Models
+      </a>
+    </li>
+    <li>
+      <a href="../articles/model-templates.html">
+        <span class="fas fa-photo-video"></span>
+         
+        Shiny Model Templates
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -379,6 +404,49 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
+          <h2 id="section-measurement-protocol-v-" class="hasAnchor"><a href="#section-measurement-protocol-v-" class="anchor"></a>Measurement Protocol v2</h2>
+          <p class="section-desc"><p>Send data into GA4 with the Measurement Protocol</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="ga_mp_cid.html">ga_mp_cid()</a></code> </p>
+        </td>
+        <td><p>Generate a random client_id</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ga_mp_event.html">ga_mp_event()</a></code> </p>
+        </td>
+        <td><p>Create a Measurement Protocol Event</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ga_mp_event_item.html">ga_mp_event_item()</a></code> </p>
+        </td>
+        <td><p>Create an Measurement Protocol Item Property for an Event</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ga_mp_send.html">ga_mp_send()</a></code> <code><a href="ga_mp_send.html">ga_mp_connection()</a></code> </p>
+        </td>
+        <td><p>Make a Measurement Protocol v2 request</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ga_trackme_event.html">ga_trackme()</a></code> <code><a href="ga_trackme_event.html">ga_trackme_event()</a></code> </p>
+        </td>
+        <td><p>Opt in or out of googleAnalyticsR usage tracking</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
           <h2 id="section-reporting-api-v-objects" class="hasAnchor"><a href="#section-reporting-api-v-objects" class="anchor"></a>Reporting API v4 objects</h2>
           <p class="section-desc"><p>Creating objects for more advanced v4 Reporting API fetches</p></p>
         </th>
@@ -498,6 +566,18 @@
           <p><code><a href="ga_meta.html">ga_meta()</a></code> </p>
         </td>
         <td><p>Get current dimensions and metrics available in GA API.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="meta.html">meta</a></code> </p>
+        </td>
+        <td><p>Google Analytics API metadata</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="meta4.html">meta4</a></code> </p>
+        </td>
+        <td><p>Google Analytics API metadata</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -516,62 +596,49 @@
         <td>
           <p><code><a href="accountPicker.html">accountPickerUI()</a></code> <code><a href="accountPicker.html">accountPicker()</a></code> </p>
         </td>
-        <td><p>accountPicker UI [Shiny Module] - pick GA4 accounts/webProperties in Shiny</p></td>
+        <td><p>accountPicker UI Shiny Module - pick GA4 accounts/webProperties in Shiny</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="authDropdown.html">authDropdown()</a></code> </p>
         </td>
-        <td><p>authDropdown [Shiny Module]</p></td>
+        <td><p>authDropdown Shiny Module</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="authDropdownUI.html">authDropdownUI()</a></code> </p>
+        </td>
+        <td><p>authDropdown UI Shiny Module</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="multi_select.html">multi_select()</a></code> </p>
         </td>
-        <td><p>multi_select [Shiny Module]</p></td>
+        <td><p>multi_select Shiny Module</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="multi_selectUI.html">multi_selectUI()</a></code> </p>
+        </td>
+        <td><p>multi_select UI Shiny Module</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="metricDimensionSelect.html">metricDimensionSelectUI()</a></code> <code><a href="metricDimensionSelect.html">metricDimensionSelect()</a></code> </p>
         </td>
-        <td><p>metricDimensionSelectUI - GA4 [Shiny Module]</p></td>
+        <td><p>metricDimensionSelectUI - GA4 Shiny Module</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="segmentBuilder.html">segmentBuilder()</a></code> </p>
         </td>
         <td><p>Create a GAv4 Segment Builder</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-advanced-fetching-options" class="hasAnchor"><a href="#section-advanced-fetching-options" class="anchor"></a>Advanced fetching options</h2>
-          <p class="section-desc"><p>Building your own Google Analytics API requests</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="make_ga_4_req.html">make_ga_4_req()</a></code> </p>
-        </td>
-        <td><p>Make a Google Analytics v4 API fetch</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="fetch_google_analytics_4.html">fetch_google_analytics_4()</a></code> </p>
+          <p><code><a href="segmentBuilderUI.html">segmentBuilderUI()</a></code> </p>
         </td>
-        <td><p>Fetch multiple GAv4 requests</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fetch_google_analytics_4_slow.html">fetch_google_analytics_4_slow()</a></code> </p>
-        </td>
-        <td><p>Fetch GAv4 requests one at a time</p></td>
+        <td><p>Create a GAv4 Segment Builder</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -590,7 +657,7 @@
         <td>
           <p><code><a href="ga_model.html">ga_model()</a></code> </p>
         </td>
-        <td><p>Use a model function created by ga_model_make</p></td>
+        <td><p>Use a model</p></td>
       </tr><tr>
         
         <td>
@@ -731,6 +798,18 @@
           <p><code><a href="ga_adwords.html">ga_adwords()</a></code> </p>
         </td>
         <td><p>Get AdWords Link meta data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ga_adwords_add_linkid.html">ga_adwords_add_linkid()</a></code> </p>
+        </td>
+        <td><p>Creates a Google Analytics webProperty-Google Ads link</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ga_adwords_delete_linkid.html">ga_adwords_delete_linkid()</a></code> </p>
+        </td>
+        <td><p>Deletes a Google Analytics webProperty-Google Ads link</p></td>
       </tr><tr>
         
         <td>
@@ -939,7 +1018,7 @@
           <p><code><a href="ga_unsampled_download.html">ga_unsampled_download()</a></code> </p>
         </td>
         <td><p>Download Unsampled Report from Google Drive. You must be authenticated with the
-same account that you setup the unsampled report. This means service account 
+same account that you setup the unsampled report. This means service account
 authentication is not supported.</p></td>
       </tr>
     </tbody><tbody>

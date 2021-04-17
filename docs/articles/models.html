@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -77,6 +77,13 @@
         <span class="fas fa-digital-tachograph"></span>
          
         GA4 Data API
+      </a>
+    </li>
+    <li>
+      <a href="../articles/measurement-protocol-v2.html">
+        <span class="fas fa-upload"></span>
+         
+        Measurement Protocol
       </a>
     </li>
     <li>
@@ -148,12 +155,30 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../articles/models.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fas fa-calculator"></span>
      
     Models
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/models.html">
+        <span class="fas fa-calculator"></span>
+         
+        Creating Models
+      </a>
+    </li>
+    <li>
+      <a href="../articles/model-templates.html">
+        <span class="fas fa-photo-video"></span>
+         
+        Shiny Model Templates
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -212,7 +237,7 @@
 
       
 
-      </header><script src="models_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="models_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Statistical models and visualisations with Google Analytics data</h1>
@@ -230,7 +255,8 @@
 <p>To make it easier to distribute these analysis, <code>googleAnalyticsR</code> now includes the <code>ga_model_*</code> functions to help end users get to insights more quickly.</p>
 <p><code>ga_model</code> objects can be saved to the new <code>.gamr</code> format. Loading these files using <code><a href="../reference/ga_model.html">ga_model()</a></code> and specifying your own Google Analytics viewId, all the data processing, modelling and visualisation steps can be encapsulated to give you the output.</p>
 <p><code>.gamr</code> files also includes the ability to create Shiny modules which you can use to quickly create online Shiny dashboards displaying the model results, and which can switch to users own Google Analytics data using the multi-user login capabilities.</p>
-<p>The <code>.gamr</code> file format can be shared with others online or within your organisation. A new R package that includes some more advanced examples is available from <a href="https://github.com/IronistM/googleAnalyticsModelR/"><code>IronistM/googleAnalyticsModelR/</code></a></p>
+<p>The <code>.gamr</code> file format can be shared with others online or within your organisation.</p>
+<p>You can also use model objects to create Shiny apps - see <a href="articles/model-templates.html">Model Shiny Templates</a></p>
 <div id="a-simple-example-loading-a-model-directly" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-simple-example-loading-a-model-directly" class="anchor"></a>A simple example loading a model directly</h2>
@@ -649,17 +675,8 @@
 <div class="figure">
 <img src="figure/unnamed-chunk-16-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-16</p>
 </div>
-<p>That can display interactively in a tweet:</p>
-<blockquote class="twitter-tweet">
-<p lang="en" dir="ltr">
-An example for the documentation - CausalImpact/Dygraphs with ga_models <a href="https://t.co/9qfvi3uvLc">https://t.co/9qfvi3uvLc</a>
-</p>
-— Mark Edmondson (<span class="citation">@HoloMarkeD</span>) <a href="https://twitter.com/HoloMarkeD/status/1106958249130119169?ref_src=twsrc%5Etfw">March 16, 2019</a>
-</blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><p>Similarly, you can launch this in a Shiny app by slightly modifying the Shiny example used previously.</p>
-<p>This is available within the package via <code><a href="https://rdrr.io/pkg/shiny/man/runApp.html">shiny::runApp(system.file("shiny/models-ga-effect", package="googleAnalyticsR"))</a></code></p>
-<p><img src="model-ga-effect.png"></p>
-<p>Dress it up in a nice theme and add some more inputs and outputs and you are close to the finished result.</p>
+<p>You can launch this in a Shiny app via the <code><a href="../reference/ga_model_shiny.html">ga_model_shiny()</a></code> function that will write the Shiny code for you - see <a href="articles/model-templates.html">Model Shiny Templates</a></p>
+<p><img src="ga_model_shiny1.png"></p>
 </div>
 </div>
   </div>

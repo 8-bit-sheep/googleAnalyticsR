@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Use a model function created by ga_model_make — ga_model • googleAnalyticsR</title>
+<title>Use a model — ga_model • googleAnalyticsR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Use a model function created by ga_model_make — ga_model" />
-<meta property="og:description" content="Use a model function created by ga_model_make" />
+<meta property="og:title" content="Use a model — ga_model" />
+<meta property="og:description" content="Use a model created by ga_model_make" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
 
@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -123,6 +123,13 @@
         <span class="fas fa-digital-tachograph"></span>
          
         GA4 Data API
+      </a>
+    </li>
+    <li>
+      <a href="../articles/measurement-protocol-v2.html">
+        <span class="fas fa-upload"></span>
+         
+        Measurement Protocol
       </a>
     </li>
     <li>
@@ -194,12 +201,30 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../articles/models.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fas fa-calculator"></span>
      
     Models
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/models.html">
+        <span class="fas fa-calculator"></span>
+         
+        Creating Models
+      </a>
+    </li>
+    <li>
+      <a href="../articles/model-templates.html">
+        <span class="fas fa-photo-video"></span>
+         
+        Shiny Model Templates
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -261,13 +286,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Use a model function created by <a href='ga_model_make.html'>ga_model_make</a></h1>
+    <h1>Use a model</h1>
     <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/R/models.R'><code>R/models.R</code></a></small>
     <div class="hidden name"><code>ga_model.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Use a model function created by <a href='ga_model_make.html'>ga_model_make</a></p>
+    <p>Use a model created by <a href='ga_model_make.html'>ga_model_make</a></p>
     </div>
 
     <pre class="usage"><span class='fu'>ga_model</span><span class='op'>(</span><span class='va'>viewId</span>, <span class='va'>model</span>, load_libs <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -307,6 +332,30 @@ created by <a href='ga_model_make.html'>ga_model_make</a></p></td>
 <code><a href='ga_model_shiny.html'>ga_model_shiny</a>()</code>,
 <code><a href='ga_model_write.html'>ga_model_write</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='co'># models that come with the package</span>
+<span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "decomp_ga_advanced.gamr" "decomp_ga.gamr"         
+#&gt; [3] "ga-effect.gamr"          "ga4-trend.gamr"         
+#&gt; [5] "market-basket.gamr"      "time-normalised.gamr"   </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+
+<span class='co'># your own Google Analytics viewID</span>
+<span class='va'>my_viewid</span> <span class='op'>&lt;-</span> <span class='fl'>81416156</span>
+
+<span class='co'># load the model (equivalent to ga_model_load())</span>
+<span class='va'>decomp_ga</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ga_model_example.html'>ga_model_example</a></span><span class='op'>(</span><span class='st'>"decomp_ga.gamr"</span><span class='op'>)</span>
+
+<span class='co'># apply model to your data</span>
+<span class='va'>d1</span> <span class='op'>&lt;-</span> <span class='fu'>ga_model</span><span class='op'>(</span><span class='va'>my_viewid</span>, model <span class='op'>=</span> <span class='va'>decomp_ga</span><span class='op'>)</span>
+
+<span class='co'># change default date range to 20 days ago to yesterday</span>
+<span class='va'>d2</span> <span class='op'>&lt;-</span> <span class='fu'>ga_model</span><span class='op'>(</span><span class='va'>my_viewid</span>, model <span class='op'>=</span> <span class='va'>decomp_ga</span>, 
+               date_range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"20daysAgo"</span>,<span class='st'>"yesterday"</span><span class='op'>)</span><span class='op'>)</span>
+
+
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

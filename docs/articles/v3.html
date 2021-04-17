@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -77,6 +77,13 @@
         <span class="fas fa-digital-tachograph"></span>
          
         GA4 Data API
+      </a>
+    </li>
+    <li>
+      <a href="../articles/measurement-protocol-v2.html">
+        <span class="fas fa-upload"></span>
+         
+        Measurement Protocol
       </a>
     </li>
     <li>
@@ -148,12 +155,30 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../articles/models.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fas fa-calculator"></span>
      
     Models
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/models.html">
+        <span class="fas fa-calculator"></span>
+         
+        Creating Models
+      </a>
+    </li>
+    <li>
+      <a href="../articles/model-templates.html">
+        <span class="fas fa-photo-video"></span>
+         
+        Shiny Model Templates
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -212,7 +237,7 @@
 
       
 
-      </header><script src="v3_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="v3_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Google Analytics Reporting API v3 R functions</h1>
@@ -230,75 +255,75 @@
 <h2 class="hasAnchor">
 <a href="#google-anaytics-v3-api-examples" class="anchor"></a>Google Anaytics V3 API examples</h2>
 <p>Consult <code><a href="../reference/google_analytics_3.html">?google_analytics_3</a></code> and see examples below:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(googleAnalyticsR)</span>
-<span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="co">## Authenticate in Google OAuth2</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">ga_auth</span>()</span>
-<span id="cb1-5"><a href="#cb1-5"></a></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="co">## if you need to re-authenticate use ga_auth(new_user=TRUE)</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co">## if you have your own Google Dev console project keys, </span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co">## then don't run ga_auth() as that will set the authentication project to the defaults.</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="co">## instead put your options here, and run googleAuthR::gar_auth()</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="co">## get account info, including View Ids</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a>account_list &lt;-<span class="st"> </span><span class="kw">ga_account_list</span>()</span>
-<span id="cb1-14"><a href="#cb1-14"></a>ga_id &lt;-<span class="st"> </span>account_list<span class="op">$</span>viewId[<span class="dv">1</span>]</span>
-<span id="cb1-15"><a href="#cb1-15"></a></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="co">## get a list of what metrics and dimensions you can use</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a>meta &lt;-<span class="st"> </span><span class="kw">google_analytics_meta</span>()</span>
-<span id="cb1-18"><a href="#cb1-18"></a><span class="kw">head</span>(meta)</span>
-<span id="cb1-19"><a href="#cb1-19"></a></span>
-<span id="cb1-20"><a href="#cb1-20"></a><span class="co">## pick the account_list$viewId you want to see data for.</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a><span class="co">## metrics and dimensions can have or have not "ga:" prefix</span></span>
-<span id="cb1-22"><a href="#cb1-22"></a>gadata &lt;-<span class="st"> </span><span class="kw">google_analytics_3</span>(<span class="dt">id =</span> ga_id, </span>
-<span id="cb1-23"><a href="#cb1-23"></a>                           <span class="dt">start=</span><span class="st">"2015-08-01"</span>, <span class="dt">end=</span><span class="st">"2015-08-02"</span>, </span>
-<span id="cb1-24"><a href="#cb1-24"></a>                           <span class="dt">metrics =</span> <span class="kw">c</span>(<span class="st">"sessions"</span>, <span class="st">"bounceRate"</span>), </span>
-<span id="cb1-25"><a href="#cb1-25"></a>                           <span class="dt">dimensions =</span> <span class="kw">c</span>(<span class="st">"source"</span>, <span class="st">"medium"</span>))</span>
-<span id="cb1-26"><a href="#cb1-26"></a></span>
-<span id="cb1-27"><a href="#cb1-27"></a></span>
-<span id="cb1-28"><a href="#cb1-28"></a><span class="co">## if more than 10000 rows in results, auto batching</span></span>
-<span id="cb1-29"><a href="#cb1-29"></a><span class="co">## example is setting lots of dimensions to try and create big sampled data</span></span>
-<span id="cb1-30"><a href="#cb1-30"></a>batch_gadata &lt;-<span class="st"> </span><span class="kw">google_analytics_3</span>(<span class="dt">id =</span> account_list<span class="op">$</span>viewId[<span class="dv">1</span>], </span>
-<span id="cb1-31"><a href="#cb1-31"></a>                                 <span class="dt">start=</span><span class="st">"2014-08-01"</span>, <span class="dt">end=</span><span class="st">"2015-08-02"</span>, </span>
-<span id="cb1-32"><a href="#cb1-32"></a>                                 <span class="dt">metrics =</span> <span class="kw">c</span>(<span class="st">"sessions"</span>, <span class="st">"bounceRate"</span>), </span>
-<span id="cb1-33"><a href="#cb1-33"></a>                                 <span class="dt">dimensions =</span> <span class="kw">c</span>(<span class="st">"source"</span>, <span class="st">"medium"</span>, <span class="st">"landingPagePath"</span>,<span class="st">"hour"</span>,<span class="st">"minute"</span>),</span>
-<span id="cb1-34"><a href="#cb1-34"></a>                                 <span class="dt">max=</span><span class="dv">99999999</span>)</span>
-<span id="cb1-35"><a href="#cb1-35"></a></span>
-<span id="cb1-36"><a href="#cb1-36"></a><span class="co">## mitigate sampling by setting samplingLevel="WALK"</span></span>
-<span id="cb1-37"><a href="#cb1-37"></a><span class="co">## this will send lots and lots of calls to the Google API limits, beware</span></span>
-<span id="cb1-38"><a href="#cb1-38"></a>walk_gadata &lt;-<span class="st"> </span><span class="kw">google_analytics_3</span>(<span class="dt">id =</span> account_list<span class="op">$</span>viewId[<span class="dv">1</span>], </span>
-<span id="cb1-39"><a href="#cb1-39"></a>                                <span class="dt">start=</span><span class="st">"2014-08-01"</span>, <span class="dt">end=</span><span class="st">"2015-08-02"</span>, </span>
-<span id="cb1-40"><a href="#cb1-40"></a>                                <span class="dt">metrics =</span> <span class="kw">c</span>(<span class="st">"sessions"</span>, <span class="st">"bounceRate"</span>), </span>
-<span id="cb1-41"><a href="#cb1-41"></a>                                <span class="dt">dimensions =</span> <span class="kw">c</span>(<span class="st">"source"</span>, <span class="st">"medium"</span>, <span class="st">"landingPagePath"</span>), </span>
-<span id="cb1-42"><a href="#cb1-42"></a>                                <span class="dt">max=</span><span class="dv">99999999</span>, <span class="dt">samplingLevel=</span><span class="st">"WALK"</span>)</span>
-<span id="cb1-43"><a href="#cb1-43"></a></span>
-<span id="cb1-44"><a href="#cb1-44"></a><span class="co">## multi-channel funnels set type="mcf"</span></span>
-<span id="cb1-45"><a href="#cb1-45"></a>mcf_gadata &lt;-<span class="st"> </span><span class="kw">google_analytics_3</span>(<span class="dt">id =</span> account_list<span class="op">$</span>viewId[<span class="dv">1</span>], </span>
-<span id="cb1-46"><a href="#cb1-46"></a>                               <span class="dt">start=</span><span class="st">"2015-08-01"</span>, <span class="dt">end=</span><span class="st">"2015-08-02"</span>, </span>
-<span id="cb1-47"><a href="#cb1-47"></a>                               <span class="dt">metrics =</span> <span class="kw">c</span>(<span class="st">"totalConversions"</span>), </span>
-<span id="cb1-48"><a href="#cb1-48"></a>                               <span class="dt">dimensions =</span> <span class="kw">c</span>(<span class="st">"sourcePath"</span>), </span>
-<span id="cb1-49"><a href="#cb1-49"></a>                               <span class="dt">type=</span><span class="st">"mcf"</span>)</span>
-<span id="cb1-50"><a href="#cb1-50"></a></span>
-<span id="cb1-51"><a href="#cb1-51"></a><span class="co">## google_analytics dataframes include these meta data attributes:</span></span>
-<span id="cb1-52"><a href="#cb1-52"></a><span class="op">-</span><span class="st"> </span><span class="kw">attr</span>(<span class="op">*</span>, <span class="st">"containsSampledData"</span>)=<span class="st"> </span>logi <span class="ot">FALSE</span></span>
-<span id="cb1-53"><a href="#cb1-53"></a> <span class="op">-</span><span class="st"> </span><span class="kw">attr</span>(<span class="op">*</span>, <span class="st">"samplePercent"</span>)=<span class="st"> </span>num <span class="dv">100</span></span>
-<span id="cb1-54"><a href="#cb1-54"></a> <span class="op">-</span><span class="st"> </span><span class="kw">attr</span>(<span class="op">*</span>, <span class="st">"samplingLevel"</span>)=<span class="st"> </span>chr <span class="st">"DEFAULT"</span></span>
-<span id="cb1-55"><a href="#cb1-55"></a> <span class="op">-</span><span class="st"> </span><span class="kw">attr</span>(<span class="op">*</span>, <span class="st">"profileInfo"</span>)=List of <span class="dv">6</span></span>
-<span id="cb1-56"><a href="#cb1-56"></a>  ..<span class="op">$</span><span class="st"> </span>profileId            <span class="op">:</span><span class="st"> </span>chr <span class="st">"535656"</span></span>
-<span id="cb1-57"><a href="#cb1-57"></a>  ..<span class="op">$</span><span class="st"> </span>accountId            <span class="op">:</span><span class="st"> </span>chr <span class="st">"2748374"</span></span>
-<span id="cb1-58"><a href="#cb1-58"></a>  ..<span class="op">$</span><span class="st"> </span>webPropertyId        <span class="op">:</span><span class="st"> </span>chr <span class="st">"UA-278374-1"</span></span>
-<span id="cb1-59"><a href="#cb1-59"></a>  ..<span class="op">$</span><span class="st"> </span>internalWebPropertyId<span class="op">:</span><span class="st"> </span>chr <span class="st">"5279208"</span></span>
-<span id="cb1-60"><a href="#cb1-60"></a>  ..<span class="op">$</span><span class="st"> </span>profileName          <span class="op">:</span><span class="st"> </span>chr <span class="st">"XXXXX"</span></span>
-<span id="cb1-61"><a href="#cb1-61"></a>  ..<span class="op">$</span><span class="st"> </span>tableId              <span class="op">:</span><span class="st"> </span>chr <span class="st">"mcf:539656"</span></span>
-<span id="cb1-62"><a href="#cb1-62"></a> <span class="op">-</span><span class="st"> </span><span class="kw">attr</span>(<span class="op">*</span>, <span class="st">"dateRange"</span>)=List of <span class="dv">2</span></span>
-<span id="cb1-63"><a href="#cb1-63"></a>  ..<span class="op">$</span><span class="st"> </span>startDate<span class="op">:</span><span class="st"> </span>chr <span class="st">"2015-08-01"</span></span>
-<span id="cb1-64"><a href="#cb1-64"></a>  ..<span class="op">$</span><span class="st"> </span>endDate  <span class="op">:</span><span class="st"> </span>chr <span class="st">"2015-08-02"</span></span>
-<span id="cb1-65"><a href="#cb1-65"></a> <span class="op">-</span><span class="st"> </span><span class="kw">attr</span>(<span class="op">*</span>, <span class="st">"totalResults"</span>)=<span class="st"> </span>int <span class="dv">4</span></span>
-<span id="cb1-66"><a href="#cb1-66"></a></span>
-<span id="cb1-67"><a href="#cb1-67"></a><span class="co">## reach meta-data via attr()</span></span>
-<span id="cb1-68"><a href="#cb1-68"></a><span class="kw">attr</span>(gadata, <span class="st">"profileInfo"</span>)</span>
-<span id="cb1-69"><a href="#cb1-69"></a><span class="kw">attr</span>(gadata, <span class="st">"dateRange"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(googleAnalyticsR)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Authenticate in Google OAuth2</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ga_auth</span>()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## if you need to re-authenticate use ga_auth(new_user=TRUE)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## if you have your own Google Dev console project keys, </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## then don't run ga_auth() as that will set the authentication project to the defaults.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## instead put your options here, and run googleAuthR::gar_auth()</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">## get account info, including View Ids</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>account_list <span class="ot">&lt;-</span> <span class="fu">ga_account_list</span>()</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>ga_id <span class="ot">&lt;-</span> account_list<span class="sc">$</span>viewId[<span class="dv">1</span>]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="do">## get a list of what metrics and dimensions you can use</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>meta <span class="ot">&lt;-</span> <span class="fu">google_analytics_meta</span>()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(meta)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="do">## pick the account_list$viewId you want to see data for.</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="do">## metrics and dimensions can have or have not "ga:" prefix</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>gadata <span class="ot">&lt;-</span> <span class="fu">google_analytics_3</span>(<span class="at">id =</span> ga_id, </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>                           <span class="at">start=</span><span class="st">"2015-08-01"</span>, <span class="at">end=</span><span class="st">"2015-08-02"</span>, </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                           <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"sessions"</span>, <span class="st">"bounceRate"</span>), </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                           <span class="at">dimensions =</span> <span class="fu">c</span>(<span class="st">"source"</span>, <span class="st">"medium"</span>))</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="do">## if more than 10000 rows in results, auto batching</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="do">## example is setting lots of dimensions to try and create big sampled data</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>batch_gadata <span class="ot">&lt;-</span> <span class="fu">google_analytics_3</span>(<span class="at">id =</span> account_list<span class="sc">$</span>viewId[<span class="dv">1</span>], </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">start=</span><span class="st">"2014-08-01"</span>, <span class="at">end=</span><span class="st">"2015-08-02"</span>, </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"sessions"</span>, <span class="st">"bounceRate"</span>), </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">dimensions =</span> <span class="fu">c</span>(<span class="st">"source"</span>, <span class="st">"medium"</span>, <span class="st">"landingPagePath"</span>,<span class="st">"hour"</span>,<span class="st">"minute"</span>),</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">max=</span><span class="dv">99999999</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="do">## mitigate sampling by setting samplingLevel="WALK"</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="do">## this will send lots and lots of calls to the Google API limits, beware</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>walk_gadata <span class="ot">&lt;-</span> <span class="fu">google_analytics_3</span>(<span class="at">id =</span> account_list<span class="sc">$</span>viewId[<span class="dv">1</span>], </span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>                                <span class="at">start=</span><span class="st">"2014-08-01"</span>, <span class="at">end=</span><span class="st">"2015-08-02"</span>, </span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>                                <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"sessions"</span>, <span class="st">"bounceRate"</span>), </span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>                                <span class="at">dimensions =</span> <span class="fu">c</span>(<span class="st">"source"</span>, <span class="st">"medium"</span>, <span class="st">"landingPagePath"</span>), </span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>                                <span class="at">max=</span><span class="dv">99999999</span>, <span class="at">samplingLevel=</span><span class="st">"WALK"</span>)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="do">## multi-channel funnels set type="mcf"</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>mcf_gadata <span class="ot">&lt;-</span> <span class="fu">google_analytics_3</span>(<span class="at">id =</span> account_list<span class="sc">$</span>viewId[<span class="dv">1</span>], </span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>                               <span class="at">start=</span><span class="st">"2015-08-01"</span>, <span class="at">end=</span><span class="st">"2015-08-02"</span>, </span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>                               <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"totalConversions"</span>), </span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>                               <span class="at">dimensions =</span> <span class="fu">c</span>(<span class="st">"sourcePath"</span>), </span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>                               <span class="at">type=</span><span class="st">"mcf"</span>)</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="do">## google_analytics dataframes include these meta data attributes:</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">"containsSampledData"</span>)<span class="ot">=</span> logi <span class="cn">FALSE</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">"samplePercent"</span>)<span class="ot">=</span> num <span class="dv">100</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">"samplingLevel"</span>)<span class="ot">=</span> chr <span class="st">"DEFAULT"</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">"profileInfo"</span>)<span class="ot">=</span>List of <span class="dv">6</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> profileId            <span class="sc">:</span> chr <span class="st">"535656"</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> accountId            <span class="sc">:</span> chr <span class="st">"2748374"</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> webPropertyId        <span class="sc">:</span> chr <span class="st">"UA-278374-1"</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> internalWebPropertyId<span class="sc">:</span> chr <span class="st">"5279208"</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> profileName          <span class="sc">:</span> chr <span class="st">"XXXXX"</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> tableId              <span class="sc">:</span> chr <span class="st">"mcf:539656"</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">"dateRange"</span>)<span class="ot">=</span>List of <span class="dv">2</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> startDate<span class="sc">:</span> chr <span class="st">"2015-08-01"</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>  ..<span class="sc">$</span> endDate  <span class="sc">:</span> chr <span class="st">"2015-08-02"</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span> <span class="fu">attr</span>(<span class="sc">*</span>, <span class="st">"totalResults"</span>)<span class="ot">=</span> int <span class="dv">4</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="do">## reach meta-data via attr()</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(gadata, <span class="st">"profileInfo"</span>)</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(gadata, <span class="st">"dateRange"</span>)</span></code></pre></div>
 </div>
 <div id="other-details" class="section level2">
 <h2 class="hasAnchor">

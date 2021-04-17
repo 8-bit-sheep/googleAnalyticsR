@@ -47,8 +47,8 @@
 
 
 <meta property="og:title" content="Make a segment definition — segment_define" />
-<meta property="og:description" content="Defines the segment to be a set of SegmentFilters 
-  which are combined together with a logical AND operation.  
+<meta property="og:description" content="Defines the segment to be a set of SegmentFilters
+which are combined together with a logical AND operation.
 segment_define is in the hierarchy of segment creation, for which you will also need:
 segment_define : AND combination of segmentFilters
 segment_vector_simple or segment_vector_sequence
@@ -97,7 +97,7 @@ segment_element that are combined in OR lists for segment_vectors_*
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -130,6 +130,13 @@ segment_element that are combined in OR lists for segment_vectors_*
         <span class="fas fa-digital-tachograph"></span>
          
         GA4 Data API
+      </a>
+    </li>
+    <li>
+      <a href="../articles/measurement-protocol-v2.html">
+        <span class="fas fa-upload"></span>
+         
+        Measurement Protocol
       </a>
     </li>
     <li>
@@ -201,12 +208,30 @@ segment_element that are combined in OR lists for segment_vectors_*
     </li>
   </ul>
 </li>
-<li>
-  <a href="../articles/models.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fas fa-calculator"></span>
      
     Models
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/models.html">
+        <span class="fas fa-calculator"></span>
+         
+        Creating Models
+      </a>
+    </li>
+    <li>
+      <a href="../articles/model-templates.html">
+        <span class="fas fa-photo-video"></span>
+         
+        Shiny Model Templates
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -274,8 +299,8 @@ segment_element that are combined in OR lists for segment_vectors_*
     </div>
 
     <div class="ref-description">
-    <p>Defines the segment to be a set of SegmentFilters 
-  which are combined together with a logical AND operation.</p>  
+    <p>Defines the segment to be a set of SegmentFilters
+which are combined together with a logical AND operation.</p>
 <p><code>segment_define</code> is in the hierarchy of segment creation, for which you will also need:</p><ul>
 <li><p>segment_define : AND combination of segmentFilters</p></li>
 <li><p><a href='segment_vector_simple.html'>segment_vector_simple</a> or <a href='segment_vector_sequence.html'>segment_vector_sequence</a></p></li>
@@ -295,7 +320,7 @@ segment_element that are combined in OR lists for segment_vectors_*
     </tr>
     <tr>
       <th>not_vector</th>
-      <td><p>Boolean applied to each segmentFilter step. 
+      <td><p>Boolean applied to each segmentFilter step.
 If NULL, assumed FALSE</p></td>
     </tr>
     </table>

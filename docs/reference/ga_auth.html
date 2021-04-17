@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -123,6 +123,13 @@
         <span class="fas fa-digital-tachograph"></span>
          
         GA4 Data API
+      </a>
+    </li>
+    <li>
+      <a href="../articles/measurement-protocol-v2.html">
+        <span class="fas fa-upload"></span>
+         
+        Measurement Protocol
       </a>
     </li>
     <li>
@@ -194,12 +201,30 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../articles/models.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fas fa-calculator"></span>
      
     Models
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/models.html">
+        <span class="fas fa-calculator"></span>
+         
+        Creating Models
+      </a>
+    </li>
+    <li>
+      <a href="../articles/model-templates.html">
+        <span class="fas fa-photo-video"></span>
+         
+        Shiny Model Templates
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -306,9 +331,9 @@
 
     
 
-  
-<p>If you use the service account JSON, you will need to add the service account email 
-  to your Google Analytics users to see data e.g. <code>xxxx@yyyyyy.iam.gserviceaccount.com</code></p>
+
+<p>If you use the service account JSON, you will need to add the service account email
+to your Google Analytics users to see data e.g. <code>xxxx@yyyyyy.iam.gserviceaccount.com</code></p>
     <h2 class="hasAnchor" id="auto-authentication"><a class="anchor" href="#auto-authentication"></a>Auto-authentication</h2>
 
     
@@ -317,8 +342,8 @@
 <p>You can choose to auto-authenticate by creating a Google OAuth service account JSON file.</p>
 <p>Specify an environment variable in R via a <code>.Renviron</code> file or using <a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.setenv</a> which points to the file location of your chosen authentication file.  See <a href='https://rdrr.io/r/base/Startup.html'>Startup</a></p>
 <p>Once you have set the environment variable <code>GA_AUTH_FILE</code> to a valid file location,
-  the function will look there for authentication details upon loading the library meaning 
-  you will not need to call <code>ga_auth()</code> yourself as you would normally.</p>
+the function will look there for authentication details upon loading the library meaning
+you will not need to call <code>ga_auth()</code> yourself as you would normally.</p>
 <p>An example <code>.Renviron</code> file is below:</p>
 <p><code>GA_AUTH_FILE = "/Users/bob/auth/googleAnalyticsR.json"</code></p>
 <p><code>GA_AUTH_FILE</code> can be a service account JSON ending with file extension <code>.json</code>.  Make sure to give the service account email access to your Google Analytics account as mentioned above.</p>
@@ -327,17 +352,12 @@
     
 
 
-<p>Be default the Google Project used is shared by all users, so you may find it runs out of API calls.  
+<p>Be default the Google Project used is shared by all users, so you may find it runs out of API calls.
 To mitigate that, create your own Google Project and turn on the Analytics APIs.</p>
 <p>The best way to do this is to use <a href='https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html'>gar_set_client</a> by downloading your JSON client credentials and setting them to be found on package startup via the <code>GAR_CLIENT_JSON</code> environment argument.  See <code><a href='https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html'>?googleAuthR::gar_set_client</a></code> function help pages for details.</p>
 <p>Or you can then copy your Google Cloud Project's client ID and client secret, to place in options or environment arguments (whichever is easiest)</p>
 <p>The environment args are below.  Similar to auto-authentication, you can place your entries in an <code>.Renviron</code> file</p>
-<p><code>
-GA_CLIENT_ID="XXXX"
-GA_CLIENT_SECRET="XXX"
-GA_WEB_CLIENT_ID="XXX"
-GA_WEB_CLIENT_SECRET="XXX"
-</code></p>
+<p><code>GA_CLIENT_ID="XXXX" GA_CLIENT_SECRET="XXX" GA_WEB_CLIENT_ID="XXX" GA_WEB_CLIENT_SECRET="XXX"</code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>

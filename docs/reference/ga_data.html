@@ -47,7 +47,8 @@
 
 
 <meta property="og:title" content="Google Analytics Data for GA4 (App+Web) — ga_data" />
-<meta property="og:description" content="Fetches Google Analytics from the Data API for Google Analytics 4 (Previously App+Web)" />
+<meta property="og:description" content="
+Fetches Google Analytics from the Data API for Google Analytics 4 (Previously App+Web)" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
 
@@ -90,7 +91,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -123,6 +124,13 @@
         <span class="fas fa-digital-tachograph"></span>
          
         GA4 Data API
+      </a>
+    </li>
+    <li>
+      <a href="../articles/measurement-protocol-v2.html">
+        <span class="fas fa-upload"></span>
+         
+        Measurement Protocol
       </a>
     </li>
     <li>
@@ -194,12 +202,30 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../articles/models.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fas fa-calculator"></span>
      
     Models
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/models.html">
+        <span class="fas fa-calculator"></span>
+         
+        Creating Models
+      </a>
+    </li>
+    <li>
+      <a href="../articles/model-templates.html">
+        <span class="fas fa-photo-video"></span>
+         
+        Shiny Model Templates
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -267,7 +293,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Fetches Google Analytics from the Data API for Google Analytics 4 (Previously App+Web)</p>
+    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p>
+<p>Fetches Google Analytics from the Data API for Google Analytics 4 (Previously App+Web)</p>
     </div>
 
     <pre class="usage"><span class='fu'>ga_data</span><span class='op'>(</span>
@@ -275,12 +302,12 @@
   <span class='va'>metrics</span>,
   date_range <span class='op'>=</span> <span class='cn'>NULL</span>,
   dimensions <span class='op'>=</span> <span class='cn'>NULL</span>,
-  dimensionFilter <span class='op'>=</span> <span class='cn'>NULL</span>,
+  dim_filters <span class='op'>=</span> <span class='cn'>NULL</span>,
   dimensionDelimiter <span class='op'>=</span> <span class='st'>"/"</span>,
-  metricFilter <span class='op'>=</span> <span class='cn'>NULL</span>,
+  met_filters <span class='op'>=</span> <span class='cn'>NULL</span>,
   orderBys <span class='op'>=</span> <span class='cn'>NULL</span>,
-  metricAggregations <span class='op'>=</span> <span class='cn'>NULL</span>,
   limit <span class='op'>=</span> <span class='fl'>100</span>,
+  page_size <span class='op'>=</span> <span class='fl'>100000L</span>,
   realtime <span class='op'>=</span> <span class='cn'>FALSE</span>,
   raw_json <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
@@ -290,43 +317,43 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>propertyId</th>
-      <td><p>A Google Analytics App + Web property id</p></td>
+      <td><p>A GA4 property Id</p></td>
     </tr>
     <tr>
       <th>metrics</th>
-      <td><p>The metrics requested and displayed</p></td>
+      <td><p>The metrics to request - see <a href='ga_meta.html'>ga_meta</a> - set to NULL to only see dimensions</p></td>
     </tr>
     <tr>
       <th>date_range</th>
-      <td><p>A vector of length two with start and end dates in YYYY-MM-DD format</p></td>
+      <td><p>A vector with start and end dates in YYYY-MM-DD format - can send in up to four date ranges at once</p></td>
     </tr>
     <tr>
       <th>dimensions</th>
-      <td><p>The dimensions requested and displayed</p></td>
+      <td><p>The dimensions to request - see <a href='ga_meta.html'>ga_meta</a></p></td>
     </tr>
     <tr>
-      <th>dimensionFilter</th>
-      <td><p>The filter clause of dimensions - see <a href='ga_data_filter.html'>ga_data_filter</a></p></td>
+      <th>dim_filters</th>
+      <td><p>Filter on the dimensions of the request - a filter object created by <a href='ga_data_filter.html'>ga_data_filter</a></p></td>
     </tr>
     <tr>
       <th>dimensionDelimiter</th>
       <td><p>If combining dimensions in one column, the delimiter for the value field</p></td>
     </tr>
     <tr>
-      <th>metricFilter</th>
-      <td><p>The filter clause of metrics - see <a href='ga_data_filter.html'>ga_data_filter</a></p></td>
+      <th>met_filters</th>
+      <td><p>Filter on the metrics of the request - a filter object created by <a href='ga_data_filter.html'>ga_data_filter</a></p></td>
     </tr>
     <tr>
       <th>orderBys</th>
-      <td><p>Specifies how rows are ordered in the response - see <a href='ga_data_order.html'>ga_data_order</a></p></td>
-    </tr>
-    <tr>
-      <th>metricAggregations</th>
-      <td><p>Aggregation of metrics. Aggregated metric values will be shown in rows where the dimensionValues are set to "RESERVED_(MetricAggregation)".</p></td>
+      <td><p>How to order the response - an order object created by <a href='ga_data_order.html'>ga_data_order</a></p></td>
     </tr>
     <tr>
       <th>limit</th>
       <td><p>The number of rows to return - use -1 to return all rows</p></td>
+    </tr>
+    <tr>
+      <th>page_size</th>
+      <td><p>The size of API pages - default is 100000L rows</p></td>
     </tr>
     <tr>
       <th>realtime</th>
@@ -361,7 +388,7 @@
   metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"activeUsers"</span>,<span class='st'>"sessions"</span><span class='op'>)</span>,
   dimensions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"date"</span>,<span class='st'>"city"</span>,<span class='st'>"dayOfWeek"</span><span class='op'>)</span>,
   date_range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2020-03-31"</span>, <span class='st'>"2020-04-27"</span>, <span class='st'>"2020-04-30"</span>, <span class='st'>"2020-05-27"</span><span class='op'>)</span>,
-  dimensionFilter <span class='op'>=</span> <span class='fu'><a href='ga_data_filter.html'>ga_data_filter</a></span><span class='op'>(</span><span class='st'>"city"</span><span class='op'>==</span><span class='st'>"Copenhagen"</span><span class='op'>)</span>,
+  dim_filters <span class='op'>=</span> <span class='fu'><a href='ga_data_filter.html'>ga_data_filter</a></span><span class='op'>(</span><span class='st'>"city"</span><span class='op'>==</span><span class='st'>"Copenhagen"</span><span class='op'>)</span>,
   limit <span class='op'>=</span> <span class='fl'>100</span>
   <span class='op'>)</span>
 
@@ -391,7 +418,6 @@
   <span class='fl'>206670707</span>,
   metrics <span class='op'>=</span> <span class='st'>"activeUsers"</span>,
   dimensions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"city"</span>,<span class='st'>"unifiedScreenName"</span><span class='op'>)</span>,
-  metricAggregations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"TOTAL"</span>, <span class='st'>"MINIMUM"</span>, <span class='st'>"MAXIMUM"</span><span class='op'>)</span>,
   limit <span class='op'>=</span> <span class='fl'>100</span>,
   realtime <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 

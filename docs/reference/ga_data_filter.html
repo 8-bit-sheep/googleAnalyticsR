@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -123,6 +123,13 @@
         <span class="fas fa-digital-tachograph"></span>
          
         GA4 Data API
+      </a>
+    </li>
+    <li>
+      <a href="../articles/measurement-protocol-v2.html">
+        <span class="fas fa-upload"></span>
+         
+        Measurement Protocol
       </a>
     </li>
     <li>
@@ -194,12 +201,30 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../articles/models.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fas fa-calculator"></span>
      
     Models
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/models.html">
+        <span class="fas fa-calculator"></span>
+         
+        Creating Models
+      </a>
+    </li>
+    <li>
+      <a href="../articles/model-templates.html">
+        <span class="fas fa-photo-video"></span>
+         
+        Shiny Model Templates
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -283,22 +308,21 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <a href='FilterExpression.html'>FilterExpression</a> object suitable for use in <a href='ga_data.html'>ga_data</a></p>
+    <p>A <code>FilterExpression</code> object suitable for use in <a href='ga_data.html'>ga_data</a></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This uses a specific filter DSL syntax to create GA4 filters that can be passed to <a href='ga_data.html'>ga_data</a> arguments <code>dimensionFilter</code> or <code>metricFilter</code>. Ensure that the fields you use are either all metrics or all dimensions.</p>
+    <p>This uses a specific filter DSL syntax to create GA4 filters that can be passed to <a href='ga_data.html'>ga_data</a> arguments <code>dim_filters</code> or <code>met_filters</code>. Ensure that the fields you use are either all metrics or all dimensions.</p>
 <p>The syntax uses operators and the class of the value you are setting (string, numeric or logical) to construct the filter expression object.</p>
 <p>Fields including custom fields for your propertyId can be imported if you fetch them via <code><a href='ga_meta.html'>ga_meta("data", propertyId = 12345)</a></code> before you construct a filter.  If you do not want filters to be validated, then send them in as strings ("field").</p>
 <p>The DSL rules are:</p>
-
 <ul>
 <li><p>Single filters can be used without wrapping in filter expressions</p></li>
 <li><p>A single filter syntax is <code>(field) (operator) (value)</code></p></li>
 <li><p>(field) is a dimension or metric for your web property, which you can review via <a href='ga_meta.html'>ga_meta</a></p></li>
 <li><p>(field) can be validated if you fetch metadata before you construct the filter.  If you do this, you can call the fields without quote strings e.g. <code>city</code> and not <code>"city"</code></p></li>
 <li><p>(operator) for metrics can be one of: <code>==, &gt;, &gt;=, &lt;, &lt;=</code></p></li>
-<li><p>(operator) for dimensions can be one of: <code>==, %begins%, %ends%, %contains%, %in%, %regex%, %regex_partial%</code> for dimensions</p></li>
-<li><p>dimension (operator) are by default case sensitive.  Make them case insensitive by using UPPER case variations <code>%BEGINS%, %ENDS%, ...</code> or <code>===</code> for exact matches</p></li>
+<li><p>(operator) for dimensions can be one of: <code>==, \%begins\%, \%ends\%, \%contains\%, \%in\%, \%regex\%, \%regex_partial\%</code> for dimensions</p></li>
+<li><p>dimension (operator) are by default case sensitive.  Make them case insensitive by using UPPER case variations <code>\%BEGINS\%, \%ENDS\%, ...</code> or <code>===</code> for exact matches</p></li>
 <li><p>(value) can be strings (<code>"dim1"</code>), numerics (<code>55</code>), string vectors (<code><a href='https://rdrr.io/r/base/c.html'>c("dim1", "dim2")</a></code>), numeric vectors (<code><a href='https://rdrr.io/r/base/c.html'>c(1,2,3)</a></code>) or boolean (<code>TRUE</code>) - the type will created different types of filters - see examples</p></li>
 <li><p>Create filter expressions for multiple filters when using the operators: <code>&amp;, |, !</code> for logical combinations of AND, OR and NOT respectively.</p></li>
 </ul>

@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -123,6 +123,13 @@
         <span class="fas fa-digital-tachograph"></span>
          
         GA4 Data API
+      </a>
+    </li>
+    <li>
+      <a href="../articles/measurement-protocol-v2.html">
+        <span class="fas fa-upload"></span>
+         
+        Measurement Protocol
       </a>
     </li>
     <li>
@@ -194,12 +201,30 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../articles/models.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fas fa-calculator"></span>
      
     Models
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/models.html">
+        <span class="fas fa-calculator"></span>
+         
+        Creating Models
+      </a>
+    </li>
+    <li>
+      <a href="../articles/model-templates.html">
+        <span class="fas fa-photo-video"></span>
+         
+        Shiny Model Templates
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -308,7 +333,7 @@
     <p>A list of data.frames: <code>$sessions</code> contains session level data. <code>$hits</code> contains individual activity data</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The User Activity API lets you query an individual user's movement through your website, by sending in the individual `clientId` or `userId`.</p>
+    <p>The User Activity API lets you query an individual user's movement through your website, by sending in the individual <code>clientId</code> or <code>userId</code>.</p>
 <p>Bear in mind each call will count against your API quota, so fetching a large amount of client ids will be limited by that.</p>
 <p>Use <a href='ga_clientid_activity_unnest.html'>ga_clientid_activity_unnest</a> to unnest deeply nested data in the hits data.</p>
 <p>The timestamps are available to millisecond level but you will need to set your R options to see them e.g. <code><a href='https://rdrr.io/r/base/options.html'>options(digits.secs=3)</a></code></p>

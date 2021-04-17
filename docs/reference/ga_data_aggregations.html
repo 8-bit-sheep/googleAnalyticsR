@@ -47,7 +47,8 @@
 
 
 <meta property="og:title" content="Extract metric aggregations from a ga_data result — ga_data_aggregations" />
-<meta property="og:description" content="Metric aggregations are available in each ga_data result.  This function lets you easily access the data.frames" />
+<meta property="og:description" content="
+Metric aggregations are available in all requests.  This function lets you easily access the data.frames" />
 <meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png" />
 
 
@@ -90,7 +91,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -123,6 +124,13 @@
         <span class="fas fa-digital-tachograph"></span>
          
         GA4 Data API
+      </a>
+    </li>
+    <li>
+      <a href="../articles/measurement-protocol-v2.html">
+        <span class="fas fa-upload"></span>
+         
+        Measurement Protocol
       </a>
     </li>
     <li>
@@ -194,12 +202,30 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../articles/models.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fas fa-calculator"></span>
      
     Models
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/models.html">
+        <span class="fas fa-calculator"></span>
+         
+        Creating Models
+      </a>
+    </li>
+    <li>
+      <a href="../articles/model-templates.html">
+        <span class="fas fa-photo-video"></span>
+         
+        Shiny Model Templates
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -267,7 +293,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Metric aggregations are available in each <a href='ga_data.html'>ga_data</a> result.  This function lets you easily access the data.frames</p>
+    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p>
+<p>Metric aggregations are available in all requests.  This function lets you easily access the data.frames</p>
     </div>
 
     <pre class="usage"><span class='fu'>ga_data_aggregations</span><span class='op'>(</span>
@@ -298,7 +325,7 @@
   metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"activeUsers"</span>,<span class='st'>"sessions"</span><span class='op'>)</span>,
   dimensions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"date"</span>,<span class='st'>"city"</span>,<span class='st'>"dayOfWeek"</span><span class='op'>)</span>,
   date_range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2020-03-31"</span>, <span class='st'>"2020-04-27"</span>, <span class='st'>"2020-04-30"</span>, <span class='st'>"2020-05-27"</span><span class='op'>)</span>,
-  dimensionFilter <span class='op'>=</span> <span class='fu'><a href='ga_data_filter.html'>ga_data_filter</a></span><span class='op'>(</span><span class='st'>"city"</span><span class='op'>==</span><span class='st'>"Copenhagen"</span><span class='op'>)</span>,
+  dim_filters <span class='op'>=</span> <span class='fu'><a href='ga_data_filter.html'>ga_data_filter</a></span><span class='op'>(</span><span class='st'>"city"</span><span class='op'>==</span><span class='st'>"Copenhagen"</span><span class='op'>)</span>,
   limit <span class='op'>=</span> <span class='fl'>100</span>
   <span class='op'>)</span>
 

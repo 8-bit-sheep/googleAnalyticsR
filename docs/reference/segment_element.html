@@ -95,7 +95,7 @@ segment_element that are combined in OR lists for segment_vectors_*
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -128,6 +128,13 @@ segment_element that are combined in OR lists for segment_vectors_*
         <span class="fas fa-digital-tachograph"></span>
          
         GA4 Data API
+      </a>
+    </li>
+    <li>
+      <a href="../articles/measurement-protocol-v2.html">
+        <span class="fas fa-upload"></span>
+         
+        Measurement Protocol
       </a>
     </li>
     <li>
@@ -199,12 +206,30 @@ segment_element that are combined in OR lists for segment_vectors_*
     </li>
   </ul>
 </li>
-<li>
-  <a href="../articles/models.html">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fas fa-calculator"></span>
      
     Models
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/models.html">
+        <span class="fas fa-calculator"></span>
+         
+        Creating Models
+      </a>
+    </li>
+    <li>
+      <a href="../articles/model-templates.html">
+        <span class="fas fa-photo-video"></span>
+         
+        Shiny Model Templates
+      </a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -317,15 +342,15 @@ segment_element that are combined in OR lists for segment_vectors_*
     </tr>
     <tr>
       <th>expressions</th>
-      <td><p>[dim] What the name shall compare to</p></td>
+      <td><p><code>dim</code> What the name shall compare to</p></td>
     </tr>
     <tr>
       <th>caseSensitive</th>
-      <td><p>[dim] Whether to be case sensitive</p></td>
+      <td><p><code>dim</code> Whether to be case sensitive</p></td>
     </tr>
     <tr>
       <th>minComparisonValue</th>
-      <td><p>[dim] Minimum comparison values for BETWEEN</p></td>
+      <td><p><code>dim</code> Minimum comparison values for BETWEEN</p></td>
     </tr>
     <tr>
       <th>maxComparisonValue</th>
@@ -333,11 +358,11 @@ segment_element that are combined in OR lists for segment_vectors_*
     </tr>
     <tr>
       <th>scope</th>
-      <td><p>[met] Scope of the metric value</p></td>
+      <td><p><code>met</code> Scope of the metric value</p></td>
     </tr>
     <tr>
       <th>comparisonValue</th>
-      <td><p>[met] What the name shall compare to</p></td>
+      <td><p><code>met</code> What the name shall compare to</p></td>
     </tr>
     <tr>
       <th>matchType</th>
@@ -347,7 +372,7 @@ segment_element that are combined in OR lists for segment_vectors_*
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An SegmentFilterClause object</p>
+    <p>A SegmentFilterClause object</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other v4 segment functions: 
