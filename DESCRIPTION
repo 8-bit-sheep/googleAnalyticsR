@@ -16,7 +16,8 @@ Authors@R: c(person("Mark", "Edmondson", email = "m@sunholo.com",
            person("Olivia", "Brode-Roger", email = "nibr@mit.edu", role = "ctb"),
            person("Jas", "Sohi", email = "contact@jassohi.com", role = "ctb"),
            person("Zoran", "Selinger", email = "zselinger@gmail.com", role = "ctb"),
-           person("Octavian", "Corlade", email = "octavian.corlade@gmail.com", role = "ctb"))
+           person("Octavian", "Corlade", email = "octavian.corlade@gmail.com", role = "ctb"),
+           person("Maegan", "Whytock", email = "maegan.whytock@gmail.com", role = "ctb"))
 URL: https://code.markedmondson.me/googleAnalyticsR/
 BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
 Depends:
