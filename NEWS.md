@@ -1,6 +1,7 @@
 # googleAnalyticsR 1.0.0.9000
 
-* ...
+* Allow path in ga_auth() to be either a file path, or a JSON string, to align with downstream libraries (GoogleAuthR and gargle)
+
 
 # googleAnalyticsR 1.0.0
 
