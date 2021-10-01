@@ -86,6 +86,11 @@ If you have used the package and published online then get in touch and I'll lis
 * Antoine writes a nice in-depth post on [analysis you can do with your blog traffic in R](https://www.statsandr.com/blog/track-blog-performance-in-r/)
 * Jamarius Taylor shows how to do [Market Basket Analysis with googleAnalyticsR data](https://www.linkedin.com/pulse/market-basket-analysis-ga-r-jamarius-taylor/)
 * Adil Khan shows how to apply [k-means clustering to Google Analytics data](https://analyticslog.com/blog/2021/2/20/google-analytics-content-segmentation-via-k-means-clustering-in-r-programming)
+* Alexey from Netpeak.net has some great Russian language resources:
+  - [Как работать с API Google Analytics на языке R с помощью пакета googleAnalyticsR](https://youtu.be/p2D_iLZ1f-8)
+  - [Как работать с API Google Analytics 4 на языке R, воркшоп для новичков (googleAnalyticsR)](https://youtu.be/zJyDxd4JGg0)
+  - [Как загрузить данные из API Google Analytics в R: часть 2](https://netpeak.net/ru/blog/kak-zagruzit-dannyye-iz-api-google-analytics-v-r-chast-2/)
+
 
 ## My website
 
