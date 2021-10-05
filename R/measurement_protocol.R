@@ -45,7 +45,9 @@
 #' 
 #' a_client_id <- 123.456
 #' event <- ga_mp_event("an_event")
-#' ga_mp_send(event, a_client_id, my_connection, debug_call = TRUE)
+#' 
+#' \dontrun{
+#' #' ga_mp_send(event, a_client_id, my_connection, debug_call = TRUE)
 #' 
 #' # multiple events at same time in a batch
 #' another <- ga_mp_event("another_event")
@@ -54,7 +56,7 @@
 #'            a_client_id, 
 #'            my_connection,
 #'            debug_call = TRUE)
-#' \dontrun{
+#'            
 #' # you can see sent events in the real-time reports
 #' my_property_id <- 206670707
 #' ga_data(my_property_id, 

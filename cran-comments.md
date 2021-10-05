@@ -1,6 +1,6 @@
 ## Test environments
 * local R installation, R 4.1.0
-* x86_64-pc-linux-gnu (64-bit) (on Google Cloud Build), R 4.1.0
+* x86_64-pc-linux-gnu (64-bit) (on Google Cloud Build), R 4.0.5
 * win-builder (devel)
 
 
@@ -10,7 +10,7 @@
 
 ---
 
-Submission to fix failing test on CRAN
+Submission to fix failing test on CRAN.  Have removed tests and stopped examples running.
 
 ## Dependencies
 
