@@ -11,7 +11,7 @@ home:
 template:
   params:
     bootswatch: paper
-    ganalytics: UA-47480439-2
+    ganalytics: G-43MDXK6CLZ
 navbar:
   title: googleAnalyticsR
   inverse: true
