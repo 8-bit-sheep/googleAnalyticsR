@@ -23,15 +23,17 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-47480439-2"></script><script>
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-43MDXK6CLZ"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-47480439-2');
+  gtag('config', 'G-43MDXK6CLZ');
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -222,7 +224,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/">
+  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -237,39 +239,39 @@
 
       
 
-      </header><script src="measurement-protocol-v2_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Measurement Protocol v2</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/vignettes/measurement-protocol-v2.Rmd"><code>vignettes/measurement-protocol-v2.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/HEAD/vignettes/measurement-protocol-v2.Rmd" class="external-link"><code>vignettes/measurement-protocol-v2.Rmd</code></a></small>
       <div class="hidden name"><code>measurement-protocol-v2.Rmd</code></div>
 
     </div>
 
     
     
-<div id="sending-hits-from-r-to-google-analytics-4-properties-via-the-measurement-protocol-v2" class="section level2">
-<h2 class="hasAnchor">
-<a href="#sending-hits-from-r-to-google-analytics-4-properties-via-the-measurement-protocol-v2" class="anchor"></a>Sending hits from R to Google Analytics 4 properties via the Measurement Protocol v2</h2>
-<p>From the <a href="https://developers.google.com/analytics/devguides/collection/protocol/ga4">Google docs</a>:</p>
+<div class="section level2">
+<h2 id="sending-hits-from-r-to-google-analytics-4-properties-via-the-measurement-protocol-v2">Sending hits from R to Google Analytics 4 properties via the Measurement Protocol v2<a class="anchor" aria-label="anchor" href="#sending-hits-from-r-to-google-analytics-4-properties-via-the-measurement-protocol-v2"></a>
+</h2>
+<p>From the <a href="https://developers.google.com/analytics/devguides/collection/protocol/ga4" class="external-link">Google docs</a>:</p>
 <p>The Google Analytics Measurement Protocol for Google Analytics 4 allows developers to make HTTP requests to send events directly to Google Analytics servers. This allows developers to measure how users interact with their business from any HTTP-enabled environment. Notably, this makes it easy to measure interactions that happen server-to-server.</p>
-<div id="librarymeasurementprotocol" class="section level3">
-<h3 class="hasAnchor">
-<a href="#librarymeasurementprotocol" class="anchor"></a>library(measurementProtocol)</h3>
-<p>The <a href="https://code.markedmondson.me/measurementProtocol/">measurementProtocol library</a> is the one actually making the hits, with <code>googleAnalyticsR</code> calling the same functions. Use <code><a href="https://code.markedmondson.me/measurementProtocol/">library(measurementProtocol)</a></code> directly if you don’t need the rest of the <code>googleAnalyticsR</code> functions and would like a lighter package to work with.</p>
+<div class="section level3">
+<h3 id="librarymeasurementprotocol">library(measurementProtocol)<a class="anchor" aria-label="anchor" href="#librarymeasurementprotocol"></a>
+</h3>
+<p>The <a href="https://code.markedmondson.me/measurementProtocol/" class="external-link">measurementProtocol library</a> is the one actually making the hits, with <code>googleAnalyticsR</code> calling the same functions. Use <code><a href="https://code.markedmondson.me/measurementProtocol/" class="external-link">library(measurementProtocol)</a></code> directly if you don’t need the rest of the <code>googleAnalyticsR</code> functions and would like a lighter package to work with.</p>
 </div>
 </div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
 <p>Using the <code><a href="../reference/ga_mp_send.html">ga_mp_send()</a></code> function you can send tracking hits from any R environment that is connected to HTTP. This can be used in variety of ways including R package tracking; extracting user data then running statistical analysis on GA4 user data and sending it back into GA4; server side tracking implementations of R web apps such as Shiny.</p>
-<p><code>googleAnalyticsR</code> includes opt-in GA4 tracking of the package usage via the <code><a href="../reference/ga_trackme.html">ga_trackme()</a></code> function.</p>
+<p><code>googleAnalyticsR</code> includes opt-in GA4 tracking of the package usage via the <code><a href="../reference/ga_trackme_event.html">ga_trackme()</a></code> function.</p>
 </div>
-<div id="sending-ga4-hits-from-r" class="section level2">
-<h2 class="hasAnchor">
-<a href="#sending-ga4-hits-from-r" class="anchor"></a>Sending GA4 hits from R</h2>
+<div class="section level2">
+<h2 id="sending-ga4-hits-from-r">Sending GA4 hits from R<a class="anchor" aria-label="anchor" href="#sending-ga4-hits-from-r"></a>
+</h2>
 <p>To send hits you need:</p>
 <ol style="list-style-type: decimal">
 <li>A GA4 account</li>
@@ -291,7 +293,7 @@
 <p>An example is shown then example below:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># preferably set this in .Renviron</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html">Sys.setenv</a></span><span class="op">(</span>GA_MP_SECRET<span class="op">=</span><span class="st">"MY_SECRET"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>GA_MP_SECRET<span class="op">=</span><span class="st">"MY_SECRET"</span><span class="op">)</span>
 
 <span class="co"># your GA4 settings</span>
 <span class="va">my_measurement_id</span> <span class="op">&lt;-</span> <span class="st">"G-43MDXK6CLZ"</span>
@@ -310,7 +312,7 @@
 <span class="va">another</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_mp_event.html">ga_mp_event</a></span><span class="op">(</span><span class="st">"another_event"</span><span class="op">)</span>
 
 <span class="co"># send a real hit - batched together</span>
-<span class="fu"><a href="../reference/ga_mp_send.html">ga_mp_send</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">event</span>, <span class="va">another</span><span class="op">)</span>, 
+<span class="fu"><a href="../reference/ga_mp_send.html">ga_mp_send</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">event</span>, <span class="va">another</span><span class="op">)</span>, 
            <span class="va">a_client_id</span>, <span class="va">my_measurement_id</span><span class="op">)</span>
 
 <span class="co"># you can see sent events in the real-time reports to check its working</span>
@@ -319,22 +321,22 @@
         dimensions <span class="op">=</span> <span class="st">"eventName"</span>, 
         metrics <span class="op">=</span> <span class="st">"eventCount"</span>, 
         dimensionFilter <span class="op">=</span> <span class="fu"><a href="../reference/ga_data_filter.html">ga_data_filter</a></span><span class="op">(</span>
-           <span class="va">eventName</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"an_event"</span>,<span class="st">"another_event"</span><span class="op">)</span><span class="op">)</span>,
+           <span class="va">eventName</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"an_event"</span>,<span class="st">"another_event"</span><span class="op">)</span><span class="op">)</span>,
         realtime <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<div id="configuration-of-ga4" class="section level3">
-<h3 class="hasAnchor">
-<a href="#configuration-of-ga4" class="anchor"></a>Configuration of GA4</h3>
+<div class="section level3">
+<h3 id="configuration-of-ga4">Configuration of GA4<a class="anchor" aria-label="anchor" href="#configuration-of-ga4"></a>
+</h3>
 <p>Once the API secret is created you can put it in an .Renviron file for the <code>GA_MP_SECRET</code> so you do not need to supply it in the R code for security.</p>
 <p>You also need a clientId, which is the ID associated with the user creating the hits. Be aware of privacy laws when creating this - for example ePrivacy in the EU dictates you must get consent to associate an ID with a user. If the clientId is the same as other streams into your GA4 account (e.g. website, mobile apps), the hits you send will be associated with the same user.</p>
 <p>Once you have those then you need to decide what event you want to send in. To see event parameters in your GA4 reports, create custom fields in your GA4 account first, after which you can see them in your reports 24hrs after you send them - - <code>dimension name</code> will be the label in the reports, <code>event parameter</code> will be the parameter you have sent in with the event.</p>
 </div>
-<div id="creating-the-connection-object" class="section level3">
-<h3 class="hasAnchor">
-<a href="#creating-the-connection-object" class="anchor"></a>Creating the connection object</h3>
+<div class="section level3">
+<h3 id="creating-the-connection-object">Creating the connection object<a class="anchor" aria-label="anchor" href="#creating-the-connection-object"></a>
+</h3>
 <p>The connection is configured with the API secret and your measurementId. Ideally the API secret should be set in your <code>.Renviron</code> file via environment argument <code>MP_SECRET</code></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># preferably set this in .Renviron</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html">Sys.setenv</a></span><span class="op">(</span>MP_SECRET<span class="op">=</span><span class="st">"MY_SECRET"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>MP_SECRET<span class="op">=</span><span class="st">"MY_SECRET"</span><span class="op">)</span>
 
 <span class="co"># your GA4 settings</span>
 <span class="va">my_measurement_id</span> <span class="op">&lt;-</span> <span class="st">"G-1234"</span>
@@ -349,18 +351,18 @@
     preview_header <span class="op">=</span> <span class="st">"ZW52LTV8OWdPOExNWFkYjA0Njk4NmQ="</span>
 <span class="op">)</span></code></pre></div>
 </div>
-<div id="sending-the-ga4-hit-via-r" class="section level3">
-<h3 class="hasAnchor">
-<a href="#sending-the-ga4-hit-via-r" class="anchor"></a>Sending the GA4 hit via R</h3>
-<p>You construct an event via <code><a href="../reference/ga_mp_event.html">ga_mp_event()</a></code> - a simple one may be <code><a href="../reference/ga_mp_event.html">ga_mp_event("an_event")</a></code></p>
+<div class="section level3">
+<h3 id="sending-the-ga4-hit-via-r">Sending the GA4 hit via R<a class="anchor" aria-label="anchor" href="#sending-the-ga4-hit-via-r"></a>
+</h3>
+<p>You construct an event via <code><a href="../reference/ga_mp_event.html">ga_mp_event()</a></code> - a simple one may be <code>ga_mp_event("an_event")</code></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ga_mp_event.html">ga_mp_event</a></span><span class="op">(</span><span class="st">"an_event"</span><span class="op">)</span></code></pre></div>
-<pre><code>## 
-## ==GA4 MP Event
-## {
-##   "name": "an_event"
-## }</code></pre>
-<p>Refer to the <a href="https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events">Events documentation</a> on what you can send in.</p>
+<pre><code><span class="co">## </span>
+<span class="co">## ==GA4 MP Event</span>
+<span class="co">## {</span>
+<span class="co">##   "name": "an_event"</span>
+<span class="co">## }</span></code></pre>
+<p>Refer to the <a href="https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events" class="external-link">Events documentation</a> on what you can send in.</p>
 <p>Once you have an event you can test it will show up when you send via <code><a href="../reference/ga_mp_send.html">ga_mp_send()</a></code> by setting <code>debug_call=TRUE</code></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_connection</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_mp_send.html">ga_mp_connection</a></span><span class="op">(</span><span class="st">"G-1234"</span><span class="op">)</span>
@@ -368,69 +370,69 @@
 
 <span class="va">event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_mp_event.html">ga_mp_event</a></span><span class="op">(</span><span class="st">"an_event"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/ga_mp_send.html">ga_mp_send</a></span><span class="op">(</span><span class="va">event</span>, <span class="va">a_client_id</span>, <span class="va">my_connection</span>, debug_call <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>## ℹ 2021-10-05 19:17:42 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-1234&amp;api_secret=MY_SECRET 
-##  {
-##   "client_id": "31761835.1633461463",
-##   "non_personalized_ads": true,
-##   "events": [
-##     {
-##       "name": "an_event"
-##     }
-##   ]
-## }</code></pre>
-<pre><code>## ℹ 2021-10-05 19:17:42 &gt; Response:  200</code></pre>
-<pre><code>## ℹ 2021-10-05 19:17:42 &gt; No validation messages found</code></pre>
-<pre><code>## [1] TRUE</code></pre>
+<pre><code><span class="co">## <span style="color: #00BBBB;">ℹ</span> <span style="color: #B2B2B2;">2022-01-13 13:01:31 &gt;</span> MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-1234&amp;api_secret=MY_SECRET </span>
+<span class="co">##  {</span>
+<span class="co">##   "client_id": "96343037.1642078892",</span>
+<span class="co">##   "non_personalized_ads": true,</span>
+<span class="co">##   "events": [</span>
+<span class="co">##     {</span>
+<span class="co">##       "name": "an_event"</span>
+<span class="co">##     }</span>
+<span class="co">##   ]</span>
+<span class="co">## }</span></code></pre>
+<pre><code><span class="co">## <span style="color: #00BBBB;">ℹ</span> <span style="color: #B2B2B2;">2022-01-13 13:01:31 &gt;</span> Response:  200</span></code></pre>
+<pre><code><span class="co">## <span style="color: #00BBBB;">ℹ</span> <span style="color: #B2B2B2;">2022-01-13 13:01:31 &gt;</span> No validation messages found</span></code></pre>
+<pre><code><span class="co">## [1] TRUE</span></code></pre>
 <p>You can send many events in on send:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">another</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_mp_event.html">ga_mp_event</a></span><span class="op">(</span><span class="st">"another_event"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/ga_mp_send.html">ga_mp_send</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">event</span>, <span class="va">another</span><span class="op">)</span>, 
+<span class="fu"><a href="../reference/ga_mp_send.html">ga_mp_send</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">event</span>, <span class="va">another</span><span class="op">)</span>, 
            <span class="va">a_client_id</span>, 
            <span class="va">my_connection</span>, 
            debug_call <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>## ℹ 2021-10-05 19:17:43 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-1234&amp;api_secret=MY_SECRET 
-##  {
-##   "client_id": "31761835.1633461463",
-##   "non_personalized_ads": true,
-##   "events": [
-##     {
-##       "name": "an_event"
-##     },
-##     {
-##       "name": "another_event"
-##     }
-##   ]
-## }</code></pre>
-<pre><code>## ℹ 2021-10-05 19:17:43 &gt; Response:  200</code></pre>
-<pre><code>## ℹ 2021-10-05 19:17:43 &gt; No validation messages found</code></pre>
-<pre><code>## [1] TRUE</code></pre>
+<pre><code><span class="co">## <span style="color: #00BBBB;">ℹ</span> <span style="color: #B2B2B2;">2022-01-13 13:01:31 &gt;</span> MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-1234&amp;api_secret=MY_SECRET </span>
+<span class="co">##  {</span>
+<span class="co">##   "client_id": "96343037.1642078892",</span>
+<span class="co">##   "non_personalized_ads": true,</span>
+<span class="co">##   "events": [</span>
+<span class="co">##     {</span>
+<span class="co">##       "name": "an_event"</span>
+<span class="co">##     },</span>
+<span class="co">##     {</span>
+<span class="co">##       "name": "another_event"</span>
+<span class="co">##     }</span>
+<span class="co">##   ]</span>
+<span class="co">## }</span></code></pre>
+<pre><code><span class="co">## <span style="color: #00BBBB;">ℹ</span> <span style="color: #B2B2B2;">2022-01-13 13:01:32 &gt;</span> Response:  200</span></code></pre>
+<pre><code><span class="co">## <span style="color: #00BBBB;">ℹ</span> <span style="color: #B2B2B2;">2022-01-13 13:01:32 &gt;</span> No validation messages found</span></code></pre>
+<pre><code><span class="co">## [1] TRUE</span></code></pre>
 <p>Events are flexible with the number of parameters you send with the event name - this allows for rich data streams. The data parameters can be added via the <code>params</code> argument and accepts (nested) named R lists:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ga_mp_event.html">ga_mp_event</a></span><span class="op">(</span><span class="st">"event_with_params"</span>, params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>my_param <span class="op">=</span> <span class="st">"hello"</span>, my_param2 <span class="op">=</span> <span class="st">"mum"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## 
-## ==GA4 MP Event
-## {
-##   "name": "event_with_params",
-##   "params": {
-##     "my_param": "hello",
-##     "my_param2": "mum"
-##   }
-## }</code></pre>
+<code class="sourceCode R"><span class="fu"><a href="../reference/ga_mp_event.html">ga_mp_event</a></span><span class="op">(</span><span class="st">"event_with_params"</span>, params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>my_param <span class="op">=</span> <span class="st">"hello"</span>, my_param2 <span class="op">=</span> <span class="st">"mum"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## </span>
+<span class="co">## ==GA4 MP Event</span>
+<span class="co">## {</span>
+<span class="co">##   "name": "event_with_params",</span>
+<span class="co">##   "params": {</span>
+<span class="co">##     "my_param": "hello",</span>
+<span class="co">##     "my_param2": "mum"</span>
+<span class="co">##   }</span>
+<span class="co">## }</span></code></pre>
 <p>If you are making product item style hits, the helper function <code><a href="../reference/ga_mp_event_item.html">ga_mp_event_item()</a></code> helps you construct them:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># one item</span>
 <span class="fu"><a href="../reference/ga_mp_event_item.html">ga_mp_event_item</a></span><span class="op">(</span>item_name <span class="op">=</span> <span class="st">"jeggings"</span>, 
                  price <span class="op">=</span> <span class="fl">8.88</span>, 
                  item_variant <span class="op">=</span> <span class="st">"Black"</span><span class="op">)</span></code></pre></div>
-<pre><code>## ==GA4 MP Event Item
-## {
-##   "item_name": "jeggings",
-##   "item_variant": "Black",
-##   "price": 8.88
-## }</code></pre>
+<pre><code><span class="co">## ==GA4 MP Event Item</span>
+<span class="co">## {</span>
+<span class="co">##   "item_name": "jeggings",</span>
+<span class="co">##   "item_variant": "Black",</span>
+<span class="co">##   "price": 8.88</span>
+<span class="co">## }</span></code></pre>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># many items in a list</span>
-<span class="va">items</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+<span class="va">items</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
   <span class="fu"><a href="../reference/ga_mp_event_item.html">ga_mp_event_item</a></span><span class="op">(</span>item_id <span class="op">=</span> <span class="st">"SKU_12345"</span>, 
                    price <span class="op">=</span> <span class="fl">9.99</span>, 
                    item_brand <span class="op">=</span> <span class="st">"Gucci"</span><span class="op">)</span>, 
@@ -440,67 +442,67 @@
                    
 <span class="co"># construct an event with its own fields</span>
 <span class="fu"><a href="../reference/ga_mp_event.html">ga_mp_event</a></span><span class="op">(</span><span class="st">"add_payment_info"</span>, 
-            params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>coupon <span class="op">=</span> <span class="st">"SUMMER_FUN"</span>, 
+            params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>coupon <span class="op">=</span> <span class="st">"SUMMER_FUN"</span>, 
                           payment_type <span class="op">=</span> <span class="st">"Credit Card"</span>, 
                           value <span class="op">=</span> <span class="fl">7.77</span>, 
                           currency <span class="op">=</span> <span class="st">"USD"</span><span class="op">)</span>, 
             items <span class="op">=</span> <span class="va">items</span><span class="op">)</span></code></pre></div>
-<pre><code>## 
-## ==GA4 MP Event
-## {
-##   "name": "add_payment_info",
-##   "params": {
-##     "coupon": "SUMMER_FUN",
-##     "payment_type": "Credit Card",
-##     "value": 7.77,
-##     "currency": "USD",
-##     "items": [
-##       {
-##         "item_id": "SKU_12345",
-##         "item_brand": "Gucci",
-##         "price": 9.99
-##       },
-##       {
-##         "item_name": "jeggings",
-##         "item_variant": "Black",
-##         "price": 8.88
-##       }
-##     ]
-##   }
-## }</code></pre>
+<pre><code><span class="co">## </span>
+<span class="co">## ==GA4 MP Event</span>
+<span class="co">## {</span>
+<span class="co">##   "name": "add_payment_info",</span>
+<span class="co">##   "params": {</span>
+<span class="co">##     "coupon": "SUMMER_FUN",</span>
+<span class="co">##     "payment_type": "Credit Card",</span>
+<span class="co">##     "value": 7.77,</span>
+<span class="co">##     "currency": "USD",</span>
+<span class="co">##     "items": [</span>
+<span class="co">##       {</span>
+<span class="co">##         "item_id": "SKU_12345",</span>
+<span class="co">##         "item_brand": "Gucci",</span>
+<span class="co">##         "price": 9.99</span>
+<span class="co">##       },</span>
+<span class="co">##       {</span>
+<span class="co">##         "item_name": "jeggings",</span>
+<span class="co">##         "item_variant": "Black",</span>
+<span class="co">##         "price": 8.88</span>
+<span class="co">##       }</span>
+<span class="co">##     ]</span>
+<span class="co">##   }</span>
+<span class="co">## }</span></code></pre>
 </div>
 </div>
-<div id="googleanalyticsr-package-tracking-with-ga_trackme" class="section level2">
-<h2 class="hasAnchor">
-<a href="#googleanalyticsr-package-tracking-with-ga_trackme" class="anchor"></a>googleAnalyticsR package tracking with ga_trackme</h2>
+<div class="section level2">
+<h2 id="googleanalyticsr-package-tracking-with-ga_trackme">googleAnalyticsR package tracking with ga_trackme<a class="anchor" aria-label="anchor" href="#googleanalyticsr-package-tracking-with-ga_trackme"></a>
+</h2>
 <p><code>googleAnalyticsR</code> uses the above to provide opt-in tracking of what systems its running on.</p>
-<p><code><a href="../reference/ga_trackme.html">ga_trackme()</a></code> is send on package load if consent is given in the form of a file saved on the user’s computer (much like a website cookie).</p>
+<p><code><a href="../reference/ga_trackme_event.html">ga_trackme()</a></code> is send on package load if consent is given in the form of a file saved on the user’s computer (much like a website cookie).</p>
 <p>You can see what is sent with the <code>debug_call=TRUE</code> flag - the below is sent when this RMarkdown file renders:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ga_trackme.html">ga_trackme_event</a></span><span class="op">(</span>debug_call <span class="op">=</span> <span class="cn">TRUE</span>, say_hello <span class="op">=</span> <span class="st">"Documentation is a feature"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning in file(con, "r"): cannot open file '/builder/home/.config/
-## googleAnalyticsR/optin-tracking': No such file or directory</code></pre>
-<pre><code>## ℹ 2021-10-05 19:17:43 &gt; MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=_hS_7VJARhqbCq9mF3oiNg 
-##  {
-##   "client_id": "12345678.987654",
-##   "non_personalized_ads": true,
-##   "events": [
-##     {
-##       "name": "r_package_loaded",
-##       "params": {
-##         "r_version": "R version 4.0.5 (2021-03-31)",
-##         "r_platform": "x86_64-pc-linux-gnu (64-bit)",
-##         "r_locale": "LC_CTYPE=en_US.UTF-8;LC_NUMERIC=C;LC_TIME=en_US.UTF-8;LC_COLLATE=en_US.UTF-8;LC_MONETARY=en_US.UTF-8;LC_MESSAGES=C;LC_PAPER=en_US.UTF-8;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=en_US.UTF-8;LC_IDENTIFICATION=C",
-##         "r_system": "Ubuntu 20.04 LTS",
-##         "say_hello": "Documentation is a feature",
-##         "package": "googleAnalyticsR 1.0.1"
-##       }
-##     }
-##   ]
-## }</code></pre>
-<pre><code>## ℹ 2021-10-05 19:17:43 &gt; Response:  200</code></pre>
-<pre><code>## ℹ 2021-10-05 19:17:43 &gt; No validation messages found</code></pre>
-<pre><code>## [1] TRUE</code></pre>
+<code class="sourceCode R"><span class="fu"><a href="../reference/ga_trackme_event.html">ga_trackme_event</a></span><span class="op">(</span>debug_call <span class="op">=</span> <span class="cn">TRUE</span>, say_hello <span class="op">=</span> <span class="st">"Documentation is a feature"</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## Warning in file(con, "r"): cannot open file '/builder/home/.config/</span>
+<span class="co">## googleAnalyticsR/optin-tracking': No such file or directory</span></code></pre>
+<pre><code><span class="co">## <span style="color: #00BBBB;">ℹ</span> <span style="color: #B2B2B2;">2022-01-13 13:01:32 &gt;</span> MP Request: https://www.google-analytics.com/debug/mp/collect?measurement_id=G-43MDXK6CLZ&amp;api_secret=_hS_7VJARhqbCq9mF3oiNg </span>
+<span class="co">##  {</span>
+<span class="co">##   "client_id": "12345678.987654",</span>
+<span class="co">##   "non_personalized_ads": true,</span>
+<span class="co">##   "events": [</span>
+<span class="co">##     {</span>
+<span class="co">##       "name": "r_package_loaded",</span>
+<span class="co">##       "params": {</span>
+<span class="co">##         "r_version": "R version 4.1.2 (2021-11-01)",</span>
+<span class="co">##         "r_platform": "x86_64-pc-linux-gnu (64-bit)",</span>
+<span class="co">##         "r_locale": "LC_CTYPE=en_US.UTF-8;LC_NUMERIC=C;LC_TIME=en_US.UTF-8;LC_COLLATE=en_US.UTF-8;LC_MONETARY=en_US.UTF-8;LC_MESSAGES=en_US.UTF-8;LC_PAPER=en_US.UTF-8;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=en_US.UTF-8;LC_IDENTIFICATION=C",</span>
+<span class="co">##         "r_system": "Ubuntu 20.04.3 LTS",</span>
+<span class="co">##         "say_hello": "Documentation is a feature",</span>
+<span class="co">##         "package": "googleAnalyticsR 1.0.1"</span>
+<span class="co">##       }</span>
+<span class="co">##     }</span>
+<span class="co">##   ]</span>
+<span class="co">## }</span></code></pre>
+<pre><code><span class="co">## <span style="color: #00BBBB;">ℹ</span> <span style="color: #B2B2B2;">2022-01-13 13:01:32 &gt;</span> Response:  200</span></code></pre>
+<pre><code><span class="co">## <span style="color: #00BBBB;">ℹ</span> <span style="color: #B2B2B2;">2022-01-13 13:01:32 &gt;</span> No validation messages found</span></code></pre>
+<pre><code><span class="co">## [1] TRUE</span></code></pre>
 <p>Send your own messages if you like! I will read them in the GA4 interface.</p>
 </div>
   </div>
@@ -516,11 +518,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Mark Edmondson.</p>
+  <p></p>
+<p>Developed by Mark Edmondson.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -528,6 +532,8 @@
 
   
 
+
+  
 
   </body>
 </html>

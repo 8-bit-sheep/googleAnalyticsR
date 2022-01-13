@@ -23,15 +23,17 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-47480439-2"></script><script>
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-43MDXK6CLZ"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-47480439-2');
+  gtag('config', 'G-43MDXK6CLZ');
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -222,7 +224,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/">
+  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -237,13 +239,13 @@
 
       
 
-      </header><script src="big-query_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Big Query Exports from Google Analytics 360 to R</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/vignettes/big-query.Rmd"><code>vignettes/big-query.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/HEAD/vignettes/big-query.Rmd" class="external-link"><code>vignettes/big-query.Rmd</code></a></small>
       <div class="hidden name"><code>big-query.Rmd</code></div>
 
     </div>
@@ -253,41 +255,41 @@
 <p>Limited support for more user friendly calls to BigQuery Google Analytics 360 exports.</p>
 <p>This is intended for users who may be familar with Google Analytics but not with SQL necessary to extract equivalent data from a BigQuery export of Google Analytics 360 data.</p>
 <p><code>google_analytics_bq</code> parses your metrics and dimensions into BigQuery queries.</p>
-<div id="setup" class="section level2">
-<h2 class="hasAnchor">
-<a href="#setup" class="anchor"></a>Setup</h2>
-<p>To use, you need to also install the <a href="http://code.markedmondson.me/bigQueryR/"><code>bigQueryR</code></a> library.</p>
+<div class="section level2">
+<h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+</h2>
+<p>To use, you need to also install the <a href="http://code.markedmondson.me/bigQueryR/" class="external-link"><code>bigQueryR</code></a> library.</p>
 <p>Stable version is on CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"bigQueryR"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"bigQueryR"</span><span class="op">)</span></code></pre></div>
 <p>Development version on devtools:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"MarkEdmondson1234/bigQueryR"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"MarkEdmondson1234/bigQueryR"</span><span class="op">)</span></code></pre></div>
 <p>Once installed, authenticate to BigQuery:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://code.markedmondson.me/bigQueryR/">bigQueryR</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://code.markedmondson.me/bigQueryR/" class="external-link">bigQueryR</a></span><span class="op">)</span>
 
 <span class="co">## go through Google oAuth2 flow</span>
 <span class="co">## needs email that has access to the BigQuery dataset</span>
-<span class="fu"><a href="https://rdrr.io/pkg/bigQueryR/man/bqr_auth.html">bqr_auth</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/bigQueryR/man/bqr_auth.html" class="external-link">bqr_auth</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co">## get lists of your project and datasets</span>
-<span class="fu"><a href="https://rdrr.io/pkg/bigQueryR/man/bqr_list_projects.html">bqr_list_projects</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/bigQueryR/man/bqr_list_datasets.html">bqr_list_datasets</a></span><span class="op">(</span><span class="st">"project-id"</span><span class="op">)</span></code></pre></div>
-<p>If you want to authenticate with Google Analytics and BigQuery in the same session (or others) then its best to authenticate with <code><a href="https://code.markedmondson.me/googleAuthR//reference/gar_auth.html">googleAuthR::gar_auth()</a></code> with the appropriate scopes set. The below lets you authenticate with Google Analytics, Google Cloud Storage and BigQuery:</p>
+<span class="fu"><a href="https://rdrr.io/pkg/bigQueryR/man/bqr_list_projects.html" class="external-link">bqr_list_projects</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/bigQueryR/man/bqr_list_datasets.html" class="external-link">bqr_list_datasets</a></span><span class="op">(</span><span class="st">"project-id"</span><span class="op">)</span></code></pre></div>
+<p>If you want to authenticate with Google Analytics and BigQuery in the same session (or others) then its best to authenticate with <code><a href="https://code.markedmondson.me/googleAuthR//reference/gar_auth.html" class="external-link">googleAuthR::gar_auth()</a></code> with the appropriate scopes set. The below lets you authenticate with Google Analytics, Google Cloud Storage and BigQuery:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>googleAuthR.scopes.selected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"https://www.googleapis.com/auth/analytics"</span>,
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>googleAuthR.scopes.selected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://www.googleapis.com/auth/analytics"</span>,
                                         <span class="st">"https://www.googleapis.com/auth/cloud-platform"</span>,
                                         <span class="st">"https://www.googleapis.com/auth/bigquery"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu">googleAuthR</span><span class="fu">::</span><span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_auth.html">gar_auth</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu">googleAuthR</span><span class="fu">::</span><span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_auth.html" class="external-link">gar_auth</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>You may also want to use a JSON file to authenticate with BigQuery. Make sure to add the service email to the users of the Google project, and then download the JSON file and authenticate via:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">googleAuthR</span><span class="fu">::</span><span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_auth_service.html">gar_auth_service</a></span><span class="op">(</span><span class="st">"gwt-download-XXXX.json"</span><span class="op">)</span></code></pre></div>
-<p>See <a href="http://code.markedmondson.me/googleAuthR/"><code>googleAuthR</code> help</a> for more details.</p>
+<code class="sourceCode R"><span class="fu">googleAuthR</span><span class="fu">::</span><span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_auth_service.html" class="external-link">gar_auth_service</a></span><span class="op">(</span><span class="st">"gwt-download-XXXX.json"</span><span class="op">)</span></code></pre></div>
+<p>See <a href="http://code.markedmondson.me/googleAuthR/" class="external-link"><code>googleAuthR</code> help</a> for more details.</p>
 </div>
-<div id="exporting-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#exporting-data" class="anchor"></a>Exporting data</h2>
+<div class="section level2">
+<h2 id="exporting-data">Exporting data<a class="anchor" aria-label="anchor" href="#exporting-data"></a>
+</h2>
 <p>For BigQuery Google Analytics 360 exports, the dataset is the same as the GA View ID you are exporting.</p>
 <p>You can then export BigQuery data via:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bq <span class="ot">&lt;-</span> <span class="fu">google_analytics_bq</span>(<span class="st">"project-id"</span>, <span class="st">"dataset-id-ga-viewid"</span>, </span>
@@ -312,9 +314,9 @@ Segments/filters are not supported. The data is unsampled though.</p>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> Error <span class="cf">in</span> <span class="fu">google_analytics_bq</span>(<span class="st">"project-id"</span>, <span class="st">"dataset-id-ga-viewid"</span>, <span class="at">start =</span> <span class="st">"2016-01-01"</span>,  <span class="sc">:</span> </span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  dimension not yet supported. Must be one of referralPath, campaign, source, medium, keyword, adContent, adwordsCampaignID, adwordsAdGroupID, transactionId, date, visitorId, visitId, visitStartTime, visitNumber                           </span></code></pre></div>
 </div>
-<div id="raw-bigquery-sql" class="section level2">
-<h2 class="hasAnchor">
-<a href="#raw-bigquery-sql" class="anchor"></a>Raw BigQuery SQL</h2>
+<div class="section level2">
+<h2 id="raw-bigquery-sql">Raw BigQuery SQL<a class="anchor" aria-label="anchor" href="#raw-bigquery-sql"></a>
+</h2>
 <p>You can query the BigQuery table directly using the <code>query</code> parameter.</p>
 <p>This is just as you would in the BigQuery interface, and allows queries you can also do there.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -335,7 +337,7 @@ ORDER BY date ASC "</span>
 <code class="sourceCode R"><span class="va">just_query</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics_bq.html">google_analytics_bq</a></span><span class="op">(</span><span class="st">"project-id"</span>, <span class="st">"dataset-id-ga-viewid"</span>, 
                                   start <span class="op">=</span> <span class="st">"2016-01-01"</span>, end <span class="op">=</span> <span class="st">"2016-02-01"</span>, 
                                   metrics <span class="op">=</span> <span class="st">"users"</span>, 
-                                  dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"source"</span>,<span class="st">"medium"</span><span class="op">)</span>,
+                                  dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"source"</span>,<span class="st">"medium"</span><span class="op">)</span>,
                                   return_query_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">just_query</span>
 <span class="co"># [1] "SELECT trafficSource.source as source, trafficSource.medium as medium, COUNT(fullVisitorId) as users </span>
@@ -343,12 +345,12 @@ ORDER BY date ASC "</span>
 <span class="co"># TIMESTAMP('2016-02-01'))) GROUP BY source, medium  LIMIT 100"</span></code></pre></div>
 <p>You could then paste this query into the BigQuery interface, or modify it and send it back in via <code>google_analytics_bq</code>.</p>
 </div>
-<div id="implemented-metrics-and-dimensions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#implemented-metrics-and-dimensions" class="anchor"></a>Implemented metrics and dimensions</h2>
+<div class="section level2">
+<h2 id="implemented-metrics-and-dimensions">Implemented metrics and dimensions<a class="anchor" aria-label="anchor" href="#implemented-metrics-and-dimensions"></a>
+</h2>
 <p>The metrics and dimensions implemented so far are in the two lookups below.</p>
 <p>They include the BigQuery exclusive <code>hitTimestamp</code>, <code>fullVisitorId</code>, <code>visitId</code> etc.</p>
-<p>Read the full <a href="https://support.google.com/analytics/answer/3437719?hl=en">Google Analytics 360 BigQuery data schema</a> for an idea on what can be queried.</p>
+<p>Read the full <a href="https://support.google.com/analytics/answer/3437719?hl=en" class="external-link">Google Analytics 360 BigQuery data schema</a> for an idea on what can be queried.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>lookup_bq_query_m <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">visits =</span> <span class="st">"SUM(totals.visits) as sessions"</span>,</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sessions =</span> <span class="st">"SUM(totals.visits) as sessions"</span>,</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">pageviews =</span> <span class="st">"SUM(totals.pageviews) as pageviews"</span>,</span>
@@ -419,11 +421,13 @@ ORDER BY date ASC "</span>
 
 
       <footer><div class="copyright">
-  <p>Developed by Mark Edmondson.</p>
+  <p></p>
+<p>Developed by Mark Edmondson.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -431,6 +435,8 @@ ORDER BY date ASC "</span>
 
   
 
+
+  
 
   </body>
 </html>

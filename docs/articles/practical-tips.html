@@ -23,15 +23,17 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-47480439-2"></script><script>
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-43MDXK6CLZ"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-47480439-2');
+  gtag('config', 'G-43MDXK6CLZ');
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -222,7 +224,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/">
+  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -237,51 +239,51 @@
 
       
 
-      </header><script src="practical-tips_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Practical Tips</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/vignettes/practical-tips.Rmd"><code>vignettes/practical-tips.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/HEAD/vignettes/practical-tips.Rmd" class="external-link"><code>vignettes/practical-tips.Rmd</code></a></small>
       <div class="hidden name"><code>practical-tips.Rmd</code></div>
 
     </div>
 
     
     
-<div id="keep-metrics-and-dimensions-within-easy-reach" class="section level3">
-<h3 class="hasAnchor">
-<a href="#keep-metrics-and-dimensions-within-easy-reach" class="anchor"></a>Keep metrics and dimensions within easy reach</h3>
+<div class="section level3">
+<h3 id="keep-metrics-and-dimensions-within-easy-reach">Keep metrics and dimensions within easy reach<a class="anchor" aria-label="anchor" href="#keep-metrics-and-dimensions-within-easy-reach"></a>
+</h3>
 <p>With several hundreds of metrics and dimensions available in GA it can be handy to have a reference of what’s what within easy reach. The <code><a href="../reference/ga_meta.html">ga_meta()</a></code> function returns a table containing a list of all GA metrics and dimensions along with their definitions and other useful meta data.</p>
 <p><img src="meta_data_screenshot.png"></p>
 <p>If offline, this data is also available by typing <code>meta</code>, although it won’t be quite as up to date.<br>
-(The meta data does not include multi-channel as they are not available, for those <a href="https://developers.google.com/analytics/devguides/reporting/mcf/dimsmets/">see the online version</a>. )</p>
+(The meta data does not include multi-channel as they are not available, for those <a href="https://developers.google.com/analytics/devguides/reporting/mcf/dimsmets/" class="external-link">see the online version</a>. )</p>
 </div>
-<div id="access-information-rapidly-about-your-web-properties-and-views" class="section level3">
-<h3 class="hasAnchor">
-<a href="#access-information-rapidly-about-your-web-properties-and-views" class="anchor"></a>Access information rapidly about your web properties and views</h3>
+<div class="section level3">
+<h3 id="access-information-rapidly-about-your-web-properties-and-views">Access information rapidly about your web properties and views<a class="anchor" aria-label="anchor" href="#access-information-rapidly-about-your-web-properties-and-views"></a>
+</h3>
 <p>In a similar fashion, using the function <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> summarises all account web properties and views available to your user for a handy reference.</p>
 </div>
-<div id="authenticate-with-the-shared-project-intially--then-consider-setting-up-your-own-gcp-project" class="section level3">
-<h3 class="hasAnchor">
-<a href="#authenticate-with-the-shared-project-intially--then-consider-setting-up-your-own-gcp-project" class="anchor"></a>Authenticate with the shared project intially -then consider setting up your own GCP project</h3>
-<p>There is detailed information about authentication options in the <a href="http://code.markedmondson.me/googleAnalyticsR/articles/setup.html">setup section</a>, but as a rule of thumb:</p>
+<div class="section level3">
+<h3 id="authenticate-with-the-shared-project-intially--then-consider-setting-up-your-own-gcp-project">Authenticate with the shared project intially -then consider setting up your own GCP project<a class="anchor" aria-label="anchor" href="#authenticate-with-the-shared-project-intially--then-consider-setting-up-your-own-gcp-project"></a>
+</h3>
+<p>There is detailed information about authentication options in the <a href="http://code.markedmondson.me/googleAnalyticsR/articles/setup.html" class="external-link">setup section</a>, but as a rule of thumb:</p>
 <ul>
 <li><p>if you are experimenting or just making casual use of the library, then use the shared project option, which essentially requires no special setup.</p></li>
 <li><p>if you use the API consistently and your work depends on it, then its preferable to set up your own Google Cloud Platform project.</p></li>
 <li><p>If you are a developer working with machine to machine applications, then the service account is probably the most suitable option for you.</p></li>
 </ul>
 </div>
-<div id="work-with-segments-hybridly-sometimes" class="section level3">
-<h3 class="hasAnchor">
-<a href="#work-with-segments-hybridly-sometimes" class="anchor"></a>Work with segments hybridly sometimes</h3>
-<p>To make the process of working with segments easier, <code>googleAnalyticsR</code> provides several options. These are examined in more detail in the <a href="http://code.markedmondson.me/googleAnalyticsR/articles/v4.html">API v4 section</a> Sometimes it is also helpful to create a segment within the UI first and then refer to it by ID when working with the <code>googleAnalyticsR</code> library -especially when some quick experimentation is needed before deciding on the exact segment definition.</p>
+<div class="section level3">
+<h3 id="work-with-segments-hybridly-sometimes">Work with segments hybridly sometimes<a class="anchor" aria-label="anchor" href="#work-with-segments-hybridly-sometimes"></a>
+</h3>
+<p>To make the process of working with segments easier, <code>googleAnalyticsR</code> provides several options. These are examined in more detail in the <a href="http://code.markedmondson.me/googleAnalyticsR/articles/v4.html" class="external-link">API v4 section</a> Sometimes it is also helpful to create a segment within the UI first and then refer to it by ID when working with the <code>googleAnalyticsR</code> library -especially when some quick experimentation is needed before deciding on the exact segment definition.</p>
 </div>
-<div id="explore-the-user-activity-api-for-more-data-analysis-options" class="section level3">
-<h3 class="hasAnchor">
-<a href="#explore-the-user-activity-api-for-more-data-analysis-options" class="anchor"></a>Explore the user activity API for more data analysis options</h3>
-<p>Several types of statistical analysis require access to more fine grained data than what’s typically available via the Google Analytics standard version. The release of the <a href="http://code.markedmondson.me/googleAnalyticsR/articles/user-activity.html">user API</a> has removed this constraint, so if you wish to explore a broader range of analysis methods you can now access the Google Analytics equivalent of a clickstream.</p>
+<div class="section level3">
+<h3 id="explore-the-user-activity-api-for-more-data-analysis-options">Explore the user activity API for more data analysis options<a class="anchor" aria-label="anchor" href="#explore-the-user-activity-api-for-more-data-analysis-options"></a>
+</h3>
+<p>Several types of statistical analysis require access to more fine grained data than what’s typically available via the Google Analytics standard version. The release of the <a href="http://code.markedmondson.me/googleAnalyticsR/articles/user-activity.html" class="external-link">user API</a> has removed this constraint, so if you wish to explore a broader range of analysis methods you can now access the Google Analytics equivalent of a clickstream.</p>
 </div>
   </div>
 
@@ -294,11 +296,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Mark Edmondson.</p>
+  <p></p>
+<p>Developed by Mark Edmondson.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -306,6 +310,8 @@
 
   
 
+
+  
 
   </body>
 </html>

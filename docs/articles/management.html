@@ -23,15 +23,17 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-47480439-2"></script><script>
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-43MDXK6CLZ"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-47480439-2');
+  gtag('config', 'G-43MDXK6CLZ');
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -222,7 +224,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/">
+  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -237,13 +239,13 @@
 
       
 
-      </header><script src="management_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Management API</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/vignettes/management.Rmd"><code>vignettes/management.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/HEAD/vignettes/management.Rmd" class="external-link"><code>vignettes/management.Rmd</code></a></small>
       <div class="hidden name"><code>management.Rmd</code></div>
 
     </div>
@@ -251,9 +253,9 @@
     
     
 <p>The Management API v3 covers all API calls that are not data reporting related and are for getting meta information about your Google Analytics account or to change account settings.</p>
-<div id="account-structure" class="section level2">
-<h2 class="hasAnchor">
-<a href="#account-structure" class="anchor"></a>Account structure</h2>
+<div class="section level2">
+<h2 id="account-structure">Account structure<a class="anchor" aria-label="anchor" href="#account-structure"></a>
+</h2>
 <p>Shows the details for your account structure (<code>Accounts &gt; Web-properties &gt; Views (profiles)</code>) including creation time, user permissions etc.</p>
 <p>The most day-to-day useful function is <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> which summarises all account web properties and views available to your user.</p>
 <ul>
@@ -274,193 +276,193 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># ga_account_list is most commonly used</span>
 <span class="co"># (restricted to top 10 with the head() function)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span><span class="op">(</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 10 x 11
-##    accountId accountName internalWebProp… level websiteUrl type  starred
-##    &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;lgl&gt;  
-##  1 79301104  cloudyr     118427305        STAN… http://cl… WEB   NA     
-##  2 54516992  Demo Accou… 87479473         STAN… https://s… WEB   NA     
-##  3 54516992  Demo Accou… 87479473         STAN… https://s… WEB   NA     
-##  4 54516992  Demo Accou… 87479473         STAN… https://s… WEB   NA     
-##  5 47480439  MarkEdmond… 78737968         STAN… http://ma… WEB   NA     
-##  6 47480439  MarkEdmond… 78742336         STAN… http://ma… WEB   NA     
-##  7 54019251  Sunholo We… 86845257         STAN… https://g… WEB   NA     
-##  8 54019251  Sunholo We… 86845257         STAN… https://g… WEB   NA     
-##  9 54019251  Sunholo We… 94325478         PREM… http://ma… WEB   NA     
-## 10 54019251  Sunholo We… 94325478         PREM… http://ma… WEB   TRUE   
-## # … with 4 more variables: webPropertyId &lt;chr&gt;, webPropertyName &lt;chr&gt;, viewId &lt;chr&gt;,
-## #   viewName &lt;chr&gt;</code></pre>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span><span class="op">(</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## # A tibble: 10 x 11</span>
+<span class="co">##    accountId accountName internalWebProp… level websiteUrl type  starred</span>
+<span class="co">##    &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;lgl&gt;  </span>
+<span class="co">##  1 79301104  cloudyr     118427305        STAN… http://cl… WEB   NA     </span>
+<span class="co">##  2 54516992  Demo Accou… 87479473         STAN… https://s… WEB   NA     </span>
+<span class="co">##  3 54516992  Demo Accou… 87479473         STAN… https://s… WEB   NA     </span>
+<span class="co">##  4 54516992  Demo Accou… 87479473         STAN… https://s… WEB   NA     </span>
+<span class="co">##  5 47480439  MarkEdmond… 78737968         STAN… http://ma… WEB   NA     </span>
+<span class="co">##  6 47480439  MarkEdmond… 78742336         STAN… http://ma… WEB   NA     </span>
+<span class="co">##  7 54019251  Sunholo We… 86845257         STAN… https://g… WEB   NA     </span>
+<span class="co">##  8 54019251  Sunholo We… 86845257         STAN… https://g… WEB   NA     </span>
+<span class="co">##  9 54019251  Sunholo We… 94325478         PREM… http://ma… WEB   NA     </span>
+<span class="co">## 10 54019251  Sunholo We… 94325478         PREM… http://ma… WEB   TRUE   </span>
+<span class="co">## # … with 4 more variables: webPropertyId &lt;chr&gt;, webPropertyName &lt;chr&gt;, viewId &lt;chr&gt;,</span>
+<span class="co">## #   viewName &lt;chr&gt;</span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># this only lists account meta-data</span>
 <span class="fu"><a href="../reference/ga_accounts.html">ga_accounts</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>##         id             name             created             updated
-## 1 47480439    MarkEdmondson 2014-01-25 12:17:05 2019-06-01 08:09:58
-## 2 54019251 Sunholo Websites 2014-08-20 19:17:05 2019-07-31 18:51:55
-## 3 54516992     Demo Account 2014-09-06 17:53:33 2019-06-10 17:56:03
-## 4 79301104          cloudyr 2016-06-14 14:29:50 2016-06-14 14:29:50
-##                            permissions.effective
-## 1 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 2 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 3                               READ_AND_ANALYZE
-## 4</code></pre>
+<pre><code><span class="co">##         id             name             created             updated</span>
+<span class="co">## 1 47480439    MarkEdmondson 2014-01-25 12:17:05 2019-06-01 08:09:58</span>
+<span class="co">## 2 54019251 Sunholo Websites 2014-08-20 19:17:05 2019-07-31 18:51:55</span>
+<span class="co">## 3 54516992     Demo Account 2014-09-06 17:53:33 2019-06-10 17:56:03</span>
+<span class="co">## 4 79301104          cloudyr 2016-06-14 14:29:50 2016-06-14 14:29:50</span>
+<span class="co">##                            permissions.effective</span>
+<span class="co">## 1 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE</span>
+<span class="co">## 2 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE</span>
+<span class="co">## 3                               READ_AND_ANALYZE</span>
+<span class="co">## 4</span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># this gives meta-data for all web-properties for this accountId</span>
 <span class="fu"><a href="../reference/ga_webproperty_list.html">ga_webproperty_list</a></span><span class="op">(</span><span class="fl">47480439</span><span class="op">)</span></code></pre></div>
-<pre><code>##              id accountId internalWebPropertyId                name
-## 1 UA-47480439-1  47480439              78742336    markedmondson.me
-## 2 UA-47480439-2  47480439              78737968 MarkEdmondson oldGA
-##                websiteUrl    level profileCount    industryVertical dataRetentionTtl
-## 1 http://markedmondson.me STANDARD            1 HOBBIES_AND_LEISURE        MONTHS_26
-## 2 http://markedmondson.me STANDARD            1 HOBBIES_AND_LEISURE       INDEFINITE
-##   dataRetentionResetOnNewActivity             created             updated
-## 1                            TRUE 2014-01-25 12:17:05 2014-01-25 12:17:06
-## 2                            TRUE 2014-01-25 12:19:20 2018-04-12 11:37:38
-##   defaultProfileId                          permissions.effective
-## 1             &lt;NA&gt; COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE
-## 2         81416156 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE</code></pre>
+<pre><code><span class="co">##              id accountId internalWebPropertyId                name</span>
+<span class="co">## 1 UA-47480439-1  47480439              78742336    markedmondson.me</span>
+<span class="co">## 2 UA-47480439-2  47480439              78737968 MarkEdmondson oldGA</span>
+<span class="co">##                websiteUrl    level profileCount    industryVertical dataRetentionTtl</span>
+<span class="co">## 1 http://markedmondson.me STANDARD            1 HOBBIES_AND_LEISURE        MONTHS_26</span>
+<span class="co">## 2 http://markedmondson.me STANDARD            1 HOBBIES_AND_LEISURE       INDEFINITE</span>
+<span class="co">##   dataRetentionResetOnNewActivity             created             updated</span>
+<span class="co">## 1                            TRUE 2014-01-25 12:17:05 2014-01-25 12:17:06</span>
+<span class="co">## 2                            TRUE 2014-01-25 12:19:20 2018-04-12 11:37:38</span>
+<span class="co">##   defaultProfileId                          permissions.effective</span>
+<span class="co">## 1             &lt;NA&gt; COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE</span>
+<span class="co">## 2         81416156 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE</span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># this is meta-data for one particular web-property</span>
 <span class="fu"><a href="../reference/ga_webproperty.html">ga_webproperty</a></span><span class="op">(</span>accountId <span class="op">=</span> <span class="fl">47480439</span>, webPropertyId <span class="op">=</span> <span class="st">"UA-47480439-1"</span><span class="op">)</span></code></pre></div>
-<pre><code>## $id
-## [1] "UA-47480439-1"
-## 
-## $kind
-## [1] "analytics#webproperty"
-## 
-## $selfLink
-## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1"
-## 
-## $accountId
-## [1] "47480439"
-## 
-## $internalWebPropertyId
-## [1] "78742336"
-## 
-## $name
-## [1] "markedmondson.me"
-## 
-## $websiteUrl
-## [1] "http://markedmondson.me"
-## 
-## $level
-## [1] "STANDARD"
-## 
-## $profileCount
-## [1] 1
-## 
-## $industryVertical
-## [1] "HOBBIES_AND_LEISURE"
-## 
-## $dataRetentionTtl
-## [1] "MONTHS_26"
-## 
-## $dataRetentionResetOnNewActivity
-## [1] TRUE
-## 
-## $permissions
-## $permissions$effective
-## [1] "COLLABORATE"      "EDIT"             "MANAGE_USERS"     "READ_AND_ANALYZE"
-## 
-## 
-## $created
-## [1] "2014-01-25T12:17:05.492Z"
-## 
-## $updated
-## [1] "2014-01-25T12:17:06.625Z"
-## 
-## $parentLink
-## $parentLink$type
-## [1] "analytics#account"
-## 
-## $parentLink$href
-## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439"
-## 
-## 
-## $childLink
-## $childLink$type
-## [1] "analytics#profiles"
-## 
-## $childLink$href
-## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1/profiles"</code></pre>
+<pre><code><span class="co">## $id</span>
+<span class="co">## [1] "UA-47480439-1"</span>
+<span class="co">## </span>
+<span class="co">## $kind</span>
+<span class="co">## [1] "analytics#webproperty"</span>
+<span class="co">## </span>
+<span class="co">## $selfLink</span>
+<span class="co">## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1"</span>
+<span class="co">## </span>
+<span class="co">## $accountId</span>
+<span class="co">## [1] "47480439"</span>
+<span class="co">## </span>
+<span class="co">## $internalWebPropertyId</span>
+<span class="co">## [1] "78742336"</span>
+<span class="co">## </span>
+<span class="co">## $name</span>
+<span class="co">## [1] "markedmondson.me"</span>
+<span class="co">## </span>
+<span class="co">## $websiteUrl</span>
+<span class="co">## [1] "http://markedmondson.me"</span>
+<span class="co">## </span>
+<span class="co">## $level</span>
+<span class="co">## [1] "STANDARD"</span>
+<span class="co">## </span>
+<span class="co">## $profileCount</span>
+<span class="co">## [1] 1</span>
+<span class="co">## </span>
+<span class="co">## $industryVertical</span>
+<span class="co">## [1] "HOBBIES_AND_LEISURE"</span>
+<span class="co">## </span>
+<span class="co">## $dataRetentionTtl</span>
+<span class="co">## [1] "MONTHS_26"</span>
+<span class="co">## </span>
+<span class="co">## $dataRetentionResetOnNewActivity</span>
+<span class="co">## [1] TRUE</span>
+<span class="co">## </span>
+<span class="co">## $permissions</span>
+<span class="co">## $permissions$effective</span>
+<span class="co">## [1] "COLLABORATE"      "EDIT"             "MANAGE_USERS"     "READ_AND_ANALYZE"</span>
+<span class="co">## </span>
+<span class="co">## </span>
+<span class="co">## $created</span>
+<span class="co">## [1] "2014-01-25T12:17:05.492Z"</span>
+<span class="co">## </span>
+<span class="co">## $updated</span>
+<span class="co">## [1] "2014-01-25T12:17:06.625Z"</span>
+<span class="co">## </span>
+<span class="co">## $parentLink</span>
+<span class="co">## $parentLink$type</span>
+<span class="co">## [1] "analytics#account"</span>
+<span class="co">## </span>
+<span class="co">## $parentLink$href</span>
+<span class="co">## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439"</span>
+<span class="co">## </span>
+<span class="co">## </span>
+<span class="co">## $childLink</span>
+<span class="co">## $childLink$type</span>
+<span class="co">## [1] "analytics#profiles"</span>
+<span class="co">## </span>
+<span class="co">## $childLink$href</span>
+<span class="co">## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1/profiles"</span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># this is meta-data for the views under this accountId/webPropertyId</span>
 <span class="fu"><a href="../reference/ga_view_list.html">ga_view_list</a></span><span class="op">(</span>accountId <span class="op">=</span> <span class="fl">47480439</span>, webPropertyId <span class="op">=</span> <span class="st">"UA-47480439-1"</span><span class="op">)</span></code></pre></div>
-<pre><code>##         id accountId webPropertyId internalWebPropertyId              name currency
-## 1 81416941  47480439 UA-47480439-1              78742336 All Web Site Data      USD
-##            timezone              websiteUrl type             created
-## 1 Europe/Copenhagen http://markedmondson.me  WEB 2014-01-25 12:17:05
-##               updated eCommerceTracking
-## 1 2015-06-14 13:18:53             FALSE
-##                            permissions.effective
-## 1 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE</code></pre>
+<pre><code><span class="co">##         id accountId webPropertyId internalWebPropertyId              name currency</span>
+<span class="co">## 1 81416941  47480439 UA-47480439-1              78742336 All Web Site Data      USD</span>
+<span class="co">##            timezone              websiteUrl type             created</span>
+<span class="co">## 1 Europe/Copenhagen http://markedmondson.me  WEB 2014-01-25 12:17:05</span>
+<span class="co">##               updated eCommerceTracking</span>
+<span class="co">## 1 2015-06-14 13:18:53             FALSE</span>
+<span class="co">##                            permissions.effective</span>
+<span class="co">## 1 COLLABORATE,EDIT,MANAGE_USERS,READ_AND_ANALYZE</span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># this is meta-data for this particular viewId (profileId)</span>
 <span class="fu"><a href="../reference/ga_view.html">ga_view</a></span><span class="op">(</span>accountId <span class="op">=</span> <span class="fl">47480439</span>, webPropertyId <span class="op">=</span> <span class="st">"UA-47480439-1"</span>, profileId <span class="op">=</span> <span class="fl">81416941</span><span class="op">)</span></code></pre></div>
-<pre><code>## $id
-## [1] "81416941"
-## 
-## $kind
-## [1] "analytics#profile"
-## 
-## $selfLink
-## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1/profiles/81416941"
-## 
-## $accountId
-## [1] "47480439"
-## 
-## $webPropertyId
-## [1] "UA-47480439-1"
-## 
-## $internalWebPropertyId
-## [1] "78742336"
-## 
-## $name
-## [1] "All Web Site Data"
-## 
-## $currency
-## [1] "USD"
-## 
-## $timezone
-## [1] "Europe/Copenhagen"
-## 
-## $websiteUrl
-## [1] "http://markedmondson.me"
-## 
-## $type
-## [1] "WEB"
-## 
-## $permissions
-## $permissions$effective
-## [1] "COLLABORATE"      "EDIT"             "MANAGE_USERS"     "READ_AND_ANALYZE"
-## 
-## 
-## $created
-## [1] "2014-01-25T12:17:05.492Z"
-## 
-## $updated
-## [1] "2015-06-14T13:18:53.638Z"
-## 
-## $eCommerceTracking
-## [1] FALSE
-## 
-## $parentLink
-## $parentLink$type
-## [1] "analytics#webproperty"
-## 
-## $parentLink$href
-## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1"
-## 
-## 
-## $childLink
-## $childLink$type
-## [1] "analytics#goals"
-## 
-## $childLink$href
-## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1/profiles/81416941/goals"</code></pre>
+<pre><code><span class="co">## $id</span>
+<span class="co">## [1] "81416941"</span>
+<span class="co">## </span>
+<span class="co">## $kind</span>
+<span class="co">## [1] "analytics#profile"</span>
+<span class="co">## </span>
+<span class="co">## $selfLink</span>
+<span class="co">## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1/profiles/81416941"</span>
+<span class="co">## </span>
+<span class="co">## $accountId</span>
+<span class="co">## [1] "47480439"</span>
+<span class="co">## </span>
+<span class="co">## $webPropertyId</span>
+<span class="co">## [1] "UA-47480439-1"</span>
+<span class="co">## </span>
+<span class="co">## $internalWebPropertyId</span>
+<span class="co">## [1] "78742336"</span>
+<span class="co">## </span>
+<span class="co">## $name</span>
+<span class="co">## [1] "All Web Site Data"</span>
+<span class="co">## </span>
+<span class="co">## $currency</span>
+<span class="co">## [1] "USD"</span>
+<span class="co">## </span>
+<span class="co">## $timezone</span>
+<span class="co">## [1] "Europe/Copenhagen"</span>
+<span class="co">## </span>
+<span class="co">## $websiteUrl</span>
+<span class="co">## [1] "http://markedmondson.me"</span>
+<span class="co">## </span>
+<span class="co">## $type</span>
+<span class="co">## [1] "WEB"</span>
+<span class="co">## </span>
+<span class="co">## $permissions</span>
+<span class="co">## $permissions$effective</span>
+<span class="co">## [1] "COLLABORATE"      "EDIT"             "MANAGE_USERS"     "READ_AND_ANALYZE"</span>
+<span class="co">## </span>
+<span class="co">## </span>
+<span class="co">## $created</span>
+<span class="co">## [1] "2014-01-25T12:17:05.492Z"</span>
+<span class="co">## </span>
+<span class="co">## $updated</span>
+<span class="co">## [1] "2015-06-14T13:18:53.638Z"</span>
+<span class="co">## </span>
+<span class="co">## $eCommerceTracking</span>
+<span class="co">## [1] FALSE</span>
+<span class="co">## </span>
+<span class="co">## $parentLink</span>
+<span class="co">## $parentLink$type</span>
+<span class="co">## [1] "analytics#webproperty"</span>
+<span class="co">## </span>
+<span class="co">## $parentLink$href</span>
+<span class="co">## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1"</span>
+<span class="co">## </span>
+<span class="co">## </span>
+<span class="co">## $childLink</span>
+<span class="co">## $childLink$type</span>
+<span class="co">## [1] "analytics#goals"</span>
+<span class="co">## </span>
+<span class="co">## $childLink$href</span>
+<span class="co">## [1] "https://www.googleapis.com/analytics/v3/management/accounts/47480439/webproperties/UA-47480439-1/profiles/81416941/goals"</span></code></pre>
 </div>
-<div id="helper-functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#helper-functions" class="anchor"></a>Helper functions</h2>
+<div class="section level2">
+<h2 id="helper-functions">Helper functions<a class="anchor" aria-label="anchor" href="#helper-functions"></a>
+</h2>
 <p>These are helper utility functions to work with Google Analytics data.</p>
 <ul>
 <li>
@@ -469,24 +471,24 @@
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># you can just use `meta` as is to get the available metrics,</span>
 <span class="co"># here we just return the first 5 columns and rows for brevity</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">meta</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<pre><code>##                      name      type dataType group     status
-## 1             ga:userType DIMENSION   STRING  User     PUBLIC
-## 2          ga:visitorType DIMENSION   STRING  User DEPRECATED
-## 3         ga:sessionCount DIMENSION   STRING  User     PUBLIC
-## 4           ga:visitCount DIMENSION   STRING  User DEPRECATED
-## 5 ga:daysSinceLastSession DIMENSION   STRING  User     PUBLIC
-## 6     ga:userDefinedValue DIMENSION   STRING  User     PUBLIC</code></pre>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">meta</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">##                      name      type dataType group     status</span>
+<span class="co">## 1             ga:userType DIMENSION   STRING  User     PUBLIC</span>
+<span class="co">## 2          ga:visitorType DIMENSION   STRING  User DEPRECATED</span>
+<span class="co">## 3         ga:sessionCount DIMENSION   STRING  User     PUBLIC</span>
+<span class="co">## 4           ga:visitCount DIMENSION   STRING  User DEPRECATED</span>
+<span class="co">## 5 ga:daysSinceLastSession DIMENSION   STRING  User     PUBLIC</span>
+<span class="co">## 6     ga:userDefinedValue DIMENSION   STRING  User     PUBLIC</span></code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># or ensure an up to date version by calling the metadata API.</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></code></pre></div>
-<pre><code>##                      name      type dataType group     status
-## 1             ga:userType DIMENSION   STRING  User     PUBLIC
-## 2          ga:visitorType DIMENSION   STRING  User DEPRECATED
-## 3         ga:sessionCount DIMENSION   STRING  User     PUBLIC
-## 4           ga:visitCount DIMENSION   STRING  User DEPRECATED
-## 5 ga:daysSinceLastSession DIMENSION   STRING  User     PUBLIC
-## 6     ga:userDefinedValue DIMENSION   STRING  User     PUBLIC</code></pre>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/ga_meta.html">ga_meta</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></code></pre></div>
+<pre><code><span class="co">##                      name      type dataType group     status</span>
+<span class="co">## 1             ga:userType DIMENSION   STRING  User     PUBLIC</span>
+<span class="co">## 2          ga:visitorType DIMENSION   STRING  User DEPRECATED</span>
+<span class="co">## 3         ga:sessionCount DIMENSION   STRING  User     PUBLIC</span>
+<span class="co">## 4           ga:visitCount DIMENSION   STRING  User DEPRECATED</span>
+<span class="co">## 5 ga:daysSinceLastSession DIMENSION   STRING  User     PUBLIC</span>
+<span class="co">## 6     ga:userDefinedValue DIMENSION   STRING  User     PUBLIC</span></code></pre>
 <ul>
 <li>
 <code>ga_aggregate</code> - aggregate data down to the dimensions you specify, treating metrics correctly regarding if they should be averaged or summed. This is used internally when using anti-sampling, and is also useful to respond to dimension selections in Shiny dashboards, where you don’t want to perform a new API call each time you need aggregated data. Download all data first in a more unaggregated form, then use this function.</li>
@@ -494,67 +496,67 @@
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># use `aggregateGAData` so you can on the fly create summary data</span>
 <span class="va">ga_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="fl">81416156</span>, 
-                            date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span><span class="op">)</span>,
-                            metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sessions"</span>,<span class="st">"bounceRate"</span><span class="op">)</span>, dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hour"</span>,<span class="st">"date"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [36mℹ[39m 2020-05-26 11:40:05 &gt; Downloaded [ 240 ] rows from a total of [ 240 ].</code></pre>
+                            date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"10daysAgo"</span>, <span class="st">"yesterday"</span><span class="op">)</span>,
+                            metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sessions"</span>,<span class="st">"bounceRate"</span><span class="op">)</span>, dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hour"</span>,<span class="st">"date"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [36mℹ[39m 2020-05-26 11:40:05 &gt; Downloaded [ 240 ] rows from a total of [ 240 ].</span></code></pre>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ga_data</span><span class="op">)</span></code></pre></div>
-<pre><code>##   hour       date sessions bounceRate
-## 1   00 2020-05-16       10   60.00000
-## 2   00 2020-05-17        8   37.50000
-## 3   00 2020-05-18        9   44.44444
-## 4   00 2020-05-19        8   50.00000
-## 5   00 2020-05-20       11   63.63636
-## 6   00 2020-05-21        8   50.00000</code></pre>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ga_data</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">##   hour       date sessions bounceRate</span>
+<span class="co">## 1   00 2020-05-16       10   60.00000</span>
+<span class="co">## 2   00 2020-05-17        8   37.50000</span>
+<span class="co">## 3   00 2020-05-18        9   44.44444</span>
+<span class="co">## 4   00 2020-05-19        8   50.00000</span>
+<span class="co">## 5   00 2020-05-20       11   63.63636</span>
+<span class="co">## 6   00 2020-05-21        8   50.00000</span></code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># if we want totals per hour over the dates:</span>
-<span class="fu"><a href="../reference/ga_aggregate.html">ga_aggregate</a></span><span class="op">(</span><span class="va">ga_data</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hour"</span>,<span class="st">"sessions"</span><span class="op">)</span><span class="op">]</span>, agg_names <span class="op">=</span> <span class="st">"hour"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 24 x 2
-##    hour  sessions
-##    &lt;chr&gt;    &lt;dbl&gt;
-##  1 00          92
-##  2 01          64
-##  3 02          58
-##  4 03          64
-##  5 04          70
-##  6 05          74
-##  7 06          59
-##  8 07          66
-##  9 08          82
-## 10 09          89
-## # … with 14 more rows</code></pre>
+<span class="fu"><a href="../reference/ga_aggregate.html">ga_aggregate</a></span><span class="op">(</span><span class="va">ga_data</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hour"</span>,<span class="st">"sessions"</span><span class="op">)</span><span class="op">]</span>, agg_names <span class="op">=</span> <span class="st">"hour"</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## # A tibble: 24 x 2</span>
+<span class="co">##    hour  sessions</span>
+<span class="co">##    &lt;chr&gt;    &lt;dbl&gt;</span>
+<span class="co">##  1 00          92</span>
+<span class="co">##  2 01          64</span>
+<span class="co">##  3 02          58</span>
+<span class="co">##  4 03          64</span>
+<span class="co">##  5 04          70</span>
+<span class="co">##  6 05          74</span>
+<span class="co">##  7 06          59</span>
+<span class="co">##  8 07          66</span>
+<span class="co">##  9 08          82</span>
+<span class="co">## 10 09          89</span>
+<span class="co">## # … with 14 more rows</span></code></pre>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># it knows not to sum metrics that are rates:</span>
-<span class="fu"><a href="../reference/ga_aggregate.html">ga_aggregate</a></span><span class="op">(</span><span class="va">ga_data</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hour"</span>,<span class="st">"bounceRate"</span><span class="op">)</span><span class="op">]</span>, agg_names <span class="op">=</span> <span class="st">"hour"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 24 x 2
-##    hour  bounceRate
-##    &lt;chr&gt;      &lt;dbl&gt;
-##  1 00          53.4
-##  2 01          65.1
-##  3 02          69.3
-##  4 03          60.5
-##  5 04          65.4
-##  6 05          79.9
-##  7 06          78.8
-##  8 07          66.1
-##  9 08          75.4
-## 10 09          66.3
-## # … with 14 more rows</code></pre>
+<span class="fu"><a href="../reference/ga_aggregate.html">ga_aggregate</a></span><span class="op">(</span><span class="va">ga_data</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hour"</span>,<span class="st">"bounceRate"</span><span class="op">)</span><span class="op">]</span>, agg_names <span class="op">=</span> <span class="st">"hour"</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## # A tibble: 24 x 2</span>
+<span class="co">##    hour  bounceRate</span>
+<span class="co">##    &lt;chr&gt;      &lt;dbl&gt;</span>
+<span class="co">##  1 00          53.4</span>
+<span class="co">##  2 01          65.1</span>
+<span class="co">##  3 02          69.3</span>
+<span class="co">##  4 03          60.5</span>
+<span class="co">##  5 04          65.4</span>
+<span class="co">##  6 05          79.9</span>
+<span class="co">##  7 06          78.8</span>
+<span class="co">##  8 07          66.1</span>
+<span class="co">##  9 08          75.4</span>
+<span class="co">## 10 09          66.3</span>
+<span class="co">## # … with 14 more rows</span></code></pre>
 <ul>
 <li>
 <code><a href="../reference/ga_allowed_metric_dim.html">ga_allowed_metric_dim()</a></code> - Create named list of allowed GA metrics/dimensions. This is useful to have nice looking labels for dimension and metric selection pickers, or to create lookup tables.</li>
 </ul>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">amd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_allowed_metric_dim.html">ga_allowed_metric_dim</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">amd</span><span class="op">)</span></code></pre></div>
-<pre><code>##                   Users               New Users          % New Sessions 
-##              "ga:users"           "ga:newUsers" "ga:percentNewSessions" 
-##      1 Day Active Users      7 Day Active Users     14 Day Active Users 
-##          "ga:1dayUsers"          "ga:7dayUsers"         "ga:14dayUsers"</code></pre>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">amd</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">##                   Users               New Users          % New Sessions </span>
+<span class="co">##              "ga:users"           "ga:newUsers" "ga:percentNewSessions" </span>
+<span class="co">##      1 Day Active Users      7 Day Active Users     14 Day Active Users </span>
+<span class="co">##          "ga:1dayUsers"          "ga:7dayUsers"         "ga:14dayUsers"</span></code></pre>
 </div>
-<div id="user-management" class="section level2">
-<h2 class="hasAnchor">
-<a href="#user-management" class="anchor"></a>User management</h2>
+<div class="section level2">
+<h2 id="user-management">User management<a class="anchor" aria-label="anchor" href="#user-management"></a>
+</h2>
 <ul>
 <li>
 <code><a href="../reference/ga_users_list.html">ga_users_list()</a></code> - list user access to your Google Analytics accounts, web properties or views</li>
@@ -567,11 +569,11 @@
 <li>
 <code><a href="../reference/ga_users_update.html">ga_users_update()</a></code> - update a user</li>
 </ul>
-<p>User management follows the recommended workflows outlined in this <a href="https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management">Google reference article</a>.</p>
+<p>User management follows the recommended workflows outlined in this <a href="https://developers.google.com/analytics/devguides/config/mgmt/v3/user-management" class="external-link">Google reference article</a>.</p>
 <p>The <code>ga_users_*</code> functions use the management APIs batching endpoint, to take advantage of the special increased quota limits when dealing with User management that API offers. For example, every 30 API calls that are batched that deal with user management only increments one API call against your management API quota. You can have 300 API calls in one batch (e.g. that costs 10 API calls against the quota), and <code>googleAnalyticsR</code> will split any list of emails into 300 emails per batch for you, so you can send in all emails you have.</p>
 <p>By default, each Google Cloud Project gets 50 write requests per project per day, which if using batching means 1500 write/delete/update user operations per day.</p>
 <blockquote>
-<p>You will need to use your own Google Cloud Platform project if using any write API operations seriously, otherwise you will be at the mercy of the shared googleAnalyticsR’s quota limits. See the section in the Setup page on how to <a href="http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#your-own-google-project">setup using your own Google Project</a></p>
+<p>You will need to use your own Google Cloud Platform project if using any write API operations seriously, otherwise you will be at the mercy of the shared googleAnalyticsR’s quota limits. See the section in the Setup page on how to <a href="http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#your-own-google-project" class="external-link">setup using your own Google Project</a></p>
 </blockquote>
 <p>To see which users are attached, use <code><a href="../reference/ga_users_list.html">ga_users_list()</a></code>. Each user email is referenced under the <code>userRef.email</code> column, whereas the unique IDs used to see which user is linked to where is the <code>linkId</code> which is unique to each user and link to your account, web property or view/profile.</p>
 <p>Users can be attached at various levels in the hierarchy so you can call the function at various viewing angles.</p>
@@ -588,7 +590,7 @@
 <p>Users can be attached at account, web-property and view level.</p>
 <p>Batching is incorporated for adding users, so you can pass in a vector of emails to add.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ga_users_add.html">ga_users_add</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"the_email@company.com"</span>, <span class="st">"another_email@company.com"</span><span class="op">)</span>, 
+<code class="sourceCode R"><span class="fu"><a href="../reference/ga_users_add.html">ga_users_add</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"the_email@company.com"</span>, <span class="st">"another_email@company.com"</span><span class="op">)</span>, 
              permissions <span class="op">=</span> <span class="st">"EDIT"</span>, accountId <span class="op">=</span> <span class="fl">47480439</span><span class="op">)</span></code></pre></div>
 <p>To delete a user from all accounts, web-properties and views takes a few API calls to <code><a href="../reference/ga_users_list.html">ga_users_list()</a></code> to find all the possible links, which is done behind the scenes of <code><a href="../reference/ga_users_delete.html">ga_users_delete()</a></code>. You can pass the function multiple emails to delete many at once, which is done via batching:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
@@ -597,7 +599,7 @@
 <span class="fu"><a href="../reference/ga_users_delete.html">ga_users_delete</a></span><span class="op">(</span><span class="st">"the_email@company.com"</span>, <span class="fl">47480439</span><span class="op">)</span>
 
 <span class="co"># delete many emails at once</span>
-<span class="fu"><a href="../reference/ga_users_delete.html">ga_users_delete</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"the_email@company.com"</span>, <span class="st">"another_email@company.com"</span><span class="op">)</span>, accountId <span class="op">=</span> <span class="fl">47480439</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/ga_users_delete.html">ga_users_delete</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"the_email@company.com"</span>, <span class="st">"another_email@company.com"</span><span class="op">)</span>, accountId <span class="op">=</span> <span class="fl">47480439</span><span class="op">)</span></code></pre></div>
 <p>For more fine grained control, the below examples shows a workflow to list and delete user access for one user at View level using the linkId.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># get the linkId for the user you want to delete</span>
@@ -613,7 +615,7 @@
 <p>You can also modify existing users via <code><a href="../reference/ga_users_update.html">ga_users_update()</a></code> - the below modifies on the web property level:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># the update to perform</span>
-<span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>permissions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>local <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"EDIT"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>permissions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>local <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"EDIT"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/ga_users_update.html">ga_users_update</a></span><span class="op">(</span><span class="st">"UA-123456-1:1111222233334444"</span>,
                 update_object <span class="op">=</span> <span class="va">o</span>,
@@ -621,9 +623,9 @@
                 webPropertyId <span class="op">=</span> <span class="st">"UA-123456-1"</span><span class="op">)</span></code></pre></div>
 <p>When using linkIds, make sure to use the correct <code>linkId</code> for the level of account, web-property or view you are operating on - the <code>linkId</code> starts with the accountId, UA code of web property, or ViewId number to distinguish between the various types.</p>
 </div>
-<div id="custom-variables" class="section level2">
-<h2 class="hasAnchor">
-<a href="#custom-variables" class="anchor"></a>Custom variables</h2>
+<div class="section level2">
+<h2 id="custom-variables">Custom variables<a class="anchor" aria-label="anchor" href="#custom-variables"></a>
+</h2>
 <p>Custom variable management for a Google Analytics property.</p>
 <ul>
 <li>
@@ -635,7 +637,7 @@
 <li>
 <code><a href="../reference/ga_custom_vars_patch.html">ga_custom_vars_patch()</a></code> - update an existing custom variable</li>
 </ul>
-<p>Using these you can scale setting up custom dimensions across your Google Analytics web properties. Custom dimension updates are governed by the same rules as when you create them in the web interface, as this <a href="https://support.google.com/analytics/answer/2709828">Google article on custom dimensions and metrics explains</a>.</p>
+<p>Using these you can scale setting up custom dimensions across your Google Analytics web properties. Custom dimension updates are governed by the same rules as when you create them in the web interface, as this <a href="https://support.google.com/analytics/answer/2709828" class="external-link">Google article on custom dimensions and metrics explains</a>.</p>
 <p>You can’t delete custom dimensions, you can only de-activate them for reuse later on.</p>
 <p>A workflow is shown below that creates, then updates a custom variable to a new name.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
@@ -661,9 +663,9 @@
 <span class="co"># view custom dimensions again to see change</span>
 <span class="fu"><a href="../reference/ga_custom_vars_list.html">ga_custom_vars_list</a></span><span class="op">(</span><span class="fl">54019251</span>, webPropertyId <span class="op">=</span> <span class="st">"UA-54019251-4"</span>, type <span class="op">=</span> <span class="st">"customDimensions"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="adwords" class="section level2">
-<h2 class="hasAnchor">
-<a href="#adwords" class="anchor"></a>AdWords</h2>
+<div class="section level2">
+<h2 id="adwords">AdWords<a class="anchor" aria-label="anchor" href="#adwords"></a>
+</h2>
 <ul>
 <li>
 <code><a href="../reference/ga_adwords.html">ga_adwords()</a></code> Get Google Analytics - AdWords Link meta data</li>
@@ -695,9 +697,9 @@
 <span class="co">#check that the link has been removed</span>
 <span class="fu"><a href="../reference/ga_adwords_list.html">ga_adwords_list</a></span><span class="op">(</span>accountId <span class="op">=</span> <span class="fl">65973592</span>, webPropertyId <span class="op">=</span> <span class="st">"UA-65973592-1"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="custom-data-sources" class="section level2">
-<h2 class="hasAnchor">
-<a href="#custom-data-sources" class="anchor"></a>Custom Data Sources</h2>
+<div class="section level2">
+<h2 id="custom-data-sources">Custom Data Sources<a class="anchor" aria-label="anchor" href="#custom-data-sources"></a>
+</h2>
 <p>See and upload custom data sources to Google Analytics</p>
 <ul>
 <li>
@@ -710,9 +712,9 @@
 <code><a href="../reference/ga_custom_upload_list.html">ga_custom_upload_list()</a></code> - List the files in a GA custom upload</li>
 </ul>
 </div>
-<div id="experiments" class="section level2">
-<h2 class="hasAnchor">
-<a href="#experiments" class="anchor"></a>Experiments</h2>
+<div class="section level2">
+<h2 id="experiments">Experiments<a class="anchor" aria-label="anchor" href="#experiments"></a>
+</h2>
 <ul>
 <li>
 <code><a href="../reference/ga_experiment.html">ga_experiment()</a></code> - Experiments Meta data</li>
@@ -720,9 +722,9 @@
 <code><a href="../reference/ga_experiment_list.html">ga_experiment_list()</a></code> - List Experiments</li>
 </ul>
 </div>
-<div id="view-filters" class="section level2">
-<h2 class="hasAnchor">
-<a href="#view-filters" class="anchor"></a>View Filters</h2>
+<div class="section level2">
+<h2 id="view-filters">View Filters<a class="anchor" aria-label="anchor" href="#view-filters"></a>
+</h2>
 <p>The filter edit functions are contributed by <span class="citation">@zselinger</span> which allow you to update filters for your Google Analytics views at scale.</p>
 <ul>
 <li>
@@ -745,9 +747,9 @@
 <code><a href="../reference/ga_filter_view_list.html">ga_filter_view_list()</a></code> - List filters for view (profile)</li>
 </ul>
 </div>
-<div id="goals" class="section level2">
-<h2 class="hasAnchor">
-<a href="#goals" class="anchor"></a>Goals</h2>
+<div class="section level2">
+<h2 id="goals">Goals<a class="anchor" aria-label="anchor" href="#goals"></a>
+</h2>
 <ul>
 <li>
 <code><a href="../reference/ga_goal.html">ga_goal()</a></code> - Get goal</li>
@@ -759,26 +761,26 @@
 <code><a href="../reference/ga_goal_update.html">ga_goal_update()</a></code> - Modify an existing goal</li>
 </ul>
 </div>
-<div id="example-copying-ga-goals" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-copying-ga-goals" class="anchor"></a>Example: Copying GA goals</h2>
+<div class="section level2">
+<h2 id="example-copying-ga-goals">Example: Copying GA goals<a class="anchor" aria-label="anchor" href="#example-copying-ga-goals"></a>
+</h2>
 <p>We can programatically copy goal configurations from any GA view (the source) to another GA view (the destination) within an entirely separate property. This can be helpful to maintain standardised goal configurations for multiple properties, and also for GA migrations.</p>
-<p>This example will first copy a single goal from one property to another, then use the <a href="https://purrr.tidyverse.org/reference/map.html"><code>map()</code></a> function from <code>purrr</code> to copy multiple goals at once.</p>
-<p>We use the Google Analytics demo account as the source view for this example - you can <a href="https://support.google.com/analytics/answer/6367342?hl=en">read more about the demo account here</a>.</p>
+<p>This example will first copy a single goal from one property to another, then use the <a href="https://purrr.tidyverse.org/reference/map.html" class="external-link"><code>map()</code></a> function from <code>purrr</code> to copy multiple goals at once.</p>
+<p>We use the Google Analytics demo account as the source view for this example - you can <a href="https://support.google.com/analytics/answer/6367342?hl=en" class="external-link">read more about the demo account here</a>.</p>
 </div>
-<div id="auth-and-setup" class="section level2">
-<h2 class="hasAnchor">
-<a href="#auth-and-setup" class="anchor"></a>Auth and setup</h2>
-<p>We authenticate and load the necessary packages, following the instructions from the <a href="http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#choose-authentication-method">documentation</a>.</p>
+<div class="section level2">
+<h2 id="auth-and-setup">Auth and setup<a class="anchor" aria-label="anchor" href="#auth-and-setup"></a>
+</h2>
+<p>We authenticate and load the necessary packages, following the instructions from the <a href="http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#choose-authentication-method" class="external-link">documentation</a>.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://stringr.tidyverse.org">stringr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">rlist</span><span class="op">)</span></code></pre></div>
-<pre><code>## Error in library(rlist): there is no package called 'rlist'</code></pre>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://renkun-ken.github.io/rlist/" class="external-link">rlist</a></span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## Error in library(rlist): there is no package called 'rlist'</span></code></pre>
 </div>
-<div id="copying-a-single-goal" class="section level2">
-<h2 class="hasAnchor">
-<a href="#copying-a-single-goal" class="anchor"></a>Copying a single goal</h2>
+<div class="section level2">
+<h2 id="copying-a-single-goal">Copying a single goal<a class="anchor" aria-label="anchor" href="#copying-a-single-goal"></a>
+</h2>
 <p>For this first section, we copy a single Goal from one view to another. To achieve this, we will:</p>
 <ol style="list-style-type: decimal">
 <li>Retrieve the accountId, webPropertyId and viewId from our <strong>source</strong> GA view (the one where our goal to be copied over currently exists).</li>
@@ -787,95 +789,95 @@
 <li>Get the configuration details of a single goal to be copied.</li>
 <li>Submit the goal details to our destination property.</li>
 </ol>
-<div id="retrieve-the-accountid-webpropertyid-and-viewid-from-our-source-ga-view" class="section level3">
-<h3 class="hasAnchor">
-<a href="#retrieve-the-accountid-webpropertyid-and-viewid-from-our-source-ga-view" class="anchor"></a>1. Retrieve the accountId, webPropertyId and viewId from our source GA view</h3>
-<p>We use the <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> function, which returns an account summary for all available accounts as a dataframe. Then, we filter the dataframe down to a specific account and view name using the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> and <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code> functions from the tidyverse.</p>
+<div class="section level3">
+<h3 id="retrieve-the-accountid-webpropertyid-and-viewid-from-our-source-ga-view">1. Retrieve the accountId, webPropertyId and viewId from our source GA view<a class="anchor" aria-label="anchor" href="#retrieve-the-accountid-webpropertyid-and-viewid-from-our-source-ga-view"></a>
+</h3>
+<p>We use the <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code> function, which returns an account summary for all available accounts as a dataframe. Then, we filter the dataframe down to a specific account and view name using the <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> and <code><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect()</a></code> functions from the tidyverse.</p>
 <p>You can supply your own filter conditions as necessary, to locate your desired view information.</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Account info and list of goals for source, to be copied</span>
-<span class="va">source_account</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">accountName</span>, <span class="st">"Demo Account"</span><span class="op">)</span>, <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">viewName</span>, <span class="st">"Master"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">source_account</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">accountName</span>, <span class="st">"Demo Account"</span><span class="op">)</span>, <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">viewName</span>, <span class="st">"Master"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">source_account</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 11
-##   accountId accountName internalWebProp… level websiteUrl type  starred webPropertyId
-##   &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;        
-## 1 54516992  Demo Accou… 87479473         STAN… https://s… WEB   NA      UA-54516992-1
-## # … with 3 more variables: webPropertyName &lt;chr&gt;, viewId &lt;chr&gt;, viewName &lt;chr&gt;</code></pre>
+<pre><code><span class="co">## # A tibble: 1 x 11</span>
+<span class="co">##   accountId accountName internalWebProp… level websiteUrl type  starred webPropertyId</span>
+<span class="co">##   &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;        </span>
+<span class="co">## 1 54516992  Demo Accou… 87479473         STAN… https://s… WEB   NA      UA-54516992-1</span>
+<span class="co">## # … with 3 more variables: webPropertyName &lt;chr&gt;, viewId &lt;chr&gt;, viewName &lt;chr&gt;</span></code></pre>
 </div>
-<div id="get-a-list-of-the-goals-currently-configured-from-our-source-ga-view" class="section level3">
-<h3 class="hasAnchor">
-<a href="#get-a-list-of-the-goals-currently-configured-from-our-source-ga-view" class="anchor"></a>2. Get a list of the goals currently configured from our source GA view</h3>
+<div class="section level3">
+<h3 id="get-a-list-of-the-goals-currently-configured-from-our-source-ga-view">2. Get a list of the goals currently configured from our source GA view<a class="anchor" aria-label="anchor" href="#get-a-list-of-the-goals-currently-configured-from-our-source-ga-view"></a>
+</h3>
 <p>Now that we have the account summary, we can use the view details to get a list of goal data, with each item in the list showing goal details.</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">source_goals</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_goal_list.html">ga_goal_list</a></span><span class="op">(</span><span class="va">source_account</span><span class="op">$</span><span class="va">accountId</span>, <span class="va">source_account</span><span class="op">$</span><span class="va">webPropertyId</span>, <span class="va">source_account</span><span class="op">$</span><span class="va">viewId</span><span class="op">)</span>
 <span class="va">source_goals</span></code></pre></div>
-<pre><code>##   id accountId webPropertyId internalWebPropertyId profileId               name
-## 1  1  54516992 UA-54516992-1              87479473  92320289 Purchase Completed
-## 2  2  54516992 UA-54516992-1              87479473  92320289      Engaged Users
-## 3  3  54516992 UA-54516992-1              87479473  92320289      Registrations
-## 4  4  54516992 UA-54516992-1              87479473  92320289   Entered Checkout
-##   value active            type             created             updated
-## 1     0   TRUE URL_DESTINATION 2014-10-10 20:13:47 2016-11-10 23:07:35
-## 2     0   TRUE VISIT_NUM_PAGES 2015-02-23 16:18:06 2015-04-14 12:02:21
-## 3     0   TRUE URL_DESTINATION 2015-02-27 12:15:01 2016-07-26 16:14:09
-## 4     0   TRUE URL_DESTINATION 2015-07-20 23:57:22 2016-07-26 16:19:40
-##                                 urlDestinationDetails.url
-## 1                                  /ordercompleted\\.html
-## 2                                                    &lt;NA&gt;
-## 3                                 /registersuccess\\.html
-## 4 /yourinfo\\.html|/guestregister\\.html|/shipping\\.html
-##   urlDestinationDetails.caseSensitive urlDestinationDetails.matchType
-## 1                               FALSE                           REGEX
-## 2                                  NA                            &lt;NA&gt;
-## 3                               FALSE                           REGEX
-## 4                               FALSE                           REGEX
-##   urlDestinationDetails.firstStepRequired
-## 1                                    TRUE
-## 2                                      NA
-## 3                                   FALSE
-## 4                                   FALSE
-##                                                                                                                            urlDestinationDetails.steps
-## 1 1:4,c("Cart", "Billing and Shipping", "Payment", "Review"),c("/basket\\\\.html", "/yourinfo\\\\.html", "/payment\\\\.html", "/revieworder\\\\.html")
-## 2                                                                                                                                                     
-## 3                                                                                                                                                     
-## 4                                                                                                                                                     
-##   visitNumPagesDetails.comparisonType visitNumPagesDetails.comparisonValue
-## 1                                &lt;NA&gt;                                 &lt;NA&gt;
-## 2                        GREATER_THAN                                   10
-## 3                                &lt;NA&gt;                                 &lt;NA&gt;
-## 4                                &lt;NA&gt;                                 &lt;NA&gt;</code></pre>
+<pre><code><span class="co">##   id accountId webPropertyId internalWebPropertyId profileId               name</span>
+<span class="co">## 1  1  54516992 UA-54516992-1              87479473  92320289 Purchase Completed</span>
+<span class="co">## 2  2  54516992 UA-54516992-1              87479473  92320289      Engaged Users</span>
+<span class="co">## 3  3  54516992 UA-54516992-1              87479473  92320289      Registrations</span>
+<span class="co">## 4  4  54516992 UA-54516992-1              87479473  92320289   Entered Checkout</span>
+<span class="co">##   value active            type             created             updated</span>
+<span class="co">## 1     0   TRUE URL_DESTINATION 2014-10-10 20:13:47 2016-11-10 23:07:35</span>
+<span class="co">## 2     0   TRUE VISIT_NUM_PAGES 2015-02-23 16:18:06 2015-04-14 12:02:21</span>
+<span class="co">## 3     0   TRUE URL_DESTINATION 2015-02-27 12:15:01 2016-07-26 16:14:09</span>
+<span class="co">## 4     0   TRUE URL_DESTINATION 2015-07-20 23:57:22 2016-07-26 16:19:40</span>
+<span class="co">##                                 urlDestinationDetails.url</span>
+<span class="co">## 1                                  /ordercompleted\\.html</span>
+<span class="co">## 2                                                    &lt;NA&gt;</span>
+<span class="co">## 3                                 /registersuccess\\.html</span>
+<span class="co">## 4 /yourinfo\\.html|/guestregister\\.html|/shipping\\.html</span>
+<span class="co">##   urlDestinationDetails.caseSensitive urlDestinationDetails.matchType</span>
+<span class="co">## 1                               FALSE                           REGEX</span>
+<span class="co">## 2                                  NA                            &lt;NA&gt;</span>
+<span class="co">## 3                               FALSE                           REGEX</span>
+<span class="co">## 4                               FALSE                           REGEX</span>
+<span class="co">##   urlDestinationDetails.firstStepRequired</span>
+<span class="co">## 1                                    TRUE</span>
+<span class="co">## 2                                      NA</span>
+<span class="co">## 3                                   FALSE</span>
+<span class="co">## 4                                   FALSE</span>
+<span class="co">##                                                                                                                            urlDestinationDetails.steps</span>
+<span class="co">## 1 1:4,c("Cart", "Billing and Shipping", "Payment", "Review"),c("/basket\\\\.html", "/yourinfo\\\\.html", "/payment\\\\.html", "/revieworder\\\\.html")</span>
+<span class="co">## 2                                                                                                                                                     </span>
+<span class="co">## 3                                                                                                                                                     </span>
+<span class="co">## 4                                                                                                                                                     </span>
+<span class="co">##   visitNumPagesDetails.comparisonType visitNumPagesDetails.comparisonValue</span>
+<span class="co">## 1                                &lt;NA&gt;                                 &lt;NA&gt;</span>
+<span class="co">## 2                        GREATER_THAN                                   10</span>
+<span class="co">## 3                                &lt;NA&gt;                                 &lt;NA&gt;</span>
+<span class="co">## 4                                &lt;NA&gt;                                 &lt;NA&gt;</span></code></pre>
 </div>
-<div id="retrieve-the-accountid-webpropertyid-and-viewid-from-our-destination-ga-view" class="section level3">
-<h3 class="hasAnchor">
-<a href="#retrieve-the-accountid-webpropertyid-and-viewid-from-our-destination-ga-view" class="anchor"></a>3. Retrieve the accountId, webPropertyId and viewId from our destination GA view</h3>
+<div class="section level3">
+<h3 id="retrieve-the-accountid-webpropertyid-and-viewid-from-our-destination-ga-view">3. Retrieve the accountId, webPropertyId and viewId from our destination GA view<a class="anchor" aria-label="anchor" href="#retrieve-the-accountid-webpropertyid-and-viewid-from-our-destination-ga-view"></a>
+</h3>
 <p>We again filter the results from <code><a href="../reference/ga_account_list.html">ga_account_list()</a></code>, to get account information for our destination GA property. In this example, we filter for “Your_Account” and the view called “Filtered”.</p>
 <p>The <code>dest_account</code> dataframe should contain the same columns and data types as your <code>source_account</code> dataframe.</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Account info for destination account</span>
-<span class="va">dest_account</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">accountName</span>, <span class="st">"Your_Account"</span><span class="op">)</span>, <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">viewName</span>, <span class="st">"Filtered"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">dest_account</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">accountName</span>, <span class="st">"Your_Account"</span><span class="op">)</span>, <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">viewName</span>, <span class="st">"Filtered"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="get-the-configuration-details-of-a-single-goal-to-be-copied-" class="section level3">
-<h3 class="hasAnchor">
-<a href="#get-the-configuration-details-of-a-single-goal-to-be-copied-" class="anchor"></a>4. Get the configuration details of a single goal to be copied.</h3>
-<p>For this first example, we add a single goal (ID 1) to the destination view, passed as a list to the <a href="http://code.markedmondson.me/googleAnalyticsR/reference/ga_goal_add.html"><code>ga_goal_add()</code></a> function.</p>
+<div class="section level3">
+<h3 id="get-the-configuration-details-of-a-single-goal-to-be-copied-">4. Get the configuration details of a single goal to be copied.<a class="anchor" aria-label="anchor" href="#get-the-configuration-details-of-a-single-goal-to-be-copied-"></a>
+</h3>
+<p>For this first example, we add a single goal (ID 1) to the destination view, passed as a list to the <a href="http://code.markedmondson.me/googleAnalyticsR/reference/ga_goal_add.html" class="external-link"><code>ga_goal_add()</code></a> function.</p>
 <p>We now use the <code><a href="../reference/ga_goal.html">ga_goal()</a></code> function to retrieve the goal specifications as a list. We use <code><a href="../reference/ga_goal.html">ga_goal()</a></code> because it provides the goal configuration data in the necessary format for our <code>goal_add()</code> request.</p>
 <p>In the example below, we retrieve the details for the goal in slot 1.</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get goal ID 1</span>
 <span class="va">goal_one</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_goal.html">ga_goal</a></span><span class="op">(</span><span class="va">source_account</span><span class="op">$</span><span class="va">accountId</span>, <span class="va">source_account</span><span class="op">$</span><span class="va">webPropertyId</span>, <span class="va">source_account</span><span class="op">$</span><span class="va">viewId</span>, 
-                    goalId <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+                    goalId <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="co"># Strip out instance-specific metadata (property, profile, view data and original creation dates)</span>
-  <span class="fu">list.remove</span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"accountId"</span>, <span class="st">"webPropertyId"</span>, <span class="st">"selfLink"</span>, <span class="st">"internalWebPropertyId"</span>, <span class="st">"profileId"</span>, <span class="st">"parentLink"</span>, <span class="st">"created"</span>, <span class="st">"updated"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## Error in list.remove(., c("accountId", "webPropertyId", "selfLink", "internalWebPropertyId", : could not find function "list.remove"</code></pre>
+  <span class="fu">list.remove</span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"accountId"</span>, <span class="st">"webPropertyId"</span>, <span class="st">"selfLink"</span>, <span class="st">"internalWebPropertyId"</span>, <span class="st">"profileId"</span>, <span class="st">"parentLink"</span>, <span class="st">"created"</span>, <span class="st">"updated"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## Error in list.remove(., c("accountId", "webPropertyId", "selfLink", "internalWebPropertyId", : could not find function "list.remove"</span></code></pre>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">goal_one</span></code></pre></div>
-<pre><code>## Error in eval(expr, envir, enclos): object 'goal_one' not found</code></pre>
+<pre><code><span class="co">## Error in eval(expr, envir, enclos): object 'goal_one' not found</span></code></pre>
 </div>
-<div id="submit-the-goal-details-to-our-destination-property-" class="section level3">
-<h3 class="hasAnchor">
-<a href="#submit-the-goal-details-to-our-destination-property-" class="anchor"></a>5. Submit the goal details to our destination property.</h3>
+<div class="section level3">
+<h3 id="submit-the-goal-details-to-our-destination-property-">5. Submit the goal details to our destination property.<a class="anchor" aria-label="anchor" href="#submit-the-goal-details-to-our-destination-property-"></a>
+</h3>
 <p>We can then use the goal details contained in <code>goal_one</code> to submit a <code><a href="../reference/ga_goal_add.html">ga_goal_add()</a></code> request to our destination property.</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ga_goal_add.html">ga_goal_add</a></span><span class="op">(</span><span class="va">goal_one</span>, <span class="va">dest_account</span><span class="op">$</span><span class="va">accountId</span>, <span class="va">dest_account</span><span class="op">$</span><span class="va">webPropertyId</span>, <span class="va">dest_account</span><span class="op">$</span><span class="va">viewId</span><span class="op">)</span></code></pre></div>
@@ -884,16 +886,16 @@
 <hr>
 </div>
 </div>
-<div id="copying-multiple-goals" class="section level2">
-<h2 class="hasAnchor">
-<a href="#copying-multiple-goals" class="anchor"></a>Copying multiple goals</h2>
-<p>Using the <a href="https://purrr.tidyverse.org/reference/map.html"><code>map()</code></a> function from the <code>tidyverse</code>, we can quickly scale up this approach. We can copy all goals from a view at once, rather than one at a time.</p>
+<div class="section level2">
+<h2 id="copying-multiple-goals">Copying multiple goals<a class="anchor" aria-label="anchor" href="#copying-multiple-goals"></a>
+</h2>
+<p>Using the <a href="https://purrr.tidyverse.org/reference/map.html" class="external-link"><code>map()</code></a> function from the <code>tidyverse</code>, we can quickly scale up this approach. We can copy all goals from a view at once, rather than one at a time.</p>
 <p>First, we define a function to copy a single goal, given a goal ID, details of the source view ID and destination view IDs. In effect, we make a function to perform steps 1-5 from the “Copying a single goal” section in this page.</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Takes a goal ID, source account information &amp; dest account information, copies goal over</span>
 <span class="va">copy_goal</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">goal_id</span>, <span class="va">source_df</span>, <span class="va">dest_df</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">source_goal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_goal.html">ga_goal</a></span><span class="op">(</span><span class="va">source_df</span><span class="op">$</span><span class="va">accountId</span>, <span class="va">source_df</span><span class="op">$</span><span class="va">webPropertyId</span>, <span class="va">source_df</span><span class="op">$</span><span class="va">viewId</span>, <span class="va">goal_id</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-    <span class="fu">list.remove</span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"accountId"</span>, <span class="st">"webPropertyId"</span>, <span class="st">"selfLink"</span>, <span class="st">"internalWebPropertyId"</span>, <span class="st">"profileId"</span>, <span class="st">"parentLink"</span>, <span class="st">"created"</span>, <span class="st">"updated"</span><span class="op">)</span><span class="op">)</span> 
+  <span class="va">source_goal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_goal.html">ga_goal</a></span><span class="op">(</span><span class="va">source_df</span><span class="op">$</span><span class="va">accountId</span>, <span class="va">source_df</span><span class="op">$</span><span class="va">webPropertyId</span>, <span class="va">source_df</span><span class="op">$</span><span class="va">viewId</span>, <span class="va">goal_id</span><span class="op">)</span> <span class="op"><a href="https://stringr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu">list.remove</span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"accountId"</span>, <span class="st">"webPropertyId"</span>, <span class="st">"selfLink"</span>, <span class="st">"internalWebPropertyId"</span>, <span class="st">"profileId"</span>, <span class="st">"parentLink"</span>, <span class="st">"created"</span>, <span class="st">"updated"</span><span class="op">)</span><span class="op">)</span> 
   <span class="fu"><a href="../reference/ga_goal_add.html">ga_goal_add</a></span><span class="op">(</span><span class="va">source_goal</span>, <span class="va">dest_df</span><span class="op">$</span><span class="va">accountId</span>, <span class="va">dest_df</span><span class="op">$</span><span class="va">webPropertyId</span>, <span class="va">dest_df</span><span class="op">$</span><span class="va">viewId</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>Having our goal-copying function defined, it is a simple step to apply it across all goal IDs from the source view.</p>
@@ -901,17 +903,17 @@
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># For each goal ID in our source view, apply the copy_goal function, </span>
 <span class="co"># using source_account and dest_account account parameters as fixed 2nd / third arguments</span>
-<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">source_goals</span><span class="op">$</span><span class="va">id</span>, <span class="va">copy_goal</span>, <span class="va">source_account</span>, <span class="va">dest_account</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">source_goals</span><span class="op">$</span><span class="va">id</span>, <span class="va">copy_goal</span>, <span class="va">source_account</span>, <span class="va">dest_account</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="write-request-limits" class="section level2">
-<h2 class="hasAnchor">
-<a href="#write-request-limits" class="anchor"></a>Write request limits</h2>
+<div class="section level2">
+<h2 id="write-request-limits">Write request limits<a class="anchor" aria-label="anchor" href="#write-request-limits"></a>
+</h2>
 <p>At the time of writing, there is a daily limit of 50 write requests per day, per Google Cloud project, which restricts the number of times this can be performed. However, it is possible to request that this limit be increased.</p>
-<p>For more information, check the Google documentation at <a href="https://developers.google.com/analytics/devguides/config/mgmt/v3/limits-quotas#write_requests" class="uri">https://developers.google.com/analytics/devguides/config/mgmt/v3/limits-quotas#write_requests</a>.</p>
+<p>For more information, check the Google documentation at <a href="https://developers.google.com/analytics/devguides/config/mgmt/v3/limits-quotas#write_requests" class="external-link uri">https://developers.google.com/analytics/devguides/config/mgmt/v3/limits-quotas#write_requests</a>.</p>
 </div>
-<div id="remarketing-segments" class="section level2">
-<h2 class="hasAnchor">
-<a href="#remarketing-segments" class="anchor"></a>Remarketing segments</h2>
+<div class="section level2">
+<h2 id="remarketing-segments">Remarketing segments<a class="anchor" aria-label="anchor" href="#remarketing-segments"></a>
+</h2>
 <p>Remarketing segments lets you target users in Google Ads from Google Analytics segments.</p>
 <ul>
 <li>
@@ -948,9 +950,9 @@
                      include <span class="op">=</span> <span class="va">my_remarketing1</span>, exclude <span class="op">=</span> <span class="va">my_remarketing2</span>,
                      audienceType <span class="op">=</span> <span class="st">"STATE_BASED"</span>, name <span class="op">=</span> <span class="st">"my_remarketing_seg1"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="unsampled-reports" class="section level2">
-<h2 class="hasAnchor">
-<a href="#unsampled-reports" class="anchor"></a>Unsampled reports</h2>
+<div class="section level2">
+<h2 id="unsampled-reports">Unsampled reports<a class="anchor" aria-label="anchor" href="#unsampled-reports"></a>
+</h2>
 <p>Available only for GA360 accounts, you will need to authenticate with the Google drive scope to get download access. The download functions are contributed by <span class="citation">@j450h1</span></p>
 <ul>
 <li>
@@ -961,9 +963,9 @@
 <code><a href="../reference/ga_unsampled_list.html">ga_unsampled_list()</a></code> - List Unsampled Reports</li>
 </ul>
 </div>
-<div id="users" class="section level2">
-<h2 class="hasAnchor">
-<a href="#users" class="anchor"></a>Users</h2>
+<div class="section level2">
+<h2 id="users">Users<a class="anchor" aria-label="anchor" href="#users"></a>
+</h2>
 <ul>
 <li>
 <code><a href="../reference/ga_clientid_hash.html">ga_clientid_hash()</a></code> - Creates the clientID hash that is used in BigQuery GA360 exports</li>
@@ -984,11 +986,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Mark Edmondson.</p>
+  <p></p>
+<p>Developed by Mark Edmondson.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -996,6 +1000,8 @@
 
   
 
+
+  
 
   </body>
 </html>
