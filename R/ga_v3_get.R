@@ -10,7 +10,7 @@
 #' @param sort How to sort the results, in form 'ga:sessions,-ga:bounceRate'
 #' @param filters Filters for the result, in form 'ga:sessions>0;ga:pagePath=~blah'
 #' @param segment How to segment.
-#' @param samplingLevel Choose "WALK" to mitigate against sampling.
+#' @param samplingLevel Level of precision of the API requests
 #' @param max_results Default 100. If greater than 10,000 then will batch GA calls.
 #' @param type ga = Google Analytics v3; mcf = Multi-Channel Funels.
 #'

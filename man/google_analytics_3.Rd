@@ -35,7 +35,7 @@ google_analytics_3(
 
 \item{segment}{How to segment.}
 
-\item{samplingLevel}{Choose "WALK" to mitigate against sampling.}
+\item{samplingLevel}{Level of precision of the API requests}
 
 \item{max_results}{Default 100. If greater than 10,000 then will batch GA calls.}
 
