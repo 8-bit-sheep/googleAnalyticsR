@@ -8,7 +8,9 @@ ga_model_make(
   data_f,
   required_columns,
   model_f,
-  output_f = function(df, ...) {     plot(df) },
+  output_f = function(df, ...) {
+     plot(df)
+ },
   required_packages = NULL,
   description = NULL,
   outputShiny = shiny::plotOutput,
