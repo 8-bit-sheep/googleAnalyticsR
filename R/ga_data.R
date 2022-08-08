@@ -27,6 +27,7 @@ version_aw <- function(){
 #' @param dimensionDelimiter If combining dimensions in one column, the delimiter for the value field
 #' @param realtime If TRUE then will call the real-time reports, that have a more limited set of dimensions/metrics - see [valid real-time dimensions](https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics)
 #' @param raw_json You can send in the raw JSON string for a Data API request which will skip all checks
+#' @param metricAggregations Default NULL, pass in character vector of one or multiple of \code{c("TOTAL","MAXIMUM","MINIMUM","COUNT")} to return extra metadata 
 #' @importFrom googleAuthR gar_api_generator
 #' @import assertthat
 #' @family GA4 functions
@@ -103,6 +104,7 @@ ga_data <- function(
   limit = 100,
   page_size = 100000L,
   realtime = FALSE,
+  metricAggregations = NULL,
   raw_json = NULL) {
   
   if(!is.null(raw_json)){
@@ -125,8 +127,10 @@ ga_data <- function(
   dimensionFilter <- as_filterExpression(dim_filters)
   metricFilter    <- as_filterExpression(met_filters)
  
-  # we always get these 3 - COUNT is not available unless pivot?
-  metricAggregations <- c("TOTAL","MAXIMUM","MINIMUM")
+  # optional get these 3 - COUNT is not available unless pivot?
+  assert_that_ifnn(is.character(metricAggregations))
+  assert_that_ifnn(all(metricAggregations %in% 
+                         c("TOTAL","MAXIMUM","MINIMUM","COUNT")))
   
   dims <- gaw_dimension(dimensions, delimiter = dimensionDelimiter)
   mets <- gaw_metric(metrics)
