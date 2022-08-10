@@ -93,13 +93,15 @@ dim_expression <- ga_data(
   limit = 100
   )
   
-# run a real-time report (no date dimension allowed)
+# run a real-time report (no date dimension allowed) 
+# includes metricAggregation metadata
 realtime <- ga_data(
   206670707,
   metrics = "activeUsers",
   dimensions = c("city","unifiedScreenName"),
   limit = 100,
-  realtime = TRUE)
+  realtime = TRUE,
+  metricAggregations = c("TOTAL","MAXIMUM","MINIMUM"))
 
 # extract meta data from the table
 ga_data_aggregations(realtime)
@@ -116,6 +118,8 @@ ga_data(
   orderBys = c(a, b)
   )
 }
+
+
 }
 \seealso{
 \href{https://developers.google.com/analytics/devguides/reporting/data/v1}{Documentation on Data API}

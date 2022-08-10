@@ -8,7 +8,7 @@ test_that("Basic fetch", {
     ga4_propertyId,
     metrics = "activeUsers",
     dimensions = c("date","city"),
-    date_range = c("2020-03-31", "2020-04-27"),
+    date_range = c("2022-03-31", "2022-04-27"),
     limit = 100
   )
   
@@ -29,7 +29,7 @@ test_that("Pagination", {
     ga4_propertyId,
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek"),
-    date_range = c("2020-03-31", "2020-04-27"),
+    date_range = c("2022-03-31", "2022-04-27"),
     limit = -1
   )
   expect_snapshot(all_results)
@@ -38,7 +38,7 @@ test_that("Pagination", {
     ga4_propertyId,
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek"),
-    date_range = c("2020-03-31", "2020-04-27"),
+    date_range = c("2022-03-31", "2022-04-27"),
     limit = -1,
     page_size = 500L
   )
@@ -51,7 +51,7 @@ test_that("Pagination", {
     ga4_propertyId,
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek"),
-    date_range = c("2020-03-31", "2020-04-27"),
+    date_range = c("2022-03-31", "2022-04-27"),
     limit = 510,
     page_size = 600L
   )
@@ -62,7 +62,7 @@ test_that("Pagination", {
     ga4_propertyId,
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek"),
-    date_range = c("2020-03-31", "2020-04-27"),
+    date_range = c("2022-03-31", "2022-04-27"),
     limit = 510,
     page_size = 500L
   )
@@ -141,7 +141,8 @@ test_that("Metric Aggregations", {
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek"),
     date_range = c("2020-03-31", "2020-04-27","2020-04-28", "2020-05-27"),
-    limit = 100
+    limit = 100,
+    metricAggregations = c("TOTAL","MAXIMUM","MINIMUM")
   )
   
   extract <- ga_data_aggregations(ma)
@@ -167,7 +168,7 @@ test_that("Custom data", {
     ga4_propertyId,
     metrics = c("activeUsers","sessions",sessionsPerUser = "sessions/activeUsers"),
     dimensions = c("date","city","dayOfWeek"),
-    date_range = c("2020-03-31", "2020-04-27"),
+    date_range = c("2022-03-31", "2022-04-27"),
     limit = 100
   )
   
@@ -179,7 +180,7 @@ test_that("Custom data", {
     ga4_propertyId,
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek", cdow = "city/dayOfWeek"),
-    date_range = c("2020-03-31", "2020-04-27"),
+    date_range = c("2022-03-31", "2022-04-27"),
     limit = 100
   )
   
@@ -236,7 +237,7 @@ test_that("Order API fetch", {
     ga4_propertyId,
     metrics = c("activeUsers","sessions"),
     dimensions = c("date","city","dayOfWeek"),
-    date_range = c("2020-03-31", "2020-04-27"),
+    date_range = c("2022-03-31", "2022-04-27"),
     orderBys = ga_data_order(-sessions -dayOfWeek)
   )
   
@@ -269,7 +270,7 @@ test_that("Filter fetch types", {
       ga4_propertyId,
       metrics = "activeUsers",
       dimensions = c("date","city", "dayOfWeek"),
-      date_range = c("2020-03-31", "2020-04-27"),
+      date_range = c("2022-03-31", "2022-04-27"),
       dim_filters = dim_filter,
       met_filters = met_filter,
       limit = 100

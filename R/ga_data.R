@@ -69,13 +69,15 @@ version_aw <- function(){
 #'   limit = 100
 #'   )
 #'   
-#' # run a real-time report (no date dimension allowed)
+#' # run a real-time report (no date dimension allowed) 
+#' # includes metricAggregation metadata
 #' realtime <- ga_data(
 #'   206670707,
 #'   metrics = "activeUsers",
 #'   dimensions = c("city","unifiedScreenName"),
 #'   limit = 100,
-#'   realtime = TRUE)
+#'   realtime = TRUE,
+#'   metricAggregations = c("TOTAL","MAXIMUM","MINIMUM"))
 #' 
 #' # extract meta data from the table
 #' ga_data_aggregations(realtime)
@@ -92,6 +94,8 @@ version_aw <- function(){
 #'   orderBys = c(a, b)
 #'   )
 #' }
+#' 
+#' 
 ga_data <- function(
   propertyId,
   metrics,
@@ -128,9 +132,9 @@ ga_data <- function(
   metricFilter    <- as_filterExpression(met_filters)
  
   # optional get these 3 - COUNT is not available unless pivot?
-  assert_that_ifnn(is.character(metricAggregations))
-  assert_that_ifnn(all(metricAggregations %in% 
-                         c("TOTAL","MAXIMUM","MINIMUM","COUNT")))
+  assert_that_ifnn(metricAggregations, is.character)
+  assert_that_ifnn(metricAggregations, 
+                   function(x) all(x %in% c("TOTAL","MAXIMUM","MINIMUM","COUNT")))
   
   dims <- gaw_dimension(dimensions, delimiter = dimensionDelimiter)
   mets <- gaw_metric(metrics)
