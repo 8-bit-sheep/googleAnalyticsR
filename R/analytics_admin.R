@@ -3,7 +3,6 @@
 #' 
 #' @seealso [Google Documentation](http://code.google.com/apis/analytics/docs/mgmt/home.html)
 #' 
-#' @details 
 #' 
 #' @importFrom googleAuthR gar_api_generator
 #' @noRd
