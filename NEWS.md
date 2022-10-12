@@ -1,6 +1,7 @@
 # googleAnalyticsR 1.0.1
 
 * Allow json_file argument in ga_auth() to be  any one of the forms supported for the txt argument of jsonlite::fromJSON() (typically, a file path or JSON string), to align with implementation in downstream libraries (googleAuthR and gargle)
+* Fix bug in parsing out quota messages (#403 - thanks @elalbaicin)
 
 
 # googleAnalyticsR 1.0.0
