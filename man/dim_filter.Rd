@@ -6,8 +6,8 @@
 \usage{
 dim_filter(
   dimension,
-  operator = c("REGEXP", "BEGINS_WITH", "ENDS_WITH", "PARTIAL", "EXACT",
-    "NUMERIC_EQUAL", "NUMERIC_GREATER_THAN", "NUMERIC_LESS_THAN", "IN_LIST"),
+  operator = c("REGEXP", "BEGINS_WITH", "ENDS_WITH", "PARTIAL", "EXACT", "NUMERIC_EQUAL",
+    "NUMERIC_GREATER_THAN", "NUMERIC_LESS_THAN", "IN_LIST"),
   expressions,
   caseSensitive = FALSE,
   not = FALSE
