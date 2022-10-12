@@ -43,3 +43,4 @@
 ^\.optin-googleanalyticsr$
 ^inst/jupyter*
 ^tests*
+^CRAN-SUBMISSION$
