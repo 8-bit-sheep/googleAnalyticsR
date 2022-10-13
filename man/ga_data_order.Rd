@@ -82,8 +82,6 @@ ga_data(
 
 Other GA4 functions: 
 \code{\link{ga_data_filter}()},
-\code{\link{ga_data_funnel_step}()},
-\code{\link{ga_data_funnel}()},
 \code{\link{ga_data}()}
 }
 \concept{GA4 functions}
