@@ -455,7 +455,7 @@ segmentChain <- function(input, output, session,
 ## helper to turn segment elements into v4 object
 segment_element_calls <- function(se){
   
-  if(class(se) != "list") return(se)
+  if(!inherits(se, "list")) return(se)
   
   se_list <- list(name = unname(se[["name"]]),
                   operator = se$operator,
