@@ -24,15 +24,17 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-47480439-2"></script><script>
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-43MDXK6CLZ"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-47480439-2');
+  gtag('config', 'G-43MDXK6CLZ');
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -45,7 +47,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">googleAnalyticsR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.1.0.9000</span>
       </span>
     </div>
 
@@ -65,7 +67,7 @@
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-table"></span>
      
     Reporting APIs
@@ -132,7 +134,7 @@
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-file"></span>
      
     Publishing
@@ -157,7 +159,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-calculator"></span>
      
     Models
@@ -182,7 +184,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     Help
@@ -223,7 +225,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/">
+  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -238,445 +240,532 @@
 
       
 
-      </header><script src="models_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Statistical models and visualisations with Google Analytics data</h1>
+      <h1 data-toc-skip>Statistical models and visualisations with
+Google Analytics data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/vignettes/models.Rmd"><code>vignettes/models.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/HEAD/vignettes/models.Rmd" class="external-link"><code>vignettes/models.Rmd</code></a></small>
       <div class="hidden name"><code>models.Rmd</code></div>
 
     </div>
 
     
     
-<p>Downloading Google Analytics data is all well and good, but the reason most users want to use the API is to then operate and act upon that data.</p>
-<p>There are several tutorials linked from the homepage that demonstrate various applications of using <code>googleAnalyticsR</code> to analyse data, but they can still be intimidating for new users of R.</p>
-<p>To make it easier to distribute these analysis, <code>googleAnalyticsR</code> now includes the <code>ga_model_*</code> functions to help end users get to insights more quickly.</p>
-<p><code>ga_model</code> objects can be saved to the new <code>.gamr</code> format. Loading these files using <code><a href="../reference/ga_model.html">ga_model()</a></code> and specifying your own Google Analytics viewId, all the data processing, modelling and visualisation steps can be encapsulated to give you the output.</p>
-<p><code>.gamr</code> files also includes the ability to create Shiny modules which you can use to quickly create online Shiny dashboards displaying the model results, and which can switch to users own Google Analytics data using the multi-user login capabilities.</p>
-<p>The <code>.gamr</code> file format can be shared with others online or within your organisation.</p>
+<p>Downloading Google Analytics data is all well and good, but the
+reason most users want to use the API is to then operate and act upon
+that data.</p>
+<p>There are several tutorials linked from the homepage that demonstrate
+various applications of using <code>googleAnalyticsR</code> to analyse
+data, but they can still be intimidating for new users of R.</p>
+<p>To make it easier to distribute these analysis,
+<code>googleAnalyticsR</code> now includes the <code>ga_model_*</code>
+functions to help end users get to insights more quickly.</p>
+<p><code>ga_model</code> objects can be saved to the new
+<code>.gamr</code> format. Loading these files using
+<code><a href="../reference/ga_model.html">ga_model()</a></code> and specifying your own Google Analytics viewId,
+all the data processing, modelling and visualisation steps can be
+encapsulated to give you the output.</p>
+<p><code>.gamr</code> files also includes the ability to create Shiny
+modules which you can use to quickly create online Shiny dashboards
+displaying the model results, and which can switch to users own Google
+Analytics data using the multi-user login capabilities.</p>
+<p>The <code>.gamr</code> file format can be shared with others online
+or within your organisation.</p>
 <p>You can also use model objects to create Shiny apps - see <a href="articles/model-templates.html">Model Shiny Templates</a></p>
-<div id="a-simple-example-loading-a-model-directly" class="section level2">
-<h2 class="hasAnchor">
-<a href="#a-simple-example-loading-a-model-directly" class="anchor"></a>A simple example loading a model directly</h2>
-<p>The above loads models within a wrapper function, but you can also load model objects yourself via <code><a href="../reference/ga_model_load.html">ga_model_load()</a></code>. Included within the package are some simple models to demonstrate its use which use <code><a href="../reference/ga_model_load.html">ga_model_load()</a></code> to load from the package examples, via <code><a href="../reference/ga_model_example.html">ga_model_example()</a></code></p>
-<p>The example below performs decomposition on the sessions to your website. Behind the scenes the model downloads your data with the right columns, applies the decomposition model then plots it, returning the data plotted for you to work with later:</p>
+<div class="section level2">
+<h2 id="a-simple-example-loading-a-model-directly">A simple example loading a model directly<a class="anchor" aria-label="anchor" href="#a-simple-example-loading-a-model-directly"></a>
+</h2>
+<p>The above loads models within a wrapper function, but you can also
+load model objects yourself via <code><a href="../reference/ga_model_load.html">ga_model_load()</a></code>. Included
+within the package are some simple models to demonstrate its use which
+use <code><a href="../reference/ga_model_load.html">ga_model_load()</a></code> to load from the package examples, via
+<code><a href="../reference/ga_model_example.html">ga_model_example()</a></code></p>
+<p>The example below performs decomposition on the sessions to your
+website. Behind the scenes the model downloads your data with the right
+columns, applies the decomposition model then plots it, returning the
+data plotted for you to work with later:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>  <span class="co"># load library</span>
-
-<span class="co"># your own Google Analytics viewID</span>
-<span class="va">my_viewid</span> <span class="op">&lt;-</span> <span class="fl">81416156</span>
-
-<span class="co"># load the model (equivalent to ga_model_load())</span>
-<span class="va">decomp_ga</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model_example.html">ga_model_example</a></span><span class="op">(</span><span class="st">"decomp_ga.gamr"</span><span class="op">)</span>
-
-<span class="co"># apply model to your data</span>
-<span class="va">d1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span><span class="op">(</span><span class="va">my_viewid</span>, model <span class="op">=</span> <span class="va">decomp_ga</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>  <span class="co"># load library</span></span>
+<span></span>
+<span><span class="co"># your own Google Analytics viewID</span></span>
+<span><span class="va">my_viewid</span> <span class="op">&lt;-</span> <span class="fl">81416156</span></span>
+<span></span>
+<span><span class="co"># load the model (equivalent to ga_model_load())</span></span>
+<span><span class="va">decomp_ga</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model_example.html">ga_model_example</a></span><span class="op">(</span><span class="st">"decomp_ga.gamr"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># apply model to your data</span></span>
+<span><span class="va">d1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span><span class="op">(</span><span class="va">my_viewid</span>, model <span class="op">=</span> <span class="va">decomp_ga</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="figure/unnamed-chunk-1-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-1</p>
 </div>
-<p>This model allows you to alter the date range of the data fetched:</p>
+<p>This model allows you to alter the date range of the data
+fetched:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># change default date range to 20 days ago to yesterday</span>
-<span class="va">d2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span><span class="op">(</span><span class="va">my_viewid</span>, model <span class="op">=</span> <span class="va">decomp_ga</span>, date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"20daysAgo"</span>,<span class="st">"yesterday"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># change default date range to 20 days ago to yesterday</span></span>
+<span><span class="va">d2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span><span class="op">(</span><span class="va">my_viewid</span>, model <span class="op">=</span> <span class="va">decomp_ga</span>, date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"20daysAgo"</span>,<span class="st">"yesterday"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="figure/unnamed-chunk-2-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-2</p>
 </div>
-<p>You can examine the properties of the model and the arguments it was sent via its print method:</p>
+<p>You can examine the properties of the model and the arguments it was
+sent via its print method:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">decomp_ga</span></code></pre></div>
-<pre><code>## ==ga_model object==
-## Description:  Performs decomposition and creates a plot 
-## Data args:    viewId date_range 
-## Input data:   date sessions 
-## Model args:   df 
-## Output args:  x y 
-## Packages:</code></pre>
-<p>You can also see an overview on how a particular call to a model was created by printing out the model’s result directly to console:</p>
+<code class="sourceCode R"><span><span class="va">decomp_ga</span></span></code></pre></div>
+<pre><code><span><span class="co">## ==ga_model object==</span></span>
+<span><span class="co">## Description:  Performs decomposition and creates a plot </span></span>
+<span><span class="co">## Data args:    viewId date_range </span></span>
+<span><span class="co">## Input data:   date sessions </span></span>
+<span><span class="co">## Model args:   df </span></span>
+<span><span class="co">## Output args:  x y </span></span>
+<span><span class="co">## Packages:</span></span></code></pre>
+<p>You can also see an overview on how a particular call to a model was
+created by printing out the model’s result directly to console:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">d2</span></code></pre></div>
-<pre><code>## ==ga_model_result object==
-## Input names:        date sessions 
-## Input dimensions:   20 2 
-## Output names:       x seasonal trend random figure type 
-## Plot class:         NULL 
-## Model args passed:  date_range = c("20daysAgo", "yesterday") 
-## ==ga_model object==
-## Description:  Performs decomposition and creates a plot 
-## Data args:    viewId date_range 
-## Input data:   date sessions 
-## Model args:   df 
-## Output args:  x y 
-## Packages:</code></pre>
-<p>And if you want to review the code of the model, use <code><a href="../reference/ga_model_write.html">ga_model_write()</a></code> to write the functions out to a file.</p>
+<code class="sourceCode R"><span><span class="va">d2</span></span></code></pre></div>
+<pre><code><span><span class="co">## ==ga_model_result object==</span></span>
+<span><span class="co">## Input names:        date sessions </span></span>
+<span><span class="co">## Input dimensions:   20 2 </span></span>
+<span><span class="co">## Output names:       x seasonal trend random figure type </span></span>
+<span><span class="co">## Plot class:         NULL </span></span>
+<span><span class="co">## Model args passed:  date_range = c("20daysAgo", "yesterday") </span></span>
+<span><span class="co">## ==ga_model object==</span></span>
+<span><span class="co">## Description:  Performs decomposition and creates a plot </span></span>
+<span><span class="co">## Data args:    viewId date_range </span></span>
+<span><span class="co">## Input data:   date sessions </span></span>
+<span><span class="co">## Model args:   df </span></span>
+<span><span class="co">## Output args:  x y </span></span>
+<span><span class="co">## Packages:</span></span></code></pre>
+<p>And if you want to review the code of the model, use
+<code><a href="../reference/ga_model_write.html">ga_model_write()</a></code> to write the functions out to a file.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ga_model_write.html">ga_model_write</a></span><span class="op">(</span><span class="va">decomp_ga</span>, <span class="st">"my_model.R"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ga_model_write.html">ga_model_write</a></span><span class="op">(</span><span class="va">decomp_ga</span>, <span class="st">"my_model.R"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="shiny-templates-for-ga_model-objects" class="section level2">
-<h2 class="hasAnchor">
-<a href="#shiny-templates-for-ga_model-objects" class="anchor"></a>Shiny templates for ga_model objects</h2>
-<p>There are Shiny templates available that can be used with model objects to quickly create Shiny apps for users. For example:</p>
+<div class="section level2">
+<h2 id="shiny-templates-for-ga_model-objects">Shiny templates for ga_model objects<a class="anchor" aria-label="anchor" href="#shiny-templates-for-ga_model-objects"></a>
+</h2>
+<p>There are Shiny templates available that can be used with model
+objects to quickly create Shiny apps for users. For example:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ga_model_shiny.html">ga_model_shiny</a></span><span class="op">(</span><span class="st">"inst/models/decomp_ga.gamr"</span>, template <span class="op">=</span> <span class="fu"><a href="../reference/ga_model_shiny_template.html">ga_model_shiny_template</a></span><span class="op">(</span><span class="st">"template1"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>Templates can be created and parsed via <code>{{ var }}</code> templating rules. The default variables used in all templates are <code>web_json</code>, <code>scopes</code> (for Google auth), and <code>title</code>. You can pass other template specific ones via the <code>...</code> argument. The <code>ga_model</code> argument is used to load the previously created <code>ga_model</code> object into the Shiny app.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ga_model_shiny.html">ga_model_shiny</a></span><span class="op">(</span><span class="st">"inst/models/decomp_ga.gamr"</span>, template <span class="op">=</span> <span class="fu"><a href="../reference/ga_model_shiny_template.html">ga_model_shiny_template</a></span><span class="op">(</span><span class="st">"template1"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Templates can be created and parsed via <code>{{ var }}</code>
+templating rules. The default variables used in all templates are
+<code>web_json</code>, <code>scopes</code> (for Google auth), and
+<code>title</code>. You can pass other template specific ones via the
+<code>...</code> argument. The <code>ga_model</code> argument is used to
+load the previously created <code>ga_model</code> object into the Shiny
+app.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/">shiny</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAuthR/">googleAuthR</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
-
-<span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html">gar_set_client</a></span><span class="op">(</span>web_json <span class="op">=</span> <span class="st">"{{ web_json }}"</span>,
-               scopes <span class="op">=</span> <span class="st">"{{ scopes }}"</span><span class="op">)</span>
-
-<span class="co"># loads a pre-existing model</span>
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model_load.html">ga_model_load</a></span><span class="op">(</span><span class="st">"{{ ga_model }}"</span><span class="op">)</span>
-
-<span class="va">modelUi</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="va">shiny_module</span><span class="op">$</span><span class="va">ui</span>
-<span class="va">modelServer</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="va">shiny_module</span><span class="op">$</span><span class="va">server</span>
-
-<span class="co">## ui.R</span>
-<span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"{{ shiny_title }}"</span>,
-                <span class="fu"><a href="../reference/authDropdownUI.html">authDropdownUI</a></span><span class="op">(</span><span class="st">"auth_menu"</span><span class="op">)</span>,
-                <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">h2</a></span><span class="op">(</span><span class="st">"Model Description"</span><span class="op">)</span>,
-                <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html">textOutput</a></span><span class="op">(</span><span class="st">"model_description"</span><span class="op">)</span>,
-                <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">h2</a></span><span class="op">(</span><span class="st">"Model Output"</span><span class="op">)</span>,
-                <span class="fu">modelUi</span><span class="op">(</span><span class="st">"{{ ga_model_name }}"</span><span class="op">)</span>
-                
-<span class="op">)</span>
-
-<span class="co">## server.R</span>
-<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span><span class="op">{</span>
-  
-  <span class="va">token</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_auth.html">gar_shiny_auth</a></span><span class="op">(</span><span class="va">session</span><span class="op">)</span>
-  
-  <span class="va">al</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span><span class="op">(</span><span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/req.html">req</a></span><span class="op">(</span><span class="va">token</span><span class="op">)</span>
-    <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span><span class="op">(</span><span class="op">)</span>
-  <span class="op">}</span><span class="op">)</span>
-  
-  <span class="co"># module for authentication</span>
-  <span class="va">view_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/callModule.html">callModule</a></span><span class="op">(</span><span class="va">authDropdown</span>, <span class="st">"auth_menu"</span>, ga.table <span class="op">=</span> <span class="va">al</span><span class="op">)</span>
-  <span class="va">output</span><span class="op">$</span><span class="va">model_description</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html">renderText</a></span><span class="op">(</span><span class="va">model</span><span class="op">$</span><span class="va">description</span><span class="op">)</span>
-  
-  <span class="co"># module to display model results</span>
-  <span class="fu">modelServer</span><span class="op">(</span><span class="st">"{{ ga_model_name }}"</span>, view_id <span class="op">=</span> <span class="va">view_id</span><span class="op">)</span>
-  
-<span class="op">}</span>
-
-<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span><span class="op">(</span><span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_ui.html">gar_shiny_ui</a></span><span class="op">(</span><span class="va">ui</span>, login_ui <span class="op">=</span> <span class="va">silent_auth</span><span class="op">)</span>, <span class="va">server</span><span class="op">)</span></code></pre></div>
-<div id="models-and-templates-included-with-googleanalyticsr" class="section level3">
-<h3 class="hasAnchor">
-<a href="#models-and-templates-included-with-googleanalyticsr" class="anchor"></a>Models and Templates included with googleAnalyticsR</h3>
-<p>There are some pre-created models and templates to help inspire your own. At the moment these are:</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAuthR/" class="external-link">googleAuthR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_set_client.html" class="external-link">gar_set_client</a></span><span class="op">(</span>web_json <span class="op">=</span> <span class="st">"{{ web_json }}"</span>,</span>
+<span>               scopes <span class="op">=</span> <span class="st">"{{ scopes }}"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># loads a pre-existing model</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model_load.html">ga_model_load</a></span><span class="op">(</span><span class="st">"{{ ga_model }}"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">modelUi</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="va">shiny_module</span><span class="op">$</span><span class="va">ui</span></span>
+<span><span class="va">modelServer</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="va">shiny_module</span><span class="op">$</span><span class="va">server</span></span>
+<span></span>
+<span><span class="co">## ui.R</span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"{{ shiny_title }}"</span>,</span>
+<span>                <span class="fu"><a href="../reference/authDropdownUI.html">authDropdownUI</a></span><span class="op">(</span><span class="st">"auth_menu"</span><span class="op">)</span>,</span>
+<span>                <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">h2</a></span><span class="op">(</span><span class="st">"Model Description"</span><span class="op">)</span>,</span>
+<span>                <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">textOutput</a></span><span class="op">(</span><span class="st">"model_description"</span><span class="op">)</span>,</span>
+<span>                <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">h2</a></span><span class="op">(</span><span class="st">"Model Output"</span><span class="op">)</span>,</span>
+<span>                <span class="fu">modelUi</span><span class="op">(</span><span class="st">"{{ ga_model_name }}"</span><span class="op">)</span></span>
+<span>                </span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## server.R</span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span><span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="va">token</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_auth.html" class="external-link">gar_shiny_auth</a></span><span class="op">(</span><span class="va">session</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">al</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/req.html" class="external-link">req</a></span><span class="op">(</span><span class="va">token</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/ga_account_list.html">ga_account_list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># module for authentication</span></span>
+<span>  <span class="va">view_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/callModule.html" class="external-link">callModule</a></span><span class="op">(</span><span class="va">authDropdown</span>, <span class="st">"auth_menu"</span>, ga.table <span class="op">=</span> <span class="va">al</span><span class="op">)</span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">model_description</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderText</a></span><span class="op">(</span><span class="va">model</span><span class="op">$</span><span class="va">description</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># module to display model results</span></span>
+<span>  <span class="fu">modelServer</span><span class="op">(</span><span class="st">"{{ ga_model_name }}"</span>, view_id <span class="op">=</span> <span class="va">view_id</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="fu"><a href="https://code.markedmondson.me/googleAuthR//reference/gar_shiny_ui.html" class="external-link">gar_shiny_ui</a></span><span class="op">(</span><span class="va">ui</span>, login_ui <span class="op">=</span> <span class="va">silent_auth</span><span class="op">)</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="models-and-templates-included-with-googleanalyticsr">Models and Templates included with googleAnalyticsR<a class="anchor" aria-label="anchor" href="#models-and-templates-included-with-googleanalyticsr"></a>
+</h3>
+<p>There are some pre-created models and templates to help inspire your
+own. At the moment these are:</p>
 <p><em>Models - accessed via <code><a href="../reference/ga_model_example.html">ga_model_example()</a></code></em></p>
 <ul>
 <li>
-<code>"ga4-trend"</code> - Fetch GA4 time-series, display via Dygraphs</li>
+<code>"ga4-trend"</code> - Fetch GA4 time-series, display via
+Dygraphs</li>
 <li>
-<code>"ga-effect"</code> - Fetch UA time-series and use with CausalImpact</li>
+<code>"ga-effect"</code> - Fetch UA time-series and use with
+CausalImpact</li>
 <li>
-<code>"decomp_ga"</code> - Fetch UA time-series and perform decomposition on them.</li>
+<code>"decomp_ga"</code> - Fetch UA time-series and perform
+decomposition on them.</li>
 </ul>
-<p><em>Templates - accessed via <code><a href="../reference/ga_model_shiny_template.html">ga_model_shiny_template()</a></code></em></p>
+<p><em>Templates - accessed via
+<code><a href="../reference/ga_model_shiny_template.html">ga_model_shiny_template()</a></code></em></p>
 <ul>
 <li>
-<code>"template_ga4"</code> - A basic Shiny dashboard with an account selector for GA4</li>
+<code>"template_ga4"</code> - A basic Shiny dashboard with an
+account selector for GA4</li>
 <li>
-<code>"template_ua"</code> - A basic Shiny dashboard with an account selector for UA</li>
+<code>"template_ua"</code> - A basic Shiny dashboard with an account
+selector for UA</li>
 <li>
-<code>"shinydashboard_ga4"</code> - Account selector for GA4 plus date picker using <code><a href="https://rdrr.io/r/base/library.html">library(shinydashboard)</a></code> styling.</li>
+<code>"shinydashboard_ga4"</code> - Account selector for GA4 plus
+date picker using <code><a href="http://rstudio.github.io/shinydashboard/" class="external-link">library(shinydashboard)</a></code> styling.</li>
 </ul>
 </div>
 </div>
-<div id="creating-model--gamr-objects" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-model--gamr-objects" class="anchor"></a>Creating model <code>.gamr</code> objects</h2>
-<p>To create your own models, you need to predefine all the functions to look after the fetching, modelling and viewing of the data. You then pass those functions to the <code><a href="../reference/ga_model_make.html">ga_model_make()</a></code> function.</p>
+<div class="section level2">
+<h2 id="creating-model--gamr-objects">Creating model <code>.gamr</code> objects<a class="anchor" aria-label="anchor" href="#creating-model--gamr-objects"></a>
+</h2>
+<p>To create your own models, you need to predefine all the functions to
+look after the fetching, modelling and viewing of the data. You then
+pass those functions to the <code><a href="../reference/ga_model_make.html">ga_model_make()</a></code> function.</p>
 <p>The functions need to follow these specifications:</p>
 <ul>
 <li>
-<code>data_f</code> - A function to collect the data you will need. The first argument should be the <code>view_id</code> which will be pass the viewId of Google Analytics property to fetch data from.</li>
+<code>data_f</code> - A function to collect the data you will need.
+The first argument should be the <code>view_id</code> which will be pass
+the viewId of Google Analytics property to fetch data from.</li>
 <li>
-<code>model_f</code> - A function to work with the data you have fetched. The first argument should be the data.frame that is produced by the data fetching function, <code>data_f()</code>.</li>
+<code>model_f</code> - A function to work with the data you have
+fetched. The first argument should be the data.frame that is produced by
+the data fetching function, <code>data_f()</code>.</li>
 <li>
-<code>output_f</code> - A function to plot the data. The first argument should be the data.frame that is produced by the model function, <code>model_f()</code>.</li>
-<li>All functions you create must include <code>...</code> as an argument.</li>
-<li>Take care if you use the same argument name that it is consistent with all functions as it will be passed to all of them.</li>
+<code>output_f</code> - A function to plot the data. The first
+argument should be the data.frame that is produced by the model
+function, <code>model_f()</code>.</li>
+<li>All functions you create must include <code>...</code> as an
+argument.</li>
+<li>Take care if you use the same argument name that it is consistent
+with all functions as it will be passed to all of them.</li>
 </ul>
-<p>If you want to also create the Shiny modules, then you also need to specify:</p>
+<p>If you want to also create the Shiny modules, then you also need to
+specify:</p>
 <ul>
 <li>
-<code>outputShiny</code> - the output function for the UI, such as <code>plotOutput</code>
+<code>outputShiny</code> - the output function for the UI, such as
+<code>plotOutput</code>
 </li>
 <li>
-<code>renderShiny</code> - the render function for the server, such as <code>renderPlot</code>
+<code>renderShiny</code> - the render function for the server, such
+as <code>renderPlot</code>
 </li>
 </ul>
-<p>You then supply supporting information to make sure the user can run the model:</p>
+<p>You then supply supporting information to make sure the user can run
+the model:</p>
 <ul>
 <li>
-<code>required_columns</code> - Specification of which columns the data will fetch. It will fail if they are not present.</li>
+<code>required_columns</code> - Specification of which columns the
+data will fetch. It will fail if they are not present.</li>
 <li>
-<code>required_packages</code> - The packages the end user needs to have installed to run your functions.</li>
+<code>required_packages</code> - The packages the end user needs to
+have installed to run your functions.</li>
 <li>
-<code>description</code> - A sentence on what the model is so they can be distinguished.</li>
+<code>description</code> - A sentence on what the model is so they
+can be distinguished.</li>
 </ul>
-<p>To create the decomposition example model, this was applied as shown below:</p>
+<p>To create the decomposition example model, this was applied as shown
+below:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">get_model_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">viewId</span>,
-                           <span class="va">date_range</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span> <span class="fl">300</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,
-                           <span class="va">...</span><span class="op">)</span><span class="op">{</span>
-   <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">viewId</span>,
-                    date_range <span class="op">=</span> <span class="va">date_range</span>,
-                    metrics <span class="op">=</span> <span class="st">"sessions"</span>,
-                    dimensions <span class="op">=</span> <span class="st">"date"</span>,
-                    max <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span>
- <span class="op">}</span>
-
-<span class="va">decompose_sessions</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">...</span><span class="op">)</span><span class="op">{</span>
-   <span class="fu"><a href="https://rdrr.io/r/stats/decompose.html">decompose</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">sessions</span>, frequency <span class="op">=</span> <span class="fl">7</span><span class="op">)</span><span class="op">)</span>
- <span class="op">}</span>
- 
-<span class="va">decomp_ga</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model_make.html">ga_model_make</a></span><span class="op">(</span><span class="va">get_model_data</span>,
-                           required_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>, <span class="st">"sessions"</span><span class="op">)</span>,
-                           model_f <span class="op">=</span> <span class="va">decompose_sessions</span>,
-                           output_f <span class="op">=</span> <span class="fu">graphics</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>,
-                           description <span class="op">=</span> <span class="st">"Performs decomposition and creates a plot"</span>,
-                           outputShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span>,
-                           renderShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">get_model_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">viewId</span>,</span>
+<span>                           <span class="va">date_range</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span> <span class="fl">300</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                           <span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span>   <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">viewId</span>,</span>
+<span>                    date_range <span class="op">=</span> <span class="va">date_range</span>,</span>
+<span>                    metrics <span class="op">=</span> <span class="st">"sessions"</span>,</span>
+<span>                    dimensions <span class="op">=</span> <span class="st">"date"</span>,</span>
+<span>                    max <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
+<span> <span class="op">}</span></span>
+<span></span>
+<span><span class="va">decompose_sessions</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span>   <span class="fu"><a href="https://rdrr.io/r/stats/decompose.html" class="external-link">decompose</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html" class="external-link">ts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">sessions</span>, frequency <span class="op">=</span> <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span>
+<span> <span class="op">}</span></span>
+<span> </span>
+<span><span class="va">decomp_ga</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model_make.html">ga_model_make</a></span><span class="op">(</span><span class="va">get_model_data</span>,</span>
+<span>                           required_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"date"</span>, <span class="st">"sessions"</span><span class="op">)</span>,</span>
+<span>                           model_f <span class="op">=</span> <span class="va">decompose_sessions</span>,</span>
+<span>                           output_f <span class="op">=</span> <span class="fu">graphics</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span>,</span>
+<span>                           description <span class="op">=</span> <span class="st">"Performs decomposition and creates a plot"</span>,</span>
+<span>                           outputShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html" class="external-link">plotOutput</a></span>,</span>
+<span>                           renderShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html" class="external-link">renderPlot</a></span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="advanced-use" class="section level2">
-<h2 class="hasAnchor">
-<a href="#advanced-use" class="anchor"></a>Advanced use</h2>
-<p>The more arguments you provide to the model creation functions, the more complicated it is for the end user, but the more flexible the model. It is suggested making several narrow usage models is better than one complicated one.</p>
-<p>For instance, you could modify the above model to allow the end user to specify the metric, timespan and seasonality of the decomposition:</p>
+<div class="section level2">
+<h2 id="advanced-use">Advanced use<a class="anchor" aria-label="anchor" href="#advanced-use"></a>
+</h2>
+<p>The more arguments you provide to the model creation functions, the
+more complicated it is for the end user, but the more flexible the
+model. It is suggested making several narrow usage models is better than
+one complicated one.</p>
+<p>For instance, you could modify the above model to allow the end user
+to specify the metric, timespan and seasonality of the
+decomposition:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">get_model_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">viewId</span>,
-                           <span class="va">date_range</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span> <span class="fl">300</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,
-                           <span class="va">metric</span>,
-                           <span class="va">...</span><span class="op">)</span><span class="op">{</span>
-   <span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">viewId</span>,
-                    date_range <span class="op">=</span> <span class="va">date_range</span>,
-                    metrics <span class="op">=</span> <span class="va">metric</span>,
-                    dimensions <span class="op">=</span> <span class="st">"date"</span>,
-                    max <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span>
-    <span class="co"># rename the metric column so its found for modelling</span>
-    <span class="va">o</span><span class="op">$</span><span class="va">the_metric</span> <span class="op">&lt;-</span> <span class="va">o</span><span class="op">[</span>, <span class="va">metric</span><span class="op">]</span>
-    
-    <span class="va">o</span>
-    
- <span class="op">}</span>
-
-<span class="va">decompose_sessions</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">frequency</span>, <span class="va">...</span><span class="op">)</span><span class="op">{</span>
-   <span class="fu"><a href="https://rdrr.io/r/stats/decompose.html">decompose</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">the_metric</span>, frequency <span class="op">=</span> <span class="va">frequency</span><span class="op">)</span><span class="op">)</span>
- <span class="op">}</span>
- 
-<span class="va">decomp_ga_advanced</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model_make.html">ga_model_make</a></span><span class="op">(</span><span class="va">get_model_data</span>,
-                           required_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>, <span class="co"># less restriction on column</span>
-                           model_f <span class="op">=</span> <span class="va">decompose_sessions</span>,
-                           output_f <span class="op">=</span> <span class="fu">graphics</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>,
-                           description <span class="op">=</span> <span class="st">"Performs decomposition and creates a plot"</span>,
-                           outputShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span>,
-                           renderShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">get_model_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">viewId</span>,</span>
+<span>                           <span class="va">date_range</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span> <span class="fl">300</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                           <span class="va">metric</span>,</span>
+<span>                           <span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span>   <span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">viewId</span>,</span>
+<span>                    date_range <span class="op">=</span> <span class="va">date_range</span>,</span>
+<span>                    metrics <span class="op">=</span> <span class="va">metric</span>,</span>
+<span>                    dimensions <span class="op">=</span> <span class="st">"date"</span>,</span>
+<span>                    max <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
+<span>    <span class="co"># rename the metric column so its found for modelling</span></span>
+<span>    <span class="va">o</span><span class="op">$</span><span class="va">the_metric</span> <span class="op">&lt;-</span> <span class="va">o</span><span class="op">[</span>, <span class="va">metric</span><span class="op">]</span></span>
+<span>    </span>
+<span>    <span class="va">o</span></span>
+<span>    </span>
+<span> <span class="op">}</span></span>
+<span></span>
+<span><span class="va">decompose_sessions</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">frequency</span>, <span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span>   <span class="fu"><a href="https://rdrr.io/r/stats/decompose.html" class="external-link">decompose</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html" class="external-link">ts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">the_metric</span>, frequency <span class="op">=</span> <span class="va">frequency</span><span class="op">)</span><span class="op">)</span></span>
+<span> <span class="op">}</span></span>
+<span> </span>
+<span><span class="va">decomp_ga_advanced</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model_make.html">ga_model_make</a></span><span class="op">(</span><span class="va">get_model_data</span>,</span>
+<span>                           required_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>, <span class="co"># less restriction on column</span></span>
+<span>                           model_f <span class="op">=</span> <span class="va">decompose_sessions</span>,</span>
+<span>                           output_f <span class="op">=</span> <span class="fu">graphics</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span>,</span>
+<span>                           description <span class="op">=</span> <span class="st">"Performs decomposition and creates a plot"</span>,</span>
+<span>                           outputShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html" class="external-link">plotOutput</a></span>,</span>
+<span>                           renderShiny <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html" class="external-link">renderPlot</a></span><span class="op">)</span></span></code></pre></div>
 <p>It would then be used via:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span><span class="op">(</span><span class="fl">81416156</span>, <span class="va">decomp_ga_advanced</span>, metric<span class="op">=</span><span class="st">"users"</span>, frequency <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span><span class="op">(</span><span class="fl">81416156</span>, <span class="va">decomp_ga_advanced</span>, metric<span class="op">=</span><span class="st">"users"</span>, frequency <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="figure/unnamed-chunk-6-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-6</p>
 </div>
-<div id="working-with-the-model-object" class="section level3">
-<h3 class="hasAnchor">
-<a href="#working-with-the-model-object" class="anchor"></a>Working with the model object</h3>
+<div class="section level3">
+<h3 id="working-with-the-model-object">Working with the model object<a class="anchor" aria-label="anchor" href="#working-with-the-model-object"></a>
+</h3>
 <p>The model objects prints to console in a friendly manner:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">decomp_ga_advanced</span></code></pre></div>
-<pre><code>## ==ga_model object==
-## Description:  Performs decomposition and creates a plot 
-## Data args:    viewId date_range metric 
-## Input data:   date 
-## Model args:   df frequency 
-## Output args:  x y 
-## Packages:</code></pre>
-<p>You can save and load model objects from a file. It is suggested to save them with the <code>.gamr</code> suffix.</p>
+<code class="sourceCode R"><span><span class="va">decomp_ga_advanced</span></span></code></pre></div>
+<pre><code><span><span class="co">## ==ga_model object==</span></span>
+<span><span class="co">## Description:  Performs decomposition and creates a plot </span></span>
+<span><span class="co">## Data args:    viewId date_range metric </span></span>
+<span><span class="co">## Input data:   date </span></span>
+<span><span class="co">## Model args:   df frequency </span></span>
+<span><span class="co">## Output args:  x y </span></span>
+<span><span class="co">## Packages:</span></span></code></pre>
+<p>You can save and load model objects from a file. It is suggested to
+save them with the <code>.gamr</code> suffix.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># save model to a file</span>
-<span class="fu"><a href="../reference/ga_model_save.html">ga_model_save</a></span><span class="op">(</span><span class="va">decomp_ga_advanced</span>, filename <span class="op">=</span> <span class="st">"my_model.gamr"</span><span class="op">)</span>
-
-<span class="co"># load model again</span>
-<span class="fu"><a href="../reference/ga_model_load.html">ga_model_load</a></span><span class="op">(</span><span class="st">"my_model.gamr"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># save model to a file</span></span>
+<span><span class="fu"><a href="../reference/ga_model_save.html">ga_model_save</a></span><span class="op">(</span><span class="va">decomp_ga_advanced</span>, filename <span class="op">=</span> <span class="st">"my_model.gamr"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># load model again</span></span>
+<span><span class="fu"><a href="../reference/ga_model_load.html">ga_model_load</a></span><span class="op">(</span><span class="st">"my_model.gamr"</span><span class="op">)</span></span></code></pre></div>
 <p>You can use models directly from the file:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ga_model.html">ga_model</a></span><span class="op">(</span><span class="fl">81416156</span>, <span class="st">"my_model.gamr"</span><span class="op">)</span></code></pre></div>
-<p>If you need to change parts of a model, <code><a href="../reference/ga_model_edit.html">ga_model_edit()</a></code> lets you change individual aspects:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ga_model.html">ga_model</a></span><span class="op">(</span><span class="fl">81416156</span>, <span class="st">"my_model.gamr"</span><span class="op">)</span></span></code></pre></div>
+<p>If you need to change parts of a model, <code><a href="../reference/ga_model_edit.html">ga_model_edit()</a></code>
+lets you change individual aspects:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ga_model_edit.html">ga_model_edit</a></span><span class="op">(</span><span class="va">decomp_ga_advanced</span>, description <span class="op">=</span> <span class="st">"New description"</span><span class="op">)</span></code></pre></div>
-<pre><code>## ==ga_model object==
-## Description:  New description 
-## Data args:    viewId date_range metric 
-## Input data:   date 
-## Model args:   df frequency 
-## Packages:</code></pre>
-<p>You can also pass it the filename, which will load, make the edit, then save the model to disk again:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ga_model_edit.html">ga_model_edit</a></span><span class="op">(</span><span class="va">decomp_ga_advanced</span>, description <span class="op">=</span> <span class="st">"New description"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## ==ga_model object==</span></span>
+<span><span class="co">## Description:  New description </span></span>
+<span><span class="co">## Data args:    viewId date_range metric </span></span>
+<span><span class="co">## Input data:   date </span></span>
+<span><span class="co">## Model args:   df frequency </span></span>
+<span><span class="co">## Packages:</span></span></code></pre>
+<p>You can also pass it the filename, which will load, make the edit,
+then save the model to disk again:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ga_model_edit.html">ga_model_edit</a></span><span class="op">(</span><span class="st">"my_model.gamr"</span>, description <span class="op">=</span> <span class="st">"New description"</span><span class="op">)</span></code></pre></div>
-<p>If you want to examine or change the functions in a model, you can use <code><a href="../reference/ga_model_write.html">ga_model_write()</a></code> to write them to a file, or examine them directly from the model object. The structure of the model object can be examined using <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ga_model_edit.html">ga_model_edit</a></span><span class="op">(</span><span class="st">"my_model.gamr"</span>, description <span class="op">=</span> <span class="st">"New description"</span><span class="op">)</span></span></code></pre></div>
+<p>If you want to examine or change the functions in a model, you can
+use <code><a href="../reference/ga_model_write.html">ga_model_write()</a></code> to write them to a file, or examine
+them directly from the model object. The structure of the model object
+can be examined using <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code>:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">decomp_ga_advanced</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<pre><code>## List of 7
-##  $ data_f           :function (viewId, date_range = c(Sys.Date() - 300, Sys.Date()), metric, ...)  
-##  $ required_columns : chr "date"
-##  $ model_f          :function (df, frequency, ...)  
-##  $ output_f         :function (x, y, ...)  
-##  $ required_packages: NULL
-##  $ description      : chr "Performs decomposition and creates a plot"
-##  $ shiny_module     :List of 2
-##   ..$ ui    :function (id, ...)  
-##   ..$ server:function (input, output, session, view_id, ...)</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">decomp_ga_advanced</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## List of 7</span></span>
+<span><span class="co">##  $ data_f           :function (viewId, date_range = c(Sys.Date() - 300, Sys.Date()), metric, ...)  </span></span>
+<span><span class="co">##  $ required_columns : chr "date"</span></span>
+<span><span class="co">##  $ model_f          :function (df, frequency, ...)  </span></span>
+<span><span class="co">##  $ output_f         :function (x, y, ...)  </span></span>
+<span><span class="co">##  $ required_packages: NULL</span></span>
+<span><span class="co">##  $ description      : chr "Performs decomposition and creates a plot"</span></span>
+<span><span class="co">##  $ shiny_module     :List of 2</span></span>
+<span><span class="co">##   ..$ ui    :function (id, ...)  </span></span>
+<span><span class="co">##   ..$ server:function (input, output, session, view_id, ...)</span></span></code></pre>
 <p>And you can access various elements by the usual list methods:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">decomp_ga_advanced</span><span class="op">$</span><span class="va">data_f</span></code></pre></div>
-<pre><code>## function(viewId,
-##                            date_range = c(Sys.Date()- 300, Sys.Date()),
-##                            metric,
-##                            ...){
-##    o &lt;- google_analytics(viewId,
-##                     date_range = date_range,
-##                     metrics = metric,
-##                     dimensions = "date",
-##                     max = -1)
-##     # rename the metric column so its found for modelling
-##     o$the_metric &lt;- o[, metric]
-##     
-##     o
-##     
-##  }</code></pre>
+<code class="sourceCode R"><span><span class="va">decomp_ga_advanced</span><span class="op">$</span><span class="va">data_f</span></span></code></pre></div>
+<pre><code><span><span class="co">## function(viewId,</span></span>
+<span><span class="co">##                            date_range = c(Sys.Date()- 300, Sys.Date()),</span></span>
+<span><span class="co">##                            metric,</span></span>
+<span><span class="co">##                            ...){</span></span>
+<span><span class="co">##    o &lt;- google_analytics(viewId,</span></span>
+<span><span class="co">##                     date_range = date_range,</span></span>
+<span><span class="co">##                     metrics = metric,</span></span>
+<span><span class="co">##                     dimensions = "date",</span></span>
+<span><span class="co">##                     max = -1)</span></span>
+<span><span class="co">##     # rename the metric column so its found for modelling</span></span>
+<span><span class="co">##     o$the_metric &lt;- o[, metric]</span></span>
+<span><span class="co">##     </span></span>
+<span><span class="co">##     o</span></span>
+<span><span class="co">##     </span></span>
+<span><span class="co">##  }</span></span></code></pre>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">decomp_ga_advanced</span><span class="op">$</span><span class="va">description</span></code></pre></div>
-<pre><code>## [1] "Performs decomposition and creates a plot"</code></pre>
+<code class="sourceCode R"><span><span class="va">decomp_ga_advanced</span><span class="op">$</span><span class="va">description</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Performs decomposition and creates a plot"</span></span></code></pre>
 </div>
 </div>
-<div id="ga-effect-with-ga_models" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ga-effect-with-ga_models" class="anchor"></a>GA Effect with ga_models</h2>
-<p>To make your own portable <a href="https://gallery.shinyapps.io/ga-effect/">GA Effect</a>, this model uses the CausalImpact and dygraphs libraries to make a plot of your GA data.</p>
-<p>This example model is available via <code><a href="../reference/ga_model_example.html">ga_model_example("ga-effect.gamr")</a></code></p>
-<div id="get-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#get-data" class="anchor"></a>Get data</h3>
-<p>The data will focus on sessions per channel grouping. For this example the end user can select the date range, but we set a default of the last 600 days.</p>
+<div class="section level2">
+<h2 id="ga-effect-with-ga_models">GA Effect with ga_models<a class="anchor" aria-label="anchor" href="#ga-effect-with-ga_models"></a>
+</h2>
+<p>To make your own portable <a href="https://gallery.shinyapps.io/ga-effect/" class="external-link">GA Effect</a>, this model
+uses the CausalImpact and dygraphs libraries to make a plot of your GA
+data.</p>
+<p>This example model is available via
+<code>ga_model_example("ga-effect.gamr")</code></p>
+<div class="section level3">
+<h3 id="get-data">Get data<a class="anchor" aria-label="anchor" href="#get-data"></a>
+</h3>
+<p>The data will focus on sessions per channel grouping. For this
+example the end user can select the date range, but we set a default of
+the last 600 days.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">get_ci_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">viewId</span>, 
-                        <span class="va">date_range</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="fl">600</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,
-                        <span class="va">...</span><span class="op">)</span><span class="op">{</span>
-  
-  <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">viewId</span>, 
-                   date_range <span class="op">=</span> <span class="va">date_range</span>,
-                   metrics <span class="op">=</span> <span class="st">"sessions"</span>,
-                   dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>, <span class="st">"channelGrouping"</span><span class="op">)</span>, 
-                   max <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
-<p>The modelling step is copied over from the <a href="http://www.dartistics.com/timeseries.html">dartistics.com time-services example</a>.</p>
-<p>The function transforms the data into the right shape, and performs the CausalImpact model. The user can select the event date to examine, the channel to test (response) and possible predictors to help the model.</p>
+<code class="sourceCode R"><span><span class="va">get_ci_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">viewId</span>, </span>
+<span>                        <span class="va">date_range</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="fl">600</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                        <span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">viewId</span>, </span>
+<span>                   date_range <span class="op">=</span> <span class="va">date_range</span>,</span>
+<span>                   metrics <span class="op">=</span> <span class="st">"sessions"</span>,</span>
+<span>                   dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"date"</span>, <span class="st">"channelGrouping"</span><span class="op">)</span>, </span>
+<span>                   max <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>The modelling step is copied over from the <a href="http://www.dartistics.com/timeseries.html" class="external-link">dartistics.com
+time-services example</a>.</p>
+<p>The function transforms the data into the right shape, and performs
+the CausalImpact model. The user can select the event date to examine,
+the channel to test (response) and possible predictors to help the
+model.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># response_dim is the channel to predict.</span>
-<span class="co"># predictors help with forecast</span>
-<span class="va">do_ci</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, 
-                  <span class="va">event_date</span>,
-                  <span class="va">response</span> <span class="op">=</span> <span class="st">"Organic Search"</span>,
-                  <span class="va">predictors</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Video"</span>,<span class="st">"Social"</span>,<span class="st">"Direct"</span><span class="op">)</span>,
-                  <span class="va">...</span><span class="op">)</span><span class="op">{</span>
-  
-  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"CausalImpact input data columns: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span><span class="op">)</span>
-  <span class="co"># restrict to one response </span>
-  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">is.character</a></span><span class="op">(</span><span class="va">response</span><span class="op">)</span>, 
-            <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">response</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,
-            <span class="fu">assertthat</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/assertthat/man/assert-is.html">is.date</a></span><span class="op">(</span><span class="va">event_date</span><span class="op">)</span>,
-            <span class="fu"><a href="https://rdrr.io/r/base/character.html">is.character</a></span><span class="op">(</span><span class="va">predictors</span><span class="op">)</span><span class="op">)</span>
-  
-  <span class="va">pivoted</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span> 
-    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/spread.html">spread</a></span><span class="op">(</span><span class="va">channelGrouping</span>, <span class="va">sessions</span><span class="op">)</span>
-  
-  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="va">response</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">pivoted</span><span class="op">)</span><span class="op">)</span>
-  
-  <span class="co">## create a time-series zoo object</span>
-  <span class="va">web_data_xts</span> <span class="op">&lt;-</span> <span class="fu">xts</span><span class="fu">::</span><span class="fu">xts</span><span class="op">(</span><span class="va">pivoted</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>, order.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">pivoted</span><span class="op">$</span><span class="va">date</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">7</span><span class="op">)</span>
-  
-  <span class="va">pre.period</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">date</span><span class="op">)</span>, <span class="va">event_date</span><span class="op">)</span><span class="op">)</span>
-  <span class="va">post.period</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">event_date</span> <span class="op">+</span> <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-  
-  <span class="va">predictors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">intersect</a></span><span class="op">(</span><span class="va">predictors</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">web_data_xts</span><span class="op">)</span><span class="op">)</span>
-
-  <span class="co">## data in order of response, predictor1, predictor2, etc.</span>
-  <span class="va">model_data</span> <span class="op">&lt;-</span> <span class="va">web_data_xts</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">response</span>,<span class="va">predictors</span><span class="op">)</span><span class="op">]</span>
-  
-  <span class="co"># deal with names</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">model_data</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/make.names.html">make.names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">model_data</span><span class="op">)</span><span class="op">)</span>
-  <span class="co"># remove any NAs</span>
-  <span class="va">model_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">model_data</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span>
-
-  <span class="fu">CausalImpact</span><span class="fu">::</span><span class="fu">CausalImpact</span><span class="op">(</span><span class="va">model_data</span>,  <span class="va">pre.period</span>, <span class="va">post.period</span><span class="op">)</span>
-
-<span class="op">}</span></code></pre></div>
-<p>Finally the CausalImpact model is sent into Dygraphs for interactive visualisation. The event date is the same as the one sent to the modelling step, and used to indicate it on the plot:</p>
+<code class="sourceCode R"><span><span class="co"># response_dim is the channel to predict.</span></span>
+<span><span class="co"># predictors help with forecast</span></span>
+<span><span class="va">do_ci</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, </span>
+<span>                  <span class="va">event_date</span>,</span>
+<span>                  <span class="va">response</span> <span class="op">=</span> <span class="st">"Organic Search"</span>,</span>
+<span>                  <span class="va">predictors</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Video"</span>,<span class="st">"Social"</span>,<span class="st">"Direct"</span><span class="op">)</span>,</span>
+<span>                  <span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"CausalImpact input data columns: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="co"># restrict to one response </span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">is.character</a></span><span class="op">(</span><span class="va">response</span><span class="op">)</span>, </span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">response</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
+<span>            <span class="fu">assertthat</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/assertthat/man/assert-is.html" class="external-link">is.date</a></span><span class="op">(</span><span class="va">event_date</span><span class="op">)</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">is.character</a></span><span class="op">(</span><span class="va">predictors</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">pivoted</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/spread.html" class="external-link">spread</a></span><span class="op">(</span><span class="va">channelGrouping</span>, <span class="va">sessions</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="va">response</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">pivoted</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co">## create a time-series zoo object</span></span>
+<span>  <span class="va">web_data_xts</span> <span class="op">&lt;-</span> <span class="fu">xts</span><span class="fu">::</span><span class="fu">xts</span><span class="op">(</span><span class="va">pivoted</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>, order.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">pivoted</span><span class="op">$</span><span class="va">date</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">pre.period</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">date</span><span class="op">)</span>, <span class="va">event_date</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">post.period</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">event_date</span> <span class="op">+</span> <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">predictors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">intersect</a></span><span class="op">(</span><span class="va">predictors</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">web_data_xts</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co">## data in order of response, predictor1, predictor2, etc.</span></span>
+<span>  <span class="va">model_data</span> <span class="op">&lt;-</span> <span class="va">web_data_xts</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">response</span>,<span class="va">predictors</span><span class="op">)</span><span class="op">]</span></span>
+<span>  </span>
+<span>  <span class="co"># deal with names</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">model_data</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/make.names.html" class="external-link">make.names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">model_data</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="co"># remove any NAs</span></span>
+<span>  <span class="va">model_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">model_data</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span></span>
+<span>  <span class="fu">CausalImpact</span><span class="fu">::</span><span class="fu">CausalImpact</span><span class="op">(</span><span class="va">model_data</span>,  <span class="va">pre.period</span>, <span class="va">post.period</span><span class="op">)</span></span>
+<span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Finally the CausalImpact model is sent into Dygraphs for interactive
+visualisation. The event date is the same as the one sent to the
+modelling step, and used to indicate it on the plot:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dygraph_plot</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">impact</span>, <span class="va">event_date</span>, <span class="va">...</span><span class="op">)</span><span class="op">{</span>
-
-  <span class="co">## the data for the plot is in here</span>
-  <span class="va">ci</span> <span class="op">&lt;-</span> <span class="va">impact</span><span class="op">$</span><span class="va">series</span>
-  
-  <span class="va">ci</span> <span class="op">&lt;-</span> <span class="fu">xts</span><span class="fu">::</span><span class="fu">xts</span><span class="op">(</span><span class="va">ci</span><span class="op">)</span>
-
-  <span class="co">## the dygraph output</span>
-  <span class="fu">dygraph</span><span class="op">(</span>data<span class="op">=</span><span class="va">ci</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'response'</span>, 
-                     <span class="st">'point.pred'</span>, <span class="st">'point.pred.lower'</span>, <span class="st">'point.pred.upper'</span><span class="op">)</span><span class="op">]</span>, 
-          main<span class="op">=</span><span class="st">"Expected (95% confidence level) vs Observed"</span>, group<span class="op">=</span><span class="st">"ci"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">dyEvent</span><span class="op">(</span>x <span class="op">=</span> <span class="va">event_date</span>, <span class="st">"Event"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">dySeries</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'point.pred.lower'</span>, <span class="st">'point.pred'</span>,<span class="st">'point.pred.upper'</span><span class="op">)</span>, 
-             label<span class="op">=</span><span class="st">'Expected'</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">dySeries</span><span class="op">(</span><span class="st">'response'</span>, label<span class="op">=</span><span class="st">"Observed"</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
-<p>The main functions done, we now specify which R packages the model needs the user to load.</p>
+<code class="sourceCode R"><span><span class="va">dygraph_plot</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">impact</span>, <span class="va">event_date</span>, <span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span></span>
+<span>  <span class="co">## the data for the plot is in here</span></span>
+<span>  <span class="va">ci</span> <span class="op">&lt;-</span> <span class="va">impact</span><span class="op">$</span><span class="va">series</span></span>
+<span>  </span>
+<span>  <span class="va">ci</span> <span class="op">&lt;-</span> <span class="fu">xts</span><span class="fu">::</span><span class="fu">xts</span><span class="op">(</span><span class="va">ci</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co">## the dygraph output</span></span>
+<span>  <span class="fu">dygraph</span><span class="op">(</span>data<span class="op">=</span><span class="va">ci</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'response'</span>, </span>
+<span>                     <span class="st">'point.pred'</span>, <span class="st">'point.pred.lower'</span>, <span class="st">'point.pred.upper'</span><span class="op">)</span><span class="op">]</span>, </span>
+<span>          main<span class="op">=</span><span class="st">"Expected (95% confidence level) vs Observed"</span>, group<span class="op">=</span><span class="st">"ci"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu">dyEvent</span><span class="op">(</span>x <span class="op">=</span> <span class="va">event_date</span>, <span class="st">"Event"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu">dySeries</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'point.pred.lower'</span>, <span class="st">'point.pred'</span>,<span class="st">'point.pred.upper'</span><span class="op">)</span>, </span>
+<span>             label<span class="op">=</span><span class="st">'Expected'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu">dySeries</span><span class="op">(</span><span class="st">'response'</span>, label<span class="op">=</span><span class="st">"Observed"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>The main functions done, we now specify which R packages the model
+needs the user to load.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">req_packs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"CausalImpact"</span>, <span class="st">"xts"</span>, <span class="st">"tidyr"</span>, <span class="st">"googleAnalyticsR"</span>, <span class="st">"assertthat"</span>, <span class="st">"dygraphs"</span><span class="op">)</span></code></pre></div>
-<p>Finally we make the model, specifying which columns we expect the data to fetch, a description and specifying which Shiny functions are needed to show the dygraph if the model is used in a Shiny app.</p>
+<code class="sourceCode R"><span><span class="va">req_packs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CausalImpact"</span>, <span class="st">"xts"</span>, <span class="st">"tidyr"</span>, <span class="st">"googleAnalyticsR"</span>, <span class="st">"assertthat"</span>, <span class="st">"dygraphs"</span><span class="op">)</span></span></code></pre></div>
+<p>Finally we make the model, specifying which columns we expect the
+data to fetch, a description and specifying which Shiny functions are
+needed to show the dygraph if the model is used in a Shiny app.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ci_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model_make.html">ga_model_make</a></span><span class="op">(</span><span class="va">get_ci_data</span>,
-                          required_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"channelGrouping"</span>,<span class="st">"sessions"</span><span class="op">)</span>,
-                          model_f <span class="op">=</span> <span class="va">do_ci</span>,
-                          output_f <span class="op">=</span> <span class="va">dygraph_plot</span>,
-                          required_packages <span class="op">=</span> <span class="va">req_packs</span>,
-                          description <span class="op">=</span> <span class="st">"Causal Impact on channelGrouping data"</span>,
-                          outputShiny <span class="op">=</span> <span class="fu">dygraphs</span><span class="fu">::</span><span class="va">dygraphOutput</span>,
-                          renderShiny <span class="op">=</span> <span class="fu">dygraphs</span><span class="fu">::</span><span class="va">renderDygraph</span><span class="op">)</span>
-<span class="co"># print out model details</span>
-<span class="va">ci_model</span></code></pre></div>
-<pre><code>## ==ga_model object==
-## Description:  Causal Impact on channelGrouping data 
-## Data args:    viewId date_range 
-## Input data:   date channelGrouping sessions 
-## Model args:   df event_date response predictors 
-## Output args:  impact event_date 
-## Packages:     CausalImpact xts tidyr googleAnalyticsR assertthat dygraphs</code></pre>
+<code class="sourceCode R"><span><span class="va">ci_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model_make.html">ga_model_make</a></span><span class="op">(</span><span class="va">get_ci_data</span>,</span>
+<span>                          required_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"date"</span>,<span class="st">"channelGrouping"</span>,<span class="st">"sessions"</span><span class="op">)</span>,</span>
+<span>                          model_f <span class="op">=</span> <span class="va">do_ci</span>,</span>
+<span>                          output_f <span class="op">=</span> <span class="va">dygraph_plot</span>,</span>
+<span>                          required_packages <span class="op">=</span> <span class="va">req_packs</span>,</span>
+<span>                          description <span class="op">=</span> <span class="st">"Causal Impact on channelGrouping data"</span>,</span>
+<span>                          outputShiny <span class="op">=</span> <span class="fu">dygraphs</span><span class="fu">::</span><span class="va">dygraphOutput</span>,</span>
+<span>                          renderShiny <span class="op">=</span> <span class="fu">dygraphs</span><span class="fu">::</span><span class="va">renderDygraph</span><span class="op">)</span></span>
+<span><span class="co"># print out model details</span></span>
+<span><span class="va">ci_model</span></span></code></pre></div>
+<pre><code><span><span class="co">## ==ga_model object==</span></span>
+<span><span class="co">## Description:  Causal Impact on channelGrouping data </span></span>
+<span><span class="co">## Data args:    viewId date_range </span></span>
+<span><span class="co">## Input data:   date channelGrouping sessions </span></span>
+<span><span class="co">## Model args:   df event_date response predictors </span></span>
+<span><span class="co">## Output args:  impact event_date </span></span>
+<span><span class="co">## Packages:     CausalImpact xts tidyr googleAnalyticsR assertthat dygraphs</span></span></code></pre>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># save it to a file for use later</span>
-<span class="fu"><a href="../reference/ga_model_save.html">ga_model_save</a></span><span class="op">(</span><span class="va">ci_model</span>, <span class="st">"causalImpact_model.gamr"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># save it to a file for use later</span></span>
+<span><span class="fu"><a href="../reference/ga_model_save.html">ga_model_save</a></span><span class="op">(</span><span class="va">ci_model</span>, <span class="st">"causalImpact_model.gamr"</span><span class="op">)</span></span></code></pre></div>
 <p>To use and make an interactive plot:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">CausalImpact</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">xts</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">dygraphs</span><span class="op">)</span>
-
-<span class="va">ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span><span class="op">(</span><span class="fl">81416156</span>, <span class="va">ci_model</span>, event_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2019-01-01"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># print to show the plot object</span>
-<span class="va">ci</span><span class="op">$</span><span class="va">plot</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://google.github.io/CausalImpact/" class="external-link">CausalImpact</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joshuaulrich/xts" class="external-link">xts</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/dygraphs" class="external-link">dygraphs</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ga_model.html">ga_model</a></span><span class="op">(</span><span class="fl">81416156</span>, <span class="va">ci_model</span>, event_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2019-01-01"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># print to show the plot object</span></span>
+<span><span class="va">ci</span><span class="op">$</span><span class="va">plot</span></span></code></pre></div>
 <div class="figure">
 <img src="figure/unnamed-chunk-16-1.png" alt=""><p class="caption">plot of chunk unnamed-chunk-16</p>
 </div>
-<p>You can launch this in a Shiny app via the <code><a href="../reference/ga_model_shiny.html">ga_model_shiny()</a></code> function that will write the Shiny code for you - see <a href="articles/model-templates.html">Model Shiny Templates</a></p>
+<p>You can launch this in a Shiny app via the
+<code><a href="../reference/ga_model_shiny.html">ga_model_shiny()</a></code> function that will write the Shiny code
+for you - see <a href="articles/model-templates.html">Model Shiny
+Templates</a></p>
 <p><img src="ga_model_shiny1.png"></p>
 </div>
 </div>
@@ -693,11 +782,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Mark Edmondson.</p>
+  <p></p>
+<p>Developed by Mark Edmondson.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -705,6 +796,8 @@
 
   
 
+
+  
 
   </body>
 </html>

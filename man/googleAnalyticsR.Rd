@@ -11,3 +11,4 @@
 
 Follow the online documentation here: \url{https://code.markedmondson.me/googleAnalyticsR/}
 }
+\keyword{internal}

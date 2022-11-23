@@ -11,6 +11,7 @@
 #' 
 #' @docType package
 #' @name googleAnalyticsR
+#' @keywords internal
 NULL
 
 ## horrible hack https://github.com/tidyverse/magrittr/issues/29
