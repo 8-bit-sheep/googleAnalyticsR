@@ -1,6 +1,6 @@
 # googleAnalyticsR 1.1.0.9000
 
-* Migrate to new `gargle` OOB flow 
+* Migrate to new `gargle` OOB flow for RStudio Server instances (#414)
 
 # googleAnalyticsR 1.1.0
 
