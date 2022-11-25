@@ -17,13 +17,17 @@ is_default_project <- function(){
                                             "289759286325-42j8nmkeq5n9v9eb1kiuj2i97v9oea1f.apps.googleusercontent.com",
                                             "201908948134-rm1ij8ursrfcbkv9koc0aqver84b04r7.apps.googleusercontent.com",
                                             "201908948134-cjjs89cffh3k429vi7943ftpk3jg36ed.apps.googleusercontent.com",
-                                            "289759286325-i5kd45j7qnoc1t8h86611b38icnfk38d.apps.googleusercontent.com")
+                                            "289759286325-i5kd45j7qnoc1t8h86611b38icnfk38d.apps.googleusercontent.com",
+                                            "289759286325-h15qtntnnounclih9tnfdj8ft1dlh1n1.apps.googleusercontent.com")
 }
 
 default_project_message <- function(){
 
   if(is_default_project()){
-    myMessage("Default Google Project for googleAnalyticsR is set.  \n This is shared with all googleAnalyticsR users. \n If making a lot of API calls, please visit: \n https://gtm2.markedmondson.me/gar-setup \n for instructions on setting your own Google Project \n", 
+    myMessage("Default Google Project for googleAnalyticsR is set. 
+      This is shared with all googleAnalyticsR users. If making a lot of API calls, please visit: 
+      https://code.markedmondson.me/googleAnalyticsR/articles/setup.html#professional-mode-your-own-google-project
+      for instructions on setting your own Google Project", 
               level = 3)
 
   }
