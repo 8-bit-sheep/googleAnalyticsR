@@ -1,4 +1,4 @@
-# googleAnalyticsR 1.1.0.9000
+# googleAnalyticsR 1.2.0
 
 * Migrate to new `gargle` OOB flow 
 
