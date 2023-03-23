@@ -72,7 +72,6 @@ quota_messages <- function(o){
   verbose <- getOption("googleAuthR.verbose") < 3 || 
     pq$tokensPerDay$consumed > 50
   
-
   tpd_remaining <- pq$tokensPerDay$remaining
   if(is.null(tpd_remaining)){
     tpd_remaining <- 0
@@ -96,7 +95,7 @@ quota_messages <- function(o){
               "] / Remaining [", tph_remaining,"]",
               level = 3)
   }
-  
+
   if(pq$concurrentRequests$remaining < 10 || verbose){
     myMessage("concurrentRequests: Query Cost [", 
               pq$concurrentRequests$consumed, 
@@ -108,6 +107,24 @@ quota_messages <- function(o){
     myMessage("serverErrorsPerProjectPerHour: Query Cost [", 
               pq$serverErrorsPerProjectPerHour$consumed, 
               "] / Remaining [", pq$serverErrorsPerProjectPerHour$remaining, "]", 
+              level = 3)
+  }
+  
+  if(pq$potentiallyThresholdedRequestsPerHour$remaining < 10 || verbose){
+    myMessage("potentiallyThresholdedRequestsPerHour: Query Cost [", pq$potentiallyThresholdedRequestsPerHour$consumed, 
+              "] / Remaining [", pq$potentiallyThresholdedRequestsPerHour$remaining, "]",
+              level = 3)
+  }
+  
+  tppph_remaining <- pq$tokensPerProjectPerHour$remaining
+  if(is.null(tppph_remaining)){
+    tppph_remaining <- 0
+  }
+  
+  if(pq$tokensPerProjectPerHour$consumed > (care_factor*tppph_remaining) ||
+     verbose){
+    myMessage("tokensPerProjectPerHour: Query Cost [", pq$tokensPerProjectPerHour$consumed, 
+              "] / Remaining [", tppph_remaining,"]",
               level = 3)
   }
 }
