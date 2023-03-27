@@ -1,6 +1,7 @@
 # googleAnalyticsR 1.2.0
 
 * Migrate to new `gargle` OOB flow 
+* Add `ga_data()` quota messages on `potentiallyThresholdedRequestsPerHour` and `tokensPerProjectPerHour` (#424)
 
 # googleAnalyticsR 1.1.0
 
