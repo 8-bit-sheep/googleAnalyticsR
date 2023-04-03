@@ -834,8 +834,10 @@ complex_filter <- ga_data(
 )
 #>ℹ 2020-11-24 16:12:36 > tokensPerDay: Query Cost [ 15 ] / Remaining [ 24847 ]
 #>ℹ 2020-11-24 16:12:36 > tokensPerHour: Query Cost [ 15 ] / Remaining [ 4967 ]
-#>ℹ 2020-11-24 16:12:36 > concurrentRequests:  10  / 10
-#>ℹ 2020-11-24 16:12:36 > serverErrorsPerProjectPerHour:  10  / 10
+#>ℹ 2020-11-24 16:12:36 > concurrentRequests: Query Cost [ 0 ] / Remaining [ 10 ]
+#>ℹ 2020-11-24 16:12:36 > serverErrorsPerProjectPerHour: Query Cost [ 0 ] / Remaining [ 10 ]
+#>ℹ 2020-11-24 16:12:36 > potentiallyThresholdedRequestsPerHour: Query Cost [ 0 ] / Remaining [ 120 ]
+#>ℹ 2020-11-24 16:12:36 > tokensPerProjectPerHour: Query Cost [ 15 ] / Remaining [ 1717 ]
 ```
 
 The quotas are:
@@ -844,6 +846,8 @@ The quotas are:
 * `tokensPerHour` - how many tokens in 1 hr
 * `concurrentRequests` - how many API requests at once
 * `serverErrorsPerProjectPerHour` - how many bad API calls you can make per project/hr
+* `potentiallyThresholdedRequestsPerHour` - how may API requests with potentially thresholded dimensions in 1 hr
+* `tokensPerProjectPerHour` - how many tokens per project in 1 hr
 
 ## Debugging and Raw JSON requests
 
