@@ -73,7 +73,7 @@ ga_clientid_hash <- function(webPropertyId, clientId){
 ga_clientid_deletion <- function(userId,
                              propertyId,
                              idType = c("CLIENT_ID", "USER_ID", "APP_INSTANCE_ID"),
-                             propertyType= c("ga", "firebase")){
+                             propertyType= c("ga", "firebase", "ga4")){
   idType       <- match.arg(idType)
   propertyType <- match.arg(propertyType)
   
@@ -97,7 +97,7 @@ ga_clientid_deletion <- function(userId,
 ga_user_deletion_one <- function(userId,
                                  propertyId,
                                  idType = c("CLIENT_ID", "USER_ID", "APP_INSTANCE_ID"),
-                                 propertyType= c("ga", "firebase")){
+                                 propertyType= c("ga", "firebase", "ga4")){
   
   idType       <- match.arg(idType)
   propertyType <- match.arg(propertyType)
@@ -119,7 +119,9 @@ ga_user_deletion_one <- function(userId,
     body <- c(body, list(webPropertyId = propertyId))
   } else if(propertyType == "firebase"){
     body <- c(body, list(firebaseProjectId = propertyId))    
-  } 
+  } else if( propertyType == "ga4"){
+    body <- c(body, list(propertyId = propertyId))
+  }
   
   the_url <- "https://www.googleapis.com/analytics/v3/userDeletion/userDeletionRequests:upsert"
   
@@ -147,10 +149,14 @@ parse_user_deletion <- function(x){
   }
   
   if(!is.null(x$webPropertyId)){
+    # ga
     property <- x$webPropertyId
-  } else {
+  } else if(!is.null(x$firebaseProjectId)) {
     # firebase
     property <- x$firebaseProjectId
+  } else {
+    # ga4
+    property <- x$propertyId
   }
   
   data.frame(
