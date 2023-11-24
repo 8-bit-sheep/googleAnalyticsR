@@ -8,7 +8,7 @@
 
 ![](https://raw.githubusercontent.com/MarkEdmondson1234/googleAnalyticsR/master/inst/hexlogo/hex.png)
 
-Get more examples and tutorials at the [googleAnalyticsR website](https://code.markedmondson.me/googleAnalyticsR/)
+Get more examples and tutorials at the [googleAnalyticsR website](https://8-bit-sheep.com/googleAnalyticsR/)
 
 ## Install
 
