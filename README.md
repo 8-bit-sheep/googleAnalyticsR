@@ -15,7 +15,7 @@ Get more examples and tutorials at the [googleAnalyticsR website](https://8-bit-
 install.packages("googleAnalyticsR")
 ```
 
-### Development version off GitHub
+### The latest development version on GitHub
 
 ```r
 remotes::install_github("8-bit-sheep/googleAnalyticsR")
