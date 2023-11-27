@@ -18,5 +18,5 @@ install.packages("googleAnalyticsR")
 ### Development version off GitHub
 
 ```r
-remotes::install_github("MarkEdmondson1234/googleAnalyticsR")
+remotes::install_github("8-bit-sheep/googleAnalyticsR")
 ```
