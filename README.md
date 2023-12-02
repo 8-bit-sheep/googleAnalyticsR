@@ -3,8 +3,8 @@
 # googleAnalyticsR
 
 [![CRAN](http://www.r-pkg.org/badges/version/googleAnalyticsR)](https://cran.r-project.org/package=googleAnalyticsR)
-[![CRAN](https://cranlogs.r-pkg.org/badges/grand-total/googleAnalyticsR)](https://cranlogs.r-pkg.org/badges/grand-total/googleAnalyticsR)
-[![CRAN](https://cranlogs.r-pkg.org/badges/googleAnalyticsR)](https://cranlogs.r-pkg.org/badges/googleAnalyticsR)
+[![CRAN Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/googleAnalyticsR)](https://cranlogs.r-pkg.org/badges/grand-total/googleAnalyticsR)
+[![CRAN Monthly Downloads](https://cranlogs.r-pkg.org/badges/googleAnalyticsR)](https://cranlogs.r-pkg.org/badges/googleAnalyticsR)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2025/badge)](https://bestpractices.coreinfrastructure.org/projects/2025)
 
 ## Install
