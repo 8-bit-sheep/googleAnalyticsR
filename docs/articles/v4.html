@@ -19,7 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Google Analytics Reporting API v4 in R Examples">
 <meta property="og:description" content="googleAnalyticsR">
-<meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png">
+<meta property="og:image" content="https://8-bit-sheep.com/googleAnalyticsR/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -224,7 +224,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/" class="external-link">
+  <a href="https://github.com/8-bit-sheep/googleAnalyticsR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -245,7 +245,7 @@
       <h1 data-toc-skip>Google Analytics Reporting API v4 in R Examples</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/HEAD/vignettes/v4.Rmd" class="external-link"><code>vignettes/v4.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/8-bit-sheep/googleAnalyticsR/blob/HEAD/vignettes/v4.Rmd" class="external-link"><code>vignettes/v4.Rmd</code></a></small>
       <div class="hidden name"><code>v4.Rmd</code></div>
 
     </div>
@@ -270,7 +270,7 @@
 <p>To get started refer to the tutorials linked on the homepage, consult <code><a href="../reference/google_analytics.html">?google_analytics</a></code> when within R to see the documentation, and see these example queries:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## setup</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://8-bit-sheep.com/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
 
 <span class="co">## authenticate</span>
 <span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span><span class="op">(</span><span class="op">)</span>
@@ -379,7 +379,7 @@
 </h3>
 <p>If you have sampling in your data request, <code>googleAnalyticsR</code> reports it back to you in the console when making the request.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://8-bit-sheep.com/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
 <span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">sampled_data_fetch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">id</span>, 
                                          date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2015-01-01"</span>,<span class="st">"2015-06-21"</span><span class="op">)</span>, 
@@ -393,7 +393,7 @@
 </h3>
 <p>Setting the argument <code>anti_sample=TRUE</code> in a <code><a href="../reference/google_analytics.html">google_analytics()</a></code> request causes the calls to be split up into small enough chunks to avoid sampling. This uses more API calls so the data will reach you slower, but it should hold more detail.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://8-bit-sheep.com/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
 <span class="fu"><a href="../reference/ga_auth.html">ga_auth</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">unsampled_data_fetch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/google_analytics.html">google_analytics</a></span><span class="op">(</span><span class="va">id</span>, 
                                          date_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2015-01-01"</span>,<span class="st">"2015-06-21"</span><span class="op">)</span>, 
@@ -437,7 +437,7 @@
 <h2 id="filters">Filters<a class="anchor" aria-label="anchor" href="#filters"></a>
 </h2>
 <blockquote>
-<p>Note these are different from account filters, which you can manipulate using the management API using the <code>ga_filter</code> family of functions. See the <a href="http://code.markedmondson.me/googleAnalyticsR/management.html" class="external-link">Management API</a></p>
+<p>Note these are different from account filters, which you can manipulate using the management API using the <code>ga_filter</code> family of functions. See the <a href="http://8-bit-sheep.com/googleAnalyticsR/management.html" class="external-link">Management API</a></p>
 </blockquote>
 <p>Filters need to be built up from the <code>met_filter</code> and <code>dim_filter</code> R objects.</p>
 <p>These then need to be wrapped in <code>filter_clause_ga4</code> function, which lets you specify the combination rules (<code>AND</code> or <code>OR</code>). The <code>met_filter</code> and <code>dim_filter</code> you pass in should be wrapped in a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> - see examples:</p>
@@ -960,10 +960,10 @@
 <div class="section level2">
 <h2 id="fetching-from-multiple-views">Fetching from multiple views<a class="anchor" aria-label="anchor" href="#fetching-from-multiple-views"></a>
 </h2>
-<p>Whilst the <a href="http://code.markedmondson.me/googleAnalyticsR/v3.html" class="external-link">v3 multi account batching feature</a> isn’t available for multi-accounts in v4, by using <a href="https://github.com/HenrikBengtsson/future.apply" class="external-link"><code>future.apply</code></a> you can launch multiple R sessions that will fetch the API in parallel. An example is shown below, that fetches from three View IDs at once.</p>
+<p>Whilst the <a href="http://8-bit-sheep.com/googleAnalyticsR/v3.html" class="external-link">v3 multi account batching feature</a> isn’t available for multi-accounts in v4, by using <a href="https://github.com/HenrikBengtsson/future.apply" class="external-link"><code>future.apply</code></a> you can launch multiple R sessions that will fetch the API in parallel. An example is shown below, that fetches from three View IDs at once.</p>
 <p>The limiting factor will then be the v4 <a href="https://developers.google.com/analytics/devguides/reporting/core/v4/limits-quotas" class="external-link">API limits</a>, which are currently 1000 requests per 100 seconds per user, per Google API project (e.g. you will probably want to setup your own Google project if making a lot of requests)</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://code.markedmondson.me/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://8-bit-sheep.com/googleAnalyticsR/">googleAnalyticsR</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.apply.futureverse.org" class="external-link">future.apply</a></span><span class="op">)</span>
 
 <span class="co">## setup multisession R for your parallel data fetches </span>
@@ -996,7 +996,7 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Mark Edmondson.</p>
+<p>Developed by Mark Edmondson, continued by Erik Grönroos.</p>
 </div>
 
 <div class="pkgdown">
