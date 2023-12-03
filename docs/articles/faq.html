@@ -19,7 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="FAQs">
 <meta property="og:description" content="googleAnalyticsR">
-<meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png">
+<meta property="og:image" content="https://8-bit-sheep.com/googleAnalyticsR/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -224,7 +224,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/" class="external-link">
+  <a href="https://github.com/8-bit-sheep/googleAnalyticsR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -245,7 +245,7 @@
       <h1 data-toc-skip>FAQs</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/HEAD/vignettes/faq.Rmd" class="external-link"><code>vignettes/faq.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/8-bit-sheep/googleAnalyticsR/blob/HEAD/vignettes/faq.Rmd" class="external-link"><code>vignettes/faq.Rmd</code></a></small>
       <div class="hidden name"><code>faq.Rmd</code></div>
 
     </div>
@@ -259,7 +259,7 @@
 <p>Connecting and interacting with an API involves a number of steps including authentication, passing data and instructions back and forth between server and client following protocol specifics etc. This can add a level of complexity to the interaction with a web API.</p>
 <ul>
 <li><p><code>googleAnalyticsR</code> intermediates between the user and the API, abstracting out the low level details of the interactions with the API. This involves providing a friendly method to authenticate and query the API and convert API data in a convenient format (typically an R data frame) that’s easy to work with directly.</p></li>
-<li><p>Additionally the library provides many advanced functionalities which are developed on top of the Google Analytics API, for example the possibility to overcome the commonly experienced issue of sampling. Check out the <a href="http://code.markedmondson.me/googleAnalyticsR" class="external-link">homepage</a> for a detailed list of these functionalities.</p></li>
+<li><p>Additionally the library provides many advanced functionalities which are developed on top of the Google Analytics API, for example the possibility to overcome the commonly experienced issue of sampling. Check out the <a href="http://8-bit-sheep.com/googleAnalyticsR" class="external-link">homepage</a> for a detailed list of these functionalities.</p></li>
 </ul>
 </div>
 <div class="section level3">
@@ -280,12 +280,12 @@
 <div class="section level3">
 <h3 id="how-much-of-the-google-analytics-api-functionality-is-covered-by-the-library">How much of the Google Analytics API functionality is covered by the library ?<a class="anchor" aria-label="anchor" href="#how-much-of-the-google-analytics-api-functionality-is-covered-by-the-library"></a>
 </h3>
-<p>The library is actively developed and now covers all key functionalities of the API and even most of the less commonly used ones. Check out the <a href="http://code.markedmondson.me/googleAnalyticsR/news/index.html" class="external-link">news section</a> to see the progress of the library in time. Practically speaking the vast majority of tasks that one can perform via the Google Analytics UI, it’s possible to do programatically using the API and the library.</p>
+<p>The library is actively developed and now covers all key functionalities of the API and even most of the less commonly used ones. Check out the <a href="http://8-bit-sheep.com/googleAnalyticsR/news/index.html" class="external-link">news section</a> to see the progress of the library in time. Practically speaking the vast majority of tasks that one can perform via the Google Analytics UI, it’s possible to do programatically using the API and the library.</p>
 </div>
 <div class="section level3">
 <h3 id="i-notice-some-similar-functionality-but-for-different-versions-of-the-api-such-as-v3-and-v4--why-is-that-which-api-version-should-i-prefer">I notice some similar functionality but for different versions of the API such as v3 and v4. Why is that ? Which API version should I prefer ?<a class="anchor" aria-label="anchor" href="#i-notice-some-similar-functionality-but-for-different-versions-of-the-api-such-as-v3-and-v4--why-is-that-which-api-version-should-i-prefer"></a>
 </h3>
-<p>As the GA API evolves over time, different versions of it become available. The library includes functions for the two latest versions, v3 and v4. All the new API features will become available only for the v4 API so becoming familiar with the v4 functions could be beneficial in this respect. (There are two basic features not available currently for version 4 which are discussed in the <a href="http://code.markedmondson.me/googleAnalyticsR/articles/v4.html" class="external-link">v4 API section</a>)</p>
+<p>As the GA API evolves over time, different versions of it become available. The library includes functions for the two latest versions, v3 and v4. All the new API features will become available only for the v4 API so becoming familiar with the v4 functions could be beneficial in this respect. (There are two basic features not available currently for version 4 which are discussed in the <a href="http://8-bit-sheep.com/googleAnalyticsR/articles/v4.html" class="external-link">v4 API section</a>)</p>
 </div>
 <div class="section level3">
 <h3 id="the-documentation-refers-to-various-apis-such-as-the-reporting-api-and-management-api---whats-the-difference-and-which-api-should-i-look-at-first">The documentation refers to various APIs such as the Reporting API and Management API - What’s the difference and which API should I look at first ?<a class="anchor" aria-label="anchor" href="#the-documentation-refers-to-various-apis-such-as-the-reporting-api-and-management-api---whats-the-difference-and-which-api-should-i-look-at-first"></a>
@@ -299,22 +299,22 @@
 <p>A typical basic workflow is to use the library for easy authentication to the Google Analytics API and then use the reporting API to collect -unsampled- data from your Google Analytics account.</p>
 <p>More advanced workflows (once the data is retrieved) could involve:</p>
 <ul>
-<li><a href="http://code.markedmondson.me/googleAnalyticsR/articles/models.html" class="external-link">Use of the library’s modeling functions for statistical analysis</a></li>
-<li><a href="http://code.markedmondson.me/googleAnalyticsR/articles/big-query.html" class="external-link">Interaction with bigquery</a></li>
-<li><a href="http://code.markedmondson.me/googleAnalyticsR/articles/management.html" class="external-link">Programmatic user management via the management API</a></li>
-<li><a href="http://code.markedmondson.me/googleAnalyticsR/articles/rmarkdown.html" class="external-link">Rmarkdown report publishing</a></li>
-<li><a href="http://code.markedmondson.me/googleAnalyticsR/articles/shiny.html" class="external-link">Generation of GA powered shiny apps</a></li>
+<li><a href="http://8-bit-sheep.com/googleAnalyticsR/articles/models.html" class="external-link">Use of the library’s modeling functions for statistical analysis</a></li>
+<li><a href="http://8-bit-sheep.com/googleAnalyticsR/articles/big-query.html" class="external-link">Interaction with bigquery</a></li>
+<li><a href="http://8-bit-sheep.com/googleAnalyticsR/articles/management.html" class="external-link">Programmatic user management via the management API</a></li>
+<li><a href="http://8-bit-sheep.com/googleAnalyticsR/articles/rmarkdown.html" class="external-link">Rmarkdown report publishing</a></li>
+<li><a href="http://8-bit-sheep.com/googleAnalyticsR/articles/shiny.html" class="external-link">Generation of GA powered shiny apps</a></li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="questionssuggestionsissues">Questions/Suggestions/Issues ?<a class="anchor" aria-label="anchor" href="#questionssuggestionsissues"></a>
 </h3>
 <ul>
-<li><p>If you wish to contribute code/documentation or if you ’d like to report a bug please read the <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/CONTRIBUTING" class="external-link">contributing page on github</a></p></li>
+<li><p>If you wish to contribute code/documentation or if you ’d like to report a bug please read the <a href="https://github.com/8-bit-sheep/googleAnalyticsR/blob/master/CONTRIBUTING" class="external-link">contributing page on github</a></p></li>
 <li><p>You can also ask a question on <a href="https://stackoverflow.com/search?q=googleanalyticsR" class="external-link">Stackoverflow</a> using the appropriate tags and there is a good chance someone will answer it for you.</p></li>
-<li><p>You can as well join an active slack community of users of the library, where you can post questions or suggestions or answer questions of others. See top of <a href="http://code.markedmondson.me/googleAnalyticsR" class="external-link">homepage</a> for more info.</p></li>
+<li><p>You can as well join an active slack community of users of the library, where you can post questions or suggestions or answer questions of others. See top of <a href="http://8-bit-sheep.com/googleAnalyticsR" class="external-link">homepage</a> for more info.</p></li>
 </ul>
-<p>For feature requests please visit the <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/master/.github/ISSUE_TEMPLATE/feature_request.md" class="external-link">feature request guide on github</a></p>
+<p>For feature requests please visit the <a href="https://github.com/8-bit-sheep/googleAnalyticsR/blob/master/.github/ISSUE_TEMPLATE/feature_request.md" class="external-link">feature request guide on github</a></p>
 </div>
   </div>
 
@@ -328,7 +328,7 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Mark Edmondson.</p>
+<p>Developed by Mark Edmondson, continued by Erik Grönroos.</p>
 </div>
 
 <div class="pkgdown">
