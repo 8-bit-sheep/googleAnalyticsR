@@ -19,7 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Management API">
 <meta property="og:description" content="googleAnalyticsR">
-<meta property="og:image" content="https://code.markedmondson.me/googleAnalyticsR/logo.png">
+<meta property="og:image" content="https://8-bit-sheep.com/googleAnalyticsR/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -224,7 +224,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/" class="external-link">
+  <a href="https://github.com/8-bit-sheep/googleAnalyticsR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -245,7 +245,7 @@
       <h1 data-toc-skip>Management API</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/MarkEdmondson1234/googleAnalyticsR/blob/HEAD/vignettes/management.Rmd" class="external-link"><code>vignettes/management.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/8-bit-sheep/googleAnalyticsR/blob/HEAD/vignettes/management.Rmd" class="external-link"><code>vignettes/management.Rmd</code></a></small>
       <div class="hidden name"><code>management.Rmd</code></div>
 
     </div>
@@ -573,7 +573,7 @@
 <p>The <code>ga_users_*</code> functions use the management APIs batching endpoint, to take advantage of the special increased quota limits when dealing with User management that API offers. For example, every 30 API calls that are batched that deal with user management only increments one API call against your management API quota. You can have 300 API calls in one batch (e.g. that costs 10 API calls against the quota), and <code>googleAnalyticsR</code> will split any list of emails into 300 emails per batch for you, so you can send in all emails you have.</p>
 <p>By default, each Google Cloud Project gets 50 write requests per project per day, which if using batching means 1500 write/delete/update user operations per day.</p>
 <blockquote>
-<p>You will need to use your own Google Cloud Platform project if using any write API operations seriously, otherwise you will be at the mercy of the shared googleAnalyticsR’s quota limits. See the section in the Setup page on how to <a href="http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#your-own-google-project" class="external-link">setup using your own Google Project</a></p>
+<p>You will need to use your own Google Cloud Platform project if using any write API operations seriously, otherwise you will be at the mercy of the shared googleAnalyticsR’s quota limits. See the section in the Setup page on how to <a href="http://8-bit-sheep.com/googleAnalyticsR/articles/setup.html#your-own-google-project" class="external-link">setup using your own Google Project</a></p>
 </blockquote>
 <p>To see which users are attached, use <code><a href="../reference/ga_users_list.html">ga_users_list()</a></code>. Each user email is referenced under the <code>userRef.email</code> column, whereas the unique IDs used to see which user is linked to where is the <code>linkId</code> which is unique to each user and link to your account, web property or view/profile.</p>
 <p>Users can be attached at various levels in the hierarchy so you can call the function at various viewing angles.</p>
@@ -771,7 +771,7 @@
 <div class="section level2">
 <h2 id="auth-and-setup">Auth and setup<a class="anchor" aria-label="anchor" href="#auth-and-setup"></a>
 </h2>
-<p>We authenticate and load the necessary packages, following the instructions from the <a href="http://code.markedmondson.me/googleAnalyticsR/articles/setup.html#choose-authentication-method" class="external-link">documentation</a>.</p>
+<p>We authenticate and load the necessary packages, following the instructions from the <a href="http://8-bit-sheep.com/googleAnalyticsR/articles/setup.html#choose-authentication-method" class="external-link">documentation</a>.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span>
@@ -861,7 +861,7 @@
 <div class="section level3">
 <h3 id="get-the-configuration-details-of-a-single-goal-to-be-copied-">4. Get the configuration details of a single goal to be copied.<a class="anchor" aria-label="anchor" href="#get-the-configuration-details-of-a-single-goal-to-be-copied-"></a>
 </h3>
-<p>For this first example, we add a single goal (ID 1) to the destination view, passed as a list to the <a href="http://code.markedmondson.me/googleAnalyticsR/reference/ga_goal_add.html" class="external-link"><code>ga_goal_add()</code></a> function.</p>
+<p>For this first example, we add a single goal (ID 1) to the destination view, passed as a list to the <a href="http://8-bit-sheep.com/googleAnalyticsR/reference/ga_goal_add.html" class="external-link"><code>ga_goal_add()</code></a> function.</p>
 <p>We now use the <code><a href="../reference/ga_goal.html">ga_goal()</a></code> function to retrieve the goal specifications as a list. We use <code><a href="../reference/ga_goal.html">ga_goal()</a></code> because it provides the goal configuration data in the necessary format for our <code>goal_add()</code> request.</p>
 <p>In the example below, we retrieve the details for the goal in slot 1.</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
@@ -987,7 +987,7 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Mark Edmondson.</p>
+<p>Developed by Mark Edmondson, continued by Erik Grönroos.</p>
 </div>
 
 <div class="pkgdown">
